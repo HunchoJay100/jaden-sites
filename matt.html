@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matt, Listen Up. - The Truth About Jaden & AI</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;900&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0a2e 30%, #0a0a0a 60%, #1a0a2e 100%);
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(138, 43, 226, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-badge {
+            background: linear-gradient(135deg, #ff6b00, #ff2d2d);
+            color: #fff;
+            padding: 8px 24px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 2rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 107, 0, 0.4); }
+            50% { box-shadow: 0 0 30px 10px rgba(255, 107, 0, 0.2); }
+        }
+
+        .hero h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3rem, 10vw, 8rem);
+            line-height: 0.95;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff 0%, #a78bfa 50%, #ff6b00 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero h1 span {
+            display: block;
+            font-size: 0.5em;
+            background: linear-gradient(135deg, #ff6b00, #ff2d2d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-sub {
+            font-size: 1.3rem;
+            color: #a0a0a0;
+            max-width: 600px;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .hero-sub strong {
+            color: #ff6b00;
+        }
+
+        .taco-callout {
+            background: rgba(255, 107, 0, 0.1);
+            border: 1px solid rgba(255, 107, 0, 0.3);
+            border-radius: 16px;
+            padding: 1.5rem 2rem;
+            margin-top: 1rem;
+            font-size: 1.5rem;
+            max-width: 700px;
+        }
+
+        /* Superhero Gallery */
+        .heroes-section {
+            padding: 6rem 2rem;
+            background: linear-gradient(180deg, #0a0a0a, #111);
+        }
+
+        .heroes-section h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2rem, 5vw, 4rem);
+            text-align: center;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #a78bfa, #ff6b00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .heroes-subtitle {
+            text-align: center;
+            color: #888;
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero-card {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            aspect-ratio: 3/4;
+            cursor: pointer;
+            transition: transform 0.4s, box-shadow 0.4s;
+        }
+
+        .hero-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(138, 43, 226, 0.3);
+        }
+
+        .hero-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-card .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem 1.5rem;
+            background: linear-gradient(transparent, rgba(0,0,0,0.95));
+        }
+
+        .hero-card .overlay h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .hero-card .overlay p {
+            color: #a78bfa;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Reasons Section */
+        .reasons {
+            padding: 6rem 2rem;
+            background: linear-gradient(180deg, #111, #0a0a0a);
+        }
+
+        .reasons h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2rem, 5vw, 4rem);
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #fff;
+        }
+
+        .reasons h2 span {
+            background: linear-gradient(135deg, #ff6b00, #ff2d2d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .reasons-list {
+            max-width: 800px;
+            margin: 0 auto;
+            list-style: none;
+        }
+
+        .reasons-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.2rem;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            font-size: 1.15rem;
+            line-height: 1.6;
+            color: #ccc;
+            transition: color 0.3s;
+        }
+
+        .reasons-list li:hover {
+            color: #fff;
+        }
+
+        .reasons-list li .num {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            color: #ff6b00;
+            min-width: 50px;
+            text-align: center;
+            line-height: 1;
+            padding-top: 4px;
+        }
+
+        /* Comparison Section */
+        .comparison {
+            padding: 6rem 2rem;
+            background: #111;
+        }
+
+        .comparison h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .comp-card {
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+        }
+
+        .comp-card.jaden {
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.2), rgba(255, 107, 0, 0.15));
+            border: 1px solid rgba(138, 43, 226, 0.3);
+        }
+
+        .comp-card.matt {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .comp-card .emoji {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .comp-card h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .comp-card.jaden h3 {
+            color: #a78bfa;
+        }
+
+        .comp-card.matt h3 {
+            color: #888;
+        }
+
+        .comp-card ul {
+            list-style: none;
+            text-align: left;
+        }
+
+        .comp-card ul li {
+            padding: 0.5rem 0;
+            color: #aaa;
+            font-size: 1rem;
+        }
+
+        .comp-card.jaden ul li {
+            color: #ccc;
+        }
+
+        .comp-card ul li::before {
+            margin-right: 8px;
+        }
+
+        .comp-card.jaden ul li::before {
+            content: "W ";
+            color: #22c55e;
+            font-weight: 900;
+        }
+
+        .comp-card.matt ul li::before {
+            content: "L ";
+            color: #ef4444;
+            font-weight: 900;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 4rem 2rem;
+            text-align: center;
+            background: linear-gradient(180deg, #0a0a0a, #1a0a2e);
+        }
+
+        .footer h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2rem, 6vw, 5rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ff6b00, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 2rem;
+        }
+
+        .footer .signature {
+            color: #a78bfa;
+            font-size: 1.2rem;
+            margin-top: 1rem;
+            font-weight: 700;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .fade-in:nth-child(2) { animation-delay: 0.15s; }
+        .fade-in:nth-child(3) { animation-delay: 0.3s; }
+        .fade-in:nth-child(4) { animation-delay: 0.45s; }
+
+        @media (max-width: 768px) {
+            .comparison-grid { grid-template-columns: 1fr; }
+            .hero-grid { grid-template-columns: 1fr; max-width: 400px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-badge fade-in">Breaking News</div>
+        <h1 class="fade-in">
+            Jaden Flynn
+            <span>Is The Real Truth of AI</span>
+        </h1>
+        <p class="hero-sub fade-in">
+            While you were out there <strong>eating a taco in a sombrero</strong>, I was out here
+            building the future with an AI agent. This page? <strong>An AI built it for me.</strong>
+            From the terminal. While I sat back like a boss.
+        </p>
+        <div class="taco-callout fade-in">
+            🌮 Matt's current status: Taco in hand. Sombrero on head. No clue what's happening. 🎉
+        </div>
+    </section>
+
+    <!-- SUPERHERO GALLERY -->
+    <section class="heroes-section">
+        <h2>The Avengers of AI</h2>
+        <p class="heroes-subtitle">Every hero needs a squad. This is mine.</p>
+        <div class="hero-grid">
+            <div class="hero-card">
+                <img src="https://images.unsplash.com/photo-1635863138275-d9b33299680b?w=600&h=800&fit=crop" alt="Iron Man figure">
+                <div class="overlay">
+                    <h3>Iron Man Energy</h3>
+                    <p>Built the suit in a cave. I built this site in a terminal.</p>
+                </div>
+            </div>
+            <div class="hero-card">
+                <img src="https://images.unsplash.com/photo-1608889825205-eebdb9fc5806?w=600&h=800&fit=crop" alt="Batman figure">
+                <div class="overlay">
+                    <h3>Batman Vibes</h3>
+                    <p>Dark mode everything. The terminal is my Batcave.</p>
+                </div>
+            </div>
+            <div class="hero-card">
+                <img src="https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?w=600&h=800&fit=crop" alt="Spider-Man figure">
+                <div class="overlay">
+                    <h3>Spider-Man Flow</h3>
+                    <p>With great AI comes great responsibility, Matt.</p>
+                </div>
+            </div>
+            <div class="hero-card">
+                <img src="https://images.unsplash.com/photo-1559535332-db9971090158?w=600&h=800&fit=crop" alt="Superman figure">
+                <div class="overlay">
+                    <h3>Superman Status</h3>
+                    <p>Faster than a speeding taco. More powerful than a sombrero.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- REASONS -->
+    <section class="reasons">
+        <h2>10 Reasons Matt Should <span>Listen to Jaden</span></h2>
+        <ol class="reasons-list">
+            <li>
+                <span class="num">01</span>
+                <span>I literally have an AI agent that builds entire websites while I talk to it like a friend. You have queso on your shirt.</span>
+            </li>
+            <li>
+                <span class="num">02</span>
+                <span>While you were picking between mild and spicy salsa, I was configuring MCP servers and automating my entire workflow.</span>
+            </li>
+            <li>
+                <span class="num">03</span>
+                <span>I can make Claude Code read my texts, send messages, search the web, control a browser, and manage GitHub repos. All from my terminal. You haven't opened your terminal since 2019.</span>
+            </li>
+            <li>
+                <span class="num">04</span>
+                <span>This entire website was built in under 60 seconds. Your last website took 3 weeks and a $4,000 Squarespace subscription.</span>
+            </li>
+            <li>
+                <span class="num">05</span>
+                <span>I've got a persistent AI knowledge graph that remembers everything across sessions. You forgot where you parked at Costco last Tuesday.</span>
+            </li>
+            <li>
+                <span class="num">06</span>
+                <span>My AI agent has browser automation, sequential thinking, and real-time documentation lookup. Your phone is at 4% because you've been watching taco ASMR on TikTok.</span>
+            </li>
+            <li>
+                <span class="num">07</span>
+                <span>I cloned a repo, accepted a GitHub invitation, installed Docker, and set up Ollama all in one session. You still ask me what a "repo" is.</span>
+            </li>
+            <li>
+                <span class="num">08</span>
+                <span>AI is the biggest shift in technology since the internet. I'm riding the wave. You're eating a taco on the beach watching the wave go by.</span>
+            </li>
+            <li>
+                <span class="num">09</span>
+                <span>Every single billionaire tech founder is saying "learn AI or get left behind." I listened. You ordered extra guac.</span>
+            </li>
+            <li>
+                <span class="num">10</span>
+                <span>Because I'm your boy, and I'm telling you — this is it. The future is here. Put the taco down and pay attention, Matt.</span>
+            </li>
+        </ol>
+    </section>
+
+    <!-- COMPARISON -->
+    <section class="comparison">
+        <h2>The Scoreboard</h2>
+        <div class="comparison-grid">
+            <div class="comp-card jaden">
+                <div class="emoji">🦾</div>
+                <h3>Jaden Flynn</h3>
+                <ul>
+                    <li>Set up an AI dev environment</li>
+                    <li>Has Claude Code building things on command</li>
+                    <li>Configured MCP servers like a pro</li>
+                    <li>Built this website in seconds</li>
+                    <li>Is the real truth of AI</li>
+                    <li>Ready for the future</li>
+                </ul>
+            </div>
+            <div class="comp-card matt">
+                <div class="emoji">🌮</div>
+                <h3>Matt Matheson</h3>
+                <ul>
+                    <li>Ate a taco</li>
+                    <li>Wore a sombrero</li>
+                    <li>Didn't know this was possible</li>
+                    <li>Still thinking about the taco</li>
+                    <li>Probably ordering another taco right now</li>
+                    <li>Needs to listen to Jaden ASAP</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <section class="footer">
+        <h2>The Taco Era Is Over. The AI Era Has Begun.</h2>
+        <p class="signature">Built with pure AI power by Jaden Flynn & Claude Code</p>
+        <p>No tacos were harmed in the making of this website. Matt's sombrero, however, has been put on notice.</p>
+    </section>
+
+    <script>
+        // Intersection Observer for scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.hero-card, .reasons-list li, .comp-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

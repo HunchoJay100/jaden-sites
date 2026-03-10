@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Megan</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --glass: rgba(255, 255, 255, 0.06);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent: #a78bfa;
+            --warm: #f9a8d4;
+            --gold: #fbbf24;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Ambient Background */
+        .ambient {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .ambient .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.4;
+            animation: drift 20s ease-in-out infinite alternate;
+        }
+
+        .orb-1 {
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, #7c3aed, transparent);
+            top: -200px; left: -100px;
+        }
+
+        .orb-2 {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, #ec4899, transparent);
+            top: 30%; right: -150px;
+            animation-delay: -7s !important;
+        }
+
+        .orb-3 {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, #3b82f6, transparent);
+            bottom: -100px; left: 30%;
+            animation-delay: -14s !important;
+        }
+
+        @keyframes drift {
+            0% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(40px, -30px) scale(1.05); }
+            66% { transform: translate(-20px, 20px) scale(0.95); }
+            100% { transform: translate(30px, -10px) scale(1.02); }
+        }
+
+        section {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .hero-eyebrow {
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--warm);
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeIn 1s ease 0.3s forwards;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 9vw, 7rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeIn 1s ease 0.6s forwards;
+        }
+
+        .hero h1 .line-2 {
+            display: block;
+            background: linear-gradient(135deg, var(--warm), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-body {
+            font-size: 1.25rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 580px;
+            line-height: 1.8;
+            opacity: 0;
+            animation: fadeIn 1s ease 0.9s forwards;
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 3rem;
+            opacity: 0;
+            animation: fadeIn 1s ease 1.5s forwards;
+        }
+
+        .scroll-hint span {
+            display: block;
+            width: 24px;
+            height: 40px;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .scroll-hint span::after {
+            content: '';
+            width: 4px; height: 8px;
+            background: var(--warm);
+            border-radius: 2px;
+            position: absolute;
+            top: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: scrollPulse 2s ease infinite;
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            50% { opacity: 0.3; transform: translateX(-50%) translateY(12px); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Letter Section */
+        .letter {
+            padding: 8rem 2rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .letter-card {
+            background: var(--glass);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 4rem;
+            max-width: 720px;
+            width: 100%;
+        }
+
+        .letter-card .greeting {
+            font-size: 1.6rem;
+            font-weight: 300;
+            color: var(--warm);
+            margin-bottom: 2rem;
+        }
+
+        .letter-card p {
+            font-size: 1.1rem;
+            font-weight: 300;
+            line-height: 2;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1.5rem;
+        }
+
+        .letter-card .sign-off {
+            margin-top: 3rem;
+            font-size: 1.2rem;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        /* What I'm Building Section */
+        .building {
+            padding: 8rem 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header .eyebrow {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .section-header p {
+            color: rgba(255,255,255,0.5);
+            font-size: 1.1rem;
+            font-weight: 300;
+            margin-top: 1rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: transform 0.4s, border-color 0.4s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(167, 139, 250, 0.3);
+        }
+
+        .feature-card .icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .icon-purple { background: rgba(124, 58, 237, 0.2); }
+        .icon-pink { background: rgba(236, 72, 153, 0.2); }
+        .icon-blue { background: rgba(59, 130, 246, 0.2); }
+        .icon-gold { background: rgba(251, 191, 36, 0.2); }
+        .icon-green { background: rgba(34, 197, 94, 0.2); }
+        .icon-red { background: rgba(239, 68, 68, 0.2); }
+
+        .feature-card h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.01em;
+        }
+
+        .feature-card p {
+            font-size: 0.95rem;
+            font-weight: 300;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.55);
+        }
+
+        /* Why It Matters */
+        .why {
+            padding: 8rem 2rem;
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .why-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            transition: transform 0.4s;
+        }
+
+        .why-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .why-card .big-text {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.03em;
+        }
+
+        .why-card:nth-child(1) .big-text {
+            background: linear-gradient(135deg, var(--warm), #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .why-card:nth-child(2) .big-text {
+            background: linear-gradient(135deg, var(--accent), #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .why-card:nth-child(3) .big-text {
+            background: linear-gradient(135deg, var(--gold), #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .why-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .why-card p {
+            font-size: 0.95rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.7;
+        }
+
+        /* Promise Section */
+        .promise {
+            padding: 8rem 2rem;
+        }
+
+        .promise-card {
+            max-width: 800px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(236, 72, 153, 0.1));
+            border: 1px solid rgba(167, 139, 250, 0.2);
+            border-radius: 24px;
+            padding: 4rem;
+            text-align: center;
+        }
+
+        .promise-card h2 {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 2rem;
+        }
+
+        .promise-list {
+            list-style: none;
+            text-align: left;
+            max-width: 520px;
+            margin: 0 auto 2rem;
+        }
+
+        .promise-list li {
+            padding: 0.8rem 0;
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .promise-list li .check {
+            color: var(--warm);
+            font-weight: 700;
+            font-size: 1.2rem;
+            min-width: 24px;
+        }
+
+        /* Footer */
+        .closing {
+            padding: 10rem 2rem 6rem;
+            text-align: center;
+        }
+
+        .closing h2 {
+            font-size: clamp(2.5rem, 7vw, 5rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        .closing h2 span {
+            background: linear-gradient(135deg, var(--warm), var(--accent), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .closing .sub {
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 1rem;
+        }
+
+        .closing .heart {
+            font-size: 3rem;
+            margin: 2rem 0;
+            animation: heartbeat 1.5s ease infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            15% { transform: scale(1.15); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.1); }
+        }
+
+        .closing .fine-print {
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 0.8rem;
+            margin-top: 4rem;
+            font-weight: 300;
+        }
+
+        /* Terminal Demo */
+        .terminal-demo {
+            padding: 4rem 2rem 8rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .terminal {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            max-width: 680px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .terminal-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .terminal-dot {
+            width: 12px; height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot-red { background: #ff5f57; }
+        .dot-yellow { background: #ffbd2e; }
+        .dot-green { background: #28c840; }
+
+        .terminal-title {
+            flex: 1;
+            text-align: center;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.4);
+            font-weight: 500;
+        }
+
+        .terminal-body {
+            padding: 1.5rem;
+            font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+            font-size: 0.85rem;
+            line-height: 1.8;
+        }
+
+        .terminal-body .prompt {
+            color: #28c840;
+        }
+
+        .terminal-body .command {
+            color: #fff;
+        }
+
+        .terminal-body .output {
+            color: rgba(255, 255, 255, 0.45);
+        }
+
+        .terminal-body .highlight {
+            color: var(--warm);
+        }
+
+        .terminal-body .line {
+            margin-bottom: 0.3rem;
+        }
+
+        .typing {
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid var(--accent);
+            animation: typing 3s steps(40) 2s forwards, blink 0.8s step-end infinite;
+            max-width: 0;
+        }
+
+        @keyframes typing {
+            to { max-width: 100%; }
+        }
+
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+
+        /* Scroll animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .letter-card { padding: 2.5rem 2rem; }
+            .promise-card { padding: 2.5rem 2rem; }
+            .features-grid { grid-template-columns: 1fr; }
+            .why-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-eyebrow">A letter, built with the future</div>
+        <h1>
+            For Megan.
+            <span class="line-2">From the heart.</span>
+        </h1>
+        <p class="hero-body">
+            This page was built by an AI that I control from my terminal.
+            Every word here is mine. The technology just helped me say it
+            in a way you deserve to see.
+        </p>
+        <div class="scroll-hint"><span></span></div>
+    </section>
+
+    <!-- The Letter -->
+    <section class="letter">
+        <div class="letter-card reveal">
+            <div class="greeting">Megan,</div>
+            <p>
+                I know the hours I spend learning this stuff can feel like time away from you and our family. I know it's hard when I'm deep in the terminal at night or reading about some new tool on the weekend. I see you holding everything together while I'm heads-down, and I don't take that for granted. Not for a second.
+            </p>
+            <p>
+                I want you to know that every minute I spend on this is an investment in us. In our future. The world is changing fast, and I refuse to let it pass us by. I'm not just playing around with technology. I'm building real skills that are going to open doors for our family that didn't exist before.
+            </p>
+            <p>
+                This page you're reading right now? I built it in seconds. Not because I'm showing off, but because I want you to see what's possible. I want you to feel what I feel every time I see this technology work. It's not about the code. It's about what it means for us.
+            </p>
+            <p>
+                You are the reason I push this hard. You and the life we're building together. Everything I do is to make sure our family is ahead of the curve, not behind it.
+            </p>
+            <div class="sign-off">
+                All my love, always.<br>
+                Jaden
+            </div>
+        </div>
+    </section>
+
+    <!-- Terminal Demo -->
+    <section class="terminal-demo">
+        <div class="terminal reveal">
+            <div class="terminal-bar">
+                <div class="terminal-dot dot-red"></div>
+                <div class="terminal-dot dot-yellow"></div>
+                <div class="terminal-dot dot-green"></div>
+                <div class="terminal-title">jaden@macbook ~ claude</div>
+            </div>
+            <div class="terminal-body">
+                <div class="line"><span class="prompt">$ </span><span class="command">claude</span></div>
+                <div class="line"><span class="output">Claude Code v2.1 | Model: Opus 4.6</span></div>
+                <div class="line"><span class="output">&nbsp;</span></div>
+                <div class="line"><span class="prompt">> </span><span class="command">Build something beautiful for the woman I love.</span></div>
+                <div class="line"><span class="output">&nbsp;</span></div>
+                <div class="line"><span class="highlight">Done. Because she deserves it.</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What I'm Building -->
+    <section class="building">
+        <div class="section-header reveal">
+            <div class="eyebrow">What the late nights are for</div>
+            <h2>What I'm actually building.</h2>
+            <p>These aren't just tools. They're capabilities that change what's possible for us.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card reveal">
+                <div class="icon icon-purple">&#9889;</div>
+                <h3>AI-Powered Automation</h3>
+                <p>Tasks that used to take hours now take seconds. Proposals, estimates, follow-ups, scheduling. All handled by an AI agent I control.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="icon icon-pink">&#9881;</div>
+                <h3>Business Systems</h3>
+                <p>Building workflows that run in the background. Client communication, project tracking, invoicing. Systems that work while I sleep.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="icon icon-blue">&#128640;</div>
+                <h3>Web Development</h3>
+                <p>Full websites and apps, built in minutes instead of weeks. Like this one. Real, professional-grade products at unbelievable speed.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="icon icon-gold">&#128161;</div>
+                <h3>New Revenue Streams</h3>
+                <p>These skills aren't just for my day job. They open doors to freelancing, consulting, building products. Additional income for our family.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="icon icon-green">&#128200;</div>
+                <h3>Staying Ahead</h3>
+                <p>AI is the biggest shift since the internet. Companies are desperate for people who understand it. I'm making sure I'm one of those people.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="icon icon-red">&#10084;</div>
+                <h3>More Time Together</h3>
+                <p>The whole point of automation is doing more with less. The better my systems get, the less time I need at the keyboard and the more time I have with you.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why It Matters -->
+    <section class="why">
+        <div class="section-header reveal">
+            <div class="eyebrow">The bigger picture</div>
+            <h2>Why this matters for our family.</h2>
+        </div>
+        <div class="why-grid">
+            <div class="why-card reveal">
+                <div class="big-text">10x</div>
+                <h3>Faster Output</h3>
+                <p>What used to take a full day of work can now be done in an hour. That's not a gimmick. That's real leverage that translates to real money and real time back.</p>
+            </div>
+            <div class="why-card reveal">
+                <div class="big-text">24/7</div>
+                <h3>Systems That Run</h3>
+                <p>I'm building automated systems that work around the clock. Monitoring, responding, processing. Working for our family even when I'm at the dinner table with you.</p>
+            </div>
+            <div class="why-card reveal">
+                <div class="big-text">&#8734;</div>
+                <h3>Limitless Potential</h3>
+                <p>There is no ceiling on where this goes. Every new skill stacks on the last one. The compound effect of what I'm learning now will pay dividends for years.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- My Promise -->
+    <section class="promise">
+        <div class="promise-card reveal">
+            <h2>My promise to you.</h2>
+            <ul class="promise-list">
+                <li><span class="check">&#10003;</span> Every late night has a purpose</li>
+                <li><span class="check">&#10003;</span> I will always put our family first</li>
+                <li><span class="check">&#10003;</span> This work is building something real for us</li>
+                <li><span class="check">&#10003;</span> The more I automate, the more time I come home with</li>
+                <li><span class="check">&#10003;</span> I will never stop appreciating everything you do</li>
+                <li><span class="check">&#10003;</span> You are the reason I do any of this</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Closing -->
+    <section class="closing">
+        <div class="heart reveal">&#10084;&#65039;</div>
+        <h2 class="reveal">
+            Thank you for believing in me,<br>
+            <span>Megan Flynn.</span>
+        </h2>
+        <p class="sub reveal">You are my why.</p>
+        <p class="fine-print">Built with love, Claude Code, and a whole lot of late nights that were always about you.</p>
+    </section>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
