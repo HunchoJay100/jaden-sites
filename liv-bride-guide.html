@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Liv — A Bride's Guide to the Big Day</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --cream: #FAF7F2;
+            --linen: #F3EDE4;
+            --warm-white: #FEFCF9;
+            --taupe: #B8A99A;
+            --sage: #A3B18A;
+            --sage-dark: #7D8B6A;
+            --sage-light: #DAE4CD;
+            --champagne: #D4C5A9;
+            --gold: #C9A96E;
+            --espresso: #3C3228;
+            --charcoal: #4A4039;
+            --warm-gray: #7A7068;
+            --light-gray: #C4BCB4;
+            --blush: #E8D5C4;
+            --glass-border: rgba(184, 169, 154, 0.2);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--cream);
+            color: var(--charcoal);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* ===== BACK LINK ===== */
+        .back-link {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: rgba(250, 247, 242, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 100px;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--espresso);
+            transition: all 0.3s ease;
+        }
+        .back-link:hover {
+            background: var(--espresso);
+            color: var(--cream);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 100px 24px 80px;
+            background: linear-gradient(180deg, var(--warm-white), var(--cream));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-circle {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            border: 1px solid rgba(163, 177, 138, 0.1);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: spin 50s linear infinite;
+        }
+        .hero-circle:nth-child(2) {
+            width: 500px; height: 500px;
+            animation-direction: reverse;
+            animation-duration: 70s;
+        }
+        @keyframes spin {
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .hero-content { position: relative; z-index: 2; }
+
+        .hero-tag {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--sage-dark);
+            margin-bottom: 24px;
+            animation: fadeUp 0.8s ease-out 0.2s both;
+        }
+
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(36px, 7vw, 64px);
+            font-weight: 300;
+            font-style: italic;
+            color: var(--espresso);
+            line-height: 1.2;
+            margin-bottom: 16px;
+            animation: fadeUp 0.8s ease-out 0.4s both;
+        }
+
+        .hero-sub {
+            font-size: 15px;
+            color: var(--warm-gray);
+            max-width: 500px;
+            line-height: 1.7;
+            animation: fadeUp 0.8s ease-out 0.6s both;
+        }
+
+        .hero-line {
+            width: 48px;
+            height: 1px;
+            background: var(--sage);
+            margin: 32px auto 0;
+            animation: fadeUp 0.8s ease-out 0.8s both;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== GUIDE CONTENT ===== */
+        .guide-section {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 80px 24px;
+        }
+
+        .guide-intro {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+        .guide-intro p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
+            font-style: italic;
+            color: var(--warm-gray);
+            line-height: 1.8;
+        }
+
+        /* ===== INDIVIDUAL ITEMS ===== */
+        .guide-item {
+            margin-bottom: 64px;
+            padding-bottom: 64px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .guide-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .guide-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--sage-light);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--sage-dark);
+            margin-bottom: 20px;
+        }
+
+        .guide-item h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            font-weight: 400;
+            color: var(--espresso);
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .guide-item .why-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--sage-dark);
+            margin: 20px 0 8px;
+        }
+
+        .guide-item .why-text {
+            font-size: 15px;
+            line-height: 1.8;
+            color: var(--warm-gray);
+            margin-bottom: 24px;
+        }
+
+        .tips-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--sage-dark);
+            margin-bottom: 16px;
+        }
+
+        .tip {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+            padding: 20px;
+            background: var(--warm-white);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+        }
+
+        .tip-icon {
+            flex-shrink: 0;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--sage-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            margin-top: 2px;
+        }
+
+        .tip p {
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--charcoal);
+        }
+        .tip p strong {
+            color: var(--espresso);
+        }
+
+        /* ===== CLOSING ===== */
+        .closing {
+            text-align: center;
+            padding: 80px 24px;
+            background: var(--linen);
+        }
+
+        .closing-icon { font-size: 48px; margin-bottom: 24px; }
+
+        .closing h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 36px;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--espresso);
+            margin-bottom: 16px;
+        }
+
+        .closing p {
+            max-width: 500px;
+            margin: 0 auto;
+            font-size: 15px;
+            line-height: 1.8;
+            color: var(--warm-gray);
+        }
+
+        .closing-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 32px;
+            padding: 14px 32px;
+            background: var(--espresso);
+            color: var(--cream);
+            border-radius: 100px;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+        .closing-back:hover {
+            background: var(--charcoal);
+            transform: translateY(-2px);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            text-align: center;
+            padding: 32px 24px;
+            font-size: 11px;
+            color: var(--light-gray);
+        }
+
+        /* ===== REVEAL ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .guide-section { padding: 48px 16px; }
+            .guide-item { margin-bottom: 40px; padding-bottom: 40px; }
+        }
+    </style>
+</head>
+<body>
+
+<a href="liv-bryson.html" class="back-link">&larr; Back to Wedding</a>
+
+<section class="hero">
+    <div class="hero-circle"></div>
+    <div class="hero-circle"></div>
+    <div class="hero-content">
+        <div class="hero-tag">Just for You, Liv</div>
+        <h1>A Bride's Guide to<br>Staying Sane</h1>
+        <p class="hero-sub">The 10 things every bride stresses about &mdash; and how to handle each one with grace, honesty, and zero Pinterest fluff.</p>
+        <div class="hero-line"></div>
+    </div>
+</section>
+
+<div class="guide-section">
+    <div class="guide-intro reveal">
+        <p>Here's the truth nobody puts on the wedding mood board: planning a wedding is stressful, emotional, and sometimes overwhelming. This guide is for the moments when it all feels like too much. Read it now, bookmark it, come back to it when you need it. You've got this.</p>
+    </div>
+
+    <!-- 1 -->
+    <div class="guide-item reveal">
+        <div class="guide-number">1</div>
+        <h2>"What If I Hate How I Look?"</h2>
+        <div class="why-label">Why This Hits Hard</div>
+        <p class="why-text">Every bridal magazine and Instagram reel sets an impossible standard. You picked your dress months ago, your body may have changed, and suddenly you're hyper-aware of everything. The dress felt magical in the shop &mdash; but what if it doesn't feel magical that morning?</p>
+        <div class="tips-label">How to Handle It</div>
+        <div class="tip">
+            <div class="tip-icon">&#x2728;</div>
+            <p><strong>Stop the comparison spiral now.</strong> Unfollow or mute any bridal content that makes you feel worse, not better. You are not a "before" photo.</p>
+        </div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F457;</div>
+            <p><strong>Do a full dress rehearsal at home.</strong> Wear the dress, do your hair roughly how you plan it, and just sit with it. The unfamiliarity is what causes panic. Make the look familiar before the day.</p>
+        </div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F4F7;</div>
+            <p><strong>Tell your photographer what you're self-conscious about.</strong> Telling them "photograph my left side" means they can actively protect you. You'll trust the photos more knowing they had that information.</p>
+        </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="guide-item reveal">
+        <div class="guide-number">2</div>
+        <h2>The Money Pit That Won't Stop Growing</h2>
+        <div class="why-label">Why This Hits Hard</div>
+        <p class="why-text">Weddings nickel-and-dime you to death. The venue was the big number, but then came the upgrades: the better linens, the late-night snack bar, the tips you didn't budget for. Every decision feels like opening your wallet again. And underneath it is a quiet guilt &mdash; is this responsible?</p>
+        <div class="tips-label">How to Handle It</div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F4C5;</div>
+            <p><strong>Set a "done" date for spending decisions.</strong> Pick a date 3-4 weeks before the wedding where the budget is locked. No more add-ons, no more upgrades. Whatever you have is what you're working with.</p>
+        </div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F46B;</div>
+            <p><strong>Nobody at your wedding knows the budget.</strong> Guests don't know if the flowers cost $500 or $5,000. They notice how they feel &mdash; whether they laughed, whether the food was good, whether you looked happy.</p>
+        </div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F4AC;</div>
+            <p><strong>Talk about it out loud with your partner.</strong> Financial stress festers in silence. Say the number. Say how you feel about it. Sharing the weight cuts it in half.</p>
+        </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="guide-item reveal">
+        <div class="guide-number">3</div>
+        <h2>The Family Drama You Saw Coming</h2>
+        <div class="why-label">Why This Hits Hard</div>
+        <p class="why-text">A wedding forces families together in ways normal life doesn't. Divorced parents in the same room, overbearing in-laws, the aunt with opinions about everything. And you become the emotional air traffic controller for all of it.</p>
+        <div class="tips-label">How to Handle It</div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F6E1;</div>
+            <p><strong>Appoint a family buffer and give them authority.</strong> Your maid of honor or your coordinator. Tell them: "If my uncle starts something at the reception, you handle it. Don't bring it to me."</p>
+        </div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F4DE;</div>
+            <p><strong>Have the hard conversations before the wedding, not at it.</strong> Sit down with each person separately: "Here's what I need from you that day. Can you give me that?"</p>
+        </div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F49B;</div>
+            <p><strong>Accept that you cannot make everyone happy.</strong> Someone will be annoyed about the seating chart. That is not your problem to solve. Your only job is to marry the person you love.</p>
+        </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="guide-item reveal">
+        <div class="guide-number">4</div>
+        <h2>"What If Something Goes Wrong?"</h2>
+        <div class="why-label">Why This Hits Hard</div>
+        <p class="why-text">You've spent months planning one single day. The stakes feel impossibly high. Your brain starts running disaster scenarios: wrong flowers, ring bearer meltdown, sound system fails, cake collapses. You've invested so much that anything less than flawless feels like failure.</p>
+        <div class="tips-label">How to Handle It</div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F4DD;</div>
+            <p><strong>Name the fear specifically and plan for it.</strong> Write down your top 5 nightmare scenarios and assign a backup plan to each. Once you have a plan, your brain can let go.</p>
+        </div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F602;</div>
+            <p><strong>The "disasters" become the best stories.</strong> Every married couple has a story about what went sideways. The rain. The drunk uncle. These become the parts people actually remember and laugh about.</p>
+        </div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F464;</div>
+            <p><strong>Designate a day-of point person who is not you.</strong> Give them the vendor contacts, the timeline, and the authority to make decisions without consulting you. You should not be solving problems on your wedding day.</p>
+        </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="guide-item reveal">
+        <div class="guide-number">5</div>
+        <h2>The Guest List Guilt</h2>
+        <div class="why-label">Why This Hits Hard</div>
+        <p class="why-text">Every name is a relationship you're either honoring or &mdash; in the eyes of the person cut &mdash; devaluing. Parents want to invite 40 people you've never met. Every added guest is another $150-250 you didn't plan for.</p>
+        <div class="tips-label">How to Handle It</div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F6D1;</div>
+            <p><strong>Set a hard number and don't defend it.</strong> "We have X seats" is a boundary, not a negotiation. The answer is: "We'd love to have them, but there is physically no room."</p>
+        </div>
+        <div class="tip">
+            <div class="tip-icon">&#x2696;</div>
+            <p><strong>Use a simple rule and apply it consistently.</strong> "If we haven't spoken in the past year, they don't get an invite." A rule removes personal judgment from each individual decision.</p>
+        </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="guide-item reveal">
+        <div class="guide-number">6</div>
+        <h2>Losing Yourself in "Bride Mode"</h2>
+        <div class="why-label">Why This Hits Hard</div>
+        <p class="why-text">For months, every conversation circles back to the wedding. People ask about centerpieces, not how you're doing. Your weekends are tastings and fittings. Somewhere in the process, you stopped doing the things that make you feel like you.</p>
+        <div class="tips-label">How to Handle It</div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F3AC;</div>
+            <p><strong>Schedule non-wedding time and protect it ruthlessly.</strong> One night a week where the wedding doesn't come up. Go to the movies. Cook something. This is not a luxury &mdash; it's maintenance.</p>
+        </div>
+        <div class="tip">
+            <div class="tip-icon">&#x2764;</div>
+            <p><strong>Have a date night with zero wedding talk.</strong> Remember why you're doing this. The wedding is a day. The marriage is the actual point.</p>
+        </div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F64F;</div>
+            <p><strong>Give yourself permission to not care about some of it.</strong> You don't have to have an opinion on napkin folds. "I don't care, pick whatever" is a valid and healthy answer.</p>
+        </div>
+    </div>
+
+    <!-- 7 -->
+    <div class="guide-item reveal">
+        <div class="guide-number">7</div>
+        <h2>Weather Anxiety</h2>
+        <div class="why-label">Why This Hits Hard</div>
+        <p class="why-text">You can manage vendors, timelines, and people. You cannot manage the sky. If you booked an outdoor ceremony, you've been quietly checking the 10-day forecast since the day you got engaged. And at Bluff Top, weather is the one thing that keeps every outdoor bride up at night.</p>
+        <div class="tips-label">How to Handle It</div>
+        <div class="tip">
+            <div class="tip-icon">&#x2602;</div>
+            <p><strong>Have a rain plan and make peace with it before the day.</strong> Don't just have a "backup" &mdash; actually walk through it. Where do people stand? Where do photos happen? A rain plan you've visualized is one you can execute without panic.</p>
+        </div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F4F1;</div>
+            <p><strong>Stop checking weather more than 48 hours out.</strong> Anything beyond two days is unreliable and just feeds anxiety. Check once, make your call, and commit.</p>
+        </div>
+        <div class="tip">
+            <div class="tip-icon">&#x2614;</div>
+            <p><strong>Buy a set of clear umbrellas.</strong> Rain photos with clear umbrellas genuinely look beautiful. One small purchase can completely shift your mindset from crisis to aesthetic choice.</p>
+        </div>
+    </div>
+
+    <!-- 8 -->
+    <div class="guide-item reveal">
+        <div class="guide-number">8</div>
+        <h2>Vendor Trust Issues</h2>
+        <div class="why-label">Why This Hits Hard</div>
+        <p class="why-text">You're paying thousands to people you've met once or twice, trusting them to execute your vision for the most important day of your life. Horror stories are everywhere: photographers who lose photos, caterers who run out of food. You're handing your day to strangers.</p>
+        <div class="tips-label">How to Handle It</div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F4CB;</div>
+            <p><strong>Create a one-page vendor summary for each vendor.</strong> Date, time, location, what they're delivering, any specific requests. Send it two weeks out and ask them to confirm.</p>
+        </div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F4DE;</div>
+            <p><strong>Do a final check-in call one week before.</strong> Not an email &mdash; an actual phone call. Confirm every detail. You'll know within 30 seconds if something feels off.</p>
+        </div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F4D2;</div>
+            <p><strong>Have backup contact info for every vendor's company.</strong> If your photographer gets sick, you want the studio's number, not just the individual's cell.</p>
+        </div>
+    </div>
+
+    <!-- 9 -->
+    <div class="guide-item reveal">
+        <div class="guide-number">9</div>
+        <h2>The Vow & Ceremony Performance Anxiety</h2>
+        <div class="why-label">Why This Hits Hard</div>
+        <p class="why-text">Writing personal vows means finding words for something you feel in your chest, not your head. Speaking them means doing it out loud, while your voice shakes, in front of everyone you love. For anyone with even mild social anxiety, this is a nightmare dressed up in tulle.</p>
+        <div class="tips-label">How to Handle It</div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F4C4;</div>
+            <p><strong>Print your vows on a card. Do not memorize them.</strong> No one has ever thought less of a bride for reading from a card. But plenty have gone blank trying to recite from memory. Read from the card. It's not cheating &mdash; it's smart.</p>
+        </div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F399;</div>
+            <p><strong>Practice reading them out loud three times &mdash; but not more.</strong> Enough to feel the words in your mouth. Not so much that they lose their meaning.</p>
+        </div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F49C;</div>
+            <p><strong>Everyone in that room is rooting for you.</strong> There is no audience on earth more supportive than a room full of people who came to celebrate your love. They're not judging. They're crying happy tears.</p>
+        </div>
+    </div>
+
+    <!-- 10 -->
+    <div class="guide-item reveal">
+        <div class="guide-number">10</div>
+        <h2>The Post-Wedding Emotional Cliff</h2>
+        <div class="why-label">Why This Hits Hard</div>
+        <p class="why-text">People don't talk about this one enough. You spend a year building toward one day. Your identity, your schedule, your social life &mdash; all organized around this event. Then it's over in 6 hours. The post-wedding blues are real: you wake up the next day and there's nothing to plan anymore.</p>
+        <div class="tips-label">How to Handle It</div>
+        <div class="tip">
+            <div class="tip-icon">&#x2708;</div>
+            <p><strong>Plan something to look forward to after the wedding.</strong> Not just the honeymoon. Book a weekend trip for a month later. Sign up for a class together. Give your brain a next thing.</p>
+        </div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F49A;</div>
+            <p><strong>Let yourself grieve it.</strong> It sounds dramatic, but a wedding is a transition. You're allowed to be sad it's over. That doesn't mean something is wrong &mdash; it means something meaningful happened.</p>
+        </div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F3E0;</div>
+            <p><strong>Start the marriage intentionally.</strong> Use the first month to set patterns: a weekly date night, a morning coffee ritual, a way of checking in. Let the energy you put into the wedding flow into the marriage. That's where the real thing lives.</p>
+        </div>
+    </div>
+</div>
+
+<!-- CLOSING -->
+<div class="closing">
+    <div class="closing-icon">&#x1F490;</div>
+    <h2>You're Going to Be Beautiful, Liv</h2>
+    <p>Not because everything will be perfect &mdash; but because you'll be marrying the love of your life, surrounded by people who adore you. That's the only thing that matters. Everything else is decoration.</p>
+    <a href="liv-bryson.html" class="closing-back">&larr; Back to Wedding Details</a>
+</div>
+
+<footer>
+    <p>&copy; 2026 &middot; Prepared with love by Megan Flynn, Wedding Coordinator</p>
+</footer>
+
+<script>
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+            setTimeout(() => entry.target.classList.add('visible'), i * 60);
+            observer.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

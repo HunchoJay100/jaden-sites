@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Paula — A Mother of the Bride's Guide</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --cream: #FAF7F2;
+            --linen: #F3EDE4;
+            --warm-white: #FEFCF9;
+            --taupe: #B8A99A;
+            --sage: #A3B18A;
+            --sage-dark: #7D8B6A;
+            --sage-light: #DAE4CD;
+            --champagne: #D4C5A9;
+            --gold: #C9A96E;
+            --espresso: #3C3228;
+            --charcoal: #4A4039;
+            --warm-gray: #7A7068;
+            --light-gray: #C4BCB4;
+            --blush: #E8D5C4;
+            --rose: #C9A99A;
+            --glass-border: rgba(184, 169, 154, 0.2);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--cream);
+            color: var(--charcoal);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        .back-link {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: rgba(250, 247, 242, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 100px;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--espresso);
+            transition: all 0.3s ease;
+        }
+        .back-link:hover {
+            background: var(--espresso);
+            color: var(--cream);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 100px 24px 80px;
+            background: linear-gradient(180deg, var(--warm-white), var(--cream));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-circle {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            border: 1px solid rgba(201, 169, 154, 0.12);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: spin 50s linear infinite;
+        }
+        .hero-circle:nth-child(2) {
+            width: 500px; height: 500px;
+            border-color: rgba(184, 169, 154, 0.08);
+            animation-direction: reverse;
+            animation-duration: 70s;
+        }
+        @keyframes spin {
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .hero-content { position: relative; z-index: 2; }
+
+        .hero-tag {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--rose);
+            margin-bottom: 24px;
+            animation: fadeUp 0.8s ease-out 0.2s both;
+        }
+
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(36px, 7vw, 64px);
+            font-weight: 300;
+            font-style: italic;
+            color: var(--espresso);
+            line-height: 1.2;
+            margin-bottom: 16px;
+            animation: fadeUp 0.8s ease-out 0.4s both;
+        }
+
+        .hero-sub {
+            font-size: 15px;
+            color: var(--warm-gray);
+            max-width: 500px;
+            line-height: 1.7;
+            animation: fadeUp 0.8s ease-out 0.6s both;
+        }
+
+        .hero-line {
+            width: 48px;
+            height: 1px;
+            background: var(--rose);
+            margin: 32px auto 0;
+            animation: fadeUp 0.8s ease-out 0.8s both;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== GUIDE CONTENT ===== */
+        .guide-section {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 80px 24px;
+        }
+
+        .guide-intro {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+        .guide-intro p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
+            font-style: italic;
+            color: var(--warm-gray);
+            line-height: 1.8;
+        }
+
+        .guide-item {
+            margin-bottom: 64px;
+            padding-bottom: 64px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .guide-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .guide-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--blush);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--rose);
+            margin-bottom: 20px;
+        }
+
+        .guide-item h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            font-weight: 400;
+            color: var(--espresso);
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .guide-item .why-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--rose);
+            margin: 20px 0 8px;
+        }
+
+        .guide-item .why-text {
+            font-size: 15px;
+            line-height: 1.8;
+            color: var(--warm-gray);
+            margin-bottom: 24px;
+        }
+
+        .tips-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--rose);
+            margin-bottom: 16px;
+        }
+
+        .tip {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+            padding: 20px;
+            background: var(--warm-white);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+        }
+
+        .tip-icon {
+            flex-shrink: 0;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--blush);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            margin-top: 2px;
+        }
+
+        .tip p {
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--charcoal);
+        }
+        .tip p strong {
+            color: var(--espresso);
+        }
+
+        /* ===== CLOSING ===== */
+        .closing {
+            text-align: center;
+            padding: 80px 24px;
+            background: var(--linen);
+        }
+
+        .closing-icon { font-size: 48px; margin-bottom: 24px; }
+
+        .closing h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 36px;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--espresso);
+            margin-bottom: 16px;
+        }
+
+        .closing p {
+            max-width: 520px;
+            margin: 0 auto;
+            font-size: 15px;
+            line-height: 1.8;
+            color: var(--warm-gray);
+        }
+
+        .closing-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 32px;
+            padding: 14px 32px;
+            background: var(--espresso);
+            color: var(--cream);
+            border-radius: 100px;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+        .closing-back:hover {
+            background: var(--charcoal);
+            transform: translateY(-2px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 32px 24px;
+            font-size: 11px;
+            color: var(--light-gray);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .guide-section { padding: 48px 16px; }
+            .guide-item { margin-bottom: 40px; padding-bottom: 40px; }
+        }
+    </style>
+</head>
+<body>
+
+<a href="liv-bryson.html" class="back-link">&larr; Back to Wedding</a>
+
+<section class="hero">
+    <div class="hero-circle"></div>
+    <div class="hero-circle"></div>
+    <div class="hero-content">
+        <div class="hero-tag">Just for You, Paula</div>
+        <h1>A Mother's Guide to<br>Her Daughter's Big Day</h1>
+        <p class="hero-sub">The 10 things every mother of the bride feels &mdash; and how to navigate them with grace, honesty, and a whole lot of love.</p>
+        <div class="hero-line"></div>
+    </div>
+</section>
+
+<div class="guide-section">
+    <div class="guide-intro reveal">
+        <p>Nobody tells the mother of the bride that this is hard for her too. That underneath all the joy, there's grief, pressure, and a thousand emotions nobody prepared you for. This guide is for you, Paula. Because you deserve to enjoy this just as much as Liv does.</p>
+    </div>
+
+    <!-- 1 -->
+    <div class="guide-item reveal">
+        <div class="guide-number">1</div>
+        <h2>Watching Your Little Girl Become Someone's Wife</h2>
+        <div class="why-label">Why This Hits Hard</div>
+        <p class="why-text">You're happy. Of course you're happy. But underneath the happiness is something no one warns you about: a deep, quiet sadness that the little girl who used to crawl into your bed during thunderstorms is now building a life with someone else. The wedding makes it official. And you're supposed to smile through all of it.</p>
+        <div class="tips-label">How to Handle It</div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F49B;</div>
+            <p><strong>Let yourself feel it without judging it.</strong> Grief and joy live in the same house. Crying while you watch her try on veils doesn't mean you're not happy &mdash; it means you love her enormously.</p>
+        </div>
+        <div class="tip">
+            <div class="tip-icon">&#x270D;</div>
+            <p><strong>Write her a letter for the wedding day.</strong> Put everything you're feeling on paper &mdash; the pride, the memories, the ache, the hope. Give it to her the morning of. It gives your emotions a place to go.</p>
+        </div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F4AC;</div>
+            <p><strong>Talk to another mother who's been through it.</strong> Hearing someone say "I felt that too" is more healing than any advice.</p>
+        </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="guide-item reveal">
+        <div class="guide-number">2</div>
+        <h2>Feeling Sidelined in the Planning</h2>
+        <div class="why-label">Why This Hits Hard</div>
+        <p class="why-text">You've imagined your daughter's wedding since before she could walk. You assumed you'd pick out flowers together, taste cakes, go to every dress appointment. But modern weddings are run by the couple, and sometimes decisions happen without you. Every Pinterest board she doesn't share with you feels like a small rejection.</p>
+        <div class="tips-label">How to Handle It</div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F64B;</div>
+            <p><strong>Ask your daughter directly: "Where would you like my help?"</strong> Don't assume or hint. One clear conversation can define your role and prevent weeks of silent resentment.</p>
+        </div>
+        <div class="tip">
+            <div class="tip-icon">&#x2B50;</div>
+            <p><strong>Find one thing that's yours.</strong> The rehearsal dinner. The morning-of experience. A special tradition. Claim one territory and pour your energy into it. You don't need to control everything &mdash; you need to matter somewhere.</p>
+        </div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F3C6;</div>
+            <p><strong>Her independence is your success, not your failure.</strong> If she's making confident decisions without you, you raised her well. It stings, but it's actually the whole point.</p>
+        </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="guide-item reveal">
+        <div class="guide-number">3</div>
+        <h2>The Financial Pressure</h2>
+        <div class="why-label">Why This Hits Hard</div>
+        <p class="why-text">You want to give her the day she dreams of, but the numbers feel reckless. Every time she adds something to the budget, you feel a knot in your stomach. Saying no feels like letting her down. Saying yes feels like financial self-harm.</p>
+        <div class="tips-label">How to Handle It</div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F4B0;</div>
+            <p><strong>State your number clearly, early, and once.</strong> "We can contribute $X. That's our ceiling." No guilt, no apology, no negotiation. A clear number lets everyone plan realistically.</p>
+        </div>
+        <div class="tip">
+            <div class="tip-icon">&#x2764;</div>
+            <p><strong>Don't bankroll guilt.</strong> A bride who loves you doesn't want you stressed or broke. If you're spending more than you're comfortable with because you feel like you owe it, stop.</p>
+        </div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F91D;</div>
+            <p><strong>Separate "contributing" from "controlling."</strong> Giving money doesn't buy veto power. Once you set the number, let go of how it's spent.</p>
+        </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="guide-item reveal">
+        <div class="guide-number">4</div>
+        <h2>Managing the Extended Family</h2>
+        <div class="why-label">Why This Hits Hard</div>
+        <p class="why-text">Your sister thinks she should be more involved. Your mother has opinions. Someone hasn't spoken to someone else in six years and they'll both be at the rehearsal dinner. Somehow, all of these problems land on you &mdash; because your daughter is "too busy" and everyone else expects you to manage it.</p>
+        <div class="tips-label">How to Handle It</div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F6AB;</div>
+            <p><strong>Stop being the family switchboard.</strong> When Aunt Linda calls to complain, the answer is: "You'll need to talk to Liv about that." Redirect. Every time. You are not the complaint department.</p>
+        </div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F4DE;</div>
+            <p><strong>Handle the truly hard stuff proactively.</strong> If there's a genuine family fracture that could cause a scene, address it weeks before. Direct, private, early.</p>
+        </div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F54A;</div>
+            <p><strong>Some relationships are not yours to fix.</strong> The wedding is not going to heal old wounds. Focus on damage containment, not reconciliation.</p>
+        </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="guide-item reveal">
+        <div class="guide-number">5</div>
+        <h2>The Relationship with the Other Mother</h2>
+        <div class="why-label">Why This Hits Hard</div>
+        <p class="why-text">Two mothers occupy an awkward middle ground. You might feel like the other mother is too involved or not involved enough. She might have more money, more opinions, or a closer relationship with the couple than you expected. Comparing yourself to her is almost involuntary.</p>
+        <div class="tips-label">How to Handle It</div>
+        <div class="tip">
+            <div class="tip-icon">&#x2615;</div>
+            <p><strong>Reach out early and establish rapport.</strong> A phone call or lunch before the planning gets intense can set a collaborative tone. Most tension comes from assumptions, not actual conflict.</p>
+        </div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F3CE;</div>
+            <p><strong>Stay in your lane and let her stay in hers.</strong> Focus on your responsibilities and let her focus on hers. Parallel, not competitive.</p>
+        </div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F6E1;</div>
+            <p><strong>If she's difficult, protect your energy.</strong> You will not change her. Be polite, be brief, and stop trying to win her over.</p>
+        </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="guide-item reveal">
+        <div class="guide-number">6</div>
+        <h2>Wanting Everything to Be Perfect for Her</h2>
+        <div class="why-label">Why This Hits Hard</div>
+        <p class="why-text">This isn't about flowers or timelines. This is about the fact that you love this person more than you love yourself, and you want the world to give her a perfect day. Every flaw feels personal. If the caterer is late, you failed. The pressure is entirely internal and entirely irrational &mdash; and that doesn't make it any less real.</p>
+        <div class="tips-label">How to Handle It</div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F3AF;</div>
+            <p><strong>Define your actual job and stick to it.</strong> Your job is to love her, show up, and handle what you're asked to handle. Not to control the weather, manage every vendor, or guarantee perfection.</p>
+        </div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F4AD;</div>
+            <p><strong>She won't remember what you're worried about.</strong> She'll remember how you looked at her when she came down the aisle. She'll remember what you said in the morning. She won't remember whether the napkins matched.</p>
+        </div>
+        <div class="tip">
+            <div class="tip-icon">&#x23F3;</div>
+            <p><strong>"Will this matter in five years?"</strong> If the answer is no, let it go. Save your energy for the moments that actually matter.</p>
+        </div>
+    </div>
+
+    <!-- 7 -->
+    <div class="guide-item reveal">
+        <div class="guide-number">7</div>
+        <h2>What to Wear (It Sounds Trivial &mdash; It's Not)</h2>
+        <div class="why-label">Why This Hits Hard</div>
+        <p class="why-text">You can't outshine the bride. You can't look frumpy. You need to look like you belong in the photos but not like you're trying too hard. Your body may have changed, your confidence may be low, and now you're shopping for a formal dress &mdash; something most women do approximately never.</p>
+        <div class="tips-label">How to Handle It</div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F3A8;</div>
+            <p><strong>Ask Liv for two things: color family and vibe.</strong> "Dusty sage, semi-formal" gives you a target without making it a joint expedition that ends in tears.</p>
+        </div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F6CD;</div>
+            <p><strong>Go shopping alone first.</strong> Try things on without anyone's opinion. Figure out what silhouette you feel good in before you invite input.</p>
+        </div>
+        <div class="tip">
+            <div class="tip-icon">&#x2702;</div>
+            <p><strong>Invest in tailoring, not a more expensive dress.</strong> A $150 dress altered to fit perfectly will look better than a $600 dress straight off the rack. Tailoring is the difference between "fine" and "wow."</p>
+        </div>
+    </div>
+
+    <!-- 8 -->
+    <div class="guide-item reveal">
+        <div class="guide-number">8</div>
+        <h2>The Rehearsal Dinner & Morning-Of Chaos</h2>
+        <div class="why-label">Why This Hits Hard</div>
+        <p class="why-text">The rehearsal dinner is often partially your domain, and it's essentially planning a second event. Then there's the morning of: hair and makeup chaos, emotional daughter, bridesmaids everywhere, something is always missing, and you're trying to hold it together while also getting yourself ready.</p>
+        <div class="tips-label">How to Handle It</div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F37D;</div>
+            <p><strong>Keep the rehearsal dinner simple.</strong> Good food, short toasts, relaxed atmosphere. It doesn't need to be a second production. The best rehearsal dinners feel like a warm-up, not a performance.</p>
+        </div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F9F0;</div>
+            <p><strong>Pack a "mom emergency kit."</strong> Sewing kit, stain remover, tissues, ibuprofen, phone charger, safety pins, a printed timeline, and a flask (only half kidding). Being prepared eliminates 80% of the panic.</p>
+        </div>
+        <div class="tip">
+            <div class="tip-icon">&#x23F0;</div>
+            <p><strong>Build in 30 minutes of buffer time for yourself.</strong> Everyone else's hair and makeup gets scheduled, but moms often forget their own. Block your time and don't give it up. You cannot pour from an empty cup.</p>
+        </div>
+    </div>
+
+    <!-- 9 -->
+    <div class="guide-item reveal">
+        <div class="guide-number">9</div>
+        <h2>The Fear of Being Emotional in Public</h2>
+        <div class="why-label">Why This Hits Hard</div>
+        <p class="why-text">When your daughter walks down the aisle, people will look at you. The photographer will aim at you. And you're terrified of either extreme: ugly-crying so hard it becomes a scene, or being so numb that you feel nothing and hate yourself for it later.</p>
+        <div class="tips-label">How to Handle It</div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F90D;</div>
+            <p><strong>Carry a real handkerchief.</strong> It handles tears without disintegrating. It also gives you something to hold, which calms nervous energy.</p>
+        </div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F49C;</div>
+            <p><strong>There is no "right" way to feel.</strong> Some moms sob. Some beam. Some feel numb until two days later when it hits them in the grocery store. All of it is normal. All of it is valid.</p>
+        </div>
+        <div class="tip">
+            <div class="tip-icon">&#x270B;</div>
+            <p><strong>Focus on a physical task.</strong> Hold your program. Adjust your corsage. Squeeze your spouse's hand. Anchoring to something physical keeps you present without suppressing the emotion.</p>
+        </div>
+    </div>
+
+    <!-- 10 -->
+    <div class="guide-item reveal">
+        <div class="guide-number">10</div>
+        <h2>Letting Go</h2>
+        <div class="why-label">Why This Hits Hard</div>
+        <p class="why-text">This is the hardest one &mdash; the one underneath all the others. After the wedding, you're no longer her first call. Her partner is. Her home is somewhere else. The holidays will be negotiated, not assumed. And while you knew this was coming, the wedding makes it real, final, and witnessed by everyone.</p>
+        <div class="tips-label">How to Handle It</div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F4A7;</div>
+            <p><strong>Grieve it. Actually grieve it.</strong> Not on the wedding day &mdash; before it. Let yourself cry in the shower, on a walk, in the car. Feel the loss so it doesn't ambush you at the altar.</p>
+        </div>
+        <div class="tip">
+            <div class="tip-icon">&#x1F331;</div>
+            <p><strong>Redefine the relationship instead of mourning the old one.</strong> You're not losing a daughter. You're gaining a new kind of relationship &mdash; one between two adults. It can be deeper, more honest, and more mutual. But only if you let the old version go.</p>
+        </div>
+        <div class="tip">
+            <div class="tip-icon">&#x2728;</div>
+            <p><strong>Invest in your own next chapter.</strong> What do you want your life to look like now? What did you put on hold while raising her? This is your permission slip. Take it.</p>
+        </div>
+    </div>
+</div>
+
+<!-- CLOSING -->
+<div class="closing">
+    <div class="closing-icon">&#x1F495;</div>
+    <h2>She Learned Love from You, Paula</h2>
+    <p>The reason Liv knows how to love Bryson, how to build a home, how to show up for people &mdash; that all started with you. This wedding isn't the end of your story together. It's the beginning of a beautiful new chapter. And you deserve to enjoy every second of it.</p>
+    <a href="liv-bryson.html" class="closing-back">&larr; Back to Wedding Details</a>
+</div>
+
+<footer>
+    <p>&copy; 2026 &middot; Prepared with love by Megan Flynn, Wedding Coordinator</p>
+</footer>
+
+<script>
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+            setTimeout(() => entry.target.classList.add('visible'), i * 60);
+            observer.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
