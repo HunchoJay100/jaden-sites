@@ -1,0 +1,1479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>69 Things Under $50 That Improve Your Life</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap');
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg-dark: #050508;
+    --bg-card: rgba(255,255,255,0.03);
+    --bg-card-hover: rgba(255,255,255,0.07);
+    --glass-border: rgba(255,255,255,0.08);
+    --glass-border-hover: rgba(255,255,255,0.18);
+    --text-primary: #f0f0f5;
+    --text-secondary: #8a8a9a;
+    --text-muted: #55556a;
+    --cyan: #00e5ff;
+    --purple: #b44aff;
+    --magenta: #ff2d95;
+    --gold: #ffd600;
+    --green: #00e676;
+    --orange: #ff6d00;
+    --nav-h: 64px;
+    --radius: 16px;
+    --transition: .35s cubic-bezier(.4,0,.2,1);
+  }
+
+  html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--purple) var(--bg-dark); }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-dark);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* === ANIMATED BG GRAIN === */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.03'/%3E%3C/svg%3E");
+    opacity: .5;
+  }
+
+  /* === GLOBAL GLOW ORBS === */
+  .glow-orb {
+    position: fixed; border-radius: 50%; pointer-events: none; z-index: 0;
+    filter: blur(120px); opacity: .12; animation: orbFloat 20s ease-in-out infinite;
+  }
+  .glow-orb.o1 { width: 600px; height: 600px; background: var(--cyan); top: -200px; left: -100px; animation-delay: 0s; }
+  .glow-orb.o2 { width: 500px; height: 500px; background: var(--purple); top: 40%; right: -150px; animation-delay: -7s; }
+  .glow-orb.o3 { width: 450px; height: 450px; background: var(--magenta); bottom: -100px; left: 30%; animation-delay: -14s; }
+  @keyframes orbFloat {
+    0%,100% { transform: translate(0,0) scale(1); }
+    33% { transform: translate(60px,-40px) scale(1.1); }
+    66% { transform: translate(-40px,60px) scale(.9); }
+  }
+
+  /* === SCROLLBAR === */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg-dark); }
+  ::-webkit-scrollbar-thumb { background: linear-gradient(var(--cyan), var(--purple)); border-radius: 3px; }
+
+  /* === NAV === */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index: 1000;
+    background: rgba(5,5,8,.7);
+    backdrop-filter: blur(24px) saturate(1.8);
+    -webkit-backdrop-filter: blur(24px) saturate(1.8);
+    border-bottom: 1px solid var(--glass-border);
+    transition: var(--transition);
+  }
+  .nav.scrolled { background: rgba(5,5,8,.92); box-shadow: 0 4px 30px rgba(0,0,0,.4); }
+  .nav-inner {
+    max-width: 1400px; margin: 0 auto; height: 100%;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px;
+  }
+  .nav-logo {
+    font-weight: 800; font-size: 1.1rem;
+    background: linear-gradient(135deg, var(--cyan), var(--purple));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; white-space: nowrap;
+  }
+  .nav-links { display: flex; gap: 4px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .nav-links::-webkit-scrollbar { display: none; }
+  .nav-link {
+    padding: 8px 14px; border-radius: 8px; font-size: .78rem; font-weight: 500;
+    color: var(--text-secondary); text-decoration: none; white-space: nowrap;
+    transition: var(--transition); border: 1px solid transparent;
+  }
+  .nav-link:hover, .nav-link.active {
+    color: var(--text-primary);
+    background: rgba(255,255,255,.05);
+    border-color: var(--glass-border);
+  }
+  .nav-link.active { color: var(--cyan); border-color: rgba(0,229,255,.25); }
+
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px; cursor: pointer;
+    background: none; border: none; padding: 8px; z-index: 1001;
+  }
+  .hamburger span {
+    width: 24px; height: 2px; background: var(--text-primary);
+    transition: var(--transition); border-radius: 2px;
+  }
+
+  /* === HERO === */
+  .hero {
+    position: relative; min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 120px 24px 80px; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,229,255,.12) 0%, transparent 50%),
+      radial-gradient(ellipse 60% 50% at 80% 20%, rgba(180,74,255,.1) 0%, transparent 50%),
+      radial-gradient(ellipse 50% 40% at 20% 80%, rgba(255,45,149,.08) 0%, transparent 50%);
+    animation: heroPulse 8s ease-in-out infinite alternate;
+  }
+  @keyframes heroPulse {
+    0% { opacity: .7; transform: scale(1); }
+    100% { opacity: 1; transform: scale(1.05); }
+  }
+
+  .hero-badge {
+    position: relative; z-index: 1;
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 20px; border-radius: 100px; font-size: .8rem; font-weight: 600;
+    color: var(--cyan); letter-spacing: .05em; text-transform: uppercase;
+    background: rgba(0,229,255,.08);
+    border: 1px solid rgba(0,229,255,.2);
+    margin-bottom: 32px;
+    animation: fadeInDown .8s ease-out;
+  }
+  .hero-badge .dot {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--cyan);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: .4; transform: scale(.8); } }
+
+  .hero h1 {
+    position: relative; z-index: 1;
+    font-size: clamp(2.8rem, 7vw, 6rem); font-weight: 900;
+    line-height: 1.05; letter-spacing: -.03em;
+    margin-bottom: 16px;
+    animation: fadeInUp .8s ease-out;
+  }
+  .hero h1 .gradient-text {
+    background: linear-gradient(135deg, var(--cyan) 0%, var(--purple) 40%, var(--magenta) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .hero h1 .counter-wrap {
+    position: relative; display: inline-block;
+  }
+  .hero h1 .counter {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--orange) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+
+  .hero-sub {
+    position: relative; z-index: 1;
+    font-size: clamp(1rem, 2.5vw, 1.35rem); color: var(--text-secondary);
+    max-width: 600px; line-height: 1.6; font-weight: 400;
+    margin-bottom: 40px;
+    animation: fadeInUp .8s ease-out .15s both;
+  }
+
+  .hero-price {
+    position: relative; z-index: 1;
+    display: inline-flex; align-items: center; gap: 12px;
+    padding: 16px 36px; border-radius: 100px;
+    background: linear-gradient(135deg, rgba(0,229,255,.12), rgba(180,74,255,.12));
+    border: 1px solid rgba(0,229,255,.2);
+    font-size: 1.5rem; font-weight: 800;
+    margin-bottom: 48px;
+    animation: fadeInUp .8s ease-out .3s both;
+  }
+  .hero-price .dollar {
+    font-family: 'JetBrains Mono', monospace;
+    background: linear-gradient(135deg, var(--green), var(--cyan));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+
+  .hero-cta {
+    position: relative; z-index: 1;
+    display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+    animation: fadeInUp .8s ease-out .45s both;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 28px; border-radius: 12px; font-size: .9rem; font-weight: 600;
+    text-decoration: none; transition: var(--transition); cursor: pointer;
+    border: none; position: relative; overflow: hidden;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--cyan), var(--purple));
+    color: #000;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,229,255,.3); }
+  .btn-secondary {
+    background: rgba(255,255,255,.05);
+    color: var(--text-primary);
+    border: 1px solid var(--glass-border);
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,.1); border-color: var(--glass-border-hover); transform: translateY(-2px); }
+
+  /* hero video embed */
+  .hero-video-container {
+    position: relative; z-index: 1;
+    width: 100%; max-width: 720px;
+    margin-top: 56px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 24px 80px rgba(0,0,0,.5), 0 0 80px rgba(0,229,255,.06);
+    animation: fadeInUp .8s ease-out .6s both;
+  }
+  .hero-video-container .video-aspect {
+    position: relative; width: 100%; padding-top: 56.25%; background: #0a0a0f;
+  }
+  .hero-video-container iframe {
+    position: absolute; inset: 0; width: 100%; height: 100%; border: 0;
+  }
+
+  /* === SEARCH/FILTER === */
+  .search-section {
+    position: sticky; top: var(--nav-h); z-index: 100;
+    background: rgba(5,5,8,.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 16px 24px;
+  }
+  .search-inner {
+    max-width: 1400px; margin: 0 auto;
+    display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+  }
+  .search-box {
+    flex: 1; min-width: 200px; position: relative;
+  }
+  .search-box input {
+    width: 100%; padding: 12px 16px 12px 44px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px; color: var(--text-primary);
+    font-size: .9rem; font-family: inherit;
+    transition: var(--transition); outline: none;
+  }
+  .search-box input:focus {
+    border-color: var(--cyan);
+    box-shadow: 0 0 0 3px rgba(0,229,255,.1);
+    background: rgba(255,255,255,.06);
+  }
+  .search-box input::placeholder { color: var(--text-muted); }
+  .search-box .search-icon {
+    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    color: var(--text-muted); font-size: 1.1rem; pointer-events: none;
+  }
+  .search-count {
+    font-size: .8rem; color: var(--text-muted); font-weight: 500;
+    font-family: 'JetBrains Mono', monospace;
+    white-space: nowrap;
+  }
+
+  .filter-tags {
+    display: flex; gap: 6px; flex-wrap: wrap;
+  }
+  .filter-tag {
+    padding: 6px 14px; border-radius: 100px; font-size: .75rem; font-weight: 600;
+    cursor: pointer; transition: var(--transition); border: 1px solid var(--glass-border);
+    background: transparent; color: var(--text-secondary); white-space: nowrap;
+  }
+  .filter-tag:hover { border-color: var(--glass-border-hover); color: var(--text-primary); background: rgba(255,255,255,.04); }
+  .filter-tag.active {
+    background: linear-gradient(135deg, rgba(0,229,255,.15), rgba(180,74,255,.15));
+    border-color: rgba(0,229,255,.3); color: var(--cyan);
+  }
+
+  /* === SECTIONS === */
+  .content { position: relative; z-index: 1; }
+
+  .category-section {
+    max-width: 1400px; margin: 0 auto; padding: 80px 24px 40px;
+  }
+
+  .section-header {
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 48px; position: relative;
+  }
+  .section-icon {
+    width: 56px; height: 56px; border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem;
+    border: 1px solid var(--glass-border);
+    flex-shrink: 0;
+  }
+  .section-header-text h2 {
+    font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800;
+    letter-spacing: -.02em;
+  }
+  .section-header-text .section-count {
+    font-size: .85rem; color: var(--text-muted); font-weight: 500;
+    margin-top: 2px;
+  }
+  .section-line {
+    flex: 1; height: 1px;
+    background: linear-gradient(90deg, var(--glass-border) 0%, transparent 100%);
+  }
+
+  /* color themes per category */
+  .cat-clothing .section-icon { background: rgba(0,229,255,.1); }
+  .cat-clothing h2 { color: var(--cyan); }
+  .cat-kitchen .section-icon { background: rgba(255,109,0,.1); }
+  .cat-kitchen h2 { color: var(--orange); }
+  .cat-grooming .section-icon { background: rgba(0,230,118,.1); }
+  .cat-grooming h2 { color: var(--green); }
+  .cat-home .section-icon { background: rgba(180,74,255,.1); }
+  .cat-home h2 { color: var(--purple); }
+  .cat-tech .section-icon { background: rgba(0,229,255,.1); }
+  .cat-tech h2 { color: var(--cyan); }
+  .cat-travel .section-icon { background: rgba(255,214,0,.1); }
+  .cat-travel h2 { color: var(--gold); }
+  .cat-car .section-icon { background: rgba(255,45,149,.1); }
+  .cat-car h2 { color: var(--magenta); }
+  .cat-sleep .section-icon { background: rgba(180,74,255,.1); }
+  .cat-sleep h2 { color: var(--purple); }
+
+  /* === CARD GRID === */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    position: relative;
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    padding: 28px 24px 24px;
+    transition: var(--transition);
+    cursor: default;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  .card.visible {
+    opacity: 1; transform: translateY(0);
+  }
+  .card::before {
+    content: '';
+    position: absolute; inset: 0; border-radius: var(--radius);
+    background: linear-gradient(135deg, rgba(0,229,255,.04) 0%, rgba(180,74,255,.02) 100%);
+    opacity: 0; transition: var(--transition);
+  }
+  .card:hover {
+    transform: translateY(-6px) scale(1.02);
+    border-color: var(--glass-border-hover);
+    box-shadow: 0 20px 60px rgba(0,0,0,.3), 0 0 40px rgba(0,229,255,.05);
+    background: var(--bg-card-hover);
+  }
+  .card:hover::before { opacity: 1; }
+
+  /* per-category card glow */
+  .cat-clothing .card:hover { box-shadow: 0 20px 60px rgba(0,0,0,.3), 0 0 40px rgba(0,229,255,.08); }
+  .cat-kitchen .card:hover { box-shadow: 0 20px 60px rgba(0,0,0,.3), 0 0 40px rgba(255,109,0,.08); }
+  .cat-grooming .card:hover { box-shadow: 0 20px 60px rgba(0,0,0,.3), 0 0 40px rgba(0,230,118,.08); }
+  .cat-home .card:hover { box-shadow: 0 20px 60px rgba(0,0,0,.3), 0 0 40px rgba(180,74,255,.08); }
+  .cat-tech .card:hover { box-shadow: 0 20px 60px rgba(0,0,0,.3), 0 0 40px rgba(0,229,255,.08); }
+  .cat-travel .card:hover { box-shadow: 0 20px 60px rgba(0,0,0,.3), 0 0 40px rgba(255,214,0,.08); }
+  .cat-car .card:hover { box-shadow: 0 20px 60px rgba(0,0,0,.3), 0 0 40px rgba(255,45,149,.08); }
+  .cat-sleep .card:hover { box-shadow: 0 20px 60px rgba(0,0,0,.3), 0 0 40px rgba(180,74,255,.08); }
+
+  .card-hidden { display: none !important; }
+
+  .card-number {
+    position: absolute; top: 12px; right: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .7rem; font-weight: 700;
+    padding: 4px 10px; border-radius: 8px;
+    background: rgba(255,255,255,.06);
+    border: 1px solid var(--glass-border);
+    color: var(--text-muted);
+    letter-spacing: .05em;
+  }
+  .cat-clothing .card-number { color: rgba(0,229,255,.6); }
+  .cat-kitchen .card-number { color: rgba(255,109,0,.6); }
+  .cat-grooming .card-number { color: rgba(0,230,118,.6); }
+  .cat-home .card-number { color: rgba(180,74,255,.6); }
+  .cat-tech .card-number { color: rgba(0,229,255,.6); }
+  .cat-travel .card-number { color: rgba(255,214,0,.6); }
+  .cat-car .card-number { color: rgba(255,45,149,.6); }
+  .cat-sleep .card-number { color: rgba(180,74,255,.6); }
+
+  .card-emoji {
+    font-size: 2rem; margin-bottom: 12px;
+    display: inline-block;
+    transition: var(--transition);
+  }
+  .card:hover .card-emoji { transform: scale(1.2) rotate(-5deg); }
+
+  .card-title {
+    font-size: 1.05rem; font-weight: 700; margin-bottom: 6px;
+    letter-spacing: -.01em;
+  }
+  .card-desc {
+    font-size: .85rem; color: var(--text-secondary); line-height: 1.5;
+    font-weight: 400;
+  }
+  .card-tag {
+    display: inline-block; margin-top: 12px;
+    padding: 4px 10px; border-radius: 6px; font-size: .7rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: .05em;
+  }
+  .cat-clothing .card-tag { background: rgba(0,229,255,.1); color: var(--cyan); }
+  .cat-kitchen .card-tag { background: rgba(255,109,0,.1); color: var(--orange); }
+  .cat-grooming .card-tag { background: rgba(0,230,118,.1); color: var(--green); }
+  .cat-home .card-tag { background: rgba(180,74,255,.1); color: var(--purple); }
+  .cat-tech .card-tag { background: rgba(0,229,255,.1); color: var(--cyan); }
+  .cat-travel .card-tag { background: rgba(255,214,0,.1); color: var(--gold); }
+  .cat-car .card-tag { background: rgba(255,45,149,.1); color: var(--magenta); }
+  .cat-sleep .card-tag { background: rgba(180,74,255,.1); color: var(--purple); }
+
+  /* === PROGRESS BAR === */
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px; z-index: 1001;
+    background: linear-gradient(90deg, var(--cyan), var(--purple), var(--magenta));
+    width: 0%; transition: width .1s linear;
+  }
+
+  /* === BACK TO TOP === */
+  .back-to-top {
+    position: fixed; bottom: 32px; right: 32px; z-index: 999;
+    width: 48px; height: 48px; border-radius: 14px;
+    background: rgba(255,255,255,.06);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    color: var(--text-primary); font-size: 1.2rem;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: var(--transition);
+    opacity: 0; transform: translateY(20px); pointer-events: none;
+  }
+  .back-to-top.visible {
+    opacity: 1; transform: translateY(0); pointer-events: all;
+  }
+  .back-to-top:hover {
+    background: linear-gradient(135deg, rgba(0,229,255,.2), rgba(180,74,255,.2));
+    border-color: var(--cyan);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,229,255,.2);
+  }
+
+  /* === FOOTER === */
+  .footer {
+    position: relative; z-index: 1;
+    border-top: 1px solid var(--glass-border);
+    padding: 60px 24px; text-align: center;
+    margin-top: 60px;
+  }
+  .footer-inner { max-width: 600px; margin: 0 auto; }
+  .footer-logo {
+    font-size: 1.4rem; font-weight: 800;
+    background: linear-gradient(135deg, var(--cyan), var(--purple));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    margin-bottom: 12px;
+  }
+  .footer p { color: var(--text-muted); font-size: .85rem; line-height: 1.7; }
+  .footer a {
+    color: var(--cyan); text-decoration: none; transition: var(--transition);
+  }
+  .footer a:hover { color: var(--purple); }
+  .footer-divider { width: 40px; height: 2px; background: var(--glass-border); margin: 20px auto; border-radius: 1px; }
+  .footer-bottom { margin-top: 8px; font-size: .75rem; color: var(--text-muted); }
+
+  /* === STATS ROW === */
+  .stats-row {
+    position: relative; z-index: 1;
+    max-width: 900px; margin: -40px auto 0;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    padding: 0 24px;
+    animation: fadeInUp .8s ease-out .75s both;
+  }
+  .stat-card {
+    background: rgba(255,255,255,.03);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius); padding: 24px; text-align: center;
+    transition: var(--transition);
+  }
+  .stat-card:hover { border-color: var(--glass-border-hover); background: rgba(255,255,255,.05); }
+  .stat-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 2rem; font-weight: 700;
+  }
+  .stat-card:nth-child(1) .stat-number { color: var(--cyan); }
+  .stat-card:nth-child(2) .stat-number { color: var(--green); }
+  .stat-card:nth-child(3) .stat-number { color: var(--gold); }
+  .stat-label { font-size: .8rem; color: var(--text-muted); margin-top: 4px; font-weight: 500; }
+
+  /* === ANIMATIONS === */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* === MOBILE === */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .nav-links.open {
+      display: flex; flex-direction: column;
+      position: fixed; top: var(--nav-h); left: 0; right: 0; bottom: 0;
+      background: rgba(5,5,8,.96);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      padding: 24px; gap: 4px; z-index: 999;
+      animation: fadeInDown .3s ease-out;
+    }
+    .nav-links.open .nav-link { font-size: 1rem; padding: 14px 16px; }
+    .hamburger { display: flex; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .stats-row { grid-template-columns: 1fr; margin-top: -20px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .search-inner { flex-direction: column; }
+    .filter-tags { justify-content: center; }
+    .hero { min-height: auto; padding: 120px 20px 60px; }
+    .hero-price { font-size: 1.2rem; padding: 12px 24px; }
+    .back-to-top { bottom: 20px; right: 20px; width: 44px; height: 44px; }
+  }
+
+  @media (max-width: 480px) {
+    .card-grid { grid-template-columns: 1fr; }
+    .category-section { padding: 60px 16px 30px; }
+  }
+
+  /* stagger children */
+  .card:nth-child(1) { transition-delay: .0s; }
+  .card:nth-child(2) { transition-delay: .06s; }
+  .card:nth-child(3) { transition-delay: .12s; }
+  .card:nth-child(4) { transition-delay: .18s; }
+  .card:nth-child(5) { transition-delay: .24s; }
+  .card:nth-child(6) { transition-delay: .3s; }
+  .card:nth-child(7) { transition-delay: .36s; }
+  .card:nth-child(8) { transition-delay: .42s; }
+  .card:nth-child(9) { transition-delay: .48s; }
+  .card:nth-child(10) { transition-delay: .54s; }
+  .card:nth-child(11) { transition-delay: .6s; }
+  .card:nth-child(12) { transition-delay: .66s; }
+  .card:nth-child(13) { transition-delay: .72s; }
+  .card:nth-child(14) { transition-delay: .78s; }
+  .card:nth-child(15) { transition-delay: .84s; }
+
+  /* === NO RESULTS === */
+  .no-results {
+    text-align: center; padding: 80px 24px;
+    display: none; position: relative; z-index: 1;
+  }
+  .no-results.visible { display: block; }
+  .no-results .emoji { font-size: 4rem; margin-bottom: 16px; }
+  .no-results h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; }
+  .no-results p { color: var(--text-muted); }
+</style>
+</head>
+<body>
+
+<!-- Progress bar -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- Ambient glow orbs -->
+<div class="glow-orb o1"></div>
+<div class="glow-orb o2"></div>
+<div class="glow-orb o3"></div>
+
+<!-- Nav -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <div class="nav-logo">69 THINGS</div>
+    <div class="nav-links" id="navLinks">
+      <a href="#clothing" class="nav-link" data-section="clothing">Clothing</a>
+      <a href="#kitchen" class="nav-link" data-section="kitchen">Kitchen</a>
+      <a href="#grooming" class="nav-link" data-section="grooming">Grooming</a>
+      <a href="#home" class="nav-link" data-section="home">Home</a>
+      <a href="#tech" class="nav-link" data-section="tech">Tech & EDC</a>
+      <a href="#travel" class="nav-link" data-section="travel">Travel</a>
+      <a href="#car" class="nav-link" data-section="car">Car</a>
+      <a href="#sleep" class="nav-link" data-section="sleep">Sleep</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="top">
+  <div class="hero-bg"></div>
+  <div class="hero-badge"><span class="dot"></span> Curated List</div>
+  <h1>
+    <span class="counter-wrap"><span class="counter" id="counter">69</span></span>
+    <span class="gradient-text">Things Under $50</span><br>
+    That Improve Your Life
+  </h1>
+  <p class="hero-sub">
+    A curated collection of affordable upgrades that punch way above their price tag.
+    Based on the viral YouTube video everyone is talking about.
+  </p>
+  <div class="hero-price">
+    <span>All items</span>
+    <span class="dollar">&lt; $50</span>
+  </div>
+  <div class="hero-cta">
+    <a href="#clothing" class="btn btn-primary">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+      Explore the List
+    </a>
+    <a href="https://www.youtube.com/watch?v=JPlRP5SpKb4" target="_blank" rel="noopener" class="btn btn-secondary">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.3 31.3 0 0 0 0 12a31.3 31.3 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1c.4-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.5 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
+      Watch Video
+    </a>
+  </div>
+  <div class="hero-video-container">
+    <div class="video-aspect">
+      <iframe src="https://www.youtube.com/embed/JPlRP5SpKb4" title="69 Things Under $50" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- Stats row -->
+<div class="stats-row">
+  <div class="stat-card">
+    <div class="stat-number" id="statItems">0</div>
+    <div class="stat-label">Total Items</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-number" id="statCategories">0</div>
+    <div class="stat-label">Categories</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-number" id="statPrice">$0</div>
+    <div class="stat-label">Max Price Each</div>
+  </div>
+</div>
+
+<!-- Search/Filter -->
+<div class="search-section" id="searchSection">
+  <div class="search-inner">
+    <div class="search-box">
+      <span class="search-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      </span>
+      <input type="text" id="searchInput" placeholder="Search 69 items..." autocomplete="off">
+    </div>
+    <div class="filter-tags">
+      <button class="filter-tag active" data-filter="all">All</button>
+      <button class="filter-tag" data-filter="clothing">Clothing</button>
+      <button class="filter-tag" data-filter="kitchen">Kitchen</button>
+      <button class="filter-tag" data-filter="grooming">Grooming</button>
+      <button class="filter-tag" data-filter="home">Home</button>
+      <button class="filter-tag" data-filter="tech">Tech</button>
+      <button class="filter-tag" data-filter="travel">Travel</button>
+      <button class="filter-tag" data-filter="car">Car</button>
+      <button class="filter-tag" data-filter="sleep">Sleep</button>
+    </div>
+    <span class="search-count" id="searchCount">Showing 65 of 65</span>
+  </div>
+</div>
+
+<!-- Content -->
+<div class="content" id="content">
+
+  <!-- CLOTHING & STYLE -->
+  <section class="category-section cat-clothing" id="clothing" data-category="clothing">
+    <div class="section-header">
+      <div class="section-icon">&#128085;</div>
+      <div class="section-header-text">
+        <h2>Clothing & Style</h2>
+        <div class="section-count">5 items</div>
+      </div>
+      <div class="section-line"></div>
+    </div>
+    <div class="card-grid">
+      <div class="card" data-search="really good socks quality hiking merino wool socks">
+        <span class="card-number">#01</span>
+        <div class="card-emoji">&#129510;</div>
+        <h3 class="card-title">Really Good Socks</h3>
+        <p class="card-desc">Quality hiking/merino wool socks that keep your feet happy all day long.</p>
+        <span class="card-tag">Essential</span>
+      </div>
+      <div class="card" data-search="a braided belt flexible adjustable braided belt">
+        <span class="card-number">#02</span>
+        <div class="card-emoji">&#128092;</div>
+        <h3 class="card-title">A Braided Belt</h3>
+        <p class="card-desc">Flexible, adjustable braided belt that fits perfectly every time.</p>
+        <span class="card-tag">Style</span>
+      </div>
+      <div class="card" data-search="uniqlo tees simple quality basics tshirt t-shirt">
+        <span class="card-number">#03</span>
+        <div class="card-emoji">&#128085;</div>
+        <h3 class="card-title">Uniqlo Tees</h3>
+        <p class="card-desc">Simple, quality basics that look clean and last forever.</p>
+        <span class="card-tag">Basics</span>
+      </div>
+      <div class="card" data-search="quality underwear upgrade your basics">
+        <span class="card-number">#04</span>
+        <div class="card-emoji">&#129403;</div>
+        <h3 class="card-title">Quality Underwear</h3>
+        <p class="card-desc">Upgrade your basics &mdash; you'll wonder why you didn't sooner.</p>
+        <span class="card-tag">Comfort</span>
+      </div>
+      <div class="card" data-search="shirt anchors keep shirts tucked in">
+        <span class="card-number">#05</span>
+        <div class="card-emoji">&#128206;</div>
+        <h3 class="card-title">Shirt Anchors</h3>
+        <p class="card-desc">Keep your shirts tucked in all day without any hassle.</p>
+        <span class="card-tag">Pro Tip</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- KITCHEN & COOKING -->
+  <section class="category-section cat-kitchen" id="kitchen" data-category="kitchen">
+    <div class="section-header">
+      <div class="section-icon">&#127859;</div>
+      <div class="section-header-text">
+        <h2>Kitchen & Cooking</h2>
+        <div class="section-count">13 items</div>
+      </div>
+      <div class="section-line"></div>
+    </div>
+    <div class="card-grid">
+      <div class="card" data-search="citrus squeezer fresh juice easily lemon lime">
+        <span class="card-number">#06</span>
+        <div class="card-emoji">&#127819;</div>
+        <h3 class="card-title">Citrus Squeezer</h3>
+        <p class="card-desc">Fresh juice in seconds. A must-have for any kitchen.</p>
+        <span class="card-tag">Must Have</span>
+      </div>
+      <div class="card" data-search="silicone baking mat replaces parchment paper oven">
+        <span class="card-number">#07</span>
+        <div class="card-emoji">&#127856;</div>
+        <h3 class="card-title">Silicone Baking Mat</h3>
+        <p class="card-desc">Replaces parchment paper forever. Non-stick and reusable.</p>
+        <span class="card-tag">Eco-Friendly</span>
+      </div>
+      <div class="card" data-search="cast iron skillet lasts a lifetime pan cooking">
+        <span class="card-number">#08</span>
+        <div class="card-emoji">&#127858;</div>
+        <h3 class="card-title">Cast Iron Skillet</h3>
+        <p class="card-desc">Lasts a lifetime and only gets better with age. The GOAT of cookware.</p>
+        <span class="card-tag">Legendary</span>
+      </div>
+      <div class="card" data-search="to-go tupperware set meal prep containers food storage">
+        <span class="card-number">#09</span>
+        <div class="card-emoji">&#129386;</div>
+        <h3 class="card-title">To-Go Tupperware Set</h3>
+        <p class="card-desc">Level up your meal prep game with quality containers.</p>
+        <span class="card-tag">Meal Prep</span>
+      </div>
+      <div class="card" data-search="microwave bowl covers replace plastic wrap reusable">
+        <span class="card-number">#10</span>
+        <div class="card-emoji">&#127869;</div>
+        <h3 class="card-title">Microwave Bowl Covers</h3>
+        <p class="card-desc">Replace plastic wrap for good. Splatter-free reheating.</p>
+        <span class="card-tag">Eco-Friendly</span>
+      </div>
+      <div class="card" data-search="milk frother cafe quality drinks at home coffee latte">
+        <span class="card-number">#11</span>
+        <div class="card-emoji">&#9749;</div>
+        <h3 class="card-title">Milk Frother</h3>
+        <p class="card-desc">Cafe-quality drinks at home. Save money on lattes.</p>
+        <span class="card-tag">Game Changer</span>
+      </div>
+      <div class="card" data-search="tpu cutting boards flexible durable cutting boards kitchen">
+        <span class="card-number">#12</span>
+        <div class="card-emoji">&#129388;</div>
+        <h3 class="card-title">TPU Cutting Boards</h3>
+        <p class="card-desc">Flexible, durable, and easy to clean. The modern cutting board.</p>
+        <span class="card-tag">Upgrade</span>
+      </div>
+      <div class="card" data-search="food thermometer perfect cooking temps every time meat temperature">
+        <span class="card-number">#13</span>
+        <div class="card-emoji">&#127789;</div>
+        <h3 class="card-title">Food Thermometer</h3>
+        <p class="card-desc">Perfect cooking temps every time. Never overcook again.</p>
+        <span class="card-tag">Precision</span>
+      </div>
+      <div class="card" data-search="oxo grill tools quality grilling essentials bbq barbecue">
+        <span class="card-number">#14</span>
+        <div class="card-emoji">&#127830;</div>
+        <h3 class="card-title">OXO Grill Tools</h3>
+        <p class="card-desc">Quality grilling essentials that feel great and last.</p>
+        <span class="card-tag">BBQ</span>
+      </div>
+      <div class="card" data-search="syrup dispenser no mess breakfast pancake waffle">
+        <span class="card-number">#15</span>
+        <div class="card-emoji">&#129480;</div>
+        <h3 class="card-title">Syrup Dispenser</h3>
+        <p class="card-desc">No-mess breakfast. Perfectly controlled pours every time.</p>
+        <span class="card-tag">Breakfast</span>
+      </div>
+      <div class="card" data-search="dish brush better than a sponge cleaning kitchen sink">
+        <span class="card-number">#16</span>
+        <div class="card-emoji">&#129529;</div>
+        <h3 class="card-title">Dish Brush</h3>
+        <p class="card-desc">Better than a sponge. More hygienic and more effective.</p>
+        <span class="card-tag">Clean</span>
+      </div>
+      <div class="card" data-search="no-mess dish soap clean dispenser system pump">
+        <span class="card-number">#17</span>
+        <div class="card-emoji">&#129532;</div>
+        <h3 class="card-title">No-Mess Dish Soap</h3>
+        <p class="card-desc">Clean dispenser system that keeps your sink area tidy.</p>
+        <span class="card-tag">Tidy</span>
+      </div>
+      <div class="card" data-search="lacrosse ball muscle recovery massage therapy knots">
+        <span class="card-number">#18</span>
+        <div class="card-emoji">&#127934;</div>
+        <h3 class="card-title">Lacrosse Ball</h3>
+        <p class="card-desc">For deep muscle recovery. Works out knots like nothing else.</p>
+        <span class="card-tag">Recovery</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- GROOMING & HEALTH -->
+  <section class="category-section cat-grooming" id="grooming" data-category="grooming">
+    <div class="section-header">
+      <div class="section-icon">&#128136;</div>
+      <div class="section-header-text">
+        <h2>Grooming & Health</h2>
+        <div class="section-count">9 items</div>
+      </div>
+      <div class="section-line"></div>
+    </div>
+    <div class="card-grid">
+      <div class="card" data-search="better moisturizer upgrade your skincare face skin cream">
+        <span class="card-number">#19</span>
+        <div class="card-emoji">&#129507;</div>
+        <h3 class="card-title">Better Moisturizer</h3>
+        <p class="card-desc">Upgrade your skincare. Your future self will thank you.</p>
+        <span class="card-tag">Skincare</span>
+      </div>
+      <div class="card" data-search="electric toothbrush better dental hygiene teeth clean oral">
+        <span class="card-number">#20</span>
+        <div class="card-emoji">&#129703;</div>
+        <h3 class="card-title">Electric Toothbrush</h3>
+        <p class="card-desc">Better dental hygiene with minimal effort. A no-brainer.</p>
+        <span class="card-tag">Health</span>
+      </div>
+      <div class="card" data-search="pick style flossers easier flossing dental teeth">
+        <span class="card-number">#21</span>
+        <div class="card-emoji">&#129463;</div>
+        <h3 class="card-title">Pick Style Flossers</h3>
+        <p class="card-desc">Make flossing so easy you'll actually do it every day.</p>
+        <span class="card-tag">Dental</span>
+      </div>
+      <div class="card" data-search="electric shaver quick clean shave razor grooming">
+        <span class="card-number">#22</span>
+        <div class="card-emoji">&#129702;</div>
+        <h3 class="card-title">Electric Shaver</h3>
+        <p class="card-desc">Quick, clean shave without the hassle of traditional razors.</p>
+        <span class="card-tag">Grooming</span>
+      </div>
+      <div class="card" data-search="adapalene gel acne treatment skin clear retinoid">
+        <span class="card-number">#23</span>
+        <div class="card-emoji">&#10024;</div>
+        <h3 class="card-title">Adapalene Gel</h3>
+        <p class="card-desc">Over-the-counter retinoid for clear skin. Dermatologist-recommended.</p>
+        <span class="card-tag">Skincare</span>
+      </div>
+      <div class="card" data-search="spf moisturizer daily sun protection sunscreen uv">
+        <span class="card-number">#24</span>
+        <div class="card-emoji">&#9728;&#65039;</div>
+        <h3 class="card-title">SPF Moisturizer</h3>
+        <p class="card-desc">Daily sun protection. The single best anti-aging product.</p>
+        <span class="card-tag">Essential</span>
+      </div>
+      <div class="card" data-search="glass nail file smoother than metal nails manicure">
+        <span class="card-number">#25</span>
+        <div class="card-emoji">&#128133;</div>
+        <h3 class="card-title">Glass Nail File</h3>
+        <p class="card-desc">Smoother, gentler than metal. Lasts forever and seals nail edges.</p>
+        <span class="card-tag">Detail</span>
+      </div>
+      <div class="card" data-search="premium deodorant smell better longer antiperspirant">
+        <span class="card-number">#26</span>
+        <div class="card-emoji">&#128168;</div>
+        <h3 class="card-title">Premium Deodorant</h3>
+        <p class="card-desc">Smell better, longer. Worth every penny of the upgrade.</p>
+        <span class="card-tag">Daily</span>
+      </div>
+      <div class="card" data-search="orthotic insoles foot support and comfort shoes arch">
+        <span class="card-number">#27</span>
+        <div class="card-emoji">&#129406;</div>
+        <h3 class="card-title">Orthotic Insoles</h3>
+        <p class="card-desc">Foot support and comfort that transforms any shoe.</p>
+        <span class="card-tag">Comfort</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOME & ORGANIZATION -->
+  <section class="category-section cat-home" id="home" data-category="home">
+    <div class="section-header">
+      <div class="section-icon">&#127968;</div>
+      <div class="section-header-text">
+        <h2>Home & Organization</h2>
+        <div class="section-count">15 items</div>
+      </div>
+      <div class="section-line"></div>
+    </div>
+    <div class="card-grid">
+      <div class="card" data-search="house slippers comfort at home cozy feet indoor">
+        <span class="card-number">#28</span>
+        <div class="card-emoji">&#129407;</div>
+        <h3 class="card-title">House Slippers</h3>
+        <p class="card-desc">Comfort at home. Your feet deserve to relax too.</p>
+        <span class="card-tag">Comfort</span>
+      </div>
+      <div class="card" data-search="night lights motion sensor night navigation led bathroom">
+        <span class="card-number">#29</span>
+        <div class="card-emoji">&#128161;</div>
+        <h3 class="card-title">Night Lights</h3>
+        <p class="card-desc">Motion sensor navigation. No more stubbed toes at 3AM.</p>
+        <span class="card-tag">Smart</span>
+      </div>
+      <div class="card" data-search="soft measuring tape body furniture measuring flexible">
+        <span class="card-number">#30</span>
+        <div class="card-emoji">&#128207;</div>
+        <h3 class="card-title">Soft Measuring Tape</h3>
+        <p class="card-desc">Flexible tape for body and furniture measurements. Always handy.</p>
+        <span class="card-tag">Tool</span>
+      </div>
+      <div class="card" data-search="nite ize gear ties flexible rubber twist ties cable organize">
+        <span class="card-number">#31</span>
+        <div class="card-emoji">&#128296;</div>
+        <h3 class="card-title">Nite Ize Gear Ties</h3>
+        <p class="card-desc">Flexible rubber twist ties. Organize cables and more.</p>
+        <span class="card-tag">Organizer</span>
+      </div>
+      <div class="card" data-search="small pliers handy tool always needed repair fix">
+        <span class="card-number">#32</span>
+        <div class="card-emoji">&#128295;</div>
+        <h3 class="card-title">Small Pliers</h3>
+        <p class="card-desc">The handy tool you didn't know you needed until you needed it.</p>
+        <span class="card-tag">Tool</span>
+      </div>
+      <div class="card" data-search="battery organizer know what you have storage aa aaa">
+        <span class="card-number">#33</span>
+        <div class="card-emoji">&#128267;</div>
+        <h3 class="card-title">Battery Organizer</h3>
+        <p class="card-desc">Know exactly what batteries you have. No more rummaging.</p>
+        <span class="card-tag">Organize</span>
+      </div>
+      <div class="card" data-search="glasses repair kit fix glasses anywhere eyeglasses screwdriver">
+        <span class="card-number">#34</span>
+        <div class="card-emoji">&#128083;</div>
+        <h3 class="card-title">Glasses Repair Kit</h3>
+        <p class="card-desc">Fix your glasses anywhere. Tiny kit, huge lifesaver.</p>
+        <span class="card-tag">Emergency</span>
+      </div>
+      <div class="card" data-search="magnetic safety locks childproof cabinets baby child proof">
+        <span class="card-number">#35</span>
+        <div class="card-emoji">&#128274;</div>
+        <h3 class="card-title">Magnetic Safety Locks</h3>
+        <p class="card-desc">Childproof cabinets invisibly. No ugly plastic latches.</p>
+        <span class="card-tag">Safety</span>
+      </div>
+      <div class="card" data-search="see-through storage bins find what you need clear transparent organize">
+        <span class="card-number">#36</span>
+        <div class="card-emoji">&#128230;</div>
+        <h3 class="card-title">See-Through Storage Bins</h3>
+        <p class="card-desc">Find what you need instantly. Clear bins change everything.</p>
+        <span class="card-tag">Organize</span>
+      </div>
+      <div class="card" data-search="good matching hangers clean closet look velvet slim uniform">
+        <span class="card-number">#37</span>
+        <div class="card-emoji">&#129526;</div>
+        <h3 class="card-title">Good Matching Hangers</h3>
+        <p class="card-desc">Clean, uniform closet look. Instant visual upgrade.</p>
+        <span class="card-tag">Aesthetic</span>
+      </div>
+      <div class="card" data-search="flat extension cords fit behind furniture slim low profile power">
+        <span class="card-number">#38</span>
+        <div class="card-emoji">&#128268;</div>
+        <h3 class="card-title">Flat Extension Cords</h3>
+        <p class="card-desc">Fit behind furniture without gaps. Genius design.</p>
+        <span class="card-tag">Clever</span>
+      </div>
+      <div class="card" data-search="soft close toilet seats no more slamming bathroom quiet">
+        <span class="card-number">#39</span>
+        <div class="card-emoji">&#128701;</div>
+        <h3 class="card-title">Soft Close Toilet Seats</h3>
+        <p class="card-desc">No more slamming. Silent, civilized closing every time.</p>
+        <span class="card-tag">Upgrade</span>
+      </div>
+      <div class="card" data-search="folding step stool reach high places compact foldable portable">
+        <span class="card-number">#40</span>
+        <div class="card-emoji">&#129517;</div>
+        <h3 class="card-title">Folding Step Stool</h3>
+        <p class="card-desc">Reach high places then fold it flat. Space-saving hero.</p>
+        <span class="card-tag">Practical</span>
+      </div>
+      <div class="card" data-search="laundry drying rack save on dryer costs clothes hang dry">
+        <span class="card-number">#41</span>
+        <div class="card-emoji">&#128090;</div>
+        <h3 class="card-title">Laundry Drying Rack</h3>
+        <p class="card-desc">Save on dryer costs and extend clothing life. Win-win.</p>
+        <span class="card-tag">Savings</span>
+      </div>
+      <div class="card" data-search="broom wall mount organized cleaning tools holder storage mop">
+        <span class="card-number">#42</span>
+        <div class="card-emoji">&#129529;</div>
+        <h3 class="card-title">Broom Wall Mount</h3>
+        <p class="card-desc">Organized cleaning tools off the floor. Clean the cleaning area.</p>
+        <span class="card-tag">Organize</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- TECH & EDC -->
+  <section class="category-section cat-tech" id="tech" data-category="tech">
+    <div class="section-header">
+      <div class="section-icon">&#128268;</div>
+      <div class="section-header-text">
+        <h2>Tech & EDC</h2>
+        <div class="section-count">11 items</div>
+      </div>
+      <div class="section-line"></div>
+    </div>
+    <div class="card-grid">
+      <div class="card" data-search="electric fly swatter zap bugs satisfyingly insect racket">
+        <span class="card-number">#43</span>
+        <div class="card-emoji">&#9889;</div>
+        <h3 class="card-title">Electric Fly Swatter</h3>
+        <p class="card-desc">Zap bugs with deeply satisfying precision. Oddly fun.</p>
+        <span class="card-tag">Fun</span>
+      </div>
+      <div class="card" data-search="a wireless mic quality audio on the go microphone recording bluetooth">
+        <span class="card-number">#44</span>
+        <div class="card-emoji">&#127908;</div>
+        <h3 class="card-title">A Wireless Mic</h3>
+        <p class="card-desc">Quality audio on the go. Perfect for content and calls.</p>
+        <span class="card-tag">Audio</span>
+      </div>
+      <div class="card" data-search="longer charging cables 10ft freedom phone charger usb long">
+        <span class="card-number">#45</span>
+        <div class="card-emoji">&#128268;</div>
+        <h3 class="card-title">Longer Charging Cables</h3>
+        <p class="card-desc">10ft of sweet, sweet freedom. Use your phone while charging.</p>
+        <span class="card-tag">Freedom</span>
+      </div>
+      <div class="card" data-search="360 charging cables magnetic rotating connectors magsafe usb spin">
+        <span class="card-number">#46</span>
+        <div class="card-emoji">&#128260;</div>
+        <h3 class="card-title">360 Charging Cables</h3>
+        <p class="card-desc">Magnetic rotating connectors. Plug in from any angle.</p>
+        <span class="card-tag">Clever</span>
+      </div>
+      <div class="card" data-search="durable cheap watch casio style reliability classic wrist time">
+        <span class="card-number">#47</span>
+        <div class="card-emoji">&#8986;</div>
+        <h3 class="card-title">Durable Cheap Watch</h3>
+        <p class="card-desc">Casio-style reliability. Looks good, lasts forever, costs nothing.</p>
+        <span class="card-tag">Classic</span>
+      </div>
+      <div class="card" data-search="keychain pocket clip quick access keys carabiner edc carry">
+        <span class="card-number">#48</span>
+        <div class="card-emoji">&#128273;</div>
+        <h3 class="card-title">Keychain Pocket Clip</h3>
+        <p class="card-desc">Quick access to your keys. No more pocket fishing.</p>
+        <span class="card-tag">EDC</span>
+      </div>
+      <div class="card" data-search="a tiny knife compact edc blade pocketknife small folding">
+        <span class="card-number">#49</span>
+        <div class="card-emoji">&#128298;</div>
+        <h3 class="card-title">A Tiny Knife</h3>
+        <p class="card-desc">Compact EDC blade for packages, tags, and life's little cuts.</p>
+        <span class="card-tag">EDC</span>
+      </div>
+      <div class="card" data-search="a small flashlight bright and portable led torch light pocket">
+        <span class="card-number">#50</span>
+        <div class="card-emoji">&#128294;</div>
+        <h3 class="card-title">A Small Flashlight</h3>
+        <p class="card-desc">Bright and portable. You'll use it more than you think.</p>
+        <span class="card-tag">Essential</span>
+      </div>
+      <div class="card" data-search="a compact umbrella always prepared rain weather travel folding">
+        <span class="card-number">#51</span>
+        <div class="card-emoji">&#9748;</div>
+        <h3 class="card-title">A Compact Umbrella</h3>
+        <p class="card-desc">Always prepared for rain. Fits in any bag.</p>
+        <span class="card-tag">Prepared</span>
+      </div>
+      <div class="card" data-search="phone grip better phone handling popsocket holder stand">
+        <span class="card-number">#52</span>
+        <div class="card-emoji">&#128241;</div>
+        <h3 class="card-title">Phone Grip</h3>
+        <p class="card-desc">Better handling, fewer drops. Simple but transformative.</p>
+        <span class="card-tag">Everyday</span>
+      </div>
+      <div class="card" data-search="mag connect for keys magnetic key holder attach magnet">
+        <span class="card-number">#53</span>
+        <div class="card-emoji">&#129522;</div>
+        <h3 class="card-title">Mag Connect for Keys</h3>
+        <p class="card-desc">Magnetic key holder. Snap on, snap off. Brilliantly simple.</p>
+        <span class="card-tag">Clever</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRAVEL & LIFESTYLE -->
+  <section class="category-section cat-travel" id="travel" data-category="travel">
+    <div class="section-header">
+      <div class="section-icon">&#9992;&#65039;</div>
+      <div class="section-header-text">
+        <h2>Travel & Lifestyle</h2>
+        <div class="section-count">6 items</div>
+      </div>
+      <div class="section-line"></div>
+    </div>
+    <div class="card-grid">
+      <div class="card" data-search="reusable tote eco friendly shopping bag grocery sustainable">
+        <span class="card-number">#54</span>
+        <div class="card-emoji">&#127757;</div>
+        <h3 class="card-title">Reusable Tote</h3>
+        <p class="card-desc">Eco-friendly shopping that folds up tiny. Save the planet in style.</p>
+        <span class="card-tag">Eco</span>
+      </div>
+      <div class="card" data-search="contigo water bottle leak proof hydration drink reusable">
+        <span class="card-number">#55</span>
+        <div class="card-emoji">&#128167;</div>
+        <h3 class="card-title">Contigo Water Bottle</h3>
+        <p class="card-desc">Leak-proof hydration. The water bottle that actually works.</p>
+        <span class="card-tag">Hydration</span>
+      </div>
+      <div class="card" data-search="tsa pre check skip airport lines precheck global entry security fast">
+        <span class="card-number">#56</span>
+        <div class="card-emoji">&#128747;</div>
+        <h3 class="card-title">TSA Pre-Check</h3>
+        <p class="card-desc">Skip airport security lines. Freedom you can't put a price on (but it's under $50).</p>
+        <span class="card-tag">Travel</span>
+      </div>
+      <div class="card" data-search="a luggage scale never pay overweight fees baggage travel weight">
+        <span class="card-number">#57</span>
+        <div class="card-emoji">&#9878;&#65039;</div>
+        <h3 class="card-title">A Luggage Scale</h3>
+        <p class="card-desc">Never pay overweight baggage fees again. Pays for itself once.</p>
+        <span class="card-tag">Savings</span>
+      </div>
+      <div class="card" data-search="personal finance books financial literacy money investing read wealth">
+        <span class="card-number">#58</span>
+        <div class="card-emoji">&#128218;</div>
+        <h3 class="card-title">Personal Finance Books</h3>
+        <p class="card-desc">Financial literacy that pays infinite returns. Knowledge is wealth.</p>
+        <span class="card-tag">Investment</span>
+      </div>
+      <div class="card" data-search="cheap sunglasses protect eyes affordably uv sun shades polarized">
+        <span class="card-number">#59</span>
+        <div class="card-emoji">&#128526;</div>
+        <h3 class="card-title">Cheap Sunglasses</h3>
+        <p class="card-desc">Protect your eyes without crying when you lose them.</p>
+        <span class="card-tag">Smart Buy</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAR & COMFORT -->
+  <section class="category-section cat-car" id="car" data-category="car">
+    <div class="section-header">
+      <div class="section-icon">&#128663;</div>
+      <div class="section-header-text">
+        <h2>Car & Comfort</h2>
+        <div class="section-count">2 items</div>
+      </div>
+      <div class="section-line"></div>
+    </div>
+    <div class="card-grid">
+      <div class="card" data-search="car window shades keep car cool sun shade windshield heat tint">
+        <span class="card-number">#60</span>
+        <div class="card-emoji">&#127774;</div>
+        <h3 class="card-title">Car Window Shades</h3>
+        <p class="card-desc">Keep your car cool in summer. No more oven-hot steering wheels.</p>
+        <span class="card-tag">Summer</span>
+      </div>
+      <div class="card" data-search="car seat ice packs cool seats in summer gel cooling pad">
+        <span class="card-number">#61</span>
+        <div class="card-emoji">&#129482;</div>
+        <h3 class="card-title">Car Seat Ice Packs</h3>
+        <p class="card-desc">Cool your seats before you sit. Beat the summer heat.</p>
+        <span class="card-tag">Comfort</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLEEP & WELLNESS -->
+  <section class="category-section cat-sleep" id="sleep" data-category="sleep">
+    <div class="section-header">
+      <div class="section-icon">&#128164;</div>
+      <div class="section-header-text">
+        <h2>Sleep & Wellness</h2>
+        <div class="section-count">4 items</div>
+      </div>
+      <div class="section-line"></div>
+    </div>
+    <div class="card-grid">
+      <div class="card" data-search="blackout curtains better sleep environment dark room light blocking bedroom">
+        <span class="card-number">#62</span>
+        <div class="card-emoji">&#127747;</div>
+        <h3 class="card-title">Blackout Curtains</h3>
+        <p class="card-desc">Better sleep environment. Total darkness, total rest.</p>
+        <span class="card-tag">Sleep</span>
+      </div>
+      <div class="card" data-search="house plants natural air purification green indoor plant succulent oxygen">
+        <span class="card-number">#63</span>
+        <div class="card-emoji">&#127793;</div>
+        <h3 class="card-title">House Plants</h3>
+        <p class="card-desc">Natural air purification and instant mood boost. Living decor.</p>
+        <span class="card-tag">Wellness</span>
+      </div>
+      <div class="card" data-search="eye mask block all light sleep mask sleeping travel blackout">
+        <span class="card-number">#64</span>
+        <div class="card-emoji">&#128564;</div>
+        <h3 class="card-title">Eye Mask</h3>
+        <p class="card-desc">Block all light for deeper sleep. Game changer for naps.</p>
+        <span class="card-tag">Sleep</span>
+      </div>
+      <div class="card" data-search="earplugs sound sleep anywhere noise blocking quiet foam silicone">
+        <span class="card-number">#65</span>
+        <div class="card-emoji">&#128263;</div>
+        <h3 class="card-title">Earplugs</h3>
+        <p class="card-desc">Sound sleep anywhere. Block out snoring, traffic, the world.</p>
+        <span class="card-tag">Peace</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- No results -->
+<div class="no-results" id="noResults">
+  <div class="emoji">&#128533;</div>
+  <h3>No items found</h3>
+  <p>Try a different search term or clear the filter.</p>
+</div>
+
+<!-- Back to top -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">69 Things Under $50</div>
+    <p>
+      Inspired by the YouTube video by
+      <a href="https://www.youtube.com/watch?v=JPlRP5SpKb4" target="_blank" rel="noopener">this creator</a>.
+      All items are under $50 and genuinely improve daily life.
+    </p>
+    <div class="footer-divider"></div>
+    <p class="footer-bottom">
+      Made with care &bull; Not affiliated with any brands &bull; Prices may vary
+    </p>
+  </div>
+</footer>
+
+<script>
+(function() {
+  'use strict';
+
+  // === COUNTER ANIMATION ===
+  function animateCounter(el, target, suffix, duration) {
+    const start = performance.now();
+    const step = (now) => {
+      const progress = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      const current = Math.round(ease * target);
+      el.textContent = suffix ? suffix + current : current;
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  // Hero counter
+  const heroCounter = document.getElementById('counter');
+  let heroCounted = false;
+
+  // Stats
+  const statItems = document.getElementById('statItems');
+  const statCategories = document.getElementById('statCategories');
+  const statPrice = document.getElementById('statPrice');
+  let statsCounted = false;
+
+  // === INTERSECTION OBSERVER FOR CARDS ===
+  const cardObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        cardObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.card').forEach(card => cardObserver.observe(card));
+
+  // Stats observer
+  const statsRow = document.querySelector('.stats-row');
+  const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !statsCounted) {
+        statsCounted = true;
+        animateCounter(statItems, 65, '', 1200);
+        animateCounter(statCategories, 8, '', 800);
+        animateCounter(statPrice, 50, '$', 1000);
+        statsObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  if (statsRow) statsObserver.observe(statsRow);
+
+  // Hero counter observer
+  const heroObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !heroCounted) {
+        heroCounted = true;
+        animateCounter(heroCounter, 69, '', 1500);
+        heroObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  if (heroCounter) heroObserver.observe(heroCounter);
+
+  // === NAV SCROLL ===
+  const nav = document.getElementById('nav');
+  const progressBar = document.getElementById('progressBar');
+  const backToTop = document.getElementById('backToTop');
+
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = (scrollY / docHeight) * 100;
+
+    nav.classList.toggle('scrolled', scrollY > 50);
+    progressBar.style.width = progress + '%';
+    backToTop.classList.toggle('visible', scrollY > 600);
+  }, { passive: true });
+
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // === HAMBURGER ===
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    navLinks.classList.toggle('open');
+  });
+
+  // Close mobile nav on link click
+  navLinks.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      navLinks.classList.remove('open');
+    });
+  });
+
+  // === ACTIVE NAV LINK ===
+  const sections = document.querySelectorAll('.category-section');
+  const navLinkEls = document.querySelectorAll('.nav-link[data-section]');
+
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.getAttribute('data-category');
+        navLinkEls.forEach(l => l.classList.toggle('active', l.dataset.section === id));
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '-80px 0px -50% 0px' });
+
+  sections.forEach(s => sectionObserver.observe(s));
+
+  // === SEARCH & FILTER ===
+  const searchInput = document.getElementById('searchInput');
+  const searchCount = document.getElementById('searchCount');
+  const filterTags = document.querySelectorAll('.filter-tag');
+  const allCards = document.querySelectorAll('.card');
+  const categorySections = document.querySelectorAll('.category-section');
+  const noResults = document.getElementById('noResults');
+  let activeFilter = 'all';
+
+  function filterItems() {
+    const query = searchInput.value.toLowerCase().trim();
+    let visible = 0;
+
+    categorySections.forEach(section => {
+      const cat = section.dataset.category;
+      const catCards = section.querySelectorAll('.card');
+      let sectionVisible = 0;
+
+      catCards.forEach(card => {
+        const searchText = (card.dataset.search + ' ' + card.querySelector('.card-title').textContent).toLowerCase();
+        const matchesSearch = !query || searchText.includes(query);
+        const matchesFilter = activeFilter === 'all' || cat === activeFilter;
+        const show = matchesSearch && matchesFilter;
+
+        card.classList.toggle('card-hidden', !show);
+        if (show) {
+          sectionVisible++;
+          visible++;
+          // re-trigger animation
+          if (!card.classList.contains('visible')) {
+            cardObserver.observe(card);
+          }
+        }
+      });
+
+      section.style.display = sectionVisible === 0 ? 'none' : '';
+    });
+
+    const total = allCards.length;
+    searchCount.textContent = `Showing ${visible} of ${total}`;
+    noResults.classList.toggle('visible', visible === 0);
+  }
+
+  searchInput.addEventListener('input', filterItems);
+
+  filterTags.forEach(tag => {
+    tag.addEventListener('click', () => {
+      filterTags.forEach(t => t.classList.remove('active'));
+      tag.classList.add('active');
+      activeFilter = tag.dataset.filter;
+      filterItems();
+    });
+  });
+
+  // === SMOOTH SCROLL OFFSET ===
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        const offset = 140; // nav + search bar height
+        const top = target.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
+
+  // === PARALLAX SUBTLE EFFECT ON HERO ===
+  const heroBg = document.querySelector('.hero-bg');
+  window.addEventListener('scroll', () => {
+    if (heroBg) {
+      const scrollY = window.scrollY;
+      heroBg.style.transform = `translateY(${scrollY * 0.3}px) scale(${1 + scrollY * 0.0002})`;
+    }
+  }, { passive: true });
+
+})();
+</script>
+
+</body>
+</html>
