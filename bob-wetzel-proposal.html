@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flynn Development | Bob Wetzel - Garage Proposal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #0a0a0a;
+  --primary-light: #141414;
+  --gold: #C5A55A;
+  --gold-light: #D4BA78;
+  --gold-dark: #A8893D;
+  --glass: rgba(197,165,90,0.04);
+  --glass-border: rgba(197,165,90,0.12);
+  --glass-hover: rgba(197,165,90,0.08);
+  --text: #f1f1f1;
+  --text-muted: #888;
+  --gradient-gold: linear-gradient(135deg, #C5A55A, #D4BA78, #A8893D);
+  --gradient-gold-subtle: linear-gradient(135deg, #C5A55A, #D4BA78);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--primary);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+.bg-texture {
+  position: fixed; top:0; left:0; width:100%; height:100%;
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(197,165,90,0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(197,165,90,0.02) 0%, transparent 50%),
+    linear-gradient(rgba(255,255,255,0.01) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.01) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 80px 80px, 80px 80px;
+  z-index: 0; pointer-events: none;
+}
+.bg-glow {
+  position: fixed; top: -300px; right: -200px;
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(197,165,90,0.06) 0%, transparent 70%);
+  border-radius: 50%; z-index: 0; pointer-events: none;
+  animation: pulse 10s ease-in-out infinite;
+}
+.bg-glow-2 {
+  position: fixed; bottom: -300px; left: -200px;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(197,165,90,0.04) 0%, transparent 70%);
+  border-radius: 50%; z-index: 0; pointer-events: none;
+  animation: pulse 12s ease-in-out infinite reverse;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.15); opacity: 1; }
+}
+
+.gold-line { height: 3px; background: var(--gradient-gold); border: none; }
+
+header {
+  position: relative; z-index:1;
+  padding: 40px 40px 32px;
+  border-bottom: 1px solid var(--glass-border);
+}
+.header-inner {
+  max-width: 1000px; margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px;
+}
+.brand { display: flex; align-items: center; gap: 20px; }
+.brand img { height: 70px; width: auto; border-radius: 8px; }
+.brand-text h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.5rem; font-weight: 700;
+  background: var(--gradient-gold);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  letter-spacing: 2px; text-transform: uppercase;
+}
+.brand-text .tagline {
+  font-size: 0.65rem; font-weight: 600;
+  color: var(--gold); letter-spacing: 4px;
+  text-transform: uppercase; margin-top: 2px;
+}
+.proposal-meta { text-align: right; }
+.proposal-meta p { color: var(--text-muted); font-size: 0.85rem; line-height: 1.9; }
+.proposal-meta strong { color: var(--gold-light); }
+
+.hero {
+  position: relative; z-index:1;
+  padding: 80px 40px 40px;
+  text-align: center;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--glass); border: 1px solid var(--glass-border);
+  padding: 8px 20px; border-radius: 100px; font-size: 0.75rem;
+  color: var(--gold); font-weight: 600; margin-bottom: 24px;
+  letter-spacing: 3px; text-transform: uppercase;
+}
+.hero-badge .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); animation: blink 2s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.hero h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 900;
+  letter-spacing: -1px; margin-bottom: 16px;
+}
+.hero h2 span {
+  background: var(--gradient-gold);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.hero > p { color: var(--text-muted); font-size: 1.05rem; max-width: 620px; margin: 0 auto; line-height: 1.8; }
+
+.specs-bar {
+  position: relative; z-index:1;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 14px; max-width: 1000px; margin: 40px auto 60px; padding: 0 40px;
+}
+.spec-card {
+  background: var(--glass); border: 1px solid var(--glass-border);
+  border-radius: 14px; padding: 24px 16px; text-align: center;
+  backdrop-filter: blur(10px); transition: all 0.3s;
+}
+.spec-card:hover { border-color: rgba(197,165,90,0.25); transform: translateY(-2px); }
+.spec-card h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.7rem; font-weight: 800;
+  background: var(--gradient-gold);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.spec-card p {
+  color: var(--text-muted); font-size: 0.7rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 1.5px; margin-top: 4px;
+}
+
+section { position: relative; z-index:1; padding: 60px 40px; }
+.section-container { max-width: 1000px; margin: 0 auto; }
+.section-label {
+  display: inline-block; background: var(--glass); border: 1px solid var(--glass-border);
+  padding: 6px 16px; border-radius: 100px; font-size: 0.7rem; font-weight: 600;
+  color: var(--gold); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 16px;
+}
+.section-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 800;
+  letter-spacing: -0.5px; margin-bottom: 32px;
+}
+
+.scope-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+}
+.scope-card {
+  background: var(--glass); border: 1px solid var(--glass-border);
+  border-radius: 16px; padding: 28px;
+  backdrop-filter: blur(10px); transition: all 0.3s;
+  position: relative; overflow: hidden;
+}
+.scope-card::before {
+  content: ''; position: absolute; top:0; left:0; width:100%; height:3px;
+  background: var(--gradient-gold); transform: scaleX(0); transition: transform 0.3s;
+  transform-origin: left;
+}
+.scope-card:hover::before { transform: scaleX(1); }
+.scope-card:hover { border-color: rgba(197,165,90,0.25); transform: translateY(-3px); }
+.scope-icon { font-size: 1.6rem; margin-bottom: 12px; }
+.scope-card h4 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.95rem; font-weight: 700; margin-bottom: 10px;
+  color: var(--gold-light);
+}
+.scope-card ul { list-style: none; margin-top: 8px; }
+.scope-card ul li {
+  color: var(--text-muted); font-size: 0.84rem;
+  padding: 4px 0; display: flex; align-items: center; gap: 8px;
+}
+.scope-card ul li::before {
+  content: ''; width: 5px; height: 5px;
+  background: var(--gold); border-radius: 50%; flex-shrink: 0;
+}
+
+.cost-section { background: linear-gradient(180deg, transparent, rgba(197,165,90,0.02), transparent); }
+.cost-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 5px;
+}
+.cost-table thead th {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.7rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 3px;
+  color: var(--gold); padding: 12px 20px;
+  text-align: left;
+  border-bottom: 2px solid rgba(197,165,90,0.2);
+}
+.cost-table thead th:last-child { text-align: right; }
+.cost-table tbody tr {
+  background: var(--glass);
+  transition: all 0.3s;
+}
+.cost-table tbody tr:hover { background: var(--glass-hover); }
+.cost-table td {
+  padding: 14px 20px;
+  font-size: 0.92rem;
+}
+.cost-table td:first-child {
+  border-radius: 10px 0 0 10px;
+  border-left: 1px solid var(--glass-border);
+}
+.cost-table td:last-child {
+  border-radius: 0 10px 10px 0;
+  border-right: 1px solid var(--glass-border);
+  text-align: right;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+}
+.cost-table .category-label { color: var(--text-muted); font-size: 0.88rem; }
+.cost-table .amount { color: var(--text); }
+.cost-table tr.subtotal { background: rgba(197,165,90,0.08); }
+.cost-table tr.subtotal td {
+  font-weight: 700;
+  font-family: 'Space Grotesk', sans-serif;
+  color: var(--gold-light);
+  border-top: 2px solid rgba(197,165,90,0.25);
+}
+.cost-table tr.total-row { background: var(--gradient-gold); }
+.cost-table tr.total-row td {
+  font-weight: 800;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.15rem;
+  color: #0a0a0a;
+  padding: 20px;
+}
+
+.notes-box {
+  background: var(--glass); border: 1px solid var(--glass-border);
+  border-radius: 16px; padding: 32px;
+  backdrop-filter: blur(10px);
+}
+.notes-box h4 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1rem; font-weight: 700; margin-bottom: 16px;
+  color: var(--gold);
+}
+.notes-box ul { list-style: none; }
+.notes-box ul li {
+  color: var(--text-muted); font-size: 0.88rem;
+  padding: 8px 0; border-bottom: 1px solid rgba(197,165,90,0.06);
+  display: flex; align-items: flex-start; gap: 10px; line-height: 1.6;
+}
+.notes-box ul li:last-child { border-bottom: none; }
+.notes-box ul li::before {
+  content: ''; width: 6px; height: 6px; margin-top: 8px;
+  background: var(--gold); border-radius: 50%; flex-shrink: 0;
+}
+
+.signature-section {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 60px; margin-top: 60px;
+}
+.sig-block { border-top: 2px solid var(--glass-border); padding-top: 16px; }
+.sig-block p { color: var(--text-muted); font-size: 0.85rem; }
+.sig-block .sig-line { height: 60px; }
+.sig-block .sig-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600; font-size: 0.9rem;
+  color: var(--gold-light);
+}
+
+footer {
+  position: relative; z-index:1;
+  text-align: center; padding: 50px 40px 40px;
+  border-top: 1px solid var(--glass-border);
+}
+footer img { height: 50px; margin-bottom: 12px; border-radius: 6px; }
+footer .tagline-footer {
+  font-size: 0.65rem; font-weight: 600; letter-spacing: 4px;
+  color: var(--gold); text-transform: uppercase; margin-bottom: 12px;
+}
+footer p { color: var(--text-muted); font-size: 0.8rem; }
+
+@media (max-width: 768px) {
+  header, .hero, section, footer { padding-left: 20px; padding-right: 20px; }
+  .header-inner { flex-direction: column; align-items: flex-start; }
+  .proposal-meta { text-align: left; }
+  .specs-bar { padding: 0 20px; grid-template-columns: repeat(2, 1fr); }
+  .scope-grid { grid-template-columns: 1fr; }
+  .signature-section { grid-template-columns: 1fr; gap: 40px; }
+  .cost-table td, .cost-table th { padding: 12px 14px; font-size: 0.82rem; }
+  .brand img { height: 50px; }
+}
+
+@media print {
+  .bg-texture, .bg-glow, .bg-glow-2 { display: none; }
+  body { background: #fff; color: #111; }
+  .cost-table tbody tr { background: #f8f6f0; }
+  .cost-table tr.subtotal { background: #f0e8d0; }
+  .cost-table tr.total-row { background: #C5A55A; }
+  .cost-table tr.total-row td { color: #0a0a0a; }
+  header, section, footer { padding: 30px 20px; }
+  .scope-card, .spec-card, .notes-box { border-color: #ddd; background: #fafafa; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-texture"></div>
+<div class="bg-glow"></div>
+<div class="bg-glow-2"></div>
+
+<hr class="gold-line">
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="brand">
+      <img src="fd-logo.png" alt="Flynn Development">
+      <div class="brand-text">
+        <h1>Flynn Development</h1>
+        <p class="tagline">Design &bull; Construct &bull; Transform</p>
+      </div>
+    </div>
+    <div class="proposal-meta">
+      <p><strong>Proposal For:</strong> Bob Wetzel</p>
+      <p><strong>Date:</strong> March 11, 2026</p>
+      <p><strong>Project:</strong> 24&times;32 Attached Garage</p>
+      <p><strong>Proposal #:</strong> FD-2026-0312</p>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge"><div class="dot"></div> Construction Proposal</div>
+  <h2>24&times;32 <span>Attached Garage</span></h2>
+  <p>Custom garage built to match your existing home &mdash; 768 sq ft with oversized door for boat storage, attic space with pull-down ladder, fully insulated with enclosed ceiling, and complete electrical service.</p>
+</div>
+
+<!-- SPECS BAR -->
+<div class="specs-bar">
+  <div class="spec-card">
+    <h3>768</h3>
+    <p>Square Feet</p>
+  </div>
+  <div class="spec-card">
+    <h3>24&times;32</h3>
+    <p>Footprint</p>
+  </div>
+  <div class="spec-card">
+    <h3>12'</h3>
+    <p>Wall Height</p>
+  </div>
+  <div class="spec-card">
+    <h3>6:12</h3>
+    <p>Roof Pitch</p>
+  </div>
+  <div class="spec-card">
+    <h3>18'</h3>
+    <p>Peak Height</p>
+  </div>
+</div>
+
+<!-- SCOPE OF WORK -->
+<section>
+  <div class="section-container">
+    <span class="section-label">Scope of Work</span>
+    <h3 class="section-title">What's Included</h3>
+
+    <div class="scope-grid">
+      <div class="scope-card">
+        <div class="scope-icon">&#x1f3d7;</div>
+        <h4>Foundation</h4>
+        <ul>
+          <li>2' wide x 10" deep concrete footer</li>
+          <li>3-course block foundation wall</li>
+          <li>Concrete skirt &amp; house attachment</li>
+          <li>Gravel fill &amp; compaction</li>
+          <li>4" concrete slab</li>
+          <li>Concrete sealed &amp; termite treated</li>
+        </ul>
+      </div>
+      <div class="scope-card">
+        <div class="scope-icon">&#x1f3e0;</div>
+        <h4>Framing &amp; Structure</h4>
+        <ul>
+          <li>2x6 exterior walls @ 16" OC</li>
+          <li>Engineered roof trusses (6:12 pitch)</li>
+          <li>OSB wall &amp; roof sheathing</li>
+          <li>House wrap</li>
+          <li>12' wall height / 18' peak</li>
+        </ul>
+      </div>
+      <div class="scope-card">
+        <div class="scope-icon">&#x1f527;</div>
+        <h4>Exterior &mdash; Match Existing Home</h4>
+        <ul>
+          <li>Dark asphalt shingle roof (match house)</li>
+          <li>Tan/yellow lap siding (match house)</li>
+          <li>18x7 overhead garage door</li>
+          <li>36" fiberglass entry door</li>
+          <li>2 windows (3-0 x 3-0)</li>
+          <li>Gutters</li>
+        </ul>
+      </div>
+      <div class="scope-card">
+        <div class="scope-icon">&#x26a1;</div>
+        <h4>Electrical</h4>
+        <ul>
+          <li>50-80 amp sub-panel</li>
+          <li>Dedicated 20 amp outlet</li>
+          <li>GFCI outlets (code spacing)</li>
+          <li>LED lighting</li>
+          <li>Power run from existing house electrical</li>
+        </ul>
+      </div>
+      <div class="scope-card">
+        <div class="scope-icon">&#x1f321;</div>
+        <h4>Insulation &amp; Interior</h4>
+        <ul>
+          <li>R-19 batt insulation (walls)</li>
+          <li>R-30 batt insulation (ceiling)</li>
+          <li>Fully enclosed ceiling</li>
+          <li>Sheetrock walls &amp; ceiling</li>
+          <li>Interior paint</li>
+          <li>Trim &amp; interior doors</li>
+        </ul>
+      </div>
+      <div class="scope-card">
+        <div class="scope-icon">&#x1f4e6;</div>
+        <h4>Attic Storage</h4>
+        <ul>
+          <li>Attic decking (partial floor)</li>
+          <li>Pull-down attic ladder (300lb rated)</li>
+          <li>Access framing &amp; reinforcement</li>
+        </ul>
+      </div>
+      <div class="scope-card">
+        <div class="scope-icon">&#x1f333;</div>
+        <h4>Site Work</h4>
+        <ul>
+          <li>Elevation grading (10' rise area)</li>
+          <li>Drainage solutions (flooding mitigation)</li>
+          <li>Gutter drainage accommodation</li>
+          <li>Tree removal if needed for driveway</li>
+          <li>Final grading &amp; seeding</li>
+        </ul>
+      </div>
+      <div class="scope-card">
+        <div class="scope-icon">&#x1f6a2;</div>
+        <h4>Boat Storage Ready</h4>
+        <ul>
+          <li>Oversized 18x7 garage door</li>
+          <li>9.5-10' door height clearance</li>
+          <li>Sized for 19' boat + trailer (20-25' total)</li>
+          <li>Wide-span engineered header</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COST BREAKDOWN -->
+<section class="cost-section">
+  <div class="section-container">
+    <span class="section-label">Investment</span>
+    <h3 class="section-title">Cost Breakdown</h3>
+
+    <table class="cost-table">
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="category-label">Start Costs, Permits &amp; Survey</td>
+          <td class="amount">$2,000.00</td>
+        </tr>
+        <tr>
+          <td class="category-label">Footer</td>
+          <td class="amount">$2,314.85</td>
+        </tr>
+        <tr>
+          <td class="category-label">Excavation &amp; Dirt Work</td>
+          <td class="amount">$2,000.00</td>
+        </tr>
+        <tr>
+          <td class="category-label">Block Foundation (3 courses)</td>
+          <td class="amount">$1,764.00</td>
+        </tr>
+        <tr>
+          <td class="category-label">Gravel Fill</td>
+          <td class="amount">$1,592.89</td>
+        </tr>
+        <tr>
+          <td class="category-label">Concrete Slab (4")</td>
+          <td class="amount">$4,597.47</td>
+        </tr>
+        <tr>
+          <td class="category-label">Framing (2x6 walls, trusses, OSB)</td>
+          <td class="amount">$17,118.40</td>
+        </tr>
+        <tr>
+          <td class="category-label">Windows (2)</td>
+          <td class="amount">$968.00</td>
+        </tr>
+        <tr>
+          <td class="category-label">Exterior Doors (garage + walk)</td>
+          <td class="amount">$5,000.00</td>
+        </tr>
+        <tr>
+          <td class="category-label">Roofing (asphalt shingles)</td>
+          <td class="amount">$2,544.00</td>
+        </tr>
+        <tr>
+          <td class="category-label">Siding &amp; Fascia (lap siding)</td>
+          <td class="amount">$6,976.00</td>
+        </tr>
+        <tr>
+          <td class="category-label">Insulation</td>
+          <td class="amount">$2,000.00</td>
+        </tr>
+        <tr>
+          <td class="category-label">Gutters</td>
+          <td class="amount">$1,300.00</td>
+        </tr>
+        <tr>
+          <td class="category-label">Electrical</td>
+          <td class="amount">$4,500.00</td>
+        </tr>
+        <tr>
+          <td class="category-label">Sheetrock</td>
+          <td class="amount">$3,850.00</td>
+        </tr>
+        <tr>
+          <td class="category-label">Interior Paint</td>
+          <td class="amount">$3,100.00</td>
+        </tr>
+        <tr>
+          <td class="category-label">Trim &amp; Interior Doors</td>
+          <td class="amount">$1,000.00</td>
+        </tr>
+        <tr>
+          <td class="category-label">Disposal &amp; Cleanup</td>
+          <td class="amount">$2,000.00</td>
+        </tr>
+        <tr>
+          <td class="category-label">Porta Potty</td>
+          <td class="amount">$500.00</td>
+        </tr>
+        <tr class="subtotal">
+          <td>Build Cost</td>
+          <td>$65,125.61</td>
+        </tr>
+        <tr>
+          <td class="category-label">Project Management &amp; Overhead</td>
+          <td class="amount">$1,302.51</td>
+        </tr>
+        <tr>
+          <td class="category-label">Builder Fee</td>
+          <td class="amount">$19,928.44</td>
+        </tr>
+        <tr class="total-row">
+          <td>Project Total</td>
+          <td>$86,356.56</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- NOTES & CONDITIONS -->
+<section>
+  <div class="section-container">
+    <div class="notes-box">
+      <h4>Notes &amp; Conditions</h4>
+      <ul>
+        <li>Property line setback requirements must be verified prior to finalizing building position (currently planned 3ft from property line)</li>
+        <li>Septic system and field lines on property &mdash; locate required before foundation work</li>
+        <li>Existing gutter drainage must be accommodated in site plan</li>
+        <li>Elevation work on 10ft rise area &mdash; final scope subject to site survey</li>
+        <li>Siding and roofing colors to match existing house exactly &mdash; samples required before ordering</li>
+        <li>Drywall and interior finishing included in this proposal</li>
+        <li>Driveway extension priced separately if tree removal is needed</li>
+        <li>Proposal valid for 30 days from date issued</li>
+        <li>Payment schedule: 10% deposit, draws at foundation, framing, dry-in, and completion</li>
+      </ul>
+    </div>
+
+    <div class="signature-section">
+      <div class="sig-block">
+        <div class="sig-line"></div>
+        <p class="sig-label">Flynn Development</p>
+        <p>Authorized Signature &amp; Date</p>
+      </div>
+      <div class="sig-block">
+        <div class="sig-line"></div>
+        <p class="sig-label">Bob Wetzel</p>
+        <p>Client Signature &amp; Date</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="gold-line">
+<footer>
+  <img src="fd-logo.png" alt="Flynn Development">
+  <p class="tagline-footer">Design &bull; Construct &bull; Transform</p>
+  <p>Cookeville, Tennessee &bull; &copy; 2026 Flynn Development. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
