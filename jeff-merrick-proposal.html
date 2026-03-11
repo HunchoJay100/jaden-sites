@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flynn Development | Jeff Merrick - Workshop Proposal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #0a0a0a;
+  --accent: #e63946;
+  --accent-dark: #c1121f;
+  --glass: rgba(255,255,255,0.05);
+  --glass-border: rgba(255,255,255,0.08);
+  --text: #f1f1f1;
+  --text-muted: #888;
+  --gradient-1: linear-gradient(135deg, #e63946, #ff6b6b);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--primary);
+  color: var(--text);
+  overflow-x: hidden;
+}
+.bg-grid {
+  position: fixed; top:0; left:0; width:100%; height:100%;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+  z-index: 0; pointer-events: none;
+}
+.bg-glow {
+  position: fixed; top: -200px; right: -200px;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(230,57,70,0.10) 0%, transparent 70%);
+  border-radius: 50%; z-index: 0; pointer-events: none;
+  animation: pulse 8s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.2); opacity: 1; }
+}
+
+/* Header */
+header {
+  position: relative; z-index:1;
+  padding: 60px 40px 40px;
+  border-bottom: 1px solid var(--glass-border);
+}
+.header-inner {
+  max-width: 1000px; margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 24px;
+}
+.brand h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.6rem; font-weight: 700;
+  background: var(--gradient-1);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.brand p { color: var(--text-muted); font-size: 0.85rem; margin-top: 4px; }
+.proposal-meta { text-align: right; }
+.proposal-meta p { color: var(--text-muted); font-size: 0.85rem; line-height: 1.8; }
+.proposal-meta strong { color: var(--text); }
+
+/* Hero */
+.hero {
+  position: relative; z-index:1;
+  padding: 80px 40px 60px;
+  text-align: center;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--glass); border: 1px solid var(--glass-border);
+  padding: 8px 20px; border-radius: 100px; font-size: 0.8rem;
+  color: var(--accent); font-weight: 600; margin-bottom: 24px;
+  letter-spacing: 2px; text-transform: uppercase;
+}
+.hero-badge .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+.hero h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900;
+  letter-spacing: -1px; margin-bottom: 16px;
+}
+.hero h2 span { background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.hero p { color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto; line-height: 1.7; }
+
+/* Specs Bar */
+.specs-bar {
+  position: relative; z-index:1;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px; max-width: 1000px; margin: 0 auto 60px; padding: 0 40px;
+}
+.spec-card {
+  background: var(--glass); border: 1px solid var(--glass-border);
+  border-radius: 16px; padding: 24px 20px; text-align: center;
+  backdrop-filter: blur(10px);
+}
+.spec-card h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.8rem; font-weight: 800;
+  background: var(--gradient-1);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.spec-card p { color: var(--text-muted); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+
+/* Sections */
+section { position: relative; z-index:1; padding: 60px 40px; }
+.section-container { max-width: 1000px; margin: 0 auto; }
+.section-label {
+  display: inline-block; background: var(--glass); border: 1px solid var(--glass-border);
+  padding: 6px 16px; border-radius: 100px; font-size: 0.75rem; font-weight: 600;
+  color: var(--accent); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 16px;
+}
+.section-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 800;
+  letter-spacing: -0.5px; margin-bottom: 32px;
+}
+
+/* Cost Table */
+.cost-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 6px;
+}
+.cost-table thead th {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.75rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 2px;
+  color: var(--accent); padding: 12px 20px;
+  text-align: left;
+  border-bottom: 1px solid var(--glass-border);
+}
+.cost-table thead th:last-child { text-align: right; }
+.cost-table tbody tr {
+  background: var(--glass);
+  transition: all 0.3s;
+}
+.cost-table tbody tr:hover {
+  background: rgba(255,255,255,0.08);
+}
+.cost-table td {
+  padding: 16px 20px;
+  font-size: 0.95rem;
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+}
+.cost-table td:first-child {
+  border-radius: 10px 0 0 10px;
+  border-left: 1px solid var(--glass-border);
+}
+.cost-table td:last-child {
+  border-radius: 0 10px 10px 0;
+  border-right: 1px solid var(--glass-border);
+  text-align: right;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+}
+.cost-table .category-label {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+.cost-table .amount {
+  color: var(--text);
+}
+
+/* Subtotal / Total rows */
+.cost-table tr.subtotal {
+  background: rgba(230,57,70,0.08);
+}
+.cost-table tr.subtotal td {
+  font-weight: 700;
+  font-family: 'Space Grotesk', sans-serif;
+  color: var(--text);
+  border-top: 2px solid rgba(230,57,70,0.3);
+}
+.cost-table tr.total-row {
+  background: var(--gradient-1);
+}
+.cost-table tr.total-row td {
+  font-weight: 800;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.15rem;
+  color: #fff;
+  padding: 20px;
+}
+
+/* Scope cards */
+.scope-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+.scope-card {
+  background: var(--glass); border: 1px solid var(--glass-border);
+  border-radius: 16px; padding: 28px;
+  backdrop-filter: blur(10px); transition: all 0.3s;
+  position: relative; overflow: hidden;
+}
+.scope-card::before {
+  content: ''; position: absolute; top:0; left:0; width:100%; height:3px;
+  background: var(--gradient-1); transform: scaleX(0); transition: transform 0.3s;
+  transform-origin: left;
+}
+.scope-card:hover::before { transform: scaleX(1); }
+.scope-card:hover { border-color: rgba(230,57,70,0.3); transform: translateY(-3px); }
+.scope-icon { font-size: 1.8rem; margin-bottom: 12px; }
+.scope-card h4 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1rem; font-weight: 700; margin-bottom: 8px;
+}
+.scope-card p { color: var(--text-muted); font-size: 0.85rem; line-height: 1.6; }
+.scope-card ul {
+  list-style: none; margin-top: 10px;
+}
+.scope-card ul li {
+  color: var(--text-muted); font-size: 0.85rem;
+  padding: 4px 0; display: flex; align-items: center; gap: 8px;
+}
+.scope-card ul li::before {
+  content: ''; width: 5px; height: 5px;
+  background: var(--accent); border-radius: 50%; flex-shrink: 0;
+}
+
+/* Notes */
+.notes-box {
+  background: var(--glass); border: 1px solid var(--glass-border);
+  border-radius: 16px; padding: 32px;
+  backdrop-filter: blur(10px);
+}
+.notes-box h4 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1rem; font-weight: 700; margin-bottom: 16px;
+  color: var(--accent);
+}
+.notes-box ul { list-style: none; }
+.notes-box ul li {
+  color: var(--text-muted); font-size: 0.9rem;
+  padding: 8px 0; border-bottom: 1px solid var(--glass-border);
+  display: flex; align-items: flex-start; gap: 10px;
+}
+.notes-box ul li:last-child { border-bottom: none; }
+.notes-box ul li::before {
+  content: ''; width: 6px; height: 6px; margin-top: 7px;
+  background: var(--accent); border-radius: 50%; flex-shrink: 0;
+}
+
+/* Signature area */
+.signature-section {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 60px; margin-top: 60px;
+}
+.sig-block {
+  border-top: 2px solid var(--glass-border);
+  padding-top: 16px;
+}
+.sig-block p {
+  color: var(--text-muted); font-size: 0.85rem;
+}
+.sig-block .sig-line {
+  height: 60px;
+}
+.sig-block .sig-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600; font-size: 0.9rem;
+  color: var(--text);
+}
+
+/* Footer */
+footer {
+  position: relative; z-index:1;
+  text-align: center; padding: 40px;
+  border-top: 1px solid var(--glass-border);
+}
+footer p { color: var(--text-muted); font-size: 0.8rem; }
+footer .brand-footer {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700; font-size: 1.1rem;
+  background: var(--gradient-1);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  header, .hero, section, footer { padding-left: 20px; padding-right: 20px; }
+  .header-inner { flex-direction: column; }
+  .proposal-meta { text-align: left; }
+  .specs-bar { padding: 0 20px; grid-template-columns: repeat(2, 1fr); }
+  .scope-grid { grid-template-columns: 1fr; }
+  .signature-section { grid-template-columns: 1fr; gap: 40px; }
+  .cost-table td, .cost-table th { padding: 12px 14px; font-size: 0.85rem; }
+}
+
+@media print {
+  .bg-grid, .bg-glow { display: none; }
+  body { background: #fff; color: #111; }
+  .cost-table tbody tr { background: #f9f9f9; }
+  .cost-table tr.total-row { background: #e63946; }
+  .cost-table tr.total-row td { color: #fff; }
+  header, section, footer { padding: 30px 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="brand">
+      <h1>Flynn Development</h1>
+      <p>Cookeville, Tennessee</p>
+    </div>
+    <div class="proposal-meta">
+      <p><strong>Proposal For:</strong> Jeff Merrick</p>
+      <p><strong>Date:</strong> March 11, 2026</p>
+      <p><strong>Project:</strong> 28x30 Truck Workshop</p>
+      <p><strong>Proposal #:</strong> FD-2026-0311</p>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge"><div class="dot"></div> Construction Proposal</div>
+  <h2>28&times;30 <span>Truck Workshop</span></h2>
+  <p>Custom-built metal workshop on your property &mdash; 840 sq ft of workspace with 6" reinforced slab, car lift capability, and full electrical service.</p>
+</div>
+
+<!-- SPECS BAR -->
+<div class="specs-bar">
+  <div class="spec-card">
+    <h3>840</h3>
+    <p>Square Feet</p>
+  </div>
+  <div class="spec-card">
+    <h3>28&times;30</h3>
+    <p>Footprint</p>
+  </div>
+  <div class="spec-card">
+    <h3>12'</h3>
+    <p>Wall Height</p>
+  </div>
+  <div class="spec-card">
+    <h3>6:12</h3>
+    <p>Roof Pitch</p>
+  </div>
+  <div class="spec-card">
+    <h3>19'</h3>
+    <p>Peak Height</p>
+  </div>
+</div>
+
+<!-- SCOPE OF WORK -->
+<section>
+  <div class="section-container">
+    <span class="section-label">Scope of Work</span>
+    <h3 class="section-title">What's Included</h3>
+
+    <div class="scope-grid">
+      <div class="scope-card">
+        <div class="scope-icon">&#x1f3d7;</div>
+        <h4>Foundation</h4>
+        <ul>
+          <li>2' wide x 10" deep concrete footer</li>
+          <li>2-course block foundation wall</li>
+          <li>Gravel fill &amp; compaction</li>
+          <li>6" reinforced concrete slab</li>
+          <li>Car lift capable (rebar grid)</li>
+          <li>Concrete sealed &amp; treated</li>
+        </ul>
+      </div>
+      <div class="scope-card">
+        <div class="scope-icon">&#x1f3e0;</div>
+        <h4>Framing &amp; Structure</h4>
+        <ul>
+          <li>2x6 exterior walls @ 16" OC</li>
+          <li>Engineered roof trusses (6:12 pitch)</li>
+          <li>OSB wall &amp; roof sheathing</li>
+          <li>House wrap</li>
+          <li>12' wall height / 19' peak</li>
+        </ul>
+      </div>
+      <div class="scope-card">
+        <div class="scope-icon">&#x1f527;</div>
+        <h4>Exterior</h4>
+        <ul>
+          <li>Screw-down metal roof (match house)</li>
+          <li>Metal siding (match house color)</li>
+          <li>10x10 insulated overhead door</li>
+          <li>36" walk-in entry door</li>
+          <li>2 windows (3-0 x 3-0)</li>
+          <li>Gutters</li>
+        </ul>
+      </div>
+      <div class="scope-card">
+        <div class="scope-icon">&#x26a1;</div>
+        <h4>Electrical</h4>
+        <ul>
+          <li>100-200 amp sub-panel</li>
+          <li>220V welder outlet</li>
+          <li>GFCI outlets (code spacing)</li>
+          <li>LED shop lighting</li>
+          <li>Power run from house or pole (TBD)</li>
+        </ul>
+      </div>
+      <div class="scope-card">
+        <div class="scope-icon">&#x1f321;</div>
+        <h4>Insulation</h4>
+        <ul>
+          <li>R-19 batt insulation (walls)</li>
+          <li>R-30 batt insulation (ceiling)</li>
+          <li>Exposed interior (no drywall)</li>
+          <li>Temperature control ready</li>
+        </ul>
+      </div>
+      <div class="scope-card">
+        <div class="scope-icon">&#x1f333;</div>
+        <h4>Site Work</h4>
+        <ul>
+          <li>Tree removal (1-2 trees, cut for firewood)</li>
+          <li>Stump removal</li>
+          <li>Excavation &amp; grading</li>
+          <li>Fill low spots / drainage</li>
+          <li>Final grading &amp; seeding</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COST BREAKDOWN -->
+<section style="background: linear-gradient(180deg, transparent, rgba(230,57,70,0.02), transparent);">
+  <div class="section-container">
+    <span class="section-label">Investment</span>
+    <h3 class="section-title">Cost Breakdown</h3>
+
+    <table class="cost-table">
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="category-label">Start Costs, Permits &amp; Survey</td>
+          <td class="amount">$2,000.00</td>
+        </tr>
+        <tr>
+          <td class="category-label">Footer (incl. pump truck)</td>
+          <td class="amount">$3,407.53</td>
+        </tr>
+        <tr>
+          <td class="category-label">Excavation &amp; Dirt Work</td>
+          <td class="amount">$3,500.00</td>
+        </tr>
+        <tr>
+          <td class="category-label">Block Foundation (2 courses)</td>
+          <td class="amount">$1,218.00</td>
+        </tr>
+        <tr>
+          <td class="category-label">Gravel Fill</td>
+          <td class="amount">$1,161.48</td>
+        </tr>
+        <tr>
+          <td class="category-label">Concrete Slab (6" reinforced)</td>
+          <td class="amount">$5,966.00</td>
+        </tr>
+        <tr>
+          <td class="category-label">Framing (2x6 walls, trusses, OSB)</td>
+          <td class="amount">$18,583.30</td>
+        </tr>
+        <tr>
+          <td class="category-label">Windows (2)</td>
+          <td class="amount">$968.00</td>
+        </tr>
+        <tr>
+          <td class="category-label">Exterior Doors (garage + walk)</td>
+          <td class="amount">$4,000.00</td>
+        </tr>
+        <tr>
+          <td class="category-label">Roofing (screw-down metal)</td>
+          <td class="amount">$3,864.00</td>
+        </tr>
+        <tr>
+          <td class="category-label">Metal Siding &amp; Fascia</td>
+          <td class="amount">$9,215.00</td>
+        </tr>
+        <tr>
+          <td class="category-label">Insulation</td>
+          <td class="amount">$2,000.00</td>
+        </tr>
+        <tr>
+          <td class="category-label">Gutters</td>
+          <td class="amount">$1,300.00</td>
+        </tr>
+        <tr>
+          <td class="category-label">Electrical</td>
+          <td class="amount">$4,500.00</td>
+        </tr>
+        <tr>
+          <td class="category-label">Disposal &amp; Cleanup</td>
+          <td class="amount">$2,000.00</td>
+        </tr>
+        <tr>
+          <td class="category-label">Porta Potty</td>
+          <td class="amount">$500.00</td>
+        </tr>
+        <tr class="subtotal">
+          <td>Build Cost</td>
+          <td>$64,183.31</td>
+        </tr>
+        <tr>
+          <td class="category-label">Project Management &amp; Overhead</td>
+          <td class="amount">$1,283.67</td>
+        </tr>
+        <tr>
+          <td class="category-label">Builder Fee</td>
+          <td class="amount">$19,640.09</td>
+        </tr>
+        <tr class="total-row">
+          <td>Project Total</td>
+          <td>$85,107.07</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- NOTES & EXCLUSIONS -->
+<section>
+  <div class="section-container">
+    <div class="notes-box">
+      <h4>Notes &amp; Conditions</h4>
+      <ul>
+        <li>Wood stove installation not included &mdash; to be discussed separately with homeowner</li>
+        <li>Electrical scope subject to electrician assessment (dedicated line from pole vs. secondary from house)</li>
+        <li>Jeff to locate septic tank and field lines prior to construction start</li>
+        <li>Gravel driveway &amp; additional site work priced separately if needed</li>
+        <li>Metal roof and siding color to match existing house &mdash; color selection required before ordering</li>
+        <li>Interior is unfinished (exposed studs &amp; insulation) &mdash; drywall can be added at a later date</li>
+        <li>Proposal valid for 30 days from date issued</li>
+        <li>Payment schedule: 10% deposit, draws at foundation, framing, dry-in, and completion</li>
+      </ul>
+    </div>
+
+    <div class="signature-section">
+      <div class="sig-block">
+        <div class="sig-line"></div>
+        <p class="sig-label">Flynn Development</p>
+        <p>Authorized Signature &amp; Date</p>
+      </div>
+      <div class="sig-block">
+        <div class="sig-line"></div>
+        <p class="sig-label">Jeff Merrick</p>
+        <p>Client Signature &amp; Date</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p class="brand-footer">Flynn Development</p>
+  <p>Cookeville, Tennessee &bull; Quality Construction &bull; Built Right</p>
+  <p style="margin-top:8px;">&copy; 2026 Flynn Development. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
