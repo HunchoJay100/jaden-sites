@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arkansas Wedding Vendor Research — Little Rock Area</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --cream: #FAF7F2;
+            --linen: #F3EDE4;
+            --warm-white: #FEFCF9;
+            --taupe: #B8A99A;
+            --sage: #A3B18A;
+            --sage-dark: #7D8B6A;
+            --sage-light: #DAE4CD;
+            --gold: #C9A96E;
+            --espresso: #3C3228;
+            --charcoal: #4A4039;
+            --warm-gray: #7A7068;
+            --light-gray: #C4BCB4;
+            --blush: #E8D5C4;
+            --glass-border: rgba(184, 169, 154, 0.2);
+            --green-bg: rgba(163, 177, 138, 0.1);
+            --gold-bg: rgba(201, 169, 110, 0.1);
+            --rose-bg: rgba(201, 169, 154, 0.1);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Montserrat', -apple-system, sans-serif;
+            background: var(--cream);
+            color: var(--charcoal);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* NAV */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            padding: 0 32px; height: 60px;
+            background: rgba(250, 247, 242, 0.92);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .nav-brand { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 500; color: var(--espresso); }
+        .nav-links { display: flex; gap: 6px; list-style: none; flex-wrap: wrap; }
+        .nav-links a {
+            text-decoration: none; font-size: 10px; font-weight: 600;
+            letter-spacing: 1.5px; text-transform: uppercase; color: var(--warm-gray);
+            padding: 6px 12px; border-radius: 100px; transition: all 0.3s;
+        }
+        .nav-links a:hover, .nav-links a.active { background: var(--espresso); color: var(--cream); }
+
+        /* HERO */
+        .hero {
+            padding: 120px 24px 60px; text-align: center;
+            background: linear-gradient(180deg, var(--warm-white), var(--cream));
+        }
+        .hero-tag { font-size: 11px; font-weight: 600; letter-spacing: 5px; text-transform: uppercase; color: var(--sage-dark); margin-bottom: 16px; }
+        .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 6vw, 56px); font-weight: 300; color: var(--espresso); margin-bottom: 12px; }
+        .hero-sub { font-size: 15px; color: var(--warm-gray); max-width: 600px; margin: 0 auto; line-height: 1.7; }
+        .hero-badges { display: flex; gap: 12px; justify-content: center; margin-top: 24px; flex-wrap: wrap; }
+        .hero-badge {
+            padding: 8px 20px; border-radius: 100px; font-size: 11px; font-weight: 600;
+            letter-spacing: 2px; text-transform: uppercase;
+        }
+        .badge-budget { background: var(--green-bg); color: var(--sage-dark); }
+        .badge-location { background: var(--gold-bg); color: var(--gold); }
+
+        /* SECTIONS */
+        section { padding: 80px 24px; }
+        .container { max-width: 1100px; margin: 0 auto; }
+        .alt-bg { background: var(--linen); }
+
+        .section-header { text-align: center; margin-bottom: 48px; }
+        .section-tag { font-size: 10px; font-weight: 600; letter-spacing: 5px; text-transform: uppercase; color: var(--sage-dark); margin-bottom: 12px; }
+        .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 4vw, 42px); font-weight: 300; color: var(--espresso); margin-bottom: 8px; }
+        .section-sub { font-size: 14px; color: var(--warm-gray); }
+
+        /* VENDOR CARDS */
+        .vendor-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+
+        .vendor-card {
+            background: var(--warm-white); border: 1px solid var(--glass-border);
+            border-radius: 16px; padding: 28px; transition: all 0.3s;
+            position: relative; overflow: hidden;
+        }
+        .vendor-card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(60,50,40,0.06); }
+        .vendor-card.picked { border-color: var(--sage); }
+        .vendor-card.picked::after {
+            content: 'TOP PICK'; position: absolute; top: 12px; right: 12px;
+            background: var(--sage); color: white; font-size: 9px; font-weight: 700;
+            letter-spacing: 2px; padding: 4px 10px; border-radius: 100px;
+        }
+
+        .vendor-card h3 {
+            font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 500;
+            color: var(--espresso); margin-bottom: 6px;
+        }
+        .vendor-card .vendor-location { font-size: 11px; color: var(--sage-dark); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
+        .vendor-card p { font-size: 13px; line-height: 1.7; color: var(--warm-gray); margin-bottom: 12px; }
+        .vendor-card .vendor-highlight {
+            display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px;
+            background: var(--green-bg); border-radius: 8px; font-size: 11px;
+            color: var(--sage-dark); font-weight: 600; margin-right: 6px; margin-bottom: 6px;
+        }
+        .vendor-card a {
+            display: inline-flex; align-items: center; gap: 4px;
+            font-size: 12px; font-weight: 600; color: var(--espresso);
+            text-decoration: none; margin-top: 8px; transition: color 0.3s;
+        }
+        .vendor-card a:hover { color: var(--sage-dark); }
+
+        /* VENUE CARDS */
+        .venue-card {
+            background: var(--warm-white); border: 1px solid var(--glass-border);
+            border-radius: 20px; padding: 36px; margin-bottom: 20px; transition: all 0.3s;
+        }
+        .venue-card:hover { box-shadow: 0 8px 32px rgba(60,50,40,0.06); }
+        .venue-rank {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 36px; height: 36px; border-radius: 50%; background: var(--sage-light);
+            font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600;
+            color: var(--sage-dark); margin-bottom: 12px;
+        }
+        .venue-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 400; color: var(--espresso); margin-bottom: 4px; }
+        .venue-card .venue-type { font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+        .venue-card p { font-size: 14px; line-height: 1.7; color: var(--warm-gray); }
+        .venue-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+        .venue-tag {
+            padding: 4px 12px; border-radius: 100px; font-size: 10px; font-weight: 600;
+            letter-spacing: 1px; text-transform: uppercase; background: var(--rose-bg); color: var(--taupe);
+        }
+
+        /* MUST-HAVES */
+        .must-have-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+        .must-have-item {
+            display: flex; gap: 16px; padding: 20px; background: var(--warm-white);
+            border: 1px solid var(--glass-border); border-radius: 14px;
+        }
+        .must-have-num {
+            flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%;
+            background: var(--sage-light); display: flex; align-items: center; justify-content: center;
+            font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; color: var(--sage-dark);
+        }
+        .must-have-item h4 { font-size: 14px; font-weight: 600; color: var(--espresso); margin-bottom: 4px; }
+        .must-have-item p { font-size: 12px; color: var(--warm-gray); line-height: 1.5; }
+
+        /* BUDGET SCENARIOS */
+        .scenario-tabs { display: flex; justify-content: center; gap: 8px; margin-bottom: 40px; flex-wrap: wrap; }
+        .scenario-tab {
+            padding: 12px 24px; border: 1px solid var(--glass-border); border-radius: 100px;
+            background: transparent; font-family: 'Montserrat', sans-serif; font-size: 11px;
+            font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+            color: var(--warm-gray); cursor: pointer; transition: all 0.3s;
+        }
+        .scenario-tab.active { background: var(--espresso); color: var(--cream); border-color: var(--espresso); }
+        .scenario-tab:hover:not(.active) { border-color: var(--taupe); color: var(--espresso); }
+
+        .scenario-panel { display: none; }
+        .scenario-panel.active { display: block; }
+
+        .scenario-header { text-align: center; margin-bottom: 32px; }
+        .scenario-header h3 { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 400; color: var(--espresso); margin-bottom: 4px; }
+        .scenario-header p { font-size: 14px; color: var(--warm-gray); }
+        .scenario-total {
+            text-align: center; margin-bottom: 32px; padding: 24px;
+            background: var(--warm-white); border: 1px solid var(--glass-border); border-radius: 16px;
+        }
+        .scenario-total .amount { font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 400; color: var(--espresso); }
+        .scenario-total .label { font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--taupe); }
+
+        .budget-table {
+            width: 100%; border-collapse: collapse; background: var(--warm-white);
+            border-radius: 16px; overflow: hidden; border: 1px solid var(--glass-border);
+        }
+        .budget-table thead { background: var(--espresso); }
+        .budget-table th {
+            font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+            color: var(--cream); padding: 14px 20px; text-align: left;
+        }
+        .budget-table td { font-size: 14px; padding: 14px 20px; border-bottom: 1px solid var(--glass-border); }
+        .budget-table tr:last-child td { border-bottom: none; }
+        .budget-table tr:hover td { background: rgba(163,177,138,0.04); }
+        .budget-table .amount-col { text-align: right; font-weight: 600; color: var(--espresso); }
+        .budget-table .pct-col { text-align: right; font-size: 12px; color: var(--taupe); }
+        .budget-table tfoot td { font-weight: 700; background: var(--linen); border-top: 2px solid var(--glass-border); }
+
+        /* FOOTER */
+        footer {
+            text-align: center; padding: 40px 24px; border-top: 1px solid var(--glass-border);
+        }
+        .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--espresso); margin-bottom: 8px; }
+        .footer-sub { font-size: 11px; color: var(--light-gray); letter-spacing: 1px; }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            nav { padding: 0 12px; height: auto; flex-wrap: wrap; padding: 8px 12px; }
+            .nav-links { gap: 4px; }
+            .nav-links a { font-size: 9px; padding: 5px 8px; }
+            section { padding: 48px 16px; }
+            .vendor-grid { grid-template-columns: 1fr; }
+            .must-have-grid { grid-template-columns: 1fr; }
+            .budget-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .budget-table { min-width: 500px; }
+        }
+
+        .reveal { opacity: 0; transform: translateY(24px); transition: all 0.7s cubic-bezier(0.16,1,0.3,1); }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-brand">AR Wedding Research</div>
+    <ul class="nav-links">
+        <li><a href="#venues">Venues</a></li>
+        <li><a href="#catering">Catering</a></li>
+        <li><a href="#photo">Photo</a></li>
+        <li><a href="#video">Video</a></li>
+        <li><a href="#dj">DJ</a></li>
+        <li><a href="#florals">Florals</a></li>
+        <li><a href="#tents">Tents</a></li>
+        <li><a href="#floors">Floors</a></li>
+        <li><a href="#cake">Cake</a></li>
+        <li><a href="#restrooms">Restrooms</a></li>
+        <li><a href="#musthaves">Must-Haves</a></li>
+        <li><a href="#budget">Budget</a></li>
+    </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+    <div class="hero-tag">Vendor Research &mdash; Compiled by Chief</div>
+    <h1>Little Rock, Arkansas<br>Wedding Vendor Guide</h1>
+    <p class="hero-sub">Every top-rated vendor in the Little Rock area, organized by category. Researched, reviewed, and ready for Megan to make decisions.</p>
+    <div class="hero-badges">
+        <span class="hero-badge badge-budget">$50,000 Budget</span>
+        <span class="hero-badge badge-location">Little Rock &amp; Central AR</span>
+    </div>
+</div>
+
+<!-- VENUES -->
+<section id="venues">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-tag">Top 5 Venues</div>
+            <h2 class="section-title">Wedding Venues</h2>
+            <p class="section-sub">Average venue cost in Little Rock: ~$5,944 (well below national average)</p>
+        </div>
+
+        <div class="venue-card reveal">
+            <div class="venue-rank">1</div>
+            <h3>The Grandeur House</h3>
+            <div class="venue-type">Estate &middot; Wine Country Aesthetic</div>
+            <p>Designed by wedding planner Natalie Scott, secluded on 40 acres of rolling pasture land in Little Rock. Wine country aesthetic with stunning photo opportunities. Perfect for couples wanting an elegant, private estate feel.</p>
+            <div class="venue-tags">
+                <span class="venue-tag">40 Acres</span>
+                <span class="venue-tag">Outdoor</span>
+                <span class="venue-tag">Estate</span>
+                <span class="venue-tag">Photo-Ready</span>
+            </div>
+        </div>
+
+        <div class="venue-card reveal">
+            <div class="venue-rank">2</div>
+            <h3>The Castle on Stagecoach</h3>
+            <div class="venue-type">Castle &middot; 100+ Acres</div>
+            <p>A gorgeous castle on over 100 acres of rolling greens with horse stables, a charming cottage, and an expansive outdoor tent area. Fairytale setting that photographs incredibly.</p>
+            <div class="venue-tags">
+                <span class="venue-tag">100+ Acres</span>
+                <span class="venue-tag">Castle</span>
+                <span class="venue-tag">Horse Stables</span>
+                <span class="venue-tag">Tent Area</span>
+            </div>
+        </div>
+
+        <div class="venue-card reveal">
+            <div class="venue-rank">3</div>
+            <h3>Capital Hotel</h3>
+            <div class="venue-type">Historic Hotel &middot; Downtown Little Rock</div>
+            <p>A captivating venue that has stood for over a century. The city's finest venue with a grand setting for celebrations. Classic, sophisticated, indoor elegance.</p>
+            <div class="venue-tags">
+                <span class="venue-tag">Historic</span>
+                <span class="venue-tag">Indoor</span>
+                <span class="venue-tag">Downtown</span>
+                <span class="venue-tag">Grand Ballroom</span>
+            </div>
+        </div>
+
+        <div class="venue-card reveal">
+            <div class="venue-rank">4</div>
+            <h3>E.O. Manees House</h3>
+            <div class="venue-type">Mansion &middot; Colonial Revival &middot; Est. 1895</div>
+            <p>A stunning mansion in North Little Rock established in 1895 with much of its original Colonial Revival styling still intact. Currently accepting 2026 reservations. Intimate and historic.</p>
+            <div class="venue-tags">
+                <span class="venue-tag">Mansion</span>
+                <span class="venue-tag">Historic 1895</span>
+                <span class="venue-tag">Indoor/Outdoor</span>
+                <span class="venue-tag">Booking 2026</span>
+            </div>
+        </div>
+
+        <div class="venue-card reveal">
+            <div class="venue-rank">5</div>
+            <h3>Next Level Events</h3>
+            <div class="venue-type">Modern Industrial &middot; Multiple Rooms</div>
+            <p>Three unique Genesis rooms with century-old architectural details. Genesis II fits 200 guests, Genesis III accommodates up to 600 seated. Scalable for any size wedding.</p>
+            <div class="venue-tags">
+                <span class="venue-tag">Up to 600 Guests</span>
+                <span class="venue-tag">Industrial Chic</span>
+                <span class="venue-tag">3 Rooms</span>
+                <span class="venue-tag">Flexible</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CATERING -->
+<section id="catering" class="alt-bg">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-tag">Food &amp; Beverage</div>
+            <h2 class="section-title">Catering</h2>
+        </div>
+        <div class="vendor-grid">
+            <div class="vendor-card picked reveal">
+                <h3>Vibrant Occasions Catering</h3>
+                <div class="vendor-location">Little Rock, AR</div>
+                <p>Top-rated on Yelp and WeddingWire. Full-service wedding catering with elegant presentations and diverse menu options.</p>
+                <span class="vendor-highlight">Top Rated</span>
+            </div>
+            <div class="vendor-card reveal">
+                <h3>Chef Wayne Schilleci</h3>
+                <div class="vendor-location">Little Rock, AR</div>
+                <p>Arkansas Catering by Chef Wayne. One of the highest-rated caterers in Little Rock. Known for gourmet, chef-driven menus.</p>
+                <span class="vendor-highlight">Chef-Driven</span>
+            </div>
+            <div class="vendor-card reveal">
+                <h3>Tasty Chef Catering</h3>
+                <div class="vendor-location">Little Rock &amp; Surrounding</div>
+                <p>Premier Arkansas catering for weddings and events. Elegant plated or buffet-style options designed to impress and elevate your big day.</p>
+                <a href="https://tastychefcatering.com" target="_blank">Visit Website &rarr;</a>
+            </div>
+            <div class="vendor-card reveal">
+                <h3>Black Swan Catering</h3>
+                <div class="vendor-location">Little Rock, AR</div>
+                <p>Full-service catering with Chef William and Curlethia Swanigan. Elegant Cajun and Creole-inspired dishes with a Southern flair. Exceptional food and service.</p>
+                <span class="vendor-highlight">Cajun &amp; Creole</span>
+            </div>
+            <div class="vendor-card reveal">
+                <h3>Hogg's Catering</h3>
+                <div class="vendor-location">North Little Rock, AR</div>
+                <p>Family-owned with over 60 years of experience providing exceptional service. A trusted name in central Arkansas events.</p>
+                <span class="vendor-highlight">60+ Years</span>
+            </div>
+            <div class="vendor-card reveal">
+                <h3>Rx Catering</h3>
+                <div class="vendor-location">Little Rock &amp; Fayetteville</div>
+                <p>Arkansas's go-to catering partner for corporate events, weddings, and celebrations. Modern menus with creative presentations.</p>
+                <a href="https://rxcatering.net" target="_blank">Visit Website &rarr;</a>
+            </div>
+            <div class="vendor-card reveal">
+                <h3>Glad Mouf BBQ</h3>
+                <div class="vendor-location">Little Rock, AR</div>
+                <p>Craft barbecue with a gourmet twist. Smoked oxtails, brisket, smoked chicken, brisket tacos. Perfect for a fun, unique reception.</p>
+                <span class="vendor-highlight">BBQ / Food Truck</span>
+            </div>
+            <div class="vendor-card reveal">
+                <h3>Catering To You</h3>
+                <div class="vendor-location">Little Rock, AR</div>
+                <p>Full-service catering for any occasion with customizable menus and professional service.</p>
+                <a href="https://cateringtoyoulr.com" target="_blank">Visit Website &rarr;</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PHOTOGRAPHY -->
+<section id="photo">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-tag">Capture the Day</div>
+            <h2 class="section-title">Photography</h2>
+        </div>
+        <div class="vendor-grid">
+            <div class="vendor-card picked reveal">
+                <h3>The Linns</h3>
+                <div class="vendor-location">Arkansas</div>
+                <p>Husband and wife team. Natural, authentic wedding photography with a classic vibe and documentary approach. True-to-life style.</p>
+                <span class="vendor-highlight">Husband &amp; Wife Team</span>
+                <a href="https://thelinns.co" target="_blank">Visit Website &rarr;</a>
+            </div>
+            <div class="vendor-card picked reveal">
+                <h3>Count In Threes Photo</h3>
+                <div class="vendor-location">Arkansas / Destinations</div>
+                <p>Top-rated luxury wedding photographer. Known for elegant, editorial imagery. Serves Arkansas, DMV, and worldwide destinations.</p>
+                <span class="vendor-highlight">Luxury / Editorial</span>
+                <a href="https://countinthreesphoto.com" target="_blank">Visit Website &rarr;</a>
+            </div>
+            <div class="vendor-card reveal">
+                <h3>Lyndsey Sullivan</h3>
+                <div class="vendor-location">Little Rock, AR</div>
+                <p>Special focus on the bride. Limits to only 15 weddings per year &mdash; quality over quantity. Customized, intimate experience.</p>
+                <span class="vendor-highlight">15 Weddings/Year</span>
+            </div>
+            <div class="vendor-card reveal">
+                <h3>Heather Jenkins Photography</h3>
+                <div class="vendor-location">Little Rock, AR</div>
+                <p>Artistic, thoughtful Arkansas wedding and elopement photography. Available to travel.</p>
+                <a href="https://www.heatherjenkins.com" target="_blank">Visit Website &rarr;</a>
+            </div>
+            <div class="vendor-card reveal">
+                <h3>Caroline M. Holt</h3>
+                <div class="vendor-location">Little Rock, AR</div>
+                <p>12+ years of experience. Images filled with love and emotion. Friendly, professional, and highly reviewed.</p>
+                <span class="vendor-highlight">12+ Years</span>
+            </div>
+            <div class="vendor-card reveal">
+                <h3>Nguyen Images</h3>
+                <div class="vendor-location">Central Arkansas</div>
+                <p>Husband and wife team specializing in elopements and full-day celebrations. Take time to know each couple personally.</p>
+                <span class="vendor-highlight">Personal Touch</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- VIDEOGRAPHY -->
+<section id="video" class="alt-bg">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-tag">Film the Story</div>
+            <h2 class="section-title">Videography</h2>
+        </div>
+        <div class="vendor-grid">
+            <div class="vendor-card picked reveal">
+                <h3>McManus Media</h3>
+                <div class="vendor-location">Little Rock, AR</div>
+                <p>Modern, cinematic wedding films. Founded by Travelle McManus with 10+ years of experience. Top-rated in central Arkansas.</p>
+                <span class="vendor-highlight">Cinematic</span>
+                <span class="vendor-highlight">10+ Years</span>
+            </div>
+            <div class="vendor-card reveal">
+                <h3>EMH Visuals</h3>
+                <div class="vendor-location">Arkansas</div>
+                <p>Multiple packages with up to 10+ hours of coverage, 2-3 videographers, and highlight reels.</p>
+                <a href="https://emhvisuals.com" target="_blank">Visit Website &rarr;</a>
+            </div>
+            <div class="vendor-card reveal">
+                <h3>Clay Clayton Media</h3>
+                <div class="vendor-location">Little Rock, AR</div>
+                <p>International wedding videographer. Customized packages with full coverage of every moment. Years of experience.</p>
+            </div>
+            <div class="vendor-card reveal">
+                <h3>Betwixt Magnolias</h3>
+                <div class="vendor-location">Little Rock, AR</div>
+                <p>Authentic, heartfelt documentary-style wedding films. Top vendor on Carats &amp; Cake.</p>
+                <span class="vendor-highlight">Documentary Style</span>
+            </div>
+            <div class="vendor-card reveal">
+                <h3>Swearingen Weddings</h3>
+                <div class="vendor-location">Arkansas</div>
+                <p>Husband and wife duo. Two professional videographers, 4-6 minute highlight reel, full ceremony and reception coverage.</p>
+                <span class="vendor-highlight">Duo Team</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- DJ -->
+<section id="dj">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-tag">Entertainment</div>
+            <h2 class="section-title">DJs &amp; Music</h2>
+        </div>
+        <div class="vendor-grid">
+            <div class="vendor-card picked reveal">
+                <h3>Arkansas' Best DJ Service</h3>
+                <div class="vendor-location">North Little Rock, AR</div>
+                <p>DJ Hollywood &mdash; voted #1 DJ in Arkansas. Best of Weddings 9 years in a row by The Knot. 25+ years of experience.</p>
+                <span class="vendor-highlight">#1 in Arkansas</span>
+                <span class="vendor-highlight">25+ Years</span>
+                <a href="https://www.arkansasbestdjservice.biz" target="_blank">Visit Website &rarr;</a>
+            </div>
+            <div class="vendor-card reveal">
+                <h3>Premier Entertainment</h3>
+                <div class="vendor-location">Little Rock, AR</div>
+                <p>Owner Adam Shipman performing since 2014. Full DJ services with uplighting, photo booths, and MC services.</p>
+            </div>
+            <div class="vendor-card reveal">
+                <h3>Celebration Events &amp; Entertainment</h3>
+                <div class="vendor-location">Little Rock, AR</div>
+                <p>DJ and photography company. Over 20 years providing wedding entertainment. Also offers dance floor rentals.</p>
+                <span class="vendor-highlight">20+ Years</span>
+            </div>
+            <div class="vendor-card reveal">
+                <h3>Timbo Promotions</h3>
+                <div class="vendor-location">Little Rock, AR</div>
+                <p>Specializes in intimate celebrations under 50 guests. Prestigious awards for excellence. Flawless track record.</p>
+                <span class="vendor-highlight">Intimate Events</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FLORALS -->
+<section id="florals" class="alt-bg">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-tag">Flowers &amp; Design</div>
+            <h2 class="section-title">Florists</h2>
+        </div>
+        <div class="vendor-grid">
+            <div class="vendor-card picked reveal">
+                <h3>Tipton &amp; Hurst</h3>
+                <div class="vendor-location">Little Rock, Pine Bluff, Conway</div>
+                <p>The gold standard in Central Arkansas for 135+ years. Go-to for bridal registry. Every bride is unique &mdash; designs from intimate to grand, rustic to elegant.</p>
+                <span class="vendor-highlight">135+ Years</span>
+                <span class="vendor-highlight">Gold Standard</span>
+                <a href="https://www.tiptonhurst.com" target="_blank">Visit Website &rarr;</a>
+            </div>
+            <div class="vendor-card picked reveal">
+                <h3>Tanarah Luxe Floral</h3>
+                <div class="vendor-location">Little Rock, AR</div>
+                <p>Seasoned artists transforming dreams into reality. Expertly manipulated floral art combining personality and style. Premium luxury tier.</p>
+                <span class="vendor-highlight">Luxury</span>
+            </div>
+            <div class="vendor-card reveal">
+                <h3>North Hills Florist &amp; Gifts</h3>
+                <div class="vendor-location">North Little Rock, AR</div>
+                <p>Won "Best Florist in Arkansas" (Arkansas Times 2025). Serving the community since 1971. Reliable, award-winning.</p>
+                <span class="vendor-highlight">Best in Arkansas 2025</span>
+                <a href="https://northhillsflorist.com" target="_blank">Visit Website &rarr;</a>
+            </div>
+            <div class="vendor-card reveal">
+                <h3>Cabbage Rose Florist</h3>
+                <div class="vendor-location">Little Rock, AR</div>
+                <p>Uniquely elegant and modern vision from designer David Kirkpatrick. 40+ years in the floral industry.</p>
+                <span class="vendor-highlight">40+ Years</span>
+                <a href="https://cabbageroseflorist.com" target="_blank">Visit Website &rarr;</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TENTS -->
+<section id="tents">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-tag">Shelter &amp; Structure</div>
+            <h2 class="section-title">Tent &amp; Event Rentals</h2>
+        </div>
+        <div class="vendor-grid">
+            <div class="vendor-card picked reveal">
+                <h3>Party Time Rental &amp; Events</h3>
+                <div class="vendor-location">Little Rock, AR</div>
+                <p>Voted Best Event Rental Company every year 2008-2024 by Soiree Magazine. 40+ years of experience. Full tent inventory from 10x10 to 20x40+. Also offers dance floors, tables, chairs, and lighting.</p>
+                <span class="vendor-highlight">Best 16 Years Running</span>
+                <span class="vendor-highlight">40+ Years</span>
+                <a href="https://www.partytimerentalandevents.com" target="_blank">Visit Website &rarr;</a>
+            </div>
+            <div class="vendor-card reveal">
+                <h3>Intents Party Rentals</h3>
+                <div class="vendor-location">Arkansas</div>
+                <p>Arkansas' finest tent and party rental company. Specializes in marquee-style tents that make your event stand out. Tables, chairs, staging, and dance floors.</p>
+                <a href="https://party-intents.com" target="_blank">Visit Website &rarr;</a>
+            </div>
+            <div class="vendor-card reveal">
+                <h3>Arkansas Tent &amp; Special Event Rental</h3>
+                <div class="vendor-location">North Little Rock, AR</div>
+                <p>Since 1999. Tents, tables, chairs, dance floors, lighting, and more. Full-service for central Arkansas.</p>
+                <a href="https://artentrental.com" target="_blank">Visit Website &rarr;</a>
+            </div>
+            <div class="vendor-card reveal">
+                <h3>Do&ntilde;a Bella Party Rentals</h3>
+                <div class="vendor-location">Little Rock, AR</div>
+                <p>Family-owned. Wedding, party, quincea&ntilde;era, and event rentals. Central Arkansas area. Focus on excellent service.</p>
+                <a href="https://www.donabellapartyrentals.com" target="_blank">Visit Website &rarr;</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- DANCE FLOORS -->
+<section id="floors" class="alt-bg">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-tag">Get on the Floor</div>
+            <h2 class="section-title">Dance Floor Rentals</h2>
+        </div>
+        <div class="vendor-grid">
+            <div class="vendor-card picked reveal">
+                <h3>Party Time Rental &amp; Events</h3>
+                <div class="vendor-location">Little Rock, AR</div>
+                <p>Various sizes, customizable to fit any venue. Setup and takedown included. The go-to in Little Rock.</p>
+                <span class="vendor-highlight">Setup Included</span>
+                <a href="https://www.partytimerentalandevents.com/dance-floor-rentals/" target="_blank">Visit Website &rarr;</a>
+            </div>
+            <div class="vendor-card picked reveal">
+                <h3>Central Arkansas Entertainment</h3>
+                <div class="vendor-location">Central Arkansas</div>
+                <p>20x20-foot LED dance floor for $700 including setup and teardown. Show-stopping option for the reception.</p>
+                <span class="vendor-highlight">LED Floor</span>
+                <span class="vendor-highlight">$700 w/ Setup</span>
+            </div>
+            <div class="vendor-card reveal">
+                <h3>Celebrations Events &amp; Entertainment</h3>
+                <div class="vendor-location">Little Rock, AR</div>
+                <p>Black, white, or checkerboard patterns. Custom designs in 1' squares. Setup, breakdown, and cleaning included.</p>
+                <span class="vendor-highlight">Custom Designs</span>
+                <a href="https://celebrations-events.com/services/dance-floor-rentals-little-rock/" target="_blank">Visit Website &rarr;</a>
+            </div>
+            <div class="vendor-card reveal">
+                <h3>Arkansas Tent &amp; Special Event Rental</h3>
+                <div class="vendor-location">North Little Rock, AR</div>
+                <p>Dance floors available alongside their full tent and event rental inventory. One-stop shop.</p>
+                <a href="https://artentrental.com" target="_blank">Visit Website &rarr;</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CAKE -->
+<section id="cake">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-tag">Sweet Endings</div>
+            <h2 class="section-title">Cake &amp; Desserts</h2>
+        </div>
+        <div class="vendor-grid">
+            <div class="vendor-card picked reveal">
+                <h3>The Blue Cake Company</h3>
+                <div class="vendor-location">Little Rock, AR</div>
+                <p>Family-owned. Beautiful custom cakes and pies made from scratch by talented bakers and artists. Weddings, showers, and events.</p>
+                <a href="https://www.thebluecakecompany.com" target="_blank">Visit Website &rarr;</a>
+            </div>
+            <div class="vendor-card reveal">
+                <h3>Dee's Delightful Desserts</h3>
+                <div class="vendor-location">Little Rock, AR</div>
+                <p>Established 2003. Pleasing palates with delightful sweet centerpieces for special occasions. Wedding cake specialist.</p>
+            </div>
+            <div class="vendor-card reveal">
+                <h3>Sweet Love Bakery</h3>
+                <div class="vendor-location">Central Arkansas</div>
+                <p>One of the newest and fastest-growing bakeries. Unique, beautiful, or classic wedding cakes led by baker Kelli Marks.</p>
+            </div>
+            <div class="vendor-card reveal">
+                <h3>Mental Bakedowns &amp; Pastry Attacks</h3>
+                <div class="vendor-location">Little Rock, AR</div>
+                <p>Located in the heart of Little Rock. Custom cakes and delightful pastries. Creative, artistic designs.</p>
+                <a href="https://www.mentalbakedownsandpastryattacks.com" target="_blank">Visit Website &rarr;</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- RESTROOMS -->
+<section id="restrooms" class="alt-bg">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-tag">Guest Comfort</div>
+            <h2 class="section-title">Luxury Restroom Trailers</h2>
+            <p class="section-sub">Standard: $325-$595/day &middot; Luxury Multi-Stall: $795-$1,050/day</p>
+        </div>
+        <div class="vendor-grid">
+            <div class="vendor-card picked reveal">
+                <h3>Royal Thrones of Little Rock</h3>
+                <div class="vendor-location">Little Rock, AR</div>
+                <p>The Opulence III trailer is specially designed for weddings. Running water, hand soap, AC/heat. Luxury amenities elevating the guest experience.</p>
+                <span class="vendor-highlight">Wedding Specialist</span>
+                <a href="https://royalthrones.com/little-rock/" target="_blank">Visit Website &rarr;</a>
+            </div>
+            <div class="vendor-card reveal">
+                <h3>Arkansas Restroom Trailers</h3>
+                <div class="vendor-location">Little Rock &amp; Statewide</div>
+                <p>Weddings, film shoots, festivals. Standard $325-$595/day, luxury suites $795-$1,050/day. Full fleet throughout Arkansas.</p>
+                <a href="https://arkansasrestroomtrailerrentals.com/little-rock/" target="_blank">Visit Website &rarr;</a>
+            </div>
+            <div class="vendor-card reveal">
+                <h3>Arkansas Portable Toilets</h3>
+                <div class="vendor-location">Arkansas</div>
+                <p>Luxury trailers perfect for outdoor/tented weddings. 2-stall trailer for up to 150 people. Heat, AC, clean neutral design. Can blend into tented events.</p>
+                <a href="https://arportabletoilets.com" target="_blank">Visit Website &rarr;</a>
+            </div>
+            <div class="vendor-card reveal">
+                <h3>Stahla Services</h3>
+                <div class="vendor-location">Little Rock, AR</div>
+                <p>Premium restroom trailer rental. Personalized service, quality assurance, and local expertise. Professional delivery and setup.</p>
+                <a href="https://stahla.com/locations/restroom-trailer-little-rock-ar/" target="_blank">Visit Website &rarr;</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TOP 10 MUST-HAVES -->
+<section id="musthaves">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-tag">Non-Negotiables</div>
+            <h2 class="section-title">Top 10 Wedding Must-Haves</h2>
+            <p class="section-sub">The things you absolutely cannot skip, no matter the budget</p>
+        </div>
+        <div class="must-have-grid">
+            <div class="must-have-item reveal">
+                <div class="must-have-num">1</div>
+                <div><h4>Venue</h4><p>Indoor or outdoor, you need a place. This is the single biggest decision that shapes everything else.</p></div>
+            </div>
+            <div class="must-have-item reveal">
+                <div class="must-have-num">2</div>
+                <div><h4>Officiant</h4><p>No officiant, no legal marriage. Book early, confirm credentials, and do a rehearsal.</p></div>
+            </div>
+            <div class="must-have-item reveal">
+                <div class="must-have-num">3</div>
+                <div><h4>Photography</h4><p>The only vendor that gives you something lasting after the day is over. Don't cut corners here.</p></div>
+            </div>
+            <div class="must-have-item reveal">
+                <div class="must-have-num">4</div>
+                <div><h4>Catering / Food</h4><p>Guests will forgive almost anything except being hungry. Feed them well.</p></div>
+            </div>
+            <div class="must-have-item reveal">
+                <div class="must-have-num">5</div>
+                <div><h4>Music / DJ</h4><p>Sets the entire mood from ceremony to last dance. A bad DJ kills a reception faster than anything.</p></div>
+            </div>
+            <div class="must-have-item reveal">
+                <div class="must-have-num">6</div>
+                <div><h4>Florals</h4><p>Bouquet, ceremony arch, centerpieces. Florals tie the visual theme together. Can be minimal or grand.</p></div>
+            </div>
+            <div class="must-have-item reveal">
+                <div class="must-have-num">7</div>
+                <div><h4>Wedding Coordinator</h4><p>Day-of coordinator at minimum. Someone who isn't the bride needs to be running the show. (That's Megan.)</p></div>
+            </div>
+            <div class="must-have-item reveal">
+                <div class="must-have-num">8</div>
+                <div><h4>Attire</h4><p>The dress, the suit, alterations. What the couple wears is the visual centerpiece of every photo.</p></div>
+            </div>
+            <div class="must-have-item reveal">
+                <div class="must-have-num">9</div>
+                <div><h4>Bar / Drinks</h4><p>Open bar, beer &amp; wine, or signature cocktails. Guests need something to toast with.</p></div>
+            </div>
+            <div class="must-have-item reveal">
+                <div class="must-have-num">10</div>
+                <div><h4>Restrooms</h4><p>Especially for outdoor venues. Luxury trailer rentals make it seamless. Don't skip this &mdash; guests will notice.</p></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- BUDGET SCENARIOS -->
+<section id="budget" class="alt-bg">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-tag">Money Moves</div>
+            <h2 class="section-title">$50,000 Budget Scenarios</h2>
+            <p class="section-sub">Three ways to maximize every dollar</p>
+        </div>
+
+        <div class="scenario-tabs">
+            <button class="scenario-tab active" data-tab="grand">The Grand Affair</button>
+            <button class="scenario-tab" data-tab="sweet">The Sweet Spot</button>
+            <button class="scenario-tab" data-tab="intimate">Intimate Luxury</button>
+        </div>
+
+        <!-- SCENARIO 1 -->
+        <div class="scenario-panel active" id="tab-grand">
+            <div class="scenario-header">
+                <h3>The Grand Affair</h3>
+                <p>Go big &mdash; 150+ guests, premium vendors, full production</p>
+            </div>
+            <div class="scenario-total"><div class="label">Total Budget</div><div class="amount">$50,000</div></div>
+            <div class="budget-table-wrap">
+                <table class="budget-table">
+                    <thead><tr><th>Category</th><th>Details</th><th class="amount-col">Amount</th><th class="pct-col">%</th></tr></thead>
+                    <tbody>
+                        <tr><td>Venue</td><td>Premium estate or ballroom</td><td class="amount-col">$8,000</td><td class="pct-col">16%</td></tr>
+                        <tr><td>Catering</td><td>Full service, 150 guests @ $65/pp</td><td class="amount-col">$9,750</td><td class="pct-col">19.5%</td></tr>
+                        <tr><td>Bar / Drinks</td><td>Open bar, 150 guests</td><td class="amount-col">$4,500</td><td class="pct-col">9%</td></tr>
+                        <tr><td>Photography</td><td>Premium photographer, full day</td><td class="amount-col">$4,000</td><td class="pct-col">8%</td></tr>
+                        <tr><td>Videography</td><td>Cinematic film + highlight reel</td><td class="amount-col">$3,000</td><td class="pct-col">6%</td></tr>
+                        <tr><td>DJ / Entertainment</td><td>Top-tier DJ, uplighting, MC</td><td class="amount-col">$2,500</td><td class="pct-col">5%</td></tr>
+                        <tr><td>Florals</td><td>Full florals: ceremony, reception, bouquets</td><td class="amount-col">$4,000</td><td class="pct-col">8%</td></tr>
+                        <tr><td>Tent Rental</td><td>Large tent + lighting</td><td class="amount-col">$3,500</td><td class="pct-col">7%</td></tr>
+                        <tr><td>Dance Floor</td><td>LED or premium floor</td><td class="amount-col">$1,000</td><td class="pct-col">2%</td></tr>
+                        <tr><td>Cake / Desserts</td><td>Custom wedding cake + dessert table</td><td class="amount-col">$1,200</td><td class="pct-col">2.4%</td></tr>
+                        <tr><td>Coordinator</td><td>Full planning + day-of (Megan)</td><td class="amount-col">$2,500</td><td class="pct-col">5%</td></tr>
+                        <tr><td>Attire</td><td>Dress, suit, alterations, accessories</td><td class="amount-col">$2,000</td><td class="pct-col">4%</td></tr>
+                        <tr><td>Hair &amp; Makeup</td><td>Bride + bridal party</td><td class="amount-col">$800</td><td class="pct-col">1.6%</td></tr>
+                        <tr><td>Restroom Trailers</td><td>Luxury 2-stall trailer</td><td class="amount-col">$900</td><td class="pct-col">1.8%</td></tr>
+                        <tr><td>Invitations</td><td>Design, print, postage</td><td class="amount-col">$500</td><td class="pct-col">1%</td></tr>
+                        <tr><td>Decor &amp; Lighting</td><td>String lights, candles, signage</td><td class="amount-col">$1,000</td><td class="pct-col">2%</td></tr>
+                        <tr><td>Transportation</td><td>Shuttle or limo service</td><td class="amount-col">$500</td><td class="pct-col">1%</td></tr>
+                        <tr><td>Favors</td><td>Guest favors</td><td class="amount-col">$350</td><td class="pct-col">0.7%</td></tr>
+                    </tbody>
+                    <tfoot><tr><td colspan="2">Total</td><td class="amount-col">$50,000</td><td class="pct-col">100%</td></tr></tfoot>
+                </table>
+            </div>
+        </div>
+
+        <!-- SCENARIO 2 -->
+        <div class="scenario-panel" id="tab-sweet">
+            <div class="scenario-header">
+                <h3>The Sweet Spot</h3>
+                <p>High quality, smart spending &mdash; 100-120 guests, money where it matters</p>
+            </div>
+            <div class="scenario-total"><div class="label">Total Budget</div><div class="amount">$50,000</div></div>
+            <div class="budget-table-wrap">
+                <table class="budget-table">
+                    <thead><tr><th>Category</th><th>Details</th><th class="amount-col">Amount</th><th class="pct-col">%</th></tr></thead>
+                    <tbody>
+                        <tr><td>Venue</td><td>Beautiful venue, mid-range</td><td class="amount-col">$6,000</td><td class="pct-col">12%</td></tr>
+                        <tr><td>Catering</td><td>110 guests @ $70/pp (elevated menu)</td><td class="amount-col">$7,700</td><td class="pct-col">15.4%</td></tr>
+                        <tr><td>Bar / Drinks</td><td>Beer, wine, 2 signature cocktails</td><td class="amount-col">$3,000</td><td class="pct-col">6%</td></tr>
+                        <tr><td>Photography</td><td>Top-tier photographer, 8-10 hrs</td><td class="amount-col">$4,500</td><td class="pct-col">9%</td></tr>
+                        <tr><td>Videography</td><td>Full day + cinematic highlight</td><td class="amount-col">$3,500</td><td class="pct-col">7%</td></tr>
+                        <tr><td>DJ / Entertainment</td><td>Premium DJ with full setup</td><td class="amount-col">$2,000</td><td class="pct-col">4%</td></tr>
+                        <tr><td>Florals</td><td>Elevated florals, statement pieces</td><td class="amount-col">$5,000</td><td class="pct-col">10%</td></tr>
+                        <tr><td>Tent Rental</td><td>Marquee tent + draping</td><td class="amount-col">$3,000</td><td class="pct-col">6%</td></tr>
+                        <tr><td>Dance Floor</td><td>Classic wood or checkered floor</td><td class="amount-col">$700</td><td class="pct-col">1.4%</td></tr>
+                        <tr><td>Cake / Desserts</td><td>Beautiful custom cake</td><td class="amount-col">$1,000</td><td class="pct-col">2%</td></tr>
+                        <tr><td>Coordinator</td><td>Full planning + day-of (Megan)</td><td class="amount-col">$3,000</td><td class="pct-col">6%</td></tr>
+                        <tr><td>Attire</td><td>Dress, suit, alterations</td><td class="amount-col">$3,000</td><td class="pct-col">6%</td></tr>
+                        <tr><td>Hair &amp; Makeup</td><td>Bride + select bridal party</td><td class="amount-col">$1,000</td><td class="pct-col">2%</td></tr>
+                        <tr><td>Restroom Trailers</td><td>Luxury 2-stall</td><td class="amount-col">$800</td><td class="pct-col">1.6%</td></tr>
+                        <tr><td>Invitations</td><td>Semi-custom design</td><td class="amount-col">$600</td><td class="pct-col">1.2%</td></tr>
+                        <tr><td>Decor &amp; Lighting</td><td>Premium lighting package + decor</td><td class="amount-col">$2,500</td><td class="pct-col">5%</td></tr>
+                        <tr><td>Transportation</td><td>Couple getaway car</td><td class="amount-col">$400</td><td class="pct-col">0.8%</td></tr>
+                        <tr><td>Buffer</td><td>Emergency fund / tips / misc</td><td class="amount-col">$2,300</td><td class="pct-col">4.6%</td></tr>
+                    </tbody>
+                    <tfoot><tr><td colspan="2">Total</td><td class="amount-col">$50,000</td><td class="pct-col">100%</td></tr></tfoot>
+                </table>
+            </div>
+        </div>
+
+        <!-- SCENARIO 3 -->
+        <div class="scenario-panel" id="tab-intimate">
+            <div class="scenario-header">
+                <h3>Intimate Luxury</h3>
+                <p>Fewer guests (50-75), but an ultra-premium experience for everyone there</p>
+            </div>
+            <div class="scenario-total"><div class="label">Total Budget</div><div class="amount">$50,000</div></div>
+            <div class="budget-table-wrap">
+                <table class="budget-table">
+                    <thead><tr><th>Category</th><th>Details</th><th class="amount-col">Amount</th><th class="pct-col">%</th></tr></thead>
+                    <tbody>
+                        <tr><td>Venue</td><td>Exclusive estate or private property</td><td class="amount-col">$7,000</td><td class="pct-col">14%</td></tr>
+                        <tr><td>Catering</td><td>65 guests @ $120/pp (plated, multi-course)</td><td class="amount-col">$7,800</td><td class="pct-col">15.6%</td></tr>
+                        <tr><td>Bar / Drinks</td><td>Premium open bar, craft cocktails</td><td class="amount-col">$3,500</td><td class="pct-col">7%</td></tr>
+                        <tr><td>Photography</td><td>Best-in-class, editorial style</td><td class="amount-col">$5,500</td><td class="pct-col">11%</td></tr>
+                        <tr><td>Videography</td><td>Cinematic film, drone footage</td><td class="amount-col">$4,500</td><td class="pct-col">9%</td></tr>
+                        <tr><td>DJ / Entertainment</td><td>Live musician for ceremony + DJ for reception</td><td class="amount-col">$3,000</td><td class="pct-col">6%</td></tr>
+                        <tr><td>Florals</td><td>Lush, abundant florals everywhere</td><td class="amount-col">$6,000</td><td class="pct-col">12%</td></tr>
+                        <tr><td>Tent Rental</td><td>Elegant tent with full draping</td><td class="amount-col">$2,500</td><td class="pct-col">5%</td></tr>
+                        <tr><td>Dance Floor</td><td>LED or custom floor</td><td class="amount-col">$700</td><td class="pct-col">1.4%</td></tr>
+                        <tr><td>Cake / Desserts</td><td>Artisan cake + dessert bar</td><td class="amount-col">$1,500</td><td class="pct-col">3%</td></tr>
+                        <tr><td>Coordinator</td><td>Full planning + day-of (Megan)</td><td class="amount-col">$3,000</td><td class="pct-col">6%</td></tr>
+                        <tr><td>Attire</td><td>Designer dress, custom suit</td><td class="amount-col">$2,500</td><td class="pct-col">5%</td></tr>
+                        <tr><td>Hair &amp; Makeup</td><td>Bride + full glam</td><td class="amount-col">$1,000</td><td class="pct-col">2%</td></tr>
+                        <tr><td>Invitations</td><td>Luxury custom stationery</td><td class="amount-col">$800</td><td class="pct-col">1.6%</td></tr>
+                        <tr><td>Favors &amp; Gifts</td><td>Premium guest gifts</td><td class="amount-col">$700</td><td class="pct-col">1.4%</td></tr>
+                    </tbody>
+                    <tfoot><tr><td colspan="2">Total</td><td class="amount-col">$50,000</td><td class="pct-col">100%</td></tr></tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-brand">Compiled by Chief for Megan Flynn</div>
+    <div class="footer-sub">Wedding Coordinator &middot; Cookeville, TN &middot; March 2026</div>
+</footer>
+
+<script>
+// Tabs
+document.querySelectorAll('.scenario-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+        document.querySelectorAll('.scenario-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.scenario-panel').forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+    });
+});
+
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+            setTimeout(() => entry.target.classList.add('visible'), i * 50);
+            observer.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+reveals.forEach(el => observer.observe(el));
+
+// Nav scroll highlight
+const sections = document.querySelectorAll('section[id]');
+window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 100) current = s.getAttribute('id');
+    });
+    document.querySelectorAll('.nav-links a').forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+});
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+        e.preventDefault();
+        document.querySelector(a.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+    });
+});
+</script>
+
+</body>
+</html>
