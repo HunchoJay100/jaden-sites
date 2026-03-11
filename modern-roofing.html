@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modern Roofing Group | Cookeville, TN</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #0a0a0a;
+  --accent: #e63946;
+  --accent-dark: #c1121f;
+  --glass: rgba(255,255,255,0.05);
+  --glass-border: rgba(255,255,255,0.08);
+  --text: #f1f1f1;
+  --text-muted: #888;
+  --gradient-1: linear-gradient(135deg, #e63946, #ff6b6b);
+  --gradient-2: linear-gradient(135deg, #1a1a2e, #16213e);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--primary);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+/* Animated background */
+.bg-grid {
+  position: fixed; top:0; left:0; width:100%; height:100%;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+  z-index: 0;
+  pointer-events: none;
+}
+.bg-glow {
+  position: fixed; top: -200px; right: -200px;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(230,57,70,0.12) 0%, transparent 70%);
+  border-radius: 50%;
+  z-index: 0;
+  pointer-events: none;
+  animation: pulse 8s ease-in-out infinite;
+}
+.bg-glow-2 {
+  position: fixed; bottom: -200px; left: -200px;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(230,57,70,0.06) 0%, transparent 70%);
+  border-radius: 50%;
+  z-index: 0;
+  pointer-events: none;
+  animation: pulse 10s ease-in-out infinite reverse;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.2); opacity: 1; }
+}
+
+/* Nav */
+nav {
+  position: fixed; top:0; left:0; width:100%; z-index:100;
+  background: rgba(10,10,10,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--glass-border);
+  padding: 16px 40px;
+  display: flex; justify-content: space-between; align-items: center;
+  transition: all 0.3s;
+}
+nav.scrolled { background: rgba(10,10,10,0.95); }
+.nav-logo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700; font-size: 1.4rem;
+  background: var(--gradient-1);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  letter-spacing: -0.5px;
+}
+.nav-links { display:flex; gap:32px; list-style:none; }
+.nav-links a {
+  color: var(--text-muted); text-decoration:none; font-size:0.9rem;
+  font-weight: 500; transition: color 0.3s; position: relative;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-links a::after {
+  content:''; position:absolute; bottom:-4px; left:0; width:0; height:2px;
+  background: var(--accent); transition: width 0.3s;
+}
+.nav-links a:hover::after { width:100%; }
+.nav-cta {
+  background: var(--gradient-1); color:#fff; border:none; padding:10px 24px;
+  border-radius:8px; font-weight:600; font-size:0.9rem; cursor:pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.nav-cta:hover { transform:translateY(-2px); box-shadow:0 8px 25px rgba(230,57,70,0.3); }
+
+/* Hero */
+.hero {
+  position: relative; z-index:1;
+  min-height: 100vh; display:flex; align-items:center;
+  padding: 120px 60px 80px;
+}
+.hero-content { max-width:800px; }
+.hero-badge {
+  display:inline-flex; align-items:center; gap:8px;
+  background: var(--glass); border:1px solid var(--glass-border);
+  padding:8px 16px; border-radius:100px; font-size:0.8rem;
+  color: var(--accent); font-weight:500; margin-bottom:24px;
+  backdrop-filter: blur(10px);
+}
+.hero-badge .dot { width:8px; height:8px; border-radius:50%; background:var(--accent); animation: blink 2s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.hero h1 {
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(3rem,7vw,5.5rem); font-weight:900;
+  line-height:1.05; letter-spacing:-2px; margin-bottom:24px;
+}
+.hero h1 span { background:var(--gradient-1); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.hero p { font-size:1.2rem; color:var(--text-muted); max-width:550px; line-height:1.7; margin-bottom:40px; }
+.hero-btns { display:flex; gap:16px; flex-wrap:wrap; }
+.btn-primary {
+  background:var(--gradient-1); color:#fff; border:none; padding:16px 36px;
+  border-radius:12px; font-weight:700; font-size:1rem; cursor:pointer;
+  transition: all 0.3s; display:inline-flex; align-items:center; gap:8px;
+}
+.btn-primary:hover { transform:translateY(-3px); box-shadow:0 12px 35px rgba(230,57,70,0.35); }
+.btn-secondary {
+  background:var(--glass); color:var(--text); border:1px solid var(--glass-border);
+  padding:16px 36px; border-radius:12px; font-weight:600; font-size:1rem;
+  cursor:pointer; transition:all 0.3s; backdrop-filter:blur(10px);
+}
+.btn-secondary:hover { background:rgba(255,255,255,0.1); transform:translateY(-3px); }
+.hero-stats {
+  display:flex; gap:48px; margin-top:60px; padding-top:40px;
+  border-top:1px solid var(--glass-border);
+}
+.stat h3 { font-family:'Space Grotesk',sans-serif; font-size:2.5rem; font-weight:800; background:var(--gradient-1); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.stat p { color:var(--text-muted); font-size:0.85rem; font-weight:500; margin-top:4px; }
+
+/* Sections */
+section { position:relative; z-index:1; padding:100px 60px; }
+.section-header { text-align:center; margin-bottom:60px; }
+.section-label {
+  display:inline-block; background:var(--glass); border:1px solid var(--glass-border);
+  padding:6px 16px; border-radius:100px; font-size:0.75rem; font-weight:600;
+  color:var(--accent); text-transform:uppercase; letter-spacing:2px; margin-bottom:16px;
+}
+.section-header h2 {
+  font-family:'Space Grotesk',sans-serif; font-size:clamp(2rem,4vw,3.2rem);
+  font-weight:800; letter-spacing:-1px;
+}
+.section-header p { color:var(--text-muted); max-width:600px; margin:16px auto 0; line-height:1.7; }
+
+/* Services Tabs */
+.tabs-container { max-width:1100px; margin:0 auto; }
+.tab-buttons {
+  display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-bottom:40px;
+}
+.tab-btn {
+  background:var(--glass); border:1px solid var(--glass-border);
+  color:var(--text-muted); padding:12px 28px; border-radius:10px;
+  font-weight:600; font-size:0.9rem; cursor:pointer; transition:all 0.3s;
+}
+.tab-btn.active, .tab-btn:hover {
+  background:var(--gradient-1); color:#fff; border-color:transparent;
+  box-shadow:0 8px 25px rgba(230,57,70,0.25);
+}
+.tab-panel { display:none; animation: fadeIn 0.4s ease; }
+.tab-panel.active { display:block; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+.services-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:24px; }
+.service-card {
+  background:var(--glass); border:1px solid var(--glass-border);
+  border-radius:16px; padding:36px; transition:all 0.3s;
+  backdrop-filter:blur(10px); position:relative; overflow:hidden;
+}
+.service-card::before {
+  content:''; position:absolute; top:0; left:0; width:100%; height:3px;
+  background:var(--gradient-1); transform:scaleX(0); transition:transform 0.3s;
+  transform-origin: left;
+}
+.service-card:hover::before { transform:scaleX(1); }
+.service-card:hover { border-color:rgba(230,57,70,0.3); transform:translateY(-4px); }
+.service-icon { font-size:2.2rem; margin-bottom:16px; }
+.service-card h3 { font-family:'Space Grotesk',sans-serif; font-size:1.2rem; font-weight:700; margin-bottom:10px; }
+.service-card p { color:var(--text-muted); font-size:0.9rem; line-height:1.7; }
+
+/* Weather */
+.weather-section { background: linear-gradient(180deg, transparent, rgba(230,57,70,0.03), transparent); }
+.weather-card {
+  max-width:900px; margin:0 auto;
+  background:var(--glass); border:1px solid var(--glass-border);
+  border-radius:20px; padding:48px; backdrop-filter:blur(20px);
+  position:relative; overflow:hidden;
+}
+.weather-card::after {
+  content:''; position:absolute; top:-50%; right:-20%;
+  width:300px; height:300px; border-radius:50%;
+  background:radial-gradient(circle, rgba(230,57,70,0.08) 0%, transparent 70%);
+  pointer-events:none;
+}
+.weather-top { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:24px; margin-bottom:36px; }
+.weather-current h3 { font-size:0.9rem; color:var(--text-muted); font-weight:500; margin-bottom:8px; }
+.weather-temp { font-family:'Space Grotesk',sans-serif; font-size:4.5rem; font-weight:900; line-height:1; }
+.weather-temp span { font-size:2rem; color:var(--text-muted); }
+.weather-desc { color:var(--text-muted); font-size:1rem; margin-top:8px; }
+.weather-details { display:flex; gap:24px; }
+.weather-detail {
+  background:rgba(255,255,255,0.03); border:1px solid var(--glass-border);
+  padding:16px 20px; border-radius:12px; text-align:center;
+}
+.weather-detail .label { font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; }
+.weather-detail .value { font-family:'Space Grotesk',sans-serif; font-size:1.3rem; font-weight:700; margin-top:4px; }
+.forecast-grid {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(110px,1fr)); gap:12px;
+}
+.forecast-day {
+  background:rgba(255,255,255,0.03); border:1px solid var(--glass-border);
+  border-radius:12px; padding:20px 12px; text-align:center; transition:all 0.3s;
+}
+.forecast-day:hover { border-color:rgba(230,57,70,0.3); background:rgba(230,57,70,0.05); }
+.forecast-day .day { font-size:0.8rem; color:var(--text-muted); font-weight:600; }
+.forecast-day .icon { font-size:1.8rem; margin:8px 0; }
+.forecast-day .temps { font-family:'Space Grotesk',sans-serif; font-weight:700; }
+.forecast-day .temps .low { color:var(--text-muted); font-weight:400; }
+.weather-alert {
+  margin-top:20px; padding:16px 20px; border-radius:10px;
+  background:rgba(230,57,70,0.1); border:1px solid rgba(230,57,70,0.3);
+  font-size:0.85rem; display:flex; align-items:center; gap:10px;
+}
+.weather-note {
+  text-align:center; margin-top:20px; font-size:0.75rem; color:var(--text-muted);
+}
+
+/* About */
+.about-grid { display:grid; grid-template-columns:1fr 1fr; gap:60px; max-width:1100px; margin:0 auto; align-items:center; }
+.about-content h3 { font-family:'Space Grotesk',sans-serif; font-size:1.8rem; font-weight:700; margin-bottom:16px; }
+.about-content p { color:var(--text-muted); line-height:1.8; margin-bottom:20px; }
+.about-features { list-style:none; }
+.about-features li {
+  display:flex; align-items:center; gap:12px; padding:12px 0;
+  border-bottom:1px solid var(--glass-border); color:var(--text-muted); font-size:0.95rem;
+}
+.about-features li .check { color:var(--accent); font-weight:700; font-size:1.2rem; }
+.cert-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.cert-card {
+  background:var(--glass); border:1px solid var(--glass-border);
+  border-radius:14px; padding:28px; text-align:center;
+  transition:all 0.3s;
+}
+.cert-card:hover { border-color:rgba(230,57,70,0.3); transform:translateY(-3px); }
+.cert-card .cert-icon { font-size:2.5rem; margin-bottom:12px; }
+.cert-card h4 { font-family:'Space Grotesk',sans-serif; font-weight:700; margin-bottom:6px; }
+.cert-card p { color:var(--text-muted); font-size:0.8rem; }
+
+/* Areas */
+.areas-container { max-width:900px; margin:0 auto; }
+.areas-list {
+  display:flex; flex-wrap:wrap; gap:12px; justify-content:center;
+}
+.area-tag {
+  background:var(--glass); border:1px solid var(--glass-border);
+  padding:10px 24px; border-radius:100px; font-size:0.9rem; font-weight:500;
+  transition:all 0.3s; cursor:default;
+}
+.area-tag:hover { border-color:var(--accent); color:var(--accent); background:rgba(230,57,70,0.05); }
+.area-tag.home { background:var(--gradient-1); color:#fff; border-color:transparent; font-weight:700; }
+
+/* Contact */
+.contact-section { background: linear-gradient(180deg, transparent, rgba(230,57,70,0.05)); }
+.contact-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px; max-width:1000px; margin:0 auto; }
+.contact-card {
+  background:var(--glass); border:1px solid var(--glass-border);
+  border-radius:16px; padding:36px; text-align:center;
+  transition:all 0.3s; backdrop-filter:blur(10px);
+}
+.contact-card:hover { border-color:rgba(230,57,70,0.3); transform:translateY(-4px); }
+.contact-card .icon { font-size:2.5rem; margin-bottom:16px; }
+.contact-card h3 { font-family:'Space Grotesk',sans-serif; font-weight:700; margin-bottom:8px; }
+.contact-card p { color:var(--text-muted); font-size:0.95rem; line-height:1.6; }
+.contact-card a { color:var(--accent); text-decoration:none; font-weight:600; transition:color 0.3s; }
+.contact-card a:hover { color:#ff6b6b; }
+
+/* CTA */
+.cta-section {
+  text-align:center; padding:100px 60px;
+  background:linear-gradient(180deg, rgba(230,57,70,0.05), transparent);
+}
+.cta-section h2 {
+  font-family:'Space Grotesk',sans-serif; font-size:clamp(2rem,4vw,3.5rem);
+  font-weight:900; letter-spacing:-1px; margin-bottom:16px;
+}
+.cta-section p { color:var(--text-muted); font-size:1.1rem; margin-bottom:36px; }
+
+/* Footer */
+footer {
+  position:relative; z-index:1;
+  border-top:1px solid var(--glass-border);
+  padding:40px 60px; display:flex; justify-content:space-between;
+  align-items:center; flex-wrap:wrap; gap:16px;
+}
+.footer-logo { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.1rem; color:var(--text-muted); }
+.footer-links { display:flex; gap:24px; }
+.footer-links a { color:var(--text-muted); text-decoration:none; font-size:0.85rem; transition:color 0.3s; }
+.footer-links a:hover { color:var(--accent); }
+.footer-copy { color:var(--text-muted); font-size:0.8rem; }
+
+/* Mobile Nav */
+.mobile-toggle { display:none; background:none; border:none; color:var(--text); font-size:1.5rem; cursor:pointer; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width:8px; }
+::-webkit-scrollbar-track { background:var(--primary); }
+::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.1); border-radius:4px; }
+::-webkit-scrollbar-thumb:hover { background:rgba(255,255,255,0.2); }
+
+/* Responsive */
+@media (max-width:768px) {
+  .hero { padding:120px 24px 60px; }
+  section { padding:60px 24px; }
+  .hero-stats { flex-wrap:wrap; gap:24px; }
+  .about-grid { grid-template-columns:1fr; gap:40px; }
+  .cert-grid { grid-template-columns:1fr; }
+  .weather-top { flex-direction:column; }
+  .weather-details { flex-wrap:wrap; }
+  .nav-links { display:none; }
+  .mobile-toggle { display:block; }
+  nav { padding:16px 24px; }
+  footer { padding:30px 24px; flex-direction:column; text-align:center; }
+  .hero-btns { flex-direction:column; }
+  .btn-primary, .btn-secondary { width:100%; justify-content:center; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<div class="bg-glow-2"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">MODERN ROOFING GROUP</div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#weather">Weather</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#areas">Service Areas</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get Free Estimate</button>
+  <button class="mobile-toggle" onclick="toggleMobileNav()">&#9776;</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge"><span class="dot"></span> Owens Corning Certified Contractor</div>
+    <h1>Built to <span>Protect.</span><br>Driven to <span>Perform.</span></h1>
+    <p>Premier roofing and exterior services in Middle Tennessee. Locally owned, fully certified, and backed by a 10-year workmanship guarantee.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+        Schedule Free Inspection
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+      <button class="btn-secondary" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">Explore Services</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><h3>A</h3><p>BBB Rating</p></div>
+      <div class="stat"><h3>10yr</h3><p>Workmanship Guarantee</p></div>
+      <div class="stat"><h3>7</h3><p>Active Certifications</p></div>
+      <div class="stat"><h3>24/7</h3><p>Storm Response</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-header">
+    <span class="section-label">What We Do</span>
+    <h2>Full-Spectrum Roofing & Exteriors</h2>
+    <p>From emergency tarping to complete roof replacements, we handle it all with certified precision and guaranteed quality.</p>
+  </div>
+  <div class="tabs-container">
+    <div class="tab-buttons">
+      <button class="tab-btn active" onclick="switchTab('roofing')">Roofing</button>
+      <button class="tab-btn" onclick="switchTab('exteriors')">Exteriors</button>
+      <button class="tab-btn" onclick="switchTab('storm')">Storm & Insurance</button>
+      <button class="tab-btn" onclick="switchTab('commercial')">Commercial</button>
+    </div>
+
+    <div id="tab-roofing" class="tab-panel active">
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">&#9650;</div>
+          <h3>Asphalt Shingle Roofing</h3>
+          <p>Expert installation and replacement of asphalt shingle systems. Industry-leading materials from Owens Corning with full warranty coverage.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">&#9670;</div>
+          <h3>Metal Roofing</h3>
+          <p>Durable, long-lasting metal roof installation designed to withstand Tennessee's toughest weather. Built for decades of protection.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">&#128736;</div>
+          <h3>Roof Repair</h3>
+          <p>Fast, reliable repairs for leaks, missing shingles, flashing issues, and storm damage. We get your roof sealed and secure.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">&#127968;</div>
+          <h3>Full Roof Replacement</h3>
+          <p>Complete tear-off and replacement with premium materials. Backed by our 10-year workmanship guarantee and manufacturer warranties.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">&#128225;</div>
+          <h3>Drone Inspections</h3>
+          <p>Advanced drone technology for thorough, non-invasive roof inspections. Get a complete picture of your roof's condition without anyone climbing up.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">&#9889;</div>
+          <h3>Emergency Tarping</h3>
+          <p>24/7 emergency response to protect your home from further damage. We'll get a tarp secured fast while we plan the full repair.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-exteriors" class="tab-panel">
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">&#127960;</div>
+          <h3>Vinyl Siding</h3>
+          <p>Quality vinyl siding installation and replacement that transforms your home's exterior while adding lasting protection.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">&#129521;</div>
+          <h3>Fiber Cement Siding</h3>
+          <p>Premium fiber cement siding for a high-end finish with superior durability, fire resistance, and weather protection.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">&#127754;</div>
+          <h3>Seamless Gutters</h3>
+          <p>Custom-fabricated seamless gutter systems that channel water away from your foundation efficiently and cleanly.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">&#128737;</div>
+          <h3>Gutter Guards</h3>
+          <p>End clogged gutters forever. Our guard systems keep debris out while letting water flow freely year-round.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-storm" class="tab-panel">
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">&#127786;</div>
+          <h3>Storm Damage Assessment</h3>
+          <p>Comprehensive damage evaluation using ground-level and drone inspection to document every issue for insurance claims.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">&#128196;</div>
+          <h3>Insurance Claim Assistance</h3>
+          <p>We work directly with your insurance company, documenting damage, providing estimates, and ensuring you get the coverage you deserve.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">&#9888;</div>
+          <h3>24/7 Storm Response</h3>
+          <p>When severe weather strikes, we respond immediately with emergency tarping and damage mitigation to protect your property.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-commercial" class="tab-panel">
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">&#127970;</div>
+          <h3>TPO Roofing Systems</h3>
+          <p>Commercial-grade TPO membrane roofing for flat and low-slope commercial buildings. Energy-efficient and built to last.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">&#128200;</div>
+          <h3>Commercial Inspections</h3>
+          <p>Detailed inspections and maintenance plans for commercial properties. Protect your business investment with proactive roof care.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">&#128736;</div>
+          <h3>Commercial Repairs</h3>
+          <p>Fast-turnaround repairs for commercial roofing systems. Minimize business disruption with our efficient, experienced crews.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WEATHER -->
+<section id="weather" class="weather-section">
+  <div class="section-header">
+    <span class="section-label">Live Conditions</span>
+    <h2>Cookeville Weather Station</h2>
+    <p>Real-time weather data powering our scheduling and storm response operations.</p>
+  </div>
+  <div class="weather-card">
+    <div class="weather-top">
+      <div class="weather-current">
+        <h3>COOKEVILLE, TN &mdash; RIGHT NOW</h3>
+        <div class="weather-temp" id="weather-temp">--<span>&deg;F</span></div>
+        <div class="weather-desc" id="weather-desc">Loading conditions...</div>
+      </div>
+      <div class="weather-details">
+        <div class="weather-detail">
+          <div class="label">Wind</div>
+          <div class="value" id="weather-wind">--</div>
+        </div>
+        <div class="weather-detail">
+          <div class="label">High</div>
+          <div class="value" id="weather-high">--</div>
+        </div>
+        <div class="weather-detail">
+          <div class="label">Low</div>
+          <div class="value" id="weather-low">--</div>
+        </div>
+      </div>
+    </div>
+    <div class="forecast-grid" id="forecast-grid">
+      <!-- Filled by JS -->
+    </div>
+    <div id="weather-alert-container"></div>
+    <div class="weather-note">Data from National Weather Service &bull; Updates automatically</div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header">
+    <span class="section-label">Who We Are</span>
+    <h2>Cookeville's Certified Roofing Experts</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-content">
+      <h3>Locally Owned. Fully Certified. Always Reliable.</h3>
+      <p>Modern Roofing Group is a locally owned and operated roofing and exterior services company based in Cookeville, Tennessee. We combine advanced technology, certified expertise, and old-fashioned hard work to deliver superior results on every project.</p>
+      <p>As proud members of the Owens Corning Roofing Contractor Network, we hold ourselves to the highest industry standards &mdash; because your home deserves nothing less.</p>
+      <ul class="about-features">
+        <li><span class="check">&#10003;</span> 10-Year Workmanship Guarantee</li>
+        <li><span class="check">&#10003;</span> Owens Corning Contractor Network Member</li>
+        <li><span class="check">&#10003;</span> Advanced Drone Inspection Technology</li>
+        <li><span class="check">&#10003;</span> 24/7 Emergency Storm Response</li>
+        <li><span class="check">&#10003;</span> Insurance Claim Specialists</li>
+        <li><span class="check">&#10003;</span> BBB A-Rated Business</li>
+      </ul>
+    </div>
+    <div class="cert-grid">
+      <div class="cert-card">
+        <div class="cert-icon">&#127942;</div>
+        <h4>Owens Corning</h4>
+        <p>Certified Contractor Network &bull; 7 Active Certifications</p>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">&#9733;</div>
+        <h4>BBB A-Rated</h4>
+        <p>Zero Complaints Filed &bull; Trusted Since 2024</p>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">&#128225;</div>
+        <h4>Drone Tech</h4>
+        <p>Advanced Aerial Inspection &bull; Full Damage Documentation</p>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">&#128737;</div>
+        <h4>10-Year Guarantee</h4>
+        <p>Full Workmanship Warranty &bull; Complete Peace of Mind</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICE AREAS -->
+<section id="areas">
+  <div class="section-header">
+    <span class="section-label">Coverage</span>
+    <h2>Service Areas</h2>
+    <p>Proudly serving Middle Tennessee with reliable roofing and exterior services.</p>
+  </div>
+  <div class="areas-container">
+    <div class="areas-list">
+      <span class="area-tag home">&#128205; Cookeville</span>
+      <span class="area-tag">Nashville</span>
+      <span class="area-tag">Franklin</span>
+      <span class="area-tag">Mount Juliet</span>
+      <span class="area-tag">Sparta</span>
+      <span class="area-tag">Livingston</span>
+      <span class="area-tag">Crossville</span>
+      <span class="area-tag">Fairfield Glade</span>
+      <span class="area-tag">Smithville</span>
+      <span class="area-tag">Rickman</span>
+      <span class="area-tag">Baxter</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+  <div class="section-header">
+    <span class="section-label">Get In Touch</span>
+    <h2>Ready to Get Started?</h2>
+    <p>Free inspections. Transparent pricing. No pressure. Just honest roofing.</p>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-card">
+      <div class="icon">&#128222;</div>
+      <h3>Call Us</h3>
+      <p><a href="tel:9314008788">(931) 400-8788</a></p>
+      <p>Mon-Sat 8AM - 8PM</p>
+    </div>
+    <div class="contact-card">
+      <div class="icon">&#128231;</div>
+      <h3>Email Us</h3>
+      <p><a href="mailto:modernroofing931@gmail.com">modernroofing931@gmail.com</a></p>
+      <p>We respond within 24 hours</p>
+    </div>
+    <div class="contact-card">
+      <div class="icon">&#128205;</div>
+      <h3>Visit Us</h3>
+      <p>1227 N Washington Ave<br>Suite 202<br>Cookeville, TN 38501</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section" style="position:relative;z-index:1;">
+  <h2>Protect What Matters Most.</h2>
+  <p>Schedule your free roof inspection today &mdash; no strings attached.</p>
+  <button class="btn-primary" onclick="window.location.href='tel:9314008788'">
+    Call (931) 400-8788
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </button>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">MODERN ROOFING GROUP</div>
+  <div class="footer-links">
+    <a href="https://www.facebook.com/ModernRoofingGroup/" target="_blank">Facebook</a>
+    <a href="https://www.instagram.com/modernroofinggroup/" target="_blank">Instagram</a>
+    <a href="https://www.youtube.com/@ModernRoofingGroup931" target="_blank">YouTube</a>
+  </div>
+  <div class="footer-copy">&copy; 2026 Modern Roofing Group LLC. All rights reserved.</div>
+</footer>
+
+<script>
+// Tab switching
+function switchTab(tab) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// Nav scroll effect
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// Mobile nav
+function toggleMobileNav() {
+  const links = document.querySelector('.nav-links');
+  if (links.style.display === 'flex') {
+    links.style.display = 'none';
+  } else {
+    links.style.display = 'flex';
+    links.style.flexDirection = 'column';
+    links.style.position = 'absolute';
+    links.style.top = '70px';
+    links.style.left = '0';
+    links.style.width = '100%';
+    links.style.background = 'rgba(10,10,10,0.95)';
+    links.style.padding = '20px';
+    links.style.borderBottom = '1px solid rgba(255,255,255,0.08)';
+  }
+}
+
+// Weather - live from NWS API
+async function loadWeather() {
+  try {
+    const forecastRes = await fetch('https://api.weather.gov/gridpoints/OHX/96,60/forecast', {
+      headers: { 'User-Agent': 'ModernRoofingGroup/1.0' }
+    });
+    const forecastData = await forecastRes.json();
+    const periods = forecastData.properties.periods;
+
+    // Current / today
+    const now = periods[0];
+    const tonight = periods.find(p => p.name.toLowerCase().includes('tonight') || p.name.toLowerCase().includes('night'));
+
+    const tempEl = document.getElementById('weather-temp');
+    tempEl.innerHTML = now.temperature + '<span>&deg;F</span>';
+    document.getElementById('weather-desc').textContent = now.shortForecast;
+    document.getElementById('weather-wind').textContent = now.windSpeed;
+    document.getElementById('weather-high').textContent = now.temperature + '°F';
+    document.getElementById('weather-low').textContent = tonight ? tonight.temperature + '°F' : '--';
+
+    // Extended forecast
+    const grid = document.getElementById('forecast-grid');
+    grid.innerHTML = '';
+    const dayPeriods = periods.filter(p => p.isDaytime).slice(0, 7);
+    const icons = { 'Sunny': '☀️', 'Clear': '🌙', 'Mostly Sunny': '🌤️', 'Partly Sunny': '⛅', 'Mostly Cloudy': '🌥️', 'Cloudy': '☁️', 'Rain': '🌧️', 'Showers': '🌧️', 'Thunderstorms': '⛈️', 'Snow': '❄️', 'Fog': '🌫️' };
+    function getIcon(forecast) {
+      for (const [key, icon] of Object.entries(icons)) {
+        if (forecast.toLowerCase().includes(key.toLowerCase())) return icon;
+      }
+      return '🌤️';
+    }
+    dayPeriods.forEach((p, i) => {
+      const nightP = periods.find(np => !np.isDaytime && np.number === p.number + 1);
+      const div = document.createElement('div');
+      div.className = 'forecast-day';
+      div.innerHTML = '<div class="day">' + (i === 0 ? 'Today' : p.name.substring(0, 3)) + '</div>' +
+        '<div class="icon">' + getIcon(p.shortForecast) + '</div>' +
+        '<div class="temps">' + p.temperature + '° <span class="low">' + (nightP ? nightP.temperature + '°' : '') + '</span></div>';
+      grid.appendChild(div);
+    });
+
+    // Alerts
+    const alertRes = await fetch('https://api.weather.gov/alerts/active?point=36.1628,-85.5016', {
+      headers: { 'User-Agent': 'ModernRoofingGroup/1.0' }
+    });
+    const alertData = await alertRes.json();
+    const container = document.getElementById('weather-alert-container');
+    if (alertData.features && alertData.features.length > 0) {
+      alertData.features.forEach(a => {
+        const div = document.createElement('div');
+        div.className = 'weather-alert';
+        div.innerHTML = '&#9888; <strong>' + a.properties.event + ':</strong>&nbsp;' + a.properties.headline;
+        container.appendChild(div);
+      });
+    }
+  } catch (e) {
+    document.getElementById('weather-desc').textContent = 'Weather data temporarily unavailable';
+  }
+}
+
+loadWeather();
+
+// Intersection Observer for animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.service-card, .cert-card, .contact-card, .forecast-day').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
