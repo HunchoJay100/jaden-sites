@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flynn Development | Settle Up — Jaden & Dad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #0a0a0a;
+  --gold: #C5A55A;
+  --gold-light: #D4BA78;
+  --gold-dark: #A8893D;
+  --glass: rgba(197,165,90,0.04);
+  --glass-border: rgba(197,165,90,0.12);
+  --glass-hover: rgba(197,165,90,0.08);
+  --text: #f1f1f1;
+  --text-muted: #888;
+  --gradient-gold: linear-gradient(135deg, #C5A55A, #D4BA78, #A8893D);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--primary);
+  color: var(--text);
+  overflow-x: hidden;
+}
+.bg-texture {
+  position: fixed; top:0; left:0; width:100%; height:100%;
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(197,165,90,0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(197,165,90,0.02) 0%, transparent 50%),
+    linear-gradient(rgba(255,255,255,0.01) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.01) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 80px 80px, 80px 80px;
+  z-index: 0; pointer-events: none;
+}
+.bg-glow {
+  position: fixed; top: -300px; right: -200px;
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(197,165,90,0.06) 0%, transparent 70%);
+  border-radius: 50%; z-index: 0; pointer-events: none;
+  animation: pulse 10s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.15); opacity: 1; }
+}
+.gold-line { height: 3px; background: var(--gradient-gold); border: none; }
+
+.container {
+  position: relative; z-index: 1;
+  max-width: 800px; margin: 0 auto;
+  padding: 0 30px;
+}
+
+/* Header */
+header {
+  position: relative; z-index: 1;
+  padding: 40px 30px 32px;
+  border-bottom: 1px solid var(--glass-border);
+}
+.header-inner {
+  max-width: 800px; margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px;
+}
+.brand { display: flex; align-items: center; gap: 16px; }
+.brand img { height: 60px; border-radius: 8px; }
+.brand-text h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.3rem; font-weight: 700;
+  background: var(--gradient-gold);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  letter-spacing: 2px; text-transform: uppercase;
+}
+.brand-text .tagline {
+  font-size: 0.6rem; font-weight: 600;
+  color: var(--gold); letter-spacing: 4px;
+  text-transform: uppercase; margin-top: 2px;
+}
+.invoice-meta { text-align: right; }
+.invoice-meta p { color: var(--text-muted); font-size: 0.85rem; line-height: 1.9; }
+.invoice-meta strong { color: var(--gold-light); }
+
+/* Invoice Title */
+.invoice-title {
+  position: relative; z-index: 1;
+  text-align: center; padding: 50px 30px 20px;
+}
+.invoice-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--glass); border: 1px solid var(--glass-border);
+  padding: 8px 20px; border-radius: 100px; font-size: 0.7rem;
+  color: var(--gold); font-weight: 600;
+  letter-spacing: 3px; text-transform: uppercase;
+}
+.invoice-title h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(2rem, 5vw, 3rem); font-weight: 900;
+  margin-top: 20px;
+}
+.invoice-title h2 span {
+  background: var(--gradient-gold);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+/* Parties */
+.parties {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: 1fr auto 1fr;
+  gap: 20px; align-items: center;
+  max-width: 800px; margin: 40px auto;
+  padding: 0 30px;
+}
+.party-card {
+  background: var(--glass); border: 1px solid var(--glass-border);
+  border-radius: 14px; padding: 24px;
+  backdrop-filter: blur(10px);
+}
+.party-card .label {
+  font-size: 0.65rem; font-weight: 600; letter-spacing: 3px;
+  color: var(--gold); text-transform: uppercase; margin-bottom: 8px;
+}
+.party-card .name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.2rem; font-weight: 700;
+}
+.party-card .detail { color: var(--text-muted); font-size: 0.85rem; margin-top: 4px; }
+.arrow {
+  font-size: 1.5rem; color: var(--gold);
+  text-align: center;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+}
+
+/* Table Section */
+.table-section {
+  position: relative; z-index: 1;
+  padding: 40px 30px;
+}
+.group-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 3px;
+  color: var(--gold); text-transform: uppercase;
+  margin-bottom: 12px; margin-top: 32px;
+}
+.group-label:first-child { margin-top: 0; }
+
+.inv-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 5px;
+  margin-bottom: 8px;
+}
+.inv-table th {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.65rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 3px;
+  color: var(--gold); padding: 10px 18px;
+  text-align: left;
+  border-bottom: 2px solid rgba(197,165,90,0.2);
+}
+.inv-table th:last-child { text-align: right; }
+.inv-table td {
+  padding: 14px 18px;
+  font-size: 0.92rem;
+  background: var(--glass);
+}
+.inv-table td:first-child {
+  border-radius: 10px 0 0 10px;
+  border-left: 1px solid var(--glass-border);
+  color: var(--text-muted);
+}
+.inv-table td:last-child {
+  border-radius: 0 10px 10px 0;
+  border-right: 1px solid var(--glass-border);
+  text-align: right;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+}
+.inv-table tr.group-total td {
+  background: rgba(197,165,90,0.08);
+  font-weight: 700;
+  font-family: 'Space Grotesk', sans-serif;
+  color: var(--gold-light);
+  border-top: 2px solid rgba(197,165,90,0.2);
+}
+
+/* Grand Total */
+.grand-total {
+  position: relative; z-index: 1;
+  max-width: 800px; margin: 20px auto 40px;
+  padding: 0 30px;
+}
+.grand-total-card {
+  background: var(--gradient-gold);
+  border-radius: 16px;
+  padding: 32px 28px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.grand-total-card .gt-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.1rem; font-weight: 800;
+  color: #0a0a0a; text-transform: uppercase;
+  letter-spacing: 2px;
+}
+.grand-total-card .gt-amount {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2.2rem; font-weight: 900;
+  color: #0a0a0a;
+}
+
+/* Footer */
+footer {
+  position: relative; z-index: 1;
+  text-align: center; padding: 40px 30px;
+  border-top: 1px solid var(--glass-border);
+}
+footer img { height: 45px; margin-bottom: 10px; border-radius: 6px; }
+footer .tagline-footer {
+  font-size: 0.6rem; font-weight: 600; letter-spacing: 4px;
+  color: var(--gold); text-transform: uppercase; margin-bottom: 10px;
+}
+footer p { color: var(--text-muted); font-size: 0.75rem; }
+footer .note {
+  margin-top: 16px; font-size: 0.8rem; color: var(--text-muted);
+  font-style: italic; max-width: 500px; margin-left: auto; margin-right: auto;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  header, .invoice-title, .table-section, footer { padding-left: 16px; padding-right: 16px; }
+  .header-inner { flex-direction: column; align-items: flex-start; }
+  .invoice-meta { text-align: left; }
+  .parties { grid-template-columns: 1fr; padding: 0 16px; }
+  .arrow { transform: rotate(90deg); }
+  .grand-total { padding: 0 16px; }
+  .grand-total-card { flex-direction: column; gap: 8px; text-align: center; }
+  .inv-table td, .inv-table th { padding: 12px 14px; font-size: 0.85rem; }
+  .brand img { height: 50px; }
+}
+
+@media print {
+  .bg-texture, .bg-glow { display: none; }
+  body { background: #fff; color: #111; }
+  .inv-table td { background: #f8f6f0; }
+  .inv-table tr.group-total td { background: #f0e8d0; }
+  .grand-total-card { background: #C5A55A; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-texture"></div>
+<div class="bg-glow"></div>
+
+<hr class="gold-line">
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="brand">
+      <img src="fd-logo.png" alt="Flynn Development">
+      <div class="brand-text">
+        <h1>Flynn Development</h1>
+        <p class="tagline">Design &bull; Construct &bull; Transform</p>
+      </div>
+    </div>
+    <div class="invoice-meta">
+      <p><strong>Invoice #:</strong> FD-SETTLE-0311</p>
+      <p><strong>Date:</strong> March 11, 2026</p>
+      <p><strong>Status:</strong> Due</p>
+    </div>
+  </div>
+</header>
+
+<!-- TITLE -->
+<div class="invoice-title">
+  <div class="invoice-badge">Internal Settle Up</div>
+  <h2>Partner <span>Settlement</span></h2>
+</div>
+
+<!-- PARTIES -->
+<div class="parties">
+  <div class="party-card">
+    <p class="label">Amount Owed By</p>
+    <p class="name">Jason Flynn</p>
+    <p class="detail">Flynn Development &mdash; Leadership</p>
+  </div>
+  <div class="arrow">&rarr;</div>
+  <div class="party-card">
+    <p class="label">Amount Owed To</p>
+    <p class="name">Jaden Flynn</p>
+    <p class="detail">Flynn Development &mdash; Founder / Operator</p>
+  </div>
+</div>
+
+<!-- LINE ITEMS -->
+<div class="table-section">
+  <div class="container">
+
+    <p class="group-label">Batch 1</p>
+    <table class="inv-table">
+      <thead>
+        <tr><th>Description</th><th>Amount</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Jerome bill from Gerald</td><td>&mdash;</td></tr>
+        <tr><td>Trailer tires</td><td>&mdash;</td></tr>
+        <tr><td>Jordan vacation pay (50%)</td><td>&mdash;</td></tr>
+        <tr><td>Smart board (50%)</td><td>&mdash;</td></tr>
+        <tr class="group-total"><td>Batch 1 Total</td><td>$1,345.00</td></tr>
+      </tbody>
+    </table>
+
+    <p class="group-label">Batch 2</p>
+    <table class="inv-table">
+      <thead>
+        <tr><th>Description</th><th>Amount</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Jordan handles at your spec</td><td>$250.00</td></tr>
+        <tr><td>Jerome other bill (missed)</td><td>$170.00</td></tr>
+        <tr><td>Home show (50%)</td><td>$430.50</td></tr>
+        <tr class="group-total"><td>Batch 2 Total</td><td>$850.50</td></tr>
+      </tbody>
+    </table>
+
+    <p class="group-label">Batch 3</p>
+    <table class="inv-table">
+      <thead>
+        <tr><th>Description</th><th>Amount</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Leftover David dumpster bill (30%)</td><td>$297.96</td></tr>
+        <tr><td>Creative Audio Board</td><td>$392.00</td></tr>
+        <tr class="group-total"><td>Batch 3 Total</td><td>$689.96</td></tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+<!-- GRAND TOTAL -->
+<div class="grand-total">
+  <div class="grand-total-card">
+    <span class="gt-label">Total Due to Jaden</span>
+    <span class="gt-amount">$2,885.46</span>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<hr class="gold-line">
+<footer>
+  <img src="fd-logo.png" alt="Flynn Development">
+  <p class="tagline-footer">Design &bull; Construct &bull; Transform</p>
+  <p>Cookeville, Tennessee &bull; &copy; 2026 Flynn Development</p>
+  <p class="note">This is an internal partner settlement document. If there are any discrepancies or additional items to reconcile, reach out to Chief and we'll get it squared away.</p>
+</footer>
+
+</body>
+</html>
