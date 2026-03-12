@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One Last Ride — Dallas</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;600;700;800;900&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --red: #ff3b30;
+            --orange: #ff6b2b;
+            --gold: #ffb800;
+            --blue: #0a84ff;
+            --green: #30d158;
+            --bg: #000000;
+            --card: rgba(28, 28, 30, 0.8);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text: #f5f5f7;
+            --text-secondary: rgba(235, 235, 245, 0.6);
+            --text-tertiary: rgba(235, 235, 245, 0.3);
+            --separator: rgba(84, 84, 88, 0.35);
+            --accent: linear-gradient(135deg, #ff3b30, #ff6b2b, #ffb800);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* ===== HERO IMAGE ===== */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 0 24px 80px;
+            overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background:
+                linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.7) 70%, #000 100%),
+                url('https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=1600&q=80') center/cover no-repeat;
+            z-index: 0;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 680px;
+        }
+        .hero-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 16px;
+            background: rgba(255, 59, 48, 0.15);
+            border: 1px solid rgba(255, 59, 48, 0.3);
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            color: var(--red);
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            animation: fadeUp 0.8s ease-out 0.2s both;
+        }
+        .hero h1 {
+            font-family: 'Orbitron', -apple-system, sans-serif;
+            font-size: clamp(40px, 11vw, 96px);
+            font-weight: 900;
+            letter-spacing: 2px;
+            line-height: 1;
+            margin-bottom: 12px;
+            background: var(--accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeUp 0.8s ease-out 0.4s both;
+        }
+        .hero-sub {
+            font-size: 15px;
+            font-weight: 500;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            animation: fadeUp 0.8s ease-out 0.5s both;
+        }
+        .hero p {
+            font-size: 18px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            animation: fadeUp 0.8s ease-out 0.6s both;
+        }
+        .hero p strong { color: var(--text); }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            animation: fadeUp 0.8s ease-out 1s both;
+        }
+        .scroll-hint span {
+            font-size: 10px;
+            letter-spacing: 3px;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+        }
+        .scroll-hint .line {
+            width: 1px;
+            height: 32px;
+            background: linear-gradient(to bottom, var(--red), transparent);
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* ===== iOS CARD SECTIONS ===== */
+        .ios-section {
+            padding: 80px 20px;
+            position: relative;
+            z-index: 2;
+        }
+        .ios-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .ios-section-label {
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 8px;
+            padding-left: 4px;
+        }
+        .ios-section-title {
+            font-size: clamp(28px, 6vw, 40px);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+        .ios-section-desc {
+            font-size: 17px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+        }
+
+        /* ===== STATS ROW ===== */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            padding: 0 20px;
+            max-width: 800px;
+            margin: -40px auto 0;
+            position: relative;
+            z-index: 3;
+        }
+        .stat-card {
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 20px 12px;
+            text-align: center;
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+        }
+        .stat-num {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(20px, 4vw, 28px);
+            font-weight: 800;
+            background: var(--accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .stat-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
+            margin-top: 4px;
+        }
+
+        /* ===== WHAT IS A TRACK DAY ===== */
+        .track-day-writeup {
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 40px 32px;
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            margin-bottom: 24px;
+        }
+        .track-day-writeup h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        .track-day-writeup p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+        .track-day-writeup p:last-child { margin-bottom: 0; }
+        .track-day-writeup strong { color: var(--text); }
+
+        /* ===== IMAGE BREAK ===== */
+        .img-break {
+            width: 100%;
+            height: 400px;
+            position: relative;
+            overflow: hidden;
+            margin: 0;
+        }
+        .img-break img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .img-break .overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(to bottom, #000 0%, transparent 20%, transparent 80%, #000 100%);
+        }
+        .img-break .caption {
+            position: absolute;
+            bottom: 32px;
+            left: 32px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+        }
+
+        /* ===== iOS LIST CARDS ===== */
+        .ios-list {
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            overflow: hidden;
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+        }
+        .ios-list-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--separator);
+        }
+        .ios-list-item:last-child { border-bottom: none; }
+        .ios-list-icon {
+            flex-shrink: 0;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            margin-top: 2px;
+        }
+        .ios-list-icon.green { background: rgba(48, 209, 88, 0.15); }
+        .ios-list-icon.red { background: rgba(255, 59, 48, 0.15); }
+        .ios-list-icon.orange { background: rgba(255, 149, 0, 0.15); }
+        .ios-list-icon.blue { background: rgba(10, 132, 255, 0.15); }
+        .ios-list-text h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        .ios-list-text p {
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--text-secondary);
+        }
+
+        /* ===== COMPARISON ===== */
+        .compare-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .compare-card {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 28px 24px;
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+        }
+        .compare-card.danger { border: 1px solid rgba(255, 59, 48, 0.2); }
+        .compare-card.safe { border: 1px solid rgba(48, 209, 88, 0.2); }
+        .compare-card h3 {
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+        .compare-card.danger h3 { color: var(--red); }
+        .compare-card.safe h3 { color: var(--green); }
+        .compare-card li {
+            list-style: none;
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--text-secondary);
+            padding: 7px 0;
+            border-bottom: 1px solid var(--separator);
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        .compare-card li:last-child { border: none; }
+        .compare-card.danger li::before {
+            content: '\2717';
+            color: var(--red);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .compare-card.safe li::before {
+            content: '\2713';
+            color: var(--green);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        /* ===== SCHEDULE ===== */
+        .schedule-month {
+            margin-bottom: 24px;
+        }
+        .schedule-month-label {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--orange);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 0 4px 8px;
+        }
+        .schedule-list {
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            overflow: hidden;
+            backdrop-filter: blur(40px);
+        }
+        .schedule-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--separator);
+        }
+        .schedule-item:last-child { border: none; }
+        .schedule-item .dates {
+            font-size: 15px;
+            font-weight: 600;
+            min-width: 100px;
+        }
+        .schedule-item .track {
+            font-size: 14px;
+            color: var(--text-secondary);
+            flex: 1;
+            padding: 0 12px;
+        }
+        .schedule-item .location {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            text-align: right;
+        }
+        .schedule-highlight {
+            background: rgba(255, 59, 48, 0.06);
+        }
+        .schedule-highlight .dates { color: var(--red); }
+
+        /* ===== THE ASK ===== */
+        .ask-card {
+            background: linear-gradient(135deg, rgba(255, 59, 48, 0.08), rgba(255, 107, 43, 0.06));
+            border: 1px solid rgba(255, 59, 48, 0.2);
+            border-radius: 24px;
+            padding: 48px 36px;
+            text-align: center;
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+        }
+        .ask-card h3 {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(22px, 5vw, 32px);
+            font-weight: 800;
+            letter-spacing: 1px;
+            background: var(--accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 24px;
+        }
+        .ask-card p {
+            font-size: 17px;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            max-width: 560px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .ask-card p strong { color: var(--text); }
+        .ask-card .sig {
+            font-family: 'Orbitron', monospace;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: var(--orange);
+            margin-top: 32px;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            text-align: center;
+            padding: 48px 24px 32px;
+            border-top: 1px solid var(--separator);
+        }
+        footer p {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            letter-spacing: 1px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .stats-row { grid-template-columns: repeat(2, 1fr); margin-top: -20px; }
+            .compare-grid { grid-template-columns: 1fr; }
+            .schedule-item { flex-direction: column; align-items: flex-start; gap: 4px; }
+            .schedule-item .location { text-align: left; }
+            .track-day-writeup { padding: 28px 20px; }
+            .ask-card { padding: 32px 20px; }
+            .img-break { height: 280px; }
+        }
+
+        /* ===== REVEAL ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+        <div class="hero-pill">A MESSAGE FOR DALLAS</div>
+        <h1>ONE LAST RIDE</h1>
+        <div class="hero-sub">Before You Let It Go</div>
+        <p>
+            I hear you, and I respect it. But before that bike finds a new home,
+            I'm asking for <strong>one track day</strong>. Let me show you what riding
+            feels like when you take the street out of the equation.
+        </p>
+    </div>
+    <div class="scroll-hint">
+        <span>Scroll</span>
+        <div class="line"></div>
+    </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-row">
+    <div class="stat-card reveal">
+        <div class="stat-num">93%</div>
+        <div class="stat-label">Fewer Fatalities</div>
+    </div>
+    <div class="stat-card reveal">
+        <div class="stat-num">0</div>
+        <div class="stat-label">Oncoming Traffic</div>
+    </div>
+    <div class="stat-card reveal">
+        <div class="stat-num">0</div>
+        <div class="stat-label">Distracted Drivers</div>
+    </div>
+    <div class="stat-card reveal">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Pure Riding</div>
+    </div>
+</div>
+
+<!-- WHAT IS A TRACK DAY -->
+<section class="ios-section">
+    <div class="ios-container">
+        <div class="ios-section-label">The Breakdown</div>
+        <h2 class="ios-section-title">What Is a Track Day?</h2>
+        <p class="ios-section-desc">It's not racing. It's not reckless. It's the safest, purest way to ride a motorcycle — period.</p>
+
+        <div class="track-day-writeup reveal">
+            <h3>A Controlled Environment Built for Riders</h3>
+            <p>
+                A track day is a structured event where motorcyclists rent time on a professional racing circuit. Think of it as an open gym — but instead of weights, it's a freshly paved, inspected track with massive runoff zones, corner workers, and an ambulance crew standing by.
+            </p>
+            <p>
+                <strong>You're not racing anyone.</strong> There's no timing. No trophies. No pressure. You ride at your own pace, in a group matched to your skill level. Beginners get classroom instruction, follow a lead rider, and learn fundamentals like body position, proper braking, and line selection. You come off the track a better, safer rider than when you went on.
+            </p>
+            <p>
+                Everyone goes the same direction. There are no intersections, no stop signs, no cars turning left in front of you, no sand on a blind corner, no deer, and no distracted teenagers on their phones. The surface is inspected before every session. If there's debris or fluid on track, corner workers throw flags and the session stops until it's clean.
+            </p>
+            <p>
+                <strong>Full gear is mandatory.</strong> Leather or armored textile suit. Back protector. Full gauntlet gloves. Boots above the ankle. Full-face helmet. You're wrapped in more protection than an NFL linebacker. And if you do go down? You slide across smooth pavement into grass or gravel — not into a curb, guardrail, or oncoming Tahoe.
+            </p>
+            <p>
+                A typical day has 5-6 sessions of 15-20 minutes each, with breaks in between. You ease in, build confidence, and push your limits only as far as feels right. Most first-timers come back grinning ear to ear and immediately book the next one.
+            </p>
+            <p>
+                <strong>The bottom line:</strong> a track day takes everything dangerous about street riding — the variables you can't control — and removes them. What's left is just you, the bike, and the most focused, exhilarating, addictive version of riding that exists.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- IMAGE BREAK -->
+<div class="img-break">
+    <img src="https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=1600&q=80" alt="Motorcycle on track" loading="lazy">
+    <div class="overlay"></div>
+    <div class="caption">Controlled. Protected. Pure.</div>
+</div>
+
+<!-- SAFETY FEATURES -->
+<section class="ios-section">
+    <div class="ios-container">
+        <div class="ios-section-label">Safety Systems</div>
+        <h2 class="ios-section-title">Why the Track Is Different</h2>
+        <p class="ios-section-desc">Every danger on the street is engineered out of a track day.</p>
+
+        <div class="ios-list reveal">
+            <div class="ios-list-item">
+                <div class="ios-list-icon green">&#x1f6e1;</div>
+                <div class="ios-list-text">
+                    <h4>Massive Runoff Zones</h4>
+                    <p>Hundreds of feet of gravel traps and grass at every corner. Go wide and you slide to a gentle stop.</p>
+                </div>
+            </div>
+            <div class="ios-list-item">
+                <div class="ios-list-icon red">&#x1f691;</div>
+                <div class="ios-list-text">
+                    <h4>Medical Crew On Site</h4>
+                    <p>EMTs, ambulance, and safety crew parked trackside all day. Response time in seconds, not minutes.</p>
+                </div>
+            </div>
+            <div class="ios-list-item">
+                <div class="ios-list-icon orange">&#x1f6ab;</div>
+                <div class="ios-list-text">
+                    <h4>No Opposing Traffic</h4>
+                    <p>Everyone goes the same way. No texting drivers. No one pulling out. No deer. No blind intersections.</p>
+                </div>
+            </div>
+            <div class="ios-list-item">
+                <div class="ios-list-icon blue">&#x1f3eb;</div>
+                <div class="ios-list-text">
+                    <h4>Coached Beginner Groups</h4>
+                    <p>Instructors ride with you. Learn proper technique, body position, and braking in a zero-pressure setting.</p>
+                </div>
+            </div>
+            <div class="ios-list-item">
+                <div class="ios-list-icon green">&#x1f9e5;</div>
+                <div class="ios-list-text">
+                    <h4>Full Gear Mandatory</h4>
+                    <p>Leather suit, back protector, gauntlets, boots, full-face helmet. More protected than any other sport.</p>
+                </div>
+            </div>
+            <div class="ios-list-item">
+                <div class="ios-list-icon orange">&#x1f3ce;</div>
+                <div class="ios-list-text">
+                    <h4>Inspected Surface</h4>
+                    <p>Track surface checked before every session. No oil, sand, potholes, or painted lines in the racing line.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- STREET VS TRACK -->
+<section class="ios-section">
+    <div class="ios-container">
+        <div class="ios-section-label">Real Talk</div>
+        <h2 class="ios-section-title">Street vs. Track</h2>
+        <p class="ios-section-desc">The street is where the danger lives. The track removes it.</p>
+
+        <div class="compare-grid">
+            <div class="compare-card danger reveal">
+                <h3>&#x26a0; STREET RIDING</h3>
+                <ul>
+                    <li>Distracted drivers everywhere</li>
+                    <li>Gravel, oil, potholes, debris</li>
+                    <li>Oncoming traffic at 100+ mph closing speed</li>
+                    <li>Guardrails, poles, and curbs</li>
+                    <li>Animals crossing randomly</li>
+                    <li>Intersections and red-light runners</li>
+                    <li>No medical crew on standby</li>
+                    <li>Often riding in minimal gear</li>
+                </ul>
+            </div>
+            <div class="compare-card safe reveal">
+                <h3>&#x2713; TRACK DAY</h3>
+                <ul>
+                    <li>Everyone going the same direction</li>
+                    <li>Clean, inspected racing surface</li>
+                    <li>Massive runoff at every turn</li>
+                    <li>Air fences and gravel traps</li>
+                    <li>No animals, no intersections</li>
+                    <li>Corner workers with flag signals</li>
+                    <li>EMTs and ambulance on site</li>
+                    <li>Full protective gear required</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- IMAGE BREAK 2 -->
+<div class="img-break">
+    <img src="https://images.unsplash.com/photo-1591637333184-19aa84b3e01f?w=1600&q=80" alt="Sportbike racing" loading="lazy">
+    <div class="overlay"></div>
+    <div class="caption">Engineered for Safety. Built for Speed.</div>
+</div>
+
+<!-- STT 2026 SCHEDULE -->
+<section class="ios-section">
+    <div class="ios-container">
+        <div class="ios-section-label">Sportbike Track Time</div>
+        <h2 class="ios-section-title">2026 Schedule</h2>
+        <p class="ios-section-desc">The closest events to Tennessee are highlighted. Pick a date — I'll handle the rest.</p>
+
+        <!-- MARCH -->
+        <div class="schedule-month reveal">
+            <div class="schedule-month-label">March</div>
+            <div class="schedule-list">
+                <div class="schedule-item schedule-highlight">
+                    <div class="dates">Mar 14-15</div>
+                    <div class="track">Barber Motorsports Park</div>
+                    <div class="location">Birmingham, AL</div>
+                </div>
+                <div class="schedule-item schedule-highlight">
+                    <div class="dates">Mar 21-22</div>
+                    <div class="track">Talladega GP</div>
+                    <div class="location">Talladega, AL</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- APRIL -->
+        <div class="schedule-month reveal">
+            <div class="schedule-month-label">April</div>
+            <div class="schedule-list">
+                <div class="schedule-item schedule-highlight">
+                    <div class="dates">Apr 4-5</div>
+                    <div class="track">Barber Motorsports Park</div>
+                    <div class="location">Birmingham, AL</div>
+                </div>
+                <div class="schedule-item schedule-highlight">
+                    <div class="dates">Apr 10</div>
+                    <div class="track">Talladega GP</div>
+                    <div class="location">Talladega, AL</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="dates">Apr 18-19</div>
+                    <div class="track">Grattan Raceway</div>
+                    <div class="location">Belding, MI</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="dates">Apr 24</div>
+                    <div class="track">GingerMan Raceway — Bike Night</div>
+                    <div class="location">South Haven, MI</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MAY -->
+        <div class="schedule-month reveal">
+            <div class="schedule-month-label">May</div>
+            <div class="schedule-list">
+                <div class="schedule-item schedule-highlight">
+                    <div class="dates">May 2-4</div>
+                    <div class="track">Barber Motorsports Park</div>
+                    <div class="location">Birmingham, AL</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="dates">May 9-10</div>
+                    <div class="track">Grattan Raceway</div>
+                    <div class="location">Belding, MI</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="dates">May 16-17</div>
+                    <div class="track">Putnam Park</div>
+                    <div class="location">Mt. Meridian, IN</div>
+                </div>
+                <div class="schedule-item schedule-highlight">
+                    <div class="dates">May 18</div>
+                    <div class="track">Barber Motorsports Park</div>
+                    <div class="location">Birmingham, AL</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="dates">May 23-25</div>
+                    <div class="track">Autobahn Country Club</div>
+                    <div class="location">Joliet, IL</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="dates">May 30-31</div>
+                    <div class="track">GingerMan Raceway</div>
+                    <div class="location">South Haven, MI</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- JUNE -->
+        <div class="schedule-month reveal">
+            <div class="schedule-month-label">June</div>
+            <div class="schedule-list">
+                <div class="schedule-item">
+                    <div class="dates">Jun 1-2</div>
+                    <div class="track">Road America</div>
+                    <div class="location">Elkhart Lake, WI</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="dates">Jun 6-7</div>
+                    <div class="track">Grattan Raceway</div>
+                    <div class="location">Belding, MI</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="dates">Jun 13-14</div>
+                    <div class="track">Road America</div>
+                    <div class="location">Elkhart Lake, WI</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="dates">Jun 27-28</div>
+                    <div class="track">Autobahn Country Club</div>
+                    <div class="location">Joliet, IL</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- JULY -->
+        <div class="schedule-month reveal">
+            <div class="schedule-month-label">July</div>
+            <div class="schedule-list">
+                <div class="schedule-item">
+                    <div class="dates">Jul 4-5</div>
+                    <div class="track">Grattan Raceway</div>
+                    <div class="location">Belding, MI</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="dates">Jul 18-19</div>
+                    <div class="track">Putnam Park</div>
+                    <div class="location">Mt. Meridian, IN</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="dates">Jul 25-26</div>
+                    <div class="track">Autobahn Country Club</div>
+                    <div class="location">Joliet, IL</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AUGUST -->
+        <div class="schedule-month reveal">
+            <div class="schedule-month-label">August</div>
+            <div class="schedule-list">
+                <div class="schedule-item">
+                    <div class="dates">Aug 1-2</div>
+                    <div class="track">Grattan Raceway</div>
+                    <div class="location">Belding, MI</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="dates">Aug 8-9</div>
+                    <div class="track">Putnam Park</div>
+                    <div class="location">Mt. Meridian, IN</div>
+                </div>
+                <div class="schedule-item schedule-highlight">
+                    <div class="dates">Aug 8-9</div>
+                    <div class="track">Barber Motorsports Park</div>
+                    <div class="location">Birmingham, AL</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEPTEMBER -->
+        <div class="schedule-month reveal">
+            <div class="schedule-month-label">September</div>
+            <div class="schedule-list">
+                <div class="schedule-item">
+                    <div class="dates">Sep 26-27</div>
+                    <div class="track">Autobahn Country Club</div>
+                    <div class="location">Joliet, IL</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- OCTOBER -->
+        <div class="schedule-month reveal">
+            <div class="schedule-month-label">October</div>
+            <div class="schedule-list">
+                <div class="schedule-item schedule-highlight">
+                    <div class="dates">Oct 3-4</div>
+                    <div class="track">Barber Motorsports Park</div>
+                    <div class="location">Birmingham, AL</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="dates">Oct 3-4</div>
+                    <div class="track">Putnam Park</div>
+                    <div class="location">Mt. Meridian, IN</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="dates">Oct 10-11</div>
+                    <div class="track">Grattan Raceway</div>
+                    <div class="location">Belding, MI</div>
+                </div>
+                <div class="schedule-item schedule-highlight">
+                    <div class="dates">Oct 17-18</div>
+                    <div class="track">Talladega GP</div>
+                    <div class="location">Talladega, AL</div>
+                </div>
+                <div class="schedule-item schedule-highlight">
+                    <div class="dates">Oct 31-Nov 2</div>
+                    <div class="track">Barber Motorsports Park</div>
+                    <div class="location">Birmingham, AL</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NOVEMBER -->
+        <div class="schedule-month reveal">
+            <div class="schedule-month-label">November</div>
+            <div class="schedule-list">
+                <div class="schedule-item schedule-highlight">
+                    <div class="dates">Nov 28-29</div>
+                    <div class="track">Talladega GP</div>
+                    <div class="location">Talladega, AL</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DECEMBER -->
+        <div class="schedule-month reveal">
+            <div class="schedule-month-label">December</div>
+            <div class="schedule-list">
+                <div class="schedule-item">
+                    <div class="dates">Dec 5-6</div>
+                    <div class="track">Jennings GP</div>
+                    <div class="location">Jennings, FL</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- THE ASK -->
+<section class="ios-section">
+    <div class="ios-container">
+        <div class="ask-card reveal">
+            <h3>One Day. That's All I'm Asking.</h3>
+            <p>
+                Brother, I get it. A wreck shakes you. It's supposed to. That's your body telling you it wants to survive, and <strong>there's nothing wrong with listening to that</strong>.
+            </p>
+            <p>
+                But the street and the track are two completely different worlds. The street has a thousand variables you can't control. The track removes almost all of them. What's left is just <strong>you, the bike, and the purest version of riding that exists</strong>.
+            </p>
+            <p>
+                I'm not asking you to keep it forever. I'm not asking you to change your mind. I'm asking for <strong>one track day</strong> — so you can feel what it's like to ride without fear, surrounded by safety, in an environment designed for exactly this.
+            </p>
+            <p>
+                If you do it and still want to sell, I'll help you post the listing myself. But I think you deserve to experience riding the way it was meant to be — <strong>at least once</strong>.
+            </p>
+            <div class="sig">— JADEN</div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>Built by Chief &bull; Jaden's AI &bull; 2026</p>
+</footer>
+
+<script>
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+            setTimeout(() => entry.target.classList.add('visible'), i * 50);
+            observer.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
+reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
