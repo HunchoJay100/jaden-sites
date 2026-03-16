@@ -1,0 +1,2208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VANTAGE CREATIVE — Vision Board v2 (Carbon)</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #050505;
+  --fg: #ffffff;
+  --fg-70: rgba(255,255,255,0.7);
+  --fg-40: rgba(255,255,255,0.4);
+  --fg-15: rgba(255,255,255,0.15);
+  --fg-08: rgba(255,255,255,0.08);
+  --fg-04: rgba(255,255,255,0.04);
+  --accent: #ff4d2e;
+  --accent-dim: rgba(255,77,46,0.15);
+  --radius: 20px;
+  --radius-sm: 12px;
+  --font: 'Plus Jakarta Sans', -apple-system, sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--fg);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--accent); color: var(--bg); }
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 clamp(20px, 4vw, 48px);
+  height: 64px;
+  background: rgba(5,5,5,0.8);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border-bottom: 1px solid var(--fg-08);
+}
+.nav-brand {
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+.nav-brand span { color: var(--accent); }
+.nav-right {
+  display: flex; align-items: center; gap: 32px;
+}
+.nav-link {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--fg-40);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.nav-link:hover { color: var(--fg); }
+.nav-pill {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--bg);
+  background: var(--accent);
+  padding: 10px 20px;
+  border-radius: 100px;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+.nav-pill:hover { background: #fff; }
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px clamp(20px, 4vw, 48px) 20px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 700px; height: 700px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(255,77,46,0.06) 0%, transparent 70%);
+  pointer-events: none;
+  animation: ambientPulse 4s ease-in-out infinite;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  top: 40%; left: 45%;
+  width: 500px; height: 500px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(255,77,46,0.03) 0%, transparent 60%);
+  pointer-events: none;
+  animation: ambientDrift 8s ease-in-out infinite alternate;
+}
+@keyframes ambientPulse {
+  0%, 100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 0.5; transform: translate(-50%, -50%) scale(1.15); }
+}
+.landing-flash {
+  position: fixed;
+  inset: 0;
+  background: #fff;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9997;
+}
+.signal-section {
+  padding: clamp(40px, 6vw, 80px) clamp(20px, 4vw, 48px);
+  text-align: center;
+  border-bottom: 1px solid var(--fg-08);
+}
+.signal-text {
+  font-size: clamp(36px, 7vw, 100px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+.signal-text .accent {
+  animation: accentGlow 3s ease-in-out infinite;
+}
+@keyframes ambientDrift {
+  0% { transform: translate(-50%, -50%) translateX(-30px); }
+  100% { transform: translate(-50%, -50%) translateX(30px); }
+}
+
+.hero-logo {
+  width: clamp(70px, 10vw, 110px);
+  margin-bottom: 40px;
+  filter: invert(1);
+}
+.hero-vantage {
+  font-size: clamp(72px, 18vw, 260px);
+  font-weight: 800;
+  letter-spacing: -0.06em;
+  text-transform: uppercase;
+  color: #fff;
+  margin-bottom: 12px;
+  line-height: 0.85;
+  text-align: center;
+}
+.hero-vantage .accent { color: var(--accent); }
+.hero h1 {
+  font-size: clamp(56px, 11vw, 160px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.hero-sub2 {
+  font-family: var(--font-body);
+  font-size: clamp(13px, 1.4vw, 16px);
+  font-weight: 400;
+  color: var(--fg-40);
+  text-align: center;
+  max-width: 440px;
+  line-height: 1.7;
+}
+.hero h1 .accent {
+  color: var(--accent);
+  animation: accentGlow 3s ease-in-out infinite;
+  display: inline-block;
+}
+@keyframes accentGlow {
+  0%, 100% { text-shadow: 0 0 20px rgba(255,77,46,0.2), 0 0 60px rgba(255,77,46,0.05); }
+  50% { text-shadow: 0 0 40px rgba(255,77,46,0.5), 0 0 100px rgba(255,77,46,0.15), 0 0 140px rgba(255,77,46,0.05); }
+}
+.hero-tagline {
+  font-size: clamp(24px, 4vw, 48px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--fg-70);
+}
+.hero-tagline .accent {
+  animation: accentGlow 3s ease-in-out infinite;
+}
+.hero-sub {
+  font-family: var(--font-body);
+  font-size: clamp(14px, 1.6vw, 18px);
+  font-weight: 400;
+  color: var(--fg-40);
+  text-align: center;
+  max-width: 480px;
+  line-height: 1.7;
+  margin-bottom: 100px;
+}
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--bg);
+  background: var(--accent);
+  padding: 18px 36px;
+  border-radius: 100px;
+  text-decoration: none;
+  transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+  animation: fadeUp 1s cubic-bezier(0.16,1,0.3,1) 0.45s forwards;
+  opacity: 0;
+}
+.hero-cta:hover { transform: scale(1.05); background: #fff; }
+.hero-cta svg { width: 14px; height: 14px; }
+
+.hero-scroll-unused {
+  opacity: 0;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── INTRO REEL ─── */
+.intro-reel {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.reel-word {
+  position: absolute;
+  font-size: clamp(48px, 10vw, 140px);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+.reel-word .hl { color: var(--accent); }
+.reel-flash {
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  opacity: 0;
+  pointer-events: none;
+}
+.glitch-layer {
+  position: absolute;
+  font-size: clamp(48px, 10vw, 140px);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+.glitch-layer .hl { color: var(--accent); }
+#glitch1 { color: #0ff; mix-blend-mode: screen; }
+#glitch2 { color: #f0f; mix-blend-mode: screen; }
+.intro-reel .scanline {
+  position: absolute;
+  left: 0; right: 0;
+  height: 2px;
+  background: rgba(255,255,255,0.06);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ─── REVEAL ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal.vis { opacity: 1; transform: none; }
+
+/* ─── SECTIONS ─── */
+.sec {
+  padding: clamp(80px, 10vw, 140px) clamp(20px, 4vw, 48px);
+  max-width: 1300px;
+  margin: 0 auto;
+}
+.sec-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 24px;
+}
+.sec-tag::before {
+  content: '';
+  width: 24px;
+  height: 2px;
+  background: var(--accent);
+}
+.sec-h2 {
+  font-size: clamp(32px, 5.5vw, 72px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.sec-h2 .dim { color: var(--fg-40); }
+.sec-p {
+  font-family: var(--font-body);
+  font-size: clamp(14px, 1.4vw, 17px);
+  color: var(--fg-40);
+  line-height: 1.7;
+  max-width: 500px;
+}
+
+/* ─── PHILOSOPHY ─── */
+.phil {
+  padding: clamp(20px, 4vw, 48px) clamp(20px, 4vw, 48px);
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+}
+.phil-quote {
+  font-size: clamp(24px, 4vw, 52px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+.phil-quote .hl { color: var(--accent); }
+.phil-cite {
+  margin-top: 24px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--fg-15);
+}
+
+/* ─── PALETTES ─── */
+.pal-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 56px;
+}
+.pal-grid .pal-card:nth-child(4),
+.pal-grid .pal-card:nth-child(5) {
+  grid-column: span 1;
+}
+.pal-card {
+  background: var(--fg-04);
+  border: 1px solid var(--fg-08);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), border-color 0.3s;
+}
+.pal-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--fg-15);
+}
+.pal-swatches { display: flex; height: 100px; }
+.pal-swatches > div {
+  flex: 1;
+  position: relative;
+  transition: flex 0.4s cubic-bezier(0.16,1,0.3,1);
+  cursor: pointer;
+}
+.pal-swatches:hover > div { flex: 0.7; }
+.pal-swatches > div:hover { flex: 2.5; }
+.pal-hex {
+  position: absolute;
+  bottom: 8px; left: 8px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  opacity: 0;
+  transition: opacity 0.25s;
+  mix-blend-mode: difference;
+  color: #fff;
+}
+.pal-swatches > div:hover .pal-hex { opacity: 1; }
+.pal-info { padding: 24px; }
+.pal-name {
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.pal-desc {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--fg-40);
+}
+.pal-tags {
+  display: flex;
+  gap: 6px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+.pal-tag {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--fg-40);
+  border: 1px solid var(--fg-08);
+  padding: 6px 14px;
+  border-radius: 100px;
+}
+
+/* ─── TYPOGRAPHY ─── */
+.type-stack {
+  margin-top: 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.type-row {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 40px;
+  align-items: start;
+  background: var(--fg-04);
+  border: 1px solid var(--fg-08);
+  padding: clamp(28px, 4vw, 48px) clamp(24px, 3vw, 40px);
+  transition: background 0.3s;
+}
+.type-row:first-child { border-radius: var(--radius) var(--radius) 0 0; }
+.type-row:last-child { border-radius: 0 0 var(--radius) var(--radius); }
+.type-row:hover { background: var(--fg-08); }
+
+.type-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.type-fonts {
+  font-size: 12px;
+  color: var(--fg-40);
+  line-height: 1.8;
+}
+.type-demo h3 {
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.type-demo p {
+  font-family: var(--font-body);
+  font-size: clamp(14px, 1.4vw, 16px);
+  color: var(--fg-40);
+  line-height: 1.7;
+  max-width: 460px;
+}
+.type-demo .type-vibe {
+  margin-top: 16px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--fg-15);
+}
+
+/* ─── SERVICES ─── */
+.svc-list {
+  margin-top: 56px;
+  border-top: 1px solid var(--fg-08);
+}
+.svc-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 0;
+  border-bottom: 1px solid var(--fg-08);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: padding 0.5s cubic-bezier(0.16,1,0.3,1);
+}
+.svc-row:hover {
+  padding-left: 24px;
+}
+.svc-row::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 0;
+  background: var(--accent);
+  transition: width 0.5s cubic-bezier(0.16,1,0.3,1);
+}
+.svc-row:hover::before { width: 3px; }
+.svc-left {
+  display: flex;
+  align-items: baseline;
+  gap: 32px;
+}
+.svc-idx {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--fg-15);
+  letter-spacing: 1px;
+  min-width: 28px;
+  transition: color 0.4s;
+}
+.svc-row:hover .svc-idx { color: var(--accent); }
+.svc-name {
+  font-size: clamp(20px, 3vw, 36px);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+}
+.svc-row:hover .svc-name { transform: translateX(8px); }
+.svc-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.svc-desc {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--fg-40);
+  max-width: 280px;
+  line-height: 1.6;
+  text-align: right;
+  opacity: 0;
+  transform: translateX(10px);
+  transition: opacity 0.4s, transform 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+.svc-row:hover .svc-desc { opacity: 1; transform: none; }
+.svc-arrow {
+  font-size: 20px;
+  color: var(--fg-15);
+  transition: color 0.3s, transform 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+.svc-row:hover .svc-arrow { color: var(--accent); transform: translateX(4px); }
+
+/* ─── MOCKUPS ─── */
+.mock-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-top: 56px;
+}
+.mock-frame {
+  background: var(--fg-04);
+  border: 1px solid var(--fg-08);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: transform 0.6s cubic-bezier(0.16,1,0.3,1), box-shadow 0.6s;
+}
+.mock-frame:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+}
+.mock-bar {
+  display: flex; align-items: center; gap: 8px;
+  padding: 14px 20px;
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid var(--fg-08);
+}
+.mock-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--fg-08); }
+.mock-url {
+  margin-left: 12px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--fg-15);
+  letter-spacing: 0.5px;
+}
+.mock-dir-label {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+  opacity: 0.6;
+}
+
+/* Mock A — Dark Bold */
+.mock-a {
+  position: relative;
+  min-height: 440px;
+  background: #080808;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(40px, 6vw, 80px);
+}
+.mock-a::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 50%;
+  background: linear-gradient(180deg, rgba(255,77,46,0.03) 0%, transparent 100%);
+}
+.mock-a .m-nav {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px clamp(24px, 4vw, 40px);
+}
+.mock-a .m-brand {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+.mock-a .m-links { display: flex; gap: 28px; }
+.mock-a .m-links span {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--fg-40);
+}
+.mock-a h3 {
+  font-size: clamp(32px, 5vw, 64px);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  text-align: center;
+  line-height: 0.95;
+  position: relative;
+  margin-bottom: 24px;
+}
+.mock-a h3 .green { color: var(--accent); }
+.mock-a .m-sub {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--fg-40);
+  text-align: center;
+  margin-bottom: 32px;
+}
+.mock-a .m-btn {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  background: var(--accent);
+  color: #080808;
+  padding: 16px 36px;
+  border: none;
+  border-radius: 100px;
+  cursor: pointer;
+}
+
+/* Mock B — Light Minimal */
+.mock-b {
+  min-height: 380px;
+  background: #f8f7f4;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+}
+.mock-b-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(32px, 5vw, 64px);
+}
+.mock-b-left h3 {
+  font-size: clamp(24px, 3vw, 40px);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: #0a0a0a;
+  margin-bottom: 16px;
+}
+.mock-b-left p {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: #6a6a6a;
+  line-height: 1.7;
+  margin-bottom: 28px;
+  max-width: 360px;
+}
+.mock-b-left .m-btn-dark {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  background: #0a0a0a;
+  color: #fff;
+  padding: 14px 32px;
+  border-radius: 100px;
+  width: fit-content;
+}
+.mock-b-right {
+  background: #eceae4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mock-b-right span {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #bbb;
+}
+
+/* Mock C — Split */
+.mock-c {
+  min-height: 380px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+}
+.mock-c-dark {
+  background: #0a0a0a;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(32px, 5vw, 64px);
+}
+.mock-c-dark h3 {
+  font-size: clamp(28px, 3.5vw, 48px);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: 16px;
+}
+.mock-c-dark h3 .green { color: var(--accent); }
+.mock-c-dark p {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--fg-40);
+  line-height: 1.7;
+}
+.mock-c-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 2px;
+  background: var(--fg-08);
+}
+.mock-c-cell {
+  background: #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+  cursor: pointer;
+}
+.mock-c-cell:hover { background: #1a1a1a; }
+.mock-c-cell span {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--fg-15);
+}
+
+/* ─── VOICE ─── */
+.voice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 56px;
+}
+.voice-card {
+  background: var(--fg-04);
+  border: 1px solid var(--fg-08);
+  border-radius: var(--radius);
+  padding: clamp(28px, 4vw, 40px);
+  transition: all 0.4s;
+}
+.voice-card:hover {
+  background: var(--fg-08);
+  border-color: var(--fg-15);
+}
+.voice-type {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+.voice-text {
+  font-size: clamp(18px, 2.5vw, 28px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+.voice-note {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--fg-40);
+  line-height: 1.6;
+}
+
+/* ─── MOOD ─── */
+.mood-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 220px 220px;
+  gap: 6px;
+  margin-top: 56px;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.mood-grid > :first-child {
+  grid-column: 1 / 3;
+  grid-row: 1 / 3;
+}
+.mood-cell {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+.mood-cell::after {
+  content: attr(data-label);
+  position: absolute;
+  bottom: 14px; left: 16px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.9);
+  opacity: 0;
+  transition: opacity 0.3s;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+}
+.mood-cell:hover::after { opacity: 1; }
+
+.m1 { background: linear-gradient(135deg, #080808, #1a1a18, #252520, #080808); }
+.m2 { background: linear-gradient(160deg, var(--accent) 0%, #cc3d24 50%, #1a0800 100%); }
+.m3 {
+  background: #0a0a0a;
+  background-image:
+    radial-gradient(circle at 30% 40%, rgba(255,77,46,0.08) 0%, transparent 50%),
+    radial-gradient(circle at 70% 60%, rgba(255,255,255,0.04) 0%, transparent 50%);
+}
+.m4 { background: #f8f7f4; }
+.m5 { background: linear-gradient(180deg, #080808, #0f0f0a); }
+.m6 {
+  background: repeating-linear-gradient(90deg, #0a0a0a 0px, #0a0a0a 1px, #111 1px, #111 16px);
+}
+
+/* ─── VISION ─── */
+.vision {
+  padding: clamp(100px, 14vw, 200px) clamp(20px, 4vw, 48px);
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+}
+.vision-logo {
+  width: 48px;
+  margin: 0 auto 48px;
+  opacity: 0.2;
+  filter: invert(1);
+}
+.vision h2 {
+  font-size: clamp(28px, 5vw, 60px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+.vision h2 .green { color: var(--accent); }
+.vision p {
+  font-family: var(--font-body);
+  font-size: clamp(14px, 1.5vw, 18px);
+  color: var(--fg-40);
+  line-height: 1.8;
+  max-width: 560px;
+  margin: 0 auto 16px;
+}
+.vision-sig {
+  margin-top: 40px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--fg-15);
+}
+
+/* ─── METRICS ─── */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 56px;
+}
+.metric-card {
+  background: var(--fg-04);
+  border: 1px solid var(--fg-08);
+  border-radius: var(--radius);
+  padding: clamp(28px, 3vw, 40px);
+  text-align: center;
+  transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+.metric-card:hover {
+  background: var(--fg-08);
+  border-color: var(--fg-15);
+  transform: translateY(-4px);
+}
+.metric-card.featured {
+  border-color: var(--accent);
+  background: rgba(255,77,46,0.03);
+}
+.metric-num {
+  font-size: clamp(48px, 6vw, 80px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  display: inline;
+}
+.metric-unit {
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 800;
+  color: var(--accent);
+  display: inline;
+  vertical-align: top;
+}
+.metric-label {
+  margin-top: 16px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--fg-40);
+  line-height: 1.5;
+}
+
+/* ─── TRANSFORMATIONS ─── */
+.transform-grid {
+  margin-top: 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.transform-card {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 32px;
+  align-items: start;
+  background: var(--fg-04);
+  border: 1px solid var(--fg-08);
+  border-radius: var(--radius);
+  padding: clamp(28px, 4vw, 48px);
+}
+.transform-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--fg-15);
+  margin-bottom: 20px;
+}
+.transform-label.hl { color: var(--accent); }
+.transform-item {
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--fg-40);
+  padding: 10px 0;
+  border-bottom: 1px solid var(--fg-08);
+  line-height: 1.5;
+}
+.transform-after .transform-item {
+  color: var(--fg-70);
+}
+.transform-arrow {
+  font-size: 32px;
+  color: var(--accent);
+  align-self: center;
+  padding-top: 28px;
+}
+.transform-quotes {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.tq-card {
+  background: var(--fg-04);
+  border: 1px solid var(--fg-08);
+  border-radius: var(--radius);
+  padding: clamp(24px, 3vw, 36px);
+  transition: all 0.4s;
+}
+.tq-card:hover {
+  background: var(--fg-08);
+  border-color: var(--fg-15);
+}
+.tq-text {
+  font-size: clamp(16px, 2vw, 22px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  margin-bottom: 16px;
+}
+.tq-source {
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--fg-15);
+  font-style: italic;
+}
+
+/* ─── INSPIRATION GRID ─── */
+.inspo-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 200px 200px;
+  gap: 6px;
+  margin-top: 56px;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.inspo-cell {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+.inspo-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.inspo-cell:hover .inspo-overlay { opacity: 1; }
+
+.i1 {
+  grid-column: 1 / 3;
+  background: linear-gradient(135deg, #0a0a0a 0%, #151515 40%, #0a0a0a 100%);
+  background-image: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.03) 0%, transparent 60%);
+}
+.i2 {
+  background: #f8f7f4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.i2::after {
+  content: 'Aa';
+  font-size: 64px;
+  font-weight: 800;
+  color: #0a0a0a;
+  letter-spacing: -0.04em;
+}
+.i3 {
+  background: #0a0a0a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.i3::after {
+  content: '';
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 40px var(--accent), 0 0 80px rgba(255,77,46,0.3);
+}
+.i4 {
+  background: linear-gradient(135deg, #2a2a28 0%, #1a1a18 50%, #252522 100%);
+  background-image: repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(255,255,255,0.015) 2px, rgba(255,255,255,0.015) 4px);
+}
+.i5 {
+  background: linear-gradient(to right, #fff 50%, #000 50%);
+}
+.i6 {
+  background: #0a0a0a;
+  background-image:
+    linear-gradient(90deg, rgba(255,77,46,0.06) 1px, transparent 1px),
+    linear-gradient(rgba(255,77,46,0.06) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+.i7 {
+  background: #0a0a0a;
+}
+.i8 {
+  background: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.i8::after {
+  content: 'V.';
+  font-size: 72px;
+  font-weight: 800;
+  color: #0a0a0a;
+  letter-spacing: -0.05em;
+}
+
+/* ─── BRAND UNIVERSE ─── */
+.bu-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 56px;
+}
+.bu-card {
+  background: var(--fg-04);
+  border: 1px solid var(--fg-08);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.16,1,0.3,1);
+}
+.bu-card:hover {
+  border-color: var(--fg-15);
+  transform: translateY(-4px);
+}
+.bu-wide { grid-column: span 2; }
+.bu-mockup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  padding: 24px;
+  position: relative;
+}
+.bu-label {
+  padding: 16px 20px;
+  border-top: 1px solid var(--fg-08);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--fg-40);
+}
+.a { color: var(--accent); }
+.bu-logo-sm {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+.bu-logo-lg {
+  font-size: 56px;
+  font-weight: 800;
+  letter-spacing: -0.05em;
+}
+
+/* Hat */
+.bu-hat-shape { text-align: center; }
+.bu-hat-crown {
+  width: 100px;
+  height: 60px;
+  background: #1a1a1a;
+  border-radius: 50% 50% 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+.bu-hat-brim {
+  width: 130px;
+  height: 14px;
+  background: #1a1a1a;
+  border-radius: 0 0 4px 4px;
+  margin: 0 auto;
+  margin-top: -1px;
+  position: relative;
+  top: 60px;
+  z-index: 1;
+}
+.bu-hat-crown { position: relative; z-index: 2; }
+
+/* Tee */
+.bu-tee-shape {
+  width: 120px;
+  text-align: center;
+}
+.bu-tee-chest {
+  width: 120px;
+  height: 140px;
+  background: #111;
+  border-radius: 4px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 24px;
+  position: relative;
+}
+.bu-tee-chest::before,
+.bu-tee-chest::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 30px;
+  height: 40px;
+  background: #111;
+  border-radius: 0 0 4px 4px;
+}
+.bu-tee-chest::before { left: -22px; transform: rotate(15deg); border-radius: 4px; }
+.bu-tee-chest::after { right: -22px; transform: rotate(-15deg); border-radius: 4px; }
+.bu-tee-back-text {
+  margin-top: 8px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: var(--fg-40);
+}
+
+/* Business Card */
+.bu-bcard .bu-mockup {
+  gap: 16px;
+}
+.bu-bcard-front, .bu-bcard-back {
+  width: 180px;
+  height: 110px;
+  border-radius: 4px;
+  padding: 16px;
+}
+.bu-bcard-front {
+  background: #111;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.bu-bcard-logo {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+.bu-bcard-info { font-size: 9px; line-height: 1.6; }
+.bu-bcard-dim { color: var(--fg-40); }
+.bu-bcard-back {
+  background: #0a0a0a;
+  border: 1px solid var(--fg-08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hoodie */
+.bu-hoodie-shape {
+  width: 140px;
+  height: 160px;
+  background: #111;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.bu-hoodie-shape::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  width: 40px;
+  height: 16px;
+  background: #111;
+  border-radius: 8px 8px 0 0;
+}
+.bu-hoodie-text {
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+.bu-hoodie-sub {
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 6px;
+  color: var(--fg-40);
+  margin-top: 4px;
+}
+
+/* Social */
+.bu-social-frame {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 240px;
+}
+.bu-social-avatar {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  background: #111;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 800;
+}
+.bu-social-name {
+  font-size: 13px;
+  font-weight: 700;
+}
+.bu-social-handle {
+  font-size: 11px;
+  color: var(--fg-40);
+  margin-bottom: 6px;
+}
+.bu-social-bio {
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: var(--fg-40);
+  line-height: 1.5;
+}
+
+/* Sign */
+.bu-sign-frame {
+  width: 100%;
+  max-width: 200px;
+  height: 80px;
+  background: #0a0a0a;
+  border: 1px solid var(--fg-15);
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 30px rgba(255,77,46,0.05);
+}
+.bu-sign-text {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 4px;
+}
+
+/* Sticker */
+.bu-sticker-circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: #111;
+  border: 2px solid var(--fg-15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Vehicle */
+.bu-vehicle-shape {
+  width: 100%;
+  max-width: 200px;
+  height: 80px;
+  background: linear-gradient(135deg, #1a1a1a, #111);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--fg-08);
+}
+.bu-vehicle-text {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+.bu-vehicle-sub {
+  font-size: 8px;
+  color: var(--fg-40);
+  letter-spacing: 2px;
+  margin-top: 4px;
+}
+
+/* ─── FOOTER ─── */
+.foot {
+  border-top: 1px solid var(--fg-08);
+  padding: 36px clamp(20px, 4vw, 48px);
+  max-width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+}
+.foot p {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--fg-15);
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1000px) {
+  .pal-grid { grid-template-columns: 1fr; }
+  .svc-desc { display: none; }
+  .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+  .transform-card { grid-template-columns: 1fr; }
+  .transform-arrow { display: none; }
+  .inspo-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(4, 160px); }
+  .inspo-grid .i1 { grid-column: 1 / -1; }
+  .bu-grid { grid-template-columns: repeat(2, 1fr); }
+  .bu-wide { grid-column: span 2; }
+  .type-row { grid-template-columns: 1fr; gap: 16px; }
+  .mock-b, .mock-c { grid-template-columns: 1fr; }
+  .mock-b-right { min-height: 180px; }
+  .mock-c-grid { min-height: 200px; }
+  .nav-link { display: none; }
+}
+@media (max-width: 600px) {
+  .svc-name { font-size: 18px; }
+  .metrics-grid { grid-template-columns: 1fr; }
+  .transform-quotes { grid-template-columns: 1fr; }
+  .inspo-grid { grid-template-columns: 1fr; grid-template-rows: repeat(8, 140px); }
+  .inspo-grid .i1 { grid-column: auto; }
+  .voice-grid { grid-template-columns: 1fr; }
+  .mood-grid { grid-template-columns: 1fr; grid-template-rows: repeat(6, 160px); }
+  .mood-grid > :first-child { grid-column: auto; grid-row: auto; }
+}
+</style>
+</head>
+<body>
+
+<!-- INTRO REEL — full screen overlay -->
+<div class="intro-reel" id="introReel">
+  <div class="reel-flash" id="reelFlash"></div>
+  <div class="reel-word" id="killWord">KILL THE <span class="hl">NOISE</span>.</div>
+  <div class="glitch-layer" id="glitch1">KILL THE <span class="hl">NOISE</span>.</div>
+  <div class="glitch-layer" id="glitch2">KILL THE <span class="hl">NOISE</span>.</div>
+</div>
+
+<nav>
+  <div class="nav-brand">Vantage<span>.</span></div>
+  <div class="nav-right">
+    <a href="#palettes" class="nav-link">Colors</a>
+    <a href="#type" class="nav-link">Type</a>
+    <a href="#services" class="nav-link">Services</a>
+    <a href="#mockups" class="nav-link">Layouts</a>
+    <a href="#vision" class="nav-pill">The Vision</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="landing-flash" id="landingFlash"></div>
+  <div class="hero-vantage">VANTAGE<span class="accent">.</span></div>
+  <p class="hero-sub">Strategy-led creative for brands that refuse to blend in.</p>
+  <h1>Build the<br><span class="accent">signal</span></h1>
+  <p class="hero-sub2">We don't make content. We build strategic systems that amplify your brand, cut through the noise, and drive real growth.</p>
+</section>
+
+<!-- PHILOSOPHY -->
+<div class="phil reveal">
+  <div class="phil-quote">
+    Most marketing problems are not marketing problems — they are <span class="hl">clarity</span> problems, <span class="hl">positioning</span> problems, and <span class="hl">strategy</span> problems.
+  </div>
+  <div class="phil-cite">The Vantage Thesis</div>
+</div>
+
+<!-- PALETTES -->
+<section class="sec reveal" id="palettes">
+  <div class="sec-tag">01 — Color Direction</div>
+  <div class="sec-h2">Pick your<br><span class="dim">palette.</span></div>
+  <div class="sec-p">The color system defines the brand before a word is read. Three directions — each with a different energy.</div>
+
+  <div class="pal-grid">
+    <div class="pal-card">
+      <div class="pal-swatches">
+        <div style="background:#050505"><span class="pal-hex">#050505</span></div>
+        <div style="background:#1a1a18"><span class="pal-hex">#1A1A18</span></div>
+        <div style="background:#ff4d2e"><span class="pal-hex">#C8FF00</span></div>
+        <div style="background:#ffffff"><span class="pal-hex">#FFFFFF</span></div>
+        <div style="background:#4a4a48"><span class="pal-hex">#4A4A48</span></div>
+      </div>
+      <div class="pal-info">
+        <div class="pal-name">Midnight Volt</div>
+        <div class="pal-desc">Black base. Red signal. Stop scrolling.</div>
+        <div class="pal-tags">
+          <span class="pal-tag">Bold</span>
+          <span class="pal-tag">Modern</span>
+          <span class="pal-tag">Disruptive</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pal-card">
+      <div class="pal-swatches">
+        <div style="background:#0a0a0a"><span class="pal-hex">#0A0A0A</span></div>
+        <div style="background:#f8f7f4"><span class="pal-hex">#F8F7F4</span></div>
+        <div style="background:#c8b87e"><span class="pal-hex">#C8B87E</span></div>
+        <div style="background:#2a2520"><span class="pal-hex">#2A2520</span></div>
+        <div style="background:#8a8780"><span class="pal-hex">#8A8780</span></div>
+      </div>
+      <div class="pal-info">
+        <div class="pal-name">Black & Gold</div>
+        <div class="pal-desc">Premium. Refined. Old money energy.</div>
+        <div class="pal-tags">
+          <span class="pal-tag">Luxury</span>
+          <span class="pal-tag">Timeless</span>
+          <span class="pal-tag">Authority</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pal-card">
+      <div class="pal-swatches">
+        <div style="background:#0a0a0a"><span class="pal-hex">#0A0A0A</span></div>
+        <div style="background:#ffffff"><span class="pal-hex">#FFFFFF</span></div>
+        <div style="background:#ff4d2e"><span class="pal-hex">#FF4D2E</span></div>
+        <div style="background:#1a1a1a"><span class="pal-hex">#1A1A1A</span></div>
+        <div style="background:#888"><span class="pal-hex">#888888</span></div>
+      </div>
+      <div class="pal-info">
+        <div class="pal-name">Carbon & Fire</div>
+        <div class="pal-desc">High contrast. Red signal. Stop scrolling.</div>
+        <div class="pal-tags">
+          <span class="pal-tag">Aggressive</span>
+          <span class="pal-tag">High-Energy</span>
+          <span class="pal-tag">Direct</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pal-card">
+      <div class="pal-swatches">
+        <div style="background:#0a0a0a"><span class="pal-hex">#0A0A0A</span></div>
+        <div style="background:#1e1e2e"><span class="pal-hex">#1E1E2E</span></div>
+        <div style="background:#6c5ce7"><span class="pal-hex">#6C5CE7</span></div>
+        <div style="background:#f0f0f0"><span class="pal-hex">#F0F0F0</span></div>
+        <div style="background:#3a3a4a"><span class="pal-hex">#3A3A4A</span></div>
+      </div>
+      <div class="pal-info">
+        <div class="pal-name">Void & Violet</div>
+        <div class="pal-desc">Deep space. Electric purple. Tech-forward.</div>
+        <div class="pal-tags">
+          <span class="pal-tag">Futuristic</span>
+          <span class="pal-tag">Creative</span>
+          <span class="pal-tag">Premium</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pal-card">
+      <div class="pal-swatches">
+        <div style="background:#f8f7f4"><span class="pal-hex">#F8F7F4</span></div>
+        <div style="background:#0a0a0a"><span class="pal-hex">#0A0A0A</span></div>
+        <div style="background:#2d6a4f"><span class="pal-hex">#2D6A4F</span></div>
+        <div style="background:#e8e5de"><span class="pal-hex">#E8E5DE</span></div>
+        <div style="background:#5a5a52"><span class="pal-hex">#5A5A52</span></div>
+      </div>
+      <div class="pal-info">
+        <div class="pal-name">Bone & Forest</div>
+        <div class="pal-desc">Light base. Deep green accent. Grounded luxury.</div>
+        <div class="pal-tags">
+          <span class="pal-tag">Organic</span>
+          <span class="pal-tag">Elevated</span>
+          <span class="pal-tag">Trustworthy</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TYPOGRAPHY -->
+<section class="sec reveal" id="type">
+  <div class="sec-tag">02 — Typography</div>
+  <div class="sec-h2">Type sets<br><span class="dim">the tone.</span></div>
+  <div class="sec-p">Bold, tight, uppercase. Or clean and technical. The font pairing defines the personality.</div>
+
+  <div class="type-stack">
+    <div class="type-row">
+      <div>
+        <div class="type-label">Option A</div>
+        <div class="type-fonts">Plus Jakarta Sans<br>DM Sans</div>
+      </div>
+      <div class="type-demo">
+        <h3 style="font-family:'Plus Jakarta Sans',sans-serif">Your brand deserves a vantage point</h3>
+        <p>We help businesses communicate their value clearly and consistently. Every campaign is designed to reinforce your signal and drive measurable growth.</p>
+        <div class="type-vibe">Bold &middot; Contemporary &middot; Tech-Forward</div>
+      </div>
+    </div>
+
+    <div class="type-row">
+      <div>
+        <div class="type-label">Option B</div>
+        <div class="type-fonts">Helvetica Neue<br>DM Sans</div>
+      </div>
+      <div class="type-demo">
+        <h3 style="font-family:Helvetica,Arial,sans-serif;font-weight:700;letter-spacing:-0.04em">Your brand deserves a vantage point</h3>
+        <p style="font-family:'DM Sans',sans-serif">We help businesses communicate their value clearly and consistently. Every campaign is designed to reinforce your signal and drive measurable growth.</p>
+        <div class="type-vibe">Clean &middot; Classic &middot; Studio Quality</div>
+      </div>
+    </div>
+
+    <div class="type-row">
+      <div>
+        <div class="type-label">Option C</div>
+        <div class="type-fonts">Plus Jakarta Sans 800<br>Plus Jakarta Sans 400</div>
+      </div>
+      <div class="type-demo">
+        <h3 style="font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:-0.05em">Your brand deserves a vantage point</h3>
+        <p style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:400">We help businesses communicate their value clearly and consistently. Every campaign is designed to reinforce your signal and drive measurable growth.</p>
+        <div class="type-vibe">Unified &middot; Minimal &middot; One Family</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="sec reveal" id="services">
+  <div class="sec-tag">03 — Capabilities</div>
+  <div class="sec-h2">What we<br><span class="dim">build.</span></div>
+  <div class="sec-p">Every service connects. Strategy informs content. Content drives campaigns. It's a system, not a menu.</div>
+
+  <div class="svc-list">
+    <div class="svc-row">
+      <div class="svc-left">
+        <span class="svc-idx">01</span>
+        <span class="svc-name">Brand Strategy & Consulting</span>
+      </div>
+      <div class="svc-right">
+        <span class="svc-desc">Positioning, messaging architecture, competitive analysis. The foundation.</span>
+        <span class="svc-arrow">&rarr;</span>
+      </div>
+    </div>
+    <div class="svc-row">
+      <div class="svc-left">
+        <span class="svc-idx">02</span>
+        <span class="svc-name">Social Media Management</span>
+      </div>
+      <div class="svc-right">
+        <span class="svc-desc">Content calendars, platform strategy, community management, reporting.</span>
+        <span class="svc-arrow">&rarr;</span>
+      </div>
+    </div>
+    <div class="svc-row">
+      <div class="svc-left">
+        <span class="svc-idx">03</span>
+        <span class="svc-name">Video Production</span>
+      </div>
+      <div class="svc-right">
+        <span class="svc-desc">Brand films, testimonials, social content. Concept through final cut.</span>
+        <span class="svc-arrow">&rarr;</span>
+      </div>
+    </div>
+    <div class="svc-row">
+      <div class="svc-left">
+        <span class="svc-idx">04</span>
+        <span class="svc-name">Photography</span>
+      </div>
+      <div class="svc-right">
+        <span class="svc-desc">Brand photography, product shoots, team portraits, environmental storytelling.</span>
+        <span class="svc-arrow">&rarr;</span>
+      </div>
+    </div>
+    <div class="svc-row">
+      <div class="svc-left">
+        <span class="svc-idx">05</span>
+        <span class="svc-name">Campaign Development</span>
+      </div>
+      <div class="svc-right">
+        <span class="svc-desc">Multi-channel strategy, creative direction, ad development, optimization.</span>
+        <span class="svc-arrow">&rarr;</span>
+      </div>
+    </div>
+    <div class="svc-row">
+      <div class="svc-left">
+        <span class="svc-idx">06</span>
+        <span class="svc-name">Website Design & Dev</span>
+      </div>
+      <div class="svc-right">
+        <span class="svc-desc">Conversion-focused sites as the hub of your digital presence. Custom built.</span>
+        <span class="svc-arrow">&rarr;</span>
+      </div>
+    </div>
+    <div class="svc-row">
+      <div class="svc-left">
+        <span class="svc-idx">07</span>
+        <span class="svc-name">App Development</span>
+      </div>
+      <div class="svc-right">
+        <span class="svc-desc">Custom applications, booking systems, lead tools, digital platforms.</span>
+        <span class="svc-arrow">&rarr;</span>
+      </div>
+    </div>
+    <div class="svc-row">
+      <div class="svc-left">
+        <span class="svc-idx">&infin;</span>
+        <span class="svc-name">Ongoing Content</span>
+      </div>
+      <div class="svc-right">
+        <span class="svc-desc">Consistent, strategic content to keep your brand top of mind.</span>
+        <span class="svc-arrow">&rarr;</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MOCKUPS -->
+<section class="sec reveal" id="mockups">
+  <div class="sec-tag">04 — Website Directions</div>
+  <div class="sec-h2">Three ways to<br><span class="dim">show up.</span></div>
+  <div class="sec-p">Different layouts, same mission. Each direction converts — just with a different personality.</div>
+
+  <div class="mock-grid">
+    <div class="mock-frame">
+      <div class="mock-bar">
+        <div class="mock-dot"></div><div class="mock-dot"></div><div class="mock-dot"></div>
+        <div class="mock-url">vantagecreative.co</div>
+      </div>
+      <div class="mock-a">
+        <div class="mock-dir-label">Direction A — Dark Bold</div>
+        <div class="m-nav">
+          <div class="m-brand">Vantage.</div>
+          <div class="m-links"><span>Work</span><span>Services</span><span>About</span><span>Contact</span></div>
+        </div>
+        <h3>Build the<br><span class="green">signal</span></h3>
+        <div class="m-sub">Strategy-led creative for growth-focused brands</div>
+        <button class="m-btn">Start a project</button>
+      </div>
+    </div>
+
+    <div class="mock-frame">
+      <div class="mock-bar">
+        <div class="mock-dot"></div><div class="mock-dot"></div><div class="mock-dot"></div>
+        <div class="mock-url">vantagecreative.co/about</div>
+      </div>
+      <div class="mock-b">
+        <div class="mock-b-left">
+          <h3>We don't<br>make noise.<br>We build<br>clarity.</h3>
+          <p>Vantage Creative is a consulting-led agency that helps businesses grow through strategic positioning and intentional brand development.</p>
+          <div class="m-btn-dark">Our approach</div>
+        </div>
+        <div class="mock-b-right"><span>Hero Image</span></div>
+      </div>
+    </div>
+
+    <div class="mock-frame">
+      <div class="mock-bar">
+        <div class="mock-dot"></div><div class="mock-dot"></div><div class="mock-dot"></div>
+        <div class="mock-url">vantagecreative.co/work</div>
+      </div>
+      <div class="mock-c">
+        <div class="mock-c-dark">
+          <h3>Selected<br><span class="green">Work</span></h3>
+          <p>Strategy-driven creative for brands that demand more than content.</p>
+        </div>
+        <div class="mock-c-grid">
+          <div class="mock-c-cell"><span>Project 01</span></div>
+          <div class="mock-c-cell"><span>Project 02</span></div>
+          <div class="mock-c-cell"><span>Project 03</span></div>
+          <div class="mock-c-cell"><span>Project 04</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BRAND VOICE -->
+<section class="sec reveal">
+  <div class="sec-tag">05 — Brand Voice</div>
+  <div class="sec-h2">How we<br><span class="dim">sound.</span></div>
+  <div class="sec-p">Confident. Direct. Never boring. The words carry the same weight as the visuals.</div>
+
+  <div class="voice-grid">
+    <div class="voice-card">
+      <div class="voice-type">Headline</div>
+      <div class="voice-text">"Your brand is talking. Is anyone listening?"</div>
+      <div class="voice-note">Provocative. Makes them stop and question everything.</div>
+    </div>
+    <div class="voice-card">
+      <div class="voice-type">Subhead</div>
+      <div class="voice-text">"We don't decorate brands. We architect them."</div>
+      <div class="voice-note">Separates us from every content shop on Instagram.</div>
+    </div>
+    <div class="voice-card">
+      <div class="voice-type">Body Copy</div>
+      <div class="voice-text">"Most agencies start with cameras. We start with questions."</div>
+      <div class="voice-note">Shows the process. Builds trust before the pitch.</div>
+    </div>
+    <div class="voice-card">
+      <div class="voice-type">CTA</div>
+      <div class="voice-text">"Let's build something that matters."</div>
+      <div class="voice-note">An invitation, not a sales pitch. Collaborative energy.</div>
+    </div>
+  </div>
+</section>
+
+<!-- METRICS -->
+<section class="sec reveal" id="metrics">
+  <div class="sec-tag">07 — Results That Matter</div>
+  <div class="sec-h2">Numbers don't<br><span class="dim">lie.</span></div>
+  <div class="sec-p">This is what happens when strategy meets execution. Real results from real partnerships.</div>
+
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <div class="metric-num" data-target="340">0</div>
+      <div class="metric-unit">%</div>
+      <div class="metric-label">Average increase in social engagement</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-num" data-target="12">0</div>
+      <div class="metric-unit">x</div>
+      <div class="metric-label">Return on ad spend for campaign clients</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-num" data-target="96">0</div>
+      <div class="metric-unit">%</div>
+      <div class="metric-label">Client retention rate year over year</div>
+    </div>
+    <div class="metric-card featured">
+      <div class="metric-num" data-target="2.4">0</div>
+      <div class="metric-unit">M+</div>
+      <div class="metric-label">Impressions generated across all client brands</div>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER -->
+<section class="sec reveal" id="transform">
+  <div class="sec-tag">08 — Transformations</div>
+  <div class="sec-h2">Before Vantage<br><span class="dim">vs. after.</span></div>
+  <div class="sec-p">What happens when a brand gets clarity, positioning, and a system that works.</div>
+
+  <div class="transform-grid">
+    <div class="transform-card">
+      <div class="transform-before">
+        <div class="transform-label">Before</div>
+        <div class="transform-item">Inconsistent posting</div>
+        <div class="transform-item">No brand guidelines</div>
+        <div class="transform-item">Generic stock content</div>
+        <div class="transform-item">Zero strategy</div>
+        <div class="transform-item">"We need more followers"</div>
+      </div>
+      <div class="transform-arrow">&rarr;</div>
+      <div class="transform-after">
+        <div class="transform-label hl">After</div>
+        <div class="transform-item">Content calendar with purpose</div>
+        <div class="transform-item">Full brand system in place</div>
+        <div class="transform-item">Custom photography & video</div>
+        <div class="transform-item">Data-driven campaign strategy</div>
+        <div class="transform-item">"Our phone won't stop ringing"</div>
+      </div>
+    </div>
+
+    <div class="transform-quotes">
+      <div class="tq-card">
+        <div class="tq-text">"We went from guessing to growing. Vantage changed everything about how we show up."</div>
+        <div class="tq-source">— Future Client Testimonial</div>
+      </div>
+      <div class="tq-card">
+        <div class="tq-text">"They didn't just make us look good. They made us make sense."</div>
+        <div class="tq-source">— Future Client Testimonial</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSPIRATION GRID -->
+<section class="sec reveal" id="inspo">
+  <div class="sec-tag">09 — Inspiration</div>
+  <div class="sec-h2">The world we<br><span class="dim">live in.</span></div>
+  <div class="sec-p">Textures, tones, and references that shape the Vantage aesthetic. This is the visual language.</div>
+
+  <div class="inspo-grid">
+    <div class="inspo-cell i1" data-label="Dark Studio"><div class="inspo-overlay">Dark Studio Lighting</div></div>
+    <div class="inspo-cell i2" data-label="Clean Type"><div class="inspo-overlay">Editorial Typography</div></div>
+    <div class="inspo-cell i3" data-label="Neon Accent"><div class="inspo-overlay">Signal Green Accents</div></div>
+    <div class="inspo-cell i4" data-label="Texture"><div class="inspo-overlay">Raw Concrete Texture</div></div>
+    <div class="inspo-cell i5" data-label="Contrast"><div class="inspo-overlay">High Contrast B&W</div></div>
+    <div class="inspo-cell i6" data-label="Motion"><div class="inspo-overlay">Cinematic Motion</div></div>
+    <div class="inspo-cell i7" data-label="Minimal"><div class="inspo-overlay">Negative Space</div></div>
+    <div class="inspo-cell i8" data-label="Bold"><div class="inspo-overlay">Bold Sans-Serif</div></div>
+  </div>
+</section>
+
+<!-- BRAND UNIVERSE -->
+<section class="sec reveal" id="universe">
+  <div class="sec-tag">10 — Brand Universe</div>
+  <div class="sec-h2">Beyond the<br><span class="dim">screen.</span></div>
+  <div class="sec-p">A brand isn't a logo. It's an ecosystem. Here's what the full Vantage system looks like in the wild.</div>
+
+  <div class="bu-grid">
+    <div class="bu-card bu-hat">
+      <div class="bu-mockup">
+        <div class="bu-hat-shape">
+          <div class="bu-hat-brim"></div>
+          <div class="bu-hat-crown">
+            <span class="bu-logo-sm">V<span class="a">.</span></span>
+          </div>
+        </div>
+      </div>
+      <div class="bu-label">Embroidered Hat</div>
+    </div>
+
+    <div class="bu-card bu-tee">
+      <div class="bu-mockup">
+        <div class="bu-tee-shape">
+          <div class="bu-tee-chest">
+            <span class="bu-logo-sm">V<span class="a">.</span></span>
+          </div>
+          <div class="bu-tee-back-text">VANTAGE<span class="a">.</span></div>
+        </div>
+      </div>
+      <div class="bu-label">Screen Print Tee</div>
+    </div>
+
+    <div class="bu-card bu-bcard bu-wide">
+      <div class="bu-mockup">
+        <div class="bu-bcard-front">
+          <div class="bu-bcard-logo">VANTAGE<span class="a">.</span></div>
+          <div class="bu-bcard-info">
+            <div>Jaden Flynn</div>
+            <div class="bu-bcard-dim">Founder & Creative Director</div>
+            <div class="bu-bcard-dim">hello@vantagecreative.co</div>
+          </div>
+        </div>
+        <div class="bu-bcard-back">
+          <span class="bu-logo-lg">V<span class="a">.</span></span>
+        </div>
+      </div>
+      <div class="bu-label">Business Cards</div>
+    </div>
+
+    <div class="bu-card bu-hoodie">
+      <div class="bu-mockup">
+        <div class="bu-hoodie-shape">
+          <div class="bu-hoodie-text">VANTAGE<span class="a">.</span></div>
+          <div class="bu-hoodie-sub">CREATIVE</div>
+        </div>
+      </div>
+      <div class="bu-label">Hoodie — Back Print</div>
+    </div>
+
+    <div class="bu-card bu-social">
+      <div class="bu-mockup">
+        <div class="bu-social-frame">
+          <div class="bu-social-avatar">V<span class="a">.</span></div>
+          <div class="bu-social-details">
+            <div class="bu-social-name">Vantage Creative</div>
+            <div class="bu-social-handle">@vantagecreative</div>
+            <div class="bu-social-bio">Strategy-led creative for brands that refuse to blend in.</div>
+          </div>
+        </div>
+      </div>
+      <div class="bu-label">Social Profile</div>
+    </div>
+
+    <div class="bu-card bu-sign">
+      <div class="bu-mockup">
+        <div class="bu-sign-frame">
+          <div class="bu-sign-text">VANTAGE<span class="a">.</span></div>
+        </div>
+      </div>
+      <div class="bu-label">Office Signage</div>
+    </div>
+
+    <div class="bu-card bu-sticker">
+      <div class="bu-mockup">
+        <div class="bu-sticker-circle">
+          <span class="bu-logo-lg">V<span class="a">.</span></span>
+        </div>
+      </div>
+      <div class="bu-label">Die-Cut Sticker</div>
+    </div>
+
+    <div class="bu-card bu-vehicle">
+      <div class="bu-mockup">
+        <div class="bu-vehicle-shape">
+          <div class="bu-vehicle-text">VANTAGE<span class="a">.</span></div>
+          <div class="bu-vehicle-sub">vantagecreative.co</div>
+        </div>
+      </div>
+      <div class="bu-label">Vehicle Wrap</div>
+    </div>
+  </div>
+</section>
+
+<!-- MOOD -->
+<section class="sec reveal">
+  <div class="sec-tag">06 — Mood</div>
+  <div class="sec-h2">The feeling<br><span class="dim">between pixels.</span></div>
+  <div class="sec-p">Textures and atmospheres that define the Vantage world before you read a word.</div>
+
+  <div class="mood-grid">
+    <div class="mood-cell m1" data-label="Deep Black"></div>
+    <div class="mood-cell m2" data-label="Electric Lime"></div>
+    <div class="mood-cell m3" data-label="Ambient Glow"></div>
+    <div class="mood-cell m4" data-label="Clean White"></div>
+    <div class="mood-cell m5" data-label="Charred"></div>
+    <div class="mood-cell m6" data-label="Fine Lines"></div>
+  </div>
+</section>
+
+<!-- VISION -->
+<section class="vision reveal" id="vision">
+  <img src="vantage-creative-logo.svg" alt="" class="vision-logo">
+  <h2>We're not building an agency. We're building <span class="green">the agency</span> that changes what businesses expect from a creative partner.</h2>
+  <p>An extension of our clients' leadership teams. A system that turns clarity into visibility, visibility into trust, and trust into growth.</p>
+  <p>Select clients. Meaningful partnerships. Dominant brands.</p>
+  <div class="vision-sig">The Flynn's</div>
+</section>
+
+<div class="foot">
+  <p>Vantage Creative &mdash; Cookeville, TN</p>
+  <p>Brand Vision &mdash; March 2026</p>
+</div>
+
+<script>
+// GSAP Intro reel — fires on load, repeats, disappears
+gsap.registerPlugin(ScrollTrigger);
+
+const flash = document.getElementById('reelFlash');
+const words = document.querySelectorAll('.reel-word');
+
+const kw = document.getElementById('killWord');
+const g1 = document.getElementById('glitch1');
+const g2 = document.getElementById('glitch2');
+const reel = document.getElementById('introReel');
+const intro = gsap.timeline({ delay: 0.05 });
+
+// Add scanlines
+for (let i = 0; i < 80; i++) {
+  const s = document.createElement('div');
+  s.className = 'scanline';
+  s.style.top = (i * 1.25) + '%';
+  s.style.opacity = Math.random() * 0.04;
+  reel.appendChild(s);
+}
+
+function glitchBurst(t) {
+  // Chromatic split
+  t.to(g1, { opacity: 0.8, x: -6, y: 2, duration: 0.02 }, '<');
+  t.to(g2, { opacity: 0.8, x: 6, y: -2, duration: 0.02 }, '<');
+  t.to(g1, { opacity: 0, x: 0, y: 0, duration: 0.02 });
+  t.to(g2, { opacity: 0, x: 0, y: 0, duration: 0.02 }, '<');
+}
+
+// Hide site until intro done
+// flicker reveal handles visibility
+
+// === KILL THE NOISE — INTENSE ===
+
+// 1. SLAM — massive
+intro.fromTo(kw, { opacity: 0, scale: 6 }, { opacity: 1, scale: 1, duration: 0.06, ease: 'power4.out' });
+intro.to(flash, { opacity: 0.35, duration: 0.02 }, '<');
+intro.to(flash, { opacity: 0, duration: 0.03 });
+intro.to(reel, { x: -18, duration: 0.015 });
+intro.to(reel, { x: 14, duration: 0.015 });
+intro.to(reel, { x: -8, duration: 0.015 });
+intro.to(reel, { x: 0, duration: 0.015 });
+
+// 2. Immediate glitch — no calm
+glitchBurst(intro);
+intro.to(kw, { opacity: 0, duration: 0.015 });
+intro.to(kw, { opacity: 1, duration: 0.008 });
+intro.to(kw, { skewX: -12, x: 30, duration: 0.02 });
+intro.to(flash, { opacity: 0.15, duration: 0.015 }, '<');
+intro.to(kw, { skewX: 8, x: -20, duration: 0.02 });
+intro.to(flash, { opacity: 0, duration: 0.02 }, '<');
+intro.to(kw, { skewX: 0, x: 0, duration: 0.015 });
+glitchBurst(intro);
+
+// 3. Rapid flicker cluster
+intro.to(kw, { opacity: 0, duration: 0.01 });
+intro.to(kw, { opacity: 1, duration: 0.008 });
+intro.to(kw, { opacity: 0, duration: 0.01 });
+intro.to(kw, { opacity: 1, duration: 0.008 });
+intro.to(kw, { opacity: 0, duration: 0.015 });
+intro.to(flash, { opacity: 0.2, duration: 0.01 }, '<');
+intro.to(flash, { opacity: 0, duration: 0.02 });
+intro.to(kw, { opacity: 1, duration: 0.008 });
+
+// 4. Scale punch + shake
+intro.to(kw, { scale: 1.15, duration: 0.04, ease: 'power4.out' });
+intro.to(reel, { x: -10, duration: 0.012 });
+intro.to(reel, { x: 8, duration: 0.012 });
+intro.to(reel, { x: 0, duration: 0.012 });
+intro.to(flash, { opacity: 0.25, duration: 0.015 }, '<');
+intro.to(flash, { opacity: 0, duration: 0.025 });
+intro.to(kw, { scale: 1, duration: 0.03 });
+glitchBurst(intro);
+
+// 5. More flicker + skew chaos
+intro.to(kw, { skewX: 15, scaleX: 1.06, duration: 0.02 });
+intro.to(kw, { skewX: -10, scaleX: 0.97, duration: 0.02 });
+intro.to(kw, { skewX: 6, duration: 0.015 });
+intro.to(kw, { skewX: 0, scaleX: 1, duration: 0.015 });
+intro.to(kw, { opacity: 0, duration: 0.01 });
+intro.to(flash, { opacity: 0.3, duration: 0.01 }, '<');
+intro.to(kw, { opacity: 1, duration: 0.008 });
+intro.to(flash, { opacity: 0, duration: 0.02 });
+glitchBurst(intro);
+intro.to(kw, { opacity: 0, duration: 0.01 });
+intro.to(kw, { opacity: 1, duration: 0.008 });
+
+// 6. Brief visible moment — but tense
+intro.to(kw, { scale: 1.02, duration: 0.15, ease: 'sine.inOut' });
+
+// 7. Final barrage — hardest
+glitchBurst(intro);
+glitchBurst(intro);
+intro.to(kw, { skewX: -20, x: 40, scaleY: 1.1, duration: 0.02 });
+intro.to(flash, { opacity: 0.35, duration: 0.01 }, '<');
+intro.to(kw, { skewX: 15, x: -30, scaleY: 0.95, duration: 0.02 });
+intro.to(kw, { skewX: -8, x: 15, duration: 0.015 });
+intro.to(flash, { opacity: 0, duration: 0.02 }, '<');
+intro.to(kw, { skewX: 0, x: 0, scaleY: 1, duration: 0.015 });
+intro.to(kw, { opacity: 0, duration: 0.01 });
+intro.to(kw, { opacity: 1, duration: 0.006 });
+intro.to(kw, { opacity: 0, duration: 0.008 });
+intro.to(kw, { opacity: 1, duration: 0.006 });
+intro.to(kw, { opacity: 0, duration: 0.01 });
+intro.to(kw, { opacity: 0.7, duration: 0.006 });
+intro.to(kw, { opacity: 0, duration: 0.008 });
+intro.to(flash, { opacity: 0.4, duration: 0.02 }, '<');
+intro.to(flash, { opacity: 0, duration: 0.04 });
+
+// 8. BLACKOUT — then BIG PULSE reveal
+intro.to(reel, { opacity: 0, duration: 0.08, ease: 'power4.in', delay: 0.08 });
+intro.set(reel, { display: 'none' });
+
+// 9. COMPRESS then SEQUENCED REVEAL
+intro.to(kw, { opacity: 1, duration: 0.002 });
+intro.to(kw, { letterSpacing: '-0.3em', scaleX: 0.3, opacity: 0, duration: 0.04, ease: 'power4.in' });
+intro.to(reel, { opacity: 0, duration: 0.02 });
+intro.set(reel, { display: 'none' });
+
+// Just kill the overlay — site is already visible underneath
+intro.set(reel, { display: 'none' });
+
+// Animated counters
+const counterObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.metric-num').forEach(num => {
+        const target = parseFloat(num.dataset.target);
+        const isDecimal = target % 1 !== 0;
+        gsap.to({ val: 0 }, {
+          val: target,
+          duration: 1.5,
+          ease: 'power2.out',
+          onUpdate: function() {
+            num.textContent = isDecimal ? this.targets()[0].val.toFixed(1) : Math.round(this.targets()[0].val);
+          }
+        });
+      });
+      counterObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+const mg = document.querySelector('.metrics-grid');
+if (mg) counterObs.observe(mg);
+
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); }
+  });
+}, { threshold: 0.06 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// Stagger children
+document.querySelectorAll('.pal-grid,.svc-list,.voice-grid,.mood-grid,.type-stack,.mock-grid,.metrics-grid,.transform-quotes,.inspo-grid,.bu-grid').forEach(g => {
+  const go = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        [...e.target.children].forEach((c, i) => {
+          c.style.cssText = `opacity:0;transform:translateY(24px);transition:opacity 0.5s cubic-bezier(0.16,1,0.3,1) ${i*0.07}s,transform 0.5s cubic-bezier(0.16,1,0.3,1) ${i*0.07}s`;
+          requestAnimationFrame(() => { c.style.opacity = '1'; c.style.transform = 'none'; });
+        });
+        go.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  go.observe(g);
+});
+</script>
+
+</body>
+</html>
