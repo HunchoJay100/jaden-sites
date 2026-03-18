@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Command — $25,000 | Modern Development</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--gold:#C5A55A;--gold-light:#D4BA78;--gold-dark:#A8893D;
+--bg:#0a0a0a;--surface:#111119;--surface2:#16161f;--surface3:#1c1c2a;
+--text:#f0f0f5;--text-dim:#9090a8;--text-muted:#5a5a72;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;line-height:1.6}
+body::before{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999}
+
+nav{position:fixed;top:0;left:0;right:0;padding:1.25rem 3rem;display:flex;justify-content:space-between;align-items:center;z-index:100;background:rgba(10,10,10,0.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(197,165,90,0.1)}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:0.15em;color:var(--gold)}
+.nav-logo span{color:var(--text-dim);font-size:0.85rem;letter-spacing:0.08em;margin-left:0.75rem}
+.nav-links{display:flex;gap:1.5rem}
+.nav-tier{font-family:'Bebas Neue',sans-serif;font-size:0.9rem;letter-spacing:0.15em;color:var(--text-dim);border:1px solid var(--surface3);padding:0.45rem 1rem;text-decoration:none;transition:all 0.3s}
+.nav-tier:hover,.nav-tier.active{border-color:var(--gold);color:var(--gold)}
+
+/* Hero - Command Center feel */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:8rem 2rem 4rem;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+
+/* Scanning grid effect */
+.scan-grid{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.scan-line{position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(197,165,90,0.15),transparent);animation:scan 6s linear infinite}
+@keyframes scan{0%{top:-5%}100%{top:105%}}
+.hex-grid{position:absolute;inset:0;opacity:0.025;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23C5A55A' fill-opacity='1'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+
+/* Corner accents */
+.corner{position:absolute;width:60px;height:60px;pointer-events:none}
+.corner::before,.corner::after{content:'';position:absolute;background:var(--gold)}
+.corner-tl{top:80px;left:40px}.corner-tl::before{top:0;left:0;width:60px;height:2px}.corner-tl::after{top:0;left:0;width:2px;height:60px}
+.corner-tr{top:80px;right:40px}.corner-tr::before{top:0;right:0;width:60px;height:2px}.corner-tr::after{top:0;right:0;width:2px;height:60px}
+.corner-bl{bottom:40px;left:40px}.corner-bl::before{bottom:0;left:0;width:60px;height:2px}.corner-bl::after{bottom:0;left:0;width:2px;height:60px}
+.corner-br{bottom:40px;right:40px}.corner-br::before{bottom:0;right:0;width:60px;height:2px}.corner-br::after{bottom:0;right:0;width:2px;height:60px}
+
+.tier-badge{font-family:'Bebas Neue',sans-serif;font-size:0.85rem;letter-spacing:0.4em;color:var(--bg);background:linear-gradient(135deg,var(--gold-light),var(--gold));padding:0.6rem 2rem;margin-bottom:3rem;display:inline-block;position:relative}
+.flagship{font-family:'DM Sans',sans-serif;font-size:0.65rem;letter-spacing:0.2em;color:var(--gold);border:1px solid var(--gold);padding:0.25rem 0.7rem;margin-left:1rem;vertical-align:middle;font-weight:700;text-transform:uppercase}
+
+h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(5rem,12vw,10rem);letter-spacing:0.08em;line-height:0.9;margin-bottom:1.5rem;background:linear-gradient(135deg,var(--gold-light),var(--gold),var(--gold-dark));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.tagline{font-size:1.35rem;color:var(--text-dim);font-style:italic;margin-bottom:3rem;font-weight:400}
+.price-hero{font-family:'Bebas Neue',sans-serif;font-size:4.5rem;letter-spacing:0.02em;color:var(--text);margin-bottom:0.5rem}
+.price-hero span{color:var(--gold);font-size:1.5rem;vertical-align:super;margin-right:0.25rem}
+.price-sub{color:var(--text-muted);font-size:0.95rem;margin-bottom:1rem}
+.savings{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--gold);letter-spacing:0.1em;margin-bottom:3rem}
+.savings em{font-style:normal;color:var(--text);font-size:0.85rem;letter-spacing:0.05em}
+
+.cta-btn{display:inline-block;padding:1.2rem 4rem;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--bg);font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:0.2em;text-decoration:none;position:relative;overflow:hidden;transition:all 0.4s;box-shadow:0 4px 20px rgba(197,165,90,0.2)}
+.cta-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 40%,rgba(255,255,255,0.25) 50%,transparent 60%);transform:translateX(-100%);transition:transform 0.6s}
+.cta-btn:hover::before{transform:translateX(100%)}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(197,165,90,0.4)}
+
+section{padding:6rem 2rem}
+.container{max-width:1100px;margin:0 auto}
+.section-label{font-family:'Bebas Neue',sans-serif;font-size:0.8rem;letter-spacing:0.4em;color:var(--gold);margin-bottom:1rem;display:flex;align-items:center;gap:1rem}
+.section-label::before{content:'';width:40px;height:1px;background:var(--gold)}
+h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,5vw,3.5rem);letter-spacing:0.04em;margin-bottom:1.5rem}
+
+/* Base tiers included */
+.base-tiers{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:3rem}
+.base-tier{background:var(--surface);border:1px solid var(--surface3);padding:2rem}
+.base-tier h3{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.15em;color:var(--text-dim);margin-bottom:0.75rem}
+.base-tier h3 .check{color:var(--gold);margin-right:0.5rem}
+.base-tier ul{list-style:none}
+.base-tier ul li{color:var(--text-muted);font-size:0.85rem;padding:0.2rem 0;padding-left:1rem;position:relative}
+.base-tier ul li::before{content:'';position:absolute;left:0;top:0.55rem;width:4px;height:4px;background:var(--gold-dark);transform:rotate(45deg)}
+
+/* Command exclusive features */
+.command-features{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.5rem}
+.cmd-feature{background:linear-gradient(135deg,rgba(197,165,90,0.04),var(--surface));border:1px solid rgba(197,165,90,0.12);padding:2.5rem;position:relative;overflow:hidden}
+.cmd-feature::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),transparent)}
+.cmd-feature h3{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:0.06em;margin-bottom:0.75rem;color:var(--gold)}
+.cmd-feature p{color:var(--text-dim);font-size:0.95rem;line-height:1.7}
+.cmd-feature .detail{margin-top:1rem;padding-top:1rem;border-top:1px solid var(--surface3)}
+.cmd-feature .detail li{list-style:none;color:var(--text-dim);font-size:0.85rem;padding:0.25rem 0;padding-left:1.25rem;position:relative}
+.cmd-feature .detail li::before{content:'';position:absolute;left:0;top:0.55rem;width:8px;height:1px;background:var(--gold)}
+
+/* Comparison Table */
+.comparison{background:var(--surface);border-top:1px solid var(--surface3);border-bottom:1px solid var(--surface3)}
+.comp-table{width:100%;border-collapse:collapse;margin-top:2rem}
+.comp-table th{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.1em;padding:1.25rem 1.5rem;text-align:left;border-bottom:2px solid var(--gold)}
+.comp-table th:first-child{color:var(--text-dim)}
+.comp-table th:nth-child(2){color:var(--text-dim)}
+.comp-table th:nth-child(3){color:var(--gold)}
+.comp-table td{padding:1rem 1.5rem;border-bottom:1px solid var(--surface3);font-size:0.95rem;color:var(--text-dim)}
+.comp-table td:nth-child(3){color:var(--text)}
+.comp-table tr:last-child td{border-bottom:2px solid var(--gold);font-weight:700}
+.comp-table tr:last-child td:nth-child(2){color:var(--text-muted)}
+.comp-table tr:last-child td:nth-child(3){color:var(--gold);font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:0.05em}
+
+/* Stats row */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:3rem;border:1px solid var(--surface3)}
+.stat{text-align:center;padding:2.5rem 1rem;border-right:1px solid var(--surface3);background:var(--surface)}
+.stat:last-child{border-right:none}
+.stat-number{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;color:var(--gold);line-height:1}
+.stat-label{color:var(--text-dim);font-size:0.75rem;letter-spacing:0.15em;margin-top:0.5rem;font-family:'Bebas Neue',sans-serif}
+
+.addon-banner{background:linear-gradient(135deg,var(--surface),var(--surface2));border:1px solid var(--surface3);padding:3rem;text-align:center;margin-top:3rem;position:relative;overflow:hidden}
+.addon-banner::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.addon-price{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--gold);margin-bottom:0.5rem}
+.addon-desc{color:var(--text-dim)}
+
+/* Bottom CTA */
+.final-cta{text-align:center;padding:8rem 2rem;position:relative;overflow:hidden}
+.final-cta::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.final-cta h2{font-size:clamp(2rem,4vw,3rem);margin-bottom:1rem}
+.final-cta p{color:var(--text-dim);font-size:1.1rem;margin-bottom:2.5rem;max-width:600px;margin-left:auto;margin-right:auto}
+.final-cta .price-tag{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--text);margin-bottom:0.5rem}
+.final-cta .price-tag span{color:var(--gold)}
+
+footer{padding:3rem;text-align:center;border-top:1px solid var(--surface3);color:var(--text-muted);font-size:0.8rem}
+footer .brand{font-family:'Bebas Neue',sans-serif;color:var(--gold);font-size:1.1rem;letter-spacing:0.15em;margin-bottom:0.5rem}
+footer .tagline-footer{font-style:italic;color:var(--text-dim);margin-bottom:1rem;font-size:0.85rem}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.hero>:not(.scan-grid):not(.corner){animation:fadeUp 0.8s ease both}
+.hero>:nth-child(6){animation-delay:0.1s}
+.hero>:nth-child(7){animation-delay:0.15s}
+.hero>:nth-child(8){animation-delay:0.2s}
+.hero>:nth-child(9){animation-delay:0.3s}
+.hero>:nth-child(10){animation-delay:0.35s}
+.hero>:nth-child(11){animation-delay:0.4s}
+.hero>:nth-child(12){animation-delay:0.5s}
+.hero>:nth-child(13){animation-delay:0.6s}
+
+@media(max-width:768px){
+.base-tiers{grid-template-columns:1fr}
+.stats-row{grid-template-columns:1fr 1fr}
+.stat{border-bottom:1px solid var(--surface3)}
+.comp-table{font-size:0.85rem}
+.comp-table th,.comp-table td{padding:0.75rem}
+.nav-links{display:none}
+nav{padding:1rem 1.5rem}
+section{padding:4rem 1.5rem}
+.corner{display:none}
+}
+</style>
+</head>
+<body>
+
+<nav>
+<div class="nav-logo">MODERN DEVELOPMENT <span>Consulting</span></div>
+<div class="nav-links">
+<a href="tier-1-blueprint.html" class="nav-tier">TIER 1</a>
+<a href="tier-2-navigator.html" class="nav-tier">TIER 2</a>
+<a href="tier-3-command.html" class="nav-tier active">TIER 3</a>
+</div>
+</nav>
+
+<section class="hero">
+<div class="scan-grid">
+<div class="scan-line"></div>
+<div class="hex-grid"></div>
+</div>
+<div class="corner corner-tl"></div>
+<div class="corner corner-tr"></div>
+<div class="corner corner-bl"></div>
+<div class="corner corner-br"></div>
+
+<div class="tier-badge">TIER 3 <span class="flagship">FLAGSHIP</span></div>
+<h1>THE COMMAND</h1>
+<p class="tagline">"Your build. Our brain."</p>
+<div class="price-hero"><span>$</span>25,000</div>
+<p class="price-sub">Effective rate: <strong style="color:var(--gold)">~$750/hr</strong> &mdash; Up to 10 months of full-spectrum advisory</p>
+<div class="savings">SAVE $75,000+ <em>vs. hiring a general contractor</em></div>
+<a href="#features" class="cta-btn">EXPLORE THE COMMAND</a>
+</section>
+
+<section id="features">
+<div class="container">
+<div class="section-label">WHAT'S INCLUDED</div>
+<h2>The Full Build Advisor Experience</h2>
+<p style="color:var(--text-dim);max-width:650px;margin-bottom:2rem">Everything in Tier 1 and Tier 2, plus milestone walkthroughs, bid reviews, budget audits, and priority support. A professional builder in your corner for the entire build &mdash; without the GC markup.</p>
+
+<div class="base-tiers">
+<div class="base-tier">
+<h3><span class="check">&#10003;</span> THE BLUEPRINT INCLUDED</h3>
+<ul>
+<li>Order of Operations</li>
+<li>Budget Tracking Spreadsheet</li>
+<li>Timeline Framework</li>
+<li>Sub List & Work Order Forms</li>
+<li>Vet Subs Guide + Permit Checklist</li>
+<li>Full Article Library</li>
+</ul>
+</div>
+<div class="base-tier">
+<h3><span class="check">&#10003;</span> THE NAVIGATOR INCLUDED</h3>
+<ul>
+<li>Monthly Strategy Calls</li>
+<li>Communication Framework</li>
+<li>Draw Schedule Guidance</li>
+<li>Email & Text Support</li>
+</ul>
+</div>
+</div>
+
+<div class="section-label">COMMAND EXCLUSIVES</div>
+<div class="command-features">
+<div class="cmd-feature">
+<h3>5 Milestone Walkthroughs</h3>
+<p>Virtual video walkthroughs at the 5 most critical stages of your build. We see what you see and tell you what to look for.</p>
+<ul class="detail">
+<li>Pre-framing (foundation/slab complete)</li>
+<li>Post-framing (structure up, before mechanicals)</li>
+<li>Post rough-ins (MEP in walls)</li>
+<li>Pre-trim (drywall done, ready for finishes)</li>
+<li>CO delivery (final walkthrough before move-in)</li>
+</ul>
+</div>
+<div class="cmd-feature">
+<h3>6 Bid Reviews</h3>
+<p>We review the bids that matter most &mdash; the trades where bad pricing costs you $10K+. Line by line. Before you sign.</p>
+<ul class="detail">
+<li>Framing</li>
+<li>Concrete / Foundation</li>
+<li>Roofing</li>
+<li>HVAC</li>
+<li>Electrical</li>
+<li>Plumbing</li>
+</ul>
+</div>
+<div class="cmd-feature">
+<h3>3 Budget Audits</h3>
+<p>Full budget review at three key financial checkpoints. We flag overruns early, before they compound.</p>
+<ul class="detail">
+<li>Foundation milestone</li>
+<li>Dry-in milestone</li>
+<li>Trim milestone</li>
+</ul>
+</div>
+<div class="cmd-feature">
+<h3>Priority Support</h3>
+<p>24-hour email and text response. When something goes sideways on the job site, you get answers fast &mdash; not in two days.</p>
+</div>
+<div class="cmd-feature">
+<h3>Problem-Solving Guide</h3>
+<p>What to do when things go wrong. Sub no-shows, budget blowouts, failed inspections, weather delays. The playbook for the unexpected.</p>
+</div>
+<div class="cmd-feature">
+<h3>Change Order + Punch List + Final Walkthrough</h3>
+<p>Professional templates for formal scope changes, room-by-room punch list inspection, and system-by-system final walkthrough before CO.</p>
+</div>
+</div>
+
+<div class="stats-row">
+<div class="stat">
+<div class="stat-number">10</div>
+<div class="stat-label">MONTHLY CALLS</div>
+</div>
+<div class="stat">
+<div class="stat-number">5</div>
+<div class="stat-label">WALKTHROUGHS</div>
+</div>
+<div class="stat">
+<div class="stat-number">6</div>
+<div class="stat-label">BID REVIEWS</div>
+</div>
+<div class="stat">
+<div class="stat-number">24HR</div>
+<div class="stat-label">RESPONSE TIME</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="comparison">
+<div class="container">
+<div class="section-label">THE REAL COMPARISON</div>
+<h2>The Command vs. Hiring a General Contractor</h2>
+<table class="comp-table">
+<thead>
+<tr>
+<th></th>
+<th>HIRING A GC ($100K)</th>
+<th>THE COMMAND ($25K)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Who carries the license</td>
+<td>GC</td>
+<td>You (owner-builder)</td>
+</tr>
+<tr>
+<td>Who hires & pays subs</td>
+<td>GC</td>
+<td>You (we advise)</td>
+</tr>
+<tr>
+<td>Who owns the schedule</td>
+<td>GC</td>
+<td>You (we review)</td>
+</tr>
+<tr>
+<td>Who's on-site daily</td>
+<td>GC</td>
+<td>You (we do virtual walkthroughs)</td>
+</tr>
+<tr>
+<td>Who fixes problems</td>
+<td>GC</td>
+<td>You execute, we tell you what to do</td>
+</tr>
+<tr>
+<td>Who guarantees the work</td>
+<td>GC warranty</td>
+<td>Advisory only &mdash; no warranty</td>
+</tr>
+<tr>
+<td>Your savings</td>
+<td>&mdash;</td>
+<td>$75,000+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section>
+<div class="container">
+<div class="section-label">BEYOND THE CAP</div>
+<h2>Need More?</h2>
+<div class="addon-banner">
+<div class="addon-price">$500 / 60 MIN</div>
+<p class="addon-desc">Additional calls, walkthroughs, or reviews beyond the included caps. Book as needed.</p>
+</div>
+</div>
+</section>
+
+<div class="final-cta">
+<h2>$400K+ Build? Save $75K.</h2>
+<p>The full build advisor experience. Professional guidance at every stage. Without the general contractor markup.</p>
+<div class="price-tag"><span>$</span>25,000</div>
+<br><br>
+<a href="#" class="cta-btn">GET STARTED</a>
+</div>
+
+<footer>
+<div class="brand">MODERN DEVELOPMENT</div>
+<div class="tagline-footer">Design. Construct. Transform.</div>
+<p>&copy; 2026 Modern Development &mdash; A Flynn Development Company</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Blueprint — $5,000 | Modern Development</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--gold:#C5A55A;--gold-light:#D4BA78;--gold-dark:#A8893D;
+--bg:#0a0a0a;--surface:#111119;--surface2:#16161f;--surface3:#1c1c2a;
+--text:#f0f0f5;--text-dim:#9090a8;--text-muted:#5a5a72;
+--red:#ff4d4d;--green:#00ff88;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;line-height:1.6}
+
+/* Grain overlay */
+body::before{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999}
+
+/* Nav */
+nav{position:fixed;top:0;left:0;right:0;padding:1.25rem 3rem;display:flex;justify-content:space-between;align-items:center;z-index:100;background:rgba(10,10,10,0.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(197,165,90,0.1)}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:0.15em;color:var(--gold)}
+.nav-logo span{color:var(--text-dim);font-size:0.85rem;letter-spacing:0.08em;margin-left:0.75rem}
+.nav-tier{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.2em;color:var(--text-dim);border:1px solid var(--surface3);padding:0.5rem 1.25rem;text-decoration:none;transition:all 0.3s}
+.nav-tier:hover{border-color:var(--gold);color:var(--gold)}
+
+/* Hero */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:8rem 2rem 4rem;position:relative}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+
+.tier-badge{font-family:'Bebas Neue',sans-serif;font-size:0.85rem;letter-spacing:0.4em;color:var(--gold);border:1px solid var(--gold);padding:0.6rem 2rem;margin-bottom:3rem;display:inline-block;position:relative}
+.tier-badge::before,.tier-badge::after{content:'';position:absolute;width:8px;height:8px;border:1px solid var(--gold)}
+.tier-badge::before{top:-4px;left:-4px;border-right:none;border-bottom:none}
+.tier-badge::after{bottom:-4px;right:-4px;border-left:none;border-top:none}
+
+h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(5rem,12vw,10rem);letter-spacing:0.05em;line-height:0.9;margin-bottom:1.5rem;background:linear-gradient(135deg,var(--gold-light),var(--gold),var(--gold-dark));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.tagline{font-size:1.35rem;color:var(--text-dim);font-style:italic;margin-bottom:3rem;font-weight:400}
+.price-hero{font-family:'Bebas Neue',sans-serif;font-size:4.5rem;letter-spacing:0.02em;color:var(--text);margin-bottom:0.5rem}
+.price-hero span{color:var(--gold);font-size:1.5rem;vertical-align:super;margin-right:0.25rem}
+.price-sub{color:var(--text-muted);font-size:0.95rem;margin-bottom:3rem}
+
+.cta-btn{display:inline-block;padding:1.1rem 3.5rem;background:var(--gold);color:var(--bg);font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:0.2em;text-decoration:none;position:relative;overflow:hidden;transition:all 0.4s}
+.cta-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 40%,rgba(255,255,255,0.2) 50%,transparent 60%);transform:translateX(-100%);transition:transform 0.6s}
+.cta-btn:hover::before{transform:translateX(100%)}
+.cta-btn:hover{background:var(--gold-light);transform:translateY(-2px);box-shadow:0 8px 30px rgba(197,165,90,0.3)}
+
+/* Blueprint grid bg */
+.hero .grid-bg{position:absolute;inset:0;opacity:0.03;background-image:linear-gradient(var(--gold) 1px,transparent 1px),linear-gradient(90deg,var(--gold) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+
+/* Sections */
+section{padding:6rem 2rem}
+.container{max-width:1100px;margin:0 auto}
+.section-label{font-family:'Bebas Neue',sans-serif;font-size:0.8rem;letter-spacing:0.4em;color:var(--gold);margin-bottom:1rem;display:flex;align-items:center;gap:1rem}
+.section-label::before{content:'';width:40px;height:1px;background:var(--gold)}
+h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,5vw,3.5rem);letter-spacing:0.04em;margin-bottom:1.5rem}
+
+/* What's Included */
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin-top:3rem}
+.feature{background:var(--surface);border:1px solid var(--surface3);padding:2rem;position:relative;transition:all 0.3s}
+.feature::before{content:'';position:absolute;top:0;left:0;width:3px;height:0;background:var(--gold);transition:height 0.4s}
+.feature:hover::before{height:100%}
+.feature:hover{border-color:rgba(197,165,90,0.2);transform:translateY(-3px)}
+.feature-icon{font-size:1.5rem;margin-bottom:1rem}
+.feature h3{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:0.1em;margin-bottom:0.5rem}
+.feature p{color:var(--text-dim);font-size:0.9rem;line-height:1.7}
+
+/* Who It's For */
+.who-section{background:var(--surface);border-top:1px solid var(--surface3);border-bottom:1px solid var(--surface3)}
+.who-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;margin-top:2rem;align-items:center}
+.who-text{color:var(--text-dim);font-size:1.05rem;line-height:1.8}
+.who-text strong{color:var(--text);font-weight:600}
+.who-stats{display:grid;gap:1.5rem}
+.stat{text-align:center;padding:1.5rem;border:1px solid var(--surface3);background:var(--surface2)}
+.stat-number{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--gold)}
+.stat-label{color:var(--text-dim);font-size:0.85rem;letter-spacing:0.1em;margin-top:0.25rem}
+
+/* How It Works */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:3rem;position:relative}
+.steps::before{content:'';position:absolute;top:2.25rem;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dark),var(--gold),var(--gold-dark),transparent)}
+.step{text-align:center;padding:0 1rem;position:relative}
+.step-num{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--gold);width:4.5rem;height:4.5rem;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;background:var(--bg);position:relative;z-index:2}
+.step h3{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.1em;margin-bottom:0.5rem}
+.step p{color:var(--text-dim);font-size:0.85rem}
+
+/* Add-on */
+.addon-banner{background:linear-gradient(135deg,var(--surface),var(--surface2));border:1px solid var(--surface3);padding:3rem;text-align:center;margin-top:3rem;position:relative;overflow:hidden}
+.addon-banner::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.addon-price{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--gold);margin-bottom:0.5rem}
+.addon-desc{color:var(--text-dim)}
+
+/* Upgrade CTA */
+.upgrade{text-align:center;padding:6rem 2rem;position:relative}
+.upgrade::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.upgrade h2{color:var(--text-dim);font-size:1.5rem;font-family:'DM Sans',sans-serif;font-weight:400;margin-bottom:1rem}
+.upgrade h2 strong{color:var(--text);font-weight:700}
+.upgrade-link{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--gold);text-decoration:none;letter-spacing:0.1em;border-bottom:2px solid transparent;transition:all 0.3s;padding-bottom:0.25rem}
+.upgrade-link:hover{border-color:var(--gold)}
+
+/* Footer */
+footer{padding:3rem;text-align:center;border-top:1px solid var(--surface3);color:var(--text-muted);font-size:0.8rem}
+footer .brand{font-family:'Bebas Neue',sans-serif;color:var(--gold);font-size:1.1rem;letter-spacing:0.15em;margin-bottom:0.5rem}
+footer .tagline-footer{font-style:italic;color:var(--text-dim);margin-bottom:1rem;font-size:0.85rem}
+
+/* Animations */
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.hero>*{animation:fadeUp 0.8s ease both}
+.hero>*:nth-child(2){animation-delay:0.1s}
+.hero>*:nth-child(3){animation-delay:0.2s}
+.hero>*:nth-child(4){animation-delay:0.3s}
+.hero>*:nth-child(5){animation-delay:0.4s}
+.hero>*:nth-child(6){animation-delay:0.5s}
+.hero>*:nth-child(7){animation-delay:0.6s}
+
+@keyframes gridPulse{0%,100%{opacity:0.02}50%{opacity:0.05}}
+.hero .grid-bg{animation:gridPulse 8s ease-in-out infinite}
+
+/* Responsive */
+@media(max-width:768px){
+.who-grid{grid-template-columns:1fr}
+.steps{grid-template-columns:1fr 1fr;gap:2rem}
+.steps::before{display:none}
+nav{padding:1rem 1.5rem}
+section{padding:4rem 1.5rem}
+}
+</style>
+</head>
+<body>
+
+<nav>
+<div class="nav-logo">MODERN DEVELOPMENT <span>Consulting</span></div>
+<a href="tier-2-navigator.html" class="nav-tier">VIEW ALL TIERS &rarr;</a>
+</nav>
+
+<section class="hero">
+<div class="grid-bg"></div>
+<div class="tier-badge">TIER 1</div>
+<h1>THE BLUEPRINT</h1>
+<p class="tagline">"The playbook. You run the build."</p>
+<div class="price-hero"><span>$</span>5,000</div>
+<p class="price-sub">One-time purchase &mdash; Lifetime access to your build toolkit</p>
+<a href="#features" class="cta-btn">SEE WHAT'S INCLUDED</a>
+</section>
+
+<section id="features">
+<div class="container">
+<div class="section-label">WHAT'S INCLUDED</div>
+<h2>Everything You Need to Run Your Own Build</h2>
+<p style="color:var(--text-dim);max-width:600px;margin-bottom:1rem">The complete self-serve toolkit for self-contracting homeowners. Delivered digitally, matched to your build type. No fluff &mdash; just the tools a professional builder actually uses.</p>
+
+<div class="features">
+<div class="feature">
+<div class="feature-icon">&#9670;</div>
+<h3>Order of Operations</h3>
+<p>The full build sequence from dirt to keys. Every phase, every step, every inspection gate &mdash; in the exact order a professional executes them.</p>
+</div>
+<div class="feature">
+<div class="feature-icon">&#9670;</div>
+<h3>Budget Tracking Spreadsheet</h3>
+<p>Every line item by trade with estimated, actual, and variance columns. Dashboard at the top. You input your numbers &mdash; we give you the structure.</p>
+</div>
+<div class="feature">
+<div class="feature-icon">&#9670;</div>
+<h3>Timeline Framework</h3>
+<p>Sequence + dependencies with duration ranges, tips, pitfalls, and prompts matched to your specific build type.</p>
+</div>
+<div class="feature">
+<div class="feature-icon">&#9670;</div>
+<h3>Sub List Tracker</h3>
+<p>Organized database for every trade. Track bids, insurance, work orders, and hiring status across your entire subcontractor roster.</p>
+</div>
+<div class="feature">
+<div class="feature-icon">&#9670;</div>
+<h3>Work Order & Insurance Form</h3>
+<p>One form per sub. Captures scope, price, terms, insurance, licensing, and lien waiver. Professional-grade documentation.</p>
+</div>
+<div class="feature">
+<div class="feature-icon">&#9670;</div>
+<h3>How to Vet Subs</h3>
+<p>What to ask, what to check, licensing requirements, reference scripts, and red flags that save you from bad hires.</p>
+</div>
+<div class="feature">
+<div class="feature-icon">&#9670;</div>
+<h3>Permit Checklist</h3>
+<p>Requirements by build type, jurisdiction-specific notes, and the complete inspection sequence from start to CO.</p>
+</div>
+<div class="feature">
+<div class="feature-icon">&#9670;</div>
+<h3>Educational Article Library</h3>
+<p>Deep-dive articles on self-contracting, draw schedules, insurance, reading bids, managing subs, and common budget mistakes.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section>
+<div class="container">
+<div class="section-label">HOW IT WORKS</div>
+<h2>From Purchase to Build-Ready in 24 Hours</h2>
+<div class="steps">
+<div class="step">
+<div class="step-num">01</div>
+<h3>PURCHASE</h3>
+<p>Secure your spot. Intake form sends automatically.</p>
+</div>
+<div class="step">
+<div class="step-num">02</div>
+<h3>INTAKE</h3>
+<p>Tell us your build type, square footage, and scope.</p>
+</div>
+<div class="step">
+<div class="step-num">03</div>
+<h3>RECEIVE</h3>
+<p>Matched deliverable package delivered to your inbox.</p>
+</div>
+<div class="step">
+<div class="step-num">04</div>
+<h3>BUILD</h3>
+<p>Execute your build with professional-grade tools.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section class="who-section">
+<div class="container">
+<div class="section-label">WHO THIS IS FOR</div>
+<h2>You Don't Need Hand-Holding. You Need Structure.</h2>
+<div class="who-grid">
+<div class="who-text">
+<p>The Blueprint is for <strong>experienced homeowners</strong> who just need the roadmap. People with construction-adjacent backgrounds or the discipline to manage a build independently.</p>
+<br>
+<p>You've done your research. You understand the risk. You just need the <strong>same tools and systems a professional builder uses</strong> &mdash; organized, sequenced, and ready to go.</p>
+<br>
+<p>No calls. No support. No hand-holding. Just the playbook.</p>
+</div>
+<div class="who-stats">
+<div class="stat">
+<div class="stat-number">$0</div>
+<div class="stat-label">ONGOING COST</div>
+</div>
+<div class="stat">
+<div class="stat-number">8</div>
+<div class="stat-label">PROFESSIONAL DELIVERABLES</div>
+</div>
+<div class="stat">
+<div class="stat-number">24HR</div>
+<div class="stat-label">DELIVERY TIME</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section>
+<div class="container">
+<div class="section-label">ADD-ONS</div>
+<h2>Need a Professional Opinion?</h2>
+<div class="addon-banner">
+<div class="addon-price">$500 / 30 MIN</div>
+<p class="addon-desc">Strategy calls available on demand. Book when you need them. No commitment.</p>
+</div>
+</div>
+</section>
+
+<div class="upgrade">
+<h2>When you hit a wall and need a builder in your corner...</h2>
+<a href="tier-2-navigator.html" class="upgrade-link">THE NAVIGATOR &mdash; $12,500 &rarr;</a>
+</div>
+
+<footer>
+<div class="brand">MODERN DEVELOPMENT</div>
+<div class="tagline-footer">Design. Construct. Transform.</div>
+<p>&copy; 2026 Modern Development &mdash; A Flynn Development Company</p>
+</footer>
+
+</body>
+</html>
