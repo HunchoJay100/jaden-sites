@@ -336,7 +336,9 @@ nav.nav-light .nav-links a.active::after { background: #A8893D; }
   font-weight: 300;
   color: var(--text-light-secondary, var(--text-secondary));
   line-height: 1.75;
+  margin-bottom: 0.75rem;
 }
+.spotlight-text p:last-of-type { margin-bottom: 0; }
 .light .spotlight-text p { color: #5a5a5a; }
 .light .spotlight-num { color: #999; }
 
@@ -411,6 +413,37 @@ nav.nav-light .nav-links a.active::after { background: #A8893D; }
   font-size: 0.6rem;
   color: #999;
   font-weight: 400;
+}
+
+.mockup-oop-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.6rem;
+  color: #999;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+.oop-page-count {
+  font-weight: 600;
+  color: #C5A55A;
+  background: rgba(197, 165, 90, 0.08);
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+  font-size: 0.55rem;
+  letter-spacing: 0.04em;
+}
+.oop-divider { color: #ddd; }
+.mockup-phase-faded { opacity: 0.4; }
+.mockup-scroll-hint {
+  text-align: center;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.55rem;
+  color: #bbb;
+  padding-top: 0.75rem;
+  letter-spacing: 0.05em;
 }
 
 /* Budget Tracker mockup */
@@ -994,17 +1027,26 @@ footer {
       <div class="mockup-toolbar"><span class="mockup-dot"></span><span class="mockup-dot"></span><span class="mockup-dot"></span></div>
       <div class="mockup-oop">
         <div class="mockup-oop-header">Flynn Development &mdash; Order of Operations</div>
-        <div class="mockup-phase"><span class="mockup-phase-num">1</span><div><div class="mockup-phase-text">Site Preparation &amp; Excavation</div><div class="mockup-phase-sub">Survey, clearing, grading, utility rough-in</div></div></div>
-        <div class="mockup-phase"><span class="mockup-phase-num">2</span><div><div class="mockup-phase-text">Foundation &amp; Concrete</div><div class="mockup-phase-sub">Footings, stem walls, slab pour, waterproofing</div></div></div>
-        <div class="mockup-phase"><span class="mockup-phase-num">3</span><div><div class="mockup-phase-text">Framing &amp; Structural</div><div class="mockup-phase-sub">Floor systems, walls, roof, sheathing, windows</div></div></div>
-        <div class="mockup-phase"><span class="mockup-phase-num">4</span><div><div class="mockup-phase-text">Mechanical Rough-Ins</div><div class="mockup-phase-sub">HVAC, plumbing, electrical, low voltage</div></div></div>
-        <div class="mockup-phase"><span class="mockup-phase-num">5</span><div><div class="mockup-phase-text">Insulation &amp; Drywall</div><div class="mockup-phase-sub">Vapor barrier, blow-in/batt, hang, tape, finish</div></div></div>
+        <div class="mockup-oop-meta">
+          <span class="oop-page-count">30+ Pages</span>
+          <span class="oop-divider">&middot;</span>
+          <span>Every phase from dirt to CO</span>
+        </div>
+        <div class="mockup-phase"><span class="mockup-phase-num">1</span><div><div class="mockup-phase-text">Site Preparation &amp; Excavation</div><div class="mockup-phase-sub">Survey, clearing, grading, utility rough-in, temporary power</div></div></div>
+        <div class="mockup-phase"><span class="mockup-phase-num">2</span><div><div class="mockup-phase-text">Foundation &amp; Concrete</div><div class="mockup-phase-sub">Footings, stem walls, slab pour, waterproofing, backfill</div></div></div>
+        <div class="mockup-phase"><span class="mockup-phase-num">3</span><div><div class="mockup-phase-text">Framing &amp; Structural</div><div class="mockup-phase-sub">Floor systems, walls, roof, sheathing, windows, ext. doors</div></div></div>
+        <div class="mockup-phase"><span class="mockup-phase-num">4</span><div><div class="mockup-phase-text">Mechanical Rough-Ins</div><div class="mockup-phase-sub">HVAC ductwork, plumbing top-out, electrical wire, low voltage</div></div></div>
+        <div class="mockup-phase"><span class="mockup-phase-num">5</span><div><div class="mockup-phase-text">Insulation &amp; Drywall</div><div class="mockup-phase-sub">Vapor barrier, blow-in/batt, hang, tape, texture, finish</div></div></div>
+        <div class="mockup-phase mockup-phase-faded"><span class="mockup-phase-num">6</span><div><div class="mockup-phase-text">Interior Trim &amp; Finishes</div><div class="mockup-phase-sub">Doors, casing, base, crown, cabinets, countertops</div></div></div>
+        <div class="mockup-phase mockup-phase-faded"><span class="mockup-phase-num">7</span><div><div class="mockup-phase-text">Mechanical Finals &amp; Fixtures</div><div class="mockup-phase-sub">HVAC startup, plumbing trim, electrical devices, fixtures</div></div></div>
+        <div class="mockup-scroll-hint">Scroll &mdash; 14 phases total</div>
       </div>
     </div>
     <div class="spotlight-text">
-      <div class="spotlight-num">Deliverable 01</div>
+      <div class="spotlight-num">Deliverable 01 &mdash; The Crown Jewel</div>
       <h3>Order of Operations</h3>
-      <p>The full build sequence from dirt to Certificate of Occupancy. Every phase, every step, every inspection gate&mdash;in the exact order a professional builder executes them. This is the roadmap that keeps your entire project on track.</p>
+      <p>This isn't a checklist. It's 30+ pages of the exact build sequence we use to run our 8-figure residential construction company. Every phase, every step, every inspection gate, every critical dependency&mdash;in the exact order a professional builder executes them.</p>
+      <p>From dirt to Certificate of Occupancy, across 14 phases and hundreds of line items. Pro tips, warning gates, and the trade sequencing that prevents the most expensive mistakes in construction. This document alone is worth the price of the entire toolkit.</p>
     </div>
   </div>
 
