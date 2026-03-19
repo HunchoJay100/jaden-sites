@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Y Project</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --warm: #F5F0E8;
+  --ink: #1a1a1a;
+  --ember: #D4763C;
+  --ember-light: #E8956A;
+  --sage: #7A9E7E;
+  --sage-light: #A3C4A7;
+  --cream: #FAF7F2;
+  --stone: #8C857B;
+  --gold: #C5A55A;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--warm);
+  color: var(--ink);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── GRAIN ── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 4rem 2rem;
+  position: relative;
+}
+
+.hero-y {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(8rem, 22vw, 16rem);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--ember);
+  line-height: 0.85;
+  opacity: 0.12;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -55%);
+  user-select: none;
+  z-index: 0;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-tag {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ember);
+  margin-bottom: 2rem;
+}
+
+.hero h1 {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-weight: 400;
+  line-height: 1.05;
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--ember);
+}
+
+.hero-sub {
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: var(--stone);
+  max-width: 520px;
+  line-height: 1.7;
+  margin: 0 auto 3rem;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.9rem 2.2rem;
+  background: var(--ink);
+  color: var(--warm);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 60px;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hero-cta:hover {
+  background: var(--ember);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(212, 118, 60, 0.2);
+}
+
+.scroll-line {
+  position: absolute;
+  bottom: 3rem;
+  left: 50%;
+  width: 1px;
+  height: 50px;
+  background: linear-gradient(to bottom, var(--stone), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(1); }
+  50% { opacity: 0.8; transform: scaleY(1.3); }
+}
+
+/* ── PURPOSE SECTION ── */
+.purpose {
+  padding: 8rem 4rem;
+  background: var(--ink);
+  color: var(--warm);
+  display: flex;
+  justify-content: center;
+}
+
+.purpose-inner {
+  max-width: 1100px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  align-items: center;
+}
+
+.purpose-eyebrow {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--ember);
+  margin-bottom: 1.5rem;
+}
+
+.purpose h2 {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  font-weight: 400;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+}
+
+.purpose h2 em { font-style: italic; color: var(--ember-light); }
+
+.purpose p {
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: #a09a92;
+  line-height: 1.75;
+  margin-bottom: 1rem;
+}
+
+.purpose-right {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.pillar {
+  padding-left: 1.5rem;
+  border-left: 2px solid var(--ember);
+}
+
+.pillar h3 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--warm);
+  margin-bottom: 0.4rem;
+}
+
+.pillar p {
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: #8a847c;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── MISSION CARDS ── */
+.missions {
+  padding: 8rem 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.missions-eyebrow {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--ember);
+  margin-bottom: 1.5rem;
+}
+
+.missions h2 {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 400;
+  text-align: center;
+  margin-bottom: 4rem;
+  max-width: 600px;
+}
+
+.missions h2 em { font-style: italic; color: var(--ember); }
+
+.mission-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  max-width: 1000px;
+  width: 100%;
+}
+
+.mission-card {
+  background: var(--cream);
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s;
+}
+.mission-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.06);
+}
+
+.mission-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.4rem;
+}
+.mission-icon.ember { background: rgba(212, 118, 60, 0.12); }
+.mission-icon.sage { background: rgba(122, 158, 126, 0.15); }
+.mission-icon.gold { background: rgba(197, 165, 90, 0.15); }
+
+.mission-card h3 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.75rem;
+}
+
+.mission-card p {
+  font-size: 0.88rem;
+  font-weight: 300;
+  color: var(--stone);
+  line-height: 1.7;
+}
+
+/* ── CTA BANNER ── */
+.cta-banner {
+  padding: 6rem 4rem;
+  background: var(--ember);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-banner::before {
+  content: 'Y';
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: 30rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgba(255,255,255,0.06);
+  pointer-events: none;
+  line-height: 1;
+}
+
+.cta-banner h2 {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 400;
+  color: #fff;
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.cta-banner p {
+  font-size: 1rem;
+  font-weight: 300;
+  color: rgba(255,255,255,0.8);
+  max-width: 480px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.7;
+  position: relative;
+  z-index: 1;
+}
+
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.9rem 2.5rem;
+  background: #fff;
+  color: var(--ember);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 60px;
+  position: relative;
+  z-index: 1;
+  transition: all 0.3s;
+}
+.cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+}
+
+/* ── FOOTER ── */
+footer {
+  padding: 3rem 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--warm);
+}
+
+.footer-brand {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--ink);
+}
+
+.footer-copy {
+  font-size: 0.75rem;
+  color: var(--stone);
+}
+
+/* ── ANIMATIONS ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(25px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+@keyframes heroFade {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero-content > * {
+  opacity: 0;
+  animation: heroFade 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.hero-content > *:nth-child(1) { animation-delay: 0.2s; }
+.hero-content > *:nth-child(2) { animation-delay: 0.35s; }
+.hero-content > *:nth-child(3) { animation-delay: 0.5s; }
+.hero-content > *:nth-child(4) { animation-delay: 0.65s; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .purpose { padding: 5rem 2rem; }
+  .purpose-inner { grid-template-columns: 1fr; gap: 3rem; }
+  .missions { padding: 5rem 2rem; }
+  .mission-grid { grid-template-columns: 1fr; }
+  .cta-banner { padding: 5rem 2rem; }
+  footer { flex-direction: column; gap: 1rem; text-align: center; padding: 3rem 2rem; }
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-y">Y</div>
+  <div class="hero-content">
+    <div class="hero-tag">A Nonprofit Movement</div>
+    <h1>The <em>Y</em> Project</h1>
+    <p class="hero-sub">Like-minded individuals pursuing their purpose. Crowdfunding for the causes that matter. Building something bigger than ourselves.</p>
+    <a href="#purpose" class="hero-cta">
+      Learn More
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+  <div class="scroll-line"></div>
+</section>
+
+<section id="purpose" class="purpose">
+  <div class="purpose-inner">
+    <div class="purpose-left">
+      <div class="purpose-eyebrow reveal">Why We Exist</div>
+      <h2 class="reveal reveal-delay-1">Everyone has a <em>why.</em><br>Most people never chase it.</h2>
+      <p class="reveal reveal-delay-2">The Y Project exists to change that. We're a community of people who believe that purpose isn't something you find. It's something you build. Through action, through service, and through showing up for the people who need it most.</p>
+      <p class="reveal reveal-delay-3">We crowdfund for charities and organizations that are doing real work on the ground. We rally around kids and individuals with special needs. And we hold each other accountable to living lives that actually mean something.</p>
+    </div>
+    <div class="purpose-right">
+      <div class="pillar reveal">
+        <h3>Purpose-Driven Community</h3>
+        <p>Connect with people who are chasing something real. Not followers. Not clout. Purpose.</p>
+      </div>
+      <div class="pillar reveal reveal-delay-1">
+        <h3>Crowdfunding for Good</h3>
+        <p>We pool resources and direct them toward charities, organizations, and causes that create tangible impact.</p>
+      </div>
+      <div class="pillar reveal reveal-delay-2">
+        <h3>Kids & Special Needs</h3>
+        <p>Our core focus. Every child deserves opportunity. Every person with special needs deserves advocacy and support.</p>
+      </div>
+      <div class="pillar reveal reveal-delay-3">
+        <h3>Living Your Why</h3>
+        <p>This isn't just about giving money. It's about aligning your life with what matters and helping others do the same.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="missions">
+  <div class="missions-eyebrow reveal">What We Do</div>
+  <h2 class="reveal reveal-delay-1">Three ways we <em>show up</em></h2>
+  <div class="mission-grid">
+    <div class="mission-card reveal">
+      <div class="mission-icon ember">&#9829;</div>
+      <h3>Raise & Rally</h3>
+      <p>We identify causes, set fundraising goals, and mobilize our community to hit them. Real money to real organizations doing real work.</p>
+    </div>
+    <div class="mission-card reveal reveal-delay-1">
+      <div class="mission-icon sage">&#9733;</div>
+      <h3>Serve & Show Up</h3>
+      <p>Boots on the ground. Volunteering, mentoring, and hands-on support for kids, families, and special needs programs in our communities.</p>
+    </div>
+    <div class="mission-card reveal reveal-delay-2">
+      <div class="mission-icon gold">&#9784;</div>
+      <h3>Inspire & Connect</h3>
+      <p>We bring together people from every walk of life who share one thing: the belief that living with purpose is non-negotiable.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta-banner">
+  <h2>Find your why.<br>Then go build it.</h2>
+  <p>The Y Project is just getting started. If you believe in living with purpose and serving something bigger than yourself, you belong here.</p>
+  <a href="mailto:theyproject@gmail.com" class="cta-btn">
+    Get Involved
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </a>
+</section>
+
+<footer>
+  <div class="footer-brand">The Y Project</div>
+  <div class="footer-copy">&copy; 2026 The Y Project. All rights reserved.</div>
+</footer>
+
+<script>
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
