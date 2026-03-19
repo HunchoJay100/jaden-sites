@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Blueprint — $5,000 | Modern Development</title>
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@100;200;300;400;500;600;700;800;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --gold: #A8893D;
+  --gold-light: #C5A55A;
+  --gold-dim: rgba(197, 165, 90, 0.1);
+  --bg: #f8f7f4;
+  --bg-elevated: #efede8;
+  --text: #0a0a0a;
+  --text-secondary: #5a5a5a;
+  --text-dim: #999;
+  --border: rgba(0, 0, 0, 0.08);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 0 4rem;
+  height: 72px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: transparent;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+nav.scrolled {
+  background: rgba(248, 247, 244, 0.92);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-brand {
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+.nav-links a {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.3s;
+  position: relative;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-links a.active { color: var(--text); }
+.nav-links a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0; right: 0;
+  height: 1px;
+  background: var(--gold);
+}
+
+/* ── FULL-VIEWPORT SECTIONS ── */
+.vp-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 6rem 4rem;
+  position: relative;
+}
+
+/* Content-heavy sections — no viewport lock */
+.content-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 8rem 4rem;
+  position: relative;
+}
+
+.section-border {
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 6rem 4rem;
+  position: relative;
+}
+
+.hero-tier {
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 500;
+  font-size: 0.72rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 2.5rem;
+}
+
+.hero h1 {
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 200;
+  font-size: clamp(4.5rem, 10vw, 9rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  margin-bottom: 2rem;
+}
+
+.hero-desc {
+  font-size: 1.15rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+  max-width: 480px;
+  line-height: 1.7;
+  margin-bottom: 4rem;
+}
+
+.hero-price {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 3rem;
+}
+.hero-price .amount {
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 300;
+  font-size: 3.5rem;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+.hero-price .terms {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2.5rem;
+  background: var(--gold);
+  color: var(--bg);
+  text-decoration: none;
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hero-cta {
+  color: #fff;
+}
+.hero-cta:hover {
+  background: var(--gold-light);
+  transform: translateY(-1px);
+  box-shadow: 0 20px 60px rgba(168, 137, 61, 0.25);
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--text-dim);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.scroll-indicator .chevron {
+  width: 20px;
+  height: 20px;
+  border-right: 1px solid var(--text-dim);
+  border-bottom: 1px solid var(--text-dim);
+  transform: rotate(45deg);
+  animation: scrollBounce 2s ease-in-out infinite;
+}
+@keyframes scrollBounce {
+  0%, 100% { transform: rotate(45deg) translateY(0); opacity: 0.4; }
+  50% { transform: rotate(45deg) translateY(6px); opacity: 1; }
+}
+
+/* ── INCLUDED SECTION ── */
+.included-section {
+  background: var(--bg);
+}
+
+.section-eyebrow {
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 500;
+  font-size: 0.7rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 2rem;
+}
+
+.section-headline {
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 200;
+  font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  max-width: 600px;
+  margin-bottom: 1.25rem;
+}
+
+.section-sub {
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+  max-width: 440px;
+  line-height: 1.7;
+  margin-bottom: 5rem;
+}
+
+/* ── DELIVERABLE GRID ── */
+.deliverables-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  max-width: 1100px;
+  width: 100%;
+}
+
+.deliverable-card {
+  background: var(--bg);
+  padding: 2.5rem 2rem;
+  text-align: left;
+  transition: background 0.4s;
+  position: relative;
+}
+.deliverable-card:hover {
+  background: var(--bg-elevated);
+}
+.deliverable-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 0; height: 1px;
+  background: var(--gold);
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.deliverable-card:hover::after { width: 100%; }
+
+.deliverable-num {
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 300;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+  margin-bottom: 1.5rem;
+}
+.deliverable-card h3 {
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 500;
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+  color: var(--text);
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+}
+.deliverable-card p {
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+/* ── PROCESS SECTION ── */
+.process-section {
+  background: var(--bg-elevated);
+}
+
+.process-steps {
+  display: flex;
+  gap: 0;
+  max-width: 900px;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.process-step {
+  flex: 1;
+  padding: 3rem 2.5rem;
+  position: relative;
+  text-align: left;
+}
+.process-step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 20%;
+  right: 0;
+  bottom: 20%;
+  width: 1px;
+  background: var(--border);
+}
+
+.step-num {
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 200;
+  font-size: 3rem;
+  color: var(--gold);
+  opacity: 0.3;
+  line-height: 1;
+  margin-bottom: 1.5rem;
+}
+.process-step h3 {
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-bottom: 0.75rem;
+}
+.process-step p {
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+/* ── AUDIENCE SECTION ── */
+.audience-section {
+  background: var(--bg);
+}
+
+.audience-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4rem;
+  max-width: 960px;
+  width: 100%;
+  text-align: left;
+}
+
+.audience-card {
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+.audience-card h3 {
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 500;
+  font-size: 1.05rem;
+  color: var(--text);
+  margin-bottom: 0.75rem;
+}
+.audience-card p {
+  font-size: 0.88rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* ── ADDON SECTION ── */
+.addon-section {
+  background: var(--bg-elevated);
+}
+
+.addon-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 700px;
+  width: 100%;
+  padding: 3rem;
+  border: 1px solid var(--border);
+  margin-top: 3rem;
+}
+.addon-box h3 {
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 400;
+  font-size: 1.3rem;
+  color: var(--text);
+  margin-bottom: 0.4rem;
+}
+.addon-box .addon-desc {
+  font-size: 0.88rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+}
+.addon-price-tag {
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 200;
+  font-size: 2.5rem;
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+/* ── UPGRADE SECTION ── */
+.upgrade-section {
+  background: var(--bg);
+}
+
+.upgrade-section .section-headline {
+  margin-bottom: 1.5rem;
+}
+.upgrade-section .section-sub {
+  margin-bottom: 3.5rem;
+}
+
+.upgrade-link {
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 400;
+  font-size: 1.1rem;
+  color: var(--gold);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.upgrade-link:hover { border-color: var(--gold); }
+.upgrade-link svg {
+  width: 18px; height: 18px;
+  transition: transform 0.3s;
+}
+.upgrade-link:hover svg { transform: translateX(4px); }
+
+/* ── FOOTER ── */
+footer {
+  padding: 3rem 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.footer-brand {
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 600;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.footer-copy {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+/* ── ANIMATIONS ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+@keyframes heroEnter {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero > * {
+  opacity: 0;
+  animation: heroEnter 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.hero > *:nth-child(1) { animation-delay: 0.15s; }
+.hero > *:nth-child(2) { animation-delay: 0.3s; }
+.hero > *:nth-child(3) { animation-delay: 0.45s; }
+.hero > *:nth-child(4) { animation-delay: 0.6s; }
+.hero > *:nth-child(5) { animation-delay: 0.75s; }
+.hero > *:nth-child(6) { animation-delay: 0.9s; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  .deliverables-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .process-steps {
+    flex-wrap: wrap;
+  }
+  .process-step {
+    flex: 1 1 50%;
+  }
+  .process-step:nth-child(2)::after { display: none; }
+}
+
+@media (max-width: 768px) {
+  nav { padding: 0 2rem; }
+  .nav-links { gap: 1.5rem; }
+  .hero { padding: 6rem 2rem; }
+  .hero h1 { font-size: clamp(3.5rem, 12vw, 5rem); }
+  .vp-section { padding: 5rem 2rem; min-height: auto; }
+  .content-section { padding: 5rem 2rem; }
+
+  .deliverables-grid { grid-template-columns: 1fr; }
+
+  .process-steps { flex-direction: column; }
+  .process-step { padding: 2rem 1.5rem; }
+  .process-step::after { display: none !important; }
+
+  .audience-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .addon-box {
+    flex-direction: column;
+    text-align: center;
+    gap: 2rem;
+  }
+
+  footer {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+    padding: 3rem 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-links a:not(.active) { display: none; }
+  .hero-price .amount { font-size: 2.5rem; }
+  .deliverable-card { padding: 2rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#" class="nav-brand">Modern Development</a>
+  <div class="nav-links">
+    <a href="tier-1-blueprint.html" class="active">Blueprint</a>
+    <a href="tier-2-navigator.html">Navigator</a>
+    <a href="tier-3-command.html">Command</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-tier">Tier One</div>
+  <h1>The Blueprint</h1>
+  <p class="hero-desc">The complete self-serve toolkit for homeowners who self-contract their own build. Everything a professional builder uses&mdash;delivered digitally.</p>
+  <div class="hero-price">
+    <div class="amount">$5,000</div>
+    <div class="terms">One-time &middot; Lifetime access</div>
+  </div>
+  <a href="#included" class="hero-cta">
+    See What's Included
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </a>
+  <div class="scroll-indicator">
+    <div class="chevron"></div>
+  </div>
+</section>
+
+<section id="included" class="content-section included-section">
+  <div class="section-eyebrow reveal">What You Receive</div>
+  <h2 class="section-headline reveal reveal-delay-1">Eight professional deliverables.<br>Matched to your build.</h2>
+  <p class="section-sub reveal reveal-delay-2">The same tools and systems a licensed general contractor uses to manage a residential build from permit to keys.</p>
+  <div class="deliverables-grid reveal reveal-delay-3">
+    <div class="deliverable-card">
+      <div class="deliverable-num">01</div>
+      <h3>Order of Operations</h3>
+      <p>The full build sequence from dirt to Certificate of Occupancy. Every phase, step, and inspection gate&mdash;in the exact order a professional executes them.</p>
+    </div>
+    <div class="deliverable-card">
+      <div class="deliverable-num">02</div>
+      <h3>Budget Tracking Spreadsheet</h3>
+      <p>Every line item organized by trade. Estimated, actual, and variance columns with a dashboard. You input your numbers&mdash;we give you the structure.</p>
+    </div>
+    <div class="deliverable-card">
+      <div class="deliverable-num">03</div>
+      <h3>Timeline Framework</h3>
+      <p>Build sequence with dependencies, duration ranges, and prompts matched to your specific build type. Know what comes next before it arrives.</p>
+    </div>
+    <div class="deliverable-card">
+      <div class="deliverable-num">04</div>
+      <h3>Subcontractor List Tracker</h3>
+      <p>An organized database for every trade on your project. Track bids, insurance, work orders, and hiring status across every phase.</p>
+    </div>
+    <div class="deliverable-card">
+      <div class="deliverable-num">05</div>
+      <h3>Work Order &amp; Insurance Form</h3>
+      <p>One form per subcontractor. Captures scope, pricing, terms, insurance verification, licensing, and lien waiver in one document.</p>
+    </div>
+    <div class="deliverable-card">
+      <div class="deliverable-num">06</div>
+      <h3>How to Vet Subcontractors</h3>
+      <p>What to ask, what to check, licensing requirements, reference call scripts, and red flags that save you from expensive bad hires.</p>
+    </div>
+    <div class="deliverable-card">
+      <div class="deliverable-num">07</div>
+      <h3>Permit Checklist</h3>
+      <p>Requirements by build type, jurisdiction-specific notes, and the complete inspection sequence from start to CO.</p>
+    </div>
+    <div class="deliverable-card">
+      <div class="deliverable-num">08</div>
+      <h3>Educational Article Library</h3>
+      <p>Deep-dive guides on self-contracting, construction lending, insurance, reading bids, managing subs, and the most common budget mistakes.</p>
+    </div>
+  </div>
+  <div class="section-border"></div>
+</section>
+
+<section class="vp-section process-section">
+  <div class="section-eyebrow reveal">How It Works</div>
+  <h2 class="section-headline reveal reveal-delay-1">From purchase to build-ready.</h2>
+  <div class="process-steps reveal reveal-delay-2">
+    <div class="process-step">
+      <div class="step-num">01</div>
+      <h3>Purchase</h3>
+      <p>Secure your toolkit. An intake form sends automatically.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">02</div>
+      <h3>Intake</h3>
+      <p>Tell us your build type, square footage, and scope of work.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">03</div>
+      <h3>Delivery</h3>
+      <p>Receive your matched deliverable package within 24 hours.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">04</div>
+      <h3>Build</h3>
+      <p>Execute your build with professional-grade tools and structure.</p>
+    </div>
+  </div>
+  <div class="section-border"></div>
+</section>
+
+<section class="content-section audience-section">
+  <div class="section-eyebrow reveal">Who This Is For</div>
+  <h2 class="section-headline reveal reveal-delay-1">You don't need hand-holding.<br>You need structure.</h2>
+  <p class="section-sub reveal reveal-delay-2">No calls included. No support between purchases. This is a product, not a service. Built for people who execute independently.</p>
+  <div class="audience-grid reveal reveal-delay-3">
+    <div class="audience-card">
+      <h3>Experienced Owner-Builders</h3>
+      <p>You've done your research. You understand the risk. You just need the same tools a professional builder uses&mdash;organized and ready to go.</p>
+    </div>
+    <div class="audience-card">
+      <h3>Construction-Adjacent Professionals</h3>
+      <p>Real estate agents, inspectors, project managers, or tradespeople stepping into the GC role for the first time.</p>
+    </div>
+    <div class="audience-card">
+      <h3>Disciplined Self-Starters</h3>
+      <p>You work independently. You follow through. You just need the right framework to channel that energy into a successful build.</p>
+    </div>
+  </div>
+  <div class="section-border"></div>
+</section>
+
+<section class="content-section addon-section">
+  <div class="section-eyebrow reveal">Add-On</div>
+  <h2 class="section-headline reveal reveal-delay-1">Need a professional opinion?</h2>
+  <div class="addon-box reveal reveal-delay-2">
+    <div>
+      <h3>Strategy Call</h3>
+      <p class="addon-desc">30-minute call with a professional builder. Book when you need it. No commitment.</p>
+    </div>
+    <div class="addon-price-tag">$500</div>
+  </div>
+  <div class="section-border"></div>
+</section>
+
+<section class="vp-section upgrade-section">
+  <div class="section-eyebrow reveal">When You Need More</div>
+  <h2 class="section-headline reveal reveal-delay-1">Hit a wall?</h2>
+  <p class="section-sub reveal reveal-delay-2">When the toolkit isn't enough and you need a professional builder walking beside you through the entire build.</p>
+  <a href="tier-2-navigator.html" class="upgrade-link reveal reveal-delay-3">
+    The Navigator&mdash;$12,500
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </a>
+</section>
+
+<footer>
+  <div class="footer-brand">Modern Development</div>
+  <div class="footer-copy">&copy; 2026 Modern Development. All rights reserved.</div>
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
