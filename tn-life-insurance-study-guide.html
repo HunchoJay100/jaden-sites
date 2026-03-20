@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TN Life Insurance Exam | Night-Before Study Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0f0f0f;
+    --surface: #1a1a1a;
+    --surface-2: #222222;
+    --border: #2a2a2a;
+    --text: #e8e8e8;
+    --text-dim: #999999;
+    --text-muted: #666666;
+    --blue: #3B82F6;
+    --purple: #8B5CF6;
+    --green: #10B981;
+    --amber: #F59E0B;
+    --red: #EF4444;
+    --gold: #C5A55A;
+    --blue-bg: rgba(59, 130, 246, 0.08);
+    --purple-bg: rgba(139, 92, 246, 0.08);
+    --green-bg: rgba(16, 185, 129, 0.08);
+    --amber-bg: rgba(245, 158, 11, 0.08);
+    --red-bg: rgba(239, 68, 68, 0.08);
+    --gold-bg: rgba(197, 165, 90, 0.08);
+  }
+
+  html { font-size: 14px; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', -apple-system, sans-serif;
+    line-height: 1.6;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .page {
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 0.5in;
+  }
+
+  /* ── COVER ───────────────────────────────── */
+  .cover {
+    text-align: center;
+    padding: 3rem 2rem;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .cover-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--gold), #d4b96a);
+    color: #0f0f0f;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700;
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 6px 20px;
+    border-radius: 30px;
+    margin-bottom: 1.5rem;
+  }
+
+  .cover h1 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ffffff, #cccccc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+  }
+
+  .cover .subtitle {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: var(--text-dim);
+    margin-bottom: 2rem;
+  }
+
+  .exam-details {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .exam-detail {
+    text-align: center;
+  }
+
+  .exam-detail .number {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--gold);
+  }
+
+  .exam-detail .label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .exam-detail .sublabel {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+  }
+
+  /* ── SECTIONS ────────────────────────────── */
+  .section {
+    margin-bottom: 2.5rem;
+    page-break-inside: avoid;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+    border-radius: 10px;
+    margin-bottom: 1.25rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .section-header::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    border-radius: 10px 0 0 10px;
+  }
+
+  .section-header .section-icon {
+    font-size: 1.4rem;
+    flex-shrink: 0;
+  }
+
+  .section-header .section-info {
+    flex: 1;
+  }
+
+  .section-header h2 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .section-header .exam-weight {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    opacity: 0.8;
+  }
+
+  /* Blue */
+  .section--blue .section-header { background: var(--blue-bg); }
+  .section--blue .section-header::before { background: var(--blue); }
+  .section--blue .section-header h2 { color: var(--blue); }
+  .section--blue .section-header .exam-weight { color: var(--blue); }
+  .section--blue .topic-title { color: var(--blue); }
+  .section--blue .quick-hit { border-color: var(--blue); }
+  .section--blue .quick-hit-label { background: var(--blue); }
+
+  /* Purple */
+  .section--purple .section-header { background: var(--purple-bg); }
+  .section--purple .section-header::before { background: var(--purple); }
+  .section--purple .section-header h2 { color: var(--purple); }
+  .section--purple .section-header .exam-weight { color: var(--purple); }
+  .section--purple .topic-title { color: var(--purple); }
+  .section--purple .quick-hit { border-color: var(--purple); }
+  .section--purple .quick-hit-label { background: var(--purple); }
+
+  /* Green */
+  .section--green .section-header { background: var(--green-bg); }
+  .section--green .section-header::before { background: var(--green); }
+  .section--green .section-header h2 { color: var(--green); }
+  .section--green .section-header .exam-weight { color: var(--green); }
+  .section--green .topic-title { color: var(--green); }
+  .section--green .quick-hit { border-color: var(--green); }
+  .section--green .quick-hit-label { background: var(--green); }
+
+  /* Amber */
+  .section--amber .section-header { background: var(--amber-bg); }
+  .section--amber .section-header::before { background: var(--amber); }
+  .section--amber .section-header h2 { color: var(--amber); }
+  .section--amber .section-header .exam-weight { color: var(--amber); }
+  .section--amber .topic-title { color: var(--amber); }
+  .section--amber .quick-hit { border-color: var(--amber); }
+  .section--amber .quick-hit-label { background: var(--amber); }
+
+  /* Red */
+  .section--red .section-header { background: var(--red-bg); }
+  .section--red .section-header::before { background: var(--red); }
+  .section--red .section-header h2 { color: var(--red); }
+  .section--red .section-header .exam-weight { color: var(--red); }
+  .section--red .topic-title { color: var(--red); }
+  .section--red .quick-hit { border-color: var(--red); }
+  .section--red .quick-hit-label { background: var(--red); }
+
+  /* Gold */
+  .section--gold .section-header { background: var(--gold-bg); }
+  .section--gold .section-header::before { background: var(--gold); }
+  .section--gold .section-header h2 { color: var(--gold); }
+  .section--gold .section-header .exam-weight { color: var(--gold); }
+  .section--gold .topic-title { color: var(--gold); }
+  .section--gold .quick-hit { border-color: var(--gold); }
+  .section--gold .quick-hit-label { background: var(--gold); }
+
+  /* ── TOPICS ──────────────────────────────── */
+  .topic {
+    margin-bottom: 1.5rem;
+    padding-left: 0.5rem;
+  }
+
+  .topic-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .topic-title .emoji {
+    font-size: 1.1rem;
+  }
+
+  .topic ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .topic li {
+    position: relative;
+    padding-left: 1.2rem;
+    margin-bottom: 4px;
+    color: var(--text);
+    font-size: 0.88rem;
+    line-height: 1.55;
+  }
+
+  .topic li::before {
+    content: '\25B8';
+    position: absolute;
+    left: 0;
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    top: 2px;
+  }
+
+  .topic li strong {
+    color: #ffffff;
+    font-weight: 600;
+  }
+
+  .key {
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  .warn {
+    color: var(--red);
+    font-weight: 700;
+  }
+
+  /* ── QUICK HIT BOXES ─────────────────────── */
+  .quick-hit {
+    background: var(--surface);
+    border-left: 3px solid;
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    margin: 1rem 0;
+    position: relative;
+  }
+
+  .quick-hit-label {
+    display: inline-block;
+    color: #fff;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 2px 10px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+  }
+
+  .quick-hit p, .quick-hit li {
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+
+  .memory-trick {
+    background: rgba(197, 165, 90, 0.1);
+    border: 1px dashed var(--gold);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin: 0.75rem 0;
+    font-size: 0.85rem;
+  }
+
+  .memory-trick .label {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700;
+    color: var(--gold);
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  /* ── TABLES ──────────────────────────────── */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 0.82rem;
+  }
+
+  .data-table thead th {
+    background: var(--surface-2);
+    color: #ffffff;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .data-table thead th:first-child {
+    border-radius: 8px 0 0 0;
+  }
+
+  .data-table thead th:last-child {
+    border-radius: 0 8px 0 0;
+  }
+
+  .data-table tbody td {
+    padding: 8px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    line-height: 1.45;
+  }
+
+  .data-table tbody tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .data-table tbody tr:last-child td:first-child {
+    border-radius: 0 0 0 8px;
+  }
+
+  .data-table tbody tr:last-child td:last-child {
+    border-radius: 0 0 8px 0;
+  }
+
+  .data-table td strong {
+    color: #ffffff;
+  }
+
+  .table-section-header th {
+    font-weight: 700 !important;
+  }
+
+  /* ── PRACTICE QUESTIONS ──────────────────── */
+  .question-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 12px;
+    page-break-inside: avoid;
+  }
+
+  .question-number {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    color: var(--gold);
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .question-text {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 8px;
+    line-height: 1.45;
+  }
+
+  .question-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 16px;
+    margin-bottom: 10px;
+    font-size: 0.82rem;
+  }
+
+  .question-options span {
+    color: var(--text-dim);
+  }
+
+  .question-answer {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+    padding-top: 8px;
+    line-height: 1.45;
+  }
+
+  .question-answer strong {
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  /* ── NUMBERED LIST ───────────────────────── */
+  .numbered-list {
+    list-style: none;
+    padding-left: 0;
+    counter-reset: item;
+  }
+
+  .numbered-list li {
+    counter-increment: item;
+    position: relative;
+    padding-left: 2rem;
+    margin-bottom: 6px;
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+
+  .numbered-list li::before {
+    content: counter(item);
+    position: absolute;
+    left: 0;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 0.75rem;
+    width: 1.4rem;
+    height: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--surface-2);
+    color: var(--text-dim);
+    top: 2px;
+  }
+
+  /* ── TWO COLUMN ──────────────────────────── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  /* ── DIVIDER ─────────────────────────────── */
+  .section-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 1rem 0;
+  }
+
+  /* ── FOOTER ──────────────────────────────── */
+  .footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    border-top: 1px solid var(--border);
+    margin-top: 2rem;
+  }
+
+  .footer p {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .footer .good-luck {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  /* ── PRINT ───────────────────────────────── */
+  @media print {
+    html { font-size: 12px; }
+    body { background: var(--bg); }
+    .page { padding: 0; max-width: 100%; }
+    .section { page-break-inside: auto; }
+    .topic, .question-block { page-break-inside: avoid; }
+    .section-header { page-break-after: avoid; }
+  }
+
+  @page {
+    size: letter;
+    margin: 0.5in;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ═══════════════ COVER ═══════════════ -->
+  <div class="cover">
+    <div class="cover-badge">Study Guide</div>
+    <h1>TN Life Insurance Exam</h1>
+    <p class="subtitle">The Night-Before Study Guide</p>
+    <div class="exam-details">
+      <div class="exam-detail">
+        <div class="number">77</div>
+        <div class="label">Questions</div>
+        <div class="sublabel">68 scored + 9 pretest</div>
+      </div>
+      <div class="exam-detail">
+        <div class="number">105</div>
+        <div class="label">Minutes</div>
+        <div class="sublabel">1 hr 45 min</div>
+      </div>
+      <div class="exam-detail">
+        <div class="number">70%</div>
+        <div class="label">To Pass</div>
+        <div class="sublabel">~48 of 68</div>
+      </div>
+      <div class="exam-detail">
+        <div class="number">&#9758;</div>
+        <div class="label">Pearson VUE</div>
+        <div class="sublabel">Testing center</div>
+      </div>
+      <div class="exam-detail">
+        <div class="number">&#9889;</div>
+        <div class="label">Results</div>
+        <div class="sublabel">Immediate</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION 1: TYPES OF POLICIES ═══════════════ -->
+  <div class="section section--blue">
+    <div class="section-header">
+      <div class="section-icon">&#128220;</div>
+      <div class="section-info">
+        <h2>Types of Policies</h2>
+        <div class="exam-weight">~12 questions on exam</div>
+      </div>
+    </div>
+
+    <div class="topic">
+      <div class="topic-title"><span class="emoji">&#9632;</span> Term Life</div>
+      <ul>
+        <li><strong>Pure protection, no cash value</strong></li>
+        <li>Types: Level Term, Decreasing Term, Annual Renewable Term (ART), Convertible Term</li>
+        <li><strong class="key">Cheapest</strong> form of life insurance</li>
+        <li><strong>Renewable</strong> = can renew without proof of insurability (premium increases at each renewal)</li>
+        <li><strong>Convertible</strong> = can convert to permanent policy without proof of insurability</li>
+      </ul>
+    </div>
+
+    <div class="topic">
+      <div class="topic-title"><span class="emoji">&#9632;</span> Whole Life (Permanent)</div>
+      <ul>
+        <li><strong>Level premium, guaranteed cash value</strong>, coverage to age 100/121</li>
+        <li>Types: Straight/Ordinary Life, Limited-Pay (20-Pay, Life Paid-Up at 65), Single Premium, Modified (lower premiums early, higher later), Graded Premium</li>
+        <li><strong class="key">Limited-Pay builds cash value FASTER</strong> (higher premiums, fewer years)</li>
+      </ul>
+    </div>
+
+    <div class="topic">
+      <div class="topic-title"><span class="emoji">&#9632;</span> Universal Life</div>
+      <ul>
+        <li><strong>Flexible premiums, adjustable death benefit</strong></li>
+        <li>Two components: insurance (ART) + cash account</li>
+        <li>Interest-sensitive (current rate, guaranteed minimum)</li>
+        <li><strong>Target premium</strong> = suggested amount to keep policy in force for life</li>
+      </ul>
+    </div>
+
+    <div class="two-col">
+      <div class="topic">
+        <div class="topic-title"><span class="emoji">&#9632;</span> Variable Life</div>
+        <ul>
+          <li><strong>Fixed premium</strong>, investment subaccounts (stocks, bonds, mutual funds)</li>
+          <li>Policyholder bears investment risk</li>
+          <li><strong class="warn">REQUIRES securities license</strong> (Series 6 or 7) to sell</li>
+          <li>Cash value and death benefit fluctuate with market</li>
+        </ul>
+      </div>
+
+      <div class="topic">
+        <div class="topic-title"><span class="emoji">&#9632;</span> Variable Universal Life (VUL)</div>
+        <ul>
+          <li>Flexible premium + investment subaccounts</li>
+          <li><strong class="warn">REQUIRES securities license</strong></li>
+          <li>Most flexible and most risky</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="topic">
+      <div class="topic-title"><span class="emoji">&#9632;</span> Indexed Universal Life (IUL)</div>
+      <ul>
+        <li>Cash value tied to market index (S&P 500)</li>
+        <li>Has a <strong>floor (0% minimum)</strong> and a <strong>cap</strong></li>
+        <li><strong class="key">Does NOT require securities license</strong></li>
+      </ul>
+    </div>
+
+    <div class="quick-hit">
+      <div class="quick-hit-label">Quick Hit: Securities License</div>
+      <p><strong class="warn">Variable Life + Variable Universal Life + Variable Annuities = REQUIRES securities license.</strong><br>
+      Indexed products (IUL, Indexed Annuity) do NOT require one.</p>
+    </div>
+
+    <div class="topic">
+      <div class="topic-title"><span class="emoji">&#9632;</span> Annuities</div>
+      <ul>
+        <li><strong>Accumulation phase</strong> = money grows tax-deferred</li>
+        <li><strong>Annuitization phase</strong> = payout begins</li>
+        <li><strong>Fixed</strong> = guaranteed rate, insurance company bears risk, inflation risk to owner</li>
+        <li><strong>Variable</strong> = subaccounts, owner bears risk, <span class="warn">REQUIRES securities license</span></li>
+        <li><strong>Indexed</strong> = tied to index with floor/cap</li>
+        <li><strong>Immediate</strong> = payments start within 12 months (funded with single premium)</li>
+        <li><strong>Deferred</strong> = payments start later</li>
+      </ul>
+    </div>
+
+    <div class="topic">
+      <div class="topic-title"><span class="emoji">&#9632;</span> Combination Plans</div>
+      <ul>
+        <li><strong>Joint Life (First-to-Die)</strong> = pays on first death</li>
+        <li><strong>Survivorship / Second-to-Die</strong> = pays on second death (used for estate planning)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION 2: PROVISIONS, RIDERS & OPTIONS ═══════════════ -->
+  <div class="section section--purple">
+    <div class="section-header">
+      <div class="section-icon">&#128272;</div>
+      <div class="section-info">
+        <h2>Provisions, Riders & Options</h2>
+        <div class="exam-weight">~19 questions on exam &middot; BIGGEST SECTION</div>
+      </div>
+    </div>
+
+    <div class="topic">
+      <div class="topic-title"><span class="emoji">&#128218;</span> Key Provisions (MEMORIZE THESE)</div>
+      <table class="data-table">
+        <thead>
+          <tr><th>Provision</th><th>What It Does</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Grace Period</strong></td><td><strong>31 days</strong> to pay overdue premium. Coverage continues. If insured dies, benefit paid minus unpaid premium.</td></tr>
+          <tr><td><strong>Incontestability</strong></td><td>After <strong>2 years</strong>, insurer cannot contest claims for misstatements in application.</td></tr>
+          <tr><td><strong>Misstatement of Age/Gender</strong></td><td><span class="warn">NEVER incontestable.</span> Benefits adjusted to what premium would have bought at correct age.</td></tr>
+          <tr><td><strong>Entire Contract</strong></td><td>Policy + application = entire contract. Nothing outside can modify it.</td></tr>
+          <tr><td><strong>Reinstatement</strong></td><td>Typically within 3-5 years. Must pay back premiums + interest, provide evidence of insurability.</td></tr>
+          <tr><td><strong>Suicide Clause</strong></td><td><strong>2 years.</strong> If suicide within 2 years, only premiums returned (no death benefit).</td></tr>
+          <tr><td><strong>Assignment</strong></td><td><strong>Absolute</strong> = full transfer of ownership. <strong>Collateral</strong> = temporary, for a loan.</td></tr>
+          <tr><td><strong>Automatic Premium Loan</strong></td><td>Uses cash value to pay overdue premium automatically if elected.</td></tr>
+          <tr><td><strong>Free Look</strong></td><td><strong>10 days</strong> standard / <strong>20 days</strong> for replacement policies in TN.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="topic">
+      <div class="topic-title"><span class="emoji">&#128176;</span> The 3 Nonforfeiture Options</div>
+      <p style="font-size: 0.82rem; color: var(--text-dim); margin-bottom: 8px;">When you stop paying premiums on a cash value policy:</p>
+      <ol class="numbered-list">
+        <li><strong>Cash Surrender Value</strong> - take the cash and walk away</li>
+        <li><strong>Reduced Paid-Up Insurance</strong> - lower face amount, paid up for life, no more premiums</li>
+        <li><strong>Extended Term Insurance</strong> - <strong class="key">SAME face amount</strong>, but term coverage only (limited time)</li>
+      </ol>
+      <div class="memory-trick">
+        <div class="label">&#129504; Memory Trick</div>
+        <strong>"Cash, Reduce, Extend" = CRE</strong>
+      </div>
+    </div>
+
+    <div class="topic">
+      <div class="topic-title"><span class="emoji">&#127793;</span> Dividend Options (Participating Policies) - PARR-O</div>
+      <ol class="numbered-list">
+        <li><strong>Paid-up Additions</strong> - buy small amounts of additional paid-up whole life</li>
+        <li><strong>Accumulate at Interest</strong> - leave with insurer, earn interest <span class="warn">(THE INTEREST IS TAXABLE)</span></li>
+        <li><strong>Reduce Premium</strong> - apply dividend to reduce next premium</li>
+        <li><strong>Receive as Cash</strong> - get a check (dividends are <strong class="key">TAX-FREE</strong>, they're return of premium)</li>
+        <li><strong>One-year Term</strong> - use dividend to buy 1-year term insurance</li>
+      </ol>
+    </div>
+
+    <div class="topic">
+      <div class="topic-title"><span class="emoji">&#128181;</span> Settlement Options (How Death Benefit Is Paid)</div>
+      <table class="data-table">
+        <thead>
+          <tr><th>Option</th><th>Details</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Lump Sum</strong></td><td>Most common, one payment</td></tr>
+          <tr><td><strong>Fixed Period</strong></td><td>Payments spread over set number of years</td></tr>
+          <tr><td><strong>Fixed Amount</strong></td><td>Set dollar amount per payment until funds exhausted</td></tr>
+          <tr><td><strong>Life Income (Straight)</strong></td><td><strong class="key">HIGHEST per-payment</strong>, but stops at death</td></tr>
+          <tr><td><strong>Life Income + Period Certain</strong></td><td>Payments for life, guaranteed minimum period (10/20 years)</td></tr>
+          <tr><td><strong>Joint and Survivor</strong></td><td>Payments continue to surviving person</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="topic">
+      <div class="topic-title"><span class="emoji">&#128736;</span> Key Riders</div>
+      <table class="data-table">
+        <thead>
+          <tr><th>Rider</th><th>What It Does</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Waiver of Premium</strong></td><td>Waives premiums if insured is totally disabled (usually 6-month waiting period)</td></tr>
+          <tr><td><strong>Guaranteed Insurability</strong></td><td>Buy additional coverage at specified ages/events <strong>WITHOUT proof of insurability</strong></td></tr>
+          <tr><td><strong>Accidental Death Benefit</strong></td><td>Extra death benefit if death by accident (within 90 days) - "Double Indemnity"</td></tr>
+          <tr><td><strong>Payor Benefit</strong></td><td>Waives premiums on a juvenile policy if the payor (parent) dies or becomes disabled</td></tr>
+          <tr><td><strong>Term Rider</strong></td><td>Adds term coverage to a permanent policy</td></tr>
+          <tr><td><strong>COLA Rider</strong></td><td>Automatically increases coverage with inflation</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION 3: APPLICATION, UNDERWRITING & DELIVERY ═══════════════ -->
+  <div class="section section--green">
+    <div class="section-header">
+      <div class="section-icon">&#128221;</div>
+      <div class="section-info">
+        <h2>Application, Underwriting & Delivery</h2>
+        <div class="exam-weight">~11 questions on exam</div>
+      </div>
+    </div>
+
+    <div class="quick-hit">
+      <div class="quick-hit-label">Quick Hit</div>
+      <p><strong class="key">Insurable interest must exist AT TIME OF APPLICATION</strong> (not at death).<br>
+      You always have insurable interest in yourself. Also: spouse, parent/child, business partner, key employee, creditor (up to debt amount).</p>
+    </div>
+
+    <div class="topic">
+      <div class="topic-title"><span class="emoji">&#9878;</span> Contract Law Elements (COLAC)</div>
+      <ul>
+        <li><strong>C</strong>ompetent parties</li>
+        <li><strong>O</strong>ffer and acceptance</li>
+        <li><strong>L</strong>egal purpose</li>
+        <li><strong>A</strong>dequate consideration (premium + application statements)</li>
+        <li><strong>C</strong>ontract characteristics:</li>
+      </ul>
+      <table class="data-table" style="margin-top: 8px;">
+        <thead>
+          <tr><th>Characteristic</th><th>Meaning</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Adhesion</strong></td><td>Take it or leave it. Ambiguity favors the insured.</td></tr>
+          <tr><td><strong>Aleatory</strong></td><td>Unequal exchange (small premiums can yield large benefit)</td></tr>
+          <tr><td><strong>Unilateral</strong></td><td>Only insurer makes an enforceable promise</td></tr>
+          <tr><td><strong>Utmost Good Faith</strong></td><td>Both parties must act honestly</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="two-col">
+      <div class="topic">
+        <div class="topic-title"><span class="emoji">&#128203;</span> Premium Receipts</div>
+        <ul>
+          <li><strong>Conditional Receipt:</strong> Coverage begins on date of application or last medical exam (whichever is later), <strong class="key">IF applicant is found insurable</strong></li>
+          <li><strong>Binding Receipt:</strong> Coverage begins <strong>IMMEDIATELY</strong>, regardless of insurability (rare)</li>
+        </ul>
+      </div>
+
+      <div class="topic">
+        <div class="topic-title"><span class="emoji">&#128200;</span> Underwriting Risk Classes</div>
+        <ol class="numbered-list">
+          <li><strong>Preferred</strong> (best rates)</li>
+          <li><strong>Standard</strong></li>
+          <li><strong>Substandard/Rated</strong> (higher premiums or exclusions)</li>
+          <li><strong>Declined</strong></li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="topic">
+      <div class="topic-title"><span class="emoji">&#128269;</span> Sources of Information</div>
+      <ul>
+        <li><strong>MIB</strong> (Medical Information Bureau) - database to prevent fraud across companies</li>
+        <li><strong>APS</strong> (Attending Physician Statement) - medical records</li>
+        <li>Inspection reports</li>
+        <li>Credit reports</li>
+      </ul>
+    </div>
+
+    <div class="quick-hit">
+      <div class="quick-hit-label">Quick Hit: Replacement Rules</div>
+      <p>Agent must determine if replacement is involved. Must provide comparison forms. <strong>Replacing insurer must provide 20-day free look in TN.</strong></p>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION 4: TAXES & RETIREMENT ═══════════════ -->
+  <div class="section section--amber">
+    <div class="section-header">
+      <div class="section-icon">&#128178;</div>
+      <div class="section-info">
+        <h2>Taxes & Retirement</h2>
+        <div class="exam-weight">~8 questions on exam</div>
+      </div>
+    </div>
+
+    <div class="topic">
+      <div class="topic-title"><span class="emoji">&#127991;</span> Tax Rules Quick Reference</div>
+      <table class="data-table">
+        <thead>
+          <tr><th>Item</th><th>Tax Treatment</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Death benefit to named beneficiary</td><td><strong class="key">INCOME TAX-FREE</strong></td></tr>
+          <tr><td>Premiums paid by individual</td><td><strong>NOT deductible</strong></td></tr>
+          <tr><td>Cash value growth</td><td><strong class="key">Tax-DEFERRED</strong></td></tr>
+          <tr><td>Policy dividends</td><td>Tax-free (return of premium)</td></tr>
+          <tr><td>Interest on accumulated dividends</td><td><strong class="warn">TAXABLE</strong></td></tr>
+          <tr><td>Cash value withdrawal (gains portion)</td><td>Taxable as ordinary income</td></tr>
+          <tr><td>Policy loan</td><td><strong>NOT taxable</strong> (unless policy lapses)</td></tr>
+          <tr><td>MEC withdrawal/loan</td><td><strong class="warn">LIFO + 10% penalty if under 59&frac12;</strong></td></tr>
+          <tr><td>Annuity accumulation</td><td>Tax-deferred</td></tr>
+          <tr><td>Annuity payments</td><td>Exclusion ratio (return of principal = tax-free, gains = taxable)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="quick-hit">
+      <div class="quick-hit-label">Quick Hit: MEC (Modified Endowment Contract)</div>
+      <ul style="list-style: none; padding: 0;">
+        <li style="padding-left: 0; margin-bottom: 4px; font-size: 0.85rem;">&#9632; Fails the <strong class="key">7-PAY TEST</strong> (overfunded relative to death benefit)</li>
+        <li style="padding-left: 0; margin-bottom: 4px; font-size: 0.85rem;">&#9632; <strong>Single Premium Whole Life is ALWAYS a MEC</strong></li>
+        <li style="padding-left: 0; margin-bottom: 4px; font-size: 0.85rem;">&#9632; Loans and withdrawals taxed <strong class="warn">LIFO</strong> (Last In, First Out = gains come out first)</li>
+        <li style="padding-left: 0; margin-bottom: 4px; font-size: 0.85rem;">&#9632; <strong class="warn">10% penalty tax</strong> if under age 59&frac12;</li>
+        <li style="padding-left: 0; margin-bottom: 4px; font-size: 0.85rem;">&#9632; Death benefit still <strong class="key">income-tax-free</strong></li>
+      </ul>
+    </div>
+
+    <div class="topic">
+      <div class="topic-title"><span class="emoji">&#127968;</span> Retirement Plans</div>
+      <table class="data-table">
+        <thead>
+          <tr><th>Plan</th><th>Type</th><th>Who</th><th>Contribution</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Traditional IRA</strong></td><td>Qualified</td><td>Anyone with earned income</td><td>Tax-deductible, grows tax-deferred</td></tr>
+          <tr><td><strong>Roth IRA</strong></td><td>Qualified</td><td>Anyone (income limits)</td><td><strong class="key">NOT deductible, grows TAX-FREE</strong></td></tr>
+          <tr><td><strong>401(k)</strong></td><td>Qualified</td><td>Employees of for-profit</td><td>Pre-tax, employer match</td></tr>
+          <tr><td><strong>403(b)</strong></td><td>Qualified</td><td>Teachers, nonprofits</td><td>Pre-tax</td></tr>
+          <tr><td><strong>SEP IRA</strong></td><td>Qualified</td><td>Self-employed</td><td>Employer contributions only</td></tr>
+          <tr><td><strong>Keogh (HR-10)</strong></td><td>Qualified</td><td>Self-employed</td><td>Tax-deductible</td></tr>
+        </tbody>
+      </table>
+      <div class="memory-trick">
+        <div class="label">&#129504; Remember</div>
+        <strong>Qualified</strong> = tax advantages, ERISA rules, penalties for early withdrawal before 59&frac12;
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION 5: TENNESSEE-SPECIFIC LAWS ═══════════════ -->
+  <div class="section section--red">
+    <div class="section-header">
+      <div class="section-icon">&#127988;</div>
+      <div class="section-info">
+        <h2>Tennessee-Specific Laws</h2>
+        <div class="exam-weight">~18 questions on exam &middot; 26% OF YOUR SCORE</div>
+      </div>
+    </div>
+
+    <div class="quick-hit">
+      <div class="quick-hit-label">&#9888; Do Not Skip This Section</div>
+      <p><strong>This section is 26% of your exam score. Almost 1 in 4 questions come from here.</strong></p>
+    </div>
+
+    <div class="topic">
+      <div class="topic-title"><span class="emoji">&#127963;</span> Regulatory Authority</div>
+      <ul>
+        <li><strong>Tennessee Dept of Commerce and Insurance</strong></li>
+        <li>Commissioner has authority to examine insurers, enforce laws, discipline producers</li>
+      </ul>
+    </div>
+
+    <div class="topic">
+      <div class="topic-title"><span class="emoji">&#128196;</span> Producer Licensing</div>
+      <ul>
+        <li>Must be <strong>18+</strong></li>
+        <li>Must be TN resident for resident license</li>
+        <li>Must pass written exam (<strong class="key">NO prelicensing education required by TN</strong>)</li>
+        <li>Apply through NIPR, $50 + fees</li>
+        <li>Fingerprinting + background check via IdentoGo</li>
+        <li>Report address change within <strong>30 days</strong></li>
+      </ul>
+    </div>
+
+    <div class="topic">
+      <div class="topic-title"><span class="emoji">&#9200;</span> Temporary License</div>
+      <ul>
+        <li>Up to <strong class="key">180 days</strong>, NO exam required</li>
+        <li><strong>ONLY for:</strong> death/disability of licensed producer (spouse/court rep), employee of business entity, military service designee</li>
+        <li>Commissioner may require licensed sponsor</li>
+      </ul>
+    </div>
+
+    <div class="topic">
+      <div class="topic-title"><span class="emoji">&#128218;</span> Continuing Education</div>
+      <table class="data-table">
+        <thead>
+          <tr><th>Requirement</th><th>Details</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>CE Hours</strong></td><td><strong class="key">24 hours every 2 years</strong></td></tr>
+          <tr><td><strong>Ethics</strong></td><td><strong>3 hours</strong> included in the 24</td></tr>
+          <tr><td><strong>Renewal Deadline</strong></td><td>Last day of birth month, biennially</td></tr>
+          <tr><td><strong>Annuity Suitability</strong></td><td>One-time 4-hour course</td></tr>
+          <tr><td><strong>Long-Term Care</strong></td><td>One-time 8-hour course + 4-hour renewal every 24 months</td></tr>
+          <tr><td><strong>Flood Insurance</strong></td><td>One-time 3-hour course</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="two-col">
+      <div class="topic">
+        <div class="topic-title"><span class="emoji">&#128337;</span> Free Look Periods</div>
+        <ul>
+          <li><strong>10 days</strong> for standard policies</li>
+          <li><strong class="key">20 days</strong> for replacement policies</li>
+        </ul>
+      </div>
+
+      <div class="topic">
+        <div class="topic-title"><span class="emoji">&#128337;</span> Grace Periods</div>
+        <ul>
+          <li><strong>7 days</strong> for weekly premium</li>
+          <li><strong>10 days</strong> for monthly premium</li>
+          <li><strong class="key">31 days</strong> for all other policies</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="topic">
+      <div class="topic-title"><span class="emoji">&#128683;</span> Unfair Trade Practices (TN Code 56-8-104)</div>
+      <ul>
+        <li>Misrepresentation</li>
+        <li>False advertising</li>
+        <li>Defamation of competitors</li>
+        <li>Boycott, coercion, intimidation</li>
+        <li>Unfair discrimination</li>
+        <li><strong>Rebating</strong> (sharing commission as inducement)</li>
+        <li><strong>Twisting</strong> (misrepresentation to induce replacement)</li>
+        <li>Commissioner issues <strong>cease and desist orders</strong></li>
+      </ul>
+    </div>
+
+    <div class="quick-hit">
+      <div class="quick-hit-label">Quick Hit: Know These Definitions</div>
+      <table class="data-table" style="margin: 0;">
+        <tbody>
+          <tr><td style="width: 120px;"><strong class="warn">Twisting</strong></td><td>Misrepresentation to replace existing policy (DECEPTIVE)</td></tr>
+          <tr><td><strong class="warn">Churning</strong></td><td>Excessive replacement for commission (similar to twisting but repeated)</td></tr>
+          <tr><td><strong class="warn">Rebating</strong></td><td>Offering inducements not in the policy (illegal in TN)</td></tr>
+          <tr><td><strong class="warn">Coercion</strong></td><td>Forcing someone to buy insurance as condition of a loan/service</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION 6: PRACTICE QUESTIONS ═══════════════ -->
+  <div class="section section--gold">
+    <div class="section-header">
+      <div class="section-icon">&#9997;</div>
+      <div class="section-info">
+        <h2>Practice Questions</h2>
+        <div class="exam-weight">28 questions &middot; test yourself</div>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-number">Question 1</div>
+      <div class="question-text">Which type of life insurance provides coverage for a specified period and does NOT build cash value?</div>
+      <div class="question-options">
+        <span>A) Whole life</span>
+        <span>B) Universal life</span>
+        <span>C) Term life</span>
+        <span>D) Endowment</span>
+      </div>
+      <div class="question-answer"><strong>Answer: C) Term life</strong></div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-number">Question 2</div>
+      <div class="question-text">Which policy has flexible premiums and an adjustable death benefit?</div>
+      <div class="question-options">
+        <span>A) Whole life</span>
+        <span>B) Variable life</span>
+        <span>C) Universal life</span>
+        <span>D) Term life</span>
+      </div>
+      <div class="question-answer"><strong>Answer: C) Universal life</strong></div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-number">Question 3</div>
+      <div class="question-text">Which type requires a securities license to sell?</div>
+      <div class="question-options">
+        <span>A) Universal life</span>
+        <span>B) Indexed universal life</span>
+        <span>C) Variable life</span>
+        <span>D) Whole life</span>
+      </div>
+      <div class="question-answer"><strong>Answer: C) Variable life</strong></div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-number">Question 4</div>
+      <div class="question-text">Which whole life policy accumulates cash value faster in early years?</div>
+      <div class="question-options">
+        <span>A) Straight Life</span>
+        <span>B) 20-Pay Life</span>
+        <span>C) Modified Whole Life</span>
+        <span>D) Graded Premium</span>
+      </div>
+      <div class="question-answer"><strong>Answer: B) 20-Pay Life</strong></div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-number">Question 5</div>
+      <div class="question-text">A Single Premium Whole Life policy would most likely be classified as?</div>
+      <div class="question-options">
+        <span>A) Term policy</span>
+        <span>B) MEC</span>
+        <span>C) Variable policy</span>
+        <span>D) Annuity</span>
+      </div>
+      <div class="question-answer"><strong>Answer: B) Modified Endowment Contract</strong> (fails 7-pay test)</div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-number">Question 6</div>
+      <div class="question-text">During which phase of an annuity does money grow tax-deferred?</div>
+      <div class="question-options">
+        <span>A) Annuitization</span>
+        <span>B) Accumulation</span>
+        <span>C) Distribution</span>
+        <span>D) Surrender</span>
+      </div>
+      <div class="question-answer"><strong>Answer: B) Accumulation phase</strong></div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-number">Question 7</div>
+      <div class="question-text">The grace period for a life insurance policy in Tennessee is:</div>
+      <div class="question-options">
+        <span>A) 10 days</span>
+        <span>B) 21 days</span>
+        <span>C) 31 days</span>
+        <span>D) 60 days</span>
+      </div>
+      <div class="question-answer"><strong>Answer: C) 31 days</strong> (for other than weekly/monthly premium)</div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-number">Question 8</div>
+      <div class="question-text">After 2 years, the insurer cannot deny a claim based on application misstatements. This is:</div>
+      <div class="question-options">
+        <span>A) Entire Contract</span>
+        <span>B) Grace Period</span>
+        <span>C) Incontestability</span>
+        <span>D) Misstatement of Age</span>
+      </div>
+      <div class="question-answer"><strong>Answer: C) Incontestability clause</strong></div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-number">Question 9</div>
+      <div class="question-text">If the insured's age was misstated, what happens?</div>
+      <div class="question-options">
+        <span>A) Policy voided</span>
+        <span>B) Claim denied</span>
+        <span>C) Benefit adjusted</span>
+        <span>D) Premium refunded</span>
+      </div>
+      <div class="question-answer"><strong>Answer: C) Benefit adjusted</strong> to what premium would have purchased at correct age</div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-number">Question 10</div>
+      <div class="question-text">Which is NOT a nonforfeiture option?</div>
+      <div class="question-options">
+        <span>A) Cash surrender</span>
+        <span>B) Reduced paid-up</span>
+        <span>C) Extended term</span>
+        <span>D) Paid-up additions</span>
+      </div>
+      <div class="question-answer"><strong>Answer: D) Paid-up additions</strong> (that's a dividend option)</div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-number">Question 11</div>
+      <div class="question-text">The nonforfeiture option providing same face amount as term coverage is:</div>
+      <div class="question-options">
+        <span>A) Reduced paid-up</span>
+        <span>B) Extended term</span>
+        <span>C) Cash surrender</span>
+        <span>D) APL</span>
+      </div>
+      <div class="question-answer"><strong>Answer: B) Extended term</strong></div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-number">Question 12</div>
+      <div class="question-text">Which dividend option results in taxable income?</div>
+      <div class="question-options">
+        <span>A) Cash</span>
+        <span>B) Reduce premium</span>
+        <span>C) Accumulate at interest</span>
+        <span>D) Paid-up additions</span>
+      </div>
+      <div class="question-answer"><strong>Answer: C) Accumulate at interest</strong> (the interest earned is taxable)</div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-number">Question 13</div>
+      <div class="question-text">Which settlement option provides highest periodic payment?</div>
+      <div class="question-options">
+        <span>A) Fixed period</span>
+        <span>B) Fixed amount</span>
+        <span>C) Life income (straight)</span>
+        <span>D) Joint and survivor</span>
+      </div>
+      <div class="question-answer"><strong>Answer: C) Life income/straight life</strong> (highest payment but stops at death)</div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-number">Question 14</div>
+      <div class="question-text">Which rider waives premiums if insured becomes disabled?</div>
+      <div class="question-options">
+        <span>A) Guaranteed insurability</span>
+        <span>B) ADB</span>
+        <span>C) Waiver of premium</span>
+        <span>D) Payor benefit</span>
+      </div>
+      <div class="question-answer"><strong>Answer: C) Waiver of premium</strong></div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-number">Question 15</div>
+      <div class="question-text">Insurable interest must exist at what point?</div>
+      <div class="question-options">
+        <span>A) Time of claim</span>
+        <span>B) Time of death</span>
+        <span>C) Time of application</span>
+        <span>D) Time of delivery</span>
+      </div>
+      <div class="question-answer"><strong>Answer: C) Time of application</strong></div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-number">Question 16</div>
+      <div class="question-text">Which organization prevents fraud across insurance companies?</div>
+      <div class="question-options">
+        <span>A) NAIC</span>
+        <span>B) MIB</span>
+        <span>C) FINRA</span>
+        <span>D) SEC</span>
+      </div>
+      <div class="question-answer"><strong>Answer: B) MIB</strong> (Medical Information Bureau)</div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-number">Question 17</div>
+      <div class="question-text">A conditional receipt means coverage begins:</div>
+      <div class="question-options">
+        <span>A) When policy delivered</span>
+        <span>B) When approved</span>
+        <span>C) Date of application/last exam if insurable</span>
+        <span>D) 30 days after</span>
+      </div>
+      <div class="question-answer"><strong>Answer: C)</strong> On date of application or last medical exam, IF found insurable</div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-number">Question 18</div>
+      <div class="question-text">Life insurance death benefits to a named beneficiary are:</div>
+      <div class="question-options">
+        <span>A) Fully taxable</span>
+        <span>B) Tax-free</span>
+        <span>C) Capital gains</span>
+        <span>D) Partially taxable</span>
+      </div>
+      <div class="question-answer"><strong>Answer: B) Tax-free</strong> (IRC Section 101(a))</div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-number">Question 19</div>
+      <div class="question-text">Life insurance premiums paid by an individual are:</div>
+      <div class="question-options">
+        <span>A) Deductible</span>
+        <span>B) Not deductible</span>
+        <span>C) Deductible up to $5K</span>
+        <span>D) Deductible if itemized</span>
+      </div>
+      <div class="question-answer"><strong>Answer: B) Not tax deductible</strong></div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-number">Question 20</div>
+      <div class="question-text">A MEC is created when a policy fails what test?</div>
+      <div class="question-options">
+        <span>A) 5-pay</span>
+        <span>B) 7-pay</span>
+        <span>C) 10-pay</span>
+        <span>D) Corridor</span>
+      </div>
+      <div class="question-answer"><strong>Answer: B) 7-pay test</strong></div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-number">Question 21</div>
+      <div class="question-text">Per stirpes distribution means:</div>
+      <div class="question-options">
+        <span>A) Split equally among living</span>
+        <span>B) Deceased's share to their heirs</span>
+        <span>C) Goes to estate</span>
+        <span>D) Contingent only</span>
+      </div>
+      <div class="question-answer"><strong>Answer: B)</strong> Deceased beneficiary's share passes to their children/descendants</div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-number">Question 22</div>
+      <div class="question-text">Group life conversion privilege allows how many days?</div>
+      <div class="question-options">
+        <span>A) 10</span>
+        <span>B) 30</span>
+        <span>C) 31</span>
+        <span>D) 60</span>
+      </div>
+      <div class="question-answer"><strong>Answer: C) 31 days</strong> to convert to individual whole life without proof of insurability</div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-number">Question 23</div>
+      <div class="question-text">Misrepresentation to induce someone to replace an existing policy is:</div>
+      <div class="question-options">
+        <span>A) Rebating</span>
+        <span>B) Churning</span>
+        <span>C) Twisting</span>
+        <span>D) Defamation</span>
+      </div>
+      <div class="question-answer"><strong>Answer: C) Twisting</strong></div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-number">Question 24</div>
+      <div class="question-text">Sharing commission as inducement to buy is:</div>
+      <div class="question-options">
+        <span>A) Twisting</span>
+        <span>B) Rebating</span>
+        <span>C) Churning</span>
+        <span>D) Coercion</span>
+      </div>
+      <div class="question-answer"><strong>Answer: B) Rebating</strong></div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-number">Question 25</div>
+      <div class="question-text">TN temporary license is valid for up to:</div>
+      <div class="question-options">
+        <span>A) 30 days</span>
+        <span>B) 90 days</span>
+        <span>C) 180 days</span>
+        <span>D) 1 year</span>
+      </div>
+      <div class="question-answer"><strong>Answer: C) 180 days</strong></div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-number">Question 26</div>
+      <div class="question-text">TN CE requirement is:</div>
+      <div class="question-options">
+        <span>A) 20 hrs/year</span>
+        <span>B) 24 hrs/2 years</span>
+        <span>C) 30 hrs/2 years</span>
+        <span>D) 24 hrs/year</span>
+      </div>
+      <div class="question-answer"><strong>Answer: B) 24 hours every 2 years</strong> including 3 hours ethics</div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-number">Question 27</div>
+      <div class="question-text">Free look period for replacement policies in TN:</div>
+      <div class="question-options">
+        <span>A) 10 days</span>
+        <span>B) 15 days</span>
+        <span>C) 20 days</span>
+        <span>D) 30 days</span>
+      </div>
+      <div class="question-answer"><strong>Answer: C) 20 days</strong></div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-number">Question 28</div>
+      <div class="question-text">Cash value inside a life insurance policy grows:</div>
+      <div class="question-options">
+        <span>A) Tax-free</span>
+        <span>B) Tax-deferred</span>
+        <span>C) Fully taxable</span>
+        <span>D) Capital gains</span>
+      </div>
+      <div class="question-answer"><strong>Answer: B) Tax-deferred</strong></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <div class="footer">
+    <p class="good-luck">You've got this. Go pass that exam.</p>
+    <p>TN Life Insurance Exam Study Guide<br>All content based on Tennessee insurance law and exam objectives.</p>
+  </div>
+
+</div>
+</body>
+</html>
