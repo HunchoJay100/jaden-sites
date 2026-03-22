@@ -1,0 +1,1613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoofPact | Annual Roof Protection</title>
+
+    <!-- Geist Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --navy: #0C1B2A;
+            --navy-light: #122438;
+            --navy-mid: #0F2033;
+            --navy-surface: #162D44;
+            --gold: #B8975A;
+            --gold-light: #C9A96E;
+            --gold-pale: #D4BC8B;
+            --gold-dark: #9A7D4A;
+            --cream: #F5F2ED;
+            --cream-dark: #E8E4DF;
+            --charcoal: #1A1A2E;
+            --gray-600: #6B7280;
+            --gray-400: #9CA3AF;
+            --white: #FAFAF8;
+            --font: 'Geist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font);
+            color: var(--charcoal);
+            background: var(--navy);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 clamp(20px, 4vw, 40px);
+        }
+
+        a { text-decoration: none; color: inherit; }
+        button { cursor: pointer; border: none; font-family: inherit; }
+
+        .label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 16px;
+        }
+
+        .label::before {
+            content: '';
+            width: 16px;
+            height: 1px;
+            background: var(--gold);
+        }
+
+        /* ============================================
+           ANIMATIONS
+           ============================================ */
+        .reveal {
+            opacity: 0;
+            filter: blur(8px);
+            transform: translateY(24px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                        filter 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateY(0);
+        }
+
+        .d1 { transition-delay: 0.08s; }
+        .d2 { transition-delay: 0.16s; }
+        .d3 { transition-delay: 0.24s; }
+        .d4 { transition-delay: 0.32s; }
+        .d5 { transition-delay: 0.4s; }
+        .d6 { transition-delay: 0.48s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(184, 151, 90, 0.08); }
+            50% { box-shadow: 0 0 40px rgba(184, 151, 90, 0.18); }
+        }
+
+        /* ============================================
+           NAVIGATION
+           ============================================ */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            background: rgba(12, 27, 42, 0.7);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid rgba(184, 151, 90, 0.06);
+            transition: all 0.3s;
+        }
+
+        nav.scrolled {
+            background: rgba(12, 27, 42, 0.95);
+            border-bottom-color: rgba(184, 151, 90, 0.12);
+        }
+
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+            padding: 0 clamp(20px, 4vw, 40px);
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Placeholder logo area */
+        .nav-logo-icon {
+            width: 32px;
+            height: 32px;
+            border: 1.5px solid var(--gold);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .nav-logo-icon::after {
+            content: '';
+            width: 12px;
+            height: 8px;
+            border-top: 2px solid var(--gold);
+            border-left: 2px solid var(--gold);
+            border-right: 2px solid var(--gold);
+            transform: perspective(10px) rotateX(2deg);
+        }
+
+        .nav-wordmark {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: -0.02em;
+        }
+
+        .nav-wordmark span { color: var(--gold); }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.45);
+            letter-spacing: 0.01em;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--white); }
+
+        .nav-cta-btn {
+            background: var(--gold);
+            color: var(--navy) !important;
+            padding: 8px 20px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            letter-spacing: 0.01em;
+            border-radius: 6px;
+            transition: all 0.25s;
+        }
+
+        .nav-cta-btn:hover {
+            background: var(--gold-light);
+            transform: translateY(-1px);
+        }
+
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            background: none;
+            padding: 8px;
+        }
+
+        .nav-toggle span {
+            display: block;
+            width: 20px;
+            height: 1.5px;
+            background: var(--white);
+        }
+
+        /* ============================================
+           HERO
+           ============================================ */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding: 120px 0 80px;
+        }
+
+        .hero-bg-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        .hero-bg-orb--1 {
+            width: 700px; height: 700px;
+            background: rgba(184, 151, 90, 0.07);
+            top: -20%; right: -15%;
+            animation: float 12s ease-in-out infinite;
+        }
+
+        .hero-bg-orb--2 {
+            width: 500px; height: 500px;
+            background: rgba(184, 151, 90, 0.04);
+            bottom: -10%; left: -10%;
+            animation: float 15s ease-in-out infinite 3s;
+        }
+
+        .hero-grid-bg {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(184, 151, 90, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(184, 151, 90, 0.025) 1px, transparent 1px);
+            background-size: 80px 80px;
+            mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, black 10%, transparent 70%);
+            -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, black 10%, transparent 70%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 780px;
+        }
+
+        .hero h1 {
+            font-size: clamp(3.2rem, 6vw, 5.2rem);
+            font-weight: 800;
+            line-height: 1.04;
+            color: var(--white);
+            margin-bottom: 24px;
+            letter-spacing: -0.035em;
+        }
+
+        .hero h1 .gold { color: var(--gold); }
+
+        .hero-sub {
+            font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+            color: rgba(255, 255, 255, 0.4);
+            line-height: 1.75;
+            max-width: 520px;
+            font-weight: 400;
+            margin-bottom: 40px;
+        }
+
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--gold);
+            color: var(--navy);
+            padding: 14px 28px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+            border-radius: 6px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.5s;
+        }
+
+        .btn-primary:hover::after { transform: translateX(100%); }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(184, 151, 90, 0.3);
+        }
+
+        .btn-primary svg {
+            width: 16px; height: 16px;
+            transition: transform 0.25s;
+        }
+
+        .btn-primary:hover svg { transform: translateX(3px); }
+
+        .btn-ghost {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 14px 24px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 6px;
+            transition: all 0.25s;
+        }
+
+        .btn-ghost:hover {
+            color: var(--white);
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .hero-proof {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            margin-top: 64px;
+            padding-top: 32px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .hero-proof-item {
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hero-proof-item svg {
+            width: 14px; height: 14px;
+            color: var(--gold);
+            opacity: 0.5;
+        }
+
+        /* ============================================
+           PROBLEM
+           ============================================ */
+        .problem {
+            padding: clamp(80px, 10vw, 140px) 0;
+            background: var(--cream);
+        }
+
+        .problem-top {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: start;
+            margin-bottom: 64px;
+        }
+
+        .problem h2 {
+            font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+            font-weight: 800;
+            color: var(--navy);
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+        }
+
+        .problem-intro {
+            font-size: 1rem;
+            color: var(--gray-600);
+            line-height: 1.8;
+            padding-top: 8px;
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: var(--cream-dark);
+            border: 1px solid var(--cream-dark);
+        }
+
+        .problem-card {
+            background: var(--white);
+            padding: 32px 28px;
+            position: relative;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .problem-card:hover {
+            background: var(--navy);
+            z-index: 2;
+        }
+
+        .problem-card-num {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--gold);
+            opacity: 0.12;
+            line-height: 1;
+            margin-bottom: 16px;
+            letter-spacing: -0.04em;
+            transition: opacity 0.35s;
+        }
+
+        .problem-card:hover .problem-card-num { opacity: 0.3; }
+
+        .problem-card h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 8px;
+            letter-spacing: -0.01em;
+            transition: color 0.35s;
+        }
+
+        .problem-card:hover h3 { color: var(--white); }
+
+        .problem-card p {
+            font-size: 0.85rem;
+            color: var(--gray-600);
+            line-height: 1.6;
+            transition: color 0.35s;
+        }
+
+        .problem-card:hover p { color: rgba(255, 255, 255, 0.45); }
+
+        /* ============================================
+           HOW IT WORKS
+           ============================================ */
+        .process {
+            padding: clamp(80px, 10vw, 140px) 0;
+            background: var(--navy);
+            position: relative;
+        }
+
+        .process-header {
+            margin-bottom: 72px;
+        }
+
+        .process-header h2 {
+            font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -0.03em;
+            max-width: 500px;
+        }
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+        }
+
+        .process-card {
+            padding: 48px 36px;
+            border: 1px solid rgba(184, 151, 90, 0.06);
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+        }
+
+        .process-card::before {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 2px;
+            background: var(--gold);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .process-card:hover::before { transform: scaleX(1); }
+
+        .process-card:hover {
+            background: rgba(184, 151, 90, 0.03);
+        }
+
+        .process-num {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            color: var(--gold);
+            margin-bottom: 32px;
+            opacity: 0.6;
+        }
+
+        .process-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 12px;
+            letter-spacing: -0.015em;
+        }
+
+        .process-card > p {
+            font-size: 0.88rem;
+            color: rgba(255, 255, 255, 0.38);
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+
+        .process-list {
+            list-style: none;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .process-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 0;
+            font-size: 0.82rem;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .process-list li svg {
+            width: 14px; height: 14px;
+            color: var(--gold);
+            opacity: 0.5;
+            flex-shrink: 0;
+        }
+
+        /* ============================================
+           PRICING
+           ============================================ */
+        .pricing {
+            padding: clamp(80px, 10vw, 140px) 0;
+            background: var(--cream);
+        }
+
+        .pricing-top {
+            max-width: 560px;
+            margin-bottom: 40px;
+        }
+
+        .pricing-top h2 {
+            font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+            font-weight: 800;
+            color: var(--navy);
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 12px;
+        }
+
+        .pricing-top p {
+            font-size: 0.95rem;
+            color: var(--gray-600);
+        }
+
+        /* Toggle switch - 21st.dev inspired */
+        .pricing-toggle {
+            display: inline-flex;
+            background: var(--white);
+            border: 1px solid var(--cream-dark);
+            border-radius: 10px;
+            padding: 4px;
+            margin-bottom: 48px;
+            position: relative;
+        }
+
+        .pricing-toggle-btn {
+            position: relative;
+            z-index: 2;
+            padding: 10px 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--gray-600);
+            background: none;
+            border-radius: 8px;
+            transition: color 0.25s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pricing-toggle-btn.active {
+            color: var(--white);
+        }
+
+        .pricing-toggle-slider {
+            position: absolute;
+            top: 4px;
+            height: calc(100% - 8px);
+            background: var(--navy);
+            border-radius: 8px;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 1;
+            box-shadow: 0 2px 8px rgba(12, 27, 42, 0.15);
+        }
+
+        .pricing-toggle-save {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            background: rgba(184, 151, 90, 0.15);
+            color: var(--gold-dark);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .active .pricing-toggle-save {
+            background: rgba(184, 151, 90, 0.2);
+            color: var(--gold-light);
+        }
+
+        /* Price cards */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .p-card {
+            background: var(--white);
+            border: 1px solid var(--cream-dark);
+            border-radius: 12px;
+            padding: 36px 28px;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .p-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 50px rgba(12, 27, 42, 0.08);
+        }
+
+        .p-card--pop {
+            background: var(--navy);
+            border: 2px solid var(--gold);
+            box-shadow: 0 0 0 1px rgba(184, 151, 90, 0.2);
+            animation: pulse-glow 4s ease-in-out infinite;
+        }
+
+        .p-card--pop:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 0 0 1px rgba(184, 151, 90, 0.3), 0 24px 60px rgba(12, 27, 42, 0.2);
+        }
+
+        .p-card-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .p-card-badge--std {
+            background: rgba(184, 151, 90, 0.08);
+            color: var(--gold-dark);
+        }
+
+        .p-card-badge--pop {
+            background: var(--gold);
+            color: var(--navy);
+        }
+
+        .p-card-badge--prem {
+            background: rgba(184, 151, 90, 0.12);
+            color: var(--gold);
+        }
+
+        .p-card-name {
+            font-size: 1.35rem;
+            font-weight: 700;
+            letter-spacing: -0.015em;
+            margin-bottom: 4px;
+        }
+
+        .p-card--pop .p-card-name { color: var(--white); }
+
+        .p-card-desc {
+            font-size: 0.82rem;
+            color: var(--gray-600);
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .p-card--pop .p-card-desc { color: rgba(255, 255, 255, 0.38); }
+
+        .p-card-price {
+            display: flex;
+            align-items: baseline;
+            gap: 2px;
+            margin-bottom: 4px;
+        }
+
+        .p-card-dollar {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-top: 4px;
+            align-self: flex-start;
+        }
+
+        .p-card--pop .p-card-dollar { color: var(--gold); }
+
+        .p-card-amount {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--navy);
+            line-height: 1;
+            letter-spacing: -0.04em;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .p-card--pop .p-card-amount { color: var(--gold); }
+
+        .p-card-amount.flip {
+            opacity: 0;
+            transform: translateY(-8px);
+        }
+
+        .p-card-period {
+            font-size: 0.78rem;
+            color: var(--gray-400);
+            margin-bottom: 28px;
+        }
+
+        .p-card--pop .p-card-period { color: rgba(255, 255, 255, 0.3); }
+
+        .p-card-cta {
+            display: block;
+            width: 100%;
+            padding: 13px;
+            text-align: center;
+            font-size: 0.82rem;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            margin-bottom: 28px;
+        }
+
+        .p-card-cta--dark {
+            background: var(--navy);
+            color: var(--white);
+            border: 1px solid var(--navy);
+        }
+
+        .p-card-cta--dark:hover {
+            background: var(--navy-light);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(12, 27, 42, 0.2);
+        }
+
+        .p-card-cta--gold {
+            background: var(--gold);
+            color: var(--navy);
+            border: 1px solid var(--gold);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .p-card-cta--gold::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.5s;
+        }
+
+        .p-card-cta--gold:hover::after { transform: translateX(100%); }
+
+        .p-card-cta--gold:hover {
+            box-shadow: 0 6px 20px rgba(184, 151, 90, 0.35);
+            transform: translateY(-1px);
+        }
+
+        .p-card-divider {
+            height: 1px;
+            background: var(--cream-dark);
+            margin-bottom: 24px;
+        }
+
+        .p-card--pop .p-card-divider { background: rgba(255, 255, 255, 0.06); }
+
+        .p-card-features-title {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--gray-400);
+            margin-bottom: 16px;
+        }
+
+        .p-card--pop .p-card-features-title { color: rgba(255, 255, 255, 0.25); }
+
+        .p-card-features {
+            list-style: none;
+        }
+
+        .p-card-features li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 0;
+            font-size: 0.85rem;
+            color: var(--charcoal);
+        }
+
+        .p-card--pop .p-card-features li { color: rgba(255, 255, 255, 0.6); }
+
+        .p-card-features li svg {
+            flex-shrink: 0;
+            width: 16px; height: 16px;
+            color: var(--gold);
+        }
+
+        .pricing-note {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.85rem;
+            color: var(--gray-600);
+        }
+
+        .pricing-note a {
+            color: var(--gold-dark);
+            font-weight: 600;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .pricing-note a:hover { border-color: var(--gold-dark); }
+
+        /* ============================================
+           STATS
+           ============================================ */
+        .stats {
+            padding: 80px 0;
+            background: var(--navy);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .stat {
+            text-align: center;
+            padding: 40px 24px;
+            border-right: 1px solid rgba(184, 151, 90, 0.06);
+        }
+
+        .stat:last-child { border-right: none; }
+
+        .stat-num {
+            font-size: clamp(2.8rem, 4.5vw, 3.8rem);
+            font-weight: 800;
+            color: var(--gold);
+            line-height: 1;
+            margin-bottom: 10px;
+            letter-spacing: -0.04em;
+        }
+
+        .stat-text {
+            font-size: 0.82rem;
+            color: rgba(255, 255, 255, 0.35);
+            max-width: 180px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        /* ============================================
+           TESTIMONIAL
+           ============================================ */
+        .testimonial {
+            padding: clamp(80px, 10vw, 120px) 0;
+            background: var(--cream);
+        }
+
+        .testimonial-inner {
+            max-width: 680px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .testimonial-mark {
+            font-size: 4rem;
+            line-height: 0.5;
+            color: var(--gold);
+            opacity: 0.2;
+            margin-bottom: 28px;
+            font-family: Georgia, serif;
+        }
+
+        .testimonial blockquote {
+            font-size: clamp(1.1rem, 1.6vw, 1.35rem);
+            font-weight: 400;
+            line-height: 1.8;
+            color: var(--navy);
+            margin-bottom: 28px;
+        }
+
+        .testimonial-who strong {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 2px;
+        }
+
+        .testimonial-who {
+            font-size: 0.78rem;
+            color: var(--gray-600);
+        }
+
+        /* ============================================
+           FAQ
+           ============================================ */
+        .faq {
+            padding: clamp(80px, 10vw, 140px) 0;
+            background: var(--navy);
+        }
+
+        .faq-header {
+            margin-bottom: 56px;
+        }
+
+        .faq-header h2 {
+            font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -0.03em;
+        }
+
+        .faq-list {
+            max-width: 700px;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .faq-q {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 22px 0;
+            background: none;
+            color: var(--white);
+            font-family: var(--font);
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-align: left;
+            letter-spacing: -0.01em;
+            transition: color 0.2s;
+        }
+
+        .faq-q:hover { color: var(--gold); }
+
+        .faq-icon {
+            flex-shrink: 0;
+            width: 24px; height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            font-size: 0.85rem;
+            font-weight: 300;
+            border: 1px solid rgba(184, 151, 90, 0.15);
+            border-radius: 4px;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .faq-item.open .faq-icon {
+            transform: rotate(45deg);
+            background: rgba(184, 151, 90, 0.08);
+        }
+
+        .faq-a {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .faq-item.open .faq-a { max-height: 280px; }
+
+        .faq-a p {
+            padding: 0 0 22px;
+            font-size: 0.88rem;
+            color: rgba(255, 255, 255, 0.35);
+            line-height: 1.75;
+        }
+
+        /* ============================================
+           FINAL CTA
+           ============================================ */
+        .cta-end {
+            padding: clamp(80px, 10vw, 120px) 0;
+            background: var(--cream);
+            text-align: center;
+        }
+
+        .cta-end h2 {
+            font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+            font-weight: 800;
+            color: var(--navy);
+            letter-spacing: -0.03em;
+            margin-bottom: 12px;
+        }
+
+        .cta-end > .container > p {
+            font-size: 0.95rem;
+            color: var(--gray-600);
+            margin-bottom: 36px;
+        }
+
+        .cta-btns {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .contact-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 32px;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--navy);
+            transition: color 0.2s;
+        }
+
+        .contact-link:hover { color: var(--gold-dark); }
+
+        .contact-link svg {
+            width: 16px; height: 16px;
+            color: var(--gold);
+        }
+
+        /* ============================================
+           FOOTER
+           ============================================ */
+        footer {
+            padding: 36px 0;
+            background: var(--navy);
+            border-top: 1px solid rgba(184, 151, 90, 0.05);
+        }
+
+        .foot-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .foot-brand {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .foot-brand span { color: var(--gold); }
+
+        .foot-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+
+        .foot-links a {
+            font-size: 0.72rem;
+            color: rgba(255, 255, 255, 0.25);
+            transition: color 0.2s;
+        }
+
+        .foot-links a:hover { color: var(--gold); }
+
+        .foot-copy {
+            font-size: 0.68rem;
+            color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 900px) {
+            .problem-top { grid-template-columns: 1fr; gap: 24px; }
+            .problem-grid { grid-template-columns: repeat(2, 1fr); }
+            .process-grid { grid-template-columns: 1fr; }
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .p-card--pop { order: -1; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .stat { border-right: none; border-bottom: 1px solid rgba(184,151,90,0.06); }
+            .stat:last-child { border-bottom: none; }
+            .hero-proof { flex-direction: column; gap: 12px; align-items: flex-start; }
+            .nav-links { display: none; }
+            .nav-toggle { display: flex; }
+        }
+
+        @media (max-width: 600px) {
+            .problem-grid { grid-template-columns: 1fr; }
+            .hero-actions { flex-direction: column; width: 100%; }
+            .hero-actions .btn-primary, .hero-actions .btn-ghost { width: 100%; justify-content: center; }
+            .contact-row { flex-direction: column; gap: 12px; }
+            .foot-inner { flex-direction: column; text-align: center; }
+            .cta-btns { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <div class="nav-inner">
+            <a href="#" class="nav-logo">
+                <div class="nav-logo-icon"></div>
+                <span class="nav-wordmark">Roof<span>Pact</span></span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#plans">Plans</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#plans" class="nav-cta-btn">Get Protected</a></li>
+            </ul>
+            <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-bg-orb hero-bg-orb--1"></div>
+        <div class="hero-bg-orb hero-bg-orb--2"></div>
+        <div class="hero-grid-bg"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="label reveal">Annual Roof Protection</div>
+                <h1 class="reveal d1">Your roof is <span class="gold">our reputation.</span></h1>
+                <p class="hero-sub reveal d2">Most homeowners never think about their roof until a small issue becomes a costly repair. RoofPact provides year-round inspections, priority service, and expert care so you never face an unexpected bill or a preventable leak.</p>
+                <div class="hero-actions reveal d3">
+                    <a href="#plans" class="btn-primary">
+                        View Plans
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                    <a href="#how-it-works" class="btn-ghost">Learn how it works</a>
+                </div>
+                <div class="hero-proof reveal d4">
+                    <div class="hero-proof-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                        Licensed &amp; Insured
+                    </div>
+                    <div class="hero-proof-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 13l4 4L19 7"/></svg>
+                        10-Year Workmanship Guarantee
+                    </div>
+                    <div class="hero-proof-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        24/7 Storm Response
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROBLEM -->
+    <section class="problem">
+        <div class="container">
+            <div class="problem-top">
+                <h2 class="reveal">Small problems become big bills. Fast.</h2>
+                <p class="problem-intro reveal d1">These are the issues that go unnoticed for years, until water finds its way in and a simple fix turns into an expensive emergency.</p>
+            </div>
+            <div class="problem-grid">
+                <div class="problem-card reveal d1">
+                    <div class="problem-card-num">01</div>
+                    <h3>Flashing Failures</h3>
+                    <p>Valleys, chimneys, skylights, and wall transitions where water infiltration starts.</p>
+                </div>
+                <div class="problem-card reveal d2">
+                    <div class="problem-card-num">02</div>
+                    <h3>Material Deterioration</h3>
+                    <p>Cracking, curling, blistering, and granule loss before they compromise your roof.</p>
+                </div>
+                <div class="problem-card reveal d3">
+                    <div class="problem-card-num">03</div>
+                    <h3>Ventilation Issues</h3>
+                    <p>Blocked soffits and ridge vents leading to moisture buildup, mold, and structural rot.</p>
+                </div>
+                <div class="problem-card reveal d4">
+                    <div class="problem-card-num">04</div>
+                    <h3>Storm Damage</h3>
+                    <p>Hail marks, wind lifting, and impact points that void warranties if left undocumented.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="process" id="how-it-works">
+        <div class="container">
+            <div class="process-header">
+                <div class="label reveal">The Process</div>
+                <h2 class="reveal d1">How RoofPact works</h2>
+            </div>
+            <div class="process-grid">
+                <div class="process-card reveal d1">
+                    <div class="process-num">STEP 01</div>
+                    <h3>Choose your plan</h3>
+                    <p>Select the level of protection that fits your needs. Enrollment takes less than five minutes.</p>
+                    <ul class="process-list">
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>No contracts or commitments</li>
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Upgrade or downgrade anytime</li>
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Coverage starts immediately</li>
+                    </ul>
+                </div>
+                <div class="process-card reveal d2">
+                    <div class="process-num">STEP 02</div>
+                    <h3>We inspect everything</h3>
+                    <p>Comprehensive assessment with documented photos. Shingles, flashing, ventilation, gutters, decking. The full checklist.</p>
+                    <ul class="process-list">
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Exterior and interior assessment</li>
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Photo report within 48 hours</li>
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>GPS-tagged documentation (Premier)</li>
+                    </ul>
+                </div>
+                <div class="process-card reveal d3">
+                    <div class="process-num">STEP 03</div>
+                    <h3>You're protected</h3>
+                    <p>Priority scheduling, repair discounts, storm response, and a team that knows your roof. If something comes up, we're on it.</p>
+                    <ul class="process-list">
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Priority and emergency response</li>
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Up to 20% off all repairs</li>
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Year-round monitoring</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="pricing" id="plans">
+        <div class="container">
+            <div class="pricing-top reveal">
+                <div class="label">Membership Plans</div>
+                <h2>We've got a plan that's right for you</h2>
+                <p>Every plan includes professional inspections and documented photo reports.</p>
+            </div>
+
+            <div class="pricing-grid">
+                <!-- Essential -->
+                <div class="p-card reveal d2">
+                    <div class="p-card-badge p-card-badge--std">Essential</div>
+                    <div class="p-card-name">Essential</div>
+                    <div class="p-card-desc">A solid foundation of protection for your home.</div>
+                    <div class="p-card-price">
+                        <span class="p-card-dollar">$</span>
+                        <span class="p-card-amount">149</span>
+                    </div>
+                    <div class="p-card-period">per year</div>
+                    <a href="#contact" class="p-card-cta p-card-cta--dark">Get Started</a>
+                    <div class="p-card-divider"></div>
+                    <div class="p-card-features-title">What's included</div>
+                    <ul class="p-card-features">
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>1 annual roof inspection</li>
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>Photo inspection report</li>
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>10% repair discount</li>
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>Standard scheduling</li>
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>Maintenance reminders</li>
+                    </ul>
+                </div>
+
+                <!-- Guardian -->
+                <div class="p-card p-card--pop reveal d3">
+                    <div class="p-card-badge p-card-badge--pop">Most Popular</div>
+                    <div class="p-card-name">Guardian</div>
+                    <div class="p-card-desc">Complete peace of mind with priority coverage.</div>
+                    <div class="p-card-price">
+                        <span class="p-card-dollar">$</span>
+                        <span class="p-card-amount">249</span>
+                    </div>
+                    <div class="p-card-period">per year</div>
+                    <a href="#contact" class="p-card-cta p-card-cta--gold">Get Protected</a>
+                    <div class="p-card-divider"></div>
+                    <div class="p-card-features-title">Everything in Essential, plus</div>
+                    <ul class="p-card-features">
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>2 annual roof inspections</li>
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>Priority scheduling</li>
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>48-hour emergency response</li>
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>15% repair discount</li>
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>Storm damage inspection</li>
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>Gutter condition check</li>
+                    </ul>
+                </div>
+
+                <!-- Premier -->
+                <div class="p-card reveal d4">
+                    <div class="p-card-badge p-card-badge--prem">Premier</div>
+                    <div class="p-card-name">Premier</div>
+                    <div class="p-card-desc">The full shield. Maximum protection and coverage.</div>
+                    <div class="p-card-price">
+                        <span class="p-card-dollar">$</span>
+                        <span class="p-card-amount">399</span>
+                    </div>
+                    <div class="p-card-period">per year</div>
+                    <a href="#contact" class="p-card-cta p-card-cta--dark">Get Started</a>
+                    <div class="p-card-divider"></div>
+                    <div class="p-card-features-title">Everything in Guardian, plus</div>
+                    <ul class="p-card-features">
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>Annual Roof Health Score</li>
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>24-hour emergency response</li>
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>20% repair discount</li>
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>Insurance claim assistance</li>
+                        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>Transferable membership</li>
+                    </ul>
+                </div>
+            </div>
+
+            <p class="pricing-note reveal">Need coverage for a commercial property? <a href="#contact">Contact us for commercial pricing.</a></p>
+        </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat reveal">
+                    <div class="stat-num" data-count="8500" data-pre="$">$0</div>
+                    <div class="stat-text">Average cost of a roof repair caught too late</div>
+                </div>
+                <div class="stat reveal d1">
+                    <div class="stat-num" data-count="73" data-suf="%">0%</div>
+                    <div class="stat-text">Of roof damage caught early through inspection</div>
+                </div>
+                <div class="stat reveal d2">
+                    <div class="stat-num" data-static="1">2-3x</div>
+                    <div class="stat-text">More likely to refer after joining RoofPact</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIAL -->
+    <section class="testimonial">
+        <div class="container">
+            <div class="testimonial-inner reveal">
+                <div class="label" style="justify-content:center">Member Voices</div>
+                <div class="testimonial-mark">"</div>
+                <blockquote>After my first RoofPact inspection, they caught a flashing issue I had no idea about. Saved me from a $4,000 repair. Best $249 I've ever spent.</blockquote>
+                <div class="testimonial-who">
+                    <strong>RoofPact Guardian Member</strong>
+                    Residential Homeowner
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <div class="faq-header">
+                <div class="label reveal">Common Questions</div>
+                <h2 class="reveal d1">Everything you need to know</h2>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item reveal d1">
+                    <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+                        What does a RoofPact inspection include?
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-a"><p>Every inspection follows our comprehensive checklist: exterior roof assessment (shingles, flashing, ridgeline, drip edge, penetrations, debris, storm damage), interior/attic assessment (ventilation, insulation, decking, leak evidence), and for Guardian and Premier members, a full gutter and drainage evaluation. You receive a detailed photo report within 48 hours.</p></div>
+                </div>
+                <div class="faq-item reveal d2">
+                    <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+                        How is this different from a one-time inspection?
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-a"><p>A one-time inspection is a snapshot. RoofPact is ongoing protection. You get scheduled inspections, priority service, repair discounts, and a team that knows your roof's history. We track condition over time so nothing falls through the cracks.</p></div>
+                </div>
+                <div class="faq-item reveal d3">
+                    <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+                        Can I upgrade my plan later?
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-a"><p>Yes. You can upgrade at any time. The price difference is prorated for the remainder of your term. Most members start with Guardian and upgrade to Premier after their first inspection.</p></div>
+                </div>
+                <div class="faq-item reveal d4">
+                    <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+                        What is the Annual Roof Health Score?
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-a"><p>Exclusive to Premier members, the Roof Health Score rates your roof across five categories: surface materials, flashing, drainage, structural integrity, and interior health. You receive a scored report out of 100 with specific recommendations, tracked year over year.</p></div>
+                </div>
+                <div class="faq-item reveal d5">
+                    <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+                        Is my membership transferable?
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-a"><p>Premier memberships are fully transferable to the new homeowner when you sell. It shows buyers the roof has been professionally maintained and documented.</p></div>
+                </div>
+                <div class="faq-item reveal d6">
+                    <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+                        Do you offer commercial memberships?
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-a"><p>Yes. Commercial memberships are available at all three tiers with pricing based on roof size. Contact us for a custom quote.</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-end" id="contact">
+        <div class="container">
+            <div class="label reveal" style="justify-content:center">Get Started</div>
+            <h2 class="reveal">Ready to protect your home?</h2>
+            <p class="reveal">Join RoofPact today. Stop worrying about what's happening above you.</p>
+            <div class="cta-btns reveal">
+                <a href="#plans" class="btn-primary">
+                    View Plans
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+            </div>
+            <div class="contact-row reveal">
+                <a href="tel:9314008788" class="contact-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                    (931) 400-8788
+                </a>
+                <a href="mailto:modernroofing931@gmail.com" class="contact-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    modernroofing931@gmail.com
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="foot-inner">
+                <div class="foot-brand">Roof<span>Pact</span></div>
+                <ul class="foot-links">
+                    <li><a href="#plans">Plans</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#">Privacy</a></li>
+                    <li><a href="#">Terms</a></li>
+                </ul>
+                <div class="foot-copy">&copy; 2026 RoofPact. All rights reserved.</div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll reveal with blur
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.06, rootMargin: '0px 0px -20px 0px' });
+        document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+        // Nav
+        window.addEventListener('scroll', () => {
+            document.querySelector('nav').classList.toggle('scrolled', scrollY > 40);
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                e.preventDefault();
+                const t = document.querySelector(a.getAttribute('href'));
+                if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        // Billing toggle with sliding indicator
+        let yearly = false;
+
+        function positionSlider() {
+            const toggle = document.getElementById('billingToggle');
+            const slider = document.getElementById('toggleSlider');
+            const btns = toggle.querySelectorAll('.pricing-toggle-btn');
+            const activeBtn = yearly ? btns[1] : btns[0];
+            slider.style.left = activeBtn.offsetLeft + 'px';
+            slider.style.width = activeBtn.offsetWidth + 'px';
+        }
+
+        function switchBilling(period) {
+            yearly = period === 'yearly';
+            const btns = document.querySelectorAll('.pricing-toggle-btn');
+            btns.forEach(b => b.classList.toggle('active',
+                (yearly && b.dataset.period === 'yearly') ||
+                (!yearly && b.dataset.period === 'monthly')
+            ));
+            positionSlider();
+
+            // Animate prices
+            document.querySelectorAll('.p-card-amount').forEach(el => {
+                el.classList.add('flip');
+                setTimeout(() => {
+                    const val = yearly ? el.dataset.yr : el.dataset.mo;
+                    animateNumber(el, parseInt(el.textContent) || 0, parseInt(val), 350);
+                    el.classList.remove('flip');
+                }, 150);
+            });
+
+            // Period labels
+            document.querySelectorAll('.period-label').forEach(el => {
+                el.textContent = yearly ? 'year' : 'month';
+            });
+        }
+
+        // Number animation
+        function animateNumber(el, from, to, duration) {
+            const start = performance.now();
+            function tick(now) {
+                const p = Math.min((now - start) / duration, 1);
+                const ease = 1 - Math.pow(1 - p, 3);
+                el.textContent = Math.round(from + (to - from) * ease);
+                if (p < 1) requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+        }
+
+        // Position slider on load
+        window.addEventListener('load', () => {
+            setTimeout(positionSlider, 100);
+        });
+        window.addEventListener('resize', positionSlider);
+
+        // Stat counters
+        const statObs = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.querySelectorAll('.stat-num[data-count]').forEach(el => {
+                        const target = parseInt(el.dataset.count);
+                        const pre = el.dataset.pre || '';
+                        const suf = el.dataset.suf || '';
+                        animateStatNumber(el, target, pre, suf, 1400);
+                    });
+                    statObs.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        const statsEl = document.querySelector('.stats');
+        if (statsEl) statObs.observe(statsEl);
+
+        function animateStatNumber(el, target, pre, suf, duration) {
+            const start = performance.now();
+            function tick(now) {
+                const p = Math.min((now - start) / duration, 1);
+                const ease = 1 - Math.pow(1 - p, 4);
+                const val = Math.round(ease * target);
+                el.textContent = pre + val.toLocaleString() + suf;
+                if (p < 1) requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+        }
+    </script>
+
+</body>
+</html>
