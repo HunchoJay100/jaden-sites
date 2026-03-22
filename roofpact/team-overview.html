@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoofPact | Team Overview</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --navy: #0C1B2A;
+            --navy-light: #122438;
+            --navy-surface: #162D44;
+            --gold: #B8975A;
+            --gold-light: #C9A96E;
+            --gold-dark: #9A7D4A;
+            --cream: #F5F2ED;
+            --cream-dark: #E8E4DF;
+            --charcoal: #1A1A2E;
+            --gray-600: #6B7280;
+            --gray-400: #9CA3AF;
+            --white: #FAFAF8;
+            --green: #34D399;
+            --red: #F87171;
+            --blue: #60A5FA;
+            --amber: #FBBF24;
+            --font: 'Geist', -apple-system, system-ui, sans-serif;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font);
+            background: var(--navy);
+            color: var(--white);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 clamp(20px, 4vw, 40px);
+        }
+
+        /* ============================================
+           HEADER
+           ============================================ */
+        .doc-header {
+            padding: 60px 0 40px;
+            border-bottom: 1px solid rgba(184, 151, 90, 0.1);
+            margin-bottom: 60px;
+        }
+
+        .doc-header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+        }
+
+        .doc-logo {
+            font-size: 1.3rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .doc-logo span { color: var(--gold); }
+
+        .doc-badge {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 6px 14px;
+            border: 1px solid rgba(184, 151, 90, 0.25);
+            color: var(--gold);
+            border-radius: 4px;
+        }
+
+        .doc-header h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            line-height: 1.05;
+            margin-bottom: 16px;
+        }
+
+        .doc-header h1 em {
+            color: var(--gold);
+            font-style: normal;
+        }
+
+        .doc-header p {
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, 0.4);
+            max-width: 600px;
+            line-height: 1.7;
+        }
+
+        /* ============================================
+           SECTION STYLING
+           ============================================ */
+        .section {
+            padding: 60px 0;
+            border-bottom: 1px solid rgba(184, 151, 90, 0.06);
+        }
+
+        .section:last-of-type { border-bottom: none; }
+
+        .section-num {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            color: var(--gold);
+            opacity: 0.5;
+            margin-bottom: 12px;
+        }
+
+        .section h2 {
+            font-size: clamp(1.6rem, 3vw, 2.2rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 8px;
+        }
+
+        .section-lead {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 40px;
+            max-width: 600px;
+        }
+
+        /* ============================================
+           OVERVIEW / WHAT IS IT
+           ============================================ */
+        .overview-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .overview-point {
+            padding: 28px;
+            border: 1px solid rgba(184, 151, 90, 0.08);
+            border-radius: 8px;
+        }
+
+        .overview-point h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .overview-point h3 .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--gold);
+            border-radius: 50%;
+        }
+
+        .overview-point p {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.4);
+            line-height: 1.65;
+        }
+
+        /* ============================================
+           TIERS QUICK VIEW
+           ============================================ */
+        .tiers-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .tier-mini {
+            padding: 28px 24px;
+            border: 1px solid rgba(184, 151, 90, 0.08);
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .tier-mini--pop {
+            border-color: var(--gold);
+            background: rgba(184, 151, 90, 0.04);
+        }
+
+        .tier-mini-badge {
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--navy);
+            background: var(--gold);
+            padding: 3px 8px;
+            border-radius: 3px;
+            position: absolute;
+            top: -10px;
+            right: 16px;
+        }
+
+        .tier-mini h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .tier-mini .tier-price {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--gold);
+            letter-spacing: -0.03em;
+            margin-bottom: 2px;
+        }
+
+        .tier-mini .tier-per {
+            font-size: 0.72rem;
+            color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 16px;
+        }
+
+        .tier-mini ul {
+            list-style: none;
+        }
+
+        .tier-mini ul li {
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.45);
+            padding: 3px 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tier-mini ul li::before {
+            content: '';
+            width: 4px;
+            height: 4px;
+            background: var(--gold);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* ============================================
+           MOCKUP UI COMPONENTS
+           ============================================ */
+        .mockup {
+            background: var(--navy-light);
+            border: 1px solid rgba(184, 151, 90, 0.08);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+
+        .mockup-bar {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 12px 16px;
+            background: rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(184, 151, 90, 0.06);
+        }
+
+        .mockup-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .mockup-dot:nth-child(1) { background: var(--red); opacity: 0.6; }
+        .mockup-dot:nth-child(2) { background: var(--amber); opacity: 0.6; }
+        .mockup-dot:nth-child(3) { background: var(--green); opacity: 0.6; }
+
+        .mockup-title {
+            margin-left: auto;
+            font-size: 0.65rem;
+            color: rgba(255, 255, 255, 0.25);
+            font-weight: 500;
+        }
+
+        .mockup-body {
+            padding: 24px;
+        }
+
+        /* Dashboard mockup */
+        .dash-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .dash-stat {
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 6px;
+            padding: 16px;
+        }
+
+        .dash-stat-label {
+            font-size: 0.65rem;
+            color: rgba(255, 255, 255, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 4px;
+        }
+
+        .dash-stat-val {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+        }
+
+        .dash-stat-val--gold { color: var(--gold); }
+        .dash-stat-val--green { color: var(--green); }
+        .dash-stat-val--blue { color: var(--blue); }
+        .dash-stat-val--white { color: var(--white); }
+
+        /* Table mockup */
+        .mock-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .mock-table th {
+            text-align: left;
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 8px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .mock-table td {
+            font-size: 0.8rem;
+            padding: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .mock-table tr:hover td {
+            background: rgba(184, 151, 90, 0.03);
+        }
+
+        .tag {
+            display: inline-block;
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 3px;
+        }
+
+        .tag--essential { background: rgba(184, 151, 90, 0.1); color: var(--gold-dark); }
+        .tag--guardian { background: var(--gold); color: var(--navy); }
+        .tag--premier { background: rgba(184, 151, 90, 0.15); color: var(--gold-light); }
+        .tag--active { background: rgba(52, 211, 153, 0.15); color: var(--green); }
+        .tag--due { background: rgba(251, 191, 36, 0.15); color: var(--amber); }
+        .tag--storm { background: rgba(248, 113, 113, 0.15); color: var(--red); }
+
+        /* Profile mockup */
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 20px;
+        }
+
+        .profile-sidebar {
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 6px;
+            padding: 20px;
+        }
+
+        .profile-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(184, 151, 90, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--gold);
+            margin-bottom: 12px;
+        }
+
+        .profile-name {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .profile-detail {
+            font-size: 0.72rem;
+            color: rgba(255, 255, 255, 0.35);
+            margin-bottom: 4px;
+        }
+
+        .profile-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 12px;
+        }
+
+        .profile-main {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .profile-card {
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 6px;
+            padding: 16px;
+        }
+
+        .profile-card-title {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 10px;
+        }
+
+        .profile-card p, .profile-card li {
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Score mockup */
+        .score-bar-bg {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 4px;
+            margin: 8px 0;
+            overflow: hidden;
+        }
+
+        .score-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            background: var(--gold);
+        }
+
+        .score-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 6px 0;
+        }
+
+        .score-row-label {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.45);
+        }
+
+        .score-row-val {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        .score-big {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--gold);
+            letter-spacing: -0.04em;
+            line-height: 1;
+        }
+
+        .score-label {
+            font-size: 0.7rem;
+            color: var(--green);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        /* Schedule mockup */
+        .sched-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+        }
+
+        .sched-day {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 6px;
+            padding: 12px;
+            min-height: 100px;
+        }
+
+        .sched-day-label {
+            font-size: 0.6rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.25);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 8px;
+        }
+
+        .sched-event {
+            font-size: 0.65rem;
+            padding: 6px 8px;
+            border-radius: 4px;
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+
+        .sched-event--inspection {
+            background: rgba(184, 151, 90, 0.15);
+            color: var(--gold);
+            border-left: 2px solid var(--gold);
+        }
+
+        .sched-event--follow {
+            background: rgba(96, 165, 250, 0.12);
+            color: var(--blue);
+            border-left: 2px solid var(--blue);
+        }
+
+        .sched-event--storm {
+            background: rgba(248, 113, 113, 0.12);
+            color: var(--red);
+            border-left: 2px solid var(--red);
+        }
+
+        /* Email timeline */
+        .email-timeline {
+            position: relative;
+            padding-left: 24px;
+        }
+
+        .email-timeline::before {
+            content: '';
+            position: absolute;
+            left: 4px;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: rgba(184, 151, 90, 0.12);
+        }
+
+        .email-step {
+            position: relative;
+            padding: 0 0 28px 20px;
+        }
+
+        .email-step::before {
+            content: '';
+            position: absolute;
+            left: -4px;
+            top: 6px;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--gold);
+            border: 2px solid var(--navy-light);
+        }
+
+        .email-step-time {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 4px;
+        }
+
+        .email-step-title {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 2px;
+        }
+
+        .email-step-desc {
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        /* Revenue */
+        .rev-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .rev-table th {
+            text-align: left;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: 10px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .rev-table td {
+            font-size: 0.88rem;
+            padding: 14px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .rev-table td:last-child {
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        /* Launch timeline */
+        .launch-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .launch-phase {
+            padding: 28px 24px;
+            border: 1px solid rgba(184, 151, 90, 0.08);
+            border-radius: 8px;
+        }
+
+        .launch-phase-label {
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 12px;
+        }
+
+        .launch-phase h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .launch-phase ul {
+            list-style: none;
+        }
+
+        .launch-phase ul li {
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.4);
+            padding: 4px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .launch-phase ul li::before {
+            content: '';
+            width: 4px;
+            height: 4px;
+            background: rgba(184, 151, 90, 0.4);
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin-top: 7px;
+        }
+
+        /* Two col layout */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        /* Caption */
+        .caption {
+            font-size: 0.72rem;
+            color: rgba(255, 255, 255, 0.25);
+            font-style: italic;
+            margin-top: 8px;
+        }
+
+        /* Footer */
+        .doc-footer {
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid rgba(184, 151, 90, 0.06);
+            margin-top: 40px;
+        }
+
+        .doc-footer p {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .doc-footer .foot-brand {
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+
+        .doc-footer .foot-brand span { color: var(--gold); }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .overview-grid, .two-col, .launch-grid, .tiers-row { grid-template-columns: 1fr; }
+            .dash-stats { grid-template-columns: repeat(2, 1fr); }
+            .profile-grid { grid-template-columns: 1fr; }
+            .sched-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 600px) {
+            .dash-stats { grid-template-columns: 1fr; }
+            .sched-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="doc-header">
+        <div class="container">
+            <div class="doc-header-top">
+                <div class="doc-logo">Roof<span>Pact</span></div>
+                <div class="doc-badge">Internal Overview</div>
+            </div>
+            <h1>The full picture.<br><em>For the team.</em></h1>
+            <p>Everything you need to know about RoofPact: what it is, how it works, what the platform looks like, and how we're going to launch it.</p>
+        </div>
+    </header>
+
+    <!-- 01. WHAT IS ROOFPACT -->
+    <section class="section">
+        <div class="container">
+            <div class="section-num">01</div>
+            <h2>What is RoofPact?</h2>
+            <p class="section-lead">An annual membership program where homeowners pay for year-round roof protection. We inspect, we monitor, we respond. They never worry about their roof again.</p>
+
+            <div class="overview-grid">
+                <div class="overview-point">
+                    <h3><span class="dot"></span> Recurring Revenue</h3>
+                    <p>Every member pays annually. Predictable income that doesn't depend on weather, season, or new leads coming in.</p>
+                </div>
+                <div class="overview-point">
+                    <h3><span class="dot"></span> They Call Us First</h3>
+                    <p>When a storm hits or something breaks, members don't shop around. They call us because we already know their roof.</p>
+                </div>
+                <div class="overview-point">
+                    <h3><span class="dot"></span> Referral Machine</h3>
+                    <p>Members refer 2-3x more than one-time customers. Built-in rewards make it systematic, not random.</p>
+                </div>
+                <div class="overview-point">
+                    <h3><span class="dot"></span> Insurance Pipeline</h3>
+                    <p>Storm inspections uncover claims proactively. We own the replacement pipeline in our market before anyone else even shows up.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 02. THE THREE TIERS -->
+    <section class="section">
+        <div class="container">
+            <div class="section-num">02</div>
+            <h2>Three tiers. One mission.</h2>
+            <p class="section-lead">Essential gets them in the door. Guardian is the volume driver. Premier is where the real margin lives.</p>
+
+            <div class="tiers-row">
+                <div class="tier-mini">
+                    <h3>Essential</h3>
+                    <div class="tier-price">$149</div>
+                    <div class="tier-per">per year</div>
+                    <ul>
+                        <li>1 annual inspection</li>
+                        <li>Photo report</li>
+                        <li>10% repair discount</li>
+                        <li>Standard scheduling</li>
+                        <li>Maintenance reminders</li>
+                    </ul>
+                </div>
+                <div class="tier-mini tier-mini--pop">
+                    <div class="tier-mini-badge">Most Popular</div>
+                    <h3>Guardian</h3>
+                    <div class="tier-price">$249</div>
+                    <div class="tier-per">per year</div>
+                    <ul>
+                        <li>2 annual inspections</li>
+                        <li>Priority scheduling</li>
+                        <li>48-hr emergency response</li>
+                        <li>15% repair discount</li>
+                        <li>Storm damage inspection</li>
+                        <li>Gutter condition check</li>
+                    </ul>
+                </div>
+                <div class="tier-mini">
+                    <h3>Premier</h3>
+                    <div class="tier-price">$399</div>
+                    <div class="tier-per">per year</div>
+                    <ul>
+                        <li>2 annual inspections</li>
+                        <li>Roof Health Score</li>
+                        <li>24-hr emergency response</li>
+                        <li>20% repair discount</li>
+                        <li>Insurance claim assistance</li>
+                        <li>Transferable membership</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 03. ADMIN DASHBOARD -->
+    <section class="section">
+        <div class="container">
+            <div class="section-num">03</div>
+            <h2>The dashboard</h2>
+            <p class="section-lead">One screen to see every member, every inspection, every dollar. This is home base.</p>
+
+            <div class="mockup">
+                <div class="mockup-bar">
+                    <div class="mockup-dot"></div>
+                    <div class="mockup-dot"></div>
+                    <div class="mockup-dot"></div>
+                    <span class="mockup-title">RoofPact Admin</span>
+                </div>
+                <div class="mockup-body">
+                    <div class="dash-stats">
+                        <div class="dash-stat">
+                            <div class="dash-stat-label">Active Members</div>
+                            <div class="dash-stat-val dash-stat-val--gold">127</div>
+                        </div>
+                        <div class="dash-stat">
+                            <div class="dash-stat-label">Monthly Revenue</div>
+                            <div class="dash-stat-val dash-stat-val--green">$2,840</div>
+                        </div>
+                        <div class="dash-stat">
+                            <div class="dash-stat-label">Inspections This Month</div>
+                            <div class="dash-stat-val dash-stat-val--blue">18</div>
+                        </div>
+                        <div class="dash-stat">
+                            <div class="dash-stat-label">Renewals Due</div>
+                            <div class="dash-stat-val dash-stat-val--white">9</div>
+                        </div>
+                    </div>
+                    <table class="mock-table">
+                        <thead>
+                            <tr>
+                                <th>Member</th>
+                                <th>Tier</th>
+                                <th>Status</th>
+                                <th>Next Inspection</th>
+                                <th>Tags</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Sarah Mitchell</td>
+                                <td><span class="tag tag--guardian">Guardian</span></td>
+                                <td><span class="tag tag--active">Active</span></td>
+                                <td>Apr 12, 2026</td>
+                                <td><span class="tag tag--storm">Storm Zone</span></td>
+                            </tr>
+                            <tr>
+                                <td>James Thornton</td>
+                                <td><span class="tag tag--premier">Premier</span></td>
+                                <td><span class="tag tag--active">Active</span></td>
+                                <td>Apr 18, 2026</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Lisa Hernandez</td>
+                                <td><span class="tag tag--essential">Essential</span></td>
+                                <td><span class="tag tag--due">Renewal Due</span></td>
+                                <td>Overdue</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Robert Kim</td>
+                                <td><span class="tag tag--guardian">Guardian</span></td>
+                                <td><span class="tag tag--active">Active</span></td>
+                                <td>May 3, 2026</td>
+                                <td><span class="tag tag--storm">Storm Zone</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <p class="caption">Dashboard shows live member data, filterable by tier, status, and tags. New signups auto-populate from Stripe.</p>
+        </div>
+    </section>
+
+    <!-- 04. CUSTOMER PROFILE -->
+    <section class="section">
+        <div class="container">
+            <div class="section-num">04</div>
+            <h2>Customer profiles</h2>
+            <p class="section-lead">Click into any member and see everything: their roof history, inspection reports, notes, and upcoming service.</p>
+
+            <div class="mockup">
+                <div class="mockup-bar">
+                    <div class="mockup-dot"></div>
+                    <div class="mockup-dot"></div>
+                    <div class="mockup-dot"></div>
+                    <span class="mockup-title">Member Profile</span>
+                </div>
+                <div class="mockup-body">
+                    <div class="profile-grid">
+                        <div class="profile-sidebar">
+                            <div class="profile-avatar">SM</div>
+                            <div class="profile-name">Sarah Mitchell</div>
+                            <div class="profile-detail">423 Oak Ridge Dr, Cookeville, TN</div>
+                            <div class="profile-detail">(931) 555-0142</div>
+                            <div class="profile-detail">sarah.mitchell@email.com</div>
+                            <div class="profile-tags">
+                                <span class="tag tag--guardian">Guardian</span>
+                                <span class="tag tag--active">Active</span>
+                                <span class="tag tag--storm">Storm Zone</span>
+                            </div>
+                            <div style="margin-top:16px; padding-top:12px; border-top:1px solid rgba(255,255,255,0.04);">
+                                <div class="profile-detail">Enrolled: Jan 15, 2026</div>
+                                <div class="profile-detail">Renews: Jan 15, 2027</div>
+                                <div class="profile-detail">Referral Source: Direct</div>
+                            </div>
+                        </div>
+                        <div class="profile-main">
+                            <div class="profile-card">
+                                <div class="profile-card-title">Last Inspection - Mar 8, 2026</div>
+                                <p>Minor granule loss on south-facing slope. Flashing around chimney showing early wear. Recommended re-seal within 6 months. Gutters clear. Ventilation adequate. 24 photos documented.</p>
+                            </div>
+                            <div class="profile-card">
+                                <div class="profile-card-title">Notes</div>
+                                <p>Homeowner mentioned leak concern in master bedroom. Inspected and found no active leak, likely condensation from poor bathroom vent. Advised HVAC check.</p>
+                            </div>
+                            <div class="profile-card">
+                                <div class="profile-card-title">Upcoming</div>
+                                <p>Next inspection scheduled: Apr 12, 2026. Assigned to: Jordan G.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="caption">Every member has a full history. Inspection photos, notes, and service records are all in one place.</p>
+        </div>
+    </section>
+
+    <!-- 05. SCHEDULING -->
+    <section class="section">
+        <div class="container">
+            <div class="section-num">05</div>
+            <h2>Crew scheduling</h2>
+            <p class="section-lead">Assign inspections, see the week at a glance, and make sure nobody gets missed.</p>
+
+            <div class="mockup">
+                <div class="mockup-bar">
+                    <div class="mockup-dot"></div>
+                    <div class="mockup-dot"></div>
+                    <div class="mockup-dot"></div>
+                    <span class="mockup-title">Schedule View - Week of Apr 7</span>
+                </div>
+                <div class="mockup-body">
+                    <div class="sched-grid">
+                        <div class="sched-day">
+                            <div class="sched-day-label">Mon 4/7</div>
+                            <div class="sched-event sched-event--inspection">9am - Mitchell (Guardian)</div>
+                            <div class="sched-event sched-event--inspection">1pm - Park (Essential)</div>
+                        </div>
+                        <div class="sched-day">
+                            <div class="sched-day-label">Tue 4/8</div>
+                            <div class="sched-event sched-event--inspection">10am - Thornton (Premier)</div>
+                            <div class="sched-event sched-event--follow">2pm - Follow-up: Davis</div>
+                        </div>
+                        <div class="sched-day">
+                            <div class="sched-day-label">Wed 4/9</div>
+                            <div class="sched-event sched-event--inspection">8am - Kim (Guardian)</div>
+                            <div class="sched-event sched-event--inspection">11am - Patel (Guardian)</div>
+                            <div class="sched-event sched-event--inspection">2pm - Brooks (Essential)</div>
+                        </div>
+                        <div class="sched-day">
+                            <div class="sched-day-label">Thu 4/10</div>
+                            <div class="sched-event sched-event--storm">Storm assessment zone</div>
+                            <div class="sched-event sched-event--inspection">1pm - Lee (Premier)</div>
+                        </div>
+                        <div class="sched-day">
+                            <div class="sched-day-label">Fri 4/11</div>
+                            <div class="sched-event sched-event--follow">9am - Renewal call: Hernandez</div>
+                            <div class="sched-event sched-event--inspection">11am - Cooper (Guardian)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="caption">Crew members see their daily schedule on mobile. Admin assigns from the dashboard. Color-coded by type.</p>
+        </div>
+    </section>
+
+    <!-- 06. AUTOMATED FOLLOW-UP -->
+    <section class="section">
+        <div class="container">
+            <div class="section-num">06</div>
+            <h2>Automated follow-up</h2>
+            <p class="section-lead">Every member gets the right message at the right time. No one falls through the cracks.</p>
+
+            <div class="two-col">
+                <div>
+                    <h3 style="font-size:0.95rem; margin-bottom:20px; color:var(--gold);">Enrollment Sequence</h3>
+                    <div class="email-timeline">
+                        <div class="email-step">
+                            <div class="email-step-time">Day 1</div>
+                            <div class="email-step-title">Welcome to RoofPact</div>
+                            <div class="email-step-desc">Confirmation, benefits overview, what to expect next.</div>
+                        </div>
+                        <div class="email-step">
+                            <div class="email-step-time">Day 7</div>
+                            <div class="email-step-title">Schedule your first inspection</div>
+                            <div class="email-step-desc">Quick check-in with a link to pick a date.</div>
+                        </div>
+                        <div class="email-step">
+                            <div class="email-step-time">Day 30</div>
+                            <div class="email-step-title">Roof maintenance tips</div>
+                            <div class="email-step-desc">Seasonal advice. Builds trust and keeps us top of mind.</div>
+                        </div>
+                        <div class="email-step">
+                            <div class="email-step-time">Day 90</div>
+                            <div class="email-step-title">Seasonal prep guide</div>
+                            <div class="email-step-desc">Relevant to the current season. Positions us as the expert.</div>
+                        </div>
+                        <div class="email-step">
+                            <div class="email-step-time">6 Months</div>
+                            <div class="email-step-title">Midyear check-in</div>
+                            <div class="email-step-desc">Reminder that their next inspection is coming up.</div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="font-size:0.95rem; margin-bottom:20px; color:var(--gold);">Renewal Sequence</h3>
+                    <div class="email-timeline">
+                        <div class="email-step">
+                            <div class="email-step-time">60 Days Before</div>
+                            <div class="email-step-title">Renewal reminder</div>
+                            <div class="email-step-desc">Recap of what we've done for them this year. Savings total.</div>
+                        </div>
+                        <div class="email-step">
+                            <div class="email-step-time">30 Days Before</div>
+                            <div class="email-step-title">Renewal + referral offer</div>
+                            <div class="email-step-desc">Renew now and refer a neighbor for a free month.</div>
+                        </div>
+                        <div class="email-step">
+                            <div class="email-step-time">Renewal Day</div>
+                            <div class="email-step-title">Personal call</div>
+                            <div class="email-step-desc">Team member calls to renew and discuss tier upgrade.</div>
+                        </div>
+                        <div class="email-step">
+                            <div class="email-step-time">Post-Storm</div>
+                            <div class="email-step-title">Storm check-in</div>
+                            <div class="email-step-desc">Manual trigger. Free storm assessment for all members.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 07. ROOF HEALTH SCORE -->
+    <section class="section">
+        <div class="container">
+            <div class="section-num">07</div>
+            <h2>Roof Health Score</h2>
+            <p class="section-lead">Premier members get a scored, branded report. No other roofing company in the area does this.</p>
+
+            <div class="mockup">
+                <div class="mockup-bar">
+                    <div class="mockup-dot"></div>
+                    <div class="mockup-dot"></div>
+                    <div class="mockup-dot"></div>
+                    <span class="mockup-title">Roof Health Score - Sarah Mitchell</span>
+                </div>
+                <div class="mockup-body">
+                    <div class="two-col" style="align-items:start">
+                        <div>
+                            <div style="margin-bottom:24px">
+                                <div class="score-big">84</div>
+                                <div class="score-label">Good Condition</div>
+                                <p style="font-size:0.78rem; color:rgba(255,255,255,0.35); margin-top:8px;">Monitor noted items at next inspection. Minor maintenance recommended.</p>
+                            </div>
+                            <div class="score-row">
+                                <span class="score-row-label">Surface Materials (30%)</span>
+                                <span class="score-row-val">26/30</span>
+                            </div>
+                            <div class="score-bar-bg"><div class="score-bar-fill" style="width:87%"></div></div>
+                            <div class="score-row">
+                                <span class="score-row-label">Flashing & Penetrations (25%)</span>
+                                <span class="score-row-val">19/25</span>
+                            </div>
+                            <div class="score-bar-bg"><div class="score-bar-fill" style="width:76%"></div></div>
+                            <div class="score-row">
+                                <span class="score-row-label">Drainage System (15%)</span>
+                                <span class="score-row-val">13/15</span>
+                            </div>
+                            <div class="score-bar-bg"><div class="score-bar-fill" style="width:87%"></div></div>
+                            <div class="score-row">
+                                <span class="score-row-label">Structural Integrity (20%)</span>
+                                <span class="score-row-val">18/20</span>
+                            </div>
+                            <div class="score-bar-bg"><div class="score-bar-fill" style="width:90%"></div></div>
+                            <div class="score-row">
+                                <span class="score-row-label">Interior / Attic Health (10%)</span>
+                                <span class="score-row-val">8/10</span>
+                            </div>
+                            <div class="score-bar-bg"><div class="score-bar-fill" style="width:80%"></div></div>
+                        </div>
+                        <div>
+                            <div class="profile-card">
+                                <div class="profile-card-title">Score Ranges</div>
+                                <div style="font-size:0.75rem; line-height:2; color:rgba(255,255,255,0.45);">
+                                    <strong style="color:var(--green)">90-100</strong> Excellent - Routine maintenance only<br>
+                                    <strong style="color:var(--gold)">75-89</strong> Good - Monitor at next inspection<br>
+                                    <strong style="color:var(--amber)">60-74</strong> Fair - Schedule repair consultation<br>
+                                    <strong style="color:var(--red)">40-59</strong> Poor - Urgent repairs needed<br>
+                                    <strong style="color:#EF4444">Below 40</strong> Critical - Immediate action required
+                                </div>
+                            </div>
+                            <div class="profile-card" style="margin-top:12px">
+                                <div class="profile-card-title">Key Findings</div>
+                                <p>Chimney flashing showing early separation. Recommend re-seal before fall. South-facing shingles have moderate granule loss consistent with age. All other systems performing well.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="caption">This becomes a branded PDF report delivered to Premier members after every inspection. Tracked year over year.</p>
+        </div>
+    </section>
+
+    <!-- 08. REVENUE PROJECTIONS -->
+    <section class="section">
+        <div class="container">
+            <div class="section-num">08</div>
+            <h2>Revenue projections</h2>
+            <p class="section-lead">Conservative numbers. Membership revenue plus upsell from repair recommendations.</p>
+
+            <div class="mockup">
+                <div class="mockup-bar">
+                    <div class="mockup-dot"></div>
+                    <div class="mockup-dot"></div>
+                    <div class="mockup-dot"></div>
+                </div>
+                <div class="mockup-body">
+                    <table class="rev-table">
+                        <thead>
+                            <tr>
+                                <th>Scenario</th>
+                                <th>Members</th>
+                                <th>Avg Rate</th>
+                                <th>Membership Rev</th>
+                                <th>Est. Upsell Rev</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Year 1 (Conservative)</td>
+                                <td>75</td>
+                                <td>$220/yr</td>
+                                <td>$16,500</td>
+                                <td>$22,000</td>
+                                <td>$38,500</td>
+                            </tr>
+                            <tr>
+                                <td>Year 1 (Moderate)</td>
+                                <td>150</td>
+                                <td>$240/yr</td>
+                                <td>$36,000</td>
+                                <td>$48,000</td>
+                                <td>$84,000</td>
+                            </tr>
+                            <tr>
+                                <td>Year 2 (Growth)</td>
+                                <td>300</td>
+                                <td>$260/yr</td>
+                                <td>$78,000</td>
+                                <td>$110,000</td>
+                                <td>$188,000</td>
+                            </tr>
+                            <tr>
+                                <td>Year 3 (Scale)</td>
+                                <td>600</td>
+                                <td>$270/yr</td>
+                                <td>$162,000</td>
+                                <td>$240,000</td>
+                                <td>$402,000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <p class="caption">Upsell estimate assumes 30% of members accept at least one repair recommendation per year at $850-$1,200 avg ticket.</p>
+        </div>
+    </section>
+
+    <!-- 09. 90-DAY LAUNCH -->
+    <section class="section">
+        <div class="container">
+            <div class="section-num">09</div>
+            <h2>90-day launch plan</h2>
+            <p class="section-lead">Three phases. Foundation, soft launch, full launch. Goal: 50 members by day 90.</p>
+
+            <div class="launch-grid">
+                <div class="launch-phase">
+                    <div class="launch-phase-label">Days 1-30: Foundation</div>
+                    <h3>Build the machine</h3>
+                    <ul>
+                        <li>Finalize tiers and pricing</li>
+                        <li>Build CRM tags and enrollment pipeline</li>
+                        <li>Create inspection report template</li>
+                        <li>Print enrollment and referral cards</li>
+                        <li>Train field techs on enrollment scripts</li>
+                        <li>Set up payment processing</li>
+                    </ul>
+                </div>
+                <div class="launch-phase">
+                    <div class="launch-phase-label">Days 31-60: Soft Launch</div>
+                    <h3>First 50 members</h3>
+                    <ul>
+                        <li>Present RoofPact at every new install close</li>
+                        <li>Outbound calls to last 12 months of customers</li>
+                        <li>Enroll first 25-50 members</li>
+                        <li>Deliver first 10 inspections</li>
+                        <li>Refine report template from field feedback</li>
+                    </ul>
+                </div>
+                <div class="launch-phase">
+                    <div class="launch-phase-label">Days 61-90: Full Launch</div>
+                    <h3>Open it up</h3>
+                    <ul>
+                        <li>Open to full customer base and new leads</li>
+                        <li>Activate referral reward system</li>
+                        <li>Review conversion rate and fix drop-offs</li>
+                        <li>Run Facebook/Google ad campaign</li>
+                        <li>Target: 50 enrolled members minimum</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="margin-top:40px; padding:28px; border:1px solid rgba(184,151,90,0.15); border-radius:8px; background:rgba(184,151,90,0.03);">
+                <p style="font-size:0.9rem; color:var(--gold); font-weight:600; margin-bottom:4px;">The single most important metric in Year 1</p>
+                <p style="font-size:0.85rem; color:rgba(255,255,255,0.45);">Renewal rate. If members are renewing at 70%+, the program is working. If they're not, the inspection experience or communication cadence is the issue.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <div class="doc-footer">
+        <div class="container">
+            <div class="foot-brand">Roof<span>Pact</span></div>
+            <p>Internal Overview | Not for distribution</p>
+        </div>
+    </div>
+
+</body>
+</html>
