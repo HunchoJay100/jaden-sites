@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BL4INE. — Rollout Questionnaire</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0a0a0a;
+    color: #e8e8e8;
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 48px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    text-align: center;
+    margin-bottom: 48px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #0a0a0a;
+    background: linear-gradient(135deg, #f0c040, #e8a820);
+    padding: 6px 20px;
+    border-radius: 2px;
+    margin-bottom: 28px;
+  }
+
+  .artist-name {
+    font-size: 64px;
+    font-weight: 900;
+    letter-spacing: -2px;
+    line-height: 1;
+    margin-bottom: 8px;
+    background: linear-gradient(180deg, #ffffff 0%, #999999 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .subtitle {
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 32px;
+  }
+
+  .hype-text {
+    max-width: 580px;
+    margin: 0 auto;
+    font-size: 15px;
+    line-height: 1.8;
+    color: #aaa;
+    font-weight: 300;
+  }
+
+  .hype-text strong {
+    color: #f0c040;
+    font-weight: 600;
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    margin-bottom: 36px;
+    page-break-inside: avoid;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .section-number {
+    font-size: 11px;
+    font-weight: 800;
+    color: #0a0a0a;
+    background: linear-gradient(135deg, #f0c040, #e8a820);
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: #fff;
+  }
+
+  /* ── QUESTIONS ── */
+  .question {
+    margin-bottom: 24px;
+    padding-left: 42px;
+  }
+
+  .question-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #ddd;
+    margin-bottom: 4px;
+  }
+
+  .question-hint {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 10px;
+    font-style: italic;
+  }
+
+  .answer-line {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    padding: 10px 0;
+    font-size: 14px;
+    color: #fff;
+    background: transparent;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .answer-line:focus {
+    border-bottom-color: #f0c040;
+  }
+
+  .answer-box {
+    width: 100%;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 4px;
+    padding: 12px 14px;
+    font-size: 14px;
+    color: #fff;
+    background: rgba(255,255,255,0.03);
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    min-height: 80px;
+    resize: vertical;
+    transition: border-color 0.2s;
+  }
+
+  .answer-box:focus {
+    border-color: rgba(240, 192, 64, 0.4);
+  }
+
+  /* ── CHECKBOX GROUP ── */
+  .checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 6px;
+  }
+
+  .checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 4px;
+    padding: 8px 14px;
+    font-size: 13px;
+    color: #bbb;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .checkbox-item:hover {
+    border-color: rgba(240, 192, 64, 0.3);
+    color: #fff;
+  }
+
+  .checkbox-item input[type="checkbox"] {
+    accent-color: #f0c040;
+    width: 14px;
+    height: 14px;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    text-align: center;
+  }
+
+  .footer-text {
+    font-size: 12px;
+    color: #555;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .footer-cta {
+    font-size: 15px;
+    color: #aaa;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  .footer-cta strong {
+    color: #f0c040;
+    font-weight: 600;
+  }
+
+  .brand {
+    margin-top: 32px;
+    font-size: 10px;
+    color: #333;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    body { background: #0a0a0a; }
+    .page { padding: 24px 36px; }
+    .answer-line { border-bottom: 1px solid rgba(255,255,255,0.2); min-height: 28px; }
+    .answer-box { min-height: 70px; border: 1px solid rgba(255,255,255,0.15); }
+    .question { page-break-inside: avoid; }
+    .section { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="tag">Rollout Strategy</div>
+    <div class="artist-name">BL4INE.</div>
+    <div class="subtitle">Brand New Me</div>
+    <p class="hype-text">
+      Your story is the kind that moves people. A real transformation, a real testimony, and a sound that hits right where culture is headed. We're building you a <strong>full strategic rollout plan</strong> to make sure "Brand New Me" reaches every ear it's supposed to. Fill this out, send it back, and we'll handle the rest.
+    </p>
+  </div>
+
+  <!-- SECTION 1: YOU -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">01</div>
+      <div class="section-title">About You</div>
+    </div>
+
+    <div class="question">
+      <div class="question-label">Full name / legal name</div>
+      <input class="answer-line" type="text" />
+    </div>
+
+    <div class="question">
+      <div class="question-label">Where are you based?</div>
+      <input class="answer-line" type="text" />
+    </div>
+
+    <div class="question">
+      <div class="question-label">What's your story in 2-3 sentences?</div>
+      <div class="question-hint">The real version. Where you were, what happened, where you are now.</div>
+      <textarea class="answer-box"></textarea>
+    </div>
+
+    <div class="question">
+      <div class="question-label">Who are your top 3-5 musical influences right now?</div>
+      <div class="question-hint">Artists whose lane or sound feels closest to where you're headed.</div>
+      <textarea class="answer-box"></textarea>
+    </div>
+
+    <div class="question">
+      <div class="question-label">What does your typical listener look like?</div>
+      <div class="question-hint">Age range, what they're into, what they relate to.</div>
+      <textarea class="answer-box"></textarea>
+    </div>
+  </div>
+
+  <!-- SECTION 2: THE TRACK -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">02</div>
+      <div class="section-title">The Track</div>
+    </div>
+
+    <div class="question">
+      <div class="question-label">Describe "Brand New Me" in your own words</div>
+      <div class="question-hint">What's the message? What do you want someone to feel when they hear it?</div>
+      <textarea class="answer-box"></textarea>
+    </div>
+
+    <div class="question">
+      <div class="question-label">What's the vibe / sound?</div>
+      <div class="question-hint">Country? Indie? Southern rock? Think tempo, energy, instrumentation.</div>
+      <textarea class="answer-box"></textarea>
+    </div>
+
+    <div class="question">
+      <div class="question-label">Is the track fully recorded, mixed, and mastered?</div>
+      <input class="answer-line" type="text" />
+    </div>
+
+    <div class="question">
+      <div class="question-label">Do you have cover art? If not, do you have a vision for it?</div>
+      <textarea class="answer-box"></textarea>
+    </div>
+
+    <div class="question">
+      <div class="question-label">Any key lyrics or lines that stand out as quotable?</div>
+      <div class="question-hint">These become caption gold and content hooks.</div>
+      <textarea class="answer-box"></textarea>
+    </div>
+
+    <div class="question">
+      <div class="question-label">Is this leading into a bigger project (EP/album) or a standalone single?</div>
+      <input class="answer-line" type="text" />
+    </div>
+  </div>
+
+  <!-- SECTION 3: PLATFORMS & PRESENCE -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">03</div>
+      <div class="section-title">Platforms & Presence</div>
+    </div>
+
+    <div class="question">
+      <div class="question-label">Social media handles</div>
+      <div class="question-hint">List your handle for each platform you're active on.</div>
+      <textarea class="answer-box" placeholder="Instagram: &#10;TikTok: &#10;YouTube: &#10;Facebook: &#10;X / Twitter: &#10;Snapchat:"></textarea>
+    </div>
+
+    <div class="question">
+      <div class="question-label">Which platforms are you most active on / get the most engagement?</div>
+      <input class="answer-line" type="text" />
+    </div>
+
+    <div class="question">
+      <div class="question-label">Do you have a website?</div>
+      <input class="answer-line" type="text" />
+    </div>
+
+    <div class="question">
+      <div class="question-label">What distributor are you using?</div>
+      <div class="question-hint">DistroKid, TuneCore, CD Baby, UnitedMasters, etc.</div>
+      <input class="answer-line" type="text" />
+    </div>
+
+    <div class="question">
+      <div class="question-label">Are you on Spotify for Artists / Apple Music for Artists?</div>
+      <input class="answer-line" type="text" />
+    </div>
+
+    <div class="question">
+      <div class="question-label">Roughly how many followers / monthly listeners do you have?</div>
+      <div class="question-hint">Doesn't matter if it's small. We're building from where you are.</div>
+      <textarea class="answer-box" placeholder="Instagram: &#10;TikTok: &#10;YouTube: &#10;Spotify: &#10;Apple Music:"></textarea>
+    </div>
+  </div>
+
+  <!-- SECTION 4: THE RELEASE -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">04</div>
+      <div class="section-title">The Release</div>
+    </div>
+
+    <div class="question">
+      <div class="question-label">Target release date</div>
+      <div class="question-hint">If you haven't picked one yet, what's the earliest you could drop?</div>
+      <input class="answer-line" type="text" />
+    </div>
+
+    <div class="question">
+      <div class="question-label">Is a music video planned?</div>
+      <div class="question-hint">Filmed? In progress? Just an idea? Visualizer?</div>
+      <input class="answer-line" type="text" />
+    </div>
+
+    <div class="question">
+      <div class="question-label">Do you have any content already shot?</div>
+      <div class="question-hint">Studio clips, behind the scenes, teaser videos, photos, etc.</div>
+      <textarea class="answer-box"></textarea>
+    </div>
+
+    <div class="question">
+      <div class="question-label">What's your budget situation?</div>
+      <div class="checkbox-group">
+        <label class="checkbox-item"><input type="checkbox" /> Bootstrapping (mostly free tools + hustle)</label>
+        <label class="checkbox-item"><input type="checkbox" /> Some budget for ads / promo ($100-500)</label>
+        <label class="checkbox-item"><input type="checkbox" /> Real budget to invest ($500+)</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: COMMUNITY -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">05</div>
+      <div class="section-title">Community & Network</div>
+    </div>
+
+    <div class="question">
+      <div class="question-label">Do you have a home church or faith community?</div>
+      <div class="question-hint">This is a massive launch pad for Christian music. Name, size, location.</div>
+      <textarea class="answer-box"></textarea>
+    </div>
+
+    <div class="question">
+      <div class="question-label">Do you know any content creators, influencers, or other artists who'd support the drop?</div>
+      <textarea class="answer-box"></textarea>
+    </div>
+
+    <div class="question">
+      <div class="question-label">Are there any local media, podcasts, or blogs you have connections to?</div>
+      <textarea class="answer-box"></textarea>
+    </div>
+
+    <div class="question">
+      <div class="question-label">Have you played any live shows? Any upcoming?</div>
+      <input class="answer-line" type="text" />
+    </div>
+  </div>
+
+  <!-- SECTION 6: VISION -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">06</div>
+      <div class="section-title">The Vision</div>
+    </div>
+
+    <div class="question">
+      <div class="question-label">What does success look like for this release?</div>
+      <div class="question-hint">Be real. 10K streams? Getting on a playlist? A viral moment? Booking a show?</div>
+      <textarea class="answer-box"></textarea>
+    </div>
+
+    <div class="question">
+      <div class="question-label">Where do you see yourself as an artist in 12 months?</div>
+      <textarea class="answer-box"></textarea>
+    </div>
+
+    <div class="question">
+      <div class="question-label">Anything else we should know?</div>
+      <div class="question-hint">Context, concerns, ideas, dreams. Whatever's on your mind.</div>
+      <textarea class="answer-box"></textarea>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-text">What happens next</div>
+    <p class="footer-cta">
+      Send this back filled out and we'll build you a <strong>full custom rollout plan</strong> — content calendar, teaser strategy, pre-save campaign, playlist pitching, social media playbook, and release day game plan. All tailored to your sound, your story, and your goals. <strong>Let's make "Brand New Me" hit.</strong>
+    </p>
+    <div class="brand">Curated by Jaden Flynn</div>
+  </div>
+
+</div>
+</body>
+</html>
