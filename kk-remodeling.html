@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K&K Remodeling — Quality Craftsmanship, Every Time</title>
+    <meta name="description" content="K&K Remodeling — Plumbing, additions, decks, bathrooms, flooring, and general remodeling across Middle Tennessee. Quality craftsmanship you can count on.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Sans:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --maroon: #780000;
+            --red: #C1121F;
+            --cream: #FDF0D5;
+            --navy: #003049;
+            --steel: #669BBC;
+            --dark: #0a1628;
+            --charcoal: #111d30;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            background: var(--dark);
+            color: var(--cream);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── NOISE TEXTURE OVERLAY ── */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.4s, backdrop-filter 0.4s, box-shadow 0.4s;
+        }
+
+        nav.scrolled {
+            background: rgba(10, 22, 40, 0.92);
+            backdrop-filter: blur(16px);
+            box-shadow: 0 2px 24px rgba(0,0,0,0.4);
+        }
+
+        .nav-logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.6rem;
+            letter-spacing: 0.08em;
+            color: var(--cream);
+            text-decoration: none;
+        }
+
+        .nav-logo span {
+            color: var(--red);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--steel);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--cream);
+        }
+
+        .nav-mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .nav-mobile-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--cream);
+            margin: 5px 0;
+            transition: transform 0.3s, opacity 0.3s;
+        }
+
+        .nav-mobile-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .nav-mobile-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .nav-mobile-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* ── HERO ── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 6rem 2rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse 80% 60% at 50% 40%, rgba(102, 155, 188, 0.08) 0%, transparent 70%),
+                radial-gradient(ellipse 60% 50% at 20% 80%, rgba(193, 18, 31, 0.06) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 120px;
+            background: linear-gradient(to bottom, transparent, var(--dark));
+            pointer-events: none;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(193, 18, 31, 0.12);
+            border: 1px solid rgba(193, 18, 31, 0.3);
+            padding: 0.5rem 1.25rem;
+            border-radius: 2px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.8s 0.2s forwards;
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--red);
+            border-radius: 50%;
+        }
+
+        .hero h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(4rem, 12vw, 10rem);
+            line-height: 0.9;
+            letter-spacing: 0.04em;
+            color: var(--cream);
+            margin-bottom: 0.5rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 0.8s 0.4s forwards;
+        }
+
+        .hero h1 .amp {
+            color: var(--red);
+            display: inline-block;
+            transform: scale(1.05);
+        }
+
+        .hero-tagline {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            letter-spacing: 0.18em;
+            color: var(--steel);
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.8s 0.6s forwards;
+        }
+
+        .hero-divider {
+            width: 60px;
+            height: 3px;
+            background: var(--red);
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.7s forwards;
+        }
+
+        .hero-desc {
+            max-width: 520px;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: rgba(253, 240, 213, 0.65);
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.8s 0.8s forwards;
+        }
+
+        /* ── SHIMMER BUTTON ── */
+        .shimmer-btn {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2.5rem;
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--cream);
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            background: transparent;
+            isolation: isolate;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.8s 1.0s forwards;
+        }
+
+        .shimmer-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 0;
+            background: conic-gradient(
+                from var(--shimmer-angle, 0deg),
+                var(--red) 0%,
+                var(--steel) 25%,
+                var(--red) 50%,
+                var(--steel) 75%,
+                var(--red) 100%
+            );
+            animation: shimmerRotate 3s linear infinite;
+            z-index: -2;
+        }
+
+        .shimmer-btn::after {
+            content: '';
+            position: absolute;
+            inset: 2px;
+            background: var(--dark);
+            z-index: -1;
+            transition: background 0.3s;
+        }
+
+        .shimmer-btn:hover::after {
+            background: rgba(10, 22, 40, 0.85);
+            box-shadow: inset 0 0 20px rgba(193, 18, 31, 0.15);
+        }
+
+        .shimmer-btn svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.3s;
+        }
+
+        .shimmer-btn:hover svg {
+            transform: translateX(4px);
+        }
+
+        @keyframes shimmerRotate {
+            to { --shimmer-angle: 360deg; }
+        }
+
+        @property --shimmer-angle {
+            syntax: '<angle>';
+            initial-value: 0deg;
+            inherits: false;
+        }
+
+        /* Shimmer button variant for light sections */
+        .shimmer-btn-light::after {
+            background: var(--cream);
+        }
+
+        .shimmer-btn-light:hover::after {
+            background: #f0e4c8;
+            box-shadow: inset 0 0 20px rgba(193, 18, 31, 0.08);
+        }
+
+        .shimmer-btn-light {
+            color: var(--navy);
+        }
+
+        /* ── SECTION SHARED ── */
+        section {
+            padding: 6rem 2rem;
+        }
+
+        .section-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 1rem;
+        }
+
+        .section-heading {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.4rem, 5vw, 3.6rem);
+            letter-spacing: 0.03em;
+            line-height: 1;
+            color: var(--cream);
+            margin-bottom: 1.5rem;
+        }
+
+        .section-divider {
+            width: 40px;
+            height: 3px;
+            background: var(--red);
+            margin-bottom: 2rem;
+        }
+
+        /* ── ABOUT (CREAM/WHITE) ── */
+        .about {
+            background: var(--cream);
+            position: relative;
+        }
+
+        .about .section-heading {
+            color: var(--navy);
+        }
+
+        .about .section-label {
+            color: var(--red);
+        }
+
+        .about-layout {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 3.5rem;
+            align-items: start;
+        }
+
+        .about-left {}
+
+        .about-text p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #2a3a4e;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Glass highlight rows */
+        .highlight-rows {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-top: 2rem;
+        }
+
+        .highlight-row {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            padding: 1.1rem 1.5rem;
+            background: rgba(0, 48, 73, 0.06);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(0, 48, 73, 0.1);
+            border-radius: 4px;
+            transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+            cursor: default;
+        }
+
+        .highlight-row:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0, 48, 73, 0.12);
+            background: rgba(0, 48, 73, 0.1);
+        }
+
+        .highlight-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.2rem;
+            color: var(--red);
+            line-height: 1;
+            min-width: 70px;
+        }
+
+        .highlight-label {
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            color: var(--navy);
+        }
+
+        /* Company overview card */
+        .company-card {
+            background: rgba(0, 48, 73, 0.06);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 48, 73, 0.1);
+            border-radius: 6px;
+            padding: 2.5rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .company-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--red), var(--maroon));
+        }
+
+        .company-card-label {
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 1rem;
+        }
+
+        .company-card-heading {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 0.04em;
+            color: var(--navy);
+            margin-bottom: 1rem;
+        }
+
+        .company-card-desc {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: #3a4a5e;
+            margin-bottom: 1.75rem;
+        }
+
+        .company-values {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .company-value {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--navy);
+        }
+
+        .company-value::before {
+            content: '';
+            width: 8px;
+            height: 2px;
+            background: var(--red);
+            flex-shrink: 0;
+        }
+
+        .company-card-divider {
+            width: 100%;
+            height: 1px;
+            background: rgba(0, 48, 73, 0.1);
+            margin: 1.75rem 0;
+        }
+
+        .company-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .company-stat {
+            text-align: center;
+        }
+
+        .company-stat-num {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8rem;
+            color: var(--navy);
+            line-height: 1;
+        }
+
+        .company-stat-label {
+            font-size: 0.6rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--steel);
+        }
+
+        /* ── SERVICES ── */
+        .services {
+            background: var(--dark);
+            position: relative;
+        }
+
+        .services::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(102, 155, 188, 0.2), transparent);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            background: rgba(0, 48, 73, 0.1);
+            border: 1px solid rgba(102, 155, 188, 0.08);
+            padding: 2.5rem 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s, box-shadow 0.4s, background 0.4s;
+            backdrop-filter: blur(4px);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(193, 18, 31, 0.12), rgba(120, 0, 0, 0.08));
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .service-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--red);
+            transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(193, 18, 31, 0.4);
+            background: rgba(193, 18, 31, 0.06);
+            box-shadow:
+                0 12px 40px rgba(193, 18, 31, 0.15),
+                0 0 0 1px rgba(193, 18, 31, 0.15),
+                0 0 60px rgba(193, 18, 31, 0.06);
+        }
+
+        .service-card:hover::before {
+            opacity: 1;
+        }
+
+        .service-card:hover::after {
+            width: 100%;
+        }
+
+        .services .section-heading {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+            letter-spacing: -0.01em;
+            text-transform: none;
+        }
+
+        .service-card h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+            color: var(--cream);
+            margin-bottom: 0.75rem;
+            position: relative;
+            transition: color 0.4s;
+        }
+
+        .service-card:hover h3 {
+            color: #fff;
+        }
+
+        .service-card p {
+            font-size: 0.9rem;
+            line-height: 1.7;
+            color: rgba(253, 240, 213, 0.55);
+            position: relative;
+            transition: color 0.4s;
+        }
+
+        .service-card:hover p {
+            color: rgba(253, 240, 213, 0.7);
+        }
+
+        /* ── GALLERY (CREAM/WHITE PREVIEW) ── */
+        .gallery {
+            background: var(--cream);
+            position: relative;
+        }
+
+        .gallery .section-heading {
+            color: var(--navy);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: 240px;
+            gap: 1rem;
+            margin-top: 3rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .gallery-item.wide {
+            grid-column: span 2;
+        }
+
+        .gallery-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            transition: transform 0.6s, filter 0.4s;
+        }
+
+        .gallery-item:nth-child(1) .gallery-placeholder { background: linear-gradient(135deg, #c4b8a0, #a89880); }
+        .gallery-item:nth-child(2) .gallery-placeholder { background: linear-gradient(135deg, #8a9baa, #6a7b8a); }
+        .gallery-item:nth-child(3) .gallery-placeholder { background: linear-gradient(135deg, #b0a090, #907868); }
+        .gallery-item:nth-child(4) .gallery-placeholder { background: linear-gradient(135deg, #90a0aa, #708898); }
+        .gallery-item:nth-child(5) .gallery-placeholder { background: linear-gradient(135deg, #a09888, #887868); }
+        .gallery-item:nth-child(6) .gallery-placeholder { background: linear-gradient(135deg, #9aaa9a, #7a8a7a); }
+
+        .gallery-item:hover .gallery-placeholder {
+            transform: scale(1.05);
+        }
+
+        .gallery-placeholder svg {
+            width: 32px;
+            height: 32px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .gallery-placeholder span {
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 500;
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 48, 73, 0.8), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s;
+            display: flex;
+            align-items: flex-end;
+            padding: 1.5rem;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-overlay span {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: 0.08em;
+            color: #fff;
+        }
+
+        .gallery-cta {
+            text-align: center;
+            margin-top: 2.5rem;
+        }
+
+        /* ── CONTACT ── */
+        .contact {
+            background: var(--dark);
+            position: relative;
+        }
+
+        .contact::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(102, 155, 188, 0.2), transparent);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .contact-text p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: rgba(253, 240, 213, 0.7);
+            margin-bottom: 2.5rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .contact-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .contact-row-icon {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(193, 18, 31, 0.1);
+            border: 1px solid rgba(193, 18, 31, 0.2);
+            flex-shrink: 0;
+        }
+
+        .contact-row-icon svg {
+            width: 18px;
+            height: 18px;
+            color: var(--red);
+        }
+
+        .contact-row-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contact-row-label {
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--steel);
+            margin-bottom: 0.2rem;
+        }
+
+        .contact-row-value {
+            font-size: 1rem;
+            color: var(--cream);
+        }
+
+        .contact-row-value a {
+            color: var(--cream);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .contact-row-value a:hover {
+            color: var(--red);
+        }
+
+        .contact-form-box {
+            background: rgba(0, 48, 73, 0.2);
+            border: 1px solid rgba(102, 155, 188, 0.1);
+            padding: 2.5rem;
+            position: relative;
+        }
+
+        .contact-form-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--maroon), var(--red), var(--maroon));
+        }
+
+        .contact-form-box h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8rem;
+            letter-spacing: 0.06em;
+            color: var(--cream);
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .form-field label {
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--steel);
+        }
+
+        .form-field input,
+        .form-field select,
+        .form-field textarea {
+            background: rgba(0, 48, 73, 0.3);
+            border: 1px solid rgba(102, 155, 188, 0.15);
+            padding: 0.8rem 1rem;
+            color: var(--cream);
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            -webkit-appearance: none;
+        }
+
+        .form-field input::placeholder,
+        .form-field textarea::placeholder {
+            color: rgba(253, 240, 213, 0.3);
+        }
+
+        .form-field input:focus,
+        .form-field select:focus,
+        .form-field textarea:focus {
+            border-color: rgba(193, 18, 31, 0.5);
+            box-shadow: 0 0 0 2px rgba(193, 18, 31, 0.1);
+        }
+
+        .form-field select {
+            cursor: pointer;
+            color: rgba(253, 240, 213, 0.6);
+        }
+
+        .form-field select option {
+            background: var(--dark);
+            color: var(--cream);
+        }
+
+        .form-field textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .shimmer-btn-contact {
+            animation: none;
+            opacity: 1;
+            transform: none;
+            width: 100%;
+            justify-content: center;
+            margin-top: 0.5rem;
+        }
+
+        .form-divider-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1.25rem 0;
+        }
+
+        .form-divider-line {
+            flex: 1;
+            height: 1px;
+            background: rgba(102, 155, 188, 0.15);
+        }
+
+        .form-divider-text {
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(253, 240, 213, 0.35);
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            padding: 2.5rem 2rem;
+            text-align: center;
+            background: var(--charcoal);
+            border-top: 1px solid rgba(102, 155, 188, 0.08);
+        }
+
+        footer p {
+            font-size: 0.8rem;
+            color: rgba(253, 240, 213, 0.35);
+            letter-spacing: 0.04em;
+        }
+
+        footer a {
+            color: rgba(253, 240, 213, 0.5);
+            text-decoration: none;
+        }
+
+        /* ── ANIMATIONS ── */
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s, transform 0.7s;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── MOBILE ── */
+        @media (max-width: 900px) {
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .about-layout {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                grid-auto-rows: 200px;
+            }
+
+            .gallery-item.wide {
+                grid-column: span 1;
+            }
+        }
+
+        @media (max-width: 600px) {
+            nav {
+                padding: 1rem 1.25rem;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0; right: 0;
+                background: rgba(10, 22, 40, 0.97);
+                backdrop-filter: blur(16px);
+                flex-direction: column;
+                padding: 1.5rem 2rem;
+                gap: 1.25rem;
+                border-bottom: 1px solid rgba(102, 155, 188, 0.1);
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .nav-mobile-toggle {
+                display: block;
+            }
+
+            section {
+                padding: 4rem 1.25rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr 1fr;
+                grid-auto-rows: 160px;
+            }
+
+            .highlight-rows {
+                gap: 0.5rem;
+            }
+
+            .highlight-row {
+                padding: 0.9rem 1.1rem;
+                gap: 1rem;
+            }
+
+            .highlight-number {
+                font-size: 1.8rem;
+                min-width: 55px;
+            }
+
+            .crew-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .contact-form-box {
+                padding: 2rem 1.5rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav id="nav">
+        <a href="#" class="nav-logo">K<span>&</span>K</a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <button class="nav-mobile-toggle" id="navToggle" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-badge">Middle Tennessee's Trusted Pros</div>
+        <h1>K<span class="amp">&</span>K<br>REMODELING</h1>
+        <div class="hero-tagline">Quality Craftsmanship, Every Time</div>
+        <div class="hero-divider"></div>
+        <p class="hero-desc">
+            From rough-in plumbing to full-scale remodels, K&K Remodeling delivers
+            the kind of work you build your reputation on. No shortcuts. No excuses. Just results.
+        </p>
+        <a href="tel:+19312608599" class="shimmer-btn">
+            Get In Touch
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" /></svg>
+        </a>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about" id="about">
+        <div class="section-container">
+            <div class="about-layout">
+                <div class="about-left reveal">
+                    <div class="section-label">Who We Are</div>
+                    <h2 class="section-heading">Skilled Hands.<br>Proven Results.</h2>
+                    <div class="section-divider"></div>
+                    <div class="about-text">
+                        <p>
+                            K&K Remodeling is led by Kenny Hammons and a crew of experienced tradesmen
+                            who've been getting it done across Middle Tennessee for years. Whether it's
+                            running new plumbing lines in a custom build or tearing into a full bathroom
+                            gut-and-redo, the standard is always the same: do it right, do it once.
+                        </p>
+                        <p>
+                            We handle 60 to 70 projects a year for some of Middle Tennessee's top builders,
+                            plus additions, decks, flooring, and everything in between. Our reputation is
+                            built on showing up, doing the work, and letting the results speak for themselves.
+                        </p>
+                    </div>
+                    <div class="highlight-rows">
+                        <div class="highlight-row">
+                            <div class="highlight-number">60+</div>
+                            <div class="highlight-label">Projects completed every year</div>
+                        </div>
+                        <div class="highlight-row">
+                            <div class="highlight-number">15+</div>
+                            <div class="highlight-label">Years of trade experience</div>
+                        </div>
+                        <div class="highlight-row">
+                            <div class="highlight-number">6</div>
+                            <div class="highlight-label">Core service specialties</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="reveal" style="animation-delay: 0.15s;">
+                    <div class="company-card">
+                        <div class="company-card-label">Why K&K</div>
+                        <div class="company-card-heading">What Sets Us Apart</div>
+                        <p class="company-card-desc">
+                            K&K Remodeling has earned its reputation across Middle Tennessee by
+                            delivering consistent, high-quality work on every project. Builders trust
+                            us because we show up, meet deadlines, and hold ourselves to a standard
+                            that doesn't bend.
+                        </p>
+                        <div class="company-values">
+                            <div class="company-value">Licensed, insured, and fully equipped</div>
+                            <div class="company-value">Consistent quality across 60+ annual projects</div>
+                            <div class="company-value">Trusted by Middle Tennessee's top builders</div>
+                            <div class="company-value">One standard: do it right, do it once</div>
+                        </div>
+                        <div class="company-card-divider"></div>
+                        <div class="company-stats">
+                            <div class="company-stat">
+                                <div class="company-stat-num">60+</div>
+                                <div class="company-stat-label">Projects/Yr</div>
+                            </div>
+                            <div class="company-stat">
+                                <div class="company-stat-num">15+</div>
+                                <div class="company-stat-label">Years Exp.</div>
+                            </div>
+                            <div class="company-stat">
+                                <div class="company-stat-num">6</div>
+                                <div class="company-stat-label">Specialties</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="services" id="services">
+        <div class="section-container">
+            <div class="reveal">
+                <div class="section-label">What We Do</div>
+                <h2 class="section-heading">Services</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="services-grid">
+                <div class="service-card reveal">
+                    <h3>Plumbing</h3>
+                    <p>Rough-in, finish, repairs, and new construction plumbing. From single-fixture swaps to full-house pipe runs.</p>
+                </div>
+                <div class="service-card reveal">
+                    <h3>Additions</h3>
+                    <p>Room additions, bump-outs, and structural expansions that blend seamlessly with your existing home.</p>
+                </div>
+                <div class="service-card reveal">
+                    <h3>Decks</h3>
+                    <p>Custom deck builds, repairs, and upgrades. Pressure-treated, composite, or whatever fits the project.</p>
+                </div>
+                <div class="service-card reveal">
+                    <h3>Bathrooms</h3>
+                    <p>Full bathroom renovations from demo to tile to final trim. Showers, vanities, tubs, flooring, and fixtures.</p>
+                </div>
+                <div class="service-card reveal">
+                    <h3>Flooring</h3>
+                    <p>Hardwood, LVP, tile, and subfloor work. Clean installs with tight transitions and zero callbacks.</p>
+                </div>
+                <div class="service-card reveal">
+                    <h3>General Remodeling</h3>
+                    <p>Kitchens, living spaces, structural work, and everything else. If it needs building or fixing, we handle it.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALLERY PREVIEW -->
+    <section class="gallery" id="gallery">
+        <div class="section-container">
+            <div class="reveal">
+                <div class="section-label">Our Work</div>
+                <h2 class="section-heading">Project Gallery</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item wide reveal">
+                    <div class="gallery-placeholder">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z" /></svg>
+                        <span>Bathroom Remodel</span>
+                    </div>
+                    <div class="gallery-overlay"><span>Bathroom Remodel</span></div>
+                </div>
+                <div class="gallery-item reveal">
+                    <div class="gallery-placeholder">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z" /></svg>
+                        <span>Custom Deck</span>
+                    </div>
+                    <div class="gallery-overlay"><span>Custom Deck Build</span></div>
+                </div>
+                <div class="gallery-item reveal">
+                    <div class="gallery-placeholder">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z" /></svg>
+                        <span>Plumbing Rough-In</span>
+                    </div>
+                    <div class="gallery-overlay"><span>New Construction Plumbing</span></div>
+                </div>
+                <div class="gallery-item reveal">
+                    <div class="gallery-placeholder">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z" /></svg>
+                        <span>Room Addition</span>
+                    </div>
+                    <div class="gallery-overlay"><span>Room Addition</span></div>
+                </div>
+                <div class="gallery-item reveal">
+                    <div class="gallery-placeholder">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z" /></svg>
+                        <span>Flooring Install</span>
+                    </div>
+                    <div class="gallery-overlay"><span>Hardwood Flooring</span></div>
+                </div>
+                <div class="gallery-item reveal">
+                    <div class="gallery-placeholder">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z" /></svg>
+                        <span>Kitchen Remodel</span>
+                    </div>
+                    <div class="gallery-overlay"><span>Kitchen Remodel</span></div>
+                </div>
+            </div>
+            <div class="gallery-cta reveal">
+                <a href="kk-remodeling-gallery.html" class="shimmer-btn shimmer-btn-light shimmer-btn-contact">
+                    View Full Gallery
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact" id="contact">
+        <div class="section-container">
+            <div class="contact-grid">
+                <div class="contact-text reveal">
+                    <div class="section-label">Get In Touch</div>
+                    <h2 class="section-heading">Ready to Start<br>Your Project?</h2>
+                    <div class="section-divider"></div>
+                    <p>
+                        Whether you need a plumber for new construction or want to talk through
+                        a full remodel, give us a call. No pressure, no runaround. Just straight
+                        talk about what your project needs.
+                    </p>
+                    <div class="contact-info">
+                        <div class="contact-row">
+                            <div class="contact-row-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" /></svg>
+                            </div>
+                            <div class="contact-row-text">
+                                <span class="contact-row-label">Phone</span>
+                                <span class="contact-row-value"><a href="tel:+19312608599">(931) 260-8599</a></span>
+                            </div>
+                        </div>
+                        <div class="contact-row">
+                            <div class="contact-row-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" /></svg>
+                            </div>
+                            <div class="contact-row-text">
+                                <span class="contact-row-label">Email</span>
+                                <span class="contact-row-value"><a href="mailto:info@kkremodeling.com">info@kkremodeling.com</a></span>
+                            </div>
+                        </div>
+                        <div class="contact-row">
+                            <div class="contact-row-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" /></svg>
+                            </div>
+                            <div class="contact-row-text">
+                                <span class="contact-row-label">Service Area</span>
+                                <span class="contact-row-value">Middle Tennessee</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form-box reveal">
+                    <h3>Request a Free Estimate</h3>
+                    <form class="contact-form" action="https://formspree.io/f/PLACEHOLDER" method="POST">
+                        <div class="form-row">
+                            <div class="form-field">
+                                <label for="name">Name</label>
+                                <input type="text" id="name" name="name" placeholder="Your name" required>
+                            </div>
+                            <div class="form-field">
+                                <label for="phone">Phone</label>
+                                <input type="tel" id="phone" name="phone" placeholder="(931) 260-8599" required>
+                            </div>
+                        </div>
+                        <div class="form-field">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="you@email.com">
+                        </div>
+                        <div class="form-field">
+                            <label for="service">Service Needed</label>
+                            <select id="service" name="service">
+                                <option value="" disabled selected>Select a service</option>
+                                <option value="Plumbing">Plumbing</option>
+                                <option value="Additions">Additions</option>
+                                <option value="Decks">Decks</option>
+                                <option value="Bathrooms">Bathrooms</option>
+                                <option value="Flooring">Flooring</option>
+                                <option value="General Remodeling">General Remodeling</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label for="message">Project Details</label>
+                            <textarea id="message" name="message" placeholder="Tell us about your project..."></textarea>
+                        </div>
+                        <button type="submit" class="shimmer-btn shimmer-btn-contact">
+                            Send Request
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+                        </button>
+                    </form>
+                    <div class="form-divider-row">
+                        <span class="form-divider-line"></span>
+                        <span class="form-divider-text">or</span>
+                        <span class="form-divider-line"></span>
+                    </div>
+                    <a href="tel:+19312608599" class="shimmer-btn shimmer-btn-contact">
+                        Call Us Now
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" /></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 K&K Remodeling. Middle Tennessee.</p>
+    </footer>
+
+    <script>
+        // ── NAV SCROLL ──
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 60);
+        });
+
+        // ── MOBILE NAV ──
+        const navToggle = document.getElementById('navToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        navToggle.addEventListener('click', () => {
+            navToggle.classList.toggle('active');
+            navLinks.classList.toggle('open');
+        });
+
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navToggle.classList.remove('active');
+                navLinks.classList.remove('open');
+            });
+        });
+
+        // ── SCROLL REVEAL ──
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, i * 80);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+        reveals.forEach(el => observer.observe(el));
+    </script>
+
+</body>
+</html>
