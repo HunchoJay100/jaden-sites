@@ -1,0 +1,1791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solar Body — Skin Transformation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --gold: #C4956A;
+  --gold-light: #D4AD8C;
+  --gold-glow: #E8C9A8;
+  --gold-pale: #F2E0CE;
+  --cream: #FBF6F0;
+  --cream-deep: #F5EDE3;
+  --warm-white: #FEFCF9;
+  --text-dark: #2C2017;
+  --text-mid: #5C4A3A;
+  --text-soft: #8B7565;
+  --text-muted: #A69585;
+  --accent-rose: #C48B7A;
+  --accent-sage: #8FA68B;
+  --accent-lavender: #9B8FAD;
+  --shadow-warm: rgba(180, 140, 100, 0.12);
+  --shadow-gold: rgba(196, 149, 106, 0.2);
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--text-dark);
+  background: var(--warm-white);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ═══════════════════════════════════════
+   GRAIN OVERLAY
+   ═══════════════════════════════════════ */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ═══════════════════════════════════════
+   SECTION MANAGEMENT
+   ═══════════════════════════════════════ */
+.section {
+  display: none;
+  min-height: 100dvh;
+}
+.section.active {
+  display: block;
+  animation: sectionIn 0.8s var(--ease-out) both;
+}
+@keyframes sectionIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ═══════════════════════════════════════
+   LANDING PAGE
+   ═══════════════════════════════════════ */
+.landing {
+  position: relative;
+  background: var(--warm-white);
+}
+
+/* Top bar */
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(254, 252, 249, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(196, 149, 106, 0.08);
+  transition: transform 0.4s var(--ease-out);
+}
+.top-bar.hidden { transform: translateY(-100%); }
+
+.logo {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--text-dark);
+}
+.logo span {
+  color: var(--gold);
+  font-weight: 300;
+}
+
+.top-bar-cta {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-decoration: none;
+  padding: 8px 16px;
+  border: 1px solid var(--gold-light);
+  border-radius: 100px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  background: none;
+}
+.top-bar-cta:hover {
+  background: var(--gold);
+  color: white;
+}
+
+/* Hero */
+.hero {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 100px 24px 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -30%;
+  right: -20%;
+  width: 70vw;
+  height: 70vw;
+  max-width: 600px;
+  max-height: 600px;
+  background: radial-gradient(circle, var(--gold-pale) 0%, transparent 70%);
+  opacity: 0.5;
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -20%;
+  left: -15%;
+  width: 50vw;
+  height: 50vw;
+  max-width: 450px;
+  max-height: 450px;
+  background: radial-gradient(circle, rgba(143, 166, 139, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-eyebrow {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  animation: fadeUp 0.8s var(--ease-out) 0.2s both;
+}
+.hero-eyebrow::before,
+.hero-eyebrow::after {
+  content: '';
+  width: 24px;
+  height: 1px;
+  background: var(--gold-light);
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(38px, 10vw, 72px);
+  font-weight: 300;
+  line-height: 1.08;
+  color: var(--text-dark);
+  max-width: 680px;
+  margin-bottom: 24px;
+  position: relative;
+  opacity: 0;
+  animation: fadeUp 0.8s var(--ease-out) 0.35s both;
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--gold);
+  font-weight: 400;
+}
+
+.hero-sub {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text-mid);
+  max-width: 440px;
+  margin-bottom: 40px;
+  font-weight: 300;
+  opacity: 0;
+  animation: fadeUp 0.8s var(--ease-out) 0.5s both;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: white;
+  background: var(--gold);
+  border: none;
+  padding: 18px 40px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.4s var(--ease-out);
+  box-shadow: 0 4px 24px var(--shadow-gold), 0 1px 3px rgba(0,0,0,0.06);
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  animation: fadeUp 0.8s var(--ease-out) 0.65s both;
+}
+.hero-cta::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 50%);
+  pointer-events: none;
+}
+.hero-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px var(--shadow-gold), 0 2px 6px rgba(0,0,0,0.08);
+  background: #B8895F;
+}
+.hero-cta:active { transform: translateY(0); }
+
+.hero-cta svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s ease;
+}
+.hero-cta:hover svg { transform: translateX(3px); }
+
+.hero-scroll {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  animation: fadeUp 0.8s var(--ease-out) 1s both;
+}
+.hero-scroll span {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--gold-light), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+  50% { opacity: 1; transform: scaleY(1); }
+}
+
+/* Story section */
+.story {
+  padding: 80px 24px;
+  background: var(--cream);
+  position: relative;
+}
+.story::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-pale), transparent);
+}
+
+.story-inner {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.story-quote {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 6vw, 36px);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.35;
+  color: var(--text-dark);
+  margin-bottom: 24px;
+  position: relative;
+  padding-left: 20px;
+}
+.story-quote::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 4px;
+  bottom: 4px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--gold), var(--gold-light));
+  border-radius: 2px;
+}
+
+.story-body {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--text-mid);
+  font-weight: 300;
+}
+.story-body strong {
+  font-weight: 500;
+  color: var(--text-dark);
+}
+
+/* Stats */
+.stats {
+  padding: 60px 24px;
+  background: var(--warm-white);
+}
+.stats-grid {
+  max-width: 560px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  text-align: center;
+}
+.stat {
+  padding: 24px 12px;
+}
+.stat-number {
+  font-family: var(--font-display);
+  font-size: 36px;
+  font-weight: 300;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.stat-label {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* How it works */
+.how-it-works {
+  padding: 80px 24px;
+  background: var(--cream);
+  position: relative;
+}
+.how-it-works::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-pale), transparent);
+}
+
+.section-label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-align: center;
+  margin-bottom: 12px;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 7vw, 40px);
+  font-weight: 300;
+  text-align: center;
+  color: var(--text-dark);
+  margin-bottom: 48px;
+  line-height: 1.15;
+}
+
+.steps {
+  max-width: 560px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.step {
+  display: flex;
+  gap: 20px;
+  padding: 28px 0;
+  position: relative;
+}
+.step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 18px;
+  top: 60px;
+  bottom: 0;
+  width: 1px;
+  background: var(--gold-pale);
+}
+.step-num {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: white;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+.step-content h3 {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--text-dark);
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+.step-content p {
+  font-size: 14px;
+  color: var(--text-soft);
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+/* Bottom CTA */
+.bottom-cta {
+  padding: 80px 24px;
+  text-align: center;
+  background: var(--warm-white);
+  position: relative;
+}
+.bottom-cta::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70vw;
+  height: 70vw;
+  max-width: 500px;
+  max-height: 500px;
+  background: radial-gradient(circle, var(--gold-pale) 0%, transparent 65%);
+  opacity: 0.4;
+  pointer-events: none;
+}
+.bottom-cta-title {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 8vw, 48px);
+  font-weight: 300;
+  color: var(--text-dark);
+  max-width: 480px;
+  margin: 0 auto 16px;
+  line-height: 1.15;
+  position: relative;
+}
+.bottom-cta-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+.bottom-cta-sub {
+  font-size: 15px;
+  color: var(--text-soft);
+  margin-bottom: 36px;
+  font-weight: 300;
+  position: relative;
+}
+
+/* ═══════════════════════════════════════
+   QUIZ SECTION
+   ═══════════════════════════════════════ */
+.quiz {
+  min-height: 100dvh;
+  background: var(--cream);
+  display: flex;
+  flex-direction: column;
+}
+
+.quiz-header {
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+.quiz-back {
+  background: none;
+  border: none;
+  font-size: 14px;
+  color: var(--text-soft);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-body);
+  padding: 8px 0;
+  transition: color 0.2s;
+}
+.quiz-back:hover { color: var(--text-dark); }
+.quiz-back svg { width: 16px; height: 16px; }
+
+.quiz-progress-text {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.quiz-progress-bar {
+  height: 2px;
+  background: var(--gold-pale);
+  position: relative;
+}
+.quiz-progress-fill {
+  height: 100%;
+  background: var(--gold);
+  border-radius: 2px;
+  transition: width 0.6s var(--ease-out);
+}
+
+.quiz-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px 24px 60px;
+  max-width: 560px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.quiz-question {
+  display: none;
+}
+.quiz-question.active {
+  display: block;
+  animation: questionIn 0.5s var(--ease-out) both;
+}
+@keyframes questionIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.quiz-q-num {
+  font-family: var(--font-display);
+  font-size: 14px;
+  color: var(--gold);
+  font-weight: 400;
+  margin-bottom: 8px;
+  letter-spacing: 0.02em;
+}
+.quiz-q-text {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 6vw, 32px);
+  font-weight: 300;
+  line-height: 1.25;
+  color: var(--text-dark);
+  margin-bottom: 32px;
+}
+
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.quiz-option {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  background: var(--warm-white);
+  border: 1.5px solid transparent;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--text-mid);
+  font-weight: 400;
+  text-align: left;
+  position: relative;
+  box-shadow: 0 1px 4px var(--shadow-warm);
+}
+.quiz-option:hover {
+  border-color: var(--gold-light);
+  box-shadow: 0 2px 12px var(--shadow-warm);
+  transform: translateY(-1px);
+}
+.quiz-option.selected {
+  border-color: var(--gold);
+  background: linear-gradient(135deg, rgba(196, 149, 106, 0.06), rgba(196, 149, 106, 0.02));
+  color: var(--text-dark);
+  font-weight: 500;
+}
+
+.option-check {
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  border-radius: 50%;
+  border: 1.5px solid var(--gold-pale);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+}
+.quiz-option.selected .option-check {
+  background: var(--gold);
+  border-color: var(--gold);
+}
+.option-check svg {
+  width: 12px;
+  height: 12px;
+  stroke: white;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.quiz-option.selected .option-check svg {
+  opacity: 1;
+}
+
+/* Multi-select variant */
+.quiz-option.multi .option-check {
+  border-radius: 6px;
+}
+
+.quiz-multi-hint {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.quiz-next {
+  margin-top: 28px;
+  align-self: flex-end;
+  background: var(--gold);
+  color: white;
+  border: none;
+  padding: 14px 32px;
+  border-radius: 100px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 12px var(--shadow-gold);
+  display: none;
+}
+.quiz-next.visible {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  animation: fadeUp 0.3s var(--ease-out) both;
+}
+.quiz-next:hover {
+  background: #B8895F;
+  transform: translateY(-1px);
+}
+.quiz-next svg { width: 14px; height: 14px; }
+
+/* ═══════════════════════════════════════
+   RESULTS SECTION
+   ═══════════════════════════════════════ */
+.results {
+  min-height: 100dvh;
+  background: var(--warm-white);
+  position: relative;
+  overflow: hidden;
+}
+.results::before {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120vw;
+  height: 60vh;
+  background: radial-gradient(ellipse at center, var(--gold-pale) 0%, transparent 60%);
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.results-inner {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 60px 24px 80px;
+  position: relative;
+}
+
+.results-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.results-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+
+/* Score circle */
+.score-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+.score-ring {
+  width: 160px;
+  height: 160px;
+  position: relative;
+}
+.score-ring svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+.score-ring-bg {
+  fill: none;
+  stroke: var(--gold-pale);
+  stroke-width: 3;
+}
+.score-ring-fill {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 440;
+  stroke-dashoffset: 440;
+  transition: stroke-dashoffset 1.8s var(--ease-out);
+}
+.score-value {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.score-number {
+  font-family: var(--font-display);
+  font-size: 52px;
+  font-weight: 300;
+  color: var(--text-dark);
+  line-height: 1;
+}
+.score-label {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+.results-profile-title {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--text-dark);
+  text-align: center;
+  margin-bottom: 10px;
+}
+.results-profile-desc {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-soft);
+  text-align: center;
+  font-weight: 300;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+/* Quick wins */
+.quick-wins {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+.quick-wins-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--text-dark);
+  margin-bottom: 20px;
+}
+.win-card {
+  display: flex;
+  gap: 14px;
+  padding: 18px;
+  background: var(--cream);
+  border-radius: 14px;
+  margin-bottom: 10px;
+  opacity: 0;
+  animation: fadeUp 0.5s var(--ease-out) both;
+}
+.win-card:nth-child(2) { animation-delay: 0.15s; }
+.win-card:nth-child(3) { animation-delay: 0.3s; }
+.win-card:nth-child(4) { animation-delay: 0.45s; }
+
+.win-icon {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--gold-light), var(--gold));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+.win-text h4 {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 3px;
+}
+.win-text p {
+  font-size: 13px;
+  color: var(--text-soft);
+  line-height: 1.5;
+  font-weight: 300;
+}
+
+/* Email capture */
+.email-capture {
+  background: var(--cream);
+  border-radius: 20px;
+  padding: 36px 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.email-capture::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold-light), var(--gold), var(--gold-light));
+}
+
+.email-capture-title {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+  line-height: 1.25;
+}
+.email-capture-sub {
+  font-size: 14px;
+  color: var(--text-soft);
+  margin-bottom: 24px;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.email-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.email-input {
+  font-family: var(--font-body);
+  font-size: 15px;
+  padding: 16px 20px;
+  border: 1.5px solid var(--gold-pale);
+  border-radius: 12px;
+  background: var(--warm-white);
+  color: var(--text-dark);
+  outline: none;
+  transition: border-color 0.3s ease;
+  width: 100%;
+}
+.email-input::placeholder { color: var(--text-muted); }
+.email-input:focus { border-color: var(--gold); }
+
+.email-submit {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: white;
+  background: var(--gold);
+  border: none;
+  padding: 16px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 12px var(--shadow-gold);
+}
+.email-submit:hover {
+  background: #B8895F;
+  transform: translateY(-1px);
+}
+
+.email-fine-print {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 12px;
+  line-height: 1.5;
+}
+
+/* Thank you state */
+.thank-you {
+  display: none;
+  text-align: center;
+  padding: 20px 0;
+}
+.thank-you.active {
+  display: block;
+  animation: fadeUp 0.6s var(--ease-out) both;
+}
+.thank-you-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold-light), var(--gold));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  font-size: 28px;
+}
+.thank-you h3 {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--text-dark);
+  margin-bottom: 10px;
+}
+.thank-you p {
+  font-size: 14px;
+  color: var(--text-soft);
+  line-height: 1.7;
+  font-weight: 300;
+  max-width: 380px;
+  margin: 0 auto;
+}
+.thank-you-steps {
+  margin-top: 28px;
+  text-align: left;
+}
+.thank-you-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+}
+.thank-you-step-num {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  border-radius: 50%;
+  background: var(--cream-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 14px;
+  color: var(--gold);
+  font-weight: 500;
+}
+.thank-you-step p {
+  font-size: 14px;
+  color: var(--text-mid);
+  margin: 0;
+  line-height: 1.5;
+}
+.thank-you-step strong {
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+/* ═══════════════════════════════════════
+   FOOTER / DISCLOSURE
+   ═══════════════════════════════════════ */
+.footer {
+  padding: 32px 24px;
+  text-align: center;
+  background: var(--cream);
+  border-top: 1px solid rgba(196, 149, 106, 0.1);
+}
+.footer p {
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.7;
+  max-width: 480px;
+  margin: 0 auto;
+}
+.footer .brand-note {
+  margin-top: 12px;
+  font-style: italic;
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+/* ═══════════════════════════════════════
+   ANIMATIONS
+   ═══════════════════════════════════════ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══════════════════════════════════════
+   DESKTOP REFINEMENTS
+   ═══════════════════════════════════════ */
+@media (min-width: 640px) {
+  .top-bar { padding: 18px 40px; }
+  .hero { padding: 120px 40px 80px; }
+  .story, .how-it-works, .bottom-cta { padding: 100px 40px; }
+  .stats { padding: 80px 40px; }
+  .quiz-body { padding: 60px 40px 80px; }
+  .results-inner { padding: 80px 40px 100px; }
+
+  .email-form {
+    flex-direction: row;
+  }
+  .email-input { flex: 1; }
+  .email-submit { white-space: nowrap; }
+
+  .quiz-option { padding: 18px 24px; }
+
+  .stat-number { font-size: 44px; }
+}
+
+@media (min-width: 960px) {
+  .hero { padding: 140px 60px 100px; }
+  .stats-grid { grid-template-columns: repeat(3, 1fr); gap: 40px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     LANDING PAGE
+     ═══════════════════════════════════════ -->
+<div id="landing" class="section landing active">
+
+  <header class="top-bar">
+    <div class="logo">solar <span>body</span></div>
+    <button class="top-bar-cta" onclick="startQuiz()">Take the Quiz</button>
+  </header>
+
+  <section class="hero">
+    <div class="hero-eyebrow">Licensed Esthetician</div>
+    <h1 class="hero-title">I fixed my skin.<br><em>Let me show you how.</em></h1>
+    <p class="hero-sub">A licensed esthetician's holistic protocol that transformed my skin from the inside out. No $500 facials. No guessing. Just results.</p>
+    <button class="hero-cta" onclick="startQuiz()">
+      Discover Your Skin Score
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </button>
+    <div class="hero-scroll">
+      <span>Her story</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <section class="story">
+    <div class="story-inner">
+      <blockquote class="story-quote">I spent years studying skin professionally, then I turned the protocol on myself and everything changed.</blockquote>
+      <p class="story-body">
+        With clinical training in microneedling, laser resurfacing, chemical peels, and dermaplaning, she had every tool at her disposal. But it wasn't until she combined that knowledge with a <strong>holistic, whole-body approach</strong> that real transformation happened.<br><br>
+        Now she teaches women the exact framework she used. No facility required. No $500 monthly facials. Just <strong>real results from someone who's been where you are</strong>.
+      </p>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="stats-grid">
+      <div class="stat">
+        <div class="stat-number">6+</div>
+        <div class="stat-label">Years Clinical Training</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">100%</div>
+        <div class="stat-label">Holistic Approach</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">Real</div>
+        <div class="stat-label">Before &amp; After Proof</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="how-it-works">
+    <div class="section-label">How It Works</div>
+    <h2 class="section-title">Your transformation<br>starts with a question</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Take the skin assessment</h3>
+          <p>2 minutes, 8 questions. Get your personalized skin score and profile instantly.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Get your free mini-protocol</h3>
+          <p>A personalized AM/PM routine, product recommendations, and the one thing to stop doing immediately.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Start seeing results</h3>
+          <p>Follow your protocol, see changes in weeks. Go deeper with a consultation or the full 6-week course.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bottom-cta">
+    <h2 class="bottom-cta-title">Ready to stop <em>guessing?</em></h2>
+    <p class="bottom-cta-sub">Takes 2 minutes. Completely free.</p>
+    <button class="hero-cta" onclick="startQuiz()">
+      Take the Skin Assessment
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </button>
+  </section>
+
+  <footer class="footer">
+    <p>This site contains educational content, not medical advice. Some links may be affiliate links. Full disclosure provided with all recommendations.</p>
+    <p class="brand-note">"Solar Body" is a working title. Brand name TBD.</p>
+  </footer>
+</div>
+
+<!-- ═══════════════════════════════════════
+     QUIZ
+     ═══════════════════════════════════════ -->
+<div id="quiz" class="section quiz">
+
+  <div class="quiz-header">
+    <button class="quiz-back" onclick="quizBack()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back
+    </button>
+    <span class="quiz-progress-text" id="quizProgressText">1 of 8</span>
+  </div>
+  <div class="quiz-progress-bar">
+    <div class="quiz-progress-fill" id="quizProgressFill" style="width: 12.5%"></div>
+  </div>
+
+  <div class="quiz-body">
+
+    <!-- Q1 -->
+    <div class="quiz-question active" data-q="0">
+      <div class="quiz-q-num">Question 01</div>
+      <h2 class="quiz-q-text">What's your number one skin concern right now?</h2>
+      <div class="quiz-options" data-single>
+        <button class="quiz-option" data-value="acne" onclick="selectOption(this)">
+          <span class="option-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          Acne &amp; breakouts
+        </button>
+        <button class="quiz-option" data-value="aging" onclick="selectOption(this)">
+          <span class="option-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          Fine lines &amp; aging
+        </button>
+        <button class="quiz-option" data-value="texture" onclick="selectOption(this)">
+          <span class="option-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          Uneven texture or tone
+        </button>
+        <button class="quiz-option" data-value="pigmentation" onclick="selectOption(this)">
+          <span class="option-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          Hyperpigmentation &amp; dark spots
+        </button>
+        <button class="quiz-option" data-value="sensitivity" onclick="selectOption(this)">
+          <span class="option-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          Redness &amp; sensitivity
+        </button>
+        <button class="quiz-option" data-value="dullness" onclick="selectOption(this)">
+          <span class="option-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          General dullness &mdash; I just want to glow
+        </button>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="quiz-question" data-q="1">
+      <div class="quiz-q-num">Question 02</div>
+      <h2 class="quiz-q-text">How would you describe your skin type?</h2>
+      <div class="quiz-options" data-single>
+        <button class="quiz-option" data-value="oily" onclick="selectOption(this)">
+          <span class="option-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          Oily
+        </button>
+        <button class="quiz-option" data-value="dry" onclick="selectOption(this)">
+          <span class="option-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          Dry
+        </button>
+        <button class="quiz-option" data-value="combination" onclick="selectOption(this)">
+          <span class="option-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          Combination
+        </button>
+        <button class="quiz-option" data-value="sensitive" onclick="selectOption(this)">
+          <span class="option-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          Sensitive
+        </button>
+        <button class="quiz-option" data-value="unknown" onclick="selectOption(this)">
+          <span class="option-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          I honestly have no idea
+        </button>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="quiz-question" data-q="2">
+      <div class="quiz-q-num">Question 03</div>
+      <h2 class="quiz-q-text">What does your current skincare routine look like?</h2>
+      <div class="quiz-options" data-single>
+        <button class="quiz-option" data-value="none" onclick="selectOption(this)">
+          <span class="option-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          I don't really have one
+        </button>
+        <button class="quiz-option" data-value="basic" onclick="selectOption(this)">
+          <span class="option-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          Cleanser + moisturizer, that's about it
+        </button>
+        <button class="quiz-option" data-value="multi" onclick="selectOption(this)">
+          <span class="option-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          I have a multi-step routine
+        </button>
+        <button class="quiz-option" data-value="everything" onclick="selectOption(this)">
+          <span class="option-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          I've tried everything and nothing works
+        </button>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="quiz-question" data-q="3">
+      <div class="quiz-q-num">Question 04</div>
+      <h2 class="quiz-q-text">How much are you currently spending on skincare each month?</h2>
+      <div class="quiz-options" data-single>
+        <button class="quiz-option" data-value="under25" onclick="selectOption(this)">
+          <span class="option-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          Under $25
+        </button>
+        <button class="quiz-option" data-value="25-75" onclick="selectOption(this)">
+          <span class="option-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          $25 - $75
+        </button>
+        <button class="quiz-option" data-value="75-150" onclick="selectOption(this)">
+          <span class="option-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          $75 - $150
+        </button>
+        <button class="quiz-option" data-value="150+" onclick="selectOption(this)">
+          <span class="option-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          $150+
+        </button>
+      </div>
+    </div>
+
+    <!-- Q5 (multi-select) -->
+    <div class="quiz-question" data-q="4" data-multi>
+      <div class="quiz-q-num">Question 05</div>
+      <h2 class="quiz-q-text">Have you ever tried professional treatments?</h2>
+      <p class="quiz-multi-hint">Select all that apply</p>
+      <div class="quiz-options">
+        <button class="quiz-option multi" data-value="peels" onclick="selectMulti(this)">
+          <span class="option-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          Chemical peels
+        </button>
+        <button class="quiz-option multi" data-value="microneedling" onclick="selectMulti(this)">
+          <span class="option-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          Microneedling
+        </button>
+        <button class="quiz-option multi" data-value="laser" onclick="selectMulti(this)">
+          <span class="option-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          Laser treatments
+        </button>
+        <button class="quiz-option multi" data-value="facials" onclick="selectMulti(this)">
+          <span class="option-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          Facials
+        </button>
+        <button class="quiz-option multi" data-value="none" onclick="selectMulti(this)">
+          <span class="option-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          None of the above
+        </button>
+      </div>
+      <button class="quiz-next" id="multiNext" onclick="nextQuestion()">
+        Continue
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+
+    <!-- Q6 -->
+    <div class="quiz-question" data-q="5">
+      <div class="quiz-q-num">Question 06</div>
+      <h2 class="quiz-q-text">How does your skin affect your confidence?</h2>
+      <div class="quiz-options" data-single>
+        <button class="quiz-option" data-value="biggest" onclick="selectOption(this)">
+          <span class="option-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          It's my biggest insecurity
+        </button>
+        <button class="quiz-option" data-value="bothers" onclick="selectOption(this)">
+          <span class="option-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          It bothers me but I deal with it
+        </button>
+        <button class="quiz-option" data-value="mostly-ok" onclick="selectOption(this)">
+          <span class="option-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          I'm mostly okay but want to improve
+        </button>
+        <button class="quiz-option" data-value="optimize" onclick="selectOption(this)">
+          <span class="option-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          I just want to optimize what I have
+        </button>
+      </div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="quiz-question" data-q="6">
+      <div class="quiz-q-num">Question 07</div>
+      <h2 class="quiz-q-text">What's your approach to health overall?</h2>
+      <div class="quiz-options" data-single>
+        <button class="quiz-option" data-value="holistic" onclick="selectOption(this)">
+          <span class="option-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          I prefer natural and holistic approaches
+        </button>
+        <button class="quiz-option" data-value="open" onclick="selectOption(this)">
+          <span class="option-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          I'm open to anything that works
+        </button>
+        <button class="quiz-option" data-value="clinical" onclick="selectOption(this)">
+          <span class="option-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          I lean toward clinical or medical solutions
+        </button>
+      </div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="quiz-question" data-q="7">
+      <div class="quiz-q-num">Question 08</div>
+      <h2 class="quiz-q-text">Last one. What's your age range?</h2>
+      <div class="quiz-options" data-single>
+        <button class="quiz-option" data-value="18-25" onclick="selectOption(this)">
+          <span class="option-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          18 - 25
+        </button>
+        <button class="quiz-option" data-value="26-35" onclick="selectOption(this)">
+          <span class="option-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          26 - 35
+        </button>
+        <button class="quiz-option" data-value="36-45" onclick="selectOption(this)">
+          <span class="option-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          36 - 45
+        </button>
+        <button class="quiz-option" data-value="46+" onclick="selectOption(this)">
+          <span class="option-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          46+
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     RESULTS PAGE
+     ═══════════════════════════════════════ -->
+<div id="results" class="section results">
+  <div class="results-inner">
+
+    <div class="results-header">
+      <div class="results-eyebrow">Your Results</div>
+
+      <div class="score-container">
+        <div class="score-ring">
+          <svg viewBox="0 0 160 160">
+            <circle class="score-ring-bg" cx="80" cy="80" r="70"/>
+            <circle class="score-ring-fill" id="scoreRing" cx="80" cy="80" r="70"/>
+          </svg>
+          <div class="score-value">
+            <div class="score-number" id="scoreNumber">0</div>
+            <div class="score-label">Skin Score</div>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="results-profile-title" id="profileTitle">Your Skin Profile</h2>
+      <p class="results-profile-desc" id="profileDesc">Loading your personalized analysis...</p>
+    </div>
+
+    <div class="quick-wins" id="quickWins">
+      <h3 class="quick-wins-title">Your Top 3 Quick Wins</h3>
+      <!-- Filled by JS -->
+    </div>
+
+    <div class="email-capture" id="emailCapture">
+      <h3 class="email-capture-title">Get your free mini-protocol</h3>
+      <p class="email-capture-sub">A personalized AM/PM routine, product recommendations, and what to stop doing immediately. Delivered straight to your inbox.</p>
+      <div class="email-form">
+        <input type="email" class="email-input" id="emailInput" placeholder="Your best email" autocomplete="email">
+        <button class="email-submit" onclick="submitEmail()">Send My Protocol</button>
+      </div>
+      <p class="email-fine-print">No spam, ever. Unsubscribe anytime. Some product links may be affiliate links.</p>
+    </div>
+
+    <div class="thank-you" id="thankYou">
+      <div class="thank-you-icon">&#10024;</div>
+      <h3>Check your inbox</h3>
+      <p>Your personalized mini-protocol is on its way. Here's what happens next:</p>
+      <div class="thank-you-steps">
+        <div class="thank-you-step">
+          <span class="thank-you-step-num">1</span>
+          <p><strong>Open your protocol</strong> and start your new AM/PM routine tonight</p>
+        </div>
+        <div class="thank-you-step">
+          <span class="thank-you-step-num">2</span>
+          <p><strong>Watch for my emails</strong> over the next 10 days with deeper skin insights</p>
+        </div>
+        <div class="thank-you-step">
+          <span class="thank-you-step-num">3</span>
+          <p><strong>Book a consultation</strong> if you want a fully custom protocol built just for you</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="footer">
+    <p>This is educational content, not medical advice. Some links in our recommendations are affiliate links, which means we may earn a small commission if you purchase through them at no extra cost to you. We only recommend products we personally use and trust.</p>
+    <p class="brand-note">"Solar Body" is a working title. Brand name TBD.</p>
+  </footer>
+</div>
+
+
+<script>
+// ═══════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════
+let currentQuestion = 0;
+const totalQuestions = 8;
+const answers = {};
+
+// ═══════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function startQuiz() {
+  currentQuestion = 0;
+  Object.keys(answers).forEach(k => delete answers[k]);
+  document.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));
+  showQuestion(0);
+  showSection('quiz');
+}
+
+function quizBack() {
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    showQuestion(currentQuestion);
+  } else {
+    showSection('landing');
+  }
+}
+
+// ═══════════════════════════════════════
+// QUIZ LOGIC
+// ═══════════════════════════════════════
+function showQuestion(idx) {
+  document.querySelectorAll('.quiz-question').forEach(q => q.classList.remove('active'));
+  const target = document.querySelector(`.quiz-question[data-q="${idx}"]`);
+  if (target) {
+    target.classList.remove('active');
+    void target.offsetWidth;
+    target.classList.add('active');
+  }
+  updateProgress(idx);
+}
+
+function updateProgress(idx) {
+  const pct = ((idx + 1) / totalQuestions) * 100;
+  document.getElementById('quizProgressFill').style.width = pct + '%';
+  document.getElementById('quizProgressText').textContent = `${idx + 1} of ${totalQuestions}`;
+}
+
+function selectOption(btn) {
+  const parent = btn.closest('.quiz-options');
+  parent.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));
+  btn.classList.add('selected');
+  answers[currentQuestion] = btn.dataset.value;
+
+  // Auto-advance after short delay for single-select
+  setTimeout(() => nextQuestion(), 350);
+}
+
+function selectMulti(btn) {
+  // If "None" is clicked, deselect everything else
+  if (btn.dataset.value === 'none') {
+    btn.closest('.quiz-options').querySelectorAll('.quiz-option').forEach(o => {
+      if (o !== btn) o.classList.remove('selected');
+    });
+    btn.classList.toggle('selected');
+  } else {
+    // Deselect "None" if selecting something else
+    const noneBtn = btn.closest('.quiz-options').querySelector('[data-value="none"]');
+    if (noneBtn) noneBtn.classList.remove('selected');
+    btn.classList.toggle('selected');
+  }
+
+  // Collect multi answers
+  const selected = btn.closest('.quiz-options').querySelectorAll('.quiz-option.selected');
+  answers[currentQuestion] = Array.from(selected).map(o => o.dataset.value);
+
+  // Show/hide the next button
+  const nextBtn = document.getElementById('multiNext');
+  if (selected.length > 0) {
+    nextBtn.classList.add('visible');
+  } else {
+    nextBtn.classList.remove('visible');
+  }
+}
+
+function nextQuestion() {
+  if (currentQuestion < totalQuestions - 1) {
+    currentQuestion++;
+    showQuestion(currentQuestion);
+  } else {
+    showResults();
+  }
+}
+
+// ═══════════════════════════════════════
+// RESULTS / SCORING
+// ═══════════════════════════════════════
+function calculateScore() {
+  let score = 50; // baseline
+
+  // Routine (Q3, idx 2)
+  const routine = answers[2];
+  if (routine === 'none') score -= 15;
+  else if (routine === 'basic') score -= 5;
+  else if (routine === 'multi') score += 8;
+  else if (routine === 'everything') score -= 8;
+
+  // Spending (Q4, idx 3)
+  const spend = answers[3];
+  if (spend === 'under25') score -= 8;
+  else if (spend === '25-75') score += 2;
+  else if (spend === '75-150') score += 6;
+  else if (spend === '150+') score += 10;
+
+  // Treatments (Q5, idx 4)
+  const treatments = answers[4] || [];
+  if (Array.isArray(treatments)) {
+    if (treatments.includes('none')) score -= 5;
+    else score += Math.min(treatments.length * 4, 12);
+  }
+
+  // Confidence (Q6, idx 5)
+  const confidence = answers[5];
+  if (confidence === 'biggest') score -= 10;
+  else if (confidence === 'bothers') score -= 4;
+  else if (confidence === 'mostly-ok') score += 4;
+  else if (confidence === 'optimize') score += 10;
+
+  // Health approach (Q7, idx 6)
+  const approach = answers[6];
+  if (approach === 'holistic') score += 6;
+  else if (approach === 'open') score += 4;
+
+  return Math.max(20, Math.min(92, score));
+}
+
+function getProfile() {
+  const concern = answers[0] || 'dullness';
+  const skinType = answers[1] || 'combination';
+  const routine = answers[2] || 'basic';
+  const approach = answers[6] || 'open';
+
+  const concernLabels = {
+    acne: 'acne-prone',
+    aging: 'aging-focused',
+    texture: 'texture-concerned',
+    pigmentation: 'pigmentation-prone',
+    sensitivity: 'sensitivity-reactive',
+    dullness: 'glow-seeking'
+  };
+
+  const typeLabels = {
+    oily: 'Oily',
+    dry: 'Dry',
+    combination: 'Combination',
+    sensitive: 'Sensitive',
+    unknown: 'Unidentified'
+  };
+
+  const routineLabels = {
+    none: 'no established routine',
+    basic: 'a minimal routine foundation',
+    multi: 'an active multi-step routine',
+    everything: 'product fatigue from over-experimentation'
+  };
+
+  const approachLabels = {
+    holistic: 'holistic-leaning',
+    open: 'approach-flexible',
+    clinical: 'clinically-minded'
+  };
+
+  const title = `${typeLabels[skinType]}, ${concernLabels[concern]}`;
+  const desc = `You have ${typeLabels[skinType].toLowerCase()} skin with ${concern === 'acne' ? 'an acne' : concern === 'aging' ? 'an aging' : 'a ' + concern} tendency. You're currently working with ${routineLabels[routine]}, and you're ${approachLabels[approach]} in your wellness philosophy. There's real potential here for transformation.`;
+
+  return { title, desc };
+}
+
+function getQuickWins() {
+  const concern = answers[0] || 'dullness';
+  const routine = answers[2] || 'basic';
+  const skinType = answers[1] || 'combination';
+
+  const wins = [];
+
+  // Win based on concern
+  const concernWins = {
+    acne: { icon: '&#9728;', title: 'Stop over-cleansing', text: 'Stripping your skin triggers more oil production. Switch to a gentle, pH-balanced cleanser once daily.' },
+    aging: { icon: '&#10024;', title: 'Start retinol low and slow', text: 'Begin with 0.25% retinol twice a week. Your skin needs time to build tolerance without irritation.' },
+    texture: { icon: '&#9883;', title: 'Add a gentle exfoliant', text: 'A BHA (salicylic acid) 2-3x per week can dramatically smooth texture without irritation.' },
+    pigmentation: { icon: '&#9788;', title: 'SPF is non-negotiable', text: 'UV exposure darkens existing spots. A mineral SPF 30+ daily is the single most impactful change you can make.' },
+    sensitivity: { icon: '&#10084;', title: 'Simplify immediately', text: 'Cut your routine to 3 products max. Cleanser, moisturizer, SPF. Let your barrier heal before adding anything.' },
+    dullness: { icon: '&#10035;', title: 'Hydration from inside out', text: 'Dull skin is usually dehydrated skin. Increase water intake and add a hyaluronic acid serum before moisturizer.' }
+  };
+  wins.push(concernWins[concern]);
+
+  // Win based on routine
+  if (routine === 'none' || routine === 'basic') {
+    wins.push({ icon: '&#9734;', title: 'Build a 3-step foundation', text: 'Cleanser, moisturizer, SPF. Every morning, every night (skip SPF at night). This alone will create visible change in 2 weeks.' });
+  } else if (routine === 'everything') {
+    wins.push({ icon: '&#9874;', title: 'Do a product reset', text: 'Too many products cause more problems than they solve. Strip back to basics for 2 weeks, then reintroduce one product at a time.' });
+  } else {
+    wins.push({ icon: '&#9989;', title: 'Check your product order', text: 'Apply thinnest to thickest. Serums before creams, water-based before oil-based. Wrong order means wasted product.' });
+  }
+
+  // Universal win
+  wins.push({ icon: '&#9752;', title: 'Look beyond your face', text: 'Your skin is a mirror of your gut, stress, and sleep. The protocol that changed everything started from the inside, not a product.' });
+
+  return wins;
+}
+
+function showResults() {
+  showSection('results');
+
+  const score = calculateScore();
+  const profile = getProfile();
+  const wins = getQuickWins();
+
+  // Animate score
+  document.getElementById('profileTitle').textContent = profile.title;
+  document.getElementById('profileDesc').textContent = profile.desc;
+
+  // Score ring animation
+  const circumference = 2 * Math.PI * 70; // r=70
+  const offset = circumference - (score / 100) * circumference;
+  setTimeout(() => {
+    document.getElementById('scoreRing').style.strokeDashoffset = offset;
+  }, 200);
+
+  // Count up score number
+  let current = 0;
+  const increment = score / 40;
+  const counter = setInterval(() => {
+    current += increment;
+    if (current >= score) {
+      current = score;
+      clearInterval(counter);
+    }
+    document.getElementById('scoreNumber').textContent = Math.round(current);
+  }, 30);
+
+  // Quick wins
+  const winsContainer = document.getElementById('quickWins');
+  const winsTitle = winsContainer.querySelector('.quick-wins-title');
+  winsContainer.innerHTML = '';
+  winsContainer.appendChild(winsTitle);
+
+  wins.forEach(win => {
+    const card = document.createElement('div');
+    card.className = 'win-card';
+    card.innerHTML = `
+      <div class="win-icon">${win.icon}</div>
+      <div class="win-text">
+        <h4>${win.title}</h4>
+        <p>${win.text}</p>
+      </div>
+    `;
+    winsContainer.appendChild(card);
+  });
+}
+
+function submitEmail() {
+  const email = document.getElementById('emailInput').value;
+  if (!email || !email.includes('@')) {
+    document.getElementById('emailInput').style.borderColor = '#C48B7A';
+    document.getElementById('emailInput').focus();
+    return;
+  }
+
+  // In production: POST to ConvertKit API with quiz answer tags
+  console.log('Email captured:', email, 'Quiz answers:', answers);
+
+  // Show thank you
+  document.getElementById('emailCapture').style.display = 'none';
+  document.getElementById('thankYou').classList.add('active');
+}
+
+// ═══════════════════════════════════════
+// SCROLL BEHAVIOR (top bar)
+// ═══════════════════════════════════════
+let lastScroll = 0;
+window.addEventListener('scroll', () => {
+  const topBar = document.querySelector('.top-bar');
+  if (!topBar) return;
+  const st = window.scrollY;
+  if (st > 80 && st > lastScroll) {
+    topBar.classList.add('hidden');
+  } else {
+    topBar.classList.remove('hidden');
+  }
+  lastScroll = st;
+});
+</script>
+
+</body>
+</html>
