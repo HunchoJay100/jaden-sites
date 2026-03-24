@@ -1,0 +1,2189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BidKit | Flynn Development Estimating</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+<style>
+:root {
+  --primary: #0a0a0a;
+  --primary-light: #141414;
+  --gold: #C5A55A;
+  --gold-light: #D4BA78;
+  --gold-dark: #A8893D;
+  --glass: rgba(197,165,90,0.04);
+  --glass-border: rgba(197,165,90,0.12);
+  --glass-hover: rgba(197,165,90,0.08);
+  --text: #f1f1f1;
+  --text-muted: #888;
+  --gradient-gold: linear-gradient(135deg, #C5A55A, #D4BA78, #A8893D);
+  --gradient-gold-subtle: linear-gradient(135deg, #C5A55A, #D4BA78);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--primary);
+  color: var(--text);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+.bg-texture {
+  position: fixed; top:0; left:0; width:100%; height:100%;
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(197,165,90,0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(197,165,90,0.02) 0%, transparent 50%),
+    linear-gradient(rgba(255,255,255,0.01) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.01) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 80px 80px, 80px 80px;
+  z-index: 0; pointer-events: none;
+}
+.bg-glow {
+  position: fixed; top: -300px; right: -200px;
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(197,165,90,0.06) 0%, transparent 70%);
+  border-radius: 50%; z-index: 0; pointer-events: none;
+  animation: pulse 10s ease-in-out infinite;
+}
+.bg-glow-2 {
+  position: fixed; bottom: -300px; left: -200px;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(197,165,90,0.04) 0%, transparent 70%);
+  border-radius: 50%; z-index: 0; pointer-events: none;
+  animation: pulse 12s ease-in-out infinite reverse;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.15); opacity: 1; }
+}
+.gold-line { height: 3px; background: var(--gradient-gold); border: none; }
+
+/* HEADER */
+.app-header {
+  position: relative; z-index: 10;
+  padding: 20px 40px;
+  border-bottom: 1px solid var(--glass-border);
+  display: flex; justify-content: space-between; align-items: center;
+  backdrop-filter: blur(20px);
+  background: rgba(10,10,10,0.8);
+}
+.brand { display: flex; align-items: center; gap: 16px; }
+.brand img { height: 50px; border-radius: 6px; }
+.brand-text h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.2rem; font-weight: 700;
+  background: var(--gradient-gold);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  letter-spacing: 2px; text-transform: uppercase;
+}
+.brand-text .tagline {
+  font-size: 0.6rem; font-weight: 600;
+  color: var(--gold); letter-spacing: 3px;
+  text-transform: uppercase; margin-top: 1px;
+}
+.header-actions { display: flex; gap: 10px; align-items: center; }
+.header-actions select, .header-actions button {
+  background: var(--primary); border: 1px solid var(--gold-dark);
+  color: var(--gold-light); padding: 8px 16px; border-radius: 8px;
+  font-family: 'Space Grotesk', sans-serif; font-size: 0.8rem;
+  font-weight: 600; cursor: pointer; transition: all 0.2s;
+}
+.header-actions select {
+  min-width: 200px;
+  -webkit-appearance: none; -moz-appearance: none; appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C5A55A' fill='none' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+}
+.header-actions select:hover, .header-actions button:hover {
+  border-color: var(--gold); background: rgba(197,165,90,0.1);
+  color: var(--gold);
+}
+.header-actions select:focus {
+  outline: none; border-color: var(--gold);
+  box-shadow: 0 0 12px rgba(197,165,90,0.15);
+}
+.btn-gold {
+  background: var(--gradient-gold) !important; color: #0a0a0a !important;
+  font-weight: 700; border: none !important;
+}
+.btn-gold:hover { opacity: 0.9; }
+
+/* PROGRESS BAR */
+.progress-bar {
+  position: relative; z-index: 10;
+  display: flex; justify-content: center; gap: 0;
+  padding: 20px 40px;
+  background: rgba(10,10,10,0.6);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--glass-border);
+}
+.progress-step {
+  display: flex; align-items: center; gap: 0;
+  cursor: pointer; transition: all 0.2s;
+}
+.progress-step .step-dot {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700; font-size: 0.85rem;
+  background: var(--glass); border: 2px solid var(--glass-border);
+  color: var(--text-muted); transition: all 0.3s;
+}
+.progress-step .step-label {
+  font-size: 0.7rem; font-weight: 600; color: var(--text-muted);
+  margin-left: 8px; margin-right: 20px; letter-spacing: 0.5px;
+  transition: all 0.3s;
+}
+.progress-step.active .step-dot {
+  background: var(--gradient-gold); border-color: var(--gold);
+  color: #0a0a0a;
+}
+.progress-step.active .step-label { color: var(--gold); }
+.progress-step.completed .step-dot {
+  background: var(--gold-dark); border-color: var(--gold);
+  color: #0a0a0a;
+}
+.progress-step.completed .step-label { color: var(--gold-dark); }
+.progress-connector {
+  width: 40px; height: 2px; background: var(--glass-border);
+  align-self: center; margin: 0 4px;
+  transition: background 0.3s;
+}
+.progress-connector.active { background: var(--gold); }
+
+/* STEP CONTAINERS */
+.step-content {
+  position: relative; z-index: 1;
+  max-width: 1100px; margin: 0 auto;
+  padding: 40px; display: none;
+}
+.step-content.active { display: block; }
+.step-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.8rem; font-weight: 800;
+  margin-bottom: 8px;
+}
+.step-title span {
+  background: var(--gradient-gold);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.step-subtitle {
+  color: var(--text-muted); font-size: 0.9rem;
+  margin-bottom: 32px; line-height: 1.6;
+}
+
+/* FORM INPUTS */
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-grid.three-col { grid-template-columns: 1fr 1fr 1fr; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group label {
+  font-size: 0.75rem; font-weight: 600; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 1px;
+}
+.form-group input, .form-group select {
+  background: var(--glass); border: 1px solid var(--glass-border);
+  color: var(--text); padding: 12px 16px; border-radius: 10px;
+  font-family: 'Inter', sans-serif; font-size: 0.95rem;
+  transition: all 0.2s; outline: none;
+}
+.form-group input:focus, .form-group select:focus {
+  border-color: var(--gold); background: var(--glass-hover);
+  box-shadow: 0 0 20px rgba(197,165,90,0.1);
+}
+.form-group input[readonly] {
+  color: var(--gold-light); font-weight: 600;
+  background: rgba(197,165,90,0.06);
+}
+.form-group select option { background: #1a1a1a; color: var(--text); }
+.header-actions select option { background: #0a0a0a; color: var(--gold-light); padding: 8px; }
+
+/* BUILD TYPE CARDS */
+.build-type-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+  margin-bottom: 32px;
+}
+.build-type-card {
+  background: var(--glass); border: 2px solid var(--glass-border);
+  border-radius: 16px; padding: 24px 16px; text-align: center;
+  cursor: pointer; transition: all 0.3s; position: relative;
+  backdrop-filter: blur(10px);
+}
+.build-type-card:hover { border-color: rgba(197,165,90,0.3); transform: translateY(-2px); }
+.build-type-card.selected {
+  border-color: var(--gold); background: rgba(197,165,90,0.08);
+}
+.build-type-card .bt-icon { font-size: 2rem; margin-bottom: 8px; }
+.build-type-card .bt-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.95rem; font-weight: 700; margin-bottom: 4px;
+}
+.build-type-card .bt-desc {
+  font-size: 0.7rem; color: var(--text-muted); line-height: 1.4;
+}
+
+/* TRADE CARDS */
+.trade-card {
+  background: var(--glass); border: 1px solid var(--glass-border);
+  border-radius: 16px; margin-bottom: 12px;
+  backdrop-filter: blur(10px); overflow: hidden;
+  transition: all 0.3s;
+}
+.trade-card:hover { border-color: rgba(197,165,90,0.25); }
+.trade-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 18px 24px; cursor: pointer; transition: background 0.2s;
+}
+.trade-header:hover { background: var(--glass-hover); }
+.trade-header-left { display: flex; align-items: center; gap: 12px; }
+.trade-header .trade-icon { font-size: 1.2rem; }
+.trade-header .trade-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700; font-size: 0.95rem;
+}
+.trade-header .trade-total {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700; color: var(--gold-light); font-size: 1rem;
+}
+.trade-body {
+  padding: 0 24px 20px; display: none;
+  border-top: 1px solid var(--glass-border);
+  padding-top: 16px;
+}
+.trade-card.open .trade-body { display: block; }
+.trade-card.open { border-color: rgba(197,165,90,0.2); }
+
+/* TIER SELECTOR */
+.tier-selector {
+  display: flex; gap: 8px; margin-bottom: 16px;
+}
+.tier-btn {
+  flex: 1; padding: 10px; border-radius: 8px; text-align: center;
+  background: var(--glass); border: 1px solid var(--glass-border);
+  color: var(--text-muted); font-size: 0.75rem; font-weight: 600;
+  cursor: pointer; transition: all 0.2s;
+  font-family: 'Space Grotesk', sans-serif;
+}
+.tier-btn:hover { border-color: rgba(197,165,90,0.3); }
+.tier-btn.active {
+  background: rgba(197,165,90,0.12); border-color: var(--gold);
+  color: var(--gold-light);
+}
+
+/* TOGGLE SWITCH */
+.toggle-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 8px 0;
+}
+.toggle-label { font-size: 0.85rem; color: var(--text-muted); }
+.toggle-switch {
+  position: relative; width: 44px; height: 24px; cursor: pointer;
+}
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.toggle-slider {
+  position: absolute; top:0; left:0; right:0; bottom:0;
+  background: rgba(255,255,255,0.1); border-radius: 24px;
+  transition: all 0.3s;
+}
+.toggle-slider::before {
+  content: ''; position: absolute; left: 3px; top: 3px;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--text-muted); transition: all 0.3s;
+}
+.toggle-switch input:checked + .toggle-slider {
+  background: var(--gold);
+}
+.toggle-switch input:checked + .toggle-slider::before {
+  transform: translateX(20px); background: #0a0a0a;
+}
+
+/* COST TABLE (reused from proposals) */
+.cost-table { width: 100%; border-collapse: separate; border-spacing: 0 5px; }
+.cost-table thead th {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.7rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 3px;
+  color: var(--gold); padding: 12px 20px; text-align: left;
+  border-bottom: 2px solid rgba(197,165,90,0.2);
+}
+.cost-table thead th:last-child { text-align: right; }
+.cost-table tbody tr { background: var(--glass); transition: all 0.3s; }
+.cost-table tbody tr:hover { background: var(--glass-hover); }
+.cost-table td { padding: 14px 20px; font-size: 0.92rem; }
+.cost-table td:first-child {
+  border-radius: 10px 0 0 10px;
+  border-left: 1px solid var(--glass-border);
+}
+.cost-table td:last-child {
+  border-radius: 0 10px 10px 0;
+  border-right: 1px solid var(--glass-border);
+  text-align: right; font-family: 'Space Grotesk', sans-serif; font-weight: 600;
+}
+.cost-table .category-label { color: var(--text-muted); font-size: 0.88rem; }
+.cost-table tr.subtotal { background: rgba(197,165,90,0.08); }
+.cost-table tr.subtotal td {
+  font-weight: 700; font-family: 'Space Grotesk', sans-serif;
+  color: var(--gold-light); border-top: 2px solid rgba(197,165,90,0.25);
+}
+.cost-table tr.total-row { background: var(--gradient-gold); }
+.cost-table tr.total-row td {
+  font-weight: 800; font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.15rem; color: #0a0a0a; padding: 20px;
+}
+
+/* RUNNING TOTAL — sticky bar under progress */
+.running-total {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(10,10,10,0.95);
+  border-bottom: 1px solid var(--glass-border);
+  backdrop-filter: blur(20px);
+  display: flex; align-items: center; justify-content: center;
+  gap: 32px; padding: 10px 40px;
+}
+.running-total h4 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.6rem; font-weight: 700; color: var(--gold);
+  text-transform: uppercase; letter-spacing: 2px;
+  margin-right: 8px;
+}
+.rt-row {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 0.8rem;
+}
+.rt-row .rt-label { color: var(--text-muted); font-size: 0.7rem; }
+.rt-row .rt-value { font-family: 'Space Grotesk', sans-serif; font-weight: 600; }
+.rt-row.rt-grand .rt-value {
+  font-size: 1rem; font-weight: 800;
+  background: var(--gradient-gold);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.rt-row .rt-sf { font-size: 0.7rem; color: var(--text-muted); }
+
+/* GEAR BUTTON + RATES PANEL */
+.gear-btn {
+  position: fixed; bottom: 24px; left: 24px; z-index: 100;
+  width: 48px; height: 48px; border-radius: 50%;
+  background: var(--glass); border: 1px solid var(--glass-border);
+  color: var(--gold); font-size: 1.4rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  backdrop-filter: blur(20px); transition: all 0.3s;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+.gear-btn:hover { border-color: var(--gold); transform: rotate(90deg); }
+.rates-overlay {
+  position: fixed; top:0; left:0; width:100%; height:100%;
+  background: rgba(0,0,0,0.6); z-index: 200; display: none;
+}
+.rates-overlay.open { display: block; }
+.rates-panel {
+  position: fixed; top:0; right: -480px; width: 460px; height: 100%;
+  background: rgba(14,14,14,0.98); border-left: 1px solid var(--glass-border);
+  z-index: 201; padding: 32px; overflow-y: auto;
+  backdrop-filter: blur(30px); transition: right 0.4s ease;
+}
+.rates-panel.open { right: 0; }
+.rates-panel h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.2rem; font-weight: 800; margin-bottom: 24px;
+}
+.rates-panel h3 span {
+  background: var(--gradient-gold);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.rate-group { margin-bottom: 24px; }
+.rate-group h5 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.7rem; font-weight: 700; color: var(--gold);
+  text-transform: uppercase; letter-spacing: 2px;
+  margin-bottom: 10px; padding-bottom: 6px;
+  border-bottom: 1px solid var(--glass-border);
+}
+.rate-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 6px 0;
+}
+.rate-row label { font-size: 0.8rem; color: var(--text-muted); flex: 1; }
+.rate-row input {
+  width: 100px; background: var(--glass); border: 1px solid var(--glass-border);
+  color: var(--text); padding: 6px 10px; border-radius: 6px;
+  font-family: 'Space Grotesk', sans-serif; font-size: 0.85rem;
+  text-align: right; outline: none;
+}
+.rate-row input:focus { border-color: var(--gold); }
+.rates-panel .btn-reset {
+  width: 100%; padding: 12px; margin-top: 16px;
+  background: rgba(255,60,60,0.1); border: 1px solid rgba(255,60,60,0.3);
+  color: #ff6b6b; border-radius: 10px; cursor: pointer;
+  font-weight: 600; font-size: 0.85rem; transition: all 0.2s;
+}
+.rates-panel .btn-reset:hover { background: rgba(255,60,60,0.2); }
+
+/* FEE SLIDER */
+.fee-slider-wrap { margin: 24px 0; }
+.fee-slider-wrap label {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px;
+}
+.fee-slider-wrap label strong {
+  font-family: 'Space Grotesk', sans-serif;
+  color: var(--gold-light); font-size: 1.1rem;
+}
+input[type="range"] {
+  -webkit-appearance: none; width: 100%; height: 6px;
+  background: var(--glass-border); border-radius: 6px; outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 22px; height: 22px;
+  background: var(--gradient-gold); border-radius: 50%;
+  cursor: pointer; box-shadow: 0 2px 10px rgba(197,165,90,0.4);
+}
+
+/* EXPORT BUTTONS */
+.export-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  margin-top: 32px;
+}
+.export-btn {
+  padding: 20px; border-radius: 14px; text-align: center;
+  cursor: pointer; transition: all 0.3s; border: 1px solid var(--glass-border);
+  background: var(--glass);
+}
+.export-btn:hover { border-color: var(--gold); transform: translateY(-2px); }
+.export-btn .exp-icon { font-size: 1.8rem; margin-bottom: 8px; }
+.export-btn .exp-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700; font-size: 0.9rem; margin-bottom: 4px;
+}
+.export-btn .exp-desc { font-size: 0.7rem; color: var(--text-muted); }
+
+/* NAV BUTTONS */
+.step-nav {
+  display: flex; justify-content: space-between; margin-top: 40px;
+  padding-top: 24px; border-top: 1px solid var(--glass-border);
+}
+.nav-btn {
+  padding: 12px 32px; border-radius: 10px; cursor: pointer;
+  font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+  font-size: 0.9rem; transition: all 0.2s; border: 1px solid var(--glass-border);
+  background: var(--glass); color: var(--text);
+}
+.nav-btn:hover { border-color: var(--gold); }
+.nav-btn.nav-next {
+  background: var(--gradient-gold); color: #0a0a0a; border: none;
+}
+.nav-btn.nav-next:hover { opacity: 0.9; }
+
+/* READOUT CARDS */
+.readout-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+  margin-top: 24px; margin-bottom: 16px;
+}
+.readout-card {
+  background: rgba(197,165,90,0.06); border: 1px solid rgba(197,165,90,0.15);
+  border-radius: 12px; padding: 16px; text-align: center;
+}
+.readout-card .readout-val {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.3rem; font-weight: 800;
+  background: var(--gradient-gold);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.readout-card .readout-label {
+  font-size: 0.65rem; font-weight: 600; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 1px; margin-top: 4px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .app-header { flex-direction: column; gap: 12px; padding: 16px 20px; }
+  .step-content { padding: 24px 20px; }
+  .form-grid { grid-template-columns: 1fr; }
+  .form-grid.three-col { grid-template-columns: 1fr; }
+  .build-type-grid { grid-template-columns: 1fr 1fr; }
+  .readout-grid { grid-template-columns: 1fr 1fr; }
+  .export-grid { grid-template-columns: 1fr; }
+  .progress-step .step-label { display: none; }
+  .running-total { right: 12px; bottom: 12px; min-width: 200px; }
+  .gear-btn { left: 12px; bottom: 12px; }
+  .rates-panel { width: 100%; right: -100%; }
+}
+</style>
+</head>
+<body>
+<div class="bg-texture"></div>
+<div class="bg-glow"></div>
+<div class="bg-glow-2"></div>
+<hr class="gold-line">
+
+<!-- HEADER -->
+<div class="app-header">
+  <div class="brand">
+    <div class="brand-text">
+      <h1>BidKit</h1>
+      <p class="tagline">Flynn Development Estimating</p>
+    </div>
+  </div>
+  <div class="header-actions">
+    <select id="savedEstimates" onchange="loadEstimateFromSelect()"><option value="">-- Saved Estimates --</option></select>
+    <button onclick="saveEstimate()" class="btn-gold">Save</button>
+    <button onclick="newEstimate()">New</button>
+    <button onclick="deleteEstimate()">Delete</button>
+    <button onclick="loadJSON()">Import</button>
+    <button onclick="exportJSON()">Backup</button>
+  </div>
+</div>
+
+<!-- PROGRESS BAR -->
+<div class="progress-bar">
+  <div class="progress-step active" onclick="goToStep(1)">
+    <div class="step-dot">1</div>
+    <div class="step-label">Project</div>
+  </div>
+  <div class="progress-connector"></div>
+  <div class="progress-step" onclick="goToStep(2)">
+    <div class="step-dot">2</div>
+    <div class="step-label">Dimensions</div>
+  </div>
+  <div class="progress-connector"></div>
+  <div class="progress-step" onclick="goToStep(3)">
+    <div class="step-dot">3</div>
+    <div class="step-label">Structural</div>
+  </div>
+  <div class="progress-connector"></div>
+  <div class="progress-step" onclick="goToStep(4)">
+    <div class="step-dot">4</div>
+    <div class="step-label">Finishes</div>
+  </div>
+  <div class="progress-connector"></div>
+  <div class="progress-step" onclick="goToStep(5)">
+    <div class="step-dot">5</div>
+    <div class="step-label">Summary</div>
+  </div>
+</div>
+
+<!-- RUNNING TOTAL BAR -->
+<div class="running-total" id="runningTotal">
+  <h4>Totals</h4>
+  <div class="rt-row"><span class="rt-label">Build</span><span class="rt-value" id="rtBuild">$0</span></div>
+  <div class="rt-row"><span class="rt-label">PM</span><span class="rt-value" id="rtPM">$0</span></div>
+  <div class="rt-row"><span class="rt-label">Fee</span><span class="rt-value" id="rtFee">$0</span></div>
+  <div class="rt-row rt-grand"><span class="rt-label">Total</span><span class="rt-value" id="rtTotal">$0</span></div>
+  <div class="rt-row"><span class="rt-label">Per SF</span><span class="rt-value rt-sf" id="rtSF">$0</span></div>
+</div>
+
+<!-- STEPS -->
+<div id="step1" class="step-content active"></div>
+<div id="step2" class="step-content"></div>
+<div id="step3" class="step-content"></div>
+<div id="step4" class="step-content"></div>
+<div id="step5" class="step-content"></div>
+
+<!-- GEAR BUTTON -->
+<button class="gear-btn" onclick="toggleRatesPanel()">&#9881;</button>
+
+<!-- RATES OVERLAY + PANEL (content added by JS) -->
+<div class="rates-overlay" id="ratesOverlay" onclick="toggleRatesPanel()"></div>
+<div class="rates-panel" id="ratesPanel"></div>
+
+<script>
+// ============================================================
+// PRICING DATABASE — all rates editable via panel
+// ============================================================
+const DEFAULT_PRICING = {
+  // Start Costs
+  survey: 1200, buildingPermit: 800, septicPermit: 500,
+  electricService: 1500, waterMeter: 800,
+  // Footer
+  footerWidth: 2, footerDepth: 10, footerOverage: 1.05,
+  steelMixPerYard: 200, footerLabor: 650,
+  stakesMisc: 150, pumpTruckBase: 1000, pumpTruckPerYard: 8,
+  // Dirtwork
+  dirtworkGarage: 2000, dirtworkBarndo: 4000,
+  dirtworkCustom: 6000, dirtworkHighEnd: 8000,
+  // Block Foundation
+  blockSize: 1.333, costPerBlock: 4, laborPerBlock: 3,
+  // Gravel
+  gravelTonsPerCuYard: 1.4, gravelPerTon: 24,
+  // Concrete Slab
+  concretePerYard: 192, slabOverage: 1.05,
+  steelPlastic: 500, slabLaborPerSF: 2,
+  concreteSeal: 500, termiteTreatment: 150,
+  // Framing
+  floorSystemPerSF: 3.50, glueMisc: 500,
+  wallRate2x4: 5, wallRate2x6: 7.50,
+  complexityMult: 1.2, trussesPerSF: 4, osbPerSF: 0.50,
+  roofMatMult: 1.1, flashingTapes: 100, screwsNails: 400,
+  framingLaborPerSF: 7.50,
+  postsDecorative: 500,
+  // Pitch multipliers
+  pitch: { '4:12': 1.054, '6:12': 1.15, '8:12': 1.25, '10:12': 1.35, '12:12': 1.414, '14:12': 1.537 },
+  // Windows
+  win3050: 385, win3060: 700, win6050: 970, win6060: 970,
+  win1040transom: 510, win3030: 310,
+  winColorMult: 1.15, winPellaMult: 1.8,
+  zipTape: 35, flexTape: 220,
+  // Doors
+  frontEntry: 800, rearExit: 400,
+  garageDoor16x8: 3000, garageDoor18x7: 4200, garageDoor10x10: 3200,
+  // Roofing (per square = 100 SF)
+  shingleLabor: 115, shingleMat: 150,
+  metalScrewLabor: 200, metalScrewMat: 200,
+  standingSeamLabor: 300, standingSeamMat: 375,
+  // Siding (per square)
+  lapSidingMat: 200, lapSidingLabor: 200,
+  metalSidingMat: 250, metalSidingLabor: 250,
+  // Finish Trades
+  electricalPerSF: 8, electricalBase: 2500,
+  plumbingPerFixture: 500,
+  sheetrockDivisor: 10, sheetrockRate: 54,
+  paintIntPerSF: 4.25, paintExtPerSF: 3.50,
+  guttersPerLinFt: 7,
+  countertopsPerSF: 85,
+  flooringBudget: 4, flooringMid: 7, flooringPremium: 12,
+  trimPerSF: 1.40, trimPremiumPerSF: 2.00, trimPerDoor: 150,
+  // Allowances
+  insulationGarage: 2000, insulationBarndo: 5000,
+  insulationCustom: 8000, insulationHighEnd: 12000,
+  hvacGarage: 0, hvacBarndo: 8000, hvacCustom: 12000, hvacHighEnd: 18000,
+  cabinetsGarage: 0, cabinetsBarndo: 8000,
+  cabinetsCustom: 15000, cabinetsHighEnd: 25000,
+  backsplash: 2500,
+  interiorItems: 2000,
+  disposal: 2000, portaPottyPerMonth: 109.75, portaPottyMonths: 4,
+  fireplace: 8000, septic: 5200, yard: 3500, handrail: 2500,
+  masterShower: 9000, driveway: 5000,
+  // Summary
+  pmOverheadPct: 0.025,
+  builderFeeGarage: 0.30, builderFeeBarndo: 0.25,
+  builderFeeCustom: 0.25, builderFeeHighEnd: 0.20,
+};
+
+let PRICING = JSON.parse(JSON.stringify(DEFAULT_PRICING));
+
+// ============================================================
+// PROJECT STATE
+// ============================================================
+const PROJECT = {
+  // Step 1
+  clientName: '', projectName: '', address: '', date: new Date().toISOString().slice(0,10),
+  projectNum: 'FD-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random()*9000)+1000),
+  buildType: 'garage', // garage | barndo | custom | highend
+  // Step 2 - Dimensions
+  heatedSF: 0, porchFront: 0, porchRear: 0,
+  garageSF: 0, auxiliarySF: 0, secondStorySF: 0,
+  length: 0, width: 0, wallHeight: 10, pitch: '6:12',
+  stories: 1, foundationType: 'slab', // slab | crawl
+  // Step 3 - Structural overrides (null = use formula)
+  startCosts: { survey: true, permit: true, electric: false, water: false, septicPermit: false },
+  footer: { pumpTruck: false },
+  blockCourses: 3,
+  slabDepth: 4,
+  framingWallType: '2x6',
+  windowList: [], // [{size, qty, color: false, pella: false}]
+  doorList: [],   // [{type, qty}]
+  roofType: 'shingles', // shingles | metalScrew | standingSeam
+  sidingType: 'lap',    // lap | metal
+  // Step 4 - Finish toggles (true = included)
+  finishes: {},
+  // Step 5
+  builderFeePct: 0.30,
+  pmPct: 0.025,
+  // Calculated totals (populated by engine)
+  trades: {},
+};
+
+let currentStep = 1;
+let autoSaveTimer = null;
+
+// ============================================================
+// UTILITY FUNCTIONS
+// ============================================================
+function fmt(n) { return '$' + (n||0).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}); }
+function fmtInt(n) { return (n||0).toLocaleString('en-US', {maximumFractionDigits: 0}); }
+function val(id) { return parseFloat(document.getElementById(id)?.value) || 0; }
+function setVal(id, v) { const el = document.getElementById(id); if(el) el.value = v; }
+function setHTML(id, h) { const el = document.getElementById(id); if(el) el.innerHTML = h; }
+function setText(id, t) { const el = document.getElementById(id); if(el) el.textContent = t; }
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+function goToStep(n) {
+  currentStep = n;
+  document.querySelectorAll('.step-content').forEach((el,i) => {
+    el.classList.toggle('active', i === n-1);
+  });
+  document.querySelectorAll('.progress-step').forEach((el,i) => {
+    el.classList.remove('active','completed');
+    if(i === n-1) el.classList.add('active');
+    else if(i < n-1) el.classList.add('completed');
+  });
+  document.querySelectorAll('.progress-connector').forEach((el,i) => {
+    el.classList.toggle('active', i < n-1);
+  });
+  window.scrollTo({top: 0, behavior: 'smooth'});
+  if(n === 5) buildStep5();
+  else if(n >= 3) recalcAll();
+}
+
+// ============================================================
+// BUILD STEP 1 HTML
+// ============================================================
+function buildStep1() {
+  document.getElementById('step1').innerHTML = `
+    <h2 class="step-title">Project <span>Info</span></h2>
+    <p class="step-subtitle">Enter the client details and select a build type to set default tiers and finish allowances.</p>
+    <div class="form-grid" style="margin-bottom:32px">
+      <div class="form-group">
+        <label>Client Name</label>
+        <input type="text" id="clientName" placeholder="e.g. Bob Wetzel" value="${PROJECT.clientName||''}" oninput="PROJECT.clientName=this.value">
+      </div>
+      <div class="form-group">
+        <label>Project Name</label>
+        <input type="text" id="projectName" placeholder="e.g. Wetzel Workshop" value="${PROJECT.projectName||''}" oninput="PROJECT.projectName=this.value">
+      </div>
+      <div class="form-group">
+        <label>Property Address</label>
+        <input type="text" id="address" placeholder="123 Main St, Cookeville TN" value="${PROJECT.address||''}" oninput="PROJECT.address=this.value">
+      </div>
+      <div class="form-group">
+        <label>Date</label>
+        <input type="date" id="projDate" value="${PROJECT.date}" oninput="PROJECT.date=this.value">
+      </div>
+      <div class="form-group">
+        <label>Project #</label>
+        <input type="text" id="projNum" value="${PROJECT.projectNum}" oninput="PROJECT.projectNum=this.value">
+      </div>
+    </div>
+    <label style="font-size:0.75rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;display:block">Build Type</label>
+    <div class="build-type-grid">
+      <div class="build-type-card ${PROJECT.buildType==='garage'?'selected':''}" onclick="selectBuildType('garage')">
+        <div class="bt-name">Garage</div>
+        <div class="bt-desc">Detached / attached garages, workshops</div>
+      </div>
+      <div class="build-type-card ${PROJECT.buildType==='barndo'?'selected':''}" onclick="selectBuildType('barndo')">
+        <div class="bt-name">Barndo</div>
+        <div class="bt-desc">Barndominium, shell + partial finish</div>
+      </div>
+      <div class="build-type-card ${PROJECT.buildType==='custom'?'selected':''}" onclick="selectBuildType('custom')">
+        <div class="bt-name">Custom Home</div>
+        <div class="bt-desc">Full custom residential build</div>
+      </div>
+      <div class="build-type-card ${PROJECT.buildType==='highend'?'selected':''}" onclick="selectBuildType('highend')">
+        <div class="bt-name">High-End</div>
+        <div class="bt-desc">Premium finishes, complex design</div>
+      </div>
+    </div>
+    <div class="step-nav">
+      <div></div>
+      <button class="nav-btn nav-next" onclick="goToStep(2)">Dimensions &#8594;</button>
+    </div>
+  `;
+}
+
+function selectBuildType(type) {
+  PROJECT.buildType = type;
+  // Set default builder fee by type
+  const fees = { garage: 0.30, barndo: 0.25, custom: 0.25, highend: 0.20 };
+  PROJECT.builderFeePct = fees[type] || 0.25;
+  // Set default finish toggles by type
+  setDefaultFinishes(type);
+  buildStep1(); // re-render to show selection
+}
+
+function setDefaultFinishes(type) {
+  const g = type === 'garage';
+  const b = type === 'barndo';
+  const c = type === 'custom';
+  const h = type === 'highend';
+  PROJECT.finishes = {
+    insulation: true,
+    gutters: true,
+    electrical: true,
+    plumbing: !g,
+    hvac: !g,
+    sheetrock: true,
+    paintInt: true,
+    paintExt: !g,
+    cabinets: !g,
+    countertops: !g && (c||h),
+    backsplash: c||h,
+    flooring: !g,
+    trim: true,
+    interiorItems: !g,
+    disposal: true,
+    portaPotty: true,
+    fireplace: h,
+    septic: !g,
+    yard: !g,
+    handrail: c||h,
+    masterShower: c||h,
+    driveway: !g,
+    exteriorBrick: false,
+    treads: false,
+  };
+}
+
+// ============================================================
+// BUILD STEP 2 HTML
+// ============================================================
+function buildStep2() {
+  const a = PROJECT.areas || {main:{l:0,w:0},porchFront:{l:0,w:0},porchRear:{l:0,w:0},garage:{l:0,w:0},auxiliary:{l:0,w:0},secondStory:{l:0,w:0}};
+  if(!PROJECT.areas) PROJECT.areas = a;
+  // Migrate old data if present
+  if(PROJECT.length && !a.main.l) { a.main.l = PROJECT.length; a.main.w = PROJECT.width; }
+
+  document.getElementById('step2').innerHTML = `
+    <h2 class="step-title">Building <span>Dimensions</span></h2>
+    <p class="step-subtitle">Enter length and width for each area. SF calculates automatically. All roofed areas are included in the roof calculation.</p>
+
+    <h4 style="font-family:'Space Grotesk';font-size:0.75rem;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:2px;margin-bottom:12px">Main Building</h4>
+    <div class="form-grid three-col" style="margin-bottom:16px">
+      <div class="form-group"><label>Length (ft)</label><input type="number" id="area_main_l" value="${a.main.l||''}" placeholder="50" oninput="updateDimensions()"></div>
+      <div class="form-group"><label>Width (ft)</label><input type="number" id="area_main_w" value="${a.main.w||''}" placeholder="50" oninput="updateDimensions()"></div>
+      <div class="form-group"><label>Main SF</label><input type="text" id="area_main_sf" readonly></div>
+    </div>
+
+    <h4 style="font-family:'Space Grotesk';font-size:0.75rem;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:2px;margin-bottom:12px">Additional Areas</h4>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;align-items:end;margin-bottom:8px">
+      <div style="font-size:0.65rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px">Area</div>
+      <div style="font-size:0.65rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px">Length</div>
+      <div style="font-size:0.65rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px">Width</div>
+      <div style="font-size:0.65rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px">SF</div>
+    </div>
+    ${areaRow('porchFront','Front Porch', a.porchFront)}
+    ${areaRow('porchRear','Rear Porch', a.porchRear)}
+    ${areaRow('garage','Garage', a.garage)}
+    ${areaRow('auxiliary','Auxiliary', a.auxiliary)}
+    ${areaRow('secondStory','2nd Story', a.secondStory)}
+
+    <h4 style="font-family:'Space Grotesk';font-size:0.75rem;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:2px;margin:24px 0 12px">Overrides (Complex Floor Plans)</h4>
+    <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:12px;line-height:1.5">For bump-outs, L-shapes, or irregular plans — enter the actual totals from your plans. Leave blank to use the L × W calculations above.</p>
+    <div class="form-grid" style="margin-bottom:24px">
+      <div class="form-group">
+        <label>Total Heated SF Override</label>
+        <input type="number" id="heatedOverride" value="${PROJECT.heatedOverride||''}" placeholder="Leave blank for L×W" oninput="updateDimensions()">
+      </div>
+      <div class="form-group">
+        <label>Perimeter Override (ft)</label>
+        <input type="number" id="perimOverride" value="${PROJECT.perimOverride||''}" placeholder="Leave blank for L×W" oninput="updateDimensions()">
+      </div>
+    </div>
+
+    <h4 style="font-family:'Space Grotesk';font-size:0.75rem;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:2px;margin:24px 0 12px">Structure</h4>
+    <div class="form-grid" style="margin-bottom:24px">
+      <div class="form-group">
+        <label>Wall Height (ft)</label>
+        <input type="number" id="wallHeight" value="${PROJECT.wallHeight||10}" placeholder="10" oninput="updateDimensions()">
+      </div>
+      <div class="form-group">
+        <label>Roof Pitch</label>
+        <select id="pitch" onchange="updateDimensions()">
+          <option value="4:12" ${PROJECT.pitch==='4:12'?'selected':''}>4:12</option>
+          <option value="6:12" ${PROJECT.pitch==='6:12'?'selected':''}>6:12</option>
+          <option value="8:12" ${PROJECT.pitch==='8:12'?'selected':''}>8:12</option>
+          <option value="10:12" ${PROJECT.pitch==='10:12'?'selected':''}>10:12</option>
+          <option value="12:12" ${PROJECT.pitch==='12:12'?'selected':''}>12:12</option>
+          <option value="14:12" ${PROJECT.pitch==='14:12'?'selected':''}>14:12</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Stories</label>
+        <select id="stories" onchange="updateDimensions()">
+          <option value="1" ${PROJECT.stories===1?'selected':''}>1 Story</option>
+          <option value="2" ${PROJECT.stories===2?'selected':''}>2 Story</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Foundation</label>
+        <select id="foundationType" onchange="updateDimensions()">
+          <option value="slab" ${PROJECT.foundationType==='slab'?'selected':''}>Slab on Grade</option>
+          <option value="crawl" ${PROJECT.foundationType==='crawl'?'selected':''}>Crawl Space</option>
+        </select>
+      </div>
+    </div>
+    <h4 style="font-family:'Space Grotesk';font-size:0.75rem;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:2px;margin-bottom:12px">Calculated Totals</h4>
+    <div class="readout-grid">
+      <div class="readout-card"><div class="readout-val" id="calcPerimeter">0</div><div class="readout-label">Perimeter (ft)</div></div>
+      <div class="readout-card"><div class="readout-val" id="calcTotalUnderRoof">0</div><div class="readout-label">Total Under Roof</div></div>
+      <div class="readout-card"><div class="readout-val" id="calcWallArea">0</div><div class="readout-label">Wall Area (SF)</div></div>
+      <div class="readout-card"><div class="readout-val" id="calcRoofArea">0</div><div class="readout-label">Roof Area (SF)</div></div>
+    </div>
+    <div class="step-nav">
+      <button class="nav-btn" onclick="goToStep(1)">&#8592; Project</button>
+      <button class="nav-btn nav-next" onclick="goToStep(3)">Structural &#8594;</button>
+    </div>
+  `;
+  updateDimensions();
+}
+
+function areaRow(id, label, data) {
+  return `<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;align-items:center;margin-bottom:6px">
+    <div style="font-size:0.85rem;color:var(--text-muted)">${label}</div>
+    <input type="number" id="area_${id}_l" value="${data.l||''}" placeholder="0" oninput="updateDimensions()" style="background:var(--glass);border:1px solid var(--glass-border);color:var(--text);padding:10px 12px;border-radius:8px;font-family:'Inter',sans-serif;font-size:0.9rem;outline:none">
+    <input type="number" id="area_${id}_w" value="${data.w||''}" placeholder="0" oninput="updateDimensions()" style="background:var(--glass);border:1px solid var(--glass-border);color:var(--text);padding:10px 12px;border-radius:8px;font-family:'Inter',sans-serif;font-size:0.9rem;outline:none">
+    <input type="text" id="area_${id}_sf" readonly style="background:rgba(197,165,90,0.06);border:1px solid rgba(197,165,90,0.15);color:var(--gold-light);padding:10px 12px;border-radius:8px;font-family:'Space Grotesk',sans-serif;font-size:0.9rem;font-weight:600">
+  </div>`;
+}
+
+function updateDimensions() {
+  if(!PROJECT.areas) PROJECT.areas = {main:{l:0,w:0},porchFront:{l:0,w:0},porchRear:{l:0,w:0},garage:{l:0,w:0},auxiliary:{l:0,w:0},secondStory:{l:0,w:0}};
+  const areaKeys = ['main','porchFront','porchRear','garage','auxiliary','secondStory'];
+
+  // Read each area's L × W
+  areaKeys.forEach(k => {
+    PROJECT.areas[k].l = val('area_'+k+'_l');
+    PROJECT.areas[k].w = val('area_'+k+'_w');
+    const sf = PROJECT.areas[k].l * PROJECT.areas[k].w;
+    setVal('area_'+k+'_sf', sf > 0 ? fmtInt(sf) + ' SF' : '');
+  });
+
+  // Derive SF values from L × W
+  const mainSFcalc = PROJECT.areas.main.l * PROJECT.areas.main.w;
+  PROJECT.porchFront = PROJECT.areas.porchFront.l * PROJECT.areas.porchFront.w;
+  PROJECT.porchRear = PROJECT.areas.porchRear.l * PROJECT.areas.porchRear.w;
+  PROJECT.garageSF = PROJECT.areas.garage.l * PROJECT.areas.garage.w;
+  PROJECT.auxiliarySF = PROJECT.areas.auxiliary.l * PROJECT.areas.auxiliary.w;
+  PROJECT.secondStorySF = PROJECT.areas.secondStory.l * PROJECT.areas.secondStory.w;
+  PROJECT.length = PROJECT.areas.main.l;
+  PROJECT.width = PROJECT.areas.main.w;
+
+  // Read overrides
+  PROJECT.heatedOverride = val('heatedOverride') || 0;
+  PROJECT.perimOverride = val('perimOverride') || 0;
+
+  // Use override if provided, otherwise L × W
+  PROJECT.heatedSF = PROJECT.heatedOverride || mainSFcalc;
+
+  PROJECT.wallHeight = val('wallHeight');
+  PROJECT.pitch = document.getElementById('pitch')?.value || '6:12';
+  PROJECT.stories = parseInt(document.getElementById('stories')?.value) || 1;
+  PROJECT.foundationType = document.getElementById('foundationType')?.value || 'slab';
+
+  // Perimeter: override or calculated from main L × W
+  const mainPerim = PROJECT.perimOverride || (PROJECT.length + PROJECT.width) * 2;
+  // Total footprint = heated (possibly overridden) + porches + garage + aux
+  const totalFootprint = PROJECT.heatedSF + PROJECT.porchFront + PROJECT.porchRear + PROJECT.garageSF + PROJECT.auxiliarySF;
+  const totalUnderRoof = totalFootprint;
+  const wallArea = mainPerim * PROJECT.wallHeight;
+  const pitchMult = PRICING.pitch[PROJECT.pitch] || 1.15;
+  const roofArea = totalFootprint * pitchMult;
+
+  setText('calcPerimeter', fmtInt(mainPerim));
+  setText('calcTotalUnderRoof', fmtInt(totalUnderRoof) + ' SF');
+  setText('calcWallArea', fmtInt(wallArea) + ' SF');
+  setText('calcRoofArea', fmtInt(Math.round(roofArea)) + ' SF');
+
+  // Store calculated values for engine
+  PROJECT._perimeter = mainPerim;
+  PROJECT._totalUnderRoof = totalUnderRoof;
+  PROJECT._wallArea = wallArea;
+  PROJECT._roofArea = roofArea;
+  PROJECT._footprint = totalFootprint;
+
+  scheduleAutoSave();
+}
+
+// ============================================================
+// BUILD STEP 3 — STRUCTURAL TRADES (11 cards)
+// ============================================================
+function buildStep3() {
+  const s = document.getElementById('step3');
+  s.innerHTML = `
+    <h2 class="step-title">Structural <span>Trades</span></h2>
+    <p class="step-subtitle">Expand each trade to adjust inputs. Totals update live as you change values.</p>
+    <div id="structuralCards"></div>
+    <div class="step-nav">
+      <button class="nav-btn" onclick="goToStep(2)">&#8592; Dimensions</button>
+      <button class="nav-btn nav-next" onclick="goToStep(4)">Finishes &#8594;</button>
+    </div>
+  `;
+  const c = document.getElementById('structuralCards');
+  c.innerHTML = buildTradeCard('startCosts', '', 'Start Costs', `
+    <div class="toggle-row"><span class="toggle-label">Survey ($${PRICING.survey} ea)</span><div style="display:flex;align-items:center;gap:8px">${tog('sc_survey', PROJECT.startCosts.survey)}<input type="number" id="sc_surveyQty" value="${PROJECT.startCosts.surveyQty||1}" min="1" style="width:50px;background:var(--primary);border:1px solid var(--gold-dark);color:var(--gold-light);padding:6px 8px;border-radius:6px;font-family:'Space Grotesk',sans-serif;font-size:0.85rem;font-weight:600;text-align:center;outline:none" onchange="PROJECT.startCosts.surveyQty=parseInt(this.value)||1;recalcAll()"></div></div>
+    <div class="toggle-row"><span class="toggle-label">Building Permit ($${PRICING.buildingPermit})</span>${tog('sc_permit', PROJECT.startCosts.permit)}</div>
+    <div class="toggle-row"><span class="toggle-label">Septic Permit ($${PRICING.septicPermit})</span>${tog('sc_septicPermit', PROJECT.startCosts.septicPermit)}</div>
+    <div class="toggle-row"><span class="toggle-label">Electric Service ($${PRICING.electricService})</span>${tog('sc_electric', PROJECT.startCosts.electric)}</div>
+    <div class="toggle-row"><span class="toggle-label">Water Meter ($${PRICING.waterMeter})</span>${tog('sc_water', PROJECT.startCosts.water)}</div>
+  `)
+  + buildTradeCard('footer', '', 'Footer', `
+    <div class="form-grid" style="margin-bottom:12px">
+      <div class="form-group"><label>Width (ft)</label><input type="number" id="footerWidth" value="${PRICING.footerWidth}" onchange="recalcAll()"></div>
+      <div class="form-group"><label>Depth (in)</label><input type="number" id="footerDepth" value="${PRICING.footerDepth}" onchange="recalcAll()"></div>
+    </div>
+    <div class="toggle-row"><span class="toggle-label">Pump Truck (+$${PRICING.pumpTruckBase})</span>${tog('footer_pump', PROJECT.footer.pumpTruck)}</div>
+    <div style="margin-top:8px;font-size:0.8rem;color:var(--text-muted)" id="footerCalcDetail"></div>
+  `)
+  + buildTradeCard('dirtwork', '', 'Dirtwork / Excavation', `
+    <div class="form-group"><label>Allowance Override</label><input type="number" id="dirtworkOverride" placeholder="Leave blank for default" onchange="recalcAll()"></div>
+    <div style="margin-top:8px;font-size:0.8rem;color:var(--text-muted)" id="dirtworkDetail"></div>
+  `)
+  + buildTradeCard('block', '', 'Block Foundation', `
+    <div class="form-grid">
+      <div class="form-group"><label>Courses High</label><input type="number" id="blockCourses" value="${PROJECT.blockCourses}" onchange="PROJECT.blockCourses=val('blockCourses');recalcAll()"></div>
+    </div>
+    <div style="margin-top:8px;font-size:0.8rem;color:var(--text-muted)" id="blockDetail"></div>
+  `)
+  + buildTradeCard('gravel', '', 'Gravel Fill', `
+    <div style="font-size:0.8rem;color:var(--text-muted)" id="gravelDetail"></div>
+  `)
+  + buildTradeCard('slab', '', 'Concrete Slab', `
+    <div class="form-grid" style="margin-bottom:12px">
+      <div class="form-group"><label>Slab Depth (in)</label>
+        <select id="slabDepth" onchange="PROJECT.slabDepth=parseInt(this.value);recalcAll()">
+          <option value="4" ${PROJECT.slabDepth===4?'selected':''}>4" Standard</option>
+          <option value="6" ${PROJECT.slabDepth===6?'selected':''}>6" Car Lift</option>
+        </select>
+      </div>
+    </div>
+    <div style="font-size:0.8rem;color:var(--text-muted)" id="slabDetail"></div>
+  `)
+  + buildTradeCard('framing', '', 'Framing', `
+    <div class="form-grid" style="margin-bottom:12px">
+      <div class="form-group"><label>Wall Type</label>
+        <select id="framingWallType" onchange="PROJECT.framingWallType=this.value;recalcAll()">
+          <option value="2x4" ${PROJECT.framingWallType==='2x4'?'selected':''}>2x4 ($${PRICING.wallRate2x4}/sf)</option>
+          <option value="2x6" ${PROJECT.framingWallType==='2x6'?'selected':''}>2x6 ($${PRICING.wallRate2x6}/sf)</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Complexity Mult</label><input type="number" id="complexMult" value="${PRICING.complexityMult}" step="0.1" onchange="recalcAll()"></div>
+      <div class="form-group"><label>Framing Labor ($/SF)</label><input type="number" id="framingLaborRate" value="${PRICING.framingLaborPerSF}" step="0.5" onchange="recalcAll()"></div>
+      <div class="form-group"><label>Trusses ($/SF)</label><input type="number" id="trussRate" value="${PRICING.trussesPerSF}" step="0.5" onchange="recalcAll()"></div>
+      <div class="form-group"><label>OSB ($/SF)</label><input type="number" id="osbRate" value="${PRICING.osbPerSF}" step="0.1" onchange="recalcAll()"></div>
+      <div class="form-group"><label>Floor System ($/SF)</label><input type="number" id="floorSysRate" value="${PRICING.floorSystemPerSF}" step="0.5" onchange="recalcAll()"></div>
+    </div>
+    <div style="font-size:0.8rem;color:var(--text-muted);line-height:1.8" id="framingDetail"></div>
+  `)
+  + buildTradeCard('windows', '', 'Windows', `
+    <div id="windowRows"></div>
+    <button style="margin-top:8px;padding:8px 16px;background:var(--glass);border:1px solid var(--glass-border);color:var(--gold);border-radius:8px;cursor:pointer;font-size:0.8rem" onclick="addWindow()">+ Add Window</button>
+    <div style="margin-top:8px;font-size:0.8rem;color:var(--text-muted)" id="windowDetail"></div>
+  `)
+  + buildTradeCard('doors', '', 'Exterior Doors', `
+    <div id="doorRows"></div>
+    <button style="margin-top:8px;padding:8px 16px;background:var(--glass);border:1px solid var(--glass-border);color:var(--gold);border-radius:8px;cursor:pointer;font-size:0.8rem" onclick="addDoor()">+ Add Door</button>
+    <div style="margin-top:8px;font-size:0.8rem;color:var(--text-muted)" id="doorDetail"></div>
+  `)
+  + buildTradeCard('roofing', '', 'Roofing', `
+    <div class="tier-selector">
+      <div class="tier-btn ${PROJECT.roofType==='shingles'?'active':''}" onclick="PROJECT.roofType='shingles';buildStep3();recalcAll()">Shingles ($${PRICING.shingleLabor+PRICING.shingleMat}/sq)</div>
+      <div class="tier-btn ${PROJECT.roofType==='metalScrew'?'active':''}" onclick="PROJECT.roofType='metalScrew';buildStep3();recalcAll()">Screw-Down ($${PRICING.metalScrewLabor+PRICING.metalScrewMat}/sq)</div>
+      <div class="tier-btn ${PROJECT.roofType==='standingSeam'?'active':''}" onclick="PROJECT.roofType='standingSeam';buildStep3();recalcAll()">Standing Seam ($${PRICING.standingSeamLabor+PRICING.standingSeamMat}/sq)</div>
+    </div>
+    <div style="font-size:0.8rem;color:var(--text-muted)" id="roofingDetail"></div>
+  `)
+  + buildTradeCard('siding', '', 'Siding & Fascia', `
+    <div class="tier-selector" style="margin-bottom:12px">
+      <div class="tier-btn ${PROJECT.sidingType==='lap'?'active':''}" onclick="PROJECT.sidingType='lap';buildStep3();recalcAll()">Lap Siding ($${PRICING.lapSidingMat+PRICING.lapSidingLabor}/sq)</div>
+      <div class="tier-btn ${PROJECT.sidingType==='metal'?'active':''}" onclick="PROJECT.sidingType='metal';buildStep3();recalcAll()">Metal Siding ($${PRICING.metalSidingMat+PRICING.metalSidingLabor}/sq)</div>
+    </div>
+    <div style="font-size:0.8rem;color:var(--text-muted)" id="sidingDetail"></div>
+  `);
+
+  // Populate window rows
+  renderWindowRows();
+  renderDoorRows();
+  recalcAll();
+}
+
+function buildTradeCard(id, icon, name, bodyHTML) {
+  return `<div class="trade-card" id="tc_${id}">
+    <div class="trade-header" onclick="toggleCard('${id}')">
+      <div class="trade-header-left">${icon?'<span class="trade-icon">'+icon+'</span>':''}<span class="trade-name">${name}</span></div>
+      <span class="trade-total" id="tt_${id}">$0</span>
+    </div>
+    <div class="trade-body">${bodyHTML}</div>
+  </div>`;
+}
+
+function tog(id, checked) {
+  return `<label class="toggle-switch"><input type="checkbox" id="${id}" ${checked?'checked':''} onchange="readToggles();recalcAll()"><span class="toggle-slider"></span></label>`;
+}
+
+function toggleCard(id) {
+  document.getElementById('tc_'+id).classList.toggle('open');
+}
+
+function readToggles() {
+  PROJECT.startCosts.survey = document.getElementById('sc_survey')?.checked ?? false;
+  PROJECT.startCosts.surveyQty = parseInt(document.getElementById('sc_surveyQty')?.value) || 1;
+  PROJECT.startCosts.permit = document.getElementById('sc_permit')?.checked ?? false;
+  PROJECT.startCosts.septicPermit = document.getElementById('sc_septicPermit')?.checked ?? false;
+  PROJECT.startCosts.electric = document.getElementById('sc_electric')?.checked ?? false;
+  PROJECT.startCosts.water = document.getElementById('sc_water')?.checked ?? false;
+  PROJECT.footer.pumpTruck = document.getElementById('footer_pump')?.checked ?? false;
+}
+
+// Window management
+function addWindow() {
+  PROJECT.windowList.push({ size: '3-0x5-0', qty: 1, color: false, pella: false });
+  renderWindowRows();
+  recalcAll();
+}
+function removeWindow(i) {
+  PROJECT.windowList.splice(i, 1);
+  renderWindowRows();
+  recalcAll();
+}
+function renderWindowRows() {
+  const el = document.getElementById('windowRows');
+  if(!el) return;
+  if(PROJECT.windowList.length === 0) {
+    el.innerHTML = '<div style="color:var(--text-muted);font-size:0.85rem;padding:8px 0">No windows added. Click + to add.</div>';
+    return;
+  }
+  el.innerHTML = PROJECT.windowList.map((w,i) => `
+    <div style="display:flex;gap:8px;align-items:end;margin-bottom:8px">
+      <div class="form-group" style="flex:2"><label>Size</label>
+        <select onchange="PROJECT.windowList[${i}].size=this.value;recalcAll()">
+          <option value="3-0x5-0" ${w.size==='3-0x5-0'?'selected':''}>3-0x5-0 ($${PRICING.win3050})</option>
+          <option value="3-0x6-0" ${w.size==='3-0x6-0'?'selected':''}>3-0x6-0 ($${PRICING.win3060})</option>
+          <option value="6-0x5-0" ${w.size==='6-0x5-0'?'selected':''}>6-0x5-0 ($${PRICING.win6050})</option>
+          <option value="6-0x6-0" ${w.size==='6-0x6-0'?'selected':''}>6-0x6-0 ($${PRICING.win6060})</option>
+          <option value="1-0x4-0" ${w.size==='1-0x4-0'?'selected':''}>1-0x4-0 Transom ($${PRICING.win1040transom})</option>
+          <option value="3-0x3-0" ${w.size==='3-0x3-0'?'selected':''}>3-0x3-0 ($${PRICING.win3030})</option>
+        </select>
+      </div>
+      <div class="form-group" style="flex:1"><label>Qty</label><input type="number" value="${w.qty}" min="1" onchange="PROJECT.windowList[${i}].qty=parseInt(this.value)||1;recalcAll()"></div>
+      <div class="form-group" style="flex:1"><label>Color</label>
+        <select onchange="PROJECT.windowList[${i}].color=this.value==='true';recalcAll()">
+          <option value="false" ${!w.color?'selected':''}>Std</option>
+          <option value="true" ${w.color?'selected':''}>Color (×${PRICING.winColorMult})</option>
+        </select>
+      </div>
+      <button style="padding:8px 12px;background:rgba(255,60,60,0.1);border:1px solid rgba(255,60,60,0.3);color:#ff6b6b;border-radius:6px;cursor:pointer;margin-bottom:6px" onclick="removeWindow(${i})">&#x2715;</button>
+    </div>
+  `).join('');
+}
+
+// Door management
+function addDoor() {
+  PROJECT.doorList.push({ type: 'frontEntry', qty: 1 });
+  renderDoorRows();
+  recalcAll();
+}
+function removeDoor(i) {
+  PROJECT.doorList.splice(i, 1);
+  renderDoorRows();
+  recalcAll();
+}
+function renderDoorRows() {
+  const el = document.getElementById('doorRows');
+  if(!el) return;
+  if(PROJECT.doorList.length === 0) {
+    el.innerHTML = '<div style="color:var(--text-muted);font-size:0.85rem;padding:8px 0">No doors added. Click + to add.</div>';
+    return;
+  }
+  el.innerHTML = PROJECT.doorList.map((d,i) => `
+    <div style="display:flex;gap:8px;align-items:end;margin-bottom:8px">
+      <div class="form-group" style="flex:2"><label>Type</label>
+        <select onchange="PROJECT.doorList[${i}].type=this.value;recalcAll()">
+          <option value="frontEntry" ${d.type==='frontEntry'?'selected':''}>Entry 3-0x6-8 ($${PRICING.frontEntry})</option>
+          <option value="rearExit" ${d.type==='rearExit'?'selected':''}>Rear Exit ($${PRICING.rearExit})</option>
+          <option value="garageDoor16x8" ${d.type==='garageDoor16x8'?'selected':''}>Garage 16x8 ($${PRICING.garageDoor16x8})</option>
+          <option value="garageDoor18x7" ${d.type==='garageDoor18x7'?'selected':''}>Garage 18x7 ($${PRICING.garageDoor18x7})</option>
+          <option value="garageDoor10x10" ${d.type==='garageDoor10x10'?'selected':''}>Garage 10x10 ($${PRICING.garageDoor10x10})</option>
+        </select>
+      </div>
+      <div class="form-group" style="flex:1"><label>Qty</label><input type="number" value="${d.qty}" min="1" onchange="PROJECT.doorList[${i}].qty=parseInt(this.value)||1;recalcAll()"></div>
+      <button style="padding:8px 12px;background:rgba(255,60,60,0.1);border:1px solid rgba(255,60,60,0.3);color:#ff6b6b;border-radius:6px;cursor:pointer;margin-bottom:6px" onclick="removeDoor(${i})">&#x2715;</button>
+    </div>
+  `).join('');
+}
+
+// ============================================================
+// BUILD STEP 4 — FINISH TRADES
+// ============================================================
+function buildStep4() {
+  const f = PROJECT.finishes;
+  const bt = PROJECT.buildType;
+  document.getElementById('step4').innerHTML = `
+    <h2 class="step-title">Finish <span>Trades</span></h2>
+    <p class="step-subtitle">Toggle trades on/off. Formula-based trades calculate from your dimensions; allowance-based trades use defaults by build type.</p>
+    <div id="finishCards">
+      ${finishCard('insulation','','Insulation', f.insulation, true)}
+      ${finishCard('gutters','','Gutters', f.gutters, false, `
+        <div class="form-group"><label>Linear Feet (auto: perimeter)</label><input type="number" id="gutterLF" placeholder="auto" onchange="recalcAll()"></div>
+      `)}
+      ${finishCard('electrical','','Electrical', f.electrical, false, `
+        <div style="font-size:0.8rem;color:var(--text-muted)" id="elecDetail">Formula: (heated+garage+bonus) × $${PRICING.electricalPerSF} + $${PRICING.electricalBase}</div>
+      `)}
+      ${finishCard('plumbing','','Plumbing', f.plumbing, false, `
+        <div class="form-group"><label>Number of Fixtures</label><input type="number" id="plumbFixtures" value="0" placeholder="0" onchange="recalcAll()"></div>
+        <div style="font-size:0.8rem;color:var(--text-muted)">$${PRICING.plumbingPerFixture}/fixture</div>
+      `)}
+      ${finishCard('hvac','','HVAC', f.hvac, true)}
+      ${finishCard('sheetrock','','Sheetrock', f.sheetrock, false, `
+        <div style="font-size:0.8rem;color:var(--text-muted)" id="sheetrockDetail">Formula: heated SF ÷ ${PRICING.sheetrockDivisor} × $${PRICING.sheetrockRate}</div>
+      `)}
+      ${finishCard('paintInt','','Interior Paint', f.paintInt, false, `
+        <div style="font-size:0.8rem;color:var(--text-muted)">$${PRICING.paintIntPerSF}/SF of heated area</div>
+      `)}
+      ${finishCard('paintExt','','Exterior Paint', f.paintExt, false, `
+        <div style="font-size:0.8rem;color:var(--text-muted)">$${PRICING.paintExtPerSF}/SF of wall area</div>
+      `)}
+      ${finishCard('cabinets','','Cabinets', f.cabinets, true)}
+      ${finishCard('countertops','','Countertops', f.countertops, false, `
+        <div class="form-group"><label>Counter SF</label><input type="number" id="counterSF" value="0" placeholder="0" onchange="recalcAll()"></div>
+        <div style="font-size:0.8rem;color:var(--text-muted)">$${PRICING.countertopsPerSF}/SF</div>
+      `)}
+      ${finishCard('backsplash','','Backsplash', f.backsplash, true)}
+      ${finishCard('flooring','','Flooring', f.flooring, false, `
+        <div class="tier-selector">
+          <div class="tier-btn ${(PROJECT._flooringTier||'budget')==='budget'?'active':''}" onclick="PROJECT._flooringTier='budget';recalcAll();buildStep4()">Budget ($${PRICING.flooringBudget}/sf)</div>
+          <div class="tier-btn ${PROJECT._flooringTier==='mid'?'active':''}" onclick="PROJECT._flooringTier='mid';recalcAll();buildStep4()">Mid ($${PRICING.flooringMid}/sf)</div>
+          <div class="tier-btn ${PROJECT._flooringTier==='premium'?'active':''}" onclick="PROJECT._flooringTier='premium';recalcAll();buildStep4()">Premium ($${PRICING.flooringPremium}/sf)</div>
+        </div>
+      `)}
+      ${finishCard('trim','','Trim & Interior Doors', f.trim, false, `
+        <div class="form-group"><label>Interior Door Count</label><input type="number" id="intDoorCount" value="0" placeholder="0" onchange="recalcAll()"></div>
+        <div style="font-size:0.8rem;color:var(--text-muted)">$${PRICING.trimPerSF}/SF + $${PRICING.trimPerDoor}/door</div>
+      `)}
+      ${finishCard('interiorItems','','Interior Items', f.interiorItems, true)}
+      ${finishCard('disposal','','Disposal & Cleanup', f.disposal, true)}
+      ${finishCard('portaPotty','','Porta Potty', f.portaPotty, false, `
+        <div class="form-group"><label>Months</label><input type="number" id="portaMonths" value="${PRICING.portaPottyMonths}" onchange="recalcAll()"></div>
+        <div style="font-size:0.8rem;color:var(--text-muted)">$${PRICING.portaPottyPerMonth}/month</div>
+      `)}
+      ${finishCard('fireplace','','Fireplace', f.fireplace, true)}
+      ${finishCard('septic','','Septic', f.septic, true)}
+      ${finishCard('yard','','Yard & Grading', f.yard, true)}
+      ${finishCard('handrail','','Handrail', f.handrail, true)}
+      ${finishCard('masterShower','','Master Tile Shower', f.masterShower, true)}
+      ${finishCard('driveway','','Driveway', f.driveway, true)}
+      ${finishCard('exteriorBrick','','Exterior Brick', f.exteriorBrick, false, `
+        <div class="form-group"><label>Brick Allowance</label><input type="number" id="brickAllowance" value="0" placeholder="0" onchange="recalcAll()"></div>
+      `)}
+      ${finishCard('treads','','Stair Treads', f.treads, false, `
+        <div class="form-group"><label>Tread Allowance</label><input type="number" id="treadAllowance" value="0" placeholder="0" onchange="recalcAll()"></div>
+      `)}
+    </div>
+    <div class="step-nav">
+      <button class="nav-btn" onclick="goToStep(3)">&#8592; Structural</button>
+      <button class="nav-btn nav-next" onclick="goToStep(5)">Summary &#8594;</button>
+    </div>
+  `;
+  recalcAll();
+}
+
+function finishCard(id, icon, name, enabled, isAllowance, bodyExtra) {
+  bodyExtra = bodyExtra || '';
+  const allowanceNote = isAllowance ?
+    `<div style="font-size:0.8rem;color:var(--text-muted);margin-top:4px">Allowance by build type</div>
+     <div class="form-group" style="margin-top:8px"><label>Override Amount</label><input type="number" id="fin_${id}_override" placeholder="Leave blank for default" onchange="recalcAll()"></div>` : '';
+  return `<div class="trade-card" id="tc_fin_${id}">
+    <div class="trade-header" onclick="toggleCard('fin_${id}')">
+      <div class="trade-header-left">
+        <label class="toggle-switch" onclick="event.stopPropagation()"><input type="checkbox" id="fin_${id}_on" ${enabled?'checked':''} onchange="PROJECT.finishes.${id}=this.checked;recalcAll()"><span class="toggle-slider"></span></label>
+        <span class="trade-icon">${icon}</span>
+        <span class="trade-name">${name}</span>
+      </div>
+      <span class="trade-total" id="tt_fin_${id}">$0</span>
+    </div>
+    <div class="trade-body">${bodyExtra}${allowanceNote}</div>
+  </div>`;
+}
+
+// ============================================================
+// CALCULATION ENGINE
+// ============================================================
+function recalcAll() {
+  const P = PRICING;
+  const perim = PROJECT._perimeter || 0;
+  const heated = PROJECT.heatedSF || 0;
+  const garage = PROJECT.garageSF || 0;
+  const porchF = PROJECT.porchFront || 0;
+  const porchR = PROJECT.porchRear || 0;
+  const aux = PROJECT.auxiliarySF || 0;
+  const second = PROJECT.secondStorySF || 0;
+  const totalUR = PROJECT._totalUnderRoof || 0;
+  const wallArea = PROJECT._wallArea || 0;
+  const roofArea = PROJECT._roofArea || 0;
+  const footprint = PROJECT._footprint || 0;
+  const wallH = PROJECT.wallHeight || 10;
+  const bt = PROJECT.buildType;
+
+  // --- STRUCTURAL TRADES ---
+
+  // 1. Start Costs
+  let startCosts = 0;
+  if(PROJECT.startCosts.survey) startCosts += P.survey * (PROJECT.startCosts.surveyQty || 1);
+  if(PROJECT.startCosts.permit) startCosts += P.buildingPermit;
+  if(PROJECT.startCosts.septicPermit) startCosts += P.septicPermit;
+  if(PROJECT.startCosts.electric) startCosts += P.electricService;
+  if(PROJECT.startCosts.water) startCosts += P.waterMeter;
+  PROJECT.trades.startCosts = startCosts;
+  setText('tt_startCosts', fmt(startCosts));
+
+  // 2. Footer
+  const fWidth = val('footerWidth') || P.footerWidth;
+  const fDepth = val('footerDepth') || P.footerDepth;
+  const footerVol = perim * fWidth * (fDepth/12) / 27;
+  const footerYards = footerVol * P.footerOverage;
+  let footerCost = 0;
+  if(perim > 0) {
+    footerCost = footerYards * P.steelMixPerYard + P.footerLabor + P.stakesMisc;
+    if(PROJECT.footer.pumpTruck) footerCost += P.pumpTruckBase + (footerYards * P.pumpTruckPerYard);
+  }
+  PROJECT.trades.footer = footerCost;
+  setText('tt_footer', fmt(footerCost));
+  setHTML('footerCalcDetail', `${perim}ft × ${fWidth}ft × ${fDepth}in = ${footerYards.toFixed(2)} yards (w/ 5% overage)`);
+
+  // 3. Dirtwork
+  const dirtOverride = val('dirtworkOverride');
+  const dirtDefaults = { garage: P.dirtworkGarage, barndo: P.dirtworkBarndo, custom: P.dirtworkCustom, highend: P.dirtworkHighEnd };
+  const dirtwork = (perim > 0) ? (dirtOverride || dirtDefaults[bt] || 2000) : 0;
+  PROJECT.trades.dirtwork = dirtwork;
+  setText('tt_dirtwork', fmt(dirtwork));
+  setHTML('dirtworkDetail', dirtOverride ? 'Manual override' : `Default for ${bt}: ${fmt(dirtwork)}`);
+
+  // 4. Block Foundation
+  const courses = PROJECT.blockCourses || 3;
+  const blockPerRun = perim / P.blockSize;
+  const totalBlocks = blockPerRun * courses;
+  const blockCost = totalBlocks * (P.costPerBlock + P.laborPerBlock);
+  PROJECT.trades.block = blockCost;
+  setText('tt_block', fmt(blockCost));
+  setHTML('blockDetail', `${perim}ft ÷ ${P.blockSize} = ${Math.round(blockPerRun)} blocks/run × ${courses} courses = ${Math.round(totalBlocks)} blocks × $${P.costPerBlock+P.laborPerBlock}`);
+
+  // 5. Gravel Fill
+  const gravelArea = heated + porchF + porchR + garage + aux;
+  const avgBlockH = courses * 8 / 12; // 8 inches per course
+  const gravelCuYd = (gravelArea * avgBlockH) / 27;
+  const gravelTons = gravelCuYd * P.gravelTonsPerCuYard;
+  const gravelCost = gravelTons * P.gravelPerTon;
+  PROJECT.trades.gravel = gravelCost;
+  setText('tt_gravel', fmt(gravelCost));
+  setHTML('gravelDetail', `${fmtInt(gravelArea)} SF × ${avgBlockH.toFixed(2)}ft depth = ${gravelCuYd.toFixed(2)} cu yd × ${P.gravelTonsPerCuYard} = ${gravelTons.toFixed(2)} tons × $${P.gravelPerTon}`);
+
+  // 6. Concrete Slab
+  const slabD = PROJECT.slabDepth || 4;
+  const slabArea = heated + porchF + porchR + garage + aux;
+  const slabVol = (slabArea * (slabD/12)) / 27;
+  const slabYards = slabVol * P.slabOverage;
+  const slabConcrete = slabYards * P.concretePerYard;
+  const slabLabor = slabArea * P.slabLaborPerSF;
+  const slabCost = slabArea > 0 ? (slabConcrete + P.steelPlastic + slabLabor + P.concreteSeal + P.termiteTreatment) : 0;
+  PROJECT.trades.slab = slabCost;
+  setText('tt_slab', fmt(slabCost));
+  setHTML('slabDetail', `${fmtInt(slabArea)} SF × ${slabD}in = ${slabYards.toFixed(2)} yards × $${P.concretePerYard} + labor $${fmtInt(slabLabor)} + extras`);
+
+  // 7. Framing
+  const wallRate = PROJECT.framingWallType === '2x4' ? P.wallRate2x4 : P.wallRate2x6;
+  const cMult = val('complexMult') || P.complexityMult;
+  const frameLaborRate = val('framingLaborRate') || P.framingLaborPerSF;
+  const trussRate = val('trussRate') || P.trussesPerSF;
+  const osbRate = val('osbRate') || P.osbPerSF;
+  const floorSysRate = val('floorSysRate') || P.floorSystemPerSF;
+  const totalFrameSF = heated + porchF + porchR + garage + aux;
+  const wallMat = totalFrameSF * wallRate * cMult;
+  const floorSys = PROJECT.foundationType === 'crawl' ? totalFrameSF * floorSysRate : 0;
+  const trusses = totalFrameSF * trussRate;
+  const osb = roofArea * osbRate;
+  const miscFrame = totalFrameSF > 0 ? (P.flashingTapes + P.screwsNails + P.postsDecorative + (floorSys > 0 ? P.glueMisc : 0)) : 0;
+  const frameLabor = totalFrameSF * frameLaborRate;
+  const framingCost = totalFrameSF > 0 ? (wallMat + floorSys + trusses + osb + miscFrame + frameLabor) : 0;
+  PROJECT.trades.framing = framingCost;
+  setText('tt_framing', fmt(framingCost));
+  setHTML('framingDetail', `Walls: ${fmtInt(totalFrameSF)} SF × $${wallRate} × ${cMult} = ${fmt(wallMat)}<br>Trusses: ${fmtInt(totalFrameSF)} SF × $${trussRate} = ${fmt(trusses)}<br>OSB: ${fmtInt(Math.round(roofArea))} SF × $${osbRate} = ${fmt(osb)}<br>Labor: ${fmtInt(totalFrameSF)} SF × $${frameLaborRate} = ${fmt(frameLabor)}<br>Misc (flashing/screws/posts): ${fmt(miscFrame)}${floorSys>0?'<br>Floor System: '+fmtInt(totalFrameSF)+' SF × $'+floorSysRate+' = '+fmt(floorSys):''}`);
+
+  // 8. Windows
+  const winPrices = { '3-0x5-0': P.win3050, '3-0x6-0': P.win3060, '6-0x5-0': P.win6050, '6-0x6-0': P.win6060, '1-0x4-0': P.win1040transom, '3-0x3-0': P.win3030 };
+  let windowCost = 0;
+  let windowOpeningArea = 0;
+  PROJECT.windowList.forEach(w => {
+    let price = winPrices[w.size] || 385;
+    if(w.color) price *= P.winColorMult;
+    if(w.pella) price *= P.winPellaMult;
+    windowCost += price * (w.qty || 1);
+    // Estimate opening area for siding calc (rough: 15 SF per window)
+    windowOpeningArea += 15 * (w.qty || 1);
+  });
+  if(PROJECT.windowList.length > 0) {
+    windowCost += P.zipTape + P.flexTape;
+  }
+  PROJECT.trades.windows = windowCost;
+  PROJECT._windowOpeningArea = windowOpeningArea;
+  setText('tt_windows', fmt(windowCost));
+  setHTML('windowDetail', `${PROJECT.windowList.length} window type(s), total: ${fmt(windowCost)}`);
+
+  // 9. Doors
+  const doorPrices = { frontEntry: P.frontEntry, rearExit: P.rearExit, garageDoor16x8: P.garageDoor16x8, garageDoor18x7: P.garageDoor18x7, garageDoor10x10: P.garageDoor10x10 };
+  let doorCost = 0;
+  let doorOpeningArea = 0;
+  PROJECT.doorList.forEach(d => {
+    doorCost += (doorPrices[d.type] || 800) * (d.qty || 1);
+    const areas = { frontEntry: 21, rearExit: 21, garageDoor16x8: 128, garageDoor18x7: 126, garageDoor10x10: 100 };
+    doorOpeningArea += (areas[d.type] || 21) * (d.qty || 1);
+  });
+  PROJECT.trades.doors = doorCost;
+  PROJECT._doorOpeningArea = doorOpeningArea;
+  setText('tt_doors', fmt(doorCost));
+  setHTML('doorDetail', `${PROJECT.doorList.length} door type(s), total: ${fmt(doorCost)}`);
+
+  // 10. Roofing
+  const squares = roofArea / 100;
+  let roofLabor, roofMaterial;
+  if(PROJECT.roofType === 'shingles') { roofLabor = P.shingleLabor; roofMaterial = P.shingleMat; }
+  else if(PROJECT.roofType === 'metalScrew') { roofLabor = P.metalScrewLabor; roofMaterial = P.metalScrewMat; }
+  else { roofLabor = P.standingSeamLabor; roofMaterial = P.standingSeamMat; }
+  const roofingCost = squares * (roofLabor + roofMaterial);
+  PROJECT.trades.roofing = roofingCost;
+  setText('tt_roofing', fmt(roofingCost));
+  setHTML('roofingDetail', `${fmtInt(roofArea)} SF ÷ 100 = ${squares.toFixed(2)} squares × $${roofLabor+roofMaterial}/sq`);
+
+  // 11. Siding
+  const gableArea = (PROJECT.width || 0) * (PROJECT.width || 0) * (PRICING.pitch[PROJECT.pitch] || 1.15 - 1) / 4 * 2; // rough 2 gables
+  const grossSidingArea = wallArea + gableArea;
+  const netSidingArea = grossSidingArea - (PROJECT._windowOpeningArea || 0) - (PROJECT._doorOpeningArea || 0);
+  const sidingSquares = Math.max(netSidingArea, 0) / 100;
+  let sidingMatRate, sidingLabRate;
+  if(PROJECT.sidingType === 'lap') { sidingMatRate = P.lapSidingMat; sidingLabRate = P.lapSidingLabor; }
+  else { sidingMatRate = P.metalSidingMat; sidingLabRate = P.metalSidingLabor; }
+  const sidingCost = sidingSquares * (sidingMatRate + sidingLabRate);
+  PROJECT.trades.siding = sidingCost;
+  setText('tt_siding', fmt(sidingCost));
+  setHTML('sidingDetail', `${fmtInt(Math.round(netSidingArea))} SF net ÷ 100 = ${sidingSquares.toFixed(2)} squares × $${sidingMatRate+sidingLabRate}/sq`);
+
+  // --- FINISH TRADES ---
+  calcFinishes();
+
+  // --- TOTALS ---
+  calcTotals();
+  scheduleAutoSave();
+}
+
+function calcFinishes() {
+  const P = PRICING;
+  const bt = PROJECT.buildType;
+  const heated = PROJECT.heatedSF || 0;
+  const garage = PROJECT.garageSF || 0;
+  const aux = PROJECT.auxiliarySF || 0;
+  const perim = PROJECT._perimeter || 0;
+  const wallArea = PROJECT._wallArea || 0;
+  const f = PROJECT.finishes;
+
+  function finVal(id) {
+    const ov = val('fin_' + id + '_override');
+    return ov || null;
+  }
+  function setFin(id, amount) {
+    const on = f[id];
+    const cost = on ? amount : 0;
+    PROJECT.trades['fin_'+id] = cost;
+    setText('tt_fin_'+id, fmt(cost));
+    return cost;
+  }
+
+  // Insulation
+  const insDefaults = { garage: P.insulationGarage, barndo: P.insulationBarndo, custom: P.insulationCustom, highend: P.insulationHighEnd };
+  setFin('insulation', finVal('insulation') || insDefaults[bt] || 2000);
+
+  // Gutters
+  const gutterLF = val('gutterLF') || perim;
+  setFin('gutters', gutterLF * P.guttersPerLinFt);
+
+  // Electrical
+  const elecSF = heated + garage + aux;
+  setFin('electrical', elecSF * P.electricalPerSF + P.electricalBase);
+  setHTML('elecDetail', `(${fmtInt(elecSF)} SF × $${P.electricalPerSF}) + $${P.electricalBase} = ${fmt(elecSF * P.electricalPerSF + P.electricalBase)}`);
+
+  // Plumbing
+  const fixtures = val('plumbFixtures') || 0;
+  setFin('plumbing', fixtures * P.plumbingPerFixture);
+
+  // HVAC
+  const hvacDefaults = { garage: P.hvacGarage, barndo: P.hvacBarndo, custom: P.hvacCustom, highend: P.hvacHighEnd };
+  setFin('hvac', finVal('hvac') || hvacDefaults[bt] || 0);
+
+  // Sheetrock
+  const sheetrockCost = (heated / P.sheetrockDivisor) * P.sheetrockRate;
+  setFin('sheetrock', sheetrockCost);
+  setHTML('sheetrockDetail', `${fmtInt(heated)} SF ÷ ${P.sheetrockDivisor} × $${P.sheetrockRate} = ${fmt(sheetrockCost)}`);
+
+  // Paint Interior
+  setFin('paintInt', heated * P.paintIntPerSF);
+
+  // Paint Exterior
+  setFin('paintExt', wallArea * P.paintExtPerSF);
+
+  // Cabinets
+  const cabDefaults = { garage: P.cabinetsGarage, barndo: P.cabinetsBarndo, custom: P.cabinetsCustom, highend: P.cabinetsHighEnd };
+  setFin('cabinets', finVal('cabinets') || cabDefaults[bt] || 0);
+
+  // Countertops
+  const counterSF = val('counterSF') || 0;
+  setFin('countertops', counterSF * P.countertopsPerSF);
+
+  // Backsplash
+  setFin('backsplash', finVal('backsplash') || P.backsplash);
+
+  // Flooring
+  const floorRate = PROJECT._flooringTier === 'premium' ? P.flooringPremium : PROJECT._flooringTier === 'mid' ? P.flooringMid : P.flooringBudget;
+  setFin('flooring', heated * floorRate);
+
+  // Trim
+  const intDoors = val('intDoorCount') || 0;
+  setFin('trim', heated * P.trimPerSF + intDoors * P.trimPerDoor);
+
+  // Interior Items
+  setFin('interiorItems', finVal('interiorItems') || P.interiorItems);
+
+  // Disposal
+  setFin('disposal', finVal('disposal') || P.disposal);
+
+  // Porta Potty
+  const portaMonths = val('portaMonths') || P.portaPottyMonths;
+  setFin('portaPotty', portaMonths * P.portaPottyPerMonth);
+
+  // Fireplace
+  setFin('fireplace', finVal('fireplace') || P.fireplace);
+
+  // Septic
+  setFin('septic', finVal('septic') || P.septic);
+
+  // Yard
+  setFin('yard', finVal('yard') || P.yard);
+
+  // Handrail
+  setFin('handrail', finVal('handrail') || P.handrail);
+
+  // Master Shower
+  setFin('masterShower', finVal('masterShower') || P.masterShower);
+
+  // Driveway
+  setFin('driveway', finVal('driveway') || P.driveway);
+
+  // Exterior Brick
+  setFin('exteriorBrick', val('brickAllowance') || 0);
+
+  // Treads
+  setFin('treads', val('treadAllowance') || 0);
+}
+
+function calcTotals() {
+  let buildCost = 0;
+  for(const [k,v] of Object.entries(PROJECT.trades)) {
+    buildCost += v || 0;
+  }
+  const pmOH = buildCost * PROJECT.pmPct;
+  const subtotalPM = buildCost + pmOH;
+  const builderFee = subtotalPM * PROJECT.builderFeePct;
+  const projectTotal = subtotalPM + builderFee;
+  const heatedSFCalc = PROJECT.heatedSF || 0;
+  const costPerSF = heatedSFCalc > 0 ? projectTotal / heatedSFCalc : 0;
+
+  PROJECT._buildCost = buildCost;
+  PROJECT._pmOH = pmOH;
+  PROJECT._builderFee = builderFee;
+  PROJECT._projectTotal = projectTotal;
+  PROJECT._costPerSF = costPerSF;
+
+  // Update running total
+  setText('rtBuild', fmt(buildCost));
+  setText('rtPM', fmt(pmOH));
+  setText('rtFee', fmt(builderFee));
+  setText('rtTotal', fmt(projectTotal));
+  setText('rtSF', heatedSFCalc > 0 ? fmt(costPerSF) + '/SF' : '$0/SF');
+
+  // Update step 5 if visible
+  if(currentStep === 5) updateStep5Totals();
+}
+
+// ============================================================
+// BUILD STEP 5 — SUMMARY
+// ============================================================
+function buildStep5() {
+  recalcAll();
+  const trades = PROJECT.trades;
+  const structKeys = ['startCosts','footer','dirtwork','block','gravel','slab','framing','windows','doors','roofing','siding'];
+  const structLabels = ['Start Costs','Footer','Dirtwork','Block Foundation','Gravel Fill','Concrete Slab','Framing','Windows','Exterior Doors','Roofing','Siding & Fascia'];
+  const finishKeys = Object.keys(trades).filter(k => k.startsWith('fin_'));
+  const finishLabels = {
+    fin_insulation:'Insulation', fin_gutters:'Gutters', fin_electrical:'Electrical',
+    fin_plumbing:'Plumbing', fin_hvac:'HVAC', fin_sheetrock:'Sheetrock',
+    fin_paintInt:'Interior Paint', fin_paintExt:'Exterior Paint', fin_cabinets:'Cabinets',
+    fin_countertops:'Countertops', fin_backsplash:'Backsplash', fin_flooring:'Flooring',
+    fin_trim:'Trim & Int Doors', fin_interiorItems:'Interior Items', fin_disposal:'Disposal',
+    fin_portaPotty:'Porta Potty', fin_fireplace:'Fireplace', fin_septic:'Septic',
+    fin_yard:'Yard & Grading', fin_handrail:'Handrail', fin_masterShower:'Master Shower',
+    fin_driveway:'Driveway', fin_exteriorBrick:'Exterior Brick', fin_treads:'Stair Treads'
+  };
+
+  let rows = '';
+  structKeys.forEach((k,i) => {
+    if(trades[k]) rows += `<tr><td class="category-label">${structLabels[i]}</td><td class="amount">${fmt(trades[k])}</td></tr>`;
+  });
+  finishKeys.forEach(k => {
+    if(trades[k]) rows += `<tr><td class="category-label">${finishLabels[k]||k}</td><td class="amount">${fmt(trades[k])}</td></tr>`;
+  });
+
+  document.getElementById('step5').innerHTML = `
+    <h2 class="step-title">Project <span>Summary</span></h2>
+    <p class="step-subtitle">${PROJECT.clientName || 'Client'} — ${PROJECT.address || 'Address'} — ${PROJECT.projectNum}</p>
+
+    <table class="cost-table">
+      <thead><tr><th>Category</th><th>Amount</th></tr></thead>
+      <tbody>
+        ${rows}
+        <tr class="subtotal"><td>Build Cost</td><td id="s5BuildCost">${fmt(PROJECT._buildCost)}</td></tr>
+        <tr><td class="category-label">PM & Overhead (<span id="s5PmPctLabel">${(PROJECT.pmPct*100).toFixed(1)}%</span>)</td><td class="amount" id="s5PM">${fmt(PROJECT._pmOH)}</td></tr>
+        <tr><td class="category-label">Builder Fee (<span id="s5FeePctLabel">${(PROJECT.builderFeePct*100).toFixed(0)}%</span>)</td><td class="amount" id="s5Fee">${fmt(PROJECT._builderFee)}</td></tr>
+        <tr class="total-row"><td>Project Total</td><td id="s5Total">${fmt(PROJECT._projectTotal)}</td></tr>
+      </tbody>
+    </table>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px">
+      <div class="form-group">
+        <label>PM & Overhead %</label>
+        <input type="number" id="pmPctInput" value="${(PROJECT.pmPct*100).toFixed(1)}" step="0.5" min="0" max="10" style="background:var(--primary);border:1px solid var(--gold-dark);color:var(--gold-light);font-weight:600" onchange="PROJECT.pmPct=parseFloat(this.value)/100;recalcAll()">
+      </div>
+      <div class="fee-slider-wrap">
+        <label>Builder Fee <strong id="feeSliderVal">${(PROJECT.builderFeePct*100).toFixed(0)}%</strong></label>
+        <input type="range" id="feeSlider" min="15" max="35" value="${PROJECT.builderFeePct*100}" oninput="PROJECT.builderFeePct=parseInt(this.value)/100;setText('feeSliderVal',this.value+'%');recalcAll()">
+      </div>
+    </div>
+
+    <div class="readout-grid" style="margin-top:24px">
+      <div class="readout-card"><div class="readout-val" id="s5TotalBig">${fmt(PROJECT._projectTotal)}</div><div class="readout-label">Project Total</div></div>
+      <div class="readout-card"><div class="readout-val">${fmtInt(PROJECT.heatedSF||0)}</div><div class="readout-label">Heated & Cooled SF</div></div>
+      <div class="readout-card"><div class="readout-val">${fmtInt((PROJECT.garageSF||0)+(PROJECT.auxiliarySF||0)+(PROJECT.porchFront||0)+(PROJECT.porchRear||0))}</div><div class="readout-label">Auxiliary SF</div></div>
+      <div class="readout-card"><div class="readout-val" id="s5CostSF">${fmt(PROJECT._costPerSF)}</div><div class="readout-label">Cost / Heated & Cooled SF</div></div>
+      <div class="readout-card"><div class="readout-val">${PROJECT.buildType}</div><div class="readout-label">Build Type</div></div>
+    </div>
+
+    <div class="export-grid">
+      <div class="export-btn" onclick="exportExcel()">
+        <div class="exp-name">Excel Workbook</div>
+        <div class="exp-desc">Multi-sheet .xlsx with all details</div>
+      </div>
+      <div class="export-btn" onclick="exportProposal()">
+        <div class="exp-name">Proposal</div>
+        <div class="exp-desc">Branded HTML — print to PDF</div>
+      </div>
+      <div class="export-btn" onclick="exportBOM()">
+        <div class="exp-name">Buildlist</div>
+        <div class="exp-desc">Material takeoff spreadsheet</div>
+      </div>
+    </div>
+
+    <div class="step-nav">
+      <button class="nav-btn" onclick="goToStep(4)">&#8592; Finishes</button>
+      <div></div>
+    </div>
+  `;
+}
+
+function updateStep5Totals() {
+  // lightweight update without full rebuild
+  setText('s5BuildCost', fmt(PROJECT._buildCost));
+  setText('s5PM', fmt(PROJECT._pmOH));
+  setText('s5Fee', fmt(PROJECT._builderFee));
+  setText('s5Total', fmt(PROJECT._projectTotal));
+  setText('s5TotalBig', fmt(PROJECT._projectTotal));
+  setText('s5CostSF', fmt(PROJECT._costPerSF));
+  setText('s5PmPctLabel', (PROJECT.pmPct*100).toFixed(1)+'%');
+  setText('s5FeePctLabel', (PROJECT.builderFeePct*100).toFixed(0)+'%');
+}
+
+// ============================================================
+// EXPORT: EXCEL
+// ============================================================
+function exportExcel() {
+  const wb = XLSX.utils.book_new();
+  // Summary sheet
+  const summaryData = [
+    ['Flynn Development - Estimate Summary'],
+    ['Client:', PROJECT.clientName, '', 'Date:', PROJECT.date],
+    ['Address:', PROJECT.address, '', 'Project #:', PROJECT.projectNum],
+    ['Build Type:', PROJECT.buildType, '', 'Total SF:', (PROJECT._totalUnderRoof||0)],
+    [],
+    ['Category', 'Amount']
+  ];
+  const structLabels = {startCosts:'Start Costs',footer:'Footer',dirtwork:'Dirtwork',block:'Block Foundation',gravel:'Gravel Fill',slab:'Concrete Slab',framing:'Framing',windows:'Windows',doors:'Exterior Doors',roofing:'Roofing',siding:'Siding & Fascia'};
+  const finLabels = {fin_insulation:'Insulation',fin_gutters:'Gutters',fin_electrical:'Electrical',fin_plumbing:'Plumbing',fin_hvac:'HVAC',fin_sheetrock:'Sheetrock',fin_paintInt:'Interior Paint',fin_paintExt:'Exterior Paint',fin_cabinets:'Cabinets',fin_countertops:'Countertops',fin_backsplash:'Backsplash',fin_flooring:'Flooring',fin_trim:'Trim & Int Doors',fin_interiorItems:'Interior Items',fin_disposal:'Disposal',fin_portaPotty:'Porta Potty',fin_fireplace:'Fireplace',fin_septic:'Septic',fin_yard:'Yard & Grading',fin_handrail:'Handrail',fin_masterShower:'Master Shower',fin_driveway:'Driveway',fin_exteriorBrick:'Exterior Brick',fin_treads:'Stair Treads'};
+
+  for(const [k,label] of Object.entries(structLabels)) {
+    if(PROJECT.trades[k]) summaryData.push([label, PROJECT.trades[k]]);
+  }
+  for(const [k,label] of Object.entries(finLabels)) {
+    if(PROJECT.trades[k]) summaryData.push([label, PROJECT.trades[k]]);
+  }
+  summaryData.push([]);
+  summaryData.push(['Build Cost', PROJECT._buildCost]);
+  summaryData.push(['PM & Overhead (' + (PROJECT.pmPct*100).toFixed(1) + '%)', PROJECT._pmOH]);
+  summaryData.push(['Builder Fee (' + (PROJECT.builderFeePct*100).toFixed(0) + '%)', PROJECT._builderFee]);
+  summaryData.push(['PROJECT TOTAL', PROJECT._projectTotal]);
+  summaryData.push(['Cost per SF', PROJECT._costPerSF]);
+
+  const ws1 = XLSX.utils.aoa_to_sheet(summaryData);
+  ws1['!cols'] = [{wch:30},{wch:15},{wch:5},{wch:15},{wch:20}];
+  XLSX.utils.book_append_sheet(wb, ws1, 'Summary');
+
+  // Dimensions sheet
+  const dimData = [
+    ['Building Dimensions'],
+    ['Length', PROJECT.length, 'ft'],
+    ['Width', PROJECT.width, 'ft'],
+    ['Wall Height', PROJECT.wallHeight, 'ft'],
+    ['Pitch', PROJECT.pitch],
+    ['Stories', PROJECT.stories],
+    ['Foundation', PROJECT.foundationType],
+    [],
+    ['Areas'],
+    ['Heated SF', PROJECT.heatedSF],
+    ['Front Porch', PROJECT.porchFront],
+    ['Rear Porch', PROJECT.porchRear],
+    ['Garage SF', PROJECT.garageSF],
+    ['Auxiliary SF', PROJECT.auxiliarySF],
+    ['2nd Story SF', PROJECT.secondStorySF],
+    [],
+    ['Calculated'],
+    ['Perimeter', PROJECT._perimeter, 'ft'],
+    ['Total Under Roof', PROJECT._totalUnderRoof, 'SF'],
+    ['Wall Area', PROJECT._wallArea, 'SF'],
+    ['Roof Area', Math.round(PROJECT._roofArea||0), 'SF'],
+  ];
+  const ws2 = XLSX.utils.aoa_to_sheet(dimData);
+  ws2['!cols'] = [{wch:20},{wch:12},{wch:8}];
+  XLSX.utils.book_append_sheet(wb, ws2, 'Dimensions');
+
+  // Rates sheet
+  const ratesData = [['Rate', 'Value']];
+  for(const [k,v] of Object.entries(PRICING)) {
+    if(typeof v === 'object') {
+      for(const [pk,pv] of Object.entries(v)) ratesData.push([k+'.'+pk, pv]);
+    } else {
+      ratesData.push([k, v]);
+    }
+  }
+  const ws3 = XLSX.utils.aoa_to_sheet(ratesData);
+  ws3['!cols'] = [{wch:30},{wch:15}];
+  XLSX.utils.book_append_sheet(wb, ws3, 'Rates');
+
+  const filename = (PROJECT.clientName || 'Estimate').replace(/\s+/g,'-') + '-' + PROJECT.projectNum + '.xlsx';
+  XLSX.writeFile(wb, filename);
+}
+
+// ============================================================
+// EXPORT: PROPOSAL (HTML in new tab)
+// ============================================================
+function exportProposal() {
+  const trades = PROJECT.trades;
+  const structKeys = ['startCosts','footer','dirtwork','block','gravel','slab','framing','windows','doors','roofing','siding'];
+  const structLabels = ['Start Costs & Permits','Footer','Excavation & Dirt Work','Block Foundation','Gravel Fill','Concrete Slab','Framing','Windows','Exterior Doors','Roofing','Siding & Fascia'];
+  const finLabels = {fin_insulation:'Insulation',fin_gutters:'Gutters',fin_electrical:'Electrical',fin_plumbing:'Plumbing',fin_hvac:'HVAC',fin_sheetrock:'Sheetrock',fin_paintInt:'Interior Paint',fin_paintExt:'Exterior Paint',fin_cabinets:'Cabinets',fin_countertops:'Countertops',fin_backsplash:'Backsplash',fin_flooring:'Flooring',fin_trim:'Trim & Interior Doors',fin_interiorItems:'Interior Items',fin_disposal:'Disposal & Cleanup',fin_portaPotty:'Porta Potty',fin_fireplace:'Fireplace',fin_septic:'Septic',fin_yard:'Yard & Grading',fin_handrail:'Handrail',fin_masterShower:'Master Tile Shower',fin_driveway:'Driveway',fin_exteriorBrick:'Exterior Brick',fin_treads:'Stair Treads'};
+
+  let costRows = '';
+  structKeys.forEach((k,i) => {
+    if(trades[k]) costRows += `<tr><td class="category-label">${structLabels[i]}</td><td class="amount">${fmt(trades[k])}</td></tr>`;
+  });
+  Object.keys(finLabels).forEach(k => {
+    if(trades[k]) costRows += `<tr><td class="category-label">${finLabels[k]}</td><td class="amount">${fmt(trades[k])}</td></tr>`;
+  });
+
+  const pitchLabel = PROJECT.pitch || '6:12';
+  const totalSF = PROJECT._totalUnderRoof || 0;
+  const dims = PROJECT.length && PROJECT.width ? PROJECT.length + '×' + PROJECT.width : '';
+  const dateStr = new Date(PROJECT.date).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+
+  const html = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Flynn Development | ${PROJECT.clientName||'Proposal'}</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#0a0a0a;--gold:#C5A55A;--gold-light:#D4BA78;--gold-dark:#A8893D;--glass:rgba(197,165,90,0.04);--glass-border:rgba(197,165,90,0.12);--glass-hover:rgba(197,165,90,0.08);--text:#f1f1f1;--text-muted:#888;--gradient-gold:linear-gradient(135deg,#C5A55A,#D4BA78,#A8893D)}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Inter',sans-serif;background:var(--primary);color:var(--text);overflow-x:hidden}
+.bg-texture{position:fixed;top:0;left:0;width:100%;height:100%;background-image:radial-gradient(ellipse at 20% 50%,rgba(197,165,90,0.03) 0%,transparent 50%),radial-gradient(ellipse at 80% 20%,rgba(197,165,90,0.02) 0%,transparent 50%),linear-gradient(rgba(255,255,255,0.01) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.01) 1px,transparent 1px);background-size:100% 100%,100% 100%,80px 80px,80px 80px;z-index:0;pointer-events:none}
+.gold-line{height:3px;background:var(--gradient-gold);border:none}
+header{position:relative;z-index:1;padding:40px 40px 32px;border-bottom:1px solid var(--glass-border)}.header-inner{max-width:1000px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px}
+.brand{display:flex;align-items:center;gap:20px}.brand img{height:70px;border-radius:8px}.brand-text h1{font-family:'Space Grotesk',sans-serif;font-size:1.5rem;font-weight:700;background:var(--gradient-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:2px;text-transform:uppercase}.brand-text .tagline{font-size:0.65rem;font-weight:600;color:var(--gold);letter-spacing:4px;text-transform:uppercase;margin-top:2px}
+.proposal-meta{text-align:right}.proposal-meta p{color:var(--text-muted);font-size:0.85rem;line-height:1.9}.proposal-meta strong{color:var(--gold-light)}
+.hero{position:relative;z-index:1;padding:80px 40px 40px;text-align:center}.hero h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:900;letter-spacing:-1px;margin-bottom:16px}.hero h2 span{background:var(--gradient-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.specs-bar{position:relative;z-index:1;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;max-width:1000px;margin:40px auto 60px;padding:0 40px}.spec-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:14px;padding:24px 16px;text-align:center;backdrop-filter:blur(10px)}.spec-card h3{font-family:'Space Grotesk',sans-serif;font-size:1.7rem;font-weight:800;background:var(--gradient-gold);-webkit-background-clip:text;-webkit-text-fill-color:transparent}.spec-card p{color:var(--text-muted);font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;margin-top:4px}
+section{position:relative;z-index:1;padding:60px 40px}.section-container{max-width:1000px;margin:0 auto}.section-label{display:inline-block;background:var(--glass);border:1px solid var(--glass-border);padding:6px 16px;border-radius:100px;font-size:0.7rem;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:3px;margin-bottom:16px}.section-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;letter-spacing:-0.5px;margin-bottom:32px}
+.cost-table{width:100%;border-collapse:separate;border-spacing:0 5px}.cost-table thead th{font-family:'Space Grotesk',sans-serif;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:var(--gold);padding:12px 20px;text-align:left;border-bottom:2px solid rgba(197,165,90,0.2)}.cost-table thead th:last-child{text-align:right}.cost-table tbody tr{background:var(--glass)}.cost-table td{padding:14px 20px;font-size:0.92rem}.cost-table td:first-child{border-radius:10px 0 0 10px;border-left:1px solid var(--glass-border)}.cost-table td:last-child{border-radius:0 10px 10px 0;border-right:1px solid var(--glass-border);text-align:right;font-family:'Space Grotesk',sans-serif;font-weight:600}.cost-table .category-label{color:var(--text-muted);font-size:0.88rem}.cost-table tr.subtotal{background:rgba(197,165,90,0.08)}.cost-table tr.subtotal td{font-weight:700;font-family:'Space Grotesk',sans-serif;color:var(--gold-light);border-top:2px solid rgba(197,165,90,0.25)}.cost-table tr.total-row{background:var(--gradient-gold)}.cost-table tr.total-row td{font-weight:800;font-family:'Space Grotesk',sans-serif;font-size:1.15rem;color:#0a0a0a;padding:20px}
+.sig-section{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:60px}.sig-block{border-top:2px solid var(--glass-border);padding-top:16px}.sig-block p{color:var(--text-muted);font-size:0.85rem}.sig-block .sig-line{height:60px}.sig-block .sig-label{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:0.9rem;color:var(--gold-light)}
+footer{position:relative;z-index:1;text-align:center;padding:50px 40px 40px;border-top:1px solid var(--glass-border)}footer img{height:50px;margin-bottom:12px;border-radius:6px}footer .tagline-footer{font-size:0.65rem;font-weight:600;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:12px}footer p{color:var(--text-muted);font-size:0.8rem}
+@media print{.bg-texture{display:none}body{background:#fff;color:#111}.cost-table tbody tr{background:#f8f6f0}.cost-table tr.subtotal{background:#f0e8d0}.cost-table tr.total-row{background:#C5A55A}.cost-table tr.total-row td{color:#0a0a0a}header,section,footer{padding:30px 20px}.spec-card{border-color:#ddd;background:#fafafa}}
+</style></head><body>
+<div class="bg-texture"></div>
+<hr class="gold-line">
+<header><div class="header-inner"><div class="brand"><div class="brand-text"><h1>Flynn Development</h1><p class="tagline">Design &bull; Construct &bull; Transform</p></div></div>
+<div class="proposal-meta"><p><strong>Prepared For:</strong> ${PROJECT.clientName||'Client'}</p><p><strong>Date:</strong> ${dateStr}</p>${PROJECT.projectName?'<p><strong>Project:</strong> '+PROJECT.projectName+'</p>':''}<p><strong>Proposal #:</strong> ${PROJECT.projectNum}</p></div></div></header>
+<div class="hero"><h2><span>Construction Proposal</span></h2>${PROJECT.projectName?'<p style="font-family:Space Grotesk,sans-serif;font-size:1.2rem;font-weight:600;color:var(--text-muted);margin-top:16px;letter-spacing:1px">'+PROJECT.projectName+'</p>':''}</div>
+<div class="specs-bar">
+  <div class="spec-card"><h3>${fmtInt(PROJECT.heatedSF||0)}</h3><p>Heated & Cooled SF</p></div>
+  <div class="spec-card"><h3>${fmtInt((PROJECT.garageSF||0)+(PROJECT.auxiliarySF||0)+(PROJECT.porchFront||0)+(PROJECT.porchRear||0))}</h3><p>Auxiliary SF</p></div>
+  <div class="spec-card"><h3>${fmtInt(totalSF)}</h3><p>Total Under Roof</p></div>
+  <div class="spec-card"><h3>${PROJECT.wallHeight||10}'</h3><p>Wall Height</p></div>
+</div>
+<section class="cost-section"><div class="section-container"><span class="section-label">Investment</span><h3 class="section-title">Cost Breakdown</h3>
+<table class="cost-table"><thead><tr><th>Category</th><th>Amount</th></tr></thead><tbody>
+${costRows}
+<tr class="subtotal"><td>Build Cost</td><td>${fmt(PROJECT._buildCost)}</td></tr>
+<tr><td class="category-label">Project Management & Overhead</td><td class="amount">${fmt(PROJECT._pmOH)}</td></tr>
+<tr><td class="category-label">Builder Fee</td><td class="amount">${fmt(PROJECT._builderFee)}</td></tr>
+<tr class="total-row"><td>Project Total</td><td>${fmt(PROJECT._projectTotal)}</td></tr>
+</tbody></table></div></section>
+<section><div class="section-container"><div class="sig-section"><div class="sig-block"><div class="sig-line"></div><p class="sig-label">Flynn Development</p><p>Authorized Signature & Date</p></div><div class="sig-block"><div class="sig-line"></div><p class="sig-label">${PROJECT.clientName||'Client'}</p><p>Client Signature & Date</p></div></div></div></section>
+<hr class="gold-line">
+<footer><p class="tagline-footer">Design &bull; Construct &bull; Transform</p><p>Cookeville, Tennessee &bull; &copy; 2026 Flynn Development. All rights reserved.</p></footer>
+</body></html>`;
+
+  const w = window.open('', '_blank');
+  w.document.write(html);
+  w.document.close();
+}
+
+// ============================================================
+// EXPORT: BILL OF MATERIALS
+// ============================================================
+function exportBOM() {
+  const wb = XLSX.utils.book_new();
+  const data = [
+    [PROJECT.clientName + ' - Material Takeoff'],
+    ['Flynn Development'],
+    ['Date:', PROJECT.date],
+    ['Building:', PROJECT.length+'ft x '+PROJECT.width+'ft x '+PROJECT.wallHeight+'ft walls - '+PROJECT.pitch+' pitch'],
+    [],
+    ['CONCRETE'],
+    ['Material','Quantity','Unit','Notes'],
+  ];
+  const slabArea = (PROJECT.heatedSF||0)+(PROJECT.porchFront||0)+(PROJECT.porchRear||0)+(PROJECT.garageSF||0)+(PROJECT.auxiliarySF||0);
+  const slabD = PROJECT.slabDepth||4;
+  const slabYd = ((slabArea*(slabD/12))/27*1.05);
+  data.push(['Concrete ('+slabD+'" slab)', slabYd.toFixed(1), 'cu yd', 'Order '+ Math.ceil(slabYd)+' cu yd']);
+  data.push(['Vapor barrier 6mil poly', slabArea, 'sq ft', '']);
+  data.push(['Gravel base (4" depth)', ((slabArea*(4/12))/27).toFixed(1), 'cu yd', '']);
+  data.push(['Form lumber', Math.round(PROJECT._perimeter||0), 'lin ft', 'Perimeter forms']);
+  data.push([]);
+
+  data.push(['FRAMING - '+PROJECT.framingWallType+' Walls @ 16" OC']);
+  data.push(['Material','Quantity','Unit','Notes']);
+  const perim = PROJECT._perimeter||0;
+  data.push(['Bottom plate (PT '+PROJECT.framingWallType+')', perim, 'lin ft', '']);
+  data.push(['Top plates (double)', perim*2, 'lin ft', '']);
+  const studs = Math.ceil(perim/1.333) + 20; // 16" OC + extras
+  data.push(['Studs ('+PROJECT.framingWallType+'x'+(PROJECT.wallHeight||10)+'ft)', studs, 'ea', '16" OC + corners/headers']);
+  data.push([]);
+
+  data.push(['ROOF TRUSSES']);
+  data.push(['Material','Quantity','Unit','Notes']);
+  const trussCount = Math.ceil((PROJECT.length||0)/1.333)+1;
+  data.push(['Trusses ('+PROJECT.width+'ft span '+PROJECT.pitch+')', trussCount, 'ea', '16" OC']);
+  data.push(['Hurricane ties', trussCount*2, 'ea', 'Both ends']);
+  data.push([]);
+
+  data.push(['SHEATHING']);
+  data.push(['Material','Quantity','Unit','Notes']);
+  const wallSheets = Math.ceil((PROJECT._wallArea||0)/32*1.1);
+  const roofSheets = Math.ceil((PROJECT._roofArea||0)/32*1.1);
+  data.push(['Wall sheathing (7/16 OSB 4x8)', wallSheets, 'sheets', '']);
+  data.push(['Roof sheathing (7/16 OSB 4x8)', roofSheets, 'sheets', '']);
+  data.push([]);
+
+  data.push(['ROOFING - '+PROJECT.roofType]);
+  data.push(['Material','Quantity','Unit','Notes']);
+  const roofSF = Math.round(PROJECT._roofArea||0);
+  data.push(['Roofing material', Math.round(roofSF*1.08), 'sq ft', roofSF+' + 8% waste']);
+  data.push(['Ridge cap', PROJECT.length||0, 'lin ft', '']);
+  data.push(['Drip edge', Math.round(perim*1.1), 'lin ft', '']);
+  data.push([]);
+
+  data.push(['SIDING - '+PROJECT.sidingType]);
+  data.push(['Material','Quantity','Unit','Notes']);
+  const netSiding = Math.round((PROJECT._wallArea||0) - (PROJECT._windowOpeningArea||0) - (PROJECT._doorOpeningArea||0));
+  data.push(['Siding panels', Math.round(netSiding*1.1), 'sq ft', netSiding+' net + 10% waste']);
+  data.push(['Corner trim', (PROJECT.wallHeight||10)*4, 'lin ft', '4 corners']);
+  data.push(['J-channel / trim', Math.round(perim*1.3), 'lin ft', '']);
+  data.push([]);
+
+  data.push(['WINDOWS & DOORS']);
+  data.push(['Material','Quantity','Unit','Notes']);
+  PROJECT.windowList.forEach(w => data.push([w.size+' window', w.qty, 'ea', w.color?'Color upgrade':'Standard']));
+  PROJECT.doorList.forEach(d => {
+    const names = {frontEntry:'Entry door 3-0x6-8',rearExit:'Rear exit door',garageDoor16x8:'Garage door 16x8',garageDoor18x7:'Garage door 18x7',garageDoor10x10:'Garage door 10x10'};
+    data.push([names[d.type]||d.type, d.qty, 'ea', '']);
+  });
+
+  const ws = XLSX.utils.aoa_to_sheet(data);
+  ws['!cols'] = [{wch:35},{wch:12},{wch:8},{wch:40}];
+  XLSX.utils.book_append_sheet(wb, ws, 'Materials');
+  const filename = (PROJECT.clientName||'BOM').replace(/\s+/g,'-') + '-materials.xlsx';
+  XLSX.writeFile(wb, filename);
+}
+
+// ============================================================
+// RATES PANEL
+// ============================================================
+function buildRatesPanel() {
+  const groups = [
+    { name: 'Concrete & Foundation', rates: [
+      ['concretePerYard','Concrete $/yd'], ['steelMixPerYard','Steel Mix $/yd'], ['slabLaborPerSF','Slab Labor $/SF'],
+      ['footerLabor','Footer Labor'], ['costPerBlock','Block Mat $'], ['laborPerBlock','Block Labor $'],
+      ['gravelPerTon','Gravel $/ton'], ['concreteSeal','Concrete Seal'], ['termiteTreatment','Termite Treat']
+    ]},
+    { name: 'Framing', rates: [
+      ['wallRate2x4','2x4 Wall $/SF'], ['wallRate2x6','2x6 Wall $/SF'], ['complexityMult','Complexity Mult'],
+      ['floorSystemPerSF','Floor Sys $/SF'], ['trussesPerSF','Trusses $/SF'], ['osbPerSF','OSB $/SF'],
+      ['framingLaborPerSF','Frame Labor $/SF']
+    ]},
+    { name: 'Roofing (per square)', rates: [
+      ['shingleLabor','Shingle Labor'], ['shingleMat','Shingle Material'],
+      ['metalScrewLabor','Metal Screw Lab'], ['metalScrewMat','Metal Screw Mat'],
+      ['standingSeamLabor','StandSeam Labor'], ['standingSeamMat','StandSeam Mat']
+    ]},
+    { name: 'Siding (per square)', rates: [
+      ['lapSidingMat','Lap Mat'], ['lapSidingLabor','Lap Labor'],
+      ['metalSidingMat','Metal Mat'], ['metalSidingLabor','Metal Labor']
+    ]},
+    { name: 'Windows', rates: [
+      ['win3050','3-0x5-0'], ['win3060','3-0x6-0'], ['win6050','6-0x5-0'],
+      ['win3030','3-0x3-0'], ['winColorMult','Color Mult'], ['winPellaMult','Pella Mult']
+    ]},
+    { name: 'Doors', rates: [
+      ['frontEntry','Entry Door'], ['rearExit','Rear Exit'],
+      ['garageDoor16x8','16x8 Garage'], ['garageDoor18x7','18x7 Garage'], ['garageDoor10x10','10x10 Garage']
+    ]},
+    { name: 'Finish Rates', rates: [
+      ['electricalPerSF','Electrical $/SF'], ['electricalBase','Electrical Base'],
+      ['plumbingPerFixture','Plumbing/Fixture'], ['sheetrockRate','Sheetrock Rate'],
+      ['paintIntPerSF','Paint Int $/SF'], ['paintExtPerSF','Paint Ext $/SF'],
+      ['guttersPerLinFt','Gutters $/LF'], ['countertopsPerSF','Counter $/SF'],
+      ['flooringBudget','Floor Budget $/SF'], ['flooringMid','Floor Mid $/SF'], ['flooringPremium','Floor Premium $/SF'],
+      ['trimPerSF','Trim $/SF'], ['trimPerDoor','Trim $/Door']
+    ]},
+    { name: 'Allowances', rates: [
+      ['insulationGarage','Insul Garage'], ['insulationBarndo','Insul Barndo'],
+      ['insulationCustom','Insul Custom'], ['insulationHighEnd','Insul High-End'],
+      ['hvacBarndo','HVAC Barndo'], ['hvacCustom','HVAC Custom'], ['hvacHighEnd','HVAC High-End'],
+      ['disposal','Disposal'], ['portaPottyPerMonth','PortaPotty/mo'],
+      ['fireplace','Fireplace'], ['septic','Septic'], ['yard','Yard'],
+      ['handrail','Handrail'], ['masterShower','Master Shower'], ['driveway','Driveway']
+    ]}
+  ];
+
+  let html = `<h3>Master <span>Rate Database</span></h3>`;
+  groups.forEach(g => {
+    html += `<div class="rate-group"><h5>${g.name}</h5>`;
+    g.rates.forEach(([key, label]) => {
+      html += `<div class="rate-row"><label>${label}</label><input type="number" step="any" value="${PRICING[key]}" onchange="PRICING.${key}=parseFloat(this.value);savePricing();recalcAll()"></div>`;
+    });
+    html += '</div>';
+  });
+  html += `<button class="btn-reset" onclick="resetPricing()">Reset All to Defaults</button>`;
+  document.getElementById('ratesPanel').innerHTML = html;
+}
+
+function toggleRatesPanel() {
+  document.getElementById('ratesPanel').classList.toggle('open');
+  document.getElementById('ratesOverlay').classList.toggle('open');
+}
+
+function savePricing() {
+  localStorage.setItem('bidkit_pricing', JSON.stringify(PRICING));
+}
+
+function loadPricing() {
+  const saved = localStorage.getItem('bidkit_pricing');
+  if(saved) {
+    try {
+      const parsed = JSON.parse(saved);
+      Object.assign(PRICING, parsed);
+    } catch(e) {}
+  }
+}
+
+function resetPricing() {
+  PRICING = JSON.parse(JSON.stringify(DEFAULT_PRICING));
+  localStorage.removeItem('bidkit_pricing');
+  buildRatesPanel();
+  recalcAll();
+}
+
+// ============================================================
+// LOCAL STORAGE — Save / Load / Auto-save
+// ============================================================
+let _skipAutoSave = false;
+function scheduleAutoSave() {
+  clearTimeout(autoSaveTimer);
+  if(_skipAutoSave) return;
+  autoSaveTimer = setTimeout(() => {
+    localStorage.setItem('bidkit_current', JSON.stringify(PROJECT));
+  }, 2000);
+}
+
+function saveEstimate() {
+  if(!PROJECT.clientName && !PROJECT.projectNum) {
+    alert('Enter a client name or project number first.');
+    return;
+  }
+  const key = 'bidkit_est_' + PROJECT.projectNum;
+  const label = PROJECT.clientName ? PROJECT.clientName + ' (' + PROJECT.projectNum + ')' : PROJECT.projectNum;
+  PROJECT._savedAt = new Date().toISOString();
+  localStorage.setItem(key, JSON.stringify(PROJECT));
+  localStorage.setItem('bidkit_current_key', key);
+  updateSavedList(key);
+  alert('Saved: ' + label);
+}
+
+function loadEstimateFromSelect() {
+  const sel = document.getElementById('savedEstimates');
+  const key = sel.value;
+  if(!key) return;
+  const data = localStorage.getItem(key);
+  if(data) {
+    try {
+      const parsed = JSON.parse(data);
+      // Reset PROJECT then apply saved data
+      Object.keys(PROJECT).forEach(k => { if(!k.startsWith('_')) delete PROJECT[k]; });
+      Object.assign(PROJECT, parsed);
+      localStorage.setItem('bidkit_current_key', key);
+      rebuildAll();
+    } catch(e) { alert('Error loading estimate'); }
+  }
+}
+
+function newEstimate() {
+  if(PROJECT.clientName && !confirm('Start a new blank estimate? (Make sure you saved first)')) return;
+  // Stop auto-save from re-saving old data during rebuild
+  _skipAutoSave = true;
+  clearTimeout(autoSaveTimer);
+  // Clear storage first
+  localStorage.removeItem('bidkit_current_key');
+  localStorage.removeItem('bidkit_current');
+  // Wipe all existing keys
+  Object.keys(PROJECT).forEach(k => delete PROJECT[k]);
+  Object.assign(PROJECT, {
+    clientName:'', projectName:'', address:'', date: new Date().toISOString().slice(0,10),
+    projectNum: 'FD-'+new Date().getFullYear()+'-'+String(Math.floor(Math.random()*9000)+1000),
+    buildType:'garage', heatedSF:0, porchFront:0, porchRear:0,
+    garageSF:0, auxiliarySF:0, secondStorySF:0,
+    length:0, width:0, wallHeight:10, pitch:'6:12',
+    stories:1, foundationType:'slab',
+    heatedOverride:0, perimOverride:0,
+    areas:{main:{l:0,w:0},porchFront:{l:0,w:0},porchRear:{l:0,w:0},garage:{l:0,w:0},auxiliary:{l:0,w:0},secondStory:{l:0,w:0}},
+    startCosts:{survey:false,permit:false,electric:false,water:false,septicPermit:false},
+    footer:{pumpTruck:false}, blockCourses:3, slabDepth:4,
+    framingWallType:'2x6', windowList:[], doorList:[],
+    roofType:'shingles', sidingType:'lap', finishes:{},
+    builderFeePct:0.30, pmPct:0.025, trades:{},
+    _flooringTier:'budget',
+    _savedAt:null
+  });
+  setDefaultFinishes('garage');
+  // Force all finishes off for blank estimate
+  Object.keys(PROJECT.finishes).forEach(k => PROJECT.finishes[k] = false);
+  currentStep = 1;
+  rebuildAll();
+  // Re-enable auto-save after rebuild is done
+  _skipAutoSave = false;
+  updateSavedList('');
+}
+
+function deleteEstimate() {
+  const sel = document.getElementById('savedEstimates');
+  const key = sel.value;
+  if(!key) { alert('Select a saved estimate to delete.'); return; }
+  const data = localStorage.getItem(key);
+  let label = key;
+  try { const d = JSON.parse(data); label = d.clientName || d.projectNum || key; } catch(e){}
+  if(!confirm('Delete estimate "' + label + '"? This cannot be undone.')) return;
+  localStorage.removeItem(key);
+  if(localStorage.getItem('bidkit_current_key') === key) {
+    localStorage.removeItem('bidkit_current_key');
+    localStorage.removeItem('bidkit_current');
+  }
+  updateSavedList('');
+}
+
+function updateSavedList(selectKey) {
+  const sel = document.getElementById('savedEstimates');
+  sel.innerHTML = '<option value="">-- Saved Estimates --</option>';
+  const estimates = [];
+  for(let i=0; i<localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if(key.startsWith('bidkit_est_')) {
+      try {
+        const d = JSON.parse(localStorage.getItem(key));
+        const label = d.clientName ? d.clientName + ' — ' + d.projectNum : d.projectNum;
+        const date = d._savedAt ? ' (' + new Date(d._savedAt).toLocaleDateString() + ')' : '';
+        estimates.push({key, label: label + date});
+      } catch(e){}
+    }
+  }
+  estimates.sort((a,b) => a.label.localeCompare(b.label));
+  estimates.forEach(e => {
+    sel.innerHTML += `<option value="${e.key}" ${e.key===selectKey?'selected':''}>${e.label}</option>`;
+  });
+}
+
+function exportJSON() {
+  const blob = new Blob([JSON.stringify(PROJECT, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = (PROJECT.clientName||'bidkit')+'-estimate.json';
+  a.click();
+}
+
+function loadJSON() {
+  const input = document.createElement('input');
+  input.type = 'file'; input.accept = '.json';
+  input.onchange = e => {
+    const file = e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      try {
+        Object.assign(PROJECT, JSON.parse(ev.target.result));
+        rebuildAll();
+      } catch(e) { alert('Invalid JSON file'); }
+    };
+    reader.readAsText(file);
+  };
+  input.click();
+}
+
+function rebuildAll() {
+  buildStep1();
+  buildStep2();
+  buildStep3();
+  buildStep4();
+  buildRatesPanel();
+  goToStep(currentStep);
+}
+
+// ============================================================
+// INIT
+// ============================================================
+function init() {
+  loadPricing();
+  // Try loading last-used estimate
+  const lastKey = localStorage.getItem('bidkit_current_key');
+  if(lastKey) {
+    const saved = localStorage.getItem(lastKey);
+    if(saved) {
+      try { Object.assign(PROJECT, JSON.parse(saved)); } catch(e){}
+    }
+  } else {
+    const autosave = localStorage.getItem('bidkit_current');
+    if(autosave) {
+      try { Object.assign(PROJECT, JSON.parse(autosave)); } catch(e){}
+    }
+  }
+  if(!PROJECT.finishes || Object.keys(PROJECT.finishes).length === 0) {
+    setDefaultFinishes(PROJECT.buildType || 'garage');
+  }
+  rebuildAll();
+  updateSavedList(lastKey || '');
+  goToStep(1);
+}
+
+init();
+</script>
+</body>
+</html>
