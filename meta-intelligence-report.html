@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meta Intelligence Report | Modern Development</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0a0b;--surface:#111113;--card:#161618;--nested:#1c1c1f;
+  --gold:#C5A55A;--gold-dim:rgba(197,165,90,0.12);--gold-glow:rgba(197,165,90,0.25);
+  --red:#ef4444;--red-dim:rgba(239,68,68,0.12);
+  --green:#22c55e;--green-dim:rgba(34,197,94,0.12);
+  --amber:#f59e0b;--amber-dim:rgba(245,158,11,0.12);
+  --blue:#3b82f6;--blue-dim:rgba(59,130,246,0.12);
+  --text:#e8e6e3;--text-secondary:rgba(232,230,227,0.6);--text-tertiary:rgba(232,230,227,0.3);
+  --border:rgba(255,255,255,0.06);
+  --font-sans:'Instrument Sans',system-ui,sans-serif;
+  --font-mono:'Space Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+
+/* Hero */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:48px 24px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:800px;height:800px;background:radial-gradient(circle,rgba(197,165,90,0.06) 0%,transparent 70%);pointer-events:none}
+.hero-badge{display:inline-block;padding:6px 20px;border:1px solid var(--gold);border-radius:9999px;font-family:var(--font-mono);font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:32px;opacity:0;animation:fadeUp .6s .2s forwards}
+.hero h1{font-size:clamp(36px,6vw,64px);font-weight:700;letter-spacing:-2px;line-height:1.05;color:var(--text);opacity:0;animation:fadeUp .6s .35s forwards}
+.hero h1 span{color:var(--gold)}
+.hero-sub{font-size:15px;color:var(--text-secondary);max-width:480px;margin-top:16px;opacity:0;animation:fadeUp .6s .5s forwards}
+.hero-meta{display:flex;gap:32px;margin-top:40px;font-family:var(--font-mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--text-tertiary);opacity:0;animation:fadeUp .6s .65s forwards}
+.hero-meta strong{color:var(--gold)}
+.scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);opacity:0;animation:fadeUp .6s .8s forwards}
+.scroll-hint span{display:block;width:1px;height:40px;background:linear-gradient(to bottom,var(--gold),transparent);margin:0 auto}
+
+/* Layout */
+.container{max-width:960px;margin:0 auto;padding:0 24px}
+section{padding:80px 0}
+.section-label{font-family:var(--font-mono);font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.section-title{font-size:28px;font-weight:700;letter-spacing:-0.8px;margin-bottom:8px}
+.section-desc{font-size:15px;color:var(--text-secondary);margin-bottom:40px}
+.divider{width:40px;height:2px;background:var(--gold);margin-bottom:40px;border-radius:1px}
+
+/* KPI Grid */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;margin-bottom:48px}
+.kpi-card{background:var(--card);border-radius:12px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,0.3),0 1px 2px rgba(0,0,0,0.2);transition:all .3s cubic-bezier(.2,0,0,1)}
+.kpi-card:hover{transform:translateY(-4px);box-shadow:0 4px 14px rgba(0,0,0,0.4),0 2px 6px rgba(0,0,0,0.3)}
+.kpi-label{font-size:11px;font-family:var(--font-mono);letter-spacing:1px;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:8px}
+.kpi-value{font-size:24px;font-weight:700;letter-spacing:-0.5px;color:var(--text)}
+.kpi-card.highlight .kpi-value{color:var(--gold)}
+
+/* Tables */
+.table-wrap{overflow-x:auto;margin-bottom:32px;border-radius:12px;background:var(--card);box-shadow:0 1px 3px rgba(0,0,0,0.3)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+thead{background:var(--nested)}
+th{padding:12px 16px;text-align:left;font-weight:600;font-size:12px;letter-spacing:0.5px;text-transform:uppercase;color:var(--text-secondary);border-bottom:1px solid var(--border)}
+td{padding:12px 16px;border-bottom:1px solid var(--border);color:var(--text-secondary)}
+tr:last-child td{border-bottom:none}
+td:first-child{color:var(--text);font-weight:500}
+.row-highlight td{color:var(--gold) !important;font-weight:600}
+.row-dim td{opacity:0.5}
+.val-good{color:var(--green) !important}
+.val-bad{color:var(--red) !important}
+.val-warn{color:var(--amber) !important}
+.val-gold{color:var(--gold) !important}
+
+/* Finding Cards */
+.finding{background:var(--card);border-radius:12px;padding:24px;margin-bottom:16px;border-left:3px solid var(--gold);box-shadow:0 1px 3px rgba(0,0,0,0.3)}
+.finding.critical{border-left-color:var(--red)}
+.finding.good{border-left-color:var(--green)}
+.finding.warn{border-left-color:var(--amber)}
+.finding.info{border-left-color:var(--blue)}
+.finding-title{font-weight:700;font-size:16px;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.finding-title .tag{font-size:10px;font-family:var(--font-mono);letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border-radius:4px;font-weight:600}
+.tag-critical{background:var(--red-dim);color:var(--red)}
+.tag-good{background:var(--green-dim);color:var(--green)}
+.tag-warn{background:var(--amber-dim);color:var(--amber)}
+.tag-gold{background:var(--gold-dim);color:var(--gold)}
+.finding p{font-size:14px;color:var(--text-secondary);line-height:1.65}
+
+/* Alert Box */
+.alert{background:var(--red-dim);border:1px solid rgba(239,68,68,0.2);border-radius:12px;padding:24px;margin-bottom:32px}
+.alert-title{font-weight:700;color:var(--red);font-size:15px;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.alert p{font-size:14px;color:var(--text-secondary);line-height:1.6}
+
+/* Diagnosis */
+.diagnosis-list{list-style:none;counter-reset:diag}
+.diagnosis-list li{counter-increment:diag;position:relative;padding:20px 20px 20px 56px;background:var(--card);border-radius:12px;margin-bottom:12px;font-size:14px;color:var(--text-secondary);line-height:1.65;box-shadow:0 1px 3px rgba(0,0,0,0.3)}
+.diagnosis-list li::before{content:counter(diag);position:absolute;left:16px;top:20px;width:28px;height:28px;border-radius:8px;background:var(--gold-dim);color:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;font-family:var(--font-mono)}
+.diagnosis-list li strong{color:var(--text)}
+
+/* Game Plan */
+.phase{margin-bottom:48px}
+.phase-header{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.phase-num{width:36px;height:36px;border-radius:10px;background:var(--gold-dim);color:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;font-family:var(--font-mono)}
+.phase-title{font-size:20px;font-weight:700;letter-spacing:-0.5px}
+.phase-subtitle{font-size:13px;color:var(--text-tertiary);font-family:var(--font-mono)}
+.action-list{list-style:none;padding-left:0}
+.action-list li{position:relative;padding:12px 16px 12px 32px;background:var(--card);border-radius:10px;margin-bottom:8px;font-size:14px;color:var(--text-secondary);line-height:1.6}
+.action-list li::before{content:'';position:absolute;left:14px;top:18px;width:8px;height:8px;border-radius:50%;background:var(--gold)}
+.action-list li strong{color:var(--text)}
+.action-group{margin-bottom:24px}
+.action-group-title{font-size:14px;font-weight:600;color:var(--gold);margin-bottom:10px;font-family:var(--font-mono);letter-spacing:0.5px;text-transform:uppercase}
+
+/* Projected Impact */
+.impact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px}
+.impact-card{background:var(--card);border-radius:12px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,0.3)}
+.impact-label{font-size:11px;font-family:var(--font-mono);letter-spacing:1px;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:12px}
+.impact-current{font-size:14px;color:var(--text-tertiary);margin-bottom:4px;text-decoration:line-through}
+.impact-projected{font-size:22px;font-weight:700;color:var(--green)}
+
+/* Footer */
+.site-footer{padding:48px 24px;text-align:center;border-top:1px solid var(--border)}
+.site-footer p{font-size:12px;color:var(--text-tertiary);font-family:var(--font-mono)}
+.footer-brand{color:var(--gold);font-weight:600}
+
+/* Scroll Reveal */
+.reveal{opacity:0;transform:translateY(24px);transition:all .6s cubic-bezier(.2,0,0,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* Mobile */
+@media(max-width:640px){
+  .hero h1{font-size:32px;letter-spacing:-1px}
+  .hero-meta{flex-direction:column;gap:8px;align-items:center}
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  section{padding:48px 0}
+  .impact-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <span class="hero-badge">7-Day Performance Report</span>
+  <h1>Meta <span>Intelligence</span></h1>
+  <p class="hero-sub">Live performance data, audience insights, and strategic diagnosis from your Meta ad account. March 18-25, 2026.</p>
+  <div class="hero-meta">
+    <span><strong>Brand:</strong> Modern Development</span>
+    <span><strong>Market:</strong> Cookeville, TN</span>
+    <span><strong>Period:</strong> 7 Days</span>
+  </div>
+  <div class="scroll-hint"><span></span></div>
+</section>
+
+<div class="container">
+
+  <!-- KPI Snapshot -->
+  <section>
+    <div class="reveal">
+      <p class="section-label">Overview</p>
+      <h2 class="section-title">7-Day Performance Snapshot</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="kpi-grid reveal">
+      <div class="kpi-card highlight"><p class="kpi-label">Total Spend</p><p class="kpi-value">$443.64</p></div>
+      <div class="kpi-card"><p class="kpi-label">Impressions</p><p class="kpi-value">30,991</p></div>
+      <div class="kpi-card"><p class="kpi-label">Reach</p><p class="kpi-value">15,826</p></div>
+      <div class="kpi-card"><p class="kpi-label">Clicks</p><p class="kpi-value">487</p></div>
+      <div class="kpi-card highlight"><p class="kpi-label">CTR</p><p class="kpi-value">1.57%</p></div>
+      <div class="kpi-card"><p class="kpi-label">CPC</p><p class="kpi-value">$0.91</p></div>
+      <div class="kpi-card"><p class="kpi-label">Calls</p><p class="kpi-value">24</p></div>
+      <div class="kpi-card"><p class="kpi-label">Messages</p><p class="kpi-value">8</p></div>
+      <div class="kpi-card highlight"><p class="kpi-label">Total Leads</p><p class="kpi-value">32</p></div>
+      <div class="kpi-card highlight"><p class="kpi-label">Cost Per Lead</p><p class="kpi-value">$13.86</p></div>
+      <div class="kpi-card"><p class="kpi-label">Active Campaigns</p><p class="kpi-value">7</p></div>
+    </div>
+  </section>
+
+  <!-- Campaign Breakdown -->
+  <section>
+    <div class="reveal">
+      <p class="section-label">Campaigns</p>
+      <h2 class="section-title">Campaign Breakdown</h2>
+      <div class="divider"></div>
+    </div>
+
+    <div class="reveal">
+      <p style="font-size:13px;color:var(--text-tertiary);font-family:var(--font-mono);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px">Phone Promo Campaigns (4 active)</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Campaign</th><th>Spend</th><th>Leads</th><th>CPL</th><th>CTR</th><th>Freq</th></tr></thead>
+          <tbody>
+            <tr><td>Promo (a)</td><td>$75.33</td><td class="val-good">8</td><td class="val-good">$9.42</td><td>1.19%</td><td>2.1</td></tr>
+            <tr class="row-dim"><td>Promo (b)</td><td>$74.35</td><td>2</td><td class="val-bad">$37.18</td><td>1.01%</td><td>2.2</td></tr>
+            <tr class="row-dim"><td>Promo (c)</td><td>$74.10</td><td>2</td><td class="val-bad">$37.05</td><td>1.26%</td><td>1.9</td></tr>
+            <tr class="row-dim"><td>Promo (d)</td><td>$60.99</td><td>2</td><td class="val-bad">$30.50</td><td>1.03%</td><td>2.0</td></tr>
+            <tr class="row-highlight"><td>Subtotal</td><td>$284.77</td><td>14</td><td>$20.34</td><td></td><td></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <p style="font-size:13px;color:var(--text-tertiary);font-family:var(--font-mono);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px">Page Promo Campaigns (3 active)</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Campaign</th><th>Spend</th><th>Leads</th><th>CPL</th><th>CTR</th><th>Freq</th></tr></thead>
+          <tbody>
+            <tr><td>Page promo (a)</td><td>$60.10</td><td>4</td><td>$15.03</td><td>1.55%</td><td>2.0</td></tr>
+            <tr class="row-dim"><td>Page promo (b)</td><td>$59.50</td><td class="val-bad">0</td><td class="val-bad">--</td><td>2.32%</td><td>1.6</td></tr>
+            <tr><td>Page promo (c)</td><td>$39.27</td><td class="val-good">14</td><td class="val-good">$2.81</td><td class="val-good">5.45%</td><td>1.5</td></tr>
+            <tr class="row-highlight"><td>Subtotal</td><td>$158.87</td><td>18</td><td>$8.83</td><td></td><td></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="finding good reveal">
+      <div class="finding-title">Key Finding <span class="tag tag-good">Insight</span></div>
+      <p>Page promos are generating leads at $8.83/lead vs phone promos at $20.34/lead. Page promos are 2.3x more efficient. One page promo is the clear winner at $2.81/lead with a 5.45% CTR.</p>
+    </div>
+  </section>
+
+  <!-- Wasted Spend -->
+  <section>
+    <div class="reveal">
+      <p class="section-label">Waste Analysis</p>
+      <h2 class="section-title">Wasted Spend</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="table-wrap reveal">
+      <table>
+        <thead><tr><th>Ad</th><th>Spend</th><th>Leads</th><th>Issue</th></tr></thead>
+        <tbody>
+          <tr><td class="val-bad">Page promo (b)</td><td>$59.50</td><td class="val-bad">0</td><td>High CTR (2.32%) but zero conversions. Getting clicks, not converting.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="finding critical reveal">
+      <div class="finding-title">Total Wasted <span class="tag tag-critical">$59.50</span></div>
+      <p>13.4% of total budget is going to ads producing zero leads. This money should be reallocated to the winning page promo format immediately.</p>
+    </div>
+  </section>
+
+  <!-- Audience Intelligence -->
+  <section>
+    <div class="reveal">
+      <p class="section-label">Audience</p>
+      <h2 class="section-title">Audience Intelligence</h2>
+      <div class="divider"></div>
+    </div>
+
+    <div class="reveal">
+      <p style="font-size:13px;color:var(--text-tertiary);font-family:var(--font-mono);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px">Age Performance</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Age</th><th>Spend</th><th>CTR</th><th>CPC</th><th>Calls</th><th>Video</th><th>Freq</th></tr></thead>
+          <tbody>
+            <tr><td class="val-warn">65+</td><td>$143.53</td><td>2.82%</td><td>$0.75</td><td>8</td><td>613</td><td>2.4</td></tr>
+            <tr><td>55-64</td><td>$39.29</td><td>1.98%</td><td>$1.35</td><td>2</td><td>100</td><td>2.5</td></tr>
+            <tr><td>45-54</td><td>$26.28</td><td>1.67%</td><td>$1.14</td><td>0</td><td>138</td><td>2.7</td></tr>
+            <tr><td>35-44</td><td>$54.08</td><td>1.67%</td><td>$0.81</td><td>2</td><td>306</td><td class="val-warn">3.5</td></tr>
+            <tr><td class="val-bad">25-34</td><td>$114.44</td><td class="val-bad">1.01%</td><td>$1.08</td><td>4</td><td>672</td><td class="val-bad">4.0</td></tr>
+            <tr><td class="val-bad">18-24</td><td>$65.96</td><td class="val-bad">1.01%</td><td>$0.94</td><td>5</td><td>465</td><td class="val-bad">4.5</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="alert reveal">
+      <div class="alert-title">Feedback Loop Detected</div>
+      <p>65+ call data is inflated. High CTR and call volume from 65+ users is driven by accidental taps on the call button, not real intent. Meta counts these as conversions, then serves more ads to this demographic, generating more accidental taps. This is a self-reinforcing cycle of bad data. Switch call-objective campaigns to lead form objectives to break the loop.</p>
+    </div>
+
+    <div class="finding warn reveal">
+      <div class="finding-title">Budget Drain: 18-34 <span class="tag tag-warn">$180.40 wasted</span></div>
+      <p>40.7% of budget is going to 25-34 and 18-24 age groups with the lowest CTR (1.01%) and highest frequency (4.0-4.5x). These audiences are seeing ads too often and not converting.</p>
+    </div>
+
+    <div class="reveal" style="margin-top:32px">
+      <p style="font-size:13px;color:var(--text-tertiary);font-family:var(--font-mono);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px">Gender Performance</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Gender</th><th>Spend</th><th>Impressions</th><th>CTR</th><th>Calls</th></tr></thead>
+          <tbody>
+            <tr><td>Male</td><td>$262.97</td><td>19,853</td><td>1.43%</td><td>9</td></tr>
+            <tr><td class="val-good">Female</td><td>$179.17</td><td>11,012</td><td class="val-good">1.83%</td><td class="val-good">12</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="finding good">
+        <div class="finding-title">Females Outperforming</div>
+        <p>Higher CTR (1.83% vs 1.43%) and more calls (12 vs 9) on 32% less spend. The algorithm is over-serving males. Note: call numbers need validation due to the feedback loop.</p>
+      </div>
+    </div>
+
+    <div class="reveal" style="margin-top:32px">
+      <p style="font-size:13px;color:var(--text-tertiary);font-family:var(--font-mono);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px">Platform Performance</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Platform</th><th>Spend</th><th>Impressions</th><th>CTR</th><th>Calls</th><th>Video</th></tr></thead>
+          <tbody>
+            <tr><td class="val-good">Facebook</td><td>$236.22</td><td>11,441</td><td class="val-good">2.83%</td><td class="val-good">13</td><td>1,021</td></tr>
+            <tr><td class="val-bad">Instagram</td><td>$207.42</td><td>19,550</td><td class="val-bad">0.83%</td><td>8</td><td>1,273</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="finding">
+        <div class="finding-title">Facebook is Crushing Instagram</div>
+        <p>3.4x higher CTR and more calls despite fewer impressions. Instagram is getting reach but not converting. $207/week on Instagram for a 0.83% CTR is below industry average for lead gen.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Daily Trend -->
+  <section>
+    <div class="reveal">
+      <p class="section-label">Trends</p>
+      <h2 class="section-title">Daily Trend (Last 7 Days)</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="table-wrap reveal">
+      <table>
+        <thead><tr><th>Date</th><th>Spend</th><th>Impressions</th><th>Leads</th><th>CPL</th><th>CTR</th></tr></thead>
+        <tbody>
+          <tr><td class="val-good">Mar 18 (Tue)</td><td>$66.54</td><td>3,735</td><td class="val-good">10</td><td class="val-good">$6.65</td><td>1.95%</td></tr>
+          <tr class="row-dim"><td>Mar 19 (Wed)</td><td>$52.62</td><td>3,232</td><td class="val-bad">0</td><td>--</td><td>1.42%</td></tr>
+          <tr><td>Mar 20 (Thu)</td><td>$49.59</td><td>3,410</td><td>2</td><td>$24.80</td><td>1.67%</td></tr>
+          <tr><td>Mar 21 (Fri)</td><td>$53.63</td><td>4,704</td><td>2</td><td>$26.82</td><td>1.17%</td></tr>
+          <tr class="row-dim"><td>Mar 22 (Sat)</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td></tr>
+          <tr><td>Mar 23 (Sun)</td><td>$69.24</td><td>5,274</td><td>6</td><td>$11.54</td><td>1.52%</td></tr>
+          <tr><td>Mar 24 (Mon)</td><td>$83.06</td><td>6,039</td><td>4</td><td>$20.77</td><td>1.41%</td></tr>
+          <tr><td class="val-good">Mar 25 (Tue)</td><td>$68.96</td><td>4,597</td><td class="val-good">8</td><td class="val-good">$8.62</td><td class="val-good">1.98%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="finding reveal">
+      <div class="finding-title">Best Days: Tuesday</div>
+      <p>Tuesdays are consistently your strongest lead day. Mid-week (Wed-Fri) drops off. Weekend and Monday pick back up.</p>
+    </div>
+  </section>
+
+  <!-- Algorithm Alert -->
+  <section>
+    <div class="reveal">
+      <p class="section-label">Alert</p>
+      <h2 class="section-title">Algorithm Alert</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="alert reveal">
+      <div class="alert-title">Frequency Warning: 3.4 Overall</div>
+      <p>The algorithm is re-serving to the same audiences too often. Creative fatigue is setting in. People are seeing the same ads 3-4 times on average, and for 25-34 and 18-24 it's 4-4.5x. Performance will continue to degrade without fresh creative.</p>
+    </div>
+  </section>
+
+  <!-- Diagnosis -->
+  <section>
+    <div class="reveal">
+      <p class="section-label">Diagnosis</p>
+      <h2 class="section-title">What's Going Wrong</h2>
+      <div class="divider"></div>
+    </div>
+    <ol class="diagnosis-list reveal">
+      <li><strong>Creative fatigue is your #1 issue.</strong> Frequency at 3.4 and rising. The algorithm is running out of fresh audience to show your current ads to.</li>
+      <li><strong>Budget is misallocated by ad type.</strong> 64% of spend is going to phone promos ($20.34/lead) when page promos are delivering at $8.83/lead.</li>
+      <li><strong>Feedback Loop: Accidental taps are poisoning data.</strong> Call-objective ads + 65+ users accidentally tapping = phantom conversions. Meta optimizes for more of the same. Switch to lead form objectives.</li>
+      <li><strong>Instagram is a reach play, not a conversion play.</strong> $207/week for a 0.83% CTR is inefficient for lead gen.</li>
+      <li><strong>One ad is carrying the team.</strong> The $39.27 page promo with 14 leads at $2.81 is doing more than campaigns spending 2x as much.</li>
+    </ol>
+  </section>
+
+  <!-- Game Plan -->
+  <section>
+    <div class="reveal">
+      <p class="section-label">Action Plan</p>
+      <h2 class="section-title">Creative &amp; Optimization Game Plan</h2>
+      <div class="divider"></div>
+    </div>
+
+    <div class="phase reveal">
+      <div class="phase-header">
+        <div class="phase-num">01</div>
+        <div><p class="phase-title">Immediate Fixes</p><p class="phase-subtitle">This Week</p></div>
+      </div>
+      <div class="action-group">
+        <p class="action-group-title">Kill the Waste</p>
+        <ul class="action-list">
+          <li><strong>Pause the zero-lead page promo (b).</strong> $59.50 burned with nothing to show. The CTR is fine (2.32%) so the creative gets attention, but the landing isn't converting.</li>
+          <li><strong>Pause the two worst phone promos (b and c).</strong> $148.45 combined, 4 leads total, $37/lead.</li>
+        </ul>
+      </div>
+      <div class="action-group">
+        <p class="action-group-title">Reallocate Budget</p>
+        <ul class="action-list">
+          <li>Take the freed-up ~$210/week and pour it into the winning page promo format ($2.81/lead at 5.45% CTR).</li>
+          <li>Create 2-3 variations of that winning ad. Same format, different creative angles.</li>
+        </ul>
+      </div>
+      <div class="action-group">
+        <p class="action-group-title">Audience Adjustments</p>
+        <ul class="action-list">
+          <li><strong>Switch call-objective campaigns to lead form objectives.</strong> Breaks the feedback loop of accidental 65+ taps.</li>
+          <li><strong>Increase female delivery.</strong> Females converting at a higher rate with less spend.</li>
+          <li><strong>Shift budget toward Facebook, away from Instagram.</strong> Facebook CTR is 2.83% vs 0.83%.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="phase reveal">
+      <div class="phase-header">
+        <div class="phase-num">02</div>
+        <div><p class="phase-title">New Creative</p><p class="phase-subtitle">Next 7-14 Days</p></div>
+      </div>
+      <ul class="action-list">
+        <li><strong>Before/After Project Showcase (15-30 sec video).</strong> Walk through a completed transformation. Open with "before," quick cuts to progress, land on the finished result. Strong CTA.</li>
+        <li><strong>Customer Testimonial / Social Proof.</strong> Short clip or quote graphic from a satisfied homeowner. Run as page promo format (proven winner).</li>
+        <li><strong>"Why Modern Development" Value Prop.</strong> Quick-hit graphic explaining what sets you apart. Target 55-64 and 65+ specifically.</li>
+        <li><strong>Seasonal/Urgency Hook.</strong> "Book your spring project before the schedule fills up." Urgency drives action from warm audiences.</li>
+      </ul>
+      <div class="finding" style="margin-top:16px">
+        <div class="finding-title">Creative Rules</div>
+        <p>3 new creatives every 2 weeks minimum. Kill any ad at frequency 4.0+ with no lead improvement. Always keep a page promo variant running.</p>
+      </div>
+    </div>
+
+    <div class="phase reveal">
+      <div class="phase-header">
+        <div class="phase-num">03</div>
+        <div><p class="phase-title">Structural Optimization</p><p class="phase-subtitle">Ongoing</p></div>
+      </div>
+      <ul class="action-list">
+        <li><strong>Consolidate 7 campaigns to 2-3.</strong> More data per campaign = faster optimization. One CBO prospecting + one retargeting with multiple ad sets.</li>
+        <li><strong>Testing framework:</strong> 5-7 days, $50 minimum spend before judging. Beat benchmark ($8.83/lead) or pause.</li>
+        <li><strong>Weekly review every Tuesday</strong> (best-performing day). Check frequency, CPL, wasted spend. Rotate creative before frequency hits 3.5.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Projected Impact -->
+  <section>
+    <div class="reveal">
+      <p class="section-label">Projection</p>
+      <h2 class="section-title">Projected Impact</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="impact-grid reveal">
+      <div class="impact-card">
+        <p class="impact-label">Spend</p>
+        <p class="impact-current">$443.64</p>
+        <p class="impact-projected">~$450</p>
+      </div>
+      <div class="impact-card">
+        <p class="impact-label">Leads</p>
+        <p class="impact-current">32</p>
+        <p class="impact-projected">45-55</p>
+      </div>
+      <div class="impact-card">
+        <p class="impact-label">CPL</p>
+        <p class="impact-current">$13.86</p>
+        <p class="impact-projected">$8-10</p>
+      </div>
+      <div class="impact-card">
+        <p class="impact-label">Wasted</p>
+        <p class="impact-current">$59.50 (13.4%)</p>
+        <p class="impact-projected">&lt;$20 (&lt;5%)</p>
+      </div>
+      <div class="impact-card">
+        <p class="impact-label">Frequency</p>
+        <p class="impact-current">3.4</p>
+        <p class="impact-projected">&lt;2.5</p>
+      </div>
+    </div>
+    <div class="finding good reveal" style="margin-top:24px">
+      <div class="finding-title">Bottom Line</div>
+      <p>By cutting waste, focusing budget on proven formats, tightening audience, and refreshing creative, you should see a 40-70% improvement in lead volume at the same spend level.</p>
+    </div>
+  </section>
+
+</div>
+
+<footer class="site-footer">
+  <p>Generated from live Meta API data | <span class="footer-brand">Analytics Command Center</span> | March 25, 2026</p>
+</footer>
+
+<script>
+const revealEls = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 50);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+revealEls.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

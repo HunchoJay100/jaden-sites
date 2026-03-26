@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Algorithm Intelligence | Modern Development</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0a0b;--surface:#111113;--card:#161618;--nested:#1c1c1f;
+  --gold:#C5A55A;--gold-dim:rgba(197,165,90,0.12);--gold-glow:rgba(197,165,90,0.25);
+  --red:#ef4444;--red-dim:rgba(239,68,68,0.12);
+  --green:#22c55e;--green-dim:rgba(34,197,94,0.12);
+  --amber:#f59e0b;--amber-dim:rgba(245,158,11,0.12);
+  --blue:#3b82f6;--blue-dim:rgba(59,130,246,0.12);
+  --pink:#ec4899;--pink-dim:rgba(236,72,153,0.12);
+  --text:#e8e6e3;--text-secondary:rgba(232,230,227,0.6);--text-tertiary:rgba(232,230,227,0.3);
+  --border:rgba(255,255,255,0.06);
+  --font-sans:'Instrument Sans',system-ui,sans-serif;
+  --font-mono:'Space Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+
+/* Hero */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:48px 24px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:800px;height:800px;background:radial-gradient(circle,rgba(197,165,90,0.06) 0%,transparent 70%);pointer-events:none}
+.hero-badge{display:inline-block;padding:6px 20px;border:1px solid var(--gold);border-radius:9999px;font-family:var(--font-mono);font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:32px;opacity:0;animation:fadeUp .6s .2s forwards}
+.hero h1{font-size:clamp(36px,6vw,64px);font-weight:700;letter-spacing:-2px;line-height:1.05;color:var(--text);opacity:0;animation:fadeUp .6s .35s forwards}
+.hero h1 span{color:var(--gold)}
+.hero-sub{font-size:15px;color:var(--text-secondary);max-width:520px;margin-top:16px;opacity:0;animation:fadeUp .6s .5s forwards}
+.hero-stats{display:flex;gap:40px;margin-top:40px;opacity:0;animation:fadeUp .6s .65s forwards}
+.hero-stat-value{font-size:32px;font-weight:700;color:var(--gold);letter-spacing:-1px}
+.hero-stat-label{font-size:11px;font-family:var(--font-mono);letter-spacing:1px;text-transform:uppercase;color:var(--text-tertiary)}
+.scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);opacity:0;animation:fadeUp .6s .8s forwards}
+.scroll-hint span{display:block;width:1px;height:40px;background:linear-gradient(to bottom,var(--gold),transparent);margin:0 auto}
+
+/* Layout */
+.container{max-width:880px;margin:0 auto;padding:0 24px}
+
+/* Section Nav */
+.section-nav{position:sticky;top:0;z-index:100;padding:12px 0;margin-bottom:48px}
+.section-nav-inner{background:rgba(10,10,11,0.85);backdrop-filter:blur(12px) saturate(180%);-webkit-backdrop-filter:blur(12px) saturate(180%);border:1px solid var(--border);border-radius:12px;padding:8px 12px;display:flex;gap:4px;overflow-x:auto;max-width:880px;margin:0 auto}
+.section-nav a{padding:6px 14px;border-radius:8px;font-size:12px;font-family:var(--font-mono);letter-spacing:0.5px;color:var(--text-tertiary);text-decoration:none;white-space:nowrap;transition:all .2s cubic-bezier(.2,0,0,1)}
+.section-nav a:hover{color:var(--text);background:rgba(255,255,255,0.05)}
+.section-nav a.active{color:var(--gold);background:var(--gold-dim)}
+
+/* Sections */
+.algo-section{padding:64px 0 80px;border-bottom:1px solid var(--border)}
+.algo-section:last-of-type{border-bottom:none}
+.section-header{margin-bottom:40px}
+.section-num{display:inline-flex;align-items:center;gap:10px;margin-bottom:12px}
+.section-num-circle{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;font-family:var(--font-mono)}
+.section-num-label{font-family:var(--font-mono);font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--text-tertiary)}
+.section-title{font-size:28px;font-weight:700;letter-spacing:-0.8px;margin-bottom:6px}
+.section-desc{font-size:15px;color:var(--text-secondary)}
+
+/* Section Colors */
+.s1 .section-num-circle{background:var(--gold-dim);color:var(--gold)}
+.s2 .section-num-circle{background:var(--green-dim);color:var(--green)}
+.s3 .section-num-circle{background:var(--pink-dim);color:var(--pink)}
+.s4 .section-num-circle{background:var(--red-dim);color:var(--red)}
+.s5 .section-num-circle{background:var(--amber-dim);color:var(--amber)}
+.s6 .section-num-circle{background:var(--blue-dim);color:var(--blue)}
+.s7 .section-num-circle{background:var(--green-dim);color:var(--green)}
+
+/* Insight Cards */
+.insight{background:var(--card);border-radius:12px;padding:24px;margin-bottom:14px;border-left:3px solid var(--gold);box-shadow:0 1px 3px rgba(0,0,0,0.3),0 1px 2px rgba(0,0,0,0.2);transition:all .3s cubic-bezier(.2,0,0,1)}
+.insight:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,0,0,0.4),0 2px 6px rgba(0,0,0,0.3)}
+.insight.critical{border-left-color:var(--red)}
+.insight.recommended{border-left-color:var(--green)}
+.insight.opportunity{border-left-color:var(--gold)}
+.insight.warning{border-left-color:var(--amber)}
+.insight.setup{border-left-color:var(--blue)}
+.insight.good{border-left-color:var(--green)}
+.insight-title{font-weight:700;font-size:16px;margin-bottom:8px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.tag{font-size:10px;font-family:var(--font-mono);letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border-radius:4px;font-weight:600}
+.tag-critical{background:var(--red-dim);color:var(--red)}
+.tag-recommended{background:var(--green-dim);color:var(--green)}
+.tag-opportunity{background:var(--gold-dim);color:var(--gold)}
+.tag-warning{background:var(--amber-dim);color:var(--amber)}
+.tag-setup{background:var(--blue-dim);color:var(--blue)}
+.tag-good{background:var(--green-dim);color:var(--green)}
+.insight p{font-size:14px;color:var(--text-secondary);line-height:1.7}
+
+/* Callout */
+.callout{background:var(--nested);border-radius:12px;padding:24px;margin-top:24px;border:1px solid var(--border)}
+.callout-title{font-weight:700;font-size:15px;margin-bottom:6px;color:var(--gold)}
+.callout p{font-size:14px;color:var(--text-secondary);line-height:1.65}
+
+/* End Card */
+.end-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:48px 32px;text-align:center;margin-top:64px}
+.end-card-label{font-family:var(--font-mono);font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.end-card h2{font-size:24px;font-weight:700;letter-spacing:-0.5px;margin-bottom:12px}
+.end-card p{font-size:14px;color:var(--text-secondary);max-width:480px;margin:0 auto}
+
+/* Footer */
+.site-footer{padding:48px 24px;text-align:center;border-top:1px solid var(--border)}
+.site-footer p{font-size:12px;color:var(--text-tertiary);font-family:var(--font-mono)}
+.footer-brand{color:var(--gold);font-weight:600}
+
+/* Scroll Reveal */
+.reveal{opacity:0;transform:translateY(24px);transition:all .6s cubic-bezier(.2,0,0,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:640px){
+  .hero h1{font-size:32px;letter-spacing:-1px}
+  .hero-stats{flex-direction:column;gap:16px}
+  .algo-section{padding:40px 0 56px}
+  .section-nav-inner{padding:6px 8px}
+  .section-nav a{padding:5px 10px;font-size:11px}
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <span class="hero-badge">Strategic Playbook</span>
+  <h1>Algorithm <span>Intelligence</span></h1>
+  <p class="hero-sub">Strategic recommendations based on current Meta algorithm behavior, construction industry benchmarks, and live account data. 7 sections. 30+ actionable insights.</p>
+  <div class="hero-stats">
+    <div><p class="hero-stat-value">7</p><p class="hero-stat-label">Sections</p></div>
+    <div><p class="hero-stat-value">30+</p><p class="hero-stat-label">Insights</p></div>
+    <div><p class="hero-stat-value">1</p><p class="hero-stat-label">Goal</p></div>
+  </div>
+  <div class="scroll-hint"><span></span></div>
+</section>
+
+<nav class="section-nav">
+  <div class="section-nav-inner container">
+    <a href="#s1">01 Campaign</a>
+    <a href="#s2">02 Creative</a>
+    <a href="#s3">03 Reels</a>
+    <a href="#s4">04 Lead Quality</a>
+    <a href="#s5">05 Budget</a>
+    <a href="#s6">06 Tracking</a>
+    <a href="#s7">07 Local</a>
+  </div>
+</nav>
+
+<div class="container">
+
+  <!-- Section 1: Campaign Structure -->
+  <section id="s1" class="algo-section s1">
+    <div class="section-header reveal">
+      <div class="section-num"><div class="section-num-circle">1</div><span class="section-num-label">Section 01</span></div>
+      <h2 class="section-title">Campaign Structure</h2>
+      <p class="section-desc">How to architect your Meta ad account for maximum algorithmic efficiency.</p>
+    </div>
+
+    <div class="insight critical reveal">
+      <div class="insight-title">Consolidate campaigns <span class="tag tag-critical">Critical</span></div>
+      <p>Run 2-3 campaigns max, not 8-10. One CBO prospecting campaign (70-80% budget), one manual-budget retargeting campaign (20-30%). More budget per campaign = faster optimization = lower CPL. Every campaign split dilutes data.</p>
+    </div>
+    <div class="insight recommended reveal">
+      <div class="insight-title">Advantage+ Audience over manual targeting <span class="tag tag-recommended">Recommended</span></div>
+      <p>Broad geo targeting (25-50 mi radius) + age 28-65 + no interest targeting. Meta's ML outperforms manual targeting in 70-80% of tests when you have 500+ pixel events. Upload your customer list as an "audience suggestion" seed.</p>
+    </div>
+    <div class="insight setup reveal">
+      <div class="insight-title">Use Cost Per Result Goal bidding <span class="tag tag-setup">Setup</span></div>
+      <p>Set it at your actual max acceptable CPL. Meta throttles delivery rather than exceeding it. More predictable unit economics than Lowest Cost. Avoid bid caps entirely for local businesses.</p>
+    </div>
+    <div class="insight critical reveal">
+      <div class="insight-title">Learning phase risk <span class="tag tag-critical">Critical</span></div>
+      <p>Last period only generated 32 conversions. Meta needs 50+ conversions/week to exit learning phase. Consolidating ad sets and increasing budget concentration will help clear this threshold faster. Do NOT edit ads during learning phase (resets the counter).</p>
+    </div>
+    <div class="callout reveal">
+      <p class="callout-title">Why This Matters</p>
+      <p>Your current account has 7+ campaigns running similar ads. Each one is fighting the others for the same audience, splitting the algorithm's learning signal. One well-structured CBO campaign with 5 ad creatives will outperform 7 thin campaigns every time.</p>
+    </div>
+  </section>
+
+  <!-- Section 2: Creative Strategy -->
+  <section id="s2" class="algo-section s2">
+    <div class="section-header reveal">
+      <div class="section-num"><div class="section-num-circle">2</div><span class="section-num-label">Section 02</span></div>
+      <h2 class="section-title">Creative Strategy</h2>
+      <p class="section-desc">What to create, how to shoot it, and why creative volume is the new targeting.</p>
+    </div>
+
+    <div class="insight opportunity reveal">
+      <div class="insight-title">UGC beats polished 25-45% on CPL <span class="tag tag-opportunity">Opportunity</span></div>
+      <p>iPhone walkthrough of a job site with you talking to camera (15-30 sec) consistently outperforms polished content for cold prospecting. Hybrid content (iPhone-shot with good lighting + lapel mic) is the actual top performer. Save cinematic content for retargeting.</p>
+    </div>
+    <div class="insight recommended reveal">
+      <div class="insight-title">Highest-converting format for contractors <span class="tag tag-recommended">Recommended</span></div>
+      <p>Homeowner testimonial filmed on the finished job site, 20-30 seconds, iPhone shot, with before photos shown on screen. Combines social proof + transformation + authenticity in one piece.</p>
+    </div>
+    <div class="insight reveal">
+      <div class="insight-title">Before/After carousels are #2</div>
+      <p>3-5 cards: card 1 = "before" with hook text, cards 2-4 = transformation shots, card 5 = CTA. Carousel completion rate is a strong algorithm signal. Kitchens and bathrooms convert best as lead cards.</p>
+    </div>
+    <div class="insight reveal">
+      <div class="insight-title">Video length sweet spot: 15-30 seconds</div>
+      <p>15-30s is optimal for lead gen (feed + Reels). Long enough to show a transformation, short enough to retain attention. Engagement drops off a cliff after 45s for construction content. 60+ sec only for retargeting warm audiences.</p>
+    </div>
+    <div class="insight critical reveal">
+      <div class="insight-title">Creative volume is the new targeting <span class="tag tag-critical">Critical</span></div>
+      <p>Instead of 5 audiences with 1 ad each, run 1 broad audience with 5-10 ad creatives. Meta's Andromeda system matches the right creative to the right person automatically. Your creative library quality is the #1 lever now, not targeting.</p>
+    </div>
+  </section>
+
+  <!-- Section 3: Reels & Short-Form -->
+  <section id="s3" class="algo-section s3">
+    <div class="section-header reveal">
+      <div class="section-num"><div class="section-num-circle">3</div><span class="section-num-label">Section 03</span></div>
+      <h2 class="section-title">Reels &amp; Short-Form</h2>
+      <p class="section-desc">Meta is subsidizing Reels inventory right now. Here's how to capitalize before the window closes.</p>
+    </div>
+
+    <div class="insight opportunity reveal">
+      <div class="insight-title">Reels CPMs are 20-40% cheaper right now <span class="tag tag-opportunity">Opportunity</span></div>
+      <p>Meta is subsidizing Reels inventory to compete with TikTok. This window will close by mid-2026. Capitalize now. Reels get 2-3x organic reach of feed posts for business pages.</p>
+    </div>
+    <div class="insight recommended reveal">
+      <div class="insight-title">Top Reels formats for construction <span class="tag tag-recommended">Recommended</span></div>
+      <p>Transformation reveals (3-15 sec before/after cuts), time-lapse builds (10-20 sec), day-in-the-life crew footage (15-30 sec), and "This is what $XX,000 gets you" walkthroughs. Lead with the "after" shot in the first 3 seconds, not the "before."</p>
+    </div>
+    <div class="insight setup reveal">
+      <div class="insight-title">Reels production checklist <span class="tag tag-setup">Setup</span></div>
+      <p>9:16 vertical (1080x1920). Keep text in center 60% safe zone. Captions/subtitles are mandatory (85% watched without sound). Use trending audio for 15-25% more distribution. Post natively to both FB and IG, never cross-post (algorithm penalizes it).</p>
+    </div>
+    <div class="insight reveal">
+      <div class="insight-title">Post 3-4 Reels per week organically</div>
+      <p>Let top performers accumulate 24-48 hours of organic engagement, then boost/promote them as ads. You get social proof on your ads for free. Track saves (not just likes) as saves predict paid ad performance.</p>
+    </div>
+  </section>
+
+  <!-- Section 4: Lead Quality & Conversion -->
+  <section id="s4" class="algo-section s4">
+    <div class="section-header reveal">
+      <div class="section-num"><div class="section-num-circle">4</div><span class="section-num-label">Section 04</span></div>
+      <h2 class="section-title">Lead Quality &amp; Conversion</h2>
+      <p class="section-desc">Generating leads is half the battle. Converting them is where the money is.</p>
+    </div>
+
+    <div class="insight critical reveal">
+      <div class="insight-title">Feedback Loop: Call taps from 65+ are phantom leads <span class="tag tag-critical">Critical</span></div>
+      <p>When campaigns use "calls" as the objective, Meta optimizes for users most likely to tap the call button. 65+ users tap accidentally at higher rates, so Meta feeds them more impressions, generating more accidental taps. The algorithm is optimizing for phantom conversions. This is a feedback loop of bad data. Switch to lead form objectives to capture intentional leads only.</p>
+    </div>
+    <div class="insight recommended reveal">
+      <div class="insight-title">Use Higher Intent Instant Forms <span class="tag tag-recommended">Recommended</span></div>
+      <p>Standard Instant Forms generate 2-3x volume but 30-50% lower quality. Switch to "Higher Intent" form type (adds a review screen). Add 2-3 qualifying questions: project type, timeline, budget range. Use conditional logic to screen out renters and browsers.</p>
+    </div>
+    <div class="insight critical reveal">
+      <div class="insight-title">Speed-to-lead is everything <span class="tag tag-critical">Critical</span></div>
+      <p>If leads from Instant Forms sit for more than 5 minutes, conversion-to-appointment rate drops 50%+. Connect forms directly to your CRM or set up instant webhook notifications. Automate the first response.</p>
+    </div>
+    <div class="insight reveal">
+      <div class="insight-title">Price anchoring qualifies leads</div>
+      <p>"Kitchen remodels starting at $XX,000" in your ad copy qualifies leads AND increases CTR. Vague pricing like "affordable remodels" attracts unqualified leads who waste your follow-up time.</p>
+    </div>
+    <div class="callout reveal">
+      <p class="callout-title">The Feedback Loop Problem</p>
+      <p>Your call-objective ads created a self-reinforcing cycle: accidental taps from older users, Meta counts them as conversions, Meta shows more ads to that demographic, more accidental taps, repeat. Your "best performing" audience was actually your worst. Lead forms with qualifying questions break this loop by requiring intentional engagement.</p>
+    </div>
+  </section>
+
+  <!-- Section 5: Budget & Frequency -->
+  <section id="s5" class="algo-section s5">
+    <div class="section-header reveal">
+      <div class="section-num"><div class="section-num-circle">5</div><span class="section-num-label">Section 05</span></div>
+      <h2 class="section-title">Budget &amp; Frequency</h2>
+      <p class="section-desc">How to allocate spend and manage ad fatigue for a local construction market.</p>
+    </div>
+
+    <div class="insight good reveal">
+      <div class="insight-title">Current spend is above optimization threshold <span class="tag tag-good">Good</span></div>
+      <p>You're above the $1,500/mo minimum needed for Meta's algorithm to optimize properly. Focus on creative rotation and audience refinement rather than budget increases. Diminishing returns typically start above $5K/mo for a single metro area.</p>
+    </div>
+    <div class="insight recommended reveal">
+      <div class="insight-title">Frequency targets by funnel stage <span class="tag tag-recommended">Recommended</span></div>
+      <p>Cold prospecting: keep frequency at 1.5-2.5 per 7-day period. Above 3.0, costs spike and engagement drops. Retargeting: frequency can run 3-5 per 7 days but rotate creative every 2-3 weeks. For Cookeville, audience saturation hits in 4-6 weeks at $100/day.</p>
+    </div>
+    <div class="insight reveal">
+      <div class="insight-title">Let Meta auto-place (Advantage+ Placements)</div>
+      <p>Manual placement selection almost always underperforms. But monitor your breakdown: if >50% of spend goes to Audience Network, your creative isn't strong enough for premium placements. Healthy mix: Feed 40-50%, Reels 15-25%, Stories 10-15%, IG Feed 10-15%.</p>
+    </div>
+    <div class="insight reveal">
+      <div class="insight-title">Seasonal budget strategy for construction</div>
+      <p>Kitchen/bath remodel ads peak Jan-March (planning after holidays). Exterior/addition ads peak March-May (pre-summer). Align budget allocation with these cycles. Pull back during July-Aug when decision fatigue is highest.</p>
+    </div>
+  </section>
+
+  <!-- Section 6: Tracking & Measurement -->
+  <section id="s6" class="algo-section s6">
+    <div class="section-header reveal">
+      <div class="section-num"><div class="section-num-circle">6</div><span class="section-num-label">Section 06</span></div>
+      <h2 class="section-title">Tracking &amp; Measurement</h2>
+      <p class="section-desc">You can't optimize what you can't measure. Most local contractors are flying blind here.</p>
+    </div>
+
+    <div class="insight critical reveal">
+      <div class="insight-title">Conversions API is mandatory (not optional) <span class="tag tag-critical">Critical</span></div>
+      <p>Browser-only pixel tracking misses 15-30% of conversions due to iOS privacy, ad blockers, and browser restrictions. Set up server-side Conversions API via Zapier webhooks from form submissions. Include email + phone + name in every server event for match quality.</p>
+    </div>
+    <div class="insight warning reveal">
+      <div class="insight-title">Event deduplication required <span class="tag tag-warning">Warning</span></div>
+      <p>When running both Pixel and CAPI, send the same event_id for each conversion. Without deduplication, reported CPL looks artificially low and Meta's optimization gets skewed. Event Match Quality (EMQ) should be above 6.0.</p>
+    </div>
+    <div class="insight reveal">
+      <div class="insight-title">Attribution window strategy</div>
+      <p>Use 7-day click for campaign optimization (the default). Review 28-day click data monthly for full-funnel understanding. Discount view-through conversions by ~50% in internal reporting (they're real but inflated).</p>
+    </div>
+    <div class="insight warning reveal">
+      <div class="insight-title">Install Meta Pixel on all brand sites <span class="tag tag-warning">Warning</span></div>
+      <p>Retargeting website visitors with project gallery carousels converts at 3-5x the rate of cold campaigns. Every day without the pixel installed is retargeting audience data you're losing forever.</p>
+    </div>
+  </section>
+
+  <!-- Section 7: Local Market Tactics -->
+  <section id="s7" class="algo-section s7">
+    <div class="section-header reveal">
+      <div class="section-num"><div class="section-num-circle">7</div><span class="section-num-label">Section 07</span></div>
+      <h2 class="section-title">Local Market Tactics</h2>
+      <p class="section-desc">Cookeville-specific strategies that big agencies never think about.</p>
+    </div>
+
+    <div class="insight opportunity reveal">
+      <div class="insight-title">Neighborhood-specific ad copy wins <span class="tag tag-opportunity">Opportunity</span></div>
+      <p>"Just finished this kitchen remodel in [subdivision name]" with a local photo gets 2-3x engagement vs generic "serving Cookeville" copy. Creates local relevance and FOMO. Rotate neighborhoods as you complete projects.</p>
+    </div>
+    <div class="insight recommended reveal">
+      <div class="insight-title">Social proof in the first line <span class="tag tag-recommended">Recommended</span></div>
+      <p>"147 five-star reviews" or "Built 50+ homes in Cookeville" must be in the first line of ad copy. Specificity beats vague claims. Numbers create credibility that "trusted local contractor" never will.</p>
+    </div>
+    <div class="insight reveal">
+      <div class="insight-title">Organic-to-paid pipeline</div>
+      <p>Post best content organically first. Let it accumulate 24-48 hours of engagement. Then boost top performers as ads. Ads running as "existing posts" carry over likes, comments, and shares (20-30% higher CTR with social proof vs dark posts).</p>
+    </div>
+    <div class="insight reveal">
+      <div class="insight-title">Build your retargeting audience now</div>
+      <p>People who engage with organic content can be retargeted with paid ads (engaged-with-page custom audiences). This warm audience converts at 2-4x cold traffic rates. Every organic post is building your cheapest future ad audience.</p>
+    </div>
+    <div class="callout reveal">
+      <p class="callout-title">The Local Advantage</p>
+      <p>National contractors and lead aggregators can't do what you can: reference specific neighborhoods, show completed projects in the same zip code, and carry organic social proof from the local community. This is your moat. Every ad should feel like it was made by someone who lives there, because it was.</p>
+    </div>
+  </section>
+
+  <!-- End Card -->
+  <div class="end-card reveal">
+    <p class="end-card-label">End of Report</p>
+    <h2>30+ Insights. 7 Sections. 1 Goal.</h2>
+    <p>Execute these recommendations systematically, starting with campaign consolidation and the feedback loop fix. Review weekly. Iterate constantly.</p>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <p>Generated from live Meta API data | <span class="footer-brand">Analytics Command Center</span> | March 25, 2026</p>
+</footer>
+
+<script>
+// Scroll reveal
+const revealEls = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+revealEls.forEach((el, i) => {
+  el.style.transitionDelay = (i % 4) * 50 + 'ms';
+  observer.observe(el);
+});
+
+// Active nav on scroll
+const sections = document.querySelectorAll('.algo-section');
+const navLinks = document.querySelectorAll('.section-nav a');
+const navObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector(`.section-nav a[href="#${entry.target.id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, { threshold: 0.3 });
+sections.forEach(s => navObserver.observe(s));
+</script>
+
+</body>
+</html>
