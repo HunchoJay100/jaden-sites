@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hice Project - Budget Analysis | Flynn Development</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C5A55A;
+    --gold-dim: rgba(197, 165, 90, 0.15);
+    --gold-glow: rgba(197, 165, 90, 0.25);
+    --bg: #0E0E10;
+    --surface: #18181B;
+    --nested: #1E1E22;
+    --border: rgba(255,255,255,0.06);
+    --text-primary: rgba(255,255,255,0.92);
+    --text-secondary: rgba(255,255,255,0.55);
+    --text-tertiary: rgba(255,255,255,0.30);
+    --green: #34C759;
+    --green-dim: rgba(52, 199, 89, 0.12);
+    --red: #FF453A;
+    --red-dim: rgba(255, 69, 58, 0.12);
+    --yellow: #FFD60A;
+    --yellow-dim: rgba(255, 214, 10, 0.12);
+    --radius: 12px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 32px;
+  }
+
+  /* Header */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 48px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .header-left h1 {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.8px;
+    line-height: 34px;
+    color: var(--text-primary);
+  }
+
+  .header-left .subtitle {
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+
+  .header-right {
+    text-align: right;
+  }
+
+  .header-right .brand {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .header-right .date {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    margin-top: 4px;
+  }
+
+  /* Summary Cards */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+
+  .summary-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
+  }
+
+  .summary-card .label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 8px;
+  }
+
+  .summary-card .value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+  }
+
+  .summary-card .sub {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-top: 4px;
+  }
+
+  .value-gold { color: var(--gold); }
+  .value-green { color: var(--green); }
+  .value-red { color: var(--red); }
+  .value-white { color: var(--text-primary); }
+
+  /* Section */
+  .section {
+    margin-bottom: 40px;
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-header h2 {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.6px;
+    line-height: 25px;
+  }
+
+  .section-badge {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 9999px;
+  }
+
+  .badge-not-started {
+    background: var(--yellow-dim);
+    color: var(--yellow);
+  }
+
+  .badge-in-progress {
+    background: var(--gold-dim);
+    color: var(--gold);
+  }
+
+  .badge-overruns {
+    background: var(--red-dim);
+    color: var(--red);
+  }
+
+  .section-total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+  }
+
+  .section-total-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .section-total-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  /* Table */
+  .budget-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--surface);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
+    margin-bottom: 12px;
+  }
+
+  .budget-table thead th {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    padding: 14px 16px;
+    text-align: left;
+    background: var(--nested);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .budget-table thead th:nth-child(n+3) {
+    text-align: right;
+  }
+
+  .budget-table tbody td {
+    padding: 12px 16px;
+    font-size: 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+
+  .budget-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .budget-table tbody td:nth-child(n+3) {
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .budget-table tbody td:first-child {
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  .budget-table tbody td:nth-child(2) {
+    color: var(--text-secondary);
+    font-size: 13px;
+  }
+
+  .budget-table tfoot td {
+    padding: 14px 16px;
+    font-weight: 600;
+    background: var(--nested);
+    border-top: 1px solid var(--border);
+    font-size: 14px;
+  }
+
+  .budget-table tfoot td:nth-child(n+2) {
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+  }
+
+  .positive { color: var(--green); }
+  .negative { color: var(--red); }
+  .neutral { color: var(--text-secondary); }
+  .zero { color: var(--text-tertiary); }
+
+  .note {
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding: 4px 0 4px 16px;
+    border-left: 2px solid var(--gold-dim);
+    margin: 4px 0;
+    line-height: 1.6;
+  }
+
+  /* Remaining Work */
+  .remaining-section {
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 2px solid var(--gold-dim);
+  }
+
+  .remaining-section h2 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.7px;
+    color: var(--gold);
+    margin-bottom: 24px;
+  }
+
+  .remaining-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--surface);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
+    border: 1px solid var(--gold-dim);
+  }
+
+  .remaining-table thead th {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    padding: 14px 16px;
+    text-align: left;
+    background: rgba(197, 165, 90, 0.06);
+    border-bottom: 1px solid var(--gold-dim);
+  }
+
+  .remaining-table thead th:last-child {
+    text-align: right;
+  }
+
+  .remaining-table tbody td {
+    padding: 12px 16px;
+    font-size: 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+
+  .remaining-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .remaining-table tbody td:last-child {
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gold);
+  }
+
+  .remaining-table tbody td:first-child {
+    font-weight: 500;
+  }
+
+  .remaining-table tbody td:nth-child(2) {
+    color: var(--text-secondary);
+    font-size: 13px;
+  }
+
+  .remaining-table .scope-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    padding: 10px 16px;
+    background: var(--nested);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .remaining-table tfoot td {
+    padding: 16px;
+    font-weight: 700;
+    font-size: 15px;
+    background: rgba(197, 165, 90, 0.06);
+    border-top: 2px solid var(--gold-dim);
+  }
+
+  .remaining-table tfoot td:last-child {
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    color: var(--gold);
+  }
+
+  /* Payment Summary */
+  .payment-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  .payment-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
+  }
+
+  .payment-card h3 {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 16px;
+  }
+
+  .payment-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .payment-row:last-child {
+    border-bottom: none;
+    padding-top: 12px;
+    margin-top: 4px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .payment-row .pr-label {
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+
+  .payment-row .pr-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .payment-row:last-child .pr-label {
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-left {
+    font-size: 12px;
+    color: var(--text-tertiary);
+  }
+
+  .footer-right {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.5;
+  }
+
+  /* Print */
+  @media print {
+    body { background: #fff; color: #111; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .page { padding: 24px 0; }
+    .summary-card, .budget-table, .remaining-table, .payment-card { box-shadow: none; border: 1px solid #ddd; }
+    .summary-card { background: #f9f9f9; }
+    .budget-table thead th, .remaining-table thead th { background: #f5f5f5; color: #666; }
+    .budget-table tbody td, .remaining-table tbody td { color: #222; }
+    .budget-table tbody td:nth-child(2), .remaining-table tbody td:nth-child(2) { color: #666; }
+    .budget-table tfoot td { background: #f5f5f5; }
+    .positive { color: #1a8a3f; }
+    .negative { color: #cc2a22; }
+    .note { border-left-color: #C5A55A; }
+    .section-badge { border: 1px solid currentColor; background: transparent; }
+    .remaining-section { border-top-color: #C5A55A; }
+    .remaining-table { border-color: #C5A55A; }
+    .remaining-table thead th { background: #fdf8ec; color: #8a7340; }
+    .remaining-table tfoot td { background: #fdf8ec; }
+    .remaining-table tbody td:last-child, .remaining-table tfoot td:last-child { color: #8a7340; }
+    .value-gold { color: #8a7340; }
+    .value-green { color: #1a8a3f; }
+    .value-red { color: #cc2a22; }
+    .nested, .budget-table tfoot td { background: #f5f5f5; }
+    var(--nested) { background: #f5f5f5; }
+  }
+
+  @media (max-width: 700px) {
+    .summary-grid { grid-template-columns: repeat(2, 1fr); }
+    .payment-grid { grid-template-columns: 1fr; }
+    .page { padding: 24px 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <h1>Hice Residence</h1>
+      <div class="subtitle">Budget vs. Actual Cost Analysis</div>
+    </div>
+    <div class="header-right">
+      <div class="brand">Flynn Development</div>
+      <div class="date">March 26, 2026</div>
+    </div>
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="summary-grid">
+    <div class="summary-card">
+      <div class="label">Contract Value</div>
+      <div class="value value-white">$91,550</div>
+      <div class="sub">3 scopes + fee + misc</div>
+    </div>
+    <div class="summary-card">
+      <div class="label">Total Spent</div>
+      <div class="value value-gold">$58,667</div>
+      <div class="sub">16 orders to date</div>
+    </div>
+    <div class="summary-card">
+      <div class="label">Collected</div>
+      <div class="value value-green">$60,000</div>
+      <div class="sub">$31,550 still owed</div>
+    </div>
+    <div class="summary-card">
+      <div class="label">Total Overruns</div>
+      <div class="value value-red">$14,180</div>
+      <div class="sub">Re-pipe, tub, cabs, unbdgt</div>
+    </div>
+  </div>
+
+  <!-- GUEST BATHROOM -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Guest Bathroom</h2>
+      <span class="section-badge badge-not-started">Not Started</span>
+    </div>
+
+    <table class="budget-table">
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Description</th>
+          <th>Estimated</th>
+          <th>Actual</th>
+          <th>Variance</th>
+          <th>Remaining</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Demo</td>
+          <td>Demo guest bathroom + trash haul</td>
+          <td>$1,200</td>
+          <td class="zero">$0</td>
+          <td class="positive">$1,200</td>
+          <td>$1,200</td>
+        </tr>
+        <tr>
+          <td>Water Proofing</td>
+          <td>Waterproofing materials</td>
+          <td>$600</td>
+          <td class="zero">$0</td>
+          <td class="positive">$600</td>
+          <td>$600</td>
+        </tr>
+        <tr>
+          <td>Tile</td>
+          <td>Tile surround, shower/tub combo (labor)</td>
+          <td>$1,800</td>
+          <td class="zero">$0</td>
+          <td class="positive">$1,800</td>
+          <td>$1,800</td>
+        </tr>
+        <tr>
+          <td>Floor Tile</td>
+          <td>Floor tile installation (labor only)</td>
+          <td>$950</td>
+          <td class="zero">$0</td>
+          <td class="positive">$950</td>
+          <td>$950</td>
+        </tr>
+        <tr>
+          <td>Bathroom Fixtures</td>
+          <td>Shower/tub combo for tile surround</td>
+          <td>$800</td>
+          <td class="zero">$0</td>
+          <td class="positive">$800</td>
+          <td>$800</td>
+        </tr>
+        <tr>
+          <td>Plumbing</td>
+          <td>Hookup all new fixtures</td>
+          <td>$1,200</td>
+          <td class="zero">$0</td>
+          <td class="positive">$1,200</td>
+          <td>$1,200</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td>Guest Bath Total</td>
+          <td></td>
+          <td>$6,550</td>
+          <td>$0</td>
+          <td class="positive">$6,550</td>
+          <td>$6,550</td>
+        </tr>
+      </tfoot>
+    </table>
+    <div class="note">Entire guest bathroom scope untouched. Full $6,550 budget remains (excl. GCP/O portion now in fixed fee).</div>
+  </div>
+
+  <!-- MASTER BATHROOM -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Master Bathroom</h2>
+      <span class="section-badge badge-in-progress">$4,729 Under</span>
+    </div>
+
+    <table class="budget-table">
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Description</th>
+          <th>Estimated</th>
+          <th>Actual</th>
+          <th>Variance</th>
+          <th>Remaining</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Demo</td>
+          <td>Demo tub, shower, floor tile + trash haul</td>
+          <td>$3,000</td>
+          <td>$3,000</td>
+          <td class="neutral">$0</td>
+          <td class="zero">$0</td>
+        </tr>
+        <tr>
+          <td>Water Proofing</td>
+          <td>Waterproofing materials (Homecorr)</td>
+          <td>$2,000</td>
+          <td>$1,553</td>
+          <td class="positive">$447</td>
+          <td class="zero">$0</td>
+        </tr>
+        <tr>
+          <td>Tile Shower</td>
+          <td>Master tile shower + glass + floor tile, labor only (Evans)</td>
+          <td>$8,500</td>
+          <td>$7,240</td>
+          <td class="positive">$1,260</td>
+          <td class="zero">$0</td>
+        </tr>
+        <tr>
+          <td>Floor Tile</td>
+          <td>Included in tile shower price (Evans)</td>
+          <td>$1,400</td>
+          <td class="zero">$0</td>
+          <td class="positive">$1,400</td>
+          <td class="zero">$0</td>
+        </tr>
+        <tr>
+          <td>Bathroom Fixtures</td>
+          <td>Jet tub + fixture hardware (Home Depot)</td>
+          <td>$2,000</td>
+          <td>$2,879</td>
+          <td class="negative">($879)</td>
+          <td class="zero">$0</td>
+        </tr>
+        <tr>
+          <td>Plumbing</td>
+          <td>Hookup fixtures (not yet billed)</td>
+          <td>$2,500</td>
+          <td class="zero">$0</td>
+          <td class="positive">$2,500</td>
+          <td>$2,500</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td>Master Bath Total</td>
+          <td></td>
+          <td>$19,400</td>
+          <td>$14,671</td>
+          <td class="positive">$4,729</td>
+          <td>$2,500</td>
+        </tr>
+      </tfoot>
+    </table>
+    <div class="note">Demo was one $7K combined order split across master bath ($3K) and living area ($4K). On budget.</div>
+    <div class="note">Waterproofing complete. Saved $447 vs estimate.</div>
+    <div class="note">Tile shower + floor tile complete (Evans). Floor tile included in shower price, saving full $1,400 floor tile budget.</div>
+    <div class="note">Tub came in $879 over fixture budget.</div>
+    <div class="note">Plumbing hookup not yet billed. $2,500 remains in budget.</div>
+    <div class="note">Re-pipe ($5,450, K and K) moved to Unbudgeted. Was not in original scope.</div>
+  </div>
+
+  <!-- MAIN LIVING AREA -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Main Living Area</h2>
+      <span class="section-badge badge-in-progress">In Progress</span>
+    </div>
+
+    <table class="budget-table">
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Description</th>
+          <th>Estimated</th>
+          <th>Actual</th>
+          <th>Variance</th>
+          <th>Remaining</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Demo</td>
+          <td>Fireplace, island, tile, flooring, backsplash + trash</td>
+          <td>$4,000</td>
+          <td>$4,000</td>
+          <td class="neutral">$0</td>
+          <td class="zero">$0</td>
+        </tr>
+        <tr>
+          <td>Fireplace</td>
+          <td>Stone accent wall (labor + materials)</td>
+          <td>$5,000</td>
+          <td class="zero">$0</td>
+          <td class="positive">$5,000</td>
+          <td>$5,000</td>
+        </tr>
+        <tr>
+          <td>Cabinets</td>
+          <td>Island, countertops, glass doors + sink (Hollman's / Wayfair)</td>
+          <td>$6,500</td>
+          <td>$9,246</td>
+          <td class="negative">($2,746)</td>
+          <td class="zero">$0</td>
+        </tr>
+        <tr>
+          <td>Tile</td>
+          <td>Backsplash labor + setting materials</td>
+          <td>$1,800</td>
+          <td class="zero">$0</td>
+          <td class="positive">$1,800</td>
+          <td>$1,800</td>
+        </tr>
+        <tr>
+          <td>Electrical</td>
+          <td>Fans, pendants, recessed lighting</td>
+          <td>$3,500</td>
+          <td class="zero">$0</td>
+          <td class="positive">$3,500</td>
+          <td>$3,500</td>
+        </tr>
+        <tr>
+          <td>Flooring</td>
+          <td>New flooring + refinish 2,000sqft + install 300sqft (RT Flooring)</td>
+          <td>$7,800</td>
+          <td>$6,758</td>
+          <td class="positive">$1,042</td>
+          <td class="zero">$0</td>
+        </tr>
+        <tr>
+          <td>Misc / Doors</td>
+          <td>3 sets exterior doors + front door (labor + materials)</td>
+          <td>$8,000</td>
+          <td class="zero">$0</td>
+          <td class="positive">$8,000</td>
+          <td>$8,000</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td>Living Area Total</td>
+          <td></td>
+          <td>$36,600</td>
+          <td>$20,004</td>
+          <td class="positive">$16,596</td>
+          <td>$14,300</td>
+        </tr>
+      </tfoot>
+    </table>
+    <div class="note">Demo split from combined $7K order with master bath. $4K allocated here, on budget.</div>
+    <div class="note">Cabinets $2,746 over (extras added + $768 sink from Wayfair).</div>
+    <div class="note">Flooring complete. Came in $1,042 under estimate.</div>
+    <div class="note">Fireplace, backsplash, electrical, doors not started.</div>
+  </div>
+
+  <!-- UNBUDGETED -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Unbudgeted / Client-Tracked</h2>
+      <span class="section-badge badge-overruns">Added Costs</span>
+    </div>
+
+    <table class="budget-table">
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Description</th>
+          <th>Estimated</th>
+          <th>Actual</th>
+          <th>Variance</th>
+          <th>Supplier</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Re-Pipe</td>
+          <td>Full re-pipe, not in original scope (K and K)</td>
+          <td class="zero">$0</td>
+          <td>$5,450</td>
+          <td class="negative">($5,450)</td>
+          <td style="font-family:'DM Sans';font-size:13px;color:var(--text-secondary)">K and K</td>
+        </tr>
+        <tr>
+          <td>Tile Selections</td>
+          <td>Client tile material selections (not in estimates)</td>
+          <td class="zero">$0</td>
+          <td>$5,106</td>
+          <td class="negative">($5,106)</td>
+          <td style="font-family:'DM Sans';font-size:13px;color:var(--text-secondary)">Homecorr</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td>Unbudgeted Total</td>
+          <td></td>
+          <td>$0</td>
+          <td>$10,555</td>
+          <td class="negative">($10,555)</td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+    <div class="note">Tile selections were not part of original estimates. Budget covered labor and waterproofing only. Tracking these costs for the client.</div>
+  </div>
+
+  <!-- MISC ALLOTMENT -->
+  <div class="section">
+    <div class="section-header">
+      <h2>$5K Misc Allotment</h2>
+    </div>
+
+    <table class="budget-table">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Description</th>
+          <th>Budget</th>
+          <th>Spent</th>
+          <th>Variance</th>
+          <th>Remaining</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Paint</td>
+          <td>Labor, bathroom (Javier Casano)</td>
+          <td>--</td>
+          <td>$360</td>
+          <td>--</td>
+          <td>--</td>
+        </tr>
+        <tr>
+          <td>Sheetrock</td>
+          <td>Sheetrock (MD)</td>
+          <td>--</td>
+          <td>$645</td>
+          <td>--</td>
+          <td>--</td>
+        </tr>
+        <tr>
+          <td>Floor Covering</td>
+          <td>Floor covering (Lowe's)</td>
+          <td>--</td>
+          <td>$107</td>
+          <td>--</td>
+          <td>--</td>
+        </tr>
+        <tr>
+          <td>Materials</td>
+          <td>Misc materials (MD)</td>
+          <td>--</td>
+          <td>$110</td>
+          <td>--</td>
+          <td>--</td>
+        </tr>
+        <tr>
+          <td>Doors</td>
+          <td>Categorized door materials</td>
+          <td>--</td>
+          <td>$214</td>
+          <td>--</td>
+          <td>--</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td>Misc Allotment Total</td>
+          <td></td>
+          <td>$5,000</td>
+          <td>$1,436</td>
+          <td class="positive">$3,564</td>
+          <td class="positive">$3,564</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <!-- CONTRACTOR FEE -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Contractor Fee</h2>
+    </div>
+
+    <table class="budget-table">
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th></th>
+          <th>Fixed Fee</th>
+          <th>Drawn</th>
+          <th>Variance</th>
+          <th>Remaining</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Fixed contractor fee</td>
+          <td style="color:var(--text-tertiary);font-family:'DM Sans';font-size:12px">Replaces GCP/O on estimates</td>
+          <td>$24,000</td>
+          <td>$12,000</td>
+          <td class="positive">$12,000</td>
+          <td>$12,000</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- REMAINING ITEMS TO COMPLETE -->
+  <div class="remaining-section">
+    <h2>Remaining Items to Complete</h2>
+
+    <table class="remaining-table">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Description</th>
+          <th>Projected Cost</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Guest Bath -->
+        <tr><td colspan="3" class="scope-label">Guest Bathroom (Full Scope)</td></tr>
+        <tr>
+          <td>Demo</td>
+          <td>Demo current guest bathroom + trash haul</td>
+          <td>$1,200</td>
+        </tr>
+        <tr>
+          <td>Water Proofing</td>
+          <td>Waterproofing materials</td>
+          <td>$600</td>
+        </tr>
+        <tr>
+          <td>Tile</td>
+          <td>Tile surround, shower/tub combo (labor)</td>
+          <td>$1,800</td>
+        </tr>
+        <tr>
+          <td>Floor Tile</td>
+          <td>Floor tile installation (labor)</td>
+          <td>$950</td>
+        </tr>
+        <tr>
+          <td>Bathroom Fixtures</td>
+          <td>Shower/tub combo for tile surround</td>
+          <td>$800</td>
+        </tr>
+        <tr>
+          <td>Plumbing</td>
+          <td>Hookup all new fixtures</td>
+          <td>$1,200</td>
+        </tr>
+
+        <!-- Master Bath -->
+        <tr><td colspan="3" class="scope-label">Master Bathroom (Remaining)</td></tr>
+        <tr>
+          <td>Plumbing</td>
+          <td>Hookup fixtures (not yet billed)</td>
+          <td>$2,500</td>
+        </tr>
+
+        <!-- Main Living -->
+        <tr><td colspan="3" class="scope-label">Main Living Area (Remaining)</td></tr>
+        <tr>
+          <td>Fireplace</td>
+          <td>Stone accent wall (labor + materials)</td>
+          <td>$5,000</td>
+        </tr>
+        <tr>
+          <td>Tile</td>
+          <td>Kitchen backsplash (labor + setting materials)</td>
+          <td>$1,800</td>
+        </tr>
+        <tr>
+          <td>Electrical</td>
+          <td>Fans, pendant lights, recessed lighting</td>
+          <td>$3,500</td>
+        </tr>
+        <tr>
+          <td>Misc / Doors</td>
+          <td>3 sets exterior doors + front door (labor + materials)</td>
+          <td>$8,000</td>
+        </tr>
+
+        <!-- Other -->
+        <tr><td colspan="3" class="scope-label">Other</td></tr>
+        <tr>
+          <td>Misc Allotment</td>
+          <td>Remaining contingency budget</td>
+          <td>$3,564</td>
+        </tr>
+        <tr>
+          <td>Contractor Fee</td>
+          <td>Remaining fixed fee draw</td>
+          <td>$12,000</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="2">Total Remaining to Complete</td>
+          <td>$42,914</td>
+<!-- Breakdown: Guest $6,550 + Master $2,500 + Living $18,300 + Misc $3,564 + Fee $12,000 -->
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <!-- Payment Summary -->
+  <div class="payment-grid" style="margin-top:40px;">
+    <div class="payment-card">
+      <h3>Payments</h3>
+      <div class="payment-row">
+        <span class="pr-label">Total Contract</span>
+        <span class="pr-value value-white">$91,550</span>
+      </div>
+      <div class="payment-row">
+        <span class="pr-label">Collected to Date</span>
+        <span class="pr-value value-green">$60,000</span>
+      </div>
+      <div class="payment-row">
+        <span class="pr-label">Credit on Account</span>
+        <span class="pr-value value-green">$1,333</span>
+      </div>
+      <div class="payment-row">
+        <span class="pr-label">Still Owed by Hice</span>
+        <span class="pr-value value-gold">$31,550</span>
+      </div>
+    </div>
+
+    <div class="payment-card">
+      <h3>Overruns</h3>
+      <div class="payment-row">
+        <span class="pr-label">Fixtures (tub over budget)</span>
+        <span class="pr-value value-red">($879)</span>
+      </div>
+      <div class="payment-row">
+        <span class="pr-label">Cabinets (extras + sink)</span>
+        <span class="pr-value value-red">($2,746)</span>
+      </div>
+      <div class="payment-row">
+        <span class="pr-label">Unbudgeted items</span>
+        <span class="pr-value value-red">($10,555)</span>
+      </div>
+      <div class="payment-row">
+        <span class="pr-label">Total Overruns</span>
+        <span class="pr-value value-red">($14,180)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-left">Prepared for internal use. All figures based on QuickBooks estimates and running cost analysis.</div>
+    <div class="footer-right">Flynn Development</div>
+  </div>
+
+</div>
+</body>
+</html>
