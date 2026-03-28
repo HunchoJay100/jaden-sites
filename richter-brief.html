@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code // Richter Technology</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================
+   PROPERTIES
+   ============================================ */
+:root {
+  --bg: #09090B;
+  --bg-surface: #111113;
+  --bg-elevated: #18181B;
+  --bg-code: #0C0C0E;
+  --border: rgba(255,255,255,0.06);
+  --border-accent: rgba(56,189,248,0.2);
+  --cyan: #38BDF8;
+  --cyan-dim: rgba(56,189,248,0.08);
+  --cyan-glow: 0 0 24px rgba(56,189,248,0.15);
+  --green: #4ADE80;
+  --amber: #FBBF24;
+  --red: #F87171;
+  --purple: #A78BFA;
+  --text-1: rgba(255,255,255,0.92);
+  --text-2: rgba(255,255,255,0.55);
+  --text-3: rgba(255,255,255,0.28);
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+  --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ============================================
+   RESET
+   ============================================ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text-1);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ============================================
+   MATRIX RAIN CANVAS
+   ============================================ */
+#matrix {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.06;
+  pointer-events: none;
+}
+
+/* ============================================
+   CONTENT
+   ============================================ */
+.content {
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================
+   NAV
+   ============================================ */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  background: rgba(9,9,11,0.8);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--border);
+  opacity: 0;
+  transition: opacity 0.4s var(--ease);
+}
+.nav.visible { opacity: 1; }
+
+.nav-mark {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-2);
+  letter-spacing: 0.5px;
+}
+.nav-mark span { color: var(--cyan); }
+
+.nav-links {
+  display: flex;
+  gap: 4px;
+  list-style: none;
+}
+.nav-links a {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-3);
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: all 0.15s var(--ease);
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+.nav-links a:hover { color: var(--text-2); }
+.nav-links a.active {
+  color: var(--cyan);
+  background: var(--cyan-dim);
+}
+
+@media (max-width: 640px) {
+  .nav-links { display: none; }
+  .nav { justify-content: center; }
+}
+
+/* ============================================
+   HERO
+   ============================================ */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 120px 32px 80px;
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+.hero-tag {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--cyan);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fadeUp 0.6s var(--ease) 0.2s forwards;
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 7vw, 80px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -2.5px;
+  margin-bottom: 32px;
+  opacity: 0;
+  animation: fadeUp 0.6s var(--ease) 0.4s forwards;
+}
+.hero h1 .dim { color: var(--text-3); }
+
+.hero-sub {
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--text-2);
+  max-width: 560px;
+  line-height: 1.7;
+  letter-spacing: -0.2px;
+  margin-bottom: 56px;
+  opacity: 0;
+  animation: fadeUp 0.6s var(--ease) 0.6s forwards;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Terminal */
+.terminal {
+  width: 100%;
+  max-width: 680px;
+  background: var(--bg-code);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  opacity: 0;
+  animation: fadeUp 0.6s var(--ease) 0.8s forwards;
+}
+.terminal-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 16px;
+  background: rgba(255,255,255,0.02);
+  border-bottom: 1px solid var(--border);
+}
+.terminal-dot { width: 12px; height: 12px; border-radius: 50%; }
+.terminal-dot.r { background: #FF5F57; }
+.terminal-dot.y { background: #FFBD2E; }
+.terminal-dot.g { background: #28C840; }
+.terminal-title {
+  flex: 1;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-3);
+}
+.terminal-body {
+  padding: 24px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.8;
+  min-height: 220px;
+}
+.terminal-body .prompt { color: var(--cyan); }
+.terminal-body .cmd { color: var(--text-1); }
+.terminal-body .out { color: var(--text-2); }
+.terminal-body .ok { color: var(--green); }
+.terminal-body .warn { color: var(--amber); }
+.terminal-body .err { color: var(--red); }
+.terminal-line {
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.cursor {
+  display: inline-block;
+  width: 8px;
+  height: 15px;
+  background: var(--cyan);
+  vertical-align: text-bottom;
+  margin-left: 2px;
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+/* Scan line on terminal */
+.terminal-body::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+  box-shadow: 0 0 8px rgba(56,189,248,0.3);
+  opacity: 0;
+  animation: scan 5s ease-in-out infinite 3s;
+  pointer-events: none;
+}
+.terminal-body { position: relative; overflow: hidden; }
+@keyframes scan {
+  0% { top: 0; opacity: 0; }
+  5% { opacity: 0.6; }
+  95% { opacity: 0.6; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* ============================================
+   SECTIONS
+   ============================================ */
+.section {
+  padding: 120px 32px;
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+.section-num {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-3);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.section h2 {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4.5vw, 48px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -1.5px;
+  margin-bottom: 16px;
+}
+
+.section-lead {
+  font-size: 17px;
+  color: var(--text-2);
+  max-width: 580px;
+  line-height: 1.7;
+  letter-spacing: -0.2px;
+  margin-bottom: 64px;
+}
+
+/* Divider */
+.divider {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+.divider hr {
+  border: none;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ============================================
+   CAPABILITY GRID
+   ============================================ */
+.cap-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+@media (max-width: 640px) { .cap-grid { grid-template-columns: 1fr; } }
+
+.cap-card {
+  background: var(--bg-surface);
+  border-radius: 12px;
+  padding: 28px 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 1px 2px rgba(0,0,0,0.15);
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+.cap-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.3), 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.cap-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--cyan);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.cap-title {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.43px;
+  margin-bottom: 8px;
+}
+
+.cap-text {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+
+/* ============================================
+   CODE BLOCKS
+   ============================================ */
+.code-block {
+  background: var(--bg-code);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 32px 0;
+}
+.code-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.code-file {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-3);
+}
+.code-lang {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--cyan);
+  background: var(--cyan-dim);
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-weight: 500;
+}
+.code-body {
+  padding: 24px;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--text-2);
+}
+.code-body pre { margin: 0; white-space: pre; }
+
+/* Syntax */
+.kw { color: var(--cyan); }
+.str { color: var(--green); }
+.cmt { color: rgba(255,255,255,0.2); font-style: italic; }
+.num { color: var(--amber); }
+.fn { color: var(--purple); }
+.prop { color: #7DD3FC; }
+.err { color: var(--red); }
+
+/* ============================================
+   PROOF OF WORK PROJECTS
+   ============================================ */
+.project {
+  margin-bottom: 96px;
+}
+.project:last-child { margin-bottom: 0; }
+
+.project-name {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 700;
+  letter-spacing: -0.8px;
+  margin-bottom: 8px;
+}
+
+.project-desc {
+  font-size: 15px;
+  color: var(--text-2);
+  margin-bottom: 32px;
+  line-height: 1.6;
+}
+
+/* Stats */
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  margin-bottom: 32px;
+}
+.stat-val {
+  font-family: var(--font-display);
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: -1.5px;
+  color: var(--text-1);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stat-lbl {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 500;
+}
+
+/* Tags */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 24px 0;
+}
+.tag {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 6px;
+  background: var(--bg-elevated);
+  color: var(--text-2);
+  border: 1px solid var(--border);
+}
+
+/* App screenshots */
+.app-frame {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 32px 0;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+}
+.app-frame-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.02);
+  border-bottom: 1px solid var(--border);
+}
+.app-frame-dot { width: 10px; height: 10px; border-radius: 50%; }
+.app-frame-dot.r { background: #FF5F57; }
+.app-frame-dot.y { background: #FFBD2E; }
+.app-frame-dot.g { background: #28C840; }
+.app-frame-url {
+  flex: 1;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-3);
+}
+.app-frame img {
+  width: 100%;
+  display: block;
+}
+.app-frame .placeholder {
+  width: 100%;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-3);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  background: var(--bg-code);
+}
+
+/* ============================================
+   MSP GRID
+   ============================================ */
+.msp-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+@media (max-width: 640px) { .msp-grid { grid-template-columns: 1fr; } }
+
+.msp-card {
+  background: var(--bg-surface);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 1px 2px rgba(0,0,0,0.15);
+  border-left: 3px solid var(--cyan);
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+.msp-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.3), 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.msp-cat {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--cyan);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.msp-title {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  margin-bottom: 8px;
+}
+
+.msp-text {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.footer {
+  padding: 96px 32px 48px;
+  max-width: 920px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.footer h3 {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 3vw, 28px);
+  font-weight: 700;
+  letter-spacing: -0.8px;
+  margin-bottom: 16px;
+  line-height: 1.4;
+}
+
+.footer p {
+  font-size: 15px;
+  color: var(--text-3);
+  margin-bottom: 48px;
+  line-height: 1.7;
+}
+
+.footer-rule {
+  width: 64px;
+  height: 1px;
+  background: var(--border);
+  margin: 0 auto 24px;
+}
+
+.footer-credit {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-3);
+}
+.footer-credit strong { color: var(--cyan); font-weight: 500; }
+
+/* ============================================
+   DYNAMIC ELEMENTS
+   ============================================ */
+
+/* Gradient orbs - floating ambient light */
+.orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.07;
+}
+.orb-1 {
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, #38BDF8, transparent 70%);
+  top: -200px; right: -200px;
+  animation: orbFloat1 20s ease-in-out infinite;
+}
+.orb-2 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, #A78BFA, transparent 70%);
+  bottom: 30%; left: -250px;
+  animation: orbFloat2 25s ease-in-out infinite;
+}
+.orb-3 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, #38BDF8, transparent 70%);
+  bottom: -100px; right: 10%;
+  animation: orbFloat3 18s ease-in-out infinite;
+}
+@keyframes orbFloat1 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-80px, 60px); }
+}
+@keyframes orbFloat2 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(60px, -40px); }
+}
+@keyframes orbFloat3 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-40px, -60px); }
+}
+
+/* Accent line that follows scroll progress */
+.scroll-progress {
+  position: fixed;
+  top: 56px;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--cyan), var(--purple));
+  box-shadow: 0 0 12px rgba(56,189,248,0.4);
+  z-index: 101;
+  width: 0%;
+  transition: none;
+}
+
+/* Stat glow pulse when counting */
+.stat-val.counting {
+  text-shadow: 0 0 16px rgba(56,189,248,0.5), 0 0 40px rgba(56,189,248,0.2);
+  color: var(--cyan);
+  transition: all 0.3s var(--ease);
+}
+
+/* Code block left accent */
+.code-block {
+  position: relative;
+}
+.code-block::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 20%;
+  bottom: 20%;
+  width: 2px;
+  background: linear-gradient(180deg, transparent, var(--cyan), transparent);
+  border-radius: 1px;
+  opacity: 0.4;
+}
+
+/* Section number accent */
+.section-num {
+  position: relative;
+  padding-left: 24px;
+}
+.section-num::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 2px;
+  background: var(--cyan);
+  box-shadow: 0 0 8px rgba(56,189,248,0.4);
+}
+
+/* Hero gradient text on hover */
+.hero h1 {
+  background: linear-gradient(135deg, var(--text-1) 0%, var(--text-1) 60%, var(--cyan) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero h1 .dim {
+  -webkit-text-fill-color: rgba(255,255,255,0.28);
+}
+
+/* MSP card hover glow */
+.msp-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  opacity: 0;
+  background: radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(56,189,248,0.06), transparent 40%);
+  transition: opacity 0.3s var(--ease);
+  pointer-events: none;
+}
+.msp-card { position: relative; overflow: hidden; }
+.msp-card:hover::after { opacity: 1; }
+
+/* Cap card hover glow */
+.cap-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  opacity: 0;
+  background: radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(56,189,248,0.06), transparent 40%);
+  transition: opacity 0.3s var(--ease);
+  pointer-events: none;
+}
+.cap-card { position: relative; overflow: hidden; }
+.cap-card:hover::after { opacity: 1; }
+
+/* App frame subtle shine on hover */
+.app-frame {
+  transition: box-shadow 0.4s var(--ease);
+}
+.app-frame:hover {
+  box-shadow: 0 8px 40px rgba(56,189,248,0.08), 0 4px 14px rgba(0,0,0,0.3);
+}
+
+/* ============================================
+   SCROLL REVEAL
+   ============================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 640px) {
+  .hero { padding: 100px 20px 64px; }
+  .section { padding: 80px 20px; }
+  .footer { padding: 64px 20px 32px; }
+  .stats { gap: 24px; }
+  .stat-val { font-size: 32px; }
+  .terminal-body { padding: 16px; font-size: 11px; }
+  .code-body { padding: 16px; font-size: 11px; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="matrix"></canvas>
+
+<!-- Ambient gradient orbs -->
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<!-- Scroll progress -->
+<div class="scroll-progress" id="scroll-progress"></div>
+
+<div class="content">
+
+  <!-- Nav -->
+  <nav class="nav" id="nav">
+    <div class="nav-mark"><span>//</span> CLAUDE CODE</div>
+    <ul class="nav-links">
+      <li><a href="#platform" data-section="platform">Platform</a></li>
+      <li><a href="#proof" data-section="proof">Proof of Work</a></li>
+      <li><a href="#msp" data-section="msp">For Richter</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" id="hero">
+    <div class="hero-tag">Technical Brief // Richter Technology LLC</div>
+    <h1>This is not<br>a <span class="dim">chatbot.</span></h1>
+    <p class="hero-sub">
+      An autonomous coding agent with full system access, persistent memory, and the ability to ship production software without human intervention. This is what it built.
+    </p>
+
+    <div class="terminal" id="hero-terminal">
+      <div class="terminal-bar">
+        <div class="terminal-dot r"></div>
+        <div class="terminal-dot y"></div>
+        <div class="terminal-dot g"></div>
+        <div class="terminal-title">claude-code // firewall-audit</div>
+      </div>
+      <div class="terminal-body" id="terminal-body"></div>
+    </div>
+  </section>
+
+  <div class="divider"><hr></div>
+
+  <!-- Section 1: Platform -->
+  <section class="section" id="platform">
+    <div class="section-num reveal">01 // Platform</div>
+    <h2 class="reveal">What Claude Code Actually Is</h2>
+    <p class="section-lead reveal">
+      Not a chat window. A persistent agent that lives in the terminal, reads and writes code, executes system commands, manages version control, and runs autonomously on a schedule.
+    </p>
+
+    <div class="cap-grid">
+      <div class="cap-card reveal">
+        <div class="cap-label">System</div>
+        <div class="cap-title">Full Infrastructure Access</div>
+        <p class="cap-text">Reads files, executes scripts, manages services, queries APIs. Not a suggestion engine. It operates your systems.</p>
+      </div>
+      <div class="cap-card reveal">
+        <div class="cap-label">Autonomy</div>
+        <div class="cap-title">Scheduled Operations</div>
+        <p class="cap-text">Runs via cron. Morning health checks, continuous monitoring, automated reporting. No human in the loop required.</p>
+      </div>
+      <div class="cap-card reveal">
+        <div class="cap-label">Security</div>
+        <div class="cap-title">Built-In Boundaries</div>
+        <p class="cap-text">Read-only enforcement, permission lockdowns, mutation blocking. Every autonomous system has a security boundary from day one.</p>
+      </div>
+      <div class="cap-card reveal">
+        <div class="cap-label">Memory</div>
+        <div class="cap-title">Persistent Context</div>
+        <p class="cap-text">File-based memory across sessions. Knows projects, preferences, team, architecture. Picks up exactly where it left off.</p>
+      </div>
+      <div class="cap-card reveal">
+        <div class="cap-label">DevOps</div>
+        <div class="cap-title">Git-Native Workflow</div>
+        <p class="cap-text">Creates branches, writes commits, opens PRs, manages merge conflicts. Full version control without a GUI.</p>
+      </div>
+      <div class="cap-card reveal">
+        <div class="cap-label">Integration</div>
+        <div class="cap-title">Any API. Any Platform.</div>
+        <p class="cap-text">REST, GraphQL, browser automation with Playwright. Builds data pipelines. Connects things that were never designed to talk.</p>
+      </div>
+    </div>
+
+    <div class="code-block reveal">
+      <div class="code-head">
+        <span class="code-file">heartbeat/watchdog/watchdog.js</span>
+        <span class="code-lang">JavaScript</span>
+      </div>
+      <div class="code-body"><pre id="code-enforce"></pre></div>
+    </div>
+    <p class="reveal" style="font-size: 13px; color: var(--text-3); margin-top: -16px;">
+      Every autonomous system enforces a read-only boundary. Write operations are blocked at the function level before any API call executes.
+    </p>
+  </section>
+
+  <div class="divider"><hr></div>
+
+  <!-- Section 2: Proof of Work -->
+  <section class="section" id="proof">
+    <div class="section-num reveal">02 // Proof of Work</div>
+    <h2 class="reveal">Built by a guy who<br>builds houses.</h2>
+    <p class="section-lead reveal">
+      Production systems. No prior programming experience. No bootcamp. No Stack Overflow. Every line of code generated by Claude Code from plain English conversation.
+    </p>
+
+    <!-- BidKit -->
+    <div class="project">
+      <h3 class="project-name reveal">BidKit</h3>
+      <p class="project-desc reveal">Full-scale construction estimating platform. Originally built as a single HTML file with zero dependencies. Now migrating to a proper JavaScript framework for better infrastructure, scalability, and multi-user support. Handles everything from footer excavation to finish carpentry with real Cookeville-area pricing.</p>
+
+      <div class="stats reveal">
+        <div>
+          <div class="stat-val" data-count="3303">0</div>
+          <div class="stat-lbl">Lines of Code</div>
+        </div>
+        <div>
+          <div class="stat-val" data-count="160" data-suffix="+">0</div>
+          <div class="stat-lbl">Pricing Rates</div>
+        </div>
+        <div>
+          <div class="stat-val" data-count="30" data-suffix="+">0</div>
+          <div class="stat-lbl">Trade Categories</div>
+        </div>
+        <div>
+          <div class="stat-val" data-count="5">0</div>
+          <div class="stat-lbl">Export Formats</div>
+        </div>
+      </div>
+
+      <div class="app-frame reveal">
+        <div class="app-frame-bar">
+          <div class="app-frame-dot r"></div>
+          <div class="app-frame-dot y"></div>
+          <div class="app-frame-dot g"></div>
+          <div class="app-frame-url">localhost:8080/bidkit.html</div>
+        </div>
+        <img src="images/bidkit-screenshot.png" alt="BidKit estimating platform interface">
+      </div>
+
+      <div class="code-block reveal">
+        <div class="code-head">
+          <span class="code-file">flynn-dev-estimating/bidkit.html</span>
+          <span class="code-lang">JavaScript</span>
+        </div>
+        <div class="code-body"><pre id="code-bidkit"></pre></div>
+      </div>
+    </div>
+
+    <!-- RECO -->
+    <div class="project">
+      <h3 class="project-name reveal">RECO Scrubber</h3>
+      <p class="project-desc reveal">Multi-platform real estate data aggregation engine. Scrapes Zillow, Redfin, Realtor.com, and Homes.com. Defeats PerimeterX, CloudFront, and rate limiting. Feeds a PostgreSQL warehouse on a cron schedule.</p>
+
+      <div class="stats reveal">
+        <div>
+          <div class="stat-val" data-count="192">0</div>
+          <div class="stat-lbl">Listings Tracked</div>
+        </div>
+        <div>
+          <div class="stat-val" data-count="4">0</div>
+          <div class="stat-lbl">Platforms</div>
+        </div>
+        <div>
+          <div class="stat-val" data-count="3">0</div>
+          <div class="stat-lbl">Anti-Bot Bypasses</div>
+        </div>
+      </div>
+
+      <div class="tags reveal">
+        <span class="tag">PerimeterX Bypass</span>
+        <span class="tag">CloudFront Evasion</span>
+        <span class="tag">PostgreSQL Warehouse</span>
+        <span class="tag">Cron Automation</span>
+        <span class="tag">Playwright Stealth</span>
+      </div>
+
+      <div class="app-frame reveal">
+        <div class="app-frame-bar">
+          <div class="app-frame-dot r"></div>
+          <div class="app-frame-dot y"></div>
+          <div class="app-frame-dot g"></div>
+          <div class="app-frame-url">hunchojay100.github.io/jaden-sites/reco.html</div>
+        </div>
+        <img src="images/reco-screenshot.png" alt="RECO Scrubber dashboard">
+      </div>
+
+      <div class="code-block reveal">
+        <div class="code-head">
+          <span class="code-file">reco/scrapers/zillow-scraper.js</span>
+          <span class="code-lang">JavaScript</span>
+        </div>
+        <div class="code-body"><pre id="code-zillow"></pre></div>
+      </div>
+
+      <div class="code-block reveal">
+        <div class="code-head">
+          <span class="code-file">reco/scrapers/redfin-scraper.js</span>
+          <span class="code-lang">JavaScript</span>
+        </div>
+        <div class="code-body"><pre id="code-redfin"></pre></div>
+      </div>
+    </div>
+
+    <!-- Analytics -->
+    <div class="project">
+      <h3 class="project-name reveal">Analytics Command Center</h3>
+      <p class="project-desc reveal">Multi-brand advertising intelligence dashboard. Live Meta API integration. TypeScript strict mode. Tracks CPL trends, ad fatigue, and spend efficiency across four brand accounts in real time.</p>
+
+      <div class="stats reveal">
+        <div>
+          <div class="stat-val" data-count="6">0</div>
+          <div class="stat-lbl">API Endpoints</div>
+        </div>
+        <div>
+          <div class="stat-val" data-count="4">0</div>
+          <div class="stat-lbl">Brand Accounts</div>
+        </div>
+      </div>
+
+      <div class="tags reveal">
+        <span class="tag">TypeScript Strict</span>
+        <span class="tag">Ad Fatigue Detection</span>
+        <span class="tag">CPL Monitoring</span>
+        <span class="tag">Live Meta API</span>
+      </div>
+
+      <div class="app-frame reveal">
+        <div class="app-frame-bar">
+          <div class="app-frame-dot r"></div>
+          <div class="app-frame-dot y"></div>
+          <div class="app-frame-dot g"></div>
+          <div class="app-frame-url">localhost:3001</div>
+        </div>
+        <img src="images/analytics-screenshot.png" alt="Analytics Command Center with live Meta data">
+      </div>
+
+      <div class="code-block reveal">
+        <div class="code-head">
+          <span class="code-file">analytics-dashboard/src/app/api/meta/campaigns/route.ts</span>
+          <span class="code-lang">TypeScript</span>
+        </div>
+        <div class="code-body"><pre id="code-analytics"></pre></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"><hr></div>
+
+  <!-- Section 3: For Richter Technology -->
+  <section class="section" id="msp">
+    <div class="section-num reveal">03 // For Richter Technology</div>
+    <h2 class="reveal">What this builds for a<br>1,000-workstation MSP.</h2>
+    <p class="section-lead reveal">
+      Every card below is something Claude Code can build, automate, or operate on your infrastructure. Not hypothetical. Not a sales deck. Actual autonomous systems.
+    </p>
+
+    <div class="msp-grid">
+      <div class="msp-card reveal">
+        <div class="msp-cat">Network + Security</div>
+        <div class="msp-title">Firewall Ruleset Auditor</div>
+        <p class="msp-text">Parses FortiGate, Meraki, and pfSense configs. Flags overly permissive rules, shadow conflicts, and unused ACLs. Scheduled runs, email reports.</p>
+      </div>
+      <div class="msp-card reveal">
+        <div class="msp-cat">Network + Security</div>
+        <div class="msp-title">Vuln Scanner Integration</div>
+        <p class="msp-text">Ingests Nessus/Qualys results. Cross-references CVE databases. Prioritizes by CVSS and asset criticality. Client-ready remediation reports.</p>
+      </div>
+      <div class="msp-card reveal">
+        <div class="msp-cat">Network + Security</div>
+        <div class="msp-title">DNS + Certificate Monitor</div>
+        <p class="msp-text">Tracks SSL/TLS expiry across all client domains. Alerts at 30/14/7 days. Monitors DNS propagation. Zero surprise outages.</p>
+      </div>
+      <div class="msp-card reveal">
+        <div class="msp-cat">Automation</div>
+        <div class="msp-title">Client Onboarding Engine</div>
+        <p class="msp-text">AD/Entra provisioning, email config, security policies, documentation generation. What takes 4 hours becomes 15 minutes.</p>
+      </div>
+      <div class="msp-card reveal">
+        <div class="msp-cat">Automation</div>
+        <div class="msp-title">Patch Compliance Engine</div>
+        <p class="msp-text">Monitors Windows Update and third-party apps across 1,000+ endpoints. Compliance reports. Flags machines behind policy.</p>
+      </div>
+      <div class="msp-card reveal">
+        <div class="msp-cat">Automation</div>
+        <div class="msp-title">Ticket Triage + Routing</div>
+        <p class="msp-text">Reads ConnectWise/Autotask tickets via API. Categorizes by urgency, routes to the right tech, drafts initial response.</p>
+      </div>
+      <div class="msp-card reveal">
+        <div class="msp-cat">Compliance</div>
+        <div class="msp-title">QBR Report Generator</div>
+        <p class="msp-text">Pulls ticket volume, SLA metrics, uptime, security posture. Generates quarterly business review decks automatically.</p>
+      </div>
+      <div class="msp-card reveal">
+        <div class="msp-cat">Compliance</div>
+        <div class="msp-title">HIPAA / CMMC Audit Prep</div>
+        <p class="msp-text">Continuous compliance monitoring. Maps controls to evidence. Generates audit-ready documentation on demand.</p>
+      </div>
+      <div class="msp-card reveal">
+        <div class="msp-cat">Compliance</div>
+        <div class="msp-title">Client Health Dashboard</div>
+        <p class="msp-text">Aggregates RMM data, backup status, AV health, ticket trends per client. Single pane of glass for the entire book of business.</p>
+      </div>
+      <div class="msp-card reveal">
+        <div class="msp-cat">Development</div>
+        <div class="msp-title">Internal Tool Builder</div>
+        <p class="msp-text">Custom calculators, status pages, client portals. Full-stack web apps from conversation. Ship internal tools in hours.</p>
+      </div>
+      <div class="msp-card reveal">
+        <div class="msp-cat">Development</div>
+        <div class="msp-title">PowerShell Script Factory</div>
+        <p class="msp-text">Generates, tests, and documents PowerShell for any Windows admin task. Bulk user management, GPO audits, event log analysis.</p>
+      </div>
+      <div class="msp-card reveal">
+        <div class="msp-cat">Development</div>
+        <div class="msp-title">API Integration Layer</div>
+        <p class="msp-text">Connects PSA, RMM, backup, and security tools into unified workflows. Automates data between platforms that don't talk to each other.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="divider" style="padding:0;max-width:none;"><hr></div>
+    <div style="padding-top: 64px;">
+      <h3 class="reveal">This entire brief is a single HTML file.<br>No framework. No npm install. One conversation.</h3>
+      <p class="reveal">
+        Built with Claude Code in one session. The Matrix rain, the code blocks,<br>
+        the screenshots, the scroll tracking. All generated autonomously.<br>
+        By a guy who builds houses for a living.
+      </p>
+      <div class="footer-rule"></div>
+      <div class="footer-credit">
+        Prepared for <strong>Richter Technology LLC</strong> // Jaden Flynn, Flynn Development
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+/* ============================================
+   MATRIX RAIN
+   ============================================ */
+(function() {
+  const c = document.getElementById('matrix');
+  const ctx = c.getContext('2d');
+
+  function resize() {
+    c.width = window.innerWidth;
+    c.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%^&*(){}[]|;:<>,.?/~`!アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+  const fontSize = 14;
+  let columns, drops;
+
+  function init() {
+    columns = Math.floor(c.width / fontSize);
+    drops = new Array(columns).fill(0).map(() => Math.random() * -100);
+  }
+  init();
+  window.addEventListener('resize', init);
+
+  function draw() {
+    ctx.fillStyle = 'rgba(9, 9, 11, 0.08)';
+    ctx.fillRect(0, 0, c.width, c.height);
+
+    ctx.fillStyle = '#38BDF8';
+    ctx.font = fontSize + 'px JetBrains Mono, monospace';
+
+    for (let i = 0; i < columns; i++) {
+      if (drops[i] < 0) {
+        drops[i] += 0.2;
+        continue;
+      }
+      const ch = chars[Math.floor(Math.random() * chars.length)];
+      const x = i * fontSize;
+      const y = drops[i] * fontSize;
+
+      // Brighten the head character
+      const alpha = 0.6 + Math.random() * 0.4;
+      ctx.globalAlpha = alpha;
+      ctx.fillText(ch, x, y);
+      ctx.globalAlpha = 1;
+
+      if (y > c.height && Math.random() > 0.975) {
+        drops[i] = Math.random() * -20;
+      }
+      drops[i] += 0.5 + Math.random() * 0.3;
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ============================================
+   CODE SNIPPETS
+   ============================================ */
+const SNIPPETS = {
+enforce: `<span class="kw">function</span> <span class="fn">enforceReadOnly</span>(query) {
+  <span class="kw">const</span> roots = Object.<span class="fn">keys</span>(query);
+  <span class="kw">for</span> (<span class="kw">const</span> r <span class="kw">of</span> roots) {
+    <span class="kw">if</span> (r.<span class="fn">startsWith</span>(<span class="str">'create'</span>) || r.<span class="fn">startsWith</span>(<span class="str">'update'</span>) || r.<span class="fn">startsWith</span>(<span class="str">'delete'</span>) ||
+        r.<span class="fn">startsWith</span>(<span class="str">'send'</span>) || r.<span class="fn">startsWith</span>(<span class="str">'submit'</span>) || r.<span class="fn">startsWith</span>(<span class="str">'cancel'</span>) ||
+        r.<span class="fn">startsWith</span>(<span class="str">'close'</span>) || r.<span class="fn">startsWith</span>(<span class="str">'copy'</span>) || r.<span class="fn">startsWith</span>(<span class="str">'mark'</span>) ||
+        r.<span class="fn">startsWith</span>(<span class="str">'notify'</span>) || r.<span class="fn">startsWith</span>(<span class="str">'rename'</span>) || r.<span class="fn">startsWith</span>(<span class="str">'rerun'</span>) ||
+        r.<span class="fn">startsWith</span>(<span class="str">'sign'</span>)) {
+      <span class="kw">throw new</span> <span class="fn">Error</span>(<span class="err">\`BLOCKED: "\${r}" is a write operation. Watchdog is read-only.\`</span>);
+    }
+    <span class="kw">if</span> (!ALLOWED_ROOTS.<span class="fn">has</span>(r)) {
+      <span class="kw">throw new</span> <span class="fn">Error</span>(<span class="err">\`BLOCKED: "\${r}" is not in the read-only whitelist.\`</span>);
+    }
+  }
+}`,
+
+bidkit: `<span class="kw">const</span> <span class="prop">DEFAULT_PRICING</span> = {
+  <span class="cmt">// Start Costs</span>
+  <span class="prop">blueprints</span>: <span class="num">75</span>, <span class="prop">blueprintDrawUp</span>: <span class="num">2500</span>,
+  <span class="prop">survey</span>: <span class="num">1200</span>, <span class="prop">buildingPermit</span>: <span class="num">800</span>, <span class="prop">septicPermit</span>: <span class="num">500</span>,
+  <span class="prop">electricService</span>: <span class="num">1500</span>, <span class="prop">waterMeter</span>: <span class="num">800</span>, <span class="prop">landCost</span>: <span class="num">0</span>,
+  <span class="cmt">// Footer</span>
+  <span class="prop">footerWidth</span>: <span class="num">2</span>, <span class="prop">footerDepth</span>: <span class="num">12</span>, <span class="prop">footerOverage</span>: <span class="num">1.05</span>,
+  <span class="prop">steelMixPerYard</span>: <span class="num">200</span>, <span class="prop">footerLabor</span>: <span class="num">650</span>,
+  <span class="prop">stakesMisc</span>: <span class="num">150</span>, <span class="prop">pumpTruckBase</span>: <span class="num">1000</span>, <span class="prop">pumpTruckPerYard</span>: <span class="num">8</span>,
+  <span class="cmt">// Dirtwork</span>
+  <span class="prop">dirtworkGarage</span>: <span class="num">2000</span>, <span class="prop">dirtworkBarndo</span>: <span class="num">4000</span>,
+  <span class="prop">dirtworkCustom</span>: <span class="num">6000</span>, <span class="prop">dirtworkHighEnd</span>: <span class="num">8000</span>,
+  <span class="cmt">// Framing</span>
+  <span class="prop">floorSystemPerSF</span>: <span class="num">3.50</span>, <span class="prop">glueMisc</span>: <span class="num">500</span>,
+  <span class="prop">wallRate2x4</span>: <span class="num">5</span>, <span class="prop">wallRate2x6</span>: <span class="num">7.50</span>,
+  <span class="prop">complexityMult</span>: <span class="num">1.2</span>, <span class="prop">trussesPerSF</span>: <span class="num">4</span>, <span class="prop">osbPerSF</span>: <span class="num">0.50</span>,
+  <span class="cmt">// Pitch multipliers</span>
+  <span class="prop">pitch</span>: { <span class="str">'4:12'</span>: <span class="num">1.054</span>, <span class="str">'6:12'</span>: <span class="num">1.15</span>, <span class="str">'8:12'</span>: <span class="num">1.25</span>, <span class="str">'10:12'</span>: <span class="num">1.35</span> },
+  <span class="cmt">// Windows</span>
+  <span class="prop">win3050</span>: <span class="num">385</span>, <span class="prop">win3060</span>: <span class="num">700</span>, <span class="prop">win6050</span>: <span class="num">970</span>,
+  <span class="prop">win1040transom</span>: <span class="num">510</span>, <span class="prop">win3030</span>: <span class="num">310</span>,
+  ...
+};`,
+
+zillow: `<span class="cmt">// Get zpid from Zillow's autocomplete API (free, no auth needed)</span>
+<span class="kw">async function</span> <span class="fn">getZpid</span>(address) {
+  <span class="kw">const</span> q = <span class="fn">encodeURIComponent</span>(address);
+  <span class="kw">const</span> resp = <span class="kw">await</span> <span class="fn">fetch</span>(
+    <span class="str">\`https://www.zillowstatic.com/autocomplete/v3/suggestions?q=\${q}\`</span>,
+    { <span class="prop">headers</span>: { <span class="str">'User-Agent'</span>: <span class="str">'Mozilla/5.0 ...'</span> } }
+  );
+  <span class="kw">const</span> data = <span class="kw">await</span> resp.<span class="fn">json</span>();
+  <span class="kw">return</span> { <span class="prop">zpid</span>: data.results[<span class="num">0</span>].metaData.zpid };
+}
+
+<span class="cmt">// Extract engagement data from a Zillow listing page</span>
+<span class="kw">async function</span> <span class="fn">extractEngagement</span>(page) {
+  <span class="kw">const</span> text = <span class="kw">await</span> page.<span class="fn">locator</span>(<span class="str">'body'</span>).<span class="fn">innerText</span>();
+
+  <span class="kw">const</span> viewsMatch = text.<span class="fn">match</span>(<span class="str">/(\d[\d,]*)\\s*(?:views|times?\\s*viewed)/i</span>);
+  <span class="kw">const</span> savesMatch = text.<span class="fn">match</span>(<span class="str">/(\d[\d,]*)\\s*(?:saves?|people\\s*saved)/i</span>);
+  <span class="kw">const</span> domMatch = text.<span class="fn">match</span>(<span class="str">/(\d+)\\s*days?\\s*on\\s*zillow/i</span>);
+  <span class="kw">const</span> hotMatch = text.<span class="fn">toLowerCase</span>().<span class="fn">includes</span>(<span class="str">'hot home'</span>);
+
+  <span class="kw">return</span> { <span class="prop">views</span>, <span class="prop">saves</span>, <span class="prop">dom</span>, <span class="prop">hot</span>: hotMatch };
+}`,
+
+redfin: `<span class="kw">async function</span> <span class="fn">findRedfinListing</span>(page, address) {
+  <span class="cmt">// Use Redfin's stingray autocomplete API via browser context</span>
+  <span class="kw">const</span> q = <span class="fn">encodeURIComponent</span>(address);
+  <span class="kw">const</span> resp = <span class="kw">await</span> page.<span class="fn">evaluate</span>(<span class="kw">async</span> (query) => {
+    <span class="kw">const</span> r = <span class="kw">await</span> <span class="fn">fetch</span>(
+      <span class="str">\`https://www.redfin.com/stingray/do/location-autocomplete?location=\${query}\`</span>,
+      { <span class="prop">credentials</span>: <span class="str">'include'</span> }
+    );
+    <span class="kw">const</span> text = <span class="kw">await</span> r.<span class="fn">text</span>();
+    <span class="cmt">// Stingray responses are prefixed with {}&amp;&amp;</span>
+    <span class="kw">return</span> text.<span class="fn">startsWith</span>(<span class="str">'{}&amp;&amp;'</span>) ? text.<span class="fn">slice</span>(<span class="num">4</span>) : text;
+  }, q);
+
+  <span class="kw">const</span> data = JSON.<span class="fn">parse</span>(resp);
+  <span class="kw">const</span> sections = data?.payload?.sections || [];
+  <span class="kw">for</span> (<span class="kw">const</span> section <span class="kw">of</span> sections) {
+    <span class="kw">for</span> (<span class="kw">const</span> row <span class="kw">of</span> section.rows || []) {
+      <span class="kw">if</span> (row.url && row.type === <span class="str">'ADDRESS'</span>) {
+        <span class="kw">return</span> { <span class="prop">url</span>: <span class="str">\`https://www.redfin.com\${row.url}\`</span> };
+      }
+    }
+  }
+}`,
+
+analytics: `<span class="kw">const</span> <span class="prop">PAGE_BRAND_MAP</span>: Record&lt;<span class="fn">string</span>, <span class="fn">string</span>&gt; = {
+  <span class="str">'102530295707110'</span>: <span class="str">'Modern Development'</span>,
+  <span class="str">'101226319202630'</span>: <span class="str">'Modern Roofing Group'</span>,
+  <span class="str">'315155705008602'</span>: <span class="str">'Flynn Development'</span>,
+  <span class="str">'102720185106582'</span>: <span class="str">'Flynn Development'</span>,
+};
+
+<span class="kw">async function</span> <span class="fn">fetchAllPages</span>(url: <span class="fn">string</span>) {
+  <span class="kw">const</span> allData: Record&lt;<span class="fn">string</span>, <span class="fn">unknown</span>&gt;[] = [];
+  <span class="kw">let</span> nextUrl: <span class="fn">string</span> | <span class="kw">null</span> = url;
+  <span class="kw">while</span> (nextUrl) {
+    <span class="kw">const</span> res = <span class="kw">await</span> <span class="fn">fetch</span>(nextUrl);
+    <span class="kw">const</span> json = <span class="kw">await</span> res.<span class="fn">json</span>();
+    <span class="kw">if</span> (json.error) <span class="kw">throw new</span> <span class="fn">Error</span>(json.error.message);
+    <span class="kw">if</span> (json.data) allData.<span class="fn">push</span>(...json.data);
+    nextUrl = json.paging?.next || <span class="kw">null</span>;
+  }
+  <span class="kw">return</span> allData;
+}`
+};
+
+document.getElementById('code-enforce').innerHTML = SNIPPETS.enforce;
+document.getElementById('code-bidkit').innerHTML = SNIPPETS.bidkit;
+document.getElementById('code-zillow').innerHTML = SNIPPETS.zillow;
+document.getElementById('code-redfin').innerHTML = SNIPPETS.redfin;
+document.getElementById('code-analytics').innerHTML = SNIPPETS.analytics;
+
+/* ============================================
+   TERMINAL TYPING
+   ============================================ */
+(function() {
+  const body = document.getElementById('terminal-body');
+  const seq = [
+    { t: 'prompt', v: '$ ' },
+    { t: 'cmd', v: 'claude "Audit the FortiGate ruleset at /etc/fortigate/config.bak"' },
+    { t: 'br', d: 500 },
+    { t: 'out', v: 'Reading firewall configuration... 2,847 rules found.' },
+    { t: 'br', d: 300 },
+    { t: 'out', v: 'Analyzing against CIS FortiGate Benchmark v1.3...' },
+    { t: 'br', d: 700 },
+    { t: 'warn', v: 'WARN  Rule #412 allows 0.0.0.0/0 inbound on port 3389 (RDP)' },
+    { t: 'warn', v: 'WARN  Rule #847 has shadow conflict with Rule #204' },
+    { t: 'warn', v: 'WARN  23 rules have not matched traffic in 90+ days' },
+    { t: 'br', d: 300 },
+    { t: 'ok', v: 'Audit complete. 3 critical, 12 medium, 23 low findings.' },
+    { t: 'ok', v: 'Report written to ./firewall-audit-2026-03-28.pdf' },
+  ];
+
+  let i = 0, ch = 0, el = null;
+  const wait = 2000;
+
+  function line() {
+    el = document.createElement('div');
+    el.className = 'terminal-line';
+    body.appendChild(el);
+    return el;
+  }
+
+  function next() {
+    if (i >= seq.length) {
+      const cur = document.createElement('span');
+      cur.className = 'cursor';
+      body.lastElementChild.appendChild(cur);
+      return;
+    }
+    const s = seq[i];
+    if (s.t === 'br') { i++; setTimeout(next, s.d); return; }
+
+    if (ch === 0) {
+      if (s.t === 'prompt') {
+        line();
+        const sp = document.createElement('span');
+        sp.className = 'prompt';
+        sp.textContent = s.v;
+        el.appendChild(sp);
+        i++; next(); return;
+      }
+      if (s.t !== 'cmd') line();
+    }
+
+    if (s.t === 'cmd') {
+      if (ch === 0) {
+        const sp = document.createElement('span');
+        sp.className = 'cmd';
+        sp.textContent = '';
+        body.lastElementChild.appendChild(sp);
+      }
+      const sp = body.lastElementChild.querySelector('.cmd');
+      if (ch < s.v.length) {
+        sp.textContent += s.v[ch];
+        ch++;
+        setTimeout(next, 20 + Math.random() * 15);
+        return;
+      }
+    } else {
+      const sp = document.createElement('span');
+      sp.className = s.t;
+      sp.textContent = s.v;
+      el.appendChild(sp);
+      el.style.opacity = '0';
+      el.style.transition = 'opacity 0.25s';
+      requestAnimationFrame(() => el.style.opacity = '1');
+    }
+
+    ch = 0; i++;
+    setTimeout(next, s.d || 80);
+  }
+
+  setTimeout(next, wait);
+})();
+
+/* ============================================
+   NAV
+   ============================================ */
+(function() {
+  const nav = document.getElementById('nav');
+  const hero = document.getElementById('hero');
+  const links = document.querySelectorAll('.nav-links a');
+
+  new IntersectionObserver(([e]) => {
+    nav.classList.toggle('visible', !e.isIntersecting);
+  }, { threshold: 0.1 }).observe(hero);
+
+  const ids = ['platform','proof','msp'];
+  new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.toggle('active', l.dataset.section === e.target.id));
+      }
+    });
+  }, { threshold: 0.2 }).observe(document.getElementById('platform'));
+  ids.forEach(id => {
+    new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          links.forEach(l => l.classList.toggle('active', l.dataset.section === e.target.id));
+        }
+      });
+    }, { threshold: 0.2 }).observe(document.getElementById(id));
+  });
+
+  links.forEach(a => a.addEventListener('click', e => {
+    e.preventDefault();
+    document.querySelector(a.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+  }));
+})();
+
+/* ============================================
+   SCROLL REVEAL
+   ============================================ */
+(function() {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, idx) => {
+      if (e.isIntersecting) {
+        const delay = parseInt(e.target.dataset.delay) || 0;
+        setTimeout(() => e.target.classList.add('visible'), delay);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
+
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    // Stagger siblings in grids
+    const parent = el.parentElement;
+    if (parent && (parent.classList.contains('cap-grid') || parent.classList.contains('msp-grid'))) {
+      const siblings = Array.from(parent.querySelectorAll('.reveal'));
+      el.dataset.delay = siblings.indexOf(el) * 50;
+    }
+    obs.observe(el);
+  });
+})();
+
+/* ============================================
+   ANIMATED COUNTERS
+   ============================================ */
+(function() {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target;
+      const target = parseInt(el.dataset.count);
+      const suffix = el.dataset.suffix || '';
+      const dur = 1200;
+      const start = performance.now();
+
+      function ease(t) { return t === 1 ? 1 : 1 - Math.pow(2, -10 * t); }
+
+      el.classList.add('counting');
+      function tick(now) {
+        const p = Math.min((now - start) / dur, 1);
+        el.textContent = Math.round(ease(p) * target).toLocaleString() + suffix;
+        if (p < 1) requestAnimationFrame(tick);
+        else {
+          el.textContent = target.toLocaleString() + suffix;
+          setTimeout(() => el.classList.remove('counting'), 400);
+        }
+      }
+      requestAnimationFrame(tick);
+      obs.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+
+  document.querySelectorAll('[data-count]').forEach(el => obs.observe(el));
+})();
+
+/* ============================================
+   SCROLL PROGRESS BAR
+   ============================================ */
+(function() {
+  const bar = document.getElementById('scroll-progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement.scrollHeight - window.innerHeight;
+    const p = (window.scrollY / h) * 100;
+    bar.style.width = p + '%';
+  });
+})();
+
+/* ============================================
+   CARD MOUSE GLOW TRACKING
+   ============================================ */
+(function() {
+  document.querySelectorAll('.msp-card, .cap-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty('--mouse-x', (e.clientX - rect.left) + 'px');
+      card.style.setProperty('--mouse-y', (e.clientY - rect.top) + 'px');
+    });
+  });
+})();
+</script>
+</body>
+</html>
