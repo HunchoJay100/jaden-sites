@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Richter Technology // Onboarding Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #09090B;
+  --bg-surface: #111113;
+  --bg-code: #0C0C0E;
+  --border: rgba(255,255,255,0.06);
+  --cyan: #38BDF8;
+  --cyan-dim: rgba(56,189,248,0.08);
+  --green: #4ADE80;
+  --amber: #FBBF24;
+  --purple: #A78BFA;
+  --text-1: rgba(255,255,255,0.92);
+  --text-2: rgba(255,255,255,0.55);
+  --text-3: rgba(255,255,255,0.28);
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text-1);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Nav */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  background: rgba(9,9,11,0.8);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--border);
+}
+.nav-mark {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-2);
+}
+.nav-mark span { color: var(--cyan); }
+.nav-time {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+/* Hero */
+.hero {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 120px 40px 80px;
+  position: relative;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(56,189,248,0.05), transparent 70%);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.hero-tag {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--cyan);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: up 0.6s var(--ease) 0.1s forwards;
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -2px;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: up 0.6s var(--ease) 0.2s forwards;
+}
+.hero h1 .dim { color: var(--text-3); }
+.hero-sub {
+  font-size: 18px;
+  color: var(--text-2);
+  max-width: 540px;
+  line-height: 1.7;
+  margin-bottom: 16px;
+  opacity: 0;
+  animation: up 0.6s var(--ease) 0.35s forwards;
+}
+.hero-time {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--cyan);
+  font-weight: 500;
+  opacity: 0;
+  animation: up 0.6s var(--ease) 0.5s forwards;
+}
+
+@keyframes up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Sections */
+.section {
+  padding: 100px 40px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.section-num {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-3);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  padding-left: 24px;
+  position: relative;
+}
+.section-num::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 50%;
+  transform: translateY(-50%);
+  width: 12px; height: 2px;
+  background: var(--cyan);
+}
+
+.section h2 {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 700;
+  letter-spacing: -1.2px;
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+
+.section-lead {
+  font-size: 16px;
+  color: var(--text-2);
+  line-height: 1.7;
+  margin-bottom: 48px;
+  max-width: 580px;
+}
+
+/* Divider */
+.divider {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+.divider hr {
+  border: none;
+  height: 1px;
+  background: var(--border);
+}
+
+/* Hardware Card */
+.hw-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 48px 40px;
+  margin-bottom: 32px;
+  position: relative;
+  overflow: hidden;
+}
+.hw-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at top right, rgba(56,189,248,0.04), transparent 60%);
+  pointer-events: none;
+}
+
+.hw-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+}
+.hw-subtitle {
+  font-size: 14px;
+  color: var(--text-2);
+  margin-bottom: 24px;
+}
+
+.hw-specs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.hw-spec {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+}
+.hw-spec-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.hw-spec-val {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.hw-why {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.7;
+  border-left: 2px solid var(--cyan);
+  padding-left: 16px;
+  margin-top: 24px;
+}
+
+/* Steps */
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 20px;
+  padding: 32px 0;
+  border-bottom: 1px solid var(--border);
+}
+.step:first-child { border-top: 1px solid var(--border); }
+
+.step-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.step-num {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: var(--cyan-dim);
+  border: 1px solid rgba(56,189,248,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cyan);
+}
+.step-line {
+  flex: 1;
+  width: 1px;
+  background: var(--border);
+  margin-top: 8px;
+}
+
+.step-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  margin-bottom: 6px;
+}
+.step-desc {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+.step-time {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-3);
+  letter-spacing: 0.5px;
+  margin-bottom: 16px;
+}
+
+/* Code blocks */
+.cmd {
+  background: var(--bg-code);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 18px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--green);
+  overflow-x: auto;
+  margin-top: 8px;
+  position: relative;
+}
+.cmd .prompt { color: var(--cyan); user-select: none; }
+.cmd .comment { color: var(--text-3); font-style: italic; }
+.cmd + .cmd { margin-top: 8px; }
+
+/* Repo card */
+.repo-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 24px;
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.repo-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: var(--cyan-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.repo-icon svg {
+  width: 20px; height: 20px;
+  stroke: var(--cyan);
+  fill: none;
+  stroke-width: 1.5;
+}
+.repo-name {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--cyan);
+  margin-bottom: 2px;
+}
+.repo-desc {
+  font-size: 13px;
+  color: var(--text-3);
+}
+
+/* Timeline */
+.timeline {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 40px;
+  margin-top: 48px;
+}
+.timeline-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 24px;
+}
+.timeline-row {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  align-items: baseline;
+}
+.timeline-row:last-child { border-bottom: none; }
+.timeline-min {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cyan);
+}
+.timeline-task {
+  font-size: 14px;
+  color: var(--text-2);
+}
+
+/* What's Next */
+.next-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+@media (max-width: 580px) { .next-grid { grid-template-columns: 1fr; } }
+
+.next-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 24px;
+  transition: all 0.3s var(--ease);
+}
+.next-card:hover {
+  border-color: rgba(56,189,248,0.2);
+  box-shadow: 0 0 20px rgba(56,189,248,0.06);
+  transform: translateY(-2px);
+}
+.next-card-title {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.next-card-text {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+
+/* Footer */
+.footer {
+  padding: 64px 40px 32px;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+.footer-msg {
+  font-size: 15px;
+  color: var(--text-2);
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+.footer-sig {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--cyan);
+}
+.footer-rule {
+  width: 48px;
+  height: 1px;
+  background: var(--border);
+  margin: 32px auto 16px;
+}
+.footer-credit {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-3);
+}
+
+/* Reveal */
+.r {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+}
+.r.v { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 768px) {
+  .hero { padding: 100px 24px 64px; }
+  .section { padding: 80px 24px; }
+  .hw-card { padding: 32px 24px; }
+  .timeline { padding: 28px 24px; }
+  .nav { padding: 0 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="nav-mark"><span>//</span> RICHTER ONBOARDING</div>
+  <div class="nav-time">Est. 2 hours</div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-tag">Implementation Guide</div>
+  <h1>From zero to<br>fully operational. <span class="dim">Today.</span></h1>
+  <p class="hero-sub">Everything you need to get Claude Code running on your machine. One session. One repo. Full autonomy by the end of the afternoon.</p>
+  <div class="hero-time">Estimated setup time: under 2 hours</div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- Step 0: Hardware -->
+<section class="section">
+  <div class="section-num r">00 // Hardware</div>
+  <h2 class="r">Start with the right machine.</h2>
+  <p class="section-lead r">Claude Code runs best on macOS. If you don't already have a dedicated machine for this, here's what we recommend.</p>
+
+  <div class="hw-card r">
+    <div class="hw-title">Apple Mac Mini (M4)</div>
+    <div class="hw-subtitle">The same machine Jaden runs his entire operation on.</div>
+
+    <div class="hw-specs">
+      <div class="hw-spec">
+        <div class="hw-spec-label">Chip</div>
+        <div class="hw-spec-val">Apple M4</div>
+      </div>
+      <div class="hw-spec">
+        <div class="hw-spec-label">Memory</div>
+        <div class="hw-spec-val">16GB+ unified</div>
+      </div>
+      <div class="hw-spec">
+        <div class="hw-spec-label">Storage</div>
+        <div class="hw-spec-val">256GB+ SSD</div>
+      </div>
+      <div class="hw-spec">
+        <div class="hw-spec-label">Price</div>
+        <div class="hw-spec-val">~$499</div>
+      </div>
+    </div>
+
+    <div class="hw-why">
+      Small, quiet, stays on 24/7 at your office or home. The M-series chip is fast enough to run local models, Docker containers, and multiple dev servers simultaneously. This is your always-on command center.
+    </div>
+  </div>
+
+  <p class="r" style="font-size: 14px; color: var(--text-3);">Already have a Mac? Skip this step entirely. Any Mac running macOS 13+ works.</p>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- Steps -->
+<section class="section">
+  <div class="section-num r">01 // Installation</div>
+  <h2 class="r">The full install chain.</h2>
+  <p class="section-lead r">Six installs. Copy and paste each command into your terminal. We'll walk through every one together, but here's the full picture.</p>
+
+  <div class="steps">
+
+    <div class="step r">
+      <div class="step-marker">
+        <div class="step-num">1</div>
+        <div class="step-line"></div>
+      </div>
+      <div>
+        <div class="step-title">Homebrew</div>
+        <div class="step-desc">The package manager for macOS. This is the foundation that installs everything else.</div>
+        <div class="step-time">~2 minutes</div>
+        <div class="cmd"><span class="prompt">$ </span>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</div>
+      </div>
+    </div>
+
+    <div class="step r">
+      <div class="step-marker">
+        <div class="step-num">2</div>
+        <div class="step-line"></div>
+      </div>
+      <div>
+        <div class="step-title">Ghostty Terminal</div>
+        <div class="step-desc">A fast, GPU-accelerated terminal built for exactly this kind of work. Way better than the default Terminal app.</div>
+        <div class="step-time">~1 minute</div>
+        <div class="cmd"><span class="prompt">$ </span>brew install --cask ghostty</div>
+      </div>
+    </div>
+
+    <div class="step r">
+      <div class="step-marker">
+        <div class="step-num">3</div>
+        <div class="step-line"></div>
+      </div>
+      <div>
+        <div class="step-title">Node.js</div>
+        <div class="step-desc">JavaScript runtime. Required for Claude Code and most of the tools we'll be building.</div>
+        <div class="step-time">~2 minutes</div>
+        <div class="cmd"><span class="prompt">$ </span>brew install node</div>
+      </div>
+    </div>
+
+    <div class="step r">
+      <div class="step-marker">
+        <div class="step-num">4</div>
+        <div class="step-line"></div>
+      </div>
+      <div>
+        <div class="step-title">Git + GitHub CLI</div>
+        <div class="step-desc">Version control and GitHub integration. You already know Git, so this will be fast. The CLI lets you manage repos, PRs, and issues from the terminal.</div>
+        <div class="step-time">~3 minutes</div>
+        <div class="cmd"><span class="prompt">$ </span>brew install git gh</div>
+        <div class="cmd"><span class="prompt">$ </span>gh auth login</div>
+      </div>
+    </div>
+
+    <div class="step r">
+      <div class="step-marker">
+        <div class="step-num">5</div>
+        <div class="step-line"></div>
+      </div>
+      <div>
+        <div class="step-title">Claude Code</div>
+        <div class="step-desc">The autonomous coding agent. This is the whole reason we're here. One command and it's installed globally.</div>
+        <div class="step-time">~1 minute</div>
+        <div class="cmd"><span class="prompt">$ </span>npm install -g @anthropic-ai/claude-code</div>
+      </div>
+    </div>
+
+    <div class="step r">
+      <div class="step-marker">
+        <div class="step-num">6</div>
+        <div class="step-line"></div>
+      </div>
+      <div>
+        <div class="step-title">Clone Your Onboarding Repo</div>
+        <div class="step-desc">We'll build a custom onboarding repository for Richter Technology on GitHub. It'll have your CLAUDE.md config, your memory files, starter scripts, and everything Claude Code needs to understand your operation from day one.</div>
+        <div class="step-time">~1 minute</div>
+        <div class="cmd"><span class="prompt">$ </span>gh repo clone richter-onboarding</div>
+        <div class="cmd"><span class="prompt">$ </span>cd richter-onboarding && claude</div>
+
+        <div class="repo-card">
+          <div class="repo-icon">
+            <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+          </div>
+          <div>
+            <div class="repo-name">richter-onboarding</div>
+            <div class="repo-desc">Custom config, memory files, and starter scripts for Richter Technology</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Timeline -->
+  <div class="timeline r">
+    <div class="timeline-title">Full Timeline</div>
+    <div class="timeline-row">
+      <div class="timeline-min">0:00</div>
+      <div class="timeline-task">Install Homebrew</div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-min">0:05</div>
+      <div class="timeline-task">Install Ghostty, Node.js, Git, GitHub CLI</div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-min">0:15</div>
+      <div class="timeline-task">Authenticate GitHub CLI</div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-min">0:20</div>
+      <div class="timeline-task">Install Claude Code</div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-min">0:25</div>
+      <div class="timeline-task">Clone onboarding repo</div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-min">0:30</div>
+      <div class="timeline-task">Configure CLAUDE.md and memory system</div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-min">0:45</div>
+      <div class="timeline-task">First Claude Code session with Jaden</div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-min">1:30</div>
+      <div class="timeline-task">Build your first tool or automation</div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-min">2:00</div>
+      <div class="timeline-task" style="color: var(--cyan); font-weight: 500;">Fully operational.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- What Happens Next -->
+<section class="section">
+  <div class="section-num r">02 // After Setup</div>
+  <h2 class="r">What we build first.</h2>
+  <p class="section-lead r">Once you're up and running, these are the kinds of things we can start building immediately. All tailored to Richter Technology's actual operations.</p>
+
+  <div class="next-grid">
+    <div class="next-card r">
+      <div class="next-card-title">Your Own Chief</div>
+      <div class="next-card-text">An autonomous ops system customized for your MSP. Morning briefs, client health monitoring, automated reporting. Runs on cron, reports to you.</div>
+    </div>
+    <div class="next-card r">
+      <div class="next-card-title">Firewall Auditor</div>
+      <div class="next-card-text">Scheduled firewall ruleset analysis across your client base. Flags overly permissive rules, shadow conflicts, unused ACLs. Client-ready PDF reports.</div>
+    </div>
+    <div class="next-card r">
+      <div class="next-card-title">Ticket Automation</div>
+      <div class="next-card-text">Connect to your PSA via API. Auto-categorize, auto-route, draft responses. Reduce triage time by 80%.</div>
+    </div>
+    <div class="next-card r">
+      <div class="next-card-title">Client Dashboard</div>
+      <div class="next-card-text">Single pane of glass pulling from your RMM, backup, and AV platforms. Real-time health scores per client. Built in a day.</div>
+    </div>
+    <div class="next-card r">
+      <div class="next-card-title">QBR Generator</div>
+      <div class="next-card-text">Pull ticket metrics, SLA data, uptime stats, and security posture into polished quarterly business review decks automatically.</div>
+    </div>
+    <div class="next-card r">
+      <div class="next-card-title">PowerShell Factory</div>
+      <div class="next-card-text">Generate, test, and document PowerShell scripts for any Windows admin task. Bulk user management, GPO audits, event log analysis. Production-ready.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <p class="footer-msg r">This is the easy part. The install takes two hours.<br>What you build after that is unlimited.</p>
+  <div class="footer-sig r">--Chief</div>
+  <div class="footer-rule"></div>
+  <div class="footer-credit">Prepared for Richter Technology LLC // Jaden Flynn, Flynn Development</div>
+</footer>
+
+<script>
+/* Scroll Reveal */
+(function() {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('v');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -32px 0px' });
+  document.querySelectorAll('.r').forEach(el => obs.observe(el));
+})();
+</script>
+</body>
+</html>
