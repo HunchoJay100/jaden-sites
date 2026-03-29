@@ -1,0 +1,1838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>BCH Blueprint | Blue Collar Hustle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════
+   BCH BLUEPRINT — BLUE COLLAR HUSTLE
+   Raw. Industrial. Operator Energy.
+   ═══════════════════════════════════════════════════ */
+
+:root {
+  --bg: #0D0D0D;
+  --surface: #161616;
+  --nested: #1E1E1E;
+  --gold: #C5A55A;
+  --gold-dim: rgba(197,165,90,0.12);
+  --gold-glow: rgba(197,165,90,0.25);
+  --blue: #3B82F6;
+  --blue-dim: rgba(59,130,246,0.12);
+  --green: #22C55E;
+  --green-dim: rgba(34,197,94,0.12);
+  --red: #EF4444;
+  --red-dim: rgba(239,68,68,0.12);
+  --yellow: #EAB308;
+  --yellow-dim: rgba(234,179,8,0.12);
+  --text-primary: #F0F0F0;
+  --text-secondary: rgba(240,240,240,0.55);
+  --text-tertiary: rgba(240,240,240,0.28);
+  --separator: rgba(240,240,240,0.08);
+  --separator-heavy: rgba(240,240,240,0.14);
+  --radius-card: 12px;
+  --radius-btn: 8px;
+  --radius-badge: 6px;
+  --radius-pill: 9999px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  min-height: 100vh;
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ─── NOISE TEXTURE OVERLAY ─── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── TYPOGRAPHY ─── */
+h1, h2, h3, h4, .outfit { font-family: 'Outfit', sans-serif; }
+
+.section-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(26px, 5vw, 34px);
+  font-weight: 700;
+  letter-spacing: -1.05px;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+.section-subtitle {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 22px;
+  max-width: 600px;
+}
+
+.section-number {
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-number::before {
+  content: '';
+  width: 32px;
+  height: 2px;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+
+/* ─── LAYOUT ─── */
+.container {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 1;
+}
+
+section {
+  padding: 64px 0;
+  position: relative;
+}
+
+.section-divider {
+  height: 4px;
+  background: var(--separator-heavy);
+  margin: 0;
+  position: relative;
+}
+
+.section-divider::after {
+  content: '';
+  position: absolute;
+  left: 20px;
+  top: 0;
+  width: 80px;
+  height: 100%;
+  background: var(--gold);
+}
+
+/* ─── GLASS NAV ─── */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(13,13,13,0.72);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border-bottom: 1px solid rgba(240,240,240,0.06);
+  border-top: 1px solid rgba(240,240,240,0.03);
+  padding: 0 20px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.nav-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border: 1.5px solid var(--gold);
+  border-radius: var(--radius-pill);
+  color: var(--gold);
+  text-decoration: none;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.03px;
+  transition: all 0.15s cubic-bezier(0.2, 0, 0, 1);
+  min-height: 44px;
+  min-width: 44px;
+  justify-content: center;
+}
+
+.nav-back:hover {
+  background: var(--gold-dim);
+}
+
+.nav-brand {
+  font-family: 'Outfit', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.43px;
+  color: var(--text-primary);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.nav-links::-webkit-scrollbar { display: none; }
+
+.nav-link {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: var(--radius-badge);
+  white-space: nowrap;
+  transition: all 0.15s cubic-bezier(0.2, 0, 0, 1);
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+.nav-link:hover {
+  color: var(--text-primary);
+  background: rgba(240,240,240,0.06);
+}
+
+/* ─── HERO ─── */
+.hero {
+  padding: 96px 0 48px;
+  text-align: center;
+  position: relative;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 56px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(197,165,90,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  background: var(--gold-dim);
+  border: 1px solid rgba(197,165,90,0.2);
+  border-radius: var(--radius-pill);
+  font-family: 'Outfit', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 24px;
+}
+
+.hero h1 {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(40px, 10vw, 72px);
+  font-weight: 800;
+  letter-spacing: -2px;
+  line-height: 1.0;
+  margin-bottom: 8px;
+}
+
+.hero h1 .gold { color: var(--gold); }
+
+.hero-sub {
+  font-size: 17px;
+  color: var(--text-secondary);
+  line-height: 26px;
+  max-width: 640px;
+  margin: 16px auto 0;
+  letter-spacing: -0.43px;
+}
+
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 20px;
+  margin-top: 24px;
+  font-size: 13px;
+  color: var(--text-tertiary);
+  letter-spacing: 0.03px;
+}
+
+.hero-meta span { white-space: nowrap; }
+.hero-meta .val { color: var(--text-secondary); font-weight: 500; }
+
+.stat-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0;
+  margin-top: 32px;
+  padding: 20px 24px;
+  background: var(--surface);
+  border-radius: var(--radius-card);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.stat-item {
+  flex: 1;
+  min-width: 120px;
+  padding: 8px 16px;
+  text-align: center;
+  position: relative;
+}
+
+.stat-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 20%;
+  height: 60%;
+  width: 1px;
+  background: var(--separator);
+}
+
+.stat-val {
+  font-family: 'Outfit', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.7px;
+  color: var(--gold);
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  letter-spacing: 0.12px;
+  margin-top: 4px;
+}
+
+/* ─── CARDS ─── */
+.card {
+  background: var(--surface);
+  border-radius: var(--radius-card);
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+  transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.card:hover {
+  box-shadow: 0 4px 14px rgba(0,0,0,0.4), 0 2px 6px rgba(0,0,0,0.25);
+  transform: translateY(-4px);
+}
+
+.card-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.43px;
+  line-height: 22px;
+  margin-bottom: 8px;
+}
+
+.card-text {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 22px;
+}
+
+.card-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.card-grid-2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.card-grid-3 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.card-grid-4 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+
+/* ─── CALLOUT BOX ─── */
+.callout {
+  background: var(--surface);
+  border-left: 4px solid var(--gold);
+  border-radius: 0 var(--radius-card) var(--radius-card) 0;
+  padding: 24px 24px 24px 28px;
+  margin-bottom: 32px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.callout p {
+  font-size: 16px;
+  line-height: 26px;
+  color: var(--text-secondary);
+  letter-spacing: -0.32px;
+}
+
+/* ─── STATUS BADGES ─── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--radius-badge);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.badge-green { background: var(--green-dim); color: var(--green); }
+.badge-red { background: var(--red-dim); color: var(--red); }
+.badge-yellow { background: var(--yellow-dim); color: var(--yellow); }
+.badge-blue { background: var(--blue-dim); color: var(--blue); }
+.badge-gold { background: var(--gold-dim); color: var(--gold); }
+
+.badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+/* ─── SHIP IT CHECKLIST ─── */
+.ship-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ship-item {
+  background: var(--surface);
+  border-radius: var(--radius-card);
+  padding: 20px 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+  transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.ship-item:hover {
+  box-shadow: 0 4px 14px rgba(0,0,0,0.4), 0 2px 6px rgba(0,0,0,0.25);
+  transform: translateY(-2px);
+}
+
+.ship-num {
+  font-family: 'Outfit', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--text-tertiary);
+  line-height: 1;
+  min-width: 36px;
+  flex-shrink: 0;
+}
+
+.ship-content { flex: 1; }
+
+.ship-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.43px;
+  margin-bottom: 4px;
+}
+
+.ship-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 20px;
+}
+
+.ship-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+/* ─── STATUS GRID (table-like) ─── */
+.status-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.status-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1.2fr;
+  gap: 16px;
+  padding: 16px 20px;
+  background: var(--surface);
+  align-items: center;
+  min-height: 52px;
+}
+
+.status-row-header {
+  background: var(--nested);
+  font-family: 'Outfit', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  min-height: 40px;
+}
+
+.status-name {
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+}
+
+.status-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  letter-spacing: 0.03px;
+}
+
+/* ─── WEEK BREAKDOWN ─── */
+.week-card {
+  background: var(--surface);
+  border-radius: var(--radius-card);
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+  margin-bottom: 16px;
+}
+
+.week-header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--separator);
+}
+
+.week-num {
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.week-theme {
+  font-family: 'Outfit', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.6px;
+}
+
+.lesson-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.lesson-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 20px;
+  padding: 8px 0;
+}
+
+.lesson-list li::before {
+  content: '';
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+
+.assignment-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: var(--nested);
+  border-radius: var(--radius-badge);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: 0.12px;
+  margin: 2px;
+}
+
+.assignment-tag::before {
+  content: '📋';
+  font-size: 11px;
+}
+
+/* ─── FLYWHEEL ─── */
+.flywheel-cycle {
+  background: var(--surface);
+  border-radius: var(--radius-card);
+  padding: 32px 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+  margin-top: 24px;
+}
+
+.flywheel-steps {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.flywheel-step {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  background: var(--nested);
+  border-radius: var(--radius-pill);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.flywheel-arrow {
+  color: var(--gold);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* ─── TIER CARDS ─── */
+.tier-card {
+  background: var(--surface);
+  border-radius: var(--radius-card);
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+  transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+  border-top: 3px solid var(--separator-heavy);
+}
+
+.tier-card:hover {
+  box-shadow: 0 4px 14px rgba(0,0,0,0.4), 0 2px 6px rgba(0,0,0,0.25);
+  transform: translateY(-4px);
+}
+
+.tier-card.active { border-top-color: var(--gold); }
+
+.tier-num {
+  font-family: 'Outfit', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: 8px;
+}
+
+.tier-name {
+  font-family: 'Outfit', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.7px;
+  margin-bottom: 4px;
+}
+
+.tier-keyword {
+  font-size: 13px;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* ─── CONTENT TYPE CARDS ─── */
+.content-card {
+  background: var(--surface);
+  border-radius: var(--radius-card);
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+  transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.content-card:hover {
+  box-shadow: 0 4px 14px rgba(0,0,0,0.4), 0 2px 6px rgba(0,0,0,0.25);
+  transform: translateY(-4px);
+}
+
+.content-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  margin-bottom: 12px;
+  background: var(--nested);
+}
+
+/* ─── BANNED WORDS BOX ─── */
+.banned-box {
+  background: var(--red-dim);
+  border: 1px solid rgba(239,68,68,0.2);
+  border-radius: var(--radius-card);
+  padding: 20px 24px;
+  margin-top: 24px;
+}
+
+.banned-box .label {
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 12px;
+}
+
+.banned-words {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.banned-word {
+  padding: 4px 12px;
+  background: rgba(239,68,68,0.08);
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  color: rgba(239,68,68,0.7);
+  font-weight: 500;
+  text-decoration: line-through;
+  text-decoration-color: rgba(239,68,68,0.3);
+}
+
+/* ─── REVENUE CARDS ─── */
+.rev-card {
+  background: var(--surface);
+  border-radius: var(--radius-card);
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+  text-align: center;
+}
+
+.rev-period {
+  font-family: 'Outfit', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: 8px;
+}
+
+.rev-amount {
+  font-family: 'Outfit', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.8px;
+  color: var(--gold);
+  line-height: 1.2;
+}
+
+.rev-note {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: 8px;
+  line-height: 18px;
+}
+
+/* ─── WHO CHIEF IS ─── */
+.chief-section {
+  background: var(--surface);
+  border-radius: var(--radius-card);
+  padding: 32px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.chief-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold) 0%, transparent 100%);
+}
+
+.chief-text {
+  font-size: 17px;
+  line-height: 28px;
+  color: var(--text-secondary);
+  letter-spacing: -0.43px;
+}
+
+.chief-text strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* ─── FOOTER ─── */
+.footer {
+  padding: 48px 0;
+  text-align: center;
+  border-top: 1px solid var(--separator);
+}
+
+.footer-brand {
+  font-family: 'Outfit', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.8px;
+  margin-bottom: 8px;
+}
+
+.footer-tag {
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.footer-date {
+  font-size: 13px;
+  color: var(--text-tertiary);
+  margin-top: 16px;
+}
+
+/* ─── MOBILE MENU ─── */
+.mobile-toggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 1px solid var(--separator-heavy);
+  border-radius: var(--radius-btn);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.15s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.mobile-toggle:hover { background: rgba(240,240,240,0.06); }
+
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 56px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(13,13,13,0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 99;
+  padding: 24px 20px;
+  overflow-y: auto;
+}
+
+.mobile-menu.open { display: flex; flex-direction: column; gap: 4px; }
+
+.mobile-menu a {
+  display: flex;
+  align-items: center;
+  padding: 14px 16px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 17px;
+  font-weight: 500;
+  border-radius: var(--radius-btn);
+  transition: all 0.15s cubic-bezier(0.2, 0, 0, 1);
+  min-height: 44px;
+}
+
+.mobile-menu a:hover {
+  color: var(--text-primary);
+  background: rgba(240,240,240,0.06);
+}
+
+/* ─── ANIMATIONS ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.5s cubic-bezier(0.2, 0, 0, 1), transform 0.5s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .mobile-toggle { display: flex; }
+
+  section { padding: 48px 0; }
+
+  .stat-row {
+    flex-direction: column;
+    padding: 16px;
+  }
+
+  .stat-item { padding: 12px 16px; }
+  .stat-item:not(:last-child)::after {
+    right: 10%;
+    top: auto;
+    bottom: 0;
+    height: 1px;
+    width: 80%;
+  }
+
+  .status-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 14px 16px;
+  }
+
+  .status-row-header { display: none; }
+
+  .flywheel-steps { flex-direction: column; }
+  .flywheel-arrow { transform: rotate(90deg); }
+
+  .hero h1 { letter-spacing: -1px; }
+
+  .ship-item { flex-direction: column; gap: 8px; }
+  .ship-num { font-size: 22px; }
+
+  .card { padding: 20px; }
+  .week-card { padding: 20px; }
+  .chief-section { padding: 24px; }
+}
+
+@media (max-width: 480px) {
+  .hero-meta { flex-direction: column; gap: 4px; }
+  .nav-brand { font-size: 15px; }
+  .section-title { font-size: 24px; }
+}
+
+/* ─── PRICE BOX ─── */
+.price-box {
+  background: var(--nested);
+  border-radius: var(--radius-card);
+  padding: 24px;
+  margin-top: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: center;
+}
+
+.price-main {
+  font-family: 'Outfit', sans-serif;
+  font-size: 34px;
+  font-weight: 800;
+  color: var(--gold);
+  letter-spacing: -1.05px;
+}
+
+.price-future {
+  font-size: 15px;
+  color: var(--text-secondary);
+}
+
+.price-future .strike {
+  text-decoration: line-through;
+  color: var(--text-tertiary);
+}
+
+.price-addon {
+  font-size: 14px;
+  color: var(--text-secondary);
+  padding: 8px 16px;
+  background: var(--surface);
+  border-radius: var(--radius-badge);
+}
+
+/* ─── POSTING TARGETS BOX ─── */
+.targets-box {
+  background: var(--nested);
+  border-radius: var(--radius-card);
+  padding: 20px 24px;
+  margin-top: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.target-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.target-item strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.target-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     NAV
+     ═══════════════════════════════════════════ -->
+<nav class="nav">
+  <div class="nav-left">
+    <a href="project-board.html" class="nav-back">&larr; Board</a>
+    <span class="nav-brand">BCH Blueprint</span>
+  </div>
+  <div class="nav-links">
+    <a href="#ship-it" class="nav-link">Ship It</a>
+    <a href="#mission" class="nav-link">Mission</a>
+    <a href="#flywheel" class="nav-link">Flywheel</a>
+    <a href="#funnel" class="nav-link">Funnel</a>
+    <a href="#challenge" class="nav-link">Challenge</a>
+    <a href="#tiers" class="nav-link">Tiers</a>
+    <a href="#content" class="nav-link">Content</a>
+    <a href="#revenue" class="nav-link">Revenue</a>
+  </div>
+  <button class="mobile-toggle" onclick="toggleMenu()" aria-label="Menu">&#9776;</button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#ship-it" onclick="closeMenu()">Ship It Checklist</a>
+  <a href="#mission" onclick="closeMenu()">The Mission</a>
+  <a href="#flywheel" onclick="closeMenu()">Flywheel</a>
+  <a href="#funnel" onclick="closeMenu()">The Funnel</a>
+  <a href="#challenge" onclick="closeMenu()">Challenge</a>
+  <a href="#tiers" onclick="closeMenu()">Tier Structure</a>
+  <a href="#content" onclick="closeMenu()">Content Machine</a>
+  <a href="#scripts" onclick="closeMenu()">Scripts</a>
+  <a href="#voice" onclick="closeMenu()">Voice Rules</a>
+  <a href="#revenue" onclick="closeMenu()">Revenue Model</a>
+  <a href="#not-built" onclick="closeMenu()">Not Built Yet</a>
+  <a href="#chief" onclick="closeMenu()">Who Chief Is</a>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     HERO
+     ═══════════════════════════════════════════ -->
+<header class="hero">
+  <div class="container">
+    <div class="hero-badge reveal">THE OPERATOR MOVEMENT</div>
+    <h1 class="reveal">Blue Collar<br><span class="gold">Hustle</span> Blueprint</h1>
+    <p class="hero-sub reveal">Trades media, education, and consulting ecosystem. Built to develop operators, build companies, and create ownership inside the blue-collar industry.</p>
+    <div class="hero-meta reveal">
+      <span>Entity: <span class="val">Separate LLC</span></span>
+      <span>TikTok: <span class="val">@bluecollorhustle</span></span>
+      <span>~560 followers</span>
+      <span>Status: <span class="val">Building</span></span>
+    </div>
+    <div class="stat-row reveal">
+      <div class="stat-item">
+        <div class="stat-val">~560</div>
+        <div class="stat-label">Followers</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-val">67</div>
+        <div class="stat-label">Videos (2 weeks)</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-val">$397</div>
+        <div class="stat-label">Challenge</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-val">25+</div>
+        <div class="stat-label">Emails Written</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 1: SHIP IT CHECKLIST
+     ═══════════════════════════════════════════ -->
+<section id="ship-it">
+  <div class="container">
+    <div class="section-number reveal">01 &mdash; SHIP IT</div>
+    <h2 class="section-title reveal">Ship It Checklist</h2>
+    <p class="section-subtitle reveal" style="margin-bottom:32px">Everything that needs to happen before anything else matters.</p>
+
+    <div class="callout reveal">
+      <p>BCH has content that's ripping, a course that's fully written, 25+ emails ready to go, and a consulting model designed. But there's no funnel to capture any of it. The audience is building and there's nowhere to send them. Equipment is still a blocker for batch production. Ship the funnel, buy the gear, launch the challenge.</p>
+    </div>
+
+    <ol class="ship-list">
+      <li class="ship-item reveal">
+        <div class="ship-num">01</div>
+        <div class="ship-content">
+          <div class="ship-title">Equipment purchase</div>
+          <div class="ship-desc">Camera, lighting, audio, gimbal. This is the #1 blocker for batch content production.</div>
+          <div class="ship-meta"><span class="badge badge-red">Not Started</span></div>
+        </div>
+      </li>
+      <li class="ship-item reveal">
+        <div class="ship-num">02</div>
+        <div class="ship-content">
+          <div class="ship-title">Film 6 ready-to-go scripts</div>
+          <div class="ship-desc">Written and approved, need equipment to film.</div>
+          <div class="ship-meta"><span class="badge badge-red">Not Started</span></div>
+        </div>
+      </li>
+      <li class="ship-item reveal">
+        <div class="ship-num">03</div>
+        <div class="ship-content">
+          <div class="ship-title">Landing page + domain</div>
+          <div class="ship-desc">Nowhere to send TikTok traffic right now.</div>
+          <div class="ship-meta"><span class="badge badge-red">Not Started</span></div>
+        </div>
+      </li>
+      <li class="ship-item reveal">
+        <div class="ship-num">04</div>
+        <div class="ship-content">
+          <div class="ship-title">Contractor Profit Audit (lead magnet)</div>
+          <div class="ship-desc">Needs to be designed and built.</div>
+          <div class="ship-meta"><span class="badge badge-red">Not Started</span></div>
+        </div>
+      </li>
+      <li class="ship-item reveal">
+        <div class="ship-num">05</div>
+        <div class="ship-content">
+          <div class="ship-title">Email platform + load 7-day sequence</div>
+          <div class="ship-desc">25+ emails written, not loaded anywhere.</div>
+          <div class="ship-meta"><span class="badge badge-red">Not Started</span></div>
+        </div>
+      </li>
+      <li class="ship-item reveal">
+        <div class="ship-num">06</div>
+        <div class="ship-content">
+          <div class="ship-title">Challenge app rebuild</div>
+          <div class="ship-desc">Currently on Base44 as HTML, needs proper rebuild.</div>
+          <div class="ship-meta"><span class="badge badge-red">Not Started</span></div>
+        </div>
+      </li>
+      <li class="ship-item reveal">
+        <div class="ship-num">07</div>
+        <div class="ship-content">
+          <div class="ship-title">Launch 4-Week Operator Challenge</div>
+          <div class="ship-desc">Content is 100% complete, just needs the platform.</div>
+          <div class="ship-meta"><span class="badge badge-red">Not Started</span></div>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 2: THE MISSION
+     ═══════════════════════════════════════════ -->
+<section id="mission">
+  <div class="container">
+    <div class="section-number reveal">02 &mdash; THE MISSION</div>
+    <h2 class="section-title reveal">The Mission</h2>
+    <p class="section-subtitle reveal" style="margin-bottom:32px">What Blue Collar Hustle exists to do.</p>
+
+    <div class="card-grid card-grid-2">
+      <div class="card reveal">
+        <div class="card-title">The Cultural Shift</div>
+        <div class="card-text">Change how America views the trades. Parents should actively encourage kids into trades instead of defaulting to 4-year degrees.</div>
+      </div>
+      <div class="card reveal">
+        <div class="card-title">The Loop</div>
+        <div class="card-text">Most tradesmen are stuck. Revenue goes up, pressure goes up, chaos increases. They confuse revenue with profit, motion with progress, effort with leverage.</div>
+      </div>
+      <div class="card reveal">
+        <div class="card-title">The Solution</div>
+        <div class="card-text">Turn workers into operators, operators into business owners, business owners into asset builders. Not theory. Real execution from someone doing it in real time.</div>
+      </div>
+      <div class="card reveal">
+        <div class="card-title">The Destination</div>
+        <div class="card-text">Stadiums and arenas. National conferences. BCH is being built toward large-scale live events where thousands of tradespeople gather.</div>
+      </div>
+      <div class="card reveal" style="grid-column: 1 / -1;">
+        <div class="card-title">Faith Foundation</div>
+        <div class="card-text">This is stewardship. Of opportunity, people, influence, and the work. None of this is random.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 3: THREE-COMPANY FLYWHEEL
+     ═══════════════════════════════════════════ -->
+<section id="flywheel">
+  <div class="container">
+    <div class="section-number reveal">03 &mdash; THE ENGINE</div>
+    <h2 class="section-title reveal">The Three-Company Flywheel</h2>
+    <p class="section-subtitle reveal" style="margin-bottom:32px">Three companies, one interconnected system.</p>
+
+    <div class="card-grid card-grid-3">
+      <div class="card reveal">
+        <div style="font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">EXECUTION ENGINE</div>
+        <div class="card-title">Flynn Development</div>
+        <div class="card-text">Real builds, real clients, real pressure. Where systems get tested. Also the ownership layer. Pays today.</div>
+      </div>
+      <div class="card reveal">
+        <div style="font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:8px;">KNOWLEDGE ENGINE</div>
+        <div class="card-title">Modern Development</div>
+        <div class="card-text">Consulting for homeowners + high-end GCs. Packages proven systems. High margin, national reach.</div>
+      </div>
+      <div class="card reveal">
+        <div style="font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--green);margin-bottom:8px;">DISTRIBUTION ENGINE</div>
+        <div class="card-title">Blue Collar Hustle</div>
+        <div class="card-text">For the everyday tradesman. Builds audience, develops operators, creates the network. No geographic ceiling. Pays tomorrow at scale.</div>
+      </div>
+    </div>
+
+    <div class="flywheel-cycle reveal">
+      <div style="font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:16px;text-align:center;">THE CYCLE</div>
+      <div class="flywheel-steps">
+        <span class="flywheel-step">Flynn proves systems</span>
+        <span class="flywheel-arrow">&rarr;</span>
+        <span class="flywheel-step">Modern packages them</span>
+        <span class="flywheel-arrow">&rarr;</span>
+        <span class="flywheel-step">BCH distributes to masses</span>
+        <span class="flywheel-arrow">&rarr;</span>
+        <span class="flywheel-step">Success stories become content</span>
+        <span class="flywheel-arrow">&rarr;</span>
+        <span class="flywheel-step">Content builds audience</span>
+        <span class="flywheel-arrow">&rarr;</span>
+        <span class="flywheel-step">Audience feeds consulting</span>
+        <span class="flywheel-arrow">&rarr;</span>
+        <span class="flywheel-step" style="background:var(--gold-dim);color:var(--gold);font-weight:600;">Cycle accelerates</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 4: THE FUNNEL
+     ═══════════════════════════════════════════ -->
+<section id="funnel">
+  <div class="container">
+    <div class="section-number reveal">04 &mdash; THE FUNNEL</div>
+    <h2 class="section-title reveal">The Funnel</h2>
+    <p class="section-subtitle reveal" style="margin-bottom:32px">From TikTok to consulting. Step by step.</p>
+
+    <div class="status-grid reveal">
+      <div class="status-row status-row-header">
+        <span>Stage</span>
+        <span>Status</span>
+        <span>Details</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">TikTok (3-6 videos/day)</span>
+        <span class="badge badge-green">Active</span>
+        <span class="status-desc">~560 followers, content performing</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">Link in Bio &rarr; Landing Page</span>
+        <span class="badge badge-red">Not Started</span>
+        <span class="status-desc">No domain, no landing page</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">Contractor Profit Audit (Lead Magnet)</span>
+        <span class="badge badge-red">Not Started</span>
+        <span class="status-desc">Needs design and build</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">7-Day Email Drip Sequence</span>
+        <span class="badge badge-red">Not Started</span>
+        <span class="status-desc">Outlined, 25+ emails written in docs</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">4-Week Operator Challenge ($397)</span>
+        <span class="badge badge-yellow">Content Complete</span>
+        <span class="status-desc">App needs rebuild</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">Consulting Ladder</span>
+        <span class="badge badge-red">Not Started</span>
+        <span class="status-desc">Tiers not yet defined</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">Live Events &amp; Expos</span>
+        <span class="badge badge-blue">Future</span>
+        <span class="status-desc">The long game</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 5: 4-WEEK OPERATOR CHALLENGE
+     ═══════════════════════════════════════════ -->
+<section id="challenge">
+  <div class="container">
+    <div class="section-number reveal">05 &mdash; THE CHALLENGE</div>
+    <h2 class="section-title reveal">4-Week Operator Challenge</h2>
+    <p class="section-subtitle reveal" style="margin-bottom:32px">The flagship product. Four weeks that change how contractors think about their business.</p>
+
+    <!-- Week 1 -->
+    <div class="week-card reveal">
+      <div class="week-header">
+        <span class="week-num">Week 1</span>
+        <span class="week-theme">Clarity</span>
+      </div>
+      <ul class="lesson-list">
+        <li>1.1 Revenue Is Not Success</li>
+        <li>1.2 The Owner Bottleneck</li>
+        <li>1.3 Growth Pressure Testing</li>
+      </ul>
+      <div style="display:flex;flex-wrap:wrap;gap:4px;">
+        <span class="assignment-tag">Business Snapshot</span>
+        <span class="assignment-tag">Growth Pressure Test</span>
+      </div>
+    </div>
+
+    <!-- Week 2 -->
+    <div class="week-card reveal">
+      <div class="week-header">
+        <span class="week-num">Week 2</span>
+        <span class="week-theme">Visibility</span>
+      </div>
+      <ul class="lesson-list">
+        <li>2.1 How Contractors Actually Lose Money</li>
+        <li>2.2 Margin vs Cash Flow</li>
+        <li>2.3 Pricing Psychology</li>
+      </ul>
+      <div style="display:flex;flex-wrap:wrap;gap:4px;">
+        <span class="assignment-tag">7-Day Leak Audit</span>
+      </div>
+    </div>
+
+    <!-- Week 3 -->
+    <div class="week-card reveal">
+      <div class="week-header">
+        <span class="week-num">Week 3</span>
+        <span class="week-theme">Structure</span>
+      </div>
+      <ul class="lesson-list">
+        <li>3.1 Structure vs Control</li>
+        <li>3.2 Decision Ownership</li>
+        <li>3.3 Documentation &amp; First SOP</li>
+      </ul>
+      <div style="display:flex;flex-wrap:wrap;gap:4px;">
+        <span class="assignment-tag">Dependency Map</span>
+        <span class="assignment-tag">Decision Ownership Matrix</span>
+        <span class="assignment-tag">First SOP</span>
+      </div>
+    </div>
+
+    <!-- Week 4 -->
+    <div class="week-card reveal">
+      <div class="week-header">
+        <span class="week-num">Week 4</span>
+        <span class="week-theme">Implementation</span>
+      </div>
+      <ul class="lesson-list">
+        <li>4.1 Implementation Shortlist</li>
+        <li>4.2 90-Day Owner Commitment</li>
+        <li>4.3 Growth Readiness</li>
+        <li>4.4 Wrap-Up + Call Prep</li>
+      </ul>
+      <div style="display:flex;flex-wrap:wrap;gap:4px;">
+        <span class="assignment-tag">Implementation Shortlist</span>
+        <span class="assignment-tag">90-Day Commitment</span>
+        <span class="assignment-tag">Growth Readiness Check</span>
+      </div>
+    </div>
+
+    <div class="callout reveal" style="margin-top:24px;">
+      <p>Ends with a 1-on-1 call with Chief. This is the bridge to consulting.</p>
+    </div>
+
+    <div class="price-box reveal">
+      <div>
+        <div class="price-main">$397</div>
+        <div class="price-future">Rises to <span class="strike">$597</span> after initial cohort</div>
+      </div>
+      <div class="price-addon">+$200 coaching call add-on</div>
+      <div style="flex:1;min-width:200px;">
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+          <span class="badge badge-yellow">Content Complete</span>
+          <span class="badge badge-red">App Needs Rebuild</span>
+        </div>
+        <div style="font-size:13px;color:var(--text-secondary);margin-top:8px;">All scripts written. All assignments designed. PDFs exist. App on Base44 needs rebuild.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 6: OPERATOR SYSTEM (TIERS)
+     ═══════════════════════════════════════════ -->
+<section id="tiers">
+  <div class="container">
+    <div class="section-number reveal">06 &mdash; THE SYSTEM</div>
+    <h2 class="section-title reveal">The Operator System</h2>
+    <p class="section-subtitle reveal" style="margin-bottom:32px">Tier structure. Each level builds on the last.</p>
+
+    <div class="card-grid card-grid-4">
+      <div class="tier-card active reveal">
+        <div class="tier-num">Tier 1</div>
+        <div class="tier-name">Foundation</div>
+        <div class="tier-keyword">Clarity</div>
+        <div class="card-text">Revenue vs profit, cash flow, sales structure, mindset shifts.</div>
+      </div>
+      <div class="tier-card reveal">
+        <div class="tier-num">Tier 2</div>
+        <div class="tier-name">Operator</div>
+        <div class="tier-keyword">Execution</div>
+        <div class="card-text">Systems, structure, running like a real business.</div>
+      </div>
+      <div class="tier-card reveal">
+        <div class="tier-num">Tier 3</div>
+        <div class="tier-name">Proximity</div>
+        <div class="tier-keyword">Acceleration</div>
+        <div class="card-text">Real-time feedback, high-level thinking, access to people further ahead.</div>
+      </div>
+      <div class="tier-card reveal">
+        <div class="tier-num">Tier 4</div>
+        <div class="tier-name">Network &amp; Opportunity</div>
+        <div class="tier-keyword">Leverage</div>
+        <div class="card-text">Partnerships, deals, capital. Learning turns into leverage.</div>
+      </div>
+    </div>
+
+    <div class="callout reveal" style="margin-top:24px;">
+      <p>Consulting pricing above the challenge is NOT YET DEFINED.</p>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 7: CONTENT MACHINE
+     ═══════════════════════════════════════════ -->
+<section id="content">
+  <div class="container">
+    <div class="section-number reveal">07 &mdash; CONTENT</div>
+    <h2 class="section-title reveal">Content Machine</h2>
+    <p class="section-subtitle reveal" style="margin-bottom:32px">Seven content types. Relentless output.</p>
+
+    <div class="card-grid card-grid-3">
+      <div class="content-card reveal">
+        <div class="content-icon">&#128165;</div>
+        <div class="card-title">Truth Bombs</div>
+        <div class="card-text">One hard truth contractors need to hear.</div>
+      </div>
+      <div class="content-card reveal">
+        <div class="content-icon">&#128214;</div>
+        <div class="card-title">Stories</div>
+        <div class="card-text">Real situations, what happened, the lesson.</div>
+      </div>
+      <div class="content-card reveal">
+        <div class="content-icon">&#9881;&#65039;</div>
+        <div class="card-title">System Reveals</div>
+        <div class="card-text">One specific system that changed the business.</div>
+      </div>
+      <div class="content-card reveal">
+        <div class="content-icon">&#128293;</div>
+        <div class="card-title">Hot Takes</div>
+        <div class="card-text">Contrarian opinions about the trades.</div>
+      </div>
+      <div class="content-card reveal">
+        <div class="content-icon">&#127909;</div>
+        <div class="card-title">Behind the Scenes</div>
+        <div class="card-text">The real side of running five companies.</div>
+      </div>
+      <div class="content-card reveal">
+        <div class="content-icon">&#128226;</div>
+        <div class="card-title">Call Outs</div>
+        <div class="card-text">Behaviors keeping contractors broke or stuck.</div>
+      </div>
+      <div class="content-card reveal" style="grid-column: 1 / -1; max-width: 340px;">
+        <div class="content-icon">&#127942;</div>
+        <div class="card-title">Win Posts</div>
+        <div class="card-text">Real proof the system works.</div>
+      </div>
+    </div>
+
+    <div class="targets-box reveal">
+      <div class="target-item"><span class="target-dot"></span><strong>3-6 TikTok videos/day</strong></div>
+      <div class="target-item"><span class="target-dot"></span><strong>4 long-form FB group posts/week</strong></div>
+      <div class="target-item"><span class="target-dot"></span>Saturday mornings = dedicated shoot day</div>
+      <div class="target-item"><span class="target-dot"></span>10+ videos per batch</div>
+      <div class="target-item"><span class="target-dot"></span>Truck TikToks throughout the week</div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 8: 6 SCRIPTS READY TO FILM
+     ═══════════════════════════════════════════ -->
+<section id="scripts">
+  <div class="container">
+    <div class="section-number reveal">08 &mdash; SCRIPTS</div>
+    <h2 class="section-title reveal">6 Scripts Ready to Film</h2>
+    <p class="section-subtitle reveal" style="margin-bottom:32px">Written. Approved. Waiting on equipment.</p>
+
+    <div class="status-grid reveal">
+      <div class="status-row status-row-header">
+        <span>Script</span>
+        <span>Status</span>
+        <span>Hook</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">You Built a Job</span>
+        <span class="badge badge-yellow">Ready</span>
+        <span class="status-desc">Business vs job distinction</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">Revenue Is Vanity</span>
+        <span class="badge badge-yellow">Ready</span>
+        <span class="status-desc">$800K can be worse than $300K</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">The Answering Machine</span>
+        <span class="badge badge-yellow">Ready</span>
+        <span class="status-desc">Lead response speed cost</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">The Two Weeks Test</span>
+        <span class="badge badge-yellow">Ready</span>
+        <span class="status-desc">Diagnostic for dependency</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">Pricing Wrong</span>
+        <span class="badge badge-yellow">Ready</span>
+        <span class="status-desc">Psychology + math of wrong pricing</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">The Flywheel</span>
+        <span class="badge badge-yellow">Ready</span>
+        <span class="status-desc">Business flywheel concept intro</span>
+      </div>
+    </div>
+
+    <div class="callout reveal" style="margin-top:24px;">
+      <p>All 6 scripts: NOT YET FILMED. Waiting on equipment purchase (Ship It #1).</p>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 9: VOICE RULES
+     ═══════════════════════════════════════════ -->
+<section id="voice">
+  <div class="container">
+    <div class="section-number reveal">09 &mdash; THE VOICE</div>
+    <h2 class="section-title reveal">Voice Rules</h2>
+    <p class="section-subtitle reveal" style="margin-bottom:32px">How BCH sounds. Non-negotiable.</p>
+
+    <div class="card-grid card-grid-3">
+      <div class="card reveal">
+        <div class="card-title">Raw and Direct</div>
+        <div class="card-text">No corporate language, no hedging, no filler.</div>
+      </div>
+      <div class="card reveal">
+        <div class="card-title">Experience-Based Only</div>
+        <div class="card-text">Every piece comes from something Chief has lived.</div>
+      </div>
+      <div class="card reveal">
+        <div class="card-title">Hook in 2 Seconds</div>
+        <div class="card-text">TikTok is a scroll platform.</div>
+      </div>
+      <div class="card reveal">
+        <div class="card-title">Never Preachy</div>
+        <div class="card-text">Teach by telling truth, not lecturing.</div>
+      </div>
+      <div class="card reveal">
+        <div class="card-title">Confident Without Arrogance</div>
+        <div class="card-text">The difference between knowing and performing knowing.</div>
+      </div>
+      <div class="card reveal">
+        <div class="card-title">Blue Collar Pride</div>
+        <div class="card-text">Celebrate the work, no victimhood.</div>
+      </div>
+    </div>
+
+    <div class="banned-box reveal">
+      <div class="label">Banned Words</div>
+      <div class="banned-words">
+        <span class="banned-word">transformative</span>
+        <span class="banned-word">innovative</span>
+        <span class="banned-word">game-changing</span>
+        <span class="banned-word">hustle culture</span>
+        <span class="banned-word">grind</span>
+        <span class="banned-word">10x</span>
+        <span class="banned-word">crushing it</span>
+        <span class="banned-word">killing it</span>
+        <span class="banned-word">level up</span>
+        <span class="banned-word">entrepreneur mindset</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 10: REVENUE MODEL
+     ═══════════════════════════════════════════ -->
+<section id="revenue">
+  <div class="container">
+    <div class="section-number reveal">10 &mdash; REVENUE</div>
+    <h2 class="section-title reveal">Revenue Model</h2>
+    <p class="section-subtitle reveal" style="margin-bottom:32px">The financial trajectory.</p>
+
+    <div class="card-grid card-grid-3">
+      <div class="rev-card reveal">
+        <div class="rev-period">Year 1 (Realistic)</div>
+        <div class="rev-amount">$2.4M-$3.2M</div>
+        <div class="rev-note">Consulting + university + subscriptions</div>
+      </div>
+      <div class="rev-card reveal">
+        <div class="rev-period">Year 2-3</div>
+        <div class="rev-amount">$8M-$12M+</div>
+        <div class="rev-note">Scale across all channels</div>
+      </div>
+      <div class="rev-card reveal">
+        <div class="rev-period">Year 4-5</div>
+        <div class="rev-amount">$25M-$50M+</div>
+        <div class="rev-note">Platform company</div>
+      </div>
+    </div>
+
+    <div class="card-grid card-grid-2 reveal" style="margin-top:16px;">
+      <div class="rev-card">
+        <div class="rev-period">Events Alone</div>
+        <div class="rev-amount">$2M-$4.5M</div>
+        <div class="rev-note">From one annual conference</div>
+      </div>
+      <div class="rev-card">
+        <div class="rev-period">Profitability</div>
+        <div class="rev-amount" style="font-size:22px;">40-60% Gross</div>
+        <div class="rev-note">25-40% EBITDA at scale</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 11: WHAT'S NOT BUILT YET
+     ═══════════════════════════════════════════ -->
+<section id="not-built">
+  <div class="container">
+    <div class="section-number reveal">11 &mdash; NOT BUILT</div>
+    <h2 class="section-title reveal">What's Not Built Yet</h2>
+    <p class="section-subtitle reveal" style="margin-bottom:32px">Full status of everything that needs to happen.</p>
+
+    <div class="status-grid reveal">
+      <div class="status-row status-row-header">
+        <span>Item</span>
+        <span>Status</span>
+        <span>Details</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">Equipment</span>
+        <span class="badge badge-red">Not Started</span>
+        <span class="status-desc">Camera, lighting, audio, gimbal</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">Domain</span>
+        <span class="badge badge-red">Not Started</span>
+        <span class="status-desc">bluecollorhustle.com or similar</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">Landing Page</span>
+        <span class="badge badge-red">Not Started</span>
+        <span class="status-desc">Lead capture destination</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">Contractor Profit Audit</span>
+        <span class="badge badge-red">Not Started</span>
+        <span class="status-desc">Lead magnet, needs design</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">Email Platform</span>
+        <span class="badge badge-red">Not Started</span>
+        <span class="status-desc">ConvertKit or similar</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">Email Sequences Loaded</span>
+        <span class="badge badge-red">Not Started</span>
+        <span class="status-desc">25+ written, nowhere to put them</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">Challenge App Rebuild</span>
+        <span class="badge badge-red">Not Started</span>
+        <span class="status-desc">Base44/HTML needs proper framework</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">Website</span>
+        <span class="badge badge-red">Not Started</span>
+        <span class="status-desc">Full BCH web presence</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">Logo Refinement</span>
+        <span class="badge badge-red">Not Started</span>
+        <span class="status-desc">Logo exists, may need polish</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">Brand Identity System</span>
+        <span class="badge badge-red">Not Started</span>
+        <span class="status-desc">Colors, fonts, guidelines</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">Consulting Tier Pricing</span>
+        <span class="badge badge-red">Not Started</span>
+        <span class="status-desc">Above the challenge, undefined</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">BCH University Framework</span>
+        <span class="badge badge-red">Not Started</span>
+        <span class="status-desc">Partner instructor model</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 12: WHO CHIEF IS
+     ═══════════════════════════════════════════ -->
+<section id="chief">
+  <div class="container">
+    <div class="section-number reveal">12 &mdash; THE OPERATOR</div>
+    <h2 class="section-title reveal">Who Chief Is</h2>
+    <p class="section-subtitle reveal" style="margin-bottom:32px">The credibility behind the content.</p>
+
+    <div class="chief-section reveal">
+      <p class="chief-text">
+        <strong>Serial entrepreneur. Middle Tennessee.</strong> Multiple active construction companies. <strong>$7-8M in construction sales</strong> in a focused stretch. Not a guru who read books about the trades. An operator who built real companies, managed real teams, navigated real pressure, and figured out how to scale from the ground up.
+      </p>
+      <br>
+      <p class="chief-text">
+        The credibility is that he's doing it <strong>in real time</strong>. His construction company is active and growing while he builds BCH. That's the proof. Not theory from someone who exited and now teaches. Real execution from someone still in the arena.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-brand">Blue Collar Hustle</div>
+    <div class="footer-tag">THE OPERATOR MOVEMENT</div>
+    <div class="footer-date">Blueprint updated March 29, 2026</div>
+  </div>
+</footer>
+
+<script>
+/* ─── MOBILE MENU ─── */
+function toggleMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+function closeMenu() {
+  document.getElementById('mobileMenu').classList.remove('open');
+}
+
+/* ─── SCROLL REVEAL ─── */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      // Stagger siblings
+      const parent = entry.target.parentElement;
+      const siblings = Array.from(parent.querySelectorAll('.reveal'));
+      const idx = siblings.indexOf(entry.target);
+      const delay = Math.min(idx * 50, 300);
+      setTimeout(() => {
+        entry.target.classList.add('visible');
+      }, delay);
+      observer.unobserve(entry.target);
+    }
+  });
+}, {
+  threshold: 0.08,
+  rootMargin: '0px 0px -40px 0px'
+});
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+/* ─── NAV SCROLL EFFECT ─── */
+const nav = document.querySelector('.nav');
+let lastScroll = 0;
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  if (scrollY > 100) {
+    nav.style.borderBottomColor = 'rgba(240,240,240,0.1)';
+  } else {
+    nav.style.borderBottomColor = 'rgba(240,240,240,0.06)';
+  }
+  lastScroll = scrollY;
+}, { passive: true });
+</script>
+</body>
+</html>
