@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RoofPact Blueprint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0C1B2A;
+    --navy-light: #122438;
+    --navy-surface: #162D44;
+    --gold: #B8975A;
+    --gold-light: #C9A96E;
+    --gold-dark: #9A7D4A;
+    --cream: #F5F2ED;
+    --cream-dark: #E8E4DF;
+    --green: #34D399;
+    --red: #F87171;
+    --yellow: #FBBF24;
+    --blue: #60A5FA;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--navy);
+    color: #fff;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+  }
+
+  /* ─── NAV ─── */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(12, 27, 42, 0.92);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border-bottom: 1px solid rgba(184, 151, 90, 0.08);
+    padding: 0 clamp(20px, 4vw, 48px);
+  }
+  .nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+  }
+  .nav-logo {
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #fff;
+  }
+  .nav-logo span { color: var(--gold); }
+  .nav-links { display: flex; gap: 6px; flex-wrap: wrap; }
+  .nav-links a {
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.35);
+    text-decoration: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    transition: all 0.2s cubic-bezier(0.2,0,0,1);
+  }
+  .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.04); }
+
+  /* ─── LAYOUT ─── */
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 4vw, 48px);
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    padding: clamp(64px, 10vw, 120px) 0 clamp(48px, 6vw, 80px);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: rgba(184, 151, 90, 0.06);
+    filter: blur(100px);
+    top: -30%;
+    right: -15%;
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .hero-badge::before {
+    content: '';
+    width: 16px;
+    height: 1px;
+    background: var(--gold);
+  }
+  .hero h1 {
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    font-weight: 900;
+    line-height: 1.06;
+    letter-spacing: -0.035em;
+    color: #fff;
+    margin-bottom: 16px;
+  }
+  .hero h1 span { color: var(--gold); }
+  .hero-sub {
+    font-size: 15px;
+    color: rgba(255,255,255,0.35);
+    max-width: 560px;
+    line-height: 1.7;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 24px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    flex-wrap: wrap;
+  }
+  .hero-meta-item {
+    font-size: 12px;
+    color: rgba(255,255,255,0.25);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .hero-meta-item .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 8px rgba(52, 211, 153, 0.4);
+  }
+  .hero-meta-item .dot.yellow { background: var(--yellow); box-shadow: 0 0 8px rgba(251, 191, 36, 0.4); }
+
+  /* ─── SECTIONS ─── */
+  section { padding: clamp(48px, 8vw, 96px) 0; }
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .section-label::before {
+    content: '';
+    width: 16px;
+    height: 1px;
+    background: var(--gold);
+  }
+  .section-title {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin-bottom: 8px;
+  }
+  .section-desc {
+    font-size: 14px;
+    color: rgba(255,255,255,0.35);
+    max-width: 520px;
+    margin-bottom: 32px;
+    line-height: 1.7;
+  }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, rgba(184,151,90,0.15), rgba(184,151,90,0.02));
+  }
+
+  /* ─── CARDS ─── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+  }
+  .card {
+    background: var(--navy-light);
+    border: 1px solid rgba(255,255,255,0.04);
+    border-radius: 12px;
+    padding: 24px;
+    transition: all 0.3s cubic-bezier(0.2,0,0,1);
+  }
+  .card:hover {
+    border-color: rgba(184,151,90,0.12);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  .card-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.2);
+    margin-bottom: 12px;
+  }
+  .card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 6px;
+  }
+  .card p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.35);
+    line-height: 1.6;
+  }
+
+  /* ─── STATUS GRID ─── */
+  .status-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2px;
+    background: rgba(255,255,255,0.02);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .status-row {
+    display: grid;
+    grid-template-columns: 1fr 120px 1fr;
+    gap: 0;
+    background: var(--navy-light);
+    align-items: center;
+  }
+  .status-row.header {
+    background: rgba(184, 151, 90, 0.06);
+  }
+  .status-row > div {
+    padding: 12px 16px;
+    font-size: 13px;
+  }
+  .status-row.header > div {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+  }
+  .status-name { font-weight: 600; }
+  .status-note { color: rgba(255,255,255,0.3); font-size: 12px; }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+  .badge.live { background: rgba(52,211,153,0.1); color: var(--green); }
+  .badge.stub { background: rgba(248,113,113,0.1); color: var(--red); }
+  .badge.partial { background: rgba(251,191,36,0.1); color: var(--yellow); }
+  .badge.ready { background: rgba(96,165,250,0.1); color: var(--blue); }
+
+  .badge::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  /* ─── URL TABLE ─── */
+  .url-grid {
+    display: grid;
+    gap: 2px;
+    background: rgba(255,255,255,0.02);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .url-row {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 0;
+    background: var(--navy-light);
+    align-items: center;
+  }
+  .url-row.header { background: rgba(184,151,90,0.06); }
+  .url-row > div { padding: 12px 16px; font-size: 13px; }
+  .url-row.header > div {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+  }
+  .url-row a {
+    color: var(--gold);
+    text-decoration: none;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 12px;
+    transition: color 0.15s;
+  }
+  .url-row a:hover { color: var(--gold-light); }
+
+  /* ─── TIER CARDS ─── */
+  .tier-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  @media (max-width: 768px) { .tier-grid { grid-template-columns: 1fr; } }
+  .tier-card {
+    border-radius: 12px;
+    padding: 28px 24px;
+    border: 1px solid rgba(255,255,255,0.04);
+    background: var(--navy-light);
+    transition: all 0.3s cubic-bezier(0.2,0,0,1);
+  }
+  .tier-card.featured {
+    background: var(--navy-surface);
+    border-color: var(--gold);
+    box-shadow: 0 0 0 1px rgba(184,151,90,0.15), 0 8px 32px rgba(184,151,90,0.08);
+  }
+  .tier-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 5px;
+    margin-bottom: 16px;
+  }
+  .tier-badge.gold { background: var(--gold); color: var(--navy); }
+  .tier-badge.subtle { background: rgba(184,151,90,0.1); color: var(--gold); }
+  .tier-name { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  .tier-price {
+    font-size: 36px;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    margin: 12px 0 4px;
+  }
+  .tier-price span { font-size: 16px; font-weight: 700; }
+  .tier-per { font-size: 12px; color: rgba(255,255,255,0.25); margin-bottom: 16px; }
+  .tier-features { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .tier-features li {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .tier-features li::before {
+    content: '✓';
+    color: var(--gold);
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  /* ─── REVENUE MODEL ─── */
+  .revenue-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  @media (max-width: 768px) { .revenue-grid { grid-template-columns: repeat(2, 1fr); } }
+  .revenue-card {
+    background: var(--navy-light);
+    border: 1px solid rgba(255,255,255,0.04);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .revenue-card .number {
+    font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+  }
+  .revenue-card .number.gold { color: var(--gold); }
+  .revenue-card .label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.25);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+
+  /* ─── ARCHITECTURE ─── */
+  .arch-flow {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+  .arch-node {
+    background: var(--navy-light);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px;
+    padding: 12px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+  }
+  .arch-node.accent {
+    border-color: rgba(184,151,90,0.2);
+    background: rgba(184,151,90,0.06);
+    color: var(--gold);
+  }
+  .arch-arrow {
+    color: rgba(255,255,255,0.15);
+    font-size: 18px;
+  }
+
+  /* ─── ROADMAP ─── */
+  .roadmap-item {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 16px;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+  }
+  .roadmap-phase {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding-top: 3px;
+  }
+  .roadmap-phase.done { color: var(--green); }
+  .roadmap-phase.current { color: var(--gold); }
+  .roadmap-phase.future { color: rgba(255,255,255,0.15); }
+  .roadmap-title { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .roadmap-desc { font-size: 13px; color: rgba(255,255,255,0.3); line-height: 1.6; }
+  .roadmap-tasks { list-style: none; margin-top: 8px; display: flex; flex-direction: column; gap: 4px; }
+  .roadmap-tasks li { font-size: 12px; color: rgba(255,255,255,0.25); display: flex; align-items: center; gap: 6px; }
+  .roadmap-tasks li .check { color: var(--green); }
+  .roadmap-tasks li .pending { color: rgba(255,255,255,0.12); }
+
+  /* ─── DATA MODEL ─── */
+  .table-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 8px;
+  }
+  .table-item {
+    background: var(--navy-light);
+    border: 1px solid rgba(255,255,255,0.04);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .table-item h4 {
+    font-size: 13px;
+    font-weight: 700;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+  .table-item p { font-size: 12px; color: rgba(255,255,255,0.3); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 32px 0;
+    border-top: 1px solid rgba(184,151,90,0.05);
+    text-align: center;
+    font-size: 11px;
+    color: rgba(255,255,255,0.12);
+  }
+  footer span { color: rgba(255,255,255,0.06); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .status-row { grid-template-columns: 1fr 100px 1fr; }
+    .url-row { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .revenue-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* ─── PRINT ─── */
+  @media print {
+    body { background: #fff; color: #111; }
+    .nav { display: none; }
+    .card, .tier-card, .table-item, .revenue-card { border: 1px solid #ddd; background: #fafafa; }
+    .badge.live { background: #d1fae5; color: #065f46; }
+    .badge.stub { background: #fee2e2; color: #991b1b; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="nav">
+  <div class="nav-inner">
+    <a href="project-board.html" class="nav-logo" style="text-decoration:none;display:inline-flex;align-items:center;gap:8px;"><span style="font-size:12px;font-weight:500;color:var(--gold);border:1px solid rgba(184,151,90,0.25);padding:3px 8px;border-radius:5px;">&#8592; Board</span> Roof<span>Pact</span> <span style="font-weight:500;font-size:12px;color:rgba(255,255,255,0.2);margin-left:4px;">Blueprint</span></a>
+    <div class="nav-links">
+      <a href="#shipit" style="color:var(--gold);">Ship It</a>
+      <a href="#overview">Overview</a>
+      <a href="#status">Status</a>
+      <a href="#users">Users</a>
+      <a href="#revenue">Revenue</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#urls">URLs</a>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="container">
+  <div class="hero">
+    <div class="hero-badge">Platform Blueprint</div>
+    <h1>The complete guide to <span>RoofPact.</span></h1>
+    <p class="hero-sub">
+      White-label SaaS that gives roofing companies a branded annual roof protection membership program. One codebase. Infinite companies. Predictable recurring revenue.
+    </p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><div class="dot"></div>Live on roofpact.com</div>
+      <div class="hero-meta-item"><div class="dot"></div>Auto-deploys from GitHub</div>
+      <div class="hero-meta-item"><div class="dot yellow"></div>Stripe not yet built</div>
+      <div class="hero-meta-item">Updated March 28, 2026</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SHIP IT -->
+<section id="shipit" style="padding-bottom:clamp(32px,4vw,48px);">
+  <div class="container">
+    <div class="section-label">Ship It Checklist</div>
+    <h2 class="section-title">3 things to revenue</h2>
+    <div style="background:var(--navy-light);border-left:3px solid var(--gold);border-radius:0 12px 12px 0;padding:20px 24px;margin-bottom:32px;max-width:720px;">
+      <p style="font-size:14px;color:rgba(255,255,255,0.5);line-height:1.7;">RoofPact is live on roofpact.com. Admin dashboard, member portal, inspections, PDF reports, branded company pages, onboarding forms -- all built. But you can't collect a single dollar because Stripe Connect isn't wired up. That's the blocker. 3 tasks and this is generating revenue.</p>
+    </div>
+
+    <div class="status-grid" style="max-width:720px;">
+      <div class="status-row header">
+        <div>#</div>
+        <div>Status</div>
+        <div>Task</div>
+      </div>
+      <div class="status-row">
+        <div style="font-weight:700;color:var(--gold);">1</div>
+        <div><span class="badge stub">Not Started</span></div>
+        <div>
+          <div class="status-name">Stripe Connect</div>
+          <div class="status-note">Companies get paid, you get $4/member/month. Zero revenue without this.</div>
+        </div>
+      </div>
+      <div class="status-row">
+        <div style="font-weight:700;color:var(--gold);">2</div>
+        <div><span class="badge stub">Not Started</span></div>
+        <div>
+          <div class="status-name">Member Portal Branding</div>
+          <div class="status-note">Portal shows generic RoofPact, not the company's brand. Homeowners need to see their roofer's logo.</div>
+        </div>
+      </div>
+      <div class="status-row">
+        <div style="font-weight:700;color:var(--gold);">3</div>
+        <div><span class="badge stub">Not Started</span></div>
+        <div>
+          <div class="status-name">Resend Domain Verification</div>
+          <div class="status-note">Verify noreply@roofpact.com so transactional emails don't hit spam.</div>
+        </div>
+      </div>
+    </div>
+
+    <p style="font-size:12px;color:rgba(255,255,255,0.2);margin-top:16px;">That's the ship list. Everything else is enhancement.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- OVERVIEW -->
+<section id="overview">
+  <div class="container">
+    <div class="section-label">The Big Picture</div>
+    <h2 class="section-title">What RoofPact is</h2>
+    <p class="section-desc">
+      Roofing companies pay you to run their membership programs. Homeowners pay the roofing company for annual roof protection. You take $4/member/month. The homeowner never sees RoofPact.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">The Problem</div>
+        <h3>Feast or famine</h3>
+        <p>Roofing companies live on one-time jobs. No recurring revenue, no customer retention, no predictability. One slow month and payroll is a problem.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">The Solution</div>
+        <h3>Branded memberships</h3>
+        <p>Annual roof protection memberships sold under the roofing company's brand. Inspections, priority service, repair discounts. Homeowners pay yearly, company earns recurring revenue.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">The Business</div>
+        <h3>White-label SaaS</h3>
+        <p>$1,000 one-time setup per company. $4/active member/month via Stripe Connect. One codebase serves every company. The more companies and members, the more you make.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- MEMBERSHIP TIERS -->
+<section>
+  <div class="container">
+    <div class="section-label">What Homeowners Buy</div>
+    <h2 class="section-title">Three membership tiers</h2>
+    <p class="section-desc">
+      Default pricing shown below. Each company can customize prices for their market. Tiers are configurable per company in the platform admin.
+    </p>
+
+    <div class="tier-grid">
+      <div class="tier-card">
+        <div class="tier-badge subtle">Essential</div>
+        <div class="tier-name">Essential</div>
+        <div class="tier-price"><span>$</span>149</div>
+        <div class="tier-per">per year</div>
+        <ul class="tier-features">
+          <li>1 annual roof inspection</li>
+          <li>Photo inspection report</li>
+          <li>10% repair discount</li>
+          <li>Standard scheduling</li>
+          <li>Maintenance reminders</li>
+        </ul>
+      </div>
+
+      <div class="tier-card featured">
+        <div class="tier-badge gold">Most Popular</div>
+        <div class="tier-name">Guardian</div>
+        <div class="tier-price" style="color:var(--gold)"><span>$</span>249</div>
+        <div class="tier-per">per year</div>
+        <ul class="tier-features">
+          <li>2 annual roof inspections</li>
+          <li>Priority scheduling</li>
+          <li>48-hour emergency response</li>
+          <li>15% repair discount</li>
+          <li>Storm damage inspection</li>
+          <li>Gutter condition check</li>
+        </ul>
+      </div>
+
+      <div class="tier-card">
+        <div class="tier-badge subtle">Premier</div>
+        <div class="tier-name">Premier</div>
+        <div class="tier-price"><span>$</span>399</div>
+        <div class="tier-per">per year</div>
+        <ul class="tier-features">
+          <li>Annual Roof Health Score</li>
+          <li>24-hour emergency response</li>
+          <li>20% repair discount</li>
+          <li>Insurance claim assistance</li>
+          <li>Transferable membership</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- REVENUE MODEL -->
+<section id="revenue">
+  <div class="container">
+    <div class="section-label">The Math</div>
+    <h2 class="section-title">Revenue model</h2>
+    <p class="section-desc">
+      Example: one roofing company with 75 members at the average $249/yr membership.
+    </p>
+
+    <div class="revenue-grid">
+      <div class="revenue-card">
+        <div class="number">$18,675</div>
+        <div class="label">Company's annual member revenue</div>
+      </div>
+      <div class="revenue-card">
+        <div class="number" style="color:rgba(255,255,255,0.35)">$3,600</div>
+        <div class="label">Your platform fees ($4 x 75 x 12)</div>
+      </div>
+      <div class="revenue-card">
+        <div class="number gold">$15,075</div>
+        <div class="label">Company's net recurring revenue</div>
+      </div>
+      <div class="revenue-card">
+        <div class="number gold">$1,000</div>
+        <div class="label">One-time setup fee you collect</div>
+      </div>
+    </div>
+
+    <div style="margin-top:24px;padding:20px 24px;background:var(--navy-light);border-radius:12px;border:1px solid rgba(184,151,90,0.08);">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">Scale Example</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+        <div>
+          <div style="font-size:20px;font-weight:800;color:var(--gold);">10 companies</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.25)">750 total members</div>
+        </div>
+        <div>
+          <div style="font-size:20px;font-weight:800;color:var(--gold);">$36,000/yr</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.25)">Platform revenue ($4 x 750 x 12)</div>
+        </div>
+        <div>
+          <div style="font-size:20px;font-weight:800;color:var(--gold);">+ $10,000</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.25)">Setup fees (10 x $1,000)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SYSTEM STATUS -->
+<section id="status">
+  <div class="container">
+    <div class="section-label">Current State</div>
+    <h2 class="section-title">What's live, what's not</h2>
+    <p class="section-desc">
+      Full audit as of March 28, 2026. Green = production ready. Yellow = partially done. Red = not built.
+    </p>
+
+    <div class="status-grid">
+      <div class="status-row header">
+        <div>Feature</div>
+        <div>Status</div>
+        <div>Notes</div>
+      </div>
+      <div class="status-row">
+        <div class="status-name">B2B Marketing Site</div>
+        <div><span class="badge live">Live</span></div>
+        <div class="status-note">roofpact.com, targets roofing company owners</div>
+      </div>
+      <div class="status-row">
+        <div class="status-name">Demo Request Form</div>
+        <div><span class="badge live">Live</span></div>
+        <div class="status-note">Writes to Supabase, emails jaden@moderndevelopment.co</div>
+      </div>
+      <div class="status-row">
+        <div class="status-name">Branded /[slug] Template</div>
+        <div><span class="badge live">Live</span></div>
+        <div class="status-note">roofpact.com/mrg-roofing. One template, infinite companies.</div>
+      </div>
+      <div class="status-row">
+        <div class="status-name">Platform Admin Dashboard</div>
+        <div><span class="badge live">Live</span></div>
+        <div class="status-note">/platform - overview, companies, onboarding, demo requests</div>
+      </div>
+      <div class="status-row">
+        <div class="status-name">Company Onboarding</div>
+        <div><span class="badge live">Live</span></div>
+        <div class="status-note">Full form: branding, pricing, admin accounts, slug</div>
+      </div>
+      <div class="status-row">
+        <div class="status-name">Company Editing</div>
+        <div><span class="badge live">Live</span></div>
+        <div class="status-note">/platform/companies/[id] - edit all fields</div>
+      </div>
+      <div class="status-row">
+        <div class="status-name">Admin Dashboard</div>
+        <div><span class="badge live">Live</span></div>
+        <div class="status-note">Stats, members, scheduling, analytics, settings, crew</div>
+      </div>
+      <div class="status-row">
+        <div class="status-name">Inspection Completion</div>
+        <div><span class="badge live">Live</span></div>
+        <div class="status-note">Score, 6-item checklist, photo upload, notes, email</div>
+      </div>
+      <div class="status-row">
+        <div class="status-name">PDF Report Generator</div>
+        <div><span class="badge live">Live</span></div>
+        <div class="status-note">Branded per company via jsPDF. Download from admin + member portal.</div>
+      </div>
+      <div class="status-row">
+        <div class="status-name">Photo Storage</div>
+        <div><span class="badge live">Live</span></div>
+        <div class="status-note">inspection-photos bucket created in Supabase</div>
+      </div>
+      <div class="status-row">
+        <div class="status-name">Member Portal</div>
+        <div><span class="badge live">Live</span></div>
+        <div class="status-note">Dashboard, inspections, health score, membership, transfer</div>
+      </div>
+      <div class="status-row">
+        <div class="status-name">Email Templates</div>
+        <div><span class="badge live">Live</span></div>
+        <div class="status-note">5 templates via Resend + React Email. Sends real emails.</div>
+      </div>
+      <div class="status-row">
+        <div class="status-name">Auth System</div>
+        <div><span class="badge live">Live</span></div>
+        <div class="status-note">Admin: email+password. Member: magic link. Platform: role-based.</div>
+      </div>
+      <div class="status-row">
+        <div class="status-name">Auto-Deploy</div>
+        <div><span class="badge live">Live</span></div>
+        <div class="status-note">Push to GitHub main = live on roofpact.com via Vercel</div>
+      </div>
+      <div class="status-row">
+        <div class="status-name">Member Portal Branding</div>
+        <div><span class="badge partial">Partial</span></div>
+        <div class="status-note">/account doesn't pull company colors/logo yet. Generic RoofPact styling.</div>
+      </div>
+      <div class="status-row">
+        <div class="status-name">Email Domain</div>
+        <div><span class="badge partial">Partial</span></div>
+        <div class="status-note">noreply@roofpact.com not verified in Resend. May hit spam.</div>
+      </div>
+      <div class="status-row">
+        <div class="status-name">Stripe Connect</div>
+        <div><span class="badge stub">Not Built</span></div>
+        <div class="status-note">Zero code. No checkout, no webhooks, no payment processing.</div>
+      </div>
+      <div class="status-row">
+        <div class="status-name">Password Reset</div>
+        <div><span class="badge stub">Not Built</span></div>
+        <div class="status-note">No forgot password flow for company admins</div>
+      </div>
+      <div class="status-row">
+        <div class="status-name">Auto-Renewal</div>
+        <div><span class="badge stub">Not Built</span></div>
+        <div class="status-note">No renewal or expiration logic</div>
+      </div>
+      <div class="status-row">
+        <div class="status-name">Mobile Pass</div>
+        <div><span class="badge stub">Not Built</span></div>
+        <div class="status-note">Not audited for mobile responsiveness</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FOUR USER TYPES -->
+<section id="users">
+  <div class="container">
+    <div class="section-label">Who Uses What</div>
+    <h2 class="section-title">Four interfaces, four user types</h2>
+    <p class="section-desc">
+      Each user type has their own login, their own UI, and their own level of access.
+    </p>
+
+    <div class="card-grid" style="grid-template-columns: repeat(2, 1fr);">
+      <div class="card">
+        <div class="card-label">User Type 1</div>
+        <h3>Visitors (B2B)</h3>
+        <p style="margin-bottom:12px">Roofing company owners browsing roofpact.com. They see the marketing pitch, pricing ($1K setup + $4/member/mo), and submit a demo request form.</p>
+        <div style="font-size:12px;color:rgba(255,255,255,0.2);">
+          <strong style="color:rgba(255,255,255,0.4)">Entry:</strong> roofpact.com<br>
+          <strong style="color:rgba(255,255,255,0.4)">Auth:</strong> None required
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-label">User Type 2</div>
+        <h3>Homeowners</h3>
+        <p style="margin-bottom:12px">A roofing company's customers. They land on roofpact.com/[slug] and see a fully branded page with their roofer's colors, logo, program name, and tier pricing.</p>
+        <div style="font-size:12px;color:rgba(255,255,255,0.2);">
+          <strong style="color:rgba(255,255,255,0.4)">Entry:</strong> roofpact.com/mrg-roofing (example)<br>
+          <strong style="color:rgba(255,255,255,0.4)">Portal:</strong> /account (magic link login)<br>
+          <strong style="color:rgba(255,255,255,0.4)">Sees:</strong> Dashboard, inspections, health score, membership, transfer
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-label">User Type 3</div>
+        <h3>Company Admins</h3>
+        <p style="margin-bottom:12px">The roofing company's staff. They manage their members, schedule inspections, complete inspections with photos/scores, generate PDF reports, and track revenue.</p>
+        <div style="font-size:12px;color:rgba(255,255,255,0.2);">
+          <strong style="color:rgba(255,255,255,0.4)">Entry:</strong> roofpact.com/login<br>
+          <strong style="color:rgba(255,255,255,0.4)">Auth:</strong> Email + password<br>
+          <strong style="color:rgba(255,255,255,0.4)">Dashboard:</strong> /admin (stats, members, schedule, analytics, settings)
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-label">User Type 4</div>
+        <h3>Platform Admin (You)</h3>
+        <p style="margin-bottom:12px">Jaden. Master control panel. Onboard new companies, edit their branding/pricing, track demo requests, see all companies at a glance.</p>
+        <div style="font-size:12px;color:rgba(255,255,255,0.2);">
+          <strong style="color:rgba(255,255,255,0.4)">Entry:</strong> roofpact.com/login (same page, role-based redirect)<br>
+          <strong style="color:rgba(255,255,255,0.4)">Auth:</strong> Email + password (platform_admin role)<br>
+          <strong style="color:rgba(255,255,255,0.4)">Dashboard:</strong> /platform (overview, companies, onboarding, demo requests)
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ARCHITECTURE -->
+<section id="architecture">
+  <div class="container">
+    <div class="section-label">Tech Stack</div>
+    <h2 class="section-title">How it's built</h2>
+    <p class="section-desc">
+      Next.js 16 App Router on Vercel, Supabase for database/auth/storage, Resend for email, Stripe Connect for payments (not yet built).
+    </p>
+
+    <div class="arch-flow">
+      <div class="arch-node">Vercel</div>
+      <div class="arch-arrow">&rarr;</div>
+      <div class="arch-node accent">Next.js 16</div>
+      <div class="arch-arrow">&rarr;</div>
+      <div class="arch-node">Supabase</div>
+      <div class="arch-arrow">&rarr;</div>
+      <div class="arch-node">Resend</div>
+      <div class="arch-arrow">&rarr;</div>
+      <div class="arch-node" style="opacity:0.3;border-style:dashed;">Stripe Connect</div>
+    </div>
+
+    <div class="section-label" style="margin-top:32px;">Database</div>
+    <h3 style="font-size:16px;font-weight:700;margin-bottom:16px;">10 tables, all with row-level security</h3>
+
+    <div class="table-list">
+      <div class="table-item">
+        <h4>companies</h4>
+        <p>The tenant. Name, slug, colors, logo, pricing, contact info.</p>
+      </div>
+      <div class="table-item">
+        <h4>profiles</h4>
+        <p>Links auth users to companies + roles (admin, member, platform_admin).</p>
+      </div>
+      <div class="table-item">
+        <h4>members</h4>
+        <p>Homeowners. Tier, status, enrollment date, Stripe customer ID.</p>
+      </div>
+      <div class="table-item">
+        <h4>crew</h4>
+        <p>Inspection team per company. Name, email, phone, role.</p>
+      </div>
+      <div class="table-item">
+        <h4>inspections</h4>
+        <p>Scheduled/completed. Checklist data, photos, score, notes.</p>
+      </div>
+      <div class="table-item">
+        <h4>notes</h4>
+        <p>Internal member notes. Admin only.</p>
+      </div>
+      <div class="table-item">
+        <h4>member_tags</h4>
+        <p>Tagging system for member segmentation.</p>
+      </div>
+      <div class="table-item">
+        <h4>email_logs</h4>
+        <p>Audit trail of every email sent.</p>
+      </div>
+      <div class="table-item">
+        <h4>membership_transfers</h4>
+        <p>Premier tier token-based transfer mechanism.</p>
+      </div>
+      <div class="table-item">
+        <h4>demo_requests</h4>
+        <p>Public intake form submissions from B2B site.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:32px;">
+      <div class="section-label">Key Architecture Decisions</div>
+      <div style="display:flex;flex-direction:column;gap:12px;margin-top:8px;">
+        <div style="font-size:13px;color:rgba(255,255,255,0.5);display:flex;gap:8px;">
+          <span style="color:var(--gold);flex-shrink:0;font-weight:700;">01</span>
+          <span><strong style="color:#fff">Multi-tenant via slugs.</strong> roofpact.com/[slug] renders any company's branded page from one template.</span>
+        </div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.5);display:flex;gap:8px;">
+          <span style="color:var(--gold);flex-shrink:0;font-weight:700;">02</span>
+          <span><strong style="color:#fff">Stripe Connect (planned).</strong> Money flows through RoofPact, auto-splits to company. No manual invoicing.</span>
+        </div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.5);display:flex;gap:8px;">
+          <span style="color:var(--gold);flex-shrink:0;font-weight:700;">03</span>
+          <span><strong style="color:#fff">No manual member creation.</strong> Members only created via Stripe webhook on payment (prevents bypassing platform fees).</span>
+        </div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.5);display:flex;gap:8px;">
+          <span style="color:var(--gold);flex-shrink:0;font-weight:700;">04</span>
+          <span><strong style="color:#fff">Magic link for members.</strong> Low-frequency login (check reports once a year). Password for admins (daily use).</span>
+        </div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.5);display:flex;gap:8px;">
+          <span style="color:var(--gold);flex-shrink:0;font-weight:700;">05</span>
+          <span><strong style="color:#fff">PDF reports branded per company.</strong> Pulls company name, colors, contact from database. Not hardcoded.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div class="container">
+    <div class="section-label">Build Roadmap</div>
+    <h2 class="section-title">What's done, what's next</h2>
+    <p class="section-desc">
+      Six phases. Phase 1 is partially done. Phase 2 is mostly done. Everything else is ahead.
+    </p>
+
+    <div class="roadmap-item">
+      <div class="roadmap-phase current">Phase 1</div>
+      <div>
+        <div class="roadmap-title">Customer-Facing Branded Portal</div>
+        <div class="roadmap-desc">The page homeowners see. Company-branded signup experience.</div>
+        <ul class="roadmap-tasks">
+          <li><span class="check">&#10003;</span> Template page at /[slug] with dynamic branding</li>
+          <li><span class="check">&#10003;</span> Homeowner-facing design (protect your investment, not B2B language)</li>
+          <li><span class="pending">&#9675;</span> Stripe Connect payment flow (auto member creation on payment)</li>
+          <li><span class="pending">&#9675;</span> Stripe Connect onboarding for companies</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="roadmap-item">
+      <div class="roadmap-phase done">Phase 2</div>
+      <div>
+        <div class="roadmap-title">Inspection System</div>
+        <div class="roadmap-desc">Full inspection workflow with reports and scoring.</div>
+        <ul class="roadmap-tasks">
+          <li><span class="check">&#10003;</span> Inspection report builder (checklist, scoring, notes)</li>
+          <li><span class="check">&#10003;</span> Photo uploads (Supabase Storage)</li>
+          <li><span class="check">&#10003;</span> PDF report template (branded per company)</li>
+          <li><span class="check">&#10003;</span> Roof Health Score calculation</li>
+          <li><span class="pending">&#9675;</span> Member portal branding (pull company colors/logo dynamically)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="roadmap-item">
+      <div class="roadmap-phase future">Phase 3</div>
+      <div>
+        <div class="roadmap-title">Marketing Site Product Showcase</div>
+        <div class="roadmap-desc">Add dashboard mockups and preview sections to the B2B marketing site.</div>
+        <ul class="roadmap-tasks">
+          <li><span class="pending">&#9675;</span> "Platform Preview" section with dashboard screenshots</li>
+          <li><span class="pending">&#9675;</span> Build after client-facing side is polished</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="roadmap-item">
+      <div class="roadmap-phase future">Phase 4</div>
+      <div>
+        <div class="roadmap-title">Analytics & Platform</div>
+        <div class="roadmap-desc">Revenue dashboards, data exports, file uploads for logos.</div>
+        <ul class="roadmap-tasks">
+          <li><span class="pending">&#9675;</span> Platform analytics (revenue, growth, company performance)</li>
+          <li><span class="pending">&#9675;</span> CSV exports (members, revenue reports)</li>
+          <li><span class="pending">&#9675;</span> Logo file upload (replace URL-only approach)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="roadmap-item">
+      <div class="roadmap-phase future">Phase 5</div>
+      <div>
+        <div class="roadmap-title">Lifecycle</div>
+        <div class="roadmap-desc">Membership renewal, expiration, and admin account recovery.</div>
+        <ul class="roadmap-tasks">
+          <li><span class="pending">&#9675;</span> Auto-renewal via Stripe</li>
+          <li><span class="pending">&#9675;</span> Expiration notifications</li>
+          <li><span class="pending">&#9675;</span> Password reset for company admins</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="roadmap-item" style="border-bottom:none;">
+      <div class="roadmap-phase future">Phase 6</div>
+      <div>
+        <div class="roadmap-title">Polish</div>
+        <div class="roadmap-desc">Mobile, self-scheduling, custom domains.</div>
+        <ul class="roadmap-tasks">
+          <li><span class="pending">&#9675;</span> Mobile responsiveness pass</li>
+          <li><span class="pending">&#9675;</span> Homeowner self-scheduling for inspections</li>
+          <li><span class="pending">&#9675;</span> Custom domains per company (upsell)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ACTION ITEMS -->
+<section>
+  <div class="container">
+    <div class="section-label">Before You Go Live</div>
+    <h2 class="section-title">Things to think about</h2>
+    <p class="section-desc">
+      Items that need attention before onboarding a real paying company.
+    </p>
+
+    <div class="card-grid" style="grid-template-columns: repeat(2, 1fr);">
+      <div class="card" style="border-color:rgba(248,113,113,0.15);">
+        <div class="card-label" style="color:var(--red);">Critical</div>
+        <h3>Stripe Connect</h3>
+        <p>No payment code exists. Companies can't collect from homeowners and you can't collect your $4/member. This is the single biggest blocker to revenue.</p>
+      </div>
+      <div class="card" style="border-color:rgba(251,191,36,0.15);">
+        <div class="card-label" style="color:var(--yellow);">Important</div>
+        <h3>Verify Email Domain</h3>
+        <p>noreply@roofpact.com needs to be verified in Resend. Without it, emails may land in spam. Takes 5 minutes in the Resend dashboard.</p>
+      </div>
+      <div class="card" style="border-color:rgba(251,191,36,0.15);">
+        <div class="card-label" style="color:var(--yellow);">Important</div>
+        <h3>Member Portal Branding</h3>
+        <p>When a member logs in at /account, they see RoofPact branding, not their roofing company's. Needs to pull company colors/logo dynamically.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Nice to Have</div>
+        <h3>Password Reset</h3>
+        <p>Company admins have no way to reset their password if they forget it. Supabase has this built in, just needs a UI page.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Nice to Have</div>
+        <h3>Mobile Responsiveness</h3>
+        <p>The app hasn't been audited for mobile. Admin dashboard and member portal should work on phones for field use.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Consider</div>
+        <h3>RLS Policy Audit</h3>
+        <p>Row-level security is enabled on all tables but policies should be reviewed to make sure no data leaks between tenants.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- URLS -->
+<section id="urls">
+  <div class="container">
+    <div class="section-label">Quick Reference</div>
+    <h2 class="section-title">All live URLs</h2>
+    <p class="section-desc">
+      Every page and endpoint currently deployed on roofpact.com.
+    </p>
+
+    <div class="url-grid">
+      <div class="url-row header">
+        <div>URL</div>
+        <div>Description</div>
+      </div>
+      <div class="url-row">
+        <div><a href="https://roofpact.com" target="_blank">roofpact.com</a></div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.4)">B2B marketing site</div>
+      </div>
+      <div class="url-row">
+        <div><a href="https://roofpact.com/mrg-roofing" target="_blank">roofpact.com/mrg-roofing</a></div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.4)">MRG's branded homeowner page</div>
+      </div>
+      <div class="url-row">
+        <div><a href="https://roofpact.com/login" target="_blank">roofpact.com/login</a></div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.4)">Admin / platform login</div>
+      </div>
+      <div class="url-row">
+        <div><a href="https://roofpact.com/account/login" target="_blank">roofpact.com/account/login</a></div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.4)">Member magic link login</div>
+      </div>
+      <div class="url-row">
+        <div><a href="https://roofpact.com/admin" target="_blank">roofpact.com/admin</a></div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.4)">Company admin dashboard</div>
+      </div>
+      <div class="url-row">
+        <div><a href="https://roofpact.com/platform" target="_blank">roofpact.com/platform</a></div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.4)">Platform admin (Jaden's master panel)</div>
+      </div>
+      <div class="url-row">
+        <div><a href="https://roofpact.com/account" target="_blank">roofpact.com/account</a></div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.4)">Member portal (requires auth)</div>
+      </div>
+      <div class="url-row">
+        <div><a href="https://github.com/HunchoJay100/roofpact" target="_blank">github.com/HunchoJay100/roofpact</a></div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.4)">Source code (private repo)</div>
+      </div>
+    </div>
+
+    <div style="margin-top:32px;">
+      <div class="section-label">Key File Paths</div>
+      <div style="margin-top:12px;font-size:12px;color:rgba(255,255,255,0.3);line-height:2;font-family:'SF Mono','Fira Code',monospace;">
+        ~/roofpact/ &mdash; project root<br>
+        ~/roofpact/src/app/[slug]/ &mdash; branded template<br>
+        ~/roofpact/src/app/admin/ &mdash; company admin pages<br>
+        ~/roofpact/src/app/platform/ &mdash; platform admin pages<br>
+        ~/roofpact/src/app/account/ &mdash; member portal<br>
+        ~/roofpact/src/app/api/ &mdash; all API routes<br>
+        ~/roofpact/src/lib/types.ts &mdash; all TypeScript interfaces<br>
+        ~/roofpact/src/lib/supabase-server.ts &mdash; server Supabase client<br>
+        ~/roofpact/supabase-schema.sql &mdash; base database schema<br>
+        ~/roofpact/src/emails/ &mdash; React Email templates
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- BRAND -->
+<section>
+  <div class="container">
+    <div class="section-label">Brand Identity</div>
+    <h2 class="section-title">RoofPact design system</h2>
+    <p class="section-desc">
+      The platform's own brand. Each company gets their own colors, but RoofPact itself uses this system for the B2B site and platform admin.
+    </p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin-bottom:24px;">
+      <div style="border-radius:10px;padding:20px;background:#0C1B2A;border:1px solid rgba(255,255,255,0.06);">
+        <div style="font-size:12px;font-weight:600;margin-bottom:4px;">Navy</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.3);font-family:monospace;">#0C1B2A</div>
+      </div>
+      <div style="border-radius:10px;padding:20px;background:#122438;border:1px solid rgba(255,255,255,0.06);">
+        <div style="font-size:12px;font-weight:600;margin-bottom:4px;">Navy Light</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.3);font-family:monospace;">#122438</div>
+      </div>
+      <div style="border-radius:10px;padding:20px;background:#B8975A;">
+        <div style="font-size:12px;font-weight:600;color:#0C1B2A;margin-bottom:4px;">Gold</div>
+        <div style="font-size:11px;color:rgba(12,27,42,0.6);font-family:monospace;">#B8975A</div>
+      </div>
+      <div style="border-radius:10px;padding:20px;background:#F5F2ED;">
+        <div style="font-size:12px;font-weight:600;color:#0C1B2A;margin-bottom:4px;">Cream</div>
+        <div style="font-size:11px;color:rgba(12,27,42,0.5);font-family:monospace;">#F5F2ED</div>
+      </div>
+    </div>
+
+    <div style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.8;">
+      <strong style="color:#fff">Font:</strong> Geist (Apple/Tesla feel)<br>
+      <strong style="color:#fff">Tagline:</strong> "Your roof is our reputation."<br>
+      <strong style="color:#fff">Vibe:</strong> Trustworthy, protective, high-end. Not generic contractor.<br>
+      <strong style="color:#fff">MRG Crew:</strong> Grant, Justin, Ty, Justin B., Peyton, Connor
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    RoofPact Blueprint <span>|</span> Generated March 28, 2026 <span>|</span> For internal reference only
+  </div>
+</footer>
+
+</body>
+</html>

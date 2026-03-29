@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BidKit Blueprint — Flynn Development</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0A0A0C;
+    --surface: #131316;
+    --nested: #1A1A1E;
+    --gold: #C5A55A;
+    --gold-dim: rgba(197,165,90,0.15);
+    --gold-border: rgba(197,165,90,0.12);
+    --gold-glow: rgba(197,165,90,0.06);
+    --text: #EEEEF0;
+    --text-secondary: rgba(255,255,255,0.45);
+    --text-tertiary: rgba(255,255,255,0.25);
+    --green: #34C759;
+    --red: #FF453A;
+    --yellow: #FFD60A;
+    --blue: #0A84FF;
+    --border: rgba(255,255,255,0.06);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, .nav-title, .callout-title, .step-num {
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  /* ── NAV ── */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,10,12,0.85);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid var(--gold-border);
+    padding: 0 clamp(16px, 4vw, 48px);
+  }
+  .nav-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    gap: 16px;
+  }
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+  .back-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gold);
+    text-decoration: none;
+    padding: 6px 14px;
+    border: 1px solid rgba(197,165,90,0.25);
+    border-radius: 100px;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+  }
+  .back-pill:hover {
+    background: rgba(197,165,90,0.08);
+    border-color: rgba(197,165,90,0.4);
+  }
+  .nav-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+  }
+  .nav-links {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    overflow-x: auto;
+  }
+  .nav-links a {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  .nav-links a:hover {
+    color: var(--text);
+    background: rgba(255,255,255,0.04);
+  }
+
+  /* ── LAYOUT ── */
+  .container {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 clamp(16px, 4vw, 48px);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    padding: clamp(56px, 10vw, 112px) 0 clamp(40px, 6vw, 72px);
+    position: relative;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: var(--gold-glow);
+    filter: blur(120px);
+    top: -20%;
+    right: -10%;
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+  .hero-badge::before {
+    content: '';
+    width: 20px;
+    height: 1px;
+    background: var(--gold);
+  }
+  .hero h1 {
+    font-size: clamp(2.6rem, 5.5vw, 4rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+  .hero h1 .gold { color: var(--gold); }
+  .hero-sub {
+    font-size: 15px;
+    color: var(--text-secondary);
+    max-width: 580px;
+    line-height: 1.7;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 24px;
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .meta-item {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .meta-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+  .meta-dot.green { background: var(--green); box-shadow: 0 0 8px rgba(52,199,89,0.4); }
+  .meta-dot.yellow { background: var(--yellow); box-shadow: 0 0 8px rgba(255,214,10,0.3); }
+
+  /* ── SECTIONS ── */
+  section { padding: clamp(48px, 8vw, 88px) 0; }
+
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+  .section-label::before {
+    content: '';
+    width: 20px;
+    height: 1px;
+    background: var(--gold);
+  }
+  .section-title {
+    font-size: clamp(1.5rem, 3vw, 2.1rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin-bottom: 8px;
+  }
+  .section-desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+    max-width: 540px;
+    margin-bottom: 32px;
+    line-height: 1.7;
+  }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, var(--gold-border), transparent 80%);
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+
+  /* ── CALLOUT BOX ── */
+  .callout {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 36px;
+  }
+  .callout p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.75;
+  }
+  .callout strong {
+    color: var(--text);
+  }
+
+  /* ── SHIP IT STEPS ── */
+  .steps-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 40px;
+  }
+  .step {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    transition: border-color 0.25s ease;
+  }
+  .step:hover { border-color: var(--gold-border); }
+  .step-num {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    min-width: 28px;
+    padding-top: 2px;
+  }
+  .step-content { flex: 1; min-width: 0; }
+  .step-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .step-desc {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    line-height: 1.6;
+  }
+
+  .future-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 12px;
+    margin-top: 8px;
+    padding: 6px 12px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+
+  /* ── BADGES ── */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .badge::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+  .badge.shipped { background: rgba(52,199,89,0.1); color: var(--green); }
+  .badge.partial { background: rgba(255,214,10,0.1); color: var(--yellow); }
+  .badge.not-started { background: rgba(255,69,58,0.1); color: var(--red); }
+  .badge.blue { background: rgba(10,132,255,0.1); color: var(--blue); }
+
+  /* ── CARD GRID ── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 12px;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    transition: all 0.3s cubic-bezier(0.25,0.1,0,1);
+  }
+  .card:hover {
+    border-color: var(--gold-border);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+  .card-icon {
+    font-size: 20px;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .card-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 10px;
+  }
+  .card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 6px;
+  }
+  .card p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+
+  /* ── STATUS GRID ── */
+  .status-grid {
+    display: grid;
+    gap: 2px;
+    background: rgba(255,255,255,0.02);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .status-row {
+    display: grid;
+    grid-template-columns: 1fr 140px 1fr;
+    background: var(--surface);
+    align-items: center;
+  }
+  .status-row.header {
+    background: var(--gold-glow);
+  }
+  .status-row > div {
+    padding: 14px 16px;
+    font-size: 13px;
+  }
+  .status-row.header > div {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+  .status-name { font-weight: 600; }
+  .status-note { color: var(--text-tertiary); font-size: 12px; }
+
+  /* ── ESTIMATE CARDS ── */
+  .estimate-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 12px;
+  }
+  .estimate-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    transition: all 0.3s cubic-bezier(0.25,0.1,0,1);
+  }
+  .estimate-card:hover {
+    border-color: var(--gold-border);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+  .estimate-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .estimate-desc {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    margin-bottom: 16px;
+  }
+  .estimate-price {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--gold);
+  }
+
+  /* ── FILE TABLE ── */
+  .file-grid {
+    display: grid;
+    gap: 2px;
+    background: rgba(255,255,255,0.02);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .file-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    background: var(--surface);
+    align-items: center;
+  }
+  .file-row.header { background: var(--gold-glow); }
+  .file-row > div { padding: 14px 16px; font-size: 13px; }
+  .file-row.header > div {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+  .file-label { font-weight: 600; }
+  .file-path {
+    color: var(--gold);
+    font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+    font-size: 12px;
+    word-break: break-all;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 36px 0;
+    border-top: 1px solid var(--border);
+  }
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: var(--text-tertiary);
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .footer-inner span { color: rgba(255,255,255,0.08); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .status-row { grid-template-columns: 1fr 110px 1fr; }
+    .status-row > div { padding: 12px 12px; font-size: 12px; }
+    .file-row { grid-template-columns: 1fr; }
+    .file-row > div { padding: 10px 16px; }
+    .file-row .file-label { padding-bottom: 0; }
+    .card-grid { grid-template-columns: 1fr; }
+    .estimate-grid { grid-template-columns: 1fr; }
+    .callout { padding: 20px; }
+    .step { padding: 16px 18px; }
+    .footer-inner { flex-direction: column; text-align: center; }
+  }
+
+  @media (max-width: 480px) {
+    .status-row { grid-template-columns: 1fr; gap: 0; }
+    .status-row > div { padding: 8px 14px; }
+    .status-row > div:first-child { padding-bottom: 2px; }
+    .status-row > div:last-child { padding-top: 2px; padding-bottom: 14px; }
+    .status-row.header { display: none; }
+    .nav-left { gap: 10px; }
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    body { background: #fff; color: #111; }
+    .nav { display: none; }
+    .card, .estimate-card, .callout, .step {
+      border: 1px solid #ddd;
+      background: #fafafa;
+      box-shadow: none;
+      transform: none;
+    }
+    .badge.shipped { background: #d1fae5; color: #065f46; }
+    .badge.not-started { background: #fee2e2; color: #991b1b; }
+    .badge.partial { background: #fef3c7; color: #92400e; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-left">
+      <a href="project-board.html" class="back-pill">&larr; Board</a>
+      <span class="nav-title">BidKit Blueprint</span>
+    </div>
+    <div class="nav-links">
+      <a href="#ship-it">Ship It</a>
+      <a href="#features">Features</a>
+      <a href="#status">Status</a>
+      <a href="#estimates">Estimates</a>
+      <a href="#why-migrate">V2</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#files">Files</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="container">
+  <div class="hero">
+    <div class="hero-badge">Flynn Development</div>
+    <h1>BidKit <span class="gold">Blueprint</span></h1>
+    <p class="hero-sub">Construction estimating app for Flynn Development. Feature-complete single-file HTML app. Used on active jobs right now.</p>
+    <div class="hero-meta">
+      <div class="meta-item"><span class="meta-dot green"></span> Stack: Vanilla HTML/JS/CSS</div>
+      <div class="meta-item"><span class="meta-dot green"></span> Status: Shipped (Internal)</div>
+      <div class="meta-item">Location: ~/flynn-dev-estimating/</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SECTION 1: SHIP IT CHECKLIST -->
+<section id="ship-it">
+  <div class="container">
+    <div class="section-label">Priority</div>
+    <h2 class="section-title">Ship It Checklist</h2>
+    <p class="section-desc">What's actually needed to call BidKit fully shipped. Spoiler: not much.</p>
+
+    <div class="callout">
+      <p><strong>BidKit is already shipped for internal use.</strong> You estimate real jobs with it. The migration to a JS framework is V2, not a blocker. The only thing missing is access from the field.</p>
+    </div>
+
+    <div class="steps-container">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Deploy to web (Vercel or GitHub Pages) <span class="badge not-started">Not Started</span></div>
+          <div class="step-desc">So you can estimate from your phone on-site. No more opening the file on your Mac only.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">Mobile responsive pass <span class="badge partial">Partial</span></div>
+          <div class="step-desc">Works but layout breaks on small screens. Needs a focused pass for phone-sized viewports.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">Cloud save with Supabase <span class="badge not-started">Not Started</span></div>
+          <div class="step-desc">Multi-device access so estimates sync between the Mac and your phone. No more localStorage-only.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">That's it. Everything else is V2. <span class="badge shipped">Clear</span></div>
+          <div class="step-desc">Do these three things and BidKit is fully deployed. The framework migration is a separate initiative.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="future-label">Future: V2 Migration</div>
+
+    <div class="steps-container">
+      <div class="step" style="opacity: 0.6;">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Framework selection (Next.js or React+Vite) <span class="badge not-started">Not Started</span></div>
+        </div>
+      </div>
+      <div class="step" style="opacity: 0.6;">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">Extract data layer (pricing constants, types, calc engine) <span class="badge not-started">Not Started</span></div>
+        </div>
+      </div>
+      <div class="step" style="opacity: 0.6;">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">Component architecture (wizard steps, trade cards) <span class="badge not-started">Not Started</span></div>
+        </div>
+      </div>
+      <div class="step" style="opacity: 0.6;">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">Port export engines <span class="badge not-started">Not Started</span></div>
+        </div>
+      </div>
+      <div class="step" style="opacity: 0.6;">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <div class="step-title">Testing <span class="badge not-started">Not Started</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 2: WHAT IT IS -->
+<section id="features">
+  <div class="container">
+    <div class="section-label">Core Features</div>
+    <h2 class="section-title">What It Is</h2>
+    <p class="section-desc">A full-featured construction estimating wizard that turns project dimensions into accurate bids with multiple export options.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-icon">&#9881;</span>
+        <div class="card-label">Wizard</div>
+        <h3>5-Step Estimation Wizard</h3>
+        <p>Project Info, Dimensions, Structural Trades, Finish Trades, and Summary. Guided flow takes you from blank project to finished estimate.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">&#9733;</span>
+        <div class="card-label">Pricing</div>
+        <h3>Pricing Engine</h3>
+        <p>~130 editable rate constants covering every trade. Adjust any rate on the fly or reset to Flynn Development defaults.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">&#8674;</span>
+        <div class="card-label">Export</div>
+        <h3>4 Export Formats</h3>
+        <p>Excel workbook, branded HTML proposal, buildlist spreadsheet, and JobTread CSV. Every output you need, one click away.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">&#128190;</span>
+        <div class="card-label">Persistence</div>
+        <h3>Save/Load System</h3>
+        <p>localStorage persistence keeps your work between sessions. Import and export full project backups as JSON files.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">&#9874;</span>
+        <div class="card-label">Calculations</div>
+        <h3>Smart Calculations</h3>
+        <p>Automatic computation of footer linear feet, slab cubic yards, framing complexity multipliers, and roof squares from dimensions.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">&#8644;</span>
+        <div class="card-label">Integration</div>
+        <h3>JobTread Integration</h3>
+        <p>CSV export maps directly to JobTread budget format with cost groups, cost codes, and built-in markup percentages.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 3: CURRENT STATE -->
+<section id="status">
+  <div class="container">
+    <div class="section-label">System Status</div>
+    <h2 class="section-title">Current State</h2>
+    <p class="section-desc">Feature-by-feature status of the existing BidKit application.</p>
+
+    <div class="status-grid">
+      <div class="status-row header">
+        <div>Feature</div>
+        <div>Status</div>
+        <div>Notes</div>
+      </div>
+      <div class="status-row">
+        <div class="status-name">5-Step Wizard</div>
+        <div><span class="badge shipped">Shipped</span></div>
+        <div class="status-note">Full flow working</div>
+      </div>
+      <div class="status-row">
+        <div class="status-name">Pricing Engine</div>
+        <div><span class="badge shipped">Shipped</span></div>
+        <div class="status-note">~130 constants, all editable</div>
+      </div>
+      <div class="status-row">
+        <div class="status-name">Excel Export</div>
+        <div><span class="badge shipped">Shipped</span></div>
+        <div class="status-note">3-sheet workbook</div>
+      </div>
+      <div class="status-row">
+        <div class="status-name">HTML Proposal</div>
+        <div><span class="badge shipped">Shipped</span></div>
+        <div class="status-note">Flynn Dev branded, print-ready</div>
+      </div>
+      <div class="status-row">
+        <div class="status-name">Buildlist Export</div>
+        <div><span class="badge shipped">Shipped</span></div>
+        <div class="status-note">Material takeoff with quantities</div>
+      </div>
+      <div class="status-row">
+        <div class="status-name">JobTread CSV</div>
+        <div><span class="badge shipped">Shipped</span></div>
+        <div class="status-note">Full budget format with cost codes</div>
+      </div>
+      <div class="status-row">
+        <div class="status-name">Save/Load/Backup</div>
+        <div><span class="badge shipped">Shipped</span></div>
+        <div class="status-note">localStorage + file import/export</div>
+      </div>
+      <div class="status-row">
+        <div class="status-name">Mobile Layout</div>
+        <div><span class="badge partial">Partial</span></div>
+        <div class="status-note">Functional but not optimized</div>
+      </div>
+      <div class="status-row">
+        <div class="status-name">Web Deployment</div>
+        <div><span class="badge not-started">Not Started</span></div>
+        <div class="status-note">Local file only</div>
+      </div>
+      <div class="status-row">
+        <div class="status-name">Cloud Sync</div>
+        <div><span class="badge not-started">Not Started</span></div>
+        <div class="status-note">No server, localStorage only</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 4: ACTIVE ESTIMATES -->
+<section id="estimates">
+  <div class="container">
+    <div class="section-label">Active Projects</div>
+    <h2 class="section-title">Active Estimates</h2>
+    <p class="section-desc">Current estimates built and priced through BidKit.</p>
+
+    <div class="estimate-grid">
+      <div class="estimate-card">
+        <div class="estimate-name">Bob Wetzel</div>
+        <div class="estimate-desc">24x32 attached garage</div>
+        <div class="estimate-price">$86,356.56</div>
+      </div>
+      <div class="estimate-card">
+        <div class="estimate-name">Jeff Merrick</div>
+        <div class="estimate-desc">28x30 truck workshop</div>
+        <div class="estimate-price">$85,107.07</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 5: WHY MIGRATE -->
+<section id="why-migrate">
+  <div class="container">
+    <div class="section-label">V2 Rationale</div>
+    <h2 class="section-title">Why Migrate</h2>
+    <p class="section-desc">The current single-file architecture works, but has limits. Here is why V2 moves to a framework.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">Scale</div>
+        <h3>3,000+ Lines, One File</h3>
+        <p>Impossible to maintain or extend. Every change risks breaking something elsewhere in the monolith.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Structure</div>
+        <h3>No Components</h3>
+        <p>Everything tangled together. Trade cards, wizard steps, exports, and state all live in one undifferentiated block.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">State</div>
+        <h3>No State Management</h3>
+        <p>DOM manipulation everywhere. Data flows are unpredictable and hard to trace through the codebase.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Quality</div>
+        <h3>No Tests</h3>
+        <p>Zero coverage. Cannot verify that pricing calculations remain correct after any code change.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Tooling</div>
+        <h3>No Build Pipeline</h3>
+        <p>No linting, no minification, no optimization. No TypeScript for type safety on critical pricing math.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Ecosystem</div>
+        <h3>Framework Ecosystem</h3>
+        <p>Access to routing, dev tools, hot reload, and the entire npm package ecosystem for faster development.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 6: ARCHITECTURE DECISIONS -->
+<section id="architecture">
+  <div class="container">
+    <div class="section-label">V2 Decisions</div>
+    <h2 class="section-title">Architecture Decisions</h2>
+    <p class="section-desc">Key technology choices for the BidKit V2 migration.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">Framework</div>
+        <h3>Next.js or React+Vite</h3>
+        <p>Framework selection still TBD. Both are viable. Decision depends on whether SSR/routing complexity is needed or if a lightweight SPA is sufficient.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Language</div>
+        <h3>TypeScript</h3>
+        <p>Type safety for pricing math. Every rate constant, formula, and output must be typed to catch errors at compile time.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Database</div>
+        <h3>Supabase</h3>
+        <p>Cloud persistence, same stack as RoofPact. Shared knowledge across projects, proven auth, and PostgreSQL under the hood.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Styling</div>
+        <h3>Tailwind CSS</h3>
+        <p>Consistent with other projects in the Flynn Development ecosystem. Utility-first approach keeps styles co-located with components.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Patterns</div>
+        <h3>Component Library</h3>
+        <p>Shared trade card pattern and reusable wizard steps. Build once, use across all 36+ trades with consistent behavior and styling.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 7: KEY FILES -->
+<section id="files">
+  <div class="container">
+    <div class="section-label">File Map</div>
+    <h2 class="section-title">Key Files</h2>
+    <p class="section-desc">All critical files and their locations on disk.</p>
+
+    <div class="file-grid">
+      <div class="file-row header">
+        <div>Description</div>
+        <div>Path</div>
+      </div>
+      <div class="file-row">
+        <div class="file-label">Main App</div>
+        <div class="file-path">~/flynn-dev-estimating/bidkit.html</div>
+      </div>
+      <div class="file-row">
+        <div class="file-label">Sample Project</div>
+        <div class="file-path">~/flynn-dev-estimating/load-brycen.html</div>
+      </div>
+      <div class="file-row">
+        <div class="file-label">Overview</div>
+        <div class="file-path">~/flynn-dev-estimating/bidkit-overview.html</div>
+      </div>
+      <div class="file-row">
+        <div class="file-label">Structure Docs</div>
+        <div class="file-path">~/flynn-dev-estimating/ESTIMATING-STRUCTURE.md</div>
+      </div>
+      <div class="file-row">
+        <div class="file-label">Master Pricing</div>
+        <div class="file-path">~/flynn-dev-estimating/flynn-master-pricing-database.xlsx</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div>Flynn Development <span>&middot;</span> BidKit</div>
+      <div>Last updated March 28, 2026</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

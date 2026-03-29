@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RECO Blueprint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0A1628;
+    --surface: #0F1E38;
+    --nested: #142847;
+    --gold: #C9A84C;
+    --gold-dim: rgba(201, 168, 76, 0.15);
+    --gold-border: rgba(201, 168, 76, 0.25);
+    --text: #F0F0F0;
+    --text-dim: rgba(255,255,255,0.5);
+    --text-muted: rgba(255,255,255,0.3);
+    --green: #34D399;
+    --red: #F87171;
+    --yellow: #FBBF24;
+    --blue: #60A5FA;
+    --blocked: #FF453A;
+    --zillow: #006AFF;
+    --redfin: #A31919;
+    --homes: #00A562;
+    --realtor: #D92228;
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Open Sans', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.65;
+  }
+
+  h1, h2, h3, h4, h5 {
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.2;
+  }
+
+  /* ── NAV ── */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10, 22, 40, 0.88);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid rgba(201, 168, 76, 0.08);
+    padding: 0 clamp(16px, 4vw, 48px);
+  }
+  .nav-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    gap: 12px;
+  }
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-shrink: 0;
+  }
+  .nav-back {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gold);
+    text-decoration: none;
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--gold-border);
+    background: var(--gold-dim);
+    transition: all 0.25s ease;
+    white-space: nowrap;
+  }
+  .nav-back:hover {
+    background: rgba(201, 168, 76, 0.25);
+    border-color: var(--gold);
+  }
+  .nav-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.01em;
+  }
+  .nav-links {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  .nav-links a {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  .nav-links a:hover {
+    color: #fff;
+    background: rgba(255,255,255,0.05);
+  }
+
+  /* ── LAYOUT ── */
+  .container {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 clamp(16px, 4vw, 48px);
+  }
+
+  section {
+    padding: clamp(48px, 6vw, 80px) 0;
+  }
+
+  /* ── GOLD DIVIDER ── */
+  .gold-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-border), transparent);
+    margin: 0;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    padding: clamp(56px, 8vw, 100px) 0 clamp(40px, 5vw, 64px);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -120px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 400px;
+    background: radial-gradient(ellipse, rgba(201, 168, 76, 0.06), transparent 70%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    padding: 6px 16px;
+    border: 1px solid var(--gold-border);
+    border-radius: 20px;
+    background: var(--gold-dim);
+    margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-size: clamp(40px, 7vw, 72px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 16px;
+  }
+  .hero h1 span { color: var(--gold); }
+  .hero-sub {
+    max-width: 640px;
+    margin: 0 auto 28px;
+    font-size: 16px;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+  .hero-meta {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 36px;
+  }
+  .hero-meta-item {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .hero-meta-item strong {
+    color: var(--text-dim);
+    font-weight: 600;
+  }
+  .stat-row {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius);
+    padding: 20px 32px;
+    text-align: center;
+    min-width: 160px;
+    transition: border-color 0.3s ease;
+  }
+  .stat-card:hover {
+    border-color: rgba(201, 168, 76, 0.2);
+  }
+  .stat-card .num {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--gold);
+    letter-spacing: -0.02em;
+  }
+  .stat-card .label {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    font-weight: 500;
+  }
+
+  /* ── SECTION HEADERS ── */
+  .section-header {
+    margin-bottom: 32px;
+  }
+  .section-num {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .section-header h2 {
+    font-size: clamp(24px, 3.5vw, 32px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  /* ── CARDS ── */
+  .card-grid {
+    display: grid;
+    gap: 16px;
+  }
+  .card-grid.cols-2 { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
+  .card-grid.cols-3 { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius);
+    padding: 24px;
+    transition: border-color 0.3s ease, transform 0.3s ease;
+  }
+  .card:hover {
+    border-color: rgba(201, 168, 76, 0.18);
+    transform: translateY(-2px);
+  }
+  .card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+  .card p {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.65;
+  }
+  .card .card-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+
+  /* ── CALLOUT BOX ── */
+  .callout {
+    background: var(--surface);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 24px 28px;
+    margin-bottom: 32px;
+    font-size: 15px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.75;
+  }
+
+  /* ── STATUS BADGES ── */
+  .badge {
+    display: inline-block;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 3px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .badge-live { background: rgba(52, 211, 153, 0.12); color: var(--green); }
+  .badge-not-started { background: rgba(248, 113, 113, 0.12); color: var(--red); }
+  .badge-building { background: rgba(251, 191, 36, 0.12); color: var(--yellow); }
+  .badge-blocked { background: rgba(255, 69, 58, 0.12); color: var(--blocked); }
+  .badge-blue { background: rgba(96, 165, 250, 0.12); color: var(--blue); }
+
+  /* ── SHIP IT LIST ── */
+  .ship-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .ship-item {
+    background: var(--surface);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    transition: border-color 0.3s ease;
+  }
+  .ship-item:hover {
+    border-color: rgba(201, 168, 76, 0.18);
+  }
+  .ship-num {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--gold);
+    flex-shrink: 0;
+    width: 32px;
+    text-align: center;
+    line-height: 1.4;
+  }
+  .ship-content {
+    flex: 1;
+  }
+  .ship-content h4 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .ship-content p {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* ── STATUS GRID ── */
+  .status-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .status-row {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 20px;
+    background: var(--surface);
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(255,255,255,0.04);
+    transition: border-color 0.2s ease;
+  }
+  .status-row:hover {
+    border-color: rgba(255,255,255,0.08);
+  }
+  .status-name {
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .status-detail {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-align: right;
+    max-width: 280px;
+  }
+
+  /* ── KEY FILES TABLE ── */
+  .files-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 4px;
+  }
+  .files-table th {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: left;
+    padding: 8px 16px;
+  }
+  .files-table td {
+    padding: 14px 16px;
+    font-size: 14px;
+    background: var(--surface);
+  }
+  .files-table tr td:first-child {
+    border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+    font-weight: 600;
+  }
+  .files-table tr td:last-child {
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    color: var(--text-dim);
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 13px;
+  }
+
+  /* ── DISCOVERY CARDS ── */
+  .discovery-card {
+    position: relative;
+    overflow: hidden;
+  }
+  .discovery-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    border-radius: 3px 0 0 3px;
+  }
+  .discovery-card.zillow::before { background: var(--zillow); }
+  .discovery-card.redfin::before { background: var(--redfin); }
+  .discovery-card.realtor::before { background: var(--realtor); }
+  .discovery-card.homes::before { background: var(--homes); }
+  .discovery-card h3 .platform-tag {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    vertical-align: middle;
+    margin-left: 8px;
+  }
+  .zillow .platform-tag { background: rgba(0,106,255,0.15); color: var(--zillow); }
+  .redfin .platform-tag { background: rgba(163,25,25,0.2); color: #E04040; }
+  .realtor .platform-tag { background: rgba(217,34,40,0.15); color: var(--realtor); }
+  .homes .platform-tag { background: rgba(0,165,98,0.15); color: var(--homes); }
+
+  /* ── AUTH CARD ICONS ── */
+  .auth-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    margin-bottom: 14px;
+  }
+  .auth-admin { background: rgba(201, 168, 76, 0.15); }
+  .auth-va { background: rgba(96, 165, 250, 0.15); }
+  .auth-agent { background: rgba(255, 255, 255, 0.06); }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding: 48px 0;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .footer strong {
+    color: var(--text-dim);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .stat-row { flex-direction: column; align-items: center; }
+    .stat-card { width: 100%; max-width: 300px; }
+    .status-row {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+    .status-detail { text-align: left; max-width: none; }
+    .ship-item { flex-direction: column; gap: 8px; }
+    .ship-num { width: auto; }
+    .card-grid.cols-2, .card-grid.cols-3 { grid-template-columns: 1fr; }
+    .files-table { font-size: 13px; }
+    .files-table td { padding: 10px 12px; }
+    .hero-meta { flex-direction: column; gap: 8px; }
+  }
+
+  @media (max-width: 480px) {
+    .hero h1 { font-size: 36px; }
+    .callout { padding: 18px 20px; font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════ NAV ════════ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-left">
+      <a href="project-board.html" class="nav-back">&#8592; Board</a>
+      <span class="nav-title">RECO Blueprint</span>
+    </div>
+    <div class="nav-links">
+      <a href="#ship-it">Ship It</a>
+      <a href="#what-it-is">What It Is</a>
+      <a href="#status">Status</a>
+      <a href="#features">Features</a>
+      <a href="#data">Data</a>
+      <a href="#auth">Auth</a>
+      <a href="#discoveries">Discoveries</a>
+      <a href="#files">Files</a>
+      <a href="#future">Future</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ════════ HERO ════════ -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge">THE REAL ESTATE COLLECTIVE</div>
+    <h1>RECO <span>Blueprint</span></h1>
+    <p class="hero-sub">Cross-platform listing performance dashboard for Amber Flynn-Jared's brokerage. Scraping, analytics, and reporting.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><strong>Stack:</strong> Next.js + PostgreSQL + Playwright</div>
+      <div class="hero-meta-item"><strong>Status:</strong> Building</div>
+      <div class="hero-meta-item"><strong>Client:</strong> Amber Flynn-Jared</div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="num">87</div>
+        <div class="label">Agents</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">$250-270M</div>
+        <div class="label">Volume</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">~460</div>
+        <div class="label">Active Listings</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-divider"></div>
+
+<!-- ════════ SHIP IT CHECKLIST ════════ -->
+<section id="ship-it">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">01 / Ship It Checklist</div>
+      <h2>The Last 20%</h2>
+    </div>
+
+    <div class="callout">
+      You built the hard part. Scrapers work, dashboard works, data is flowing. But Amber's VAs can't use any of it because there's no reports page, no remote access, and no automation. The last 20% is the part that makes this real.
+    </div>
+
+    <ol class="ship-list">
+      <li class="ship-item">
+        <div class="ship-num">1</div>
+        <div class="ship-content">
+          <h4>Reports Page <span class="badge badge-not-started">Not Started</span></h4>
+          <p>VAs need to generate branded PDFs from the dashboard. This is the entire point of the product.</p>
+        </div>
+      </li>
+      <li class="ship-item">
+        <div class="ship-num">2</div>
+        <div class="ship-content">
+          <h4>Cloudflare Tunnel <span class="badge badge-not-started">Not Started</span></h4>
+          <p>VAs can't access a dashboard running on your Mac Mini. This needs remote access.</p>
+        </div>
+      </li>
+      <li class="ship-item">
+        <div class="ship-num">3</div>
+        <div class="ship-content">
+          <h4>Cron Automation <span class="badge badge-not-started">Not Started</span></h4>
+          <p>Scrapers need to run nightly (IDX) and weekly (full sweep) without you manually triggering them.</p>
+        </div>
+      </li>
+      <li class="ship-item">
+        <div class="ship-num">4</div>
+        <div class="ship-content">
+          <h4>Admin Panel <span class="badge badge-not-started">Not Started</span></h4>
+          <p>Amber needs to add/remove VA accounts herself.</p>
+        </div>
+      </li>
+    </ol>
+
+    <p style="margin-top: 20px; font-size: 14px; color: var(--text-muted); text-align: center;">That's the ship list. Everything else is enhancement.</p>
+  </div>
+</section>
+
+<div class="gold-divider"></div>
+
+<!-- ════════ WHAT IT IS ════════ -->
+<section id="what-it-is">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">02 / What It Is</div>
+      <h2>System Overview</h2>
+    </div>
+
+    <p style="font-size: 15px; color: var(--text-dim); line-height: 1.75; margin-bottom: 32px; max-width: 800px;">
+      A web dashboard where Amber's VAs log in, search an address, and instantly see cross-platform listing performance (Zillow, Redfin, Homes.com). VAs generate polished reports and send them to agents. Agents never log in. They receive reports, which positions RECO as delivering premium value.
+    </p>
+
+    <div class="card-grid cols-3">
+      <div class="card">
+        <div class="card-label">Scraper</div>
+        <h3>IDX Scraper</h3>
+        <p>Pulls active listings from letsgoreco.com (192 listings)</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Scraper</div>
+        <h3>Zillow Scraper</h3>
+        <p>Views, saves, DOM. Zero blocks. Persistent Chrome profile.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Scraper</div>
+        <h3>Redfin Scraper</h3>
+        <p>Views, favorites. Zero blocks. Stingray API.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Scraper</div>
+        <h3>Homes.com Scraper</h3>
+        <p>Agent dashboard login. Views, favorites, leads, DOM.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Engine</div>
+        <h3>Orchestrator</h3>
+        <p>run-scrubber.js runs all platforms in sequence</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Frontend</div>
+        <h3>Next.js Dashboard</h3>
+        <p>JWT auth, KPI counters, listings table, charts</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-divider"></div>
+
+<!-- ════════ SYSTEM STATUS ════════ -->
+<section id="status">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">03 / System Status</div>
+      <h2>Component Status Grid</h2>
+    </div>
+
+    <div class="status-grid">
+      <div class="status-row">
+        <span class="status-name">IDX Inventory Scraper</span>
+        <span class="badge badge-live">Live</span>
+        <span class="status-detail">192 listings synced</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">Zillow Scraper</span>
+        <span class="badge badge-live">Live</span>
+        <span class="status-detail">Views/saves/DOM, PerimeterX bypassed</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">Redfin Scraper</span>
+        <span class="badge badge-live">Live</span>
+        <span class="status-detail">Views/favorites, CloudFront bypassed</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">Homes.com Scraper</span>
+        <span class="badge badge-live">Live</span>
+        <span class="status-detail">Views/favorites/leads via agent dashboard</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">Realtor.com Scraper</span>
+        <span class="badge badge-blocked">Blocked</span>
+        <span class="status-detail">Kasada anti-bot kills page loads</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">Orchestrator</span>
+        <span class="badge badge-live">Live</span>
+        <span class="status-detail">npm run scrub</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">Dashboard Login</span>
+        <span class="badge badge-live">Live</span>
+        <span class="status-detail">JWT auth, httpOnly cookies</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">Dashboard Home</span>
+        <span class="badge badge-live">Live</span>
+        <span class="status-detail">KPI counters, top performers, alerts</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">Listings Table</span>
+        <span class="badge badge-live">Live</span>
+        <span class="status-detail">Sortable, filterable, 3 platform columns</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">Listing Detail</span>
+        <span class="badge badge-live">Live</span>
+        <span class="status-detail">Platform cards, Recharts charts, history</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">Search</span>
+        <span class="badge badge-live">Live</span>
+        <span class="status-detail">Debounced live search</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">Reports Page</span>
+        <span class="badge badge-not-started">Not Started</span>
+        <span class="status-detail">PDF generation</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">Admin Panel</span>
+        <span class="badge badge-not-started">Not Started</span>
+        <span class="status-detail">VA account management</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">Cron Automation</span>
+        <span class="badge badge-not-started">Not Started</span>
+        <span class="status-detail">Nightly + weekly schedules</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">Remote Access</span>
+        <span class="badge badge-not-started">Not Started</span>
+        <span class="status-detail">Cloudflare Tunnel</span>
+      </div>
+      <div class="status-row">
+        <span class="status-name">On-demand Scrape</span>
+        <span class="badge badge-not-started">Not Started</span>
+        <span class="status-detail">Single-listing from search</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-divider"></div>
+
+<!-- ════════ DASHBOARD FEATURES ════════ -->
+<section id="features">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">04 / Dashboard Features</div>
+      <h2>What's Built</h2>
+    </div>
+
+    <div class="card-grid cols-3">
+      <div class="card">
+        <h3>Login</h3>
+        <p>Glassmorphism card, JWT auth, role-based routing</p>
+      </div>
+      <div class="card">
+        <h3>KPI Dashboard</h3>
+        <p>Animated counters, platform coverage bars</p>
+      </div>
+      <div class="card">
+        <h3>Listings Table</h3>
+        <p>Sortable, engagement badges, DOM badges, platform colors</p>
+      </div>
+      <div class="card">
+        <h3>Listing Detail</h3>
+        <p>3-column platform cards, Recharts area charts, history</p>
+      </div>
+      <div class="card">
+        <h3>Top Performers</h3>
+        <p>Top 5 by engagement</p>
+      </div>
+      <div class="card">
+        <h3>Underperformer Alerts</h3>
+        <p>Below-market listings flagged</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-divider"></div>
+
+<!-- ════════ DATA STRATEGY ════════ -->
+<section id="data">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">05 / Data Strategy</div>
+      <h2>Scraping Cadence</h2>
+    </div>
+
+    <div class="card-grid cols-3">
+      <div class="card">
+        <h3>Nightly <span style="color: var(--text-muted); font-weight: 400; font-size: 13px;">(Light)</span></h3>
+        <p>IDX inventory refresh. ~3 minutes.</p>
+      </div>
+      <div class="card">
+        <h3>Weekly <span style="color: var(--text-muted); font-weight: 400; font-size: 13px;">(Heavy)</span></h3>
+        <p>Full sweep all platforms, Sunday night. ~3 hours.</p>
+      </div>
+      <div class="card">
+        <h3>On-demand</h3>
+        <p>VA searches address, ~30 seconds, cached in PostgreSQL.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-divider"></div>
+
+<!-- ════════ AUTH MODEL ════════ -->
+<section id="auth">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">06 / Auth Model</div>
+      <h2>Access Roles</h2>
+    </div>
+
+    <div class="card-grid cols-3">
+      <div class="card">
+        <div class="auth-icon auth-admin">&#9733;</div>
+        <h3>Admin</h3>
+        <p style="color: var(--text-muted); font-size: 12px; margin-bottom: 8px;">Amber, Jaden</p>
+        <p>Full access, manage VAs</p>
+      </div>
+      <div class="card">
+        <div class="auth-icon auth-va">&#9881;</div>
+        <h3>VA</h3>
+        <p style="color: var(--text-muted); font-size: 12px; margin-bottom: 8px;">Virtual Assistants</p>
+        <p>Search listings, generate/send reports</p>
+      </div>
+      <div class="card">
+        <div class="auth-icon auth-agent">&#9993;</div>
+        <h3>Agent</h3>
+        <p style="color: var(--text-muted); font-size: 12px; margin-bottom: 8px;">87 RECO Agents</p>
+        <p>Never log in. Receive reports only.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-divider"></div>
+
+<!-- ════════ TECHNICAL DISCOVERIES ════════ -->
+<section id="discoveries">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">07 / Technical Discoveries</div>
+      <h2>Anti-Bot Breakdown</h2>
+    </div>
+
+    <div class="card-grid cols-2">
+      <div class="card discovery-card zillow">
+        <h3>Zillow (PerimeterX) <span class="platform-tag">Zillow</span></h3>
+        <p>Beaten with persistent Chrome context. Full browser profile persists cookies and fingerprint across sessions, making requests indistinguishable from organic traffic.</p>
+      </div>
+      <div class="card discovery-card redfin">
+        <h3>Redfin (CloudFront) <span class="platform-tag">Redfin</span></h3>
+        <p>Beaten with in-browser Stingray API. Executes search directly within the browser context using Redfin's internal API endpoints, bypassing CloudFront WAF entirely.</p>
+      </div>
+      <div class="card discovery-card realtor">
+        <h3>Realtor.com (Kasada) <span class="platform-tag">Realtor.com</span></h3>
+        <p>NOT beaten. Kasada detects CDP (Chrome DevTools Protocol) at the connection level. Every Playwright/Puppeteer session is fingerprinted before the first request.</p>
+      </div>
+      <div class="card discovery-card homes">
+        <h3>Homes.com (Akamai) <span class="platform-tag">Homes.com</span></h3>
+        <p>Bypassed via agent dashboard login. Authenticated sessions through the agent portal avoid Akamai's bot detection entirely. Views, favorites, and leads all accessible.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-divider"></div>
+
+<!-- ════════ KEY FILES ════════ -->
+<section id="files">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">08 / Key Files</div>
+      <h2>Project Paths</h2>
+    </div>
+
+    <div style="overflow-x: auto;">
+      <table class="files-table">
+        <thead>
+          <tr>
+            <th>Component</th>
+            <th>Path</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Scrapers</td>
+            <td>~/flynn-dev-estimating/reco/scrapers/</td>
+          </tr>
+          <tr>
+            <td>Dashboard</td>
+            <td>~/flynn-dev-estimating/reco/dashboard/</td>
+          </tr>
+          <tr>
+            <td>Database</td>
+            <td>PostgreSQL reco_scrubber</td>
+          </tr>
+          <tr>
+            <td>Reports</td>
+            <td>~/flynn-dev-estimating/reco/reports/output/</td>
+          </tr>
+          <tr>
+            <td>Chrome Profile</td>
+            <td>~/.reco-chrome-profile</td>
+          </tr>
+          <tr>
+            <td>Credentials</td>
+            <td>~/flynn-dev-estimating/reco/.env</td>
+          </tr>
+          <tr>
+            <td>Presentation</td>
+            <td>hunchojay100.github.io/jaden-sites/reco.html</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<div class="gold-divider"></div>
+
+<!-- ════════ FUTURE SYSTEMS ════════ -->
+<section id="future">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">09 / Future Systems</div>
+      <h2>What's Next</h2>
+    </div>
+
+    <div class="card-grid cols-2">
+      <div class="card">
+        <h3>Showing Claim System</h3>
+        <p>Uber-style showing requests. Agents claim showings for $50. Real-time availability, push notifications, and automatic assignment if unclaimed.</p>
+      </div>
+      <div class="card">
+        <h3>Agent Boot Camp 2.0</h3>
+        <p>Interactive onboarding replacing Google Classroom. Progress tracking, quizzes, and completion certificates built into the RECO dashboard.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-divider"></div>
+
+<!-- ════════ FOOTER ════════ -->
+<footer class="footer">
+  <div class="container">
+    <p><strong>The Real Estate Collective</strong> &middot; RECO Dashboard</p>
+    <p style="margin-top: 6px;">March 2026</p>
+  </div>
+</footer>
+
+</body>
+</html>

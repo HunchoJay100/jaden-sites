@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flynn & Co Blueprint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1A1215;
+    --surface: #231A1E;
+    --nested: #2D2226;
+    --plum: #8E6B7E;
+    --ocean: #5E8E9B;
+    --terra: #B5695A;
+    --text: #F5EDE8;
+    --text-secondary: rgba(245,237,232,0.55);
+    --text-tertiary: rgba(245,237,232,0.28);
+    --green: #34C759;
+    --red: #FF453A;
+    --yellow: #FFD60A;
+    --blue: #0A84FF;
+    --radius: 12px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Outfit', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+    position: relative;
+  }
+
+  /* Subtle dot pattern overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(rgba(142,107,126,0.06) 1px, transparent 1px);
+    background-size: 24px 24px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  h1, h2, h3, .playfair { font-family: 'Playfair Display', Georgia, serif; }
+
+  /* NAV */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(26,18,21,0.88);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid rgba(142,107,126,0.12);
+    padding: 0 clamp(20px, 4vw, 48px);
+  }
+  .nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    gap: 16px;
+  }
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-width: 0;
+  }
+  .nav-back {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--plum);
+    text-decoration: none;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(142,107,126,0.35);
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .nav-back:hover { background: rgba(142,107,126,0.12); border-color: var(--plum); }
+  .nav-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .nav-links { display: flex; gap: 4px; flex-shrink: 0; }
+  .nav-links a {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-decoration: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  .nav-links a:hover { color: var(--text); background: rgba(142,107,126,0.08); }
+
+  /* LAYOUT */
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 4vw, 48px);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* HERO */
+  .hero {
+    padding: clamp(64px, 10vw, 120px) 0 clamp(48px, 6vw, 80px);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: rgba(142,107,126,0.08);
+    filter: blur(120px);
+    top: -20%;
+    right: -10%;
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: rgba(94,142,155,0.06);
+    filter: blur(100px);
+    bottom: -10%;
+    left: -10%;
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--plum);
+    background: rgba(142,107,126,0.1);
+    border: 1px solid rgba(142,107,126,0.2);
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-size: clamp(40px, 7vw, 64px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+  .hero h1 .accent { color: var(--plum); }
+  .hero-sub {
+    font-size: clamp(15px, 2vw, 17px);
+    color: var(--text-secondary);
+    max-width: 600px;
+    line-height: 1.65;
+    margin-bottom: 24px;
+  }
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    font-size: 13px;
+    color: var(--text-tertiary);
+  }
+  .hero-meta span { display: flex; align-items: center; gap: 6px; }
+  .hero-meta .label { color: var(--text-secondary); font-weight: 500; }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, var(--plum), transparent 70%);
+    opacity: 0.25;
+    margin: 0;
+  }
+
+  /* SECTIONS */
+  .section {
+    padding: clamp(48px, 6vw, 80px) 0;
+  }
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--plum);
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-size: clamp(24px, 4vw, 32px);
+    font-weight: 800;
+    letter-spacing: -0.015em;
+    margin-bottom: 32px;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--surface);
+    border: 1px solid rgba(142,107,126,0.08);
+    border-radius: var(--radius);
+    padding: clamp(20px, 3vw, 28px);
+    transition: all 0.25s ease;
+  }
+  .card:hover {
+    border-color: rgba(142,107,126,0.2);
+    box-shadow: 0 8px 32px rgba(142,107,126,0.08);
+  }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+  }
+  .card-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .card h3 {
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+  .card p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .card-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+
+  /* CALLOUT */
+  .callout {
+    background: var(--surface);
+    border-left: 3px solid var(--plum);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: clamp(20px, 3vw, 28px);
+    margin-bottom: 32px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .callout strong { color: var(--text); font-weight: 600; }
+
+  /* CHECKLIST */
+  .phase-header {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ocean);
+    margin: 28px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(94,142,155,0.15);
+  }
+  .phase-header:first-of-type { margin-top: 0; }
+  .checklist { display: flex; flex-direction: column; gap: 8px; }
+  .check-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--surface);
+    border: 1px solid rgba(142,107,126,0.06);
+    border-radius: 10px;
+    padding: 14px 18px;
+    transition: all 0.2s ease;
+  }
+  .check-item:hover { border-color: rgba(142,107,126,0.15); }
+  .check-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--nested);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+  }
+  .check-text {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    min-width: 0;
+  }
+  .check-note {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    font-weight: 400;
+    display: block;
+    margin-top: 2px;
+  }
+  .check-status {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 4px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .status-not-started {
+    color: var(--text-tertiary);
+    background: rgba(245,237,232,0.05);
+  }
+  .status-done {
+    color: var(--green);
+    background: rgba(52,199,89,0.1);
+  }
+  .status-needs-work {
+    color: var(--yellow);
+    background: rgba(255,214,10,0.1);
+  }
+  .status-in-progress {
+    color: var(--blue);
+    background: rgba(10,132,255,0.1);
+  }
+
+  /* TABLE */
+  .table-wrap {
+    overflow-x: auto;
+    border-radius: var(--radius);
+    border: 1px solid rgba(142,107,126,0.08);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  thead th {
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    background: var(--surface);
+    padding: 12px 18px;
+    border-bottom: 1px solid rgba(142,107,126,0.1);
+  }
+  tbody td {
+    padding: 14px 18px;
+    border-bottom: 1px solid rgba(142,107,126,0.05);
+    color: var(--text-secondary);
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: rgba(142,107,126,0.03); }
+  tbody td:first-child { color: var(--text); font-weight: 500; }
+  .total-row td {
+    font-weight: 600;
+    color: var(--text) !important;
+    border-top: 1px solid rgba(142,107,126,0.15);
+    background: rgba(142,107,126,0.04);
+  }
+
+  /* BUILD CARDS */
+  .build-card { position: relative; overflow: hidden; }
+  .build-card .build-status {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+  }
+  .build-card h3 { padding-right: 90px; }
+  .build-card .path {
+    font-size: 12px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    color: var(--plum);
+    background: rgba(142,107,126,0.08);
+    padding: 3px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+  .build-card ul {
+    list-style: none;
+    margin-top: 10px;
+  }
+  .build-card ul li {
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding: 3px 0;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .build-card ul li::before {
+    content: '~';
+    color: var(--plum);
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  .build-card .needs {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(142,107,126,0.08);
+    font-size: 12px;
+    color: var(--terra);
+    font-weight: 500;
+  }
+
+  /* STATUS GRID */
+  .status-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .status-row {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 12px;
+    align-items: center;
+    background: var(--surface);
+    border: 1px solid rgba(142,107,126,0.06);
+    border-radius: 8px;
+    padding: 12px 18px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+  }
+  .status-row:hover { border-color: rgba(142,107,126,0.15); }
+  .status-row .name { font-weight: 500; color: var(--text); }
+  .status-row .detail { color: var(--text-tertiary); font-size: 13px; text-align: right; }
+
+  /* SCHEDULE CARDS */
+  .sched-card .day {
+    font-size: 20px;
+    font-weight: 800;
+    font-family: 'Playfair Display', Georgia, serif;
+    margin-bottom: 6px;
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 48px 0;
+    text-align: center;
+    border-top: 1px solid rgba(142,107,126,0.08);
+  }
+  .footer-brand {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-tertiary);
+    margin-bottom: 8px;
+  }
+  .footer-date {
+    font-size: 12px;
+    color: var(--text-tertiary);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .card-grid, .card-grid-3 { grid-template-columns: 1fr; }
+    .status-row { grid-template-columns: 1fr; gap: 6px; }
+    .status-row .detail { text-align: left; }
+    .hero-meta { flex-direction: column; gap: 8px; }
+    .check-item { flex-wrap: wrap; }
+    .check-status { margin-left: 40px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-left">
+      <a href="project-board.html" class="nav-back">&larr; Board</a>
+      <span class="nav-title">Flynn & Co Blueprint</span>
+    </div>
+    <div class="nav-links">
+      <a href="#ship-it">Ship It</a>
+      <a href="#problem">Problem</a>
+      <a href="#builds">Builds</a>
+      <a href="#clients">Clients</a>
+      <a href="#schedule">Schedule</a>
+      <a href="#design">Design</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#status">Status</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="container">
+  <section class="hero">
+    <div class="hero-badge">BOUTIQUE SOCIAL MEDIA AGENCY</div>
+    <h1>Flynn & Co <span class="accent">Blueprint</span></h1>
+    <p class="hero-sub">Megan Flynn's social media and video production agency. Brand site, concept mockup, and full client management system.</p>
+    <div class="hero-meta">
+      <span><span class="label">Owner:</span> Megan Flynn</span>
+      <span><span class="label">Location:</span> Middle Tennessee</span>
+      <span><span class="label">Status:</span> In Progress</span>
+    </div>
+  </section>
+</div>
+
+<div class="divider"></div>
+
+<!-- SECTION 1: SHIP IT CHECKLIST -->
+<div class="container">
+  <section class="section" id="ship-it">
+    <div class="section-label">Priority</div>
+    <h2 class="section-title">Ship It Checklist</h2>
+
+    <div class="callout">
+      <strong>Megan manages 4 clients entirely through text messages.</strong> Clients ghost, there's no accountability, and no visibility. She needs two things: a website to attract new clients, and a system to manage existing ones. Don't build both at once. <strong>Ship the website first.</strong>
+    </div>
+
+    <div class="phase-header">Phase A &mdash; Website (Ship First)</div>
+    <div class="checklist">
+      <div class="check-item">
+        <span class="check-num">1</span>
+        <div class="check-text">Color refinement on brand site<span class="check-note">Flagged as "too much orange", needs tweaking</span></div>
+        <span class="check-status status-not-started">NOT STARTED</span>
+      </div>
+      <div class="check-item">
+        <span class="check-num">2</span>
+        <div class="check-text">Final content pass<span class="check-note">Megan's real portfolio, testimonials, pricing</span></div>
+        <span class="check-status status-not-started">NOT STARTED</span>
+      </div>
+      <div class="check-item">
+        <span class="check-num">3</span>
+        <div class="check-text">Domain purchase<span class="check-note">Need flynnandco.com or similar</span></div>
+        <span class="check-status status-not-started">NOT STARTED</span>
+      </div>
+      <div class="check-item">
+        <span class="check-num">4</span>
+        <div class="check-text">Deploy to Vercel / GitHub Pages<span class="check-note">Currently just a local HTML file</span></div>
+        <span class="check-status status-not-started">NOT STARTED</span>
+      </div>
+    </div>
+
+    <div class="phase-header">Phase B &mdash; Management App MVP</div>
+    <div class="checklist">
+      <div class="check-item">
+        <span class="check-num">5</span>
+        <div class="check-text">Next.js + Supabase project setup</div>
+        <span class="check-status status-not-started">NOT STARTED</span>
+      </div>
+      <div class="check-item">
+        <span class="check-num">6</span>
+        <div class="check-text">Client database<span class="check-note">Profiles, contact info, preferences</span></div>
+        <span class="check-status status-not-started">NOT STARTED</span>
+      </div>
+      <div class="check-item">
+        <span class="check-num">7</span>
+        <div class="check-text">Filming calendar with Tue/Thu/Fri schedule</div>
+        <span class="check-status status-not-started">NOT STARTED</span>
+      </div>
+      <div class="check-item">
+        <span class="check-num">8</span>
+        <div class="check-text">Booking confirmations<span class="check-note">Replace texting with real system</span></div>
+        <span class="check-status status-not-started">NOT STARTED</span>
+      </div>
+      <div class="check-item">
+        <span class="check-num">9</span>
+        <div class="check-text">Basic payment tracking</div>
+        <span class="check-status status-not-started">NOT STARTED</span>
+      </div>
+    </div>
+
+    <p style="margin-top:20px; font-size:13px; color:var(--text-tertiary);">Phase A is 4 tasks. Ship the website, then start Phase B.</p>
+  </section>
+</div>
+
+<div class="divider"></div>
+
+<!-- SECTION 2: THE PROBLEM -->
+<div class="container">
+  <section class="section" id="problem">
+    <div class="section-label">Context</div>
+    <h2 class="section-title">The Problem</h2>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon" style="background:rgba(181,105,90,0.12); color:var(--terra);">&#9993;</div>
+        <h3>Text-Based Booking</h3>
+        <p>Clients confirm (or ghost) via text. No system, no paper trail, no accountability.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:rgba(255,69,58,0.1); color:var(--red);">&#10007;</div>
+        <h3>No Accountability</h3>
+        <p>Clients skip shoots with no consequences or tracking. Megan absorbs the lost time.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:rgba(181,105,90,0.12); color:var(--terra);">&#36;</div>
+        <h3>Payment Blindness</h3>
+        <p>No visibility into who owes what. Invoicing is manual and inconsistent.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:rgba(142,107,126,0.12); color:var(--plum);">&#127760;</div>
+        <h3>No Web Presence</h3>
+        <p>No website, no portfolio, can't attract new clients. Word of mouth only.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:rgba(255,214,10,0.1); color:var(--yellow);">&#9650;</div>
+        <h3>Revenue Ceiling</h3>
+        <p>Stuck at $1,550/mo because she can't scale chaos. Growth requires structure.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:rgba(94,142,155,0.12); color:var(--ocean);">&#9881;</div>
+        <h3>No Client Self-Service</h3>
+        <p>Everything flows through Megan manually. Booking, rescheduling, payments, questions.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="divider"></div>
+
+<!-- SECTION 3: THREE BUILDS -->
+<div class="container">
+  <section class="section" id="builds">
+    <div class="section-label">Deliverables</div>
+    <h2 class="section-title">Three Builds</h2>
+    <div class="card-grid-3">
+      <div class="card build-card">
+        <span class="check-status status-done build-status">DONE</span>
+        <span class="path">~/flynn-and-co-site/</span>
+        <h3>Brand / Marketing Site</h3>
+        <p>Funky-yet-professional agency website</p>
+        <ul>
+          <li>Capri theme + social media girl boss energy</li>
+          <li>Hero, social proof, 6 services, about, portfolio, process, testimonial, CTA</li>
+          <li>Git repo, 2 commits</li>
+        </ul>
+        <div class="needs">Needs: color fix, real content, deploy</div>
+      </div>
+      <div class="card build-card">
+        <span class="check-status status-done build-status">DONE</span>
+        <span class="path">~/flynn-and-co-vibe/</span>
+        <h3>Vibe Mockup</h3>
+        <p>Concept showing management system features</p>
+        <ul>
+          <li>Calendar, slot picker, booking flow</li>
+          <li>Client cards, portal, payments</li>
+          <li>Git repo, 1 commit</li>
+        </ul>
+      </div>
+      <div class="card build-card">
+        <span class="check-status status-not-started build-status">NOT STARTED</span>
+        <span class="path">~/flynn-and-co/</span>
+        <h3>Management System</h3>
+        <p>Full production app for client management</p>
+        <ul>
+          <li>Next.js + Supabase + Vercel</li>
+          <li>Must carry brand site design language</li>
+          <li>Role-based auth, calendar, payments</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="divider"></div>
+
+<!-- SECTION 4: CURRENT CLIENTS -->
+<div class="container">
+  <section class="section" id="clients">
+    <div class="section-label">Revenue</div>
+    <h2 class="section-title">Current Clients</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Client</th>
+            <th>Monthly</th>
+            <th>Scope</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>RECO</td>
+            <td>$800/mo</td>
+            <td>Full shoot day reels</td>
+          </tr>
+          <tr>
+            <td>Babe Cave</td>
+            <td>$0 (exchange)</td>
+            <td>TBD</td>
+          </tr>
+          <tr>
+            <td>Michelle Irvin</td>
+            <td>$150/mo</td>
+            <td>3 posts/week</td>
+          </tr>
+          <tr>
+            <td>MRG</td>
+            <td>$600/mo</td>
+            <td>2 reels/week</td>
+          </tr>
+          <tr class="total-row">
+            <td>TOTAL</td>
+            <td>$1,550/mo</td>
+            <td>+ exchange</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<div class="divider"></div>
+
+<!-- SECTION 5: FILMING SCHEDULE -->
+<div class="container">
+  <section class="section" id="schedule">
+    <div class="section-label">Operations</div>
+    <h2 class="section-title">Filming Schedule</h2>
+    <div class="card-grid-3">
+      <div class="card sched-card">
+        <div class="day" style="color:var(--plum);">Tuesday</div>
+        <p>Pre-assigned client block</p>
+      </div>
+      <div class="card sched-card">
+        <div class="day" style="color:var(--ocean);">Thursday</div>
+        <p>Open booking day</p>
+      </div>
+      <div class="card sched-card">
+        <div class="day" style="color:var(--terra);">Friday</div>
+        <p>Pre-assigned client block</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="divider"></div>
+
+<!-- SECTION 6: DESIGN DIRECTION -->
+<div class="container">
+  <section class="section" id="design">
+    <div class="section-label">Creative</div>
+    <h2 class="section-title">Design Direction</h2>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon" style="background:rgba(142,107,126,0.12); color:var(--plum);">Aa</div>
+        <h3>Typography</h3>
+        <p>Playfair Display (bold serif) + Libre Bodoni (italic) + Caveat (handwritten) + Outfit (body)</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:rgba(94,142,155,0.12); color:var(--ocean);">&#9679;</div>
+        <h3>Colors</h3>
+        <p>Earth tones + plum #8E6B7E + ocean #5E8E9B, terra #B5695A. Warm, not corporate.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:rgba(181,105,90,0.12); color:var(--terra);">&#10022;</div>
+        <h3>Elements</h3>
+        <p>Checker textures, sparkle stars, sticker badges, handwritten annotations, scrapbook energy.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:rgba(142,107,126,0.12); color:var(--plum);">&#9733;</div>
+        <h3>Inspiration</h3>
+        <p>Capri ThemeForest + Secret Socials + social media girl boss brands. Funky meets professional.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="divider"></div>
+
+<!-- SECTION 7: MANAGEMENT APP ARCHITECTURE -->
+<div class="container">
+  <section class="section" id="architecture">
+    <div class="section-label">Technical</div>
+    <h2 class="section-title">Management App Architecture</h2>
+    <div class="card-grid-3">
+      <div class="card">
+        <div class="card-icon" style="background:rgba(94,142,155,0.12); color:var(--ocean);">&#9881;</div>
+        <h3>Next.js + Supabase</h3>
+        <p>Proven stack. Server components, Postgres, real-time subscriptions.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:rgba(142,107,126,0.12); color:var(--plum);">&#9650;</div>
+        <h3>Vercel Deployment</h3>
+        <p>Zero-config deploys, edge functions, automatic previews.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:rgba(181,105,90,0.12); color:var(--terra);">&#128274;</div>
+        <h3>Role-Based Auth</h3>
+        <p>Megan = admin, clients = portal. Supabase RLS for data isolation.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:rgba(94,142,155,0.12); color:var(--ocean);">&#128197;</div>
+        <h3>Real-Time Calendar</h3>
+        <p>Tue/Thu/Fri filming blocks. Client self-booking with confirmations.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:rgba(142,107,126,0.12); color:var(--plum);">&#128179;</div>
+        <h3>Stripe Integration</h3>
+        <p>Automated invoicing, payment tracking, subscription management.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:rgba(181,105,90,0.12); color:var(--terra);">&#128172;</div>
+        <h3>Email/SMS Notifications</h3>
+        <p>Booking confirmations, reminders, payment receipts. Replace the texting.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="divider"></div>
+
+<!-- SECTION 8: BUILD STATUS -->
+<div class="container">
+  <section class="section" id="status">
+    <div class="section-label">Progress</div>
+    <h2 class="section-title">Build Status</h2>
+    <div class="status-grid">
+      <div class="status-row">
+        <span class="name">Brand Site HTML</span>
+        <span class="check-status status-done">DONE</span>
+        <span class="detail">Mockup complete</span>
+      </div>
+      <div class="status-row">
+        <span class="name">Brand Site Colors</span>
+        <span class="check-status status-needs-work">NEEDS WORK</span>
+        <span class="detail">Too much orange, needs tweaking</span>
+      </div>
+      <div class="status-row">
+        <span class="name">Vibe Mockup</span>
+        <span class="check-status status-done">DONE</span>
+        <span class="detail">Feature layout concept</span>
+      </div>
+      <div class="status-row">
+        <span class="name">App Project Setup</span>
+        <span class="check-status status-not-started">NOT STARTED</span>
+        <span class="detail">Next.js + Supabase</span>
+      </div>
+      <div class="status-row">
+        <span class="name">Client Database</span>
+        <span class="check-status status-not-started">NOT STARTED</span>
+        <span class="detail"></span>
+      </div>
+      <div class="status-row">
+        <span class="name">Filming Calendar</span>
+        <span class="check-status status-not-started">NOT STARTED</span>
+        <span class="detail"></span>
+      </div>
+      <div class="status-row">
+        <span class="name">Booking System</span>
+        <span class="check-status status-not-started">NOT STARTED</span>
+        <span class="detail"></span>
+      </div>
+      <div class="status-row">
+        <span class="name">Client Portal</span>
+        <span class="check-status status-not-started">NOT STARTED</span>
+        <span class="detail"></span>
+      </div>
+      <div class="status-row">
+        <span class="name">Payment Tracking</span>
+        <span class="check-status status-not-started">NOT STARTED</span>
+        <span class="detail"></span>
+      </div>
+      <div class="status-row">
+        <span class="name">Notifications</span>
+        <span class="check-status status-not-started">NOT STARTED</span>
+        <span class="detail"></span>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- FOOTER -->
+<div class="container">
+  <footer class="footer">
+    <div class="footer-brand">Flynn & Co</div>
+    <div class="footer-date">Blueprint &middot; March 2026</div>
+  </footer>
+</div>
+
+</body>
+</html>

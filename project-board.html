@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Project Board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #9E8542;
+    --gold-soft: #B8975A;
+    --gold-dim: rgba(158,133,66,0.07);
+    --bg: #F7F5F2;
+    --surface: #FFFFFF;
+    --surface-hover: #FAFAF9;
+    --nested: #EFEEE9;
+    --text-primary: #1A1A1D;
+    --text-secondary: #6E6E78;
+    --text-tertiary: #A3A3AD;
+    --separator: rgba(0,0,0,0.07);
+    --green: #1B8F3D;
+    --green-bg: rgba(27,143,61,0.08);
+    --yellow: #A67C00;
+    --yellow-bg: rgba(166,124,0,0.08);
+    --blue: #1A6BD6;
+    --blue-bg: rgba(26,107,214,0.08);
+    --orange: #C2710A;
+    --orange-bg: rgba(194,113,10,0.08);
+    --red: #C93B3B;
+    --red-bg: rgba(201,59,59,0.06);
+    --radius: 16px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: 'Geist', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    min-height: 100vh;
+    min-height: 100dvh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    padding: 56px 20px 36px;
+    text-align: center;
+  }
+
+  .hero-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  .hero h1 {
+    font-size: clamp(28px, 7vw, 40px);
+    font-weight: 800;
+    letter-spacing: -1.2px;
+    line-height: 1.1;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+  }
+
+  .hero p {
+    font-size: 15px;
+    color: var(--text-secondary);
+    max-width: 360px;
+    margin: 0 auto;
+    line-height: 22px;
+  }
+
+  /* ─── STATS ROW ─── */
+  .stats {
+    display: flex;
+    gap: 8px;
+    padding: 0 20px 28px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    justify-content: center;
+  }
+  .stats::-webkit-scrollbar { display: none; }
+
+  .stat {
+    flex-shrink: 0;
+    background: var(--surface);
+    border-radius: 12px;
+    padding: 12px 20px;
+    min-width: 84px;
+    text-align: center;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+
+  .stat-num {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.8px;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.8px;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* ─── PROJECT GRID ─── */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 0 16px 48px;
+    max-width: 920px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 600px) {
+    .grid { grid-template-columns: 1fr 1fr; gap: 20px; padding: 0 24px 64px; }
+  }
+
+  /* ─── PROJECT CARD ─── */
+  .project-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    background: var(--surface);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    transition: all 0.3s cubic-bezier(0.2,0,0,1);
+    opacity: 0;
+    transform: translateY(12px);
+    animation: cardReveal 0.4s cubic-bezier(0.2,0,0,1) forwards;
+  }
+
+  .project-card:hover, .project-card:active {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04);
+  }
+
+  @keyframes cardReveal {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .card-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    object-position: top left;
+    display: block;
+  }
+
+  .card-body {
+    padding: 16px 16px 18px;
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 6px;
+  }
+
+  .card-title {
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    line-height: 24px;
+  }
+
+  .badge {
+    flex-shrink: 0;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 4px 10px;
+    border-radius: 9999px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .badge-live { background: var(--green-bg); color: var(--green); }
+  .badge-shipped { background: var(--gold-dim); color: var(--gold); }
+  .badge-building { background: var(--blue-bg); color: var(--blue); }
+  .badge-progress { background: var(--orange-bg); color: var(--orange); }
+
+  .card-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 19px;
+    margin-bottom: 14px;
+  }
+
+  /* Ship list */
+  .ship-list {
+    margin-bottom: 14px;
+  }
+
+  .ship-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 5px;
+  }
+
+  .ship-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 3px 0;
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 16px;
+  }
+
+  .ship-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .dot-red { background: var(--red); }
+  .dot-yellow { background: var(--yellow); }
+  .dot-green { background: var(--green); }
+
+  /* Progress bar */
+  .progress-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .progress-track {
+    flex: 1;
+    height: 3px;
+    background: var(--nested);
+    border-radius: 9999px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    border-radius: 9999px;
+    transition: width 0.6s cubic-bezier(0.32,0.72,0,1);
+  }
+
+  .fill-green { background: var(--green); }
+  .fill-gold { background: var(--gold-soft); }
+  .fill-blue { background: var(--blue); }
+  .fill-orange { background: var(--orange); }
+
+  .progress-pct {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    min-width: 28px;
+    text-align: right;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    text-align: center;
+    padding: 0 16px 64px;
+  }
+
+  footer p {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.15px;
+  }
+
+  .fd-mark {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-label">Flynn Development</div>
+  <h1>Project Board</h1>
+  <p>Active builds, what's left to ship, and what's next.</p>
+</div>
+
+<div class="stats">
+  <div class="stat">
+    <div class="stat-num" style="color:var(--text-primary)">5</div>
+    <div class="stat-label">Projects</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num" style="color:var(--green)">1</div>
+    <div class="stat-label">Live</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num" style="color:var(--blue)">3</div>
+    <div class="stat-label">Building</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num" style="color:var(--orange)">1</div>
+    <div class="stat-label">In Progress</div>
+  </div>
+</div>
+
+<div class="grid">
+
+  <!-- RoofPact -->
+  <a href="roofpact-blueprint.html" class="project-card" style="animation-delay:0.05s">
+    <img class="card-image" src="images/roofpact-screenshot.png" alt="RoofPact">
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-title">RoofPact</div>
+        <div class="badge badge-live">Live</div>
+      </div>
+      <div class="card-desc">White-label roof protection memberships. Live on roofpact.com.</div>
+      <div class="ship-list">
+        <div class="ship-label">To Ship</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Stripe Connect (revenue blocker)</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Member portal branding</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Resend domain verification</div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-track"><div class="progress-fill fill-green" style="width:65%"></div></div>
+        <div class="progress-pct">65%</div>
+      </div>
+    </div>
+  </a>
+
+  <!-- BidKit -->
+  <a href="bidkit-blueprint.html" class="project-card" style="animation-delay:0.1s">
+    <img class="card-image" src="images/bidkit-screenshot.png" alt="BidKit">
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-title">BidKit</div>
+        <div class="badge badge-shipped">Shipped</div>
+      </div>
+      <div class="card-desc">Construction estimating app. Feature-complete, used on active jobs.</div>
+      <div class="ship-list">
+        <div class="ship-label">V2</div>
+        <div class="ship-item"><div class="ship-dot dot-yellow"></div>Deploy to web (use from phone)</div>
+        <div class="ship-item"><div class="ship-dot dot-yellow"></div>Mobile responsive pass</div>
+        <div class="ship-item"><div class="ship-dot dot-yellow"></div>Cloud save (multi-device)</div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-track"><div class="progress-fill fill-gold" style="width:85%"></div></div>
+        <div class="progress-pct">85%</div>
+      </div>
+    </div>
+  </a>
+
+  <!-- RECO -->
+  <a href="reco-blueprint.html" class="project-card" style="animation-delay:0.15s">
+    <img class="card-image" src="images/reco-screenshot.png" alt="RECO">
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-title">RECO</div>
+        <div class="badge badge-building">Building</div>
+      </div>
+      <div class="card-desc">Listing performance dashboard for Amber. Scrapers + dashboard built.</div>
+      <div class="ship-list">
+        <div class="ship-label">To Ship</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Reports page (the whole point)</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Cloudflare Tunnel (remote access)</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Cron automation</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Admin panel (VA management)</div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-track"><div class="progress-fill fill-blue" style="width:55%"></div></div>
+        <div class="progress-pct">55%</div>
+      </div>
+    </div>
+  </a>
+
+  <!-- Flynn & Co -->
+  <a href="flynn-and-co-blueprint.html" class="project-card" style="animation-delay:0.2s">
+    <img class="card-image" src="images/flynnco-screenshot.png" alt="Flynn & Co">
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-title">Flynn & Co</div>
+        <div class="badge badge-progress">In Progress</div>
+      </div>
+      <div class="card-desc">Megan's social media agency. Brand site + client management system.</div>
+      <div class="ship-list">
+        <div class="ship-label">Phase A: Website</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Color refinement + content</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Domain + deploy</div>
+        <div class="ship-label" style="margin-top:6px">Phase B: Management App</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Next.js + Supabase build (not started)</div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-track"><div class="progress-fill fill-orange" style="width:25%"></div></div>
+        <div class="progress-pct">25%</div>
+      </div>
+    </div>
+  </a>
+
+  <!-- Modern Dev Consulting -->
+  <a href="md-consulting-blueprint.html" class="project-card" style="animation-delay:0.25s">
+    <img class="card-image" src="images/md-consulting-screenshot.png" alt="MD Consulting">
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-title">MD Consulting</div>
+        <div class="badge badge-building">Building</div>
+      </div>
+      <div class="card-desc">Cloud construction consulting. Tier 1 deliverables done, articles 6/11.</div>
+      <div class="ship-list">
+        <div class="ship-label">To Ship Tier 1</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>5 remaining articles</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Payment system (Stripe/Gumroad)</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Delivery mechanism</div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-track"><div class="progress-fill fill-gold" style="width:55%"></div></div>
+        <div class="progress-pct">55%</div>
+      </div>
+    </div>
+  </a>
+
+</div>
+
+<footer>
+  <div class="fd-mark">Flynn Development</div>
+  <p>Last updated March 29, 2026</p>
+</footer>
+
+</body>
+</html>
