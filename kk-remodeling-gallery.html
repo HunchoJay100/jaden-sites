@@ -259,49 +259,15 @@
             grid-row: span 2;
         }
 
-        .gallery-placeholder {
+        .gallery-img {
             width: 100%;
             height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 0.75rem;
+            object-fit: cover;
             transition: transform 0.6s;
         }
 
-        /* Warm, earthy placeholder gradients */
-        .gallery-category:nth-child(1) .gallery-item:nth-child(1) .gallery-placeholder { background: linear-gradient(135deg, #c4b8a0, #a89880); }
-        .gallery-category:nth-child(1) .gallery-item:nth-child(2) .gallery-placeholder { background: linear-gradient(135deg, #8a9baa, #6a7b8a); }
-        .gallery-category:nth-child(1) .gallery-item:nth-child(3) .gallery-placeholder { background: linear-gradient(135deg, #b0a090, #907868); }
-        .gallery-category:nth-child(1) .gallery-item:nth-child(4) .gallery-placeholder { background: linear-gradient(135deg, #90a0aa, #708898); }
-
-        .gallery-category:nth-child(2) .gallery-item:nth-child(1) .gallery-placeholder { background: linear-gradient(135deg, #9aaa9a, #7a8a7a); }
-        .gallery-category:nth-child(2) .gallery-item:nth-child(2) .gallery-placeholder { background: linear-gradient(135deg, #b8a898, #988878); }
-        .gallery-category:nth-child(2) .gallery-item:nth-child(3) .gallery-placeholder { background: linear-gradient(135deg, #a0b0b0, #809898); }
-        .gallery-category:nth-child(2) .gallery-item:nth-child(4) .gallery-placeholder { background: linear-gradient(135deg, #bab0a0, #9a8878); }
-
-        .gallery-category:nth-child(3) .gallery-item:nth-child(1) .gallery-placeholder { background: linear-gradient(135deg, #a0a8b8, #808898); }
-        .gallery-category:nth-child(3) .gallery-item:nth-child(2) .gallery-placeholder { background: linear-gradient(135deg, #c0b0a0, #a09080); }
-        .gallery-category:nth-child(3) .gallery-item:nth-child(3) .gallery-placeholder { background: linear-gradient(135deg, #98a8a0, #788880); }
-        .gallery-category:nth-child(3) .gallery-item:nth-child(4) .gallery-placeholder { background: linear-gradient(135deg, #b0a8a0, #908880); }
-
-        .gallery-item:hover .gallery-placeholder {
+        .gallery-item:hover .gallery-img {
             transform: scale(1.05);
-        }
-
-        .gallery-placeholder svg {
-            width: 28px;
-            height: 28px;
-            color: rgba(255, 255, 255, 0.45);
-        }
-
-        .gallery-placeholder span {
-            font-size: 0.65rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.45);
-            font-weight: 500;
         }
 
         .gallery-overlay {
@@ -527,117 +493,82 @@
     <div class="gallery-section">
         <div class="gallery-container">
 
-            <!-- Bathrooms -->
-            <div class="gallery-category reveal">
-                <h2 class="gallery-category-title">Bathrooms</h2>
-                <div class="gallery-category-divider"></div>
-                <div class="gallery-grid">
-                    <div class="gallery-item wide">
-                        <div class="gallery-placeholder">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z" /></svg>
-                            <span>Full Bathroom Remodel</span>
-                        </div>
-                        <div class="gallery-overlay"><span>Full Bathroom Remodel</span></div>
-                    </div>
-                    <div class="gallery-item">
-                        <div class="gallery-placeholder">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z" /></svg>
-                            <span>Shower Tile Work</span>
-                        </div>
-                        <div class="gallery-overlay"><span>Shower Tile Work</span></div>
-                    </div>
-                    <div class="gallery-item">
-                        <div class="gallery-placeholder">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z" /></svg>
-                            <span>Vanity Install</span>
-                        </div>
-                        <div class="gallery-overlay"><span>Vanity Install</span></div>
-                    </div>
-                </div>
-            </div>
-
             <!-- Decks & Additions -->
             <div class="gallery-category reveal">
                 <h2 class="gallery-category-title">Decks & Additions</h2>
                 <div class="gallery-category-divider"></div>
                 <div class="gallery-grid">
-                    <div class="gallery-item">
-                        <div class="gallery-placeholder">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z" /></svg>
-                            <span>Custom Deck Build</span>
-                        </div>
-                        <div class="gallery-overlay"><span>Custom Deck Build</span></div>
+                    <div class="gallery-item wide">
+                        <img class="gallery-img" src="images/kk/kk-04.jpg" alt="Sunroom addition exterior" loading="lazy">
+                        <div class="gallery-overlay"><span>Sunroom Addition</span></div>
                     </div>
                     <div class="gallery-item">
-                        <div class="gallery-placeholder">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z" /></svg>
-                            <span>Room Addition</span>
-                        </div>
+                        <img class="gallery-img" src="images/kk/kk-02.jpg" alt="Addition with windows and deck" loading="lazy">
                         <div class="gallery-overlay"><span>Room Addition</span></div>
                     </div>
-                    <div class="gallery-item wide">
-                        <div class="gallery-placeholder">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z" /></svg>
-                            <span>Deck Railing Detail</span>
-                        </div>
-                        <div class="gallery-overlay"><span>Deck Railing Detail</span></div>
+                    <div class="gallery-item">
+                        <img class="gallery-img" src="images/kk/kk-03.jpg" alt="Under-deck tongue and groove ceiling" loading="lazy">
+                        <div class="gallery-overlay"><span>Under-Deck Ceiling</span></div>
                     </div>
                     <div class="gallery-item">
-                        <div class="gallery-placeholder">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z" /></svg>
-                            <span>Structural Framing</span>
-                        </div>
-                        <div class="gallery-overlay"><span>Structural Framing</span></div>
+                        <img class="gallery-img" src="images/kk/kk-15.jpg" alt="Custom deck and porch build" loading="lazy">
+                        <div class="gallery-overlay"><span>Custom Deck Build</span></div>
                     </div>
                 </div>
             </div>
 
-            <!-- Plumbing & Flooring -->
+            <!-- Plumbing -->
             <div class="gallery-category reveal">
-                <h2 class="gallery-category-title">Plumbing, Flooring & More</h2>
+                <h2 class="gallery-category-title">Plumbing</h2>
                 <div class="gallery-category-divider"></div>
                 <div class="gallery-grid">
-                    <div class="gallery-item tall">
-                        <div class="gallery-placeholder">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z" /></svg>
-                            <span>Plumbing Rough-In</span>
-                        </div>
+                    <div class="gallery-item">
+                        <img class="gallery-img" src="images/kk/kk-05.jpg" alt="Bathroom vanity and toilet install" loading="lazy">
+                        <div class="gallery-overlay"><span>Bathroom Install</span></div>
+                    </div>
+                    <div class="gallery-item">
+                        <img class="gallery-img" src="images/kk/kk-06.jpg" alt="Plumbing rough-in PEX and PVC" loading="lazy">
+                        <div class="gallery-overlay"><span>Plumbing Rough-In</span></div>
+                    </div>
+                    <div class="gallery-item">
+                        <img class="gallery-img" src="images/kk/kk-07.jpg" alt="Overhead plumbing rough-in" loading="lazy">
+                        <div class="gallery-overlay"><span>Overhead Plumbing</span></div>
+                    </div>
+                    <div class="gallery-item">
+                        <img class="gallery-img" src="images/kk/kk-12.jpg" alt="New construction plumbing rough-in" loading="lazy">
                         <div class="gallery-overlay"><span>New Construction Plumbing</span></div>
                     </div>
+                    <div class="gallery-item wide">
+                        <img class="gallery-img" src="images/kk/kk-13.jpg" alt="Crawl space plumbing" loading="lazy">
+                        <div class="gallery-overlay"><span>Crawl Space Plumbing</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- New Construction & Commercial -->
+            <div class="gallery-category reveal">
+                <h2 class="gallery-category-title">New Construction & Commercial</h2>
+                <div class="gallery-category-divider"></div>
+                <div class="gallery-grid">
                     <div class="gallery-item">
-                        <div class="gallery-placeholder">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z" /></svg>
-                            <span>Hardwood Install</span>
-                        </div>
-                        <div class="gallery-overlay"><span>Hardwood Flooring</span></div>
+                        <img class="gallery-img" src="images/kk/kk-11.jpg" alt="New construction two-story home" loading="lazy">
+                        <div class="gallery-overlay"><span>New Construction</span></div>
+                    </div>
+                    <div class="gallery-item wide">
+                        <img class="gallery-img" src="images/kk/kk-14.jpg" alt="K&K trucks on job site" loading="lazy">
+                        <div class="gallery-overlay"><span>K&K On Site</span></div>
                     </div>
                     <div class="gallery-item">
-                        <div class="gallery-placeholder">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z" /></svg>
-                            <span>Kitchen Remodel</span>
-                        </div>
-                        <div class="gallery-overlay"><span>Kitchen Remodel</span></div>
+                        <img class="gallery-img" src="images/kk/kk-09.jpg" alt="House of Prayer church exterior" loading="lazy">
+                        <div class="gallery-overlay"><span>Commercial - House of Prayer</span></div>
                     </div>
                     <div class="gallery-item">
-                        <div class="gallery-placeholder">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z" /></svg>
-                            <span>LVP Flooring</span>
-                        </div>
-                        <div class="gallery-overlay"><span>LVP Flooring Install</span></div>
+                        <img class="gallery-img" src="images/kk/kk-08.jpg" alt="Church building side view" loading="lazy">
+                        <div class="gallery-overlay"><span>Commercial Exterior</span></div>
                     </div>
                     <div class="gallery-item">
-                        <div class="gallery-placeholder">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z" /></svg>
-                            <span>Fixture Install</span>
-                        </div>
-                        <div class="gallery-overlay"><span>Plumbing Fixture Install</span></div>
-                    </div>
-                    <div class="gallery-item">
-                        <div class="gallery-placeholder">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z" /></svg>
-                            <span>General Remodel</span>
-                        </div>
-                        <div class="gallery-overlay"><span>General Remodel</span></div>
+                        <img class="gallery-img" src="images/kk/kk-10.jpg" alt="Church building with metal roof" loading="lazy">
+                        <div class="gallery-overlay"><span>Metal Roof Install</span></div>
                     </div>
                 </div>
             </div>
