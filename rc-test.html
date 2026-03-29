@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RC LIVE // Flynn Dev</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --gold: #C5A55A;
+    --gold-light: #E8D5A0;
+    --gold-glow: rgba(197, 165, 90, 0.4);
+    --bg-base: #0A0A0F;
+    --bg-surface: #111118;
+    --bg-nested: #1A1A24;
+    --text-primary: rgba(255,255,255,1);
+    --text-secondary: rgba(255,255,255,0.6);
+    --text-tertiary: rgba(255,255,255,0.3);
+    --green: #34D399;
+    --red: #F87171;
+  }
+
+  html { font-size: 16px; }
+
+  body {
+    font-family: 'Outfit', -apple-system, sans-serif;
+    background: var(--bg-base);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* === GRAIN OVERLAY === */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  }
+
+  /* === BACKGROUND GLOW === */
+  .bg-glow {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .bg-glow .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    animation: drift 20s ease-in-out infinite;
+  }
+  .bg-glow .orb-1 {
+    width: 500px; height: 500px;
+    background: rgba(197, 165, 90, 0.08);
+    top: -100px; right: -100px;
+    animation-delay: 0s;
+  }
+  .bg-glow .orb-2 {
+    width: 400px; height: 400px;
+    background: rgba(197, 165, 90, 0.05);
+    bottom: -50px; left: -100px;
+    animation-delay: -7s;
+  }
+  .bg-glow .orb-3 {
+    width: 300px; height: 300px;
+    background: rgba(52, 211, 153, 0.04);
+    top: 40%; left: 50%;
+    animation-delay: -13s;
+  }
+  @keyframes drift {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(30px, -20px) scale(1.05); }
+    66% { transform: translate(-20px, 15px) scale(0.95); }
+  }
+
+  /* === LAYOUT === */
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 48px 16px 64px;
+  }
+
+  /* === GLASS NAV === */
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(10, 10, 15, 0.7);
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-brand {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+  .nav-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--green);
+    letter-spacing: 0.12px;
+  }
+  .nav-status .pulse {
+    width: 8px; height: 8px;
+    background: var(--green);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.4); }
+    50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(52, 211, 153, 0); }
+  }
+
+  /* === HERO === */
+  .hero {
+    margin-top: 56px;
+    padding: 32px 0;
+    text-align: center;
+  }
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(197, 165, 90, 0.1);
+    border: 1px solid rgba(197, 165, 90, 0.2);
+    border-radius: 9999px;
+    padding: 6px 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--gold);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    animation: fadeInUp 0.6s cubic-bezier(0.2, 0, 0, 1) backwards;
+  }
+  .hero h1 {
+    font-size: 44px;
+    font-weight: 900;
+    letter-spacing: -1.5px;
+    line-height: 1.05;
+    margin-bottom: 16px;
+    animation: fadeInUp 0.6s cubic-bezier(0.2, 0, 0, 1) 0.1s backwards;
+  }
+  .hero h1 .gold { color: var(--gold); }
+  .hero p {
+    font-size: 17px;
+    font-weight: 400;
+    color: var(--text-secondary);
+    letter-spacing: -0.43px;
+    line-height: 22px;
+    max-width: 320px;
+    margin: 0 auto;
+    animation: fadeInUp 0.6s cubic-bezier(0.2, 0, 0, 1) 0.2s backwards;
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* === STAT CARDS === */
+  .stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 32px;
+  }
+  .stat-card {
+    background: var(--bg-surface);
+    border-radius: 12px;
+    padding: 20px 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
+    transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+    animation: fadeInUp 0.6s cubic-bezier(0.2, 0, 0, 1) backwards;
+  }
+  .stat-card:nth-child(1) { animation-delay: 0.3s; }
+  .stat-card:nth-child(2) { animation-delay: 0.35s; }
+  .stat-card:nth-child(3) { animation-delay: 0.4s; }
+  .stat-card:nth-child(4) { animation-delay: 0.45s; }
+
+  .stat-card:active {
+    transform: scale(0.97);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.15), 0 2px 6px rgba(0,0,0,0.1);
+  }
+  .stat-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    letter-spacing: 0.12px;
+    line-height: 16px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .stat-value {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.8px;
+    line-height: 34px;
+  }
+  .stat-value.gold { color: var(--gold); }
+  .stat-value.green { color: var(--green); }
+  .stat-sub {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+    letter-spacing: 0.03px;
+  }
+
+  /* === TERMINAL CARD === */
+  .terminal {
+    margin-top: 24px;
+    background: var(--bg-surface);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
+    animation: fadeInUp 0.6s cubic-bezier(0.2, 0, 0, 1) 0.5s backwards;
+  }
+  .terminal-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: var(--bg-nested);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .terminal-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .terminal-dot.r { background: #FF5F57; }
+  .terminal-dot.y { background: #FEBC2E; }
+  .terminal-dot.g { background: #28C840; }
+  .terminal-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-tertiary);
+    margin-left: 8px;
+  }
+  .terminal-body {
+    padding: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 22px;
+    color: var(--text-secondary);
+  }
+  .terminal-line {
+    opacity: 0;
+    animation: typeLine 0.4s cubic-bezier(0.2, 0, 0, 1) forwards;
+  }
+  .terminal-line:nth-child(1) { animation-delay: 0.8s; }
+  .terminal-line:nth-child(2) { animation-delay: 1.2s; }
+  .terminal-line:nth-child(3) { animation-delay: 1.6s; }
+  .terminal-line:nth-child(4) { animation-delay: 2.0s; }
+  .terminal-line:nth-child(5) { animation-delay: 2.4s; }
+  .terminal-line:nth-child(6) { animation-delay: 2.8s; }
+
+  @keyframes typeLine {
+    from { opacity: 0; transform: translateX(-4px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .terminal-line .prompt { color: var(--gold); }
+  .terminal-line .cmd { color: var(--text-primary); }
+  .terminal-line .success { color: var(--green); }
+  .terminal-line .dim { color: var(--text-tertiary); }
+
+  /* === CONNECTION CARD === */
+  .connection {
+    margin-top: 24px;
+    background: var(--bg-surface);
+    border-radius: 12px;
+    padding: 24px 16px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
+    animation: fadeInUp 0.6s cubic-bezier(0.2, 0, 0, 1) 0.6s backwards;
+  }
+  .connection-icon {
+    width: 56px; height: 56px;
+    margin: 0 auto 16px;
+    background: rgba(197, 165, 90, 0.1);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    animation: iconFloat 3s ease-in-out infinite;
+  }
+  @keyframes iconFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+  .connection h3 {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.6px;
+    margin-bottom: 8px;
+  }
+  .connection p {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 19px;
+    max-width: 280px;
+    margin: 0 auto;
+  }
+  .connection-chain {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 24px;
+  }
+  .chain-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .chain-icon {
+    width: 44px; height: 44px;
+    background: var(--bg-nested);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+  }
+  .chain-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .chain-line {
+    width: 32px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), rgba(197,165,90,0.2));
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .chain-line::after {
+    content: '';
+    position: absolute;
+    width: 6px; height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+    right: -3px;
+    top: -2px;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  /* === TIMESTAMP === */
+  .timestamp {
+    margin-top: 32px;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-tertiary);
+    letter-spacing: 1px;
+    animation: fadeInUp 0.6s cubic-bezier(0.2, 0, 0, 1) 0.7s backwards;
+  }
+  .timestamp .live {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--gold);
+    font-weight: 600;
+  }
+  .timestamp .live::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  /* === FOOTER === */
+  .footer {
+    margin-top: 48px;
+    text-align: center;
+    animation: fadeInUp 0.6s cubic-bezier(0.2, 0, 0, 1) 0.8s backwards;
+  }
+  .footer-logo {
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.5;
+  }
+  .footer-sub {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    margin-top: 4px;
+    letter-spacing: 0.5px;
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-glow">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+
+<nav class="nav">
+  <div class="nav-brand">Flynn Dev</div>
+  <div class="nav-status">
+    <div class="pulse"></div>
+    RC Active
+  </div>
+</nav>
+
+<div class="container">
+
+  <div class="hero">
+    <div class="hero-tag">&#9889; Remote Control</div>
+    <h1>Built From<br>My <span class="gold">Phone.</span></h1>
+    <p>First page deployed via Claude Code Remote Control. Mac Mini doing the work, phone calling the shots.</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat-card">
+      <div class="stat-label">Status</div>
+      <div class="stat-value green">Live</div>
+      <div class="stat-sub">RC Connected</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Device</div>
+      <div class="stat-value">Mini</div>
+      <div class="stat-sub">Mac Mini M-Series</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Control</div>
+      <div class="stat-value gold">Phone</div>
+      <div class="stat-sub">iPhone via /rc</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Deploy</div>
+      <div class="stat-value" id="deployTime">0:00</div>
+      <div class="stat-sub">Build to live</div>
+    </div>
+  </div>
+
+  <div class="terminal">
+    <div class="terminal-header">
+      <div class="terminal-dot r"></div>
+      <div class="terminal-dot y"></div>
+      <div class="terminal-dot g"></div>
+      <span class="terminal-title">zsh - Mac Mini</span>
+    </div>
+    <div class="terminal-body">
+      <div class="terminal-line"><span class="prompt">~ $</span> <span class="cmd">claude</span></div>
+      <div class="terminal-line"><span class="dim">// trust workspace? yes.</span></div>
+      <div class="terminal-line"><span class="prompt">claude $</span> <span class="cmd">/rc</span></div>
+      <div class="terminal-line"><span class="success">&#10003; Remote Control active</span></div>
+      <div class="terminal-line"><span class="dim">// connected from iPhone</span></div>
+      <div class="terminal-line"><span class="prompt">claude $</span> <span class="cmd">build something cool</span> <span class="success blink">_</span></div>
+    </div>
+  </div>
+
+  <div class="connection">
+    <div class="connection-icon">&#128752;</div>
+    <h3>The Pipeline</h3>
+    <p>Voice to phone to Claude to Mac Mini to GitHub to live site. Zero friction.</p>
+    <div class="connection-chain">
+      <div class="chain-node">
+        <div class="chain-icon">&#128241;</div>
+        <div class="chain-label">Phone</div>
+      </div>
+      <div class="chain-line"></div>
+      <div class="chain-node">
+        <div class="chain-icon">&#129302;</div>
+        <div class="chain-label">Claude</div>
+      </div>
+      <div class="chain-line"></div>
+      <div class="chain-node">
+        <div class="chain-icon">&#128421;</div>
+        <div class="chain-label">Mini</div>
+      </div>
+      <div class="chain-line"></div>
+      <div class="chain-node">
+        <div class="chain-icon">&#127760;</div>
+        <div class="chain-label">Live</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="timestamp">
+    <span class="live">LIVE</span> &middot; <span id="clock"></span>
+  </div>
+
+  <div class="footer">
+    <div class="footer-logo">Flynn Development</div>
+    <div class="footer-sub">Design. Construct. Transform.</div>
+  </div>
+
+</div>
+
+<script>
+  // Live clock
+  function updateClock() {
+    const now = new Date();
+    const opts = { hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true, timeZone: 'America/New_York' };
+    document.getElementById('clock').textContent = now.toLocaleTimeString('en-US', opts) + ' ET';
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  // Deploy timer (counts up from page load to simulate build time)
+  let start = Date.now();
+  function updateTimer() {
+    const elapsed = Math.floor((Date.now() - start) / 1000);
+    const min = Math.floor(elapsed / 60);
+    const sec = String(elapsed % 60).padStart(2, '0');
+    document.getElementById('deployTime').textContent = min + ':' + sec;
+  }
+  setInterval(updateTimer, 1000);
+</script>
+
+</body>
+</html>
