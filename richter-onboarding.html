@@ -333,6 +333,43 @@ body {
 .cmd .comment { color: var(--text-3); font-style: italic; }
 .cmd + .cmd { margin-top: 8px; }
 
+/* Distro tabs */
+.distro-tabs {
+  display: flex;
+  gap: 0;
+  margin-top: 16px;
+  margin-bottom: 0;
+}
+.distro-tab {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-bottom: none;
+  color: var(--text-3);
+  cursor: pointer;
+  transition: all 0.2s var(--ease);
+  border-radius: 8px 8px 0 0;
+}
+.distro-tab:hover { color: var(--text-2); }
+.distro-tab.active {
+  background: var(--bg-code);
+  color: var(--cyan);
+  border-color: var(--border);
+}
+.distro-panel {
+  display: none;
+}
+.distro-panel.active {
+  display: block;
+}
+.distro-panel .cmd:first-child {
+  margin-top: 0;
+  border-radius: 0 8px 8px 8px;
+}
+
 /* Repo card */
 .repo-card {
   background: var(--bg-surface);
@@ -495,9 +532,9 @@ body {
 
 <!-- Hero -->
 <section class="hero">
-  <div class="hero-tag">Implementation Guide</div>
+  <div class="hero-tag">Linux Implementation Guide</div>
   <h1>From zero to<br>fully operational. <span class="dim">Today.</span></h1>
-  <p class="hero-sub">Everything you need to get Claude Code running on your machine. One session. One repo. Full autonomy by the end of the afternoon.</p>
+  <p class="hero-sub">Everything you need to get Claude Code running on your Linux machine. One session. One repo. Full autonomy by the end of the afternoon.</p>
   <div class="hero-time">Estimated setup time: under 2 hours</div>
 </section>
 
@@ -506,38 +543,38 @@ body {
 <!-- Step 0: Hardware -->
 <section class="section">
   <div class="section-num r">00 // Hardware</div>
-  <h2 class="r">Start with the right machine.</h2>
-  <p class="section-lead r">Claude Code runs best on macOS. If you don't already have a dedicated machine for this, here's what we recommend.</p>
+  <h2 class="r">Your existing PC works.</h2>
+  <p class="section-lead r">Claude Code runs on any modern Linux distribution. No special hardware required. If your machine can run a browser and a terminal, you're good.</p>
 
   <div class="hw-card r">
-    <div class="hw-title">Apple Mac Mini (M4)</div>
-    <div class="hw-subtitle">The same machine Jaden runs his entire operation on.</div>
+    <div class="hw-title">Your PC + Linux</div>
+    <div class="hw-subtitle">Any x86_64 machine running a modern Linux distro. Ubuntu, Fedora, Debian, Arch, Pop!_OS, whatever you're comfortable with.</div>
 
     <div class="hw-specs">
       <div class="hw-spec">
-        <div class="hw-spec-label">Chip</div>
-        <div class="hw-spec-val">Apple M4</div>
+        <div class="hw-spec-label">CPU</div>
+        <div class="hw-spec-val">Any modern x86_64</div>
       </div>
       <div class="hw-spec">
         <div class="hw-spec-label">Memory</div>
-        <div class="hw-spec-val">16GB+ unified</div>
+        <div class="hw-spec-val">8GB+ RAM</div>
       </div>
       <div class="hw-spec">
         <div class="hw-spec-label">Storage</div>
-        <div class="hw-spec-val">256GB+ SSD</div>
+        <div class="hw-spec-val">50GB+ free</div>
       </div>
       <div class="hw-spec">
-        <div class="hw-spec-label">Price</div>
-        <div class="hw-spec-val">~$499</div>
+        <div class="hw-spec-label">Distro</div>
+        <div class="hw-spec-val">Ubuntu 22.04+</div>
       </div>
     </div>
 
     <div class="hw-why">
-      Small, quiet, stays on 24/7 at your office or home. The M-series chip is fast enough to run local models, Docker containers, and multiple dev servers simultaneously. This is your always-on command center.
+      Linux is closer to the server environments you already manage. Docker runs natively, SSH is built in, and you have direct access to the same tools your clients' infrastructure runs on. For an MSP, this is actually the ideal setup.
     </div>
   </div>
 
-  <p class="r" style="font-size: 14px; color: var(--text-3);">Already have a Mac? Skip this step entirely. Any Mac running macOS 13+ works.</p>
+  <p class="r" style="font-size: 14px; color: var(--text-3);">Ubuntu is the recommended distro if you're starting fresh. The commands below cover Ubuntu/Debian and Fedora/RHEL.</p>
 </section>
 
 <div class="divider"><hr></div>
@@ -556,10 +593,21 @@ body {
         <div class="step-line"></div>
       </div>
       <div>
-        <div class="step-title">Homebrew</div>
-        <div class="step-desc">The package manager for macOS. This is the foundation that installs everything else.</div>
+        <div class="step-title">Update Your System</div>
+        <div class="step-desc">Start clean. Update your package manager and install the essentials: curl, git, and build tools.</div>
         <div class="step-time">~2 minutes</div>
-        <div class="cmd"><span class="prompt">$ </span>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</div>
+        <div class="distro-tabs" data-group="update">
+          <button class="distro-tab active" data-distro="ubuntu">Ubuntu / Debian</button>
+          <button class="distro-tab" data-distro="fedora">Fedora / RHEL</button>
+        </div>
+        <div class="distro-panel active" data-group="update" data-distro="ubuntu">
+          <div class="cmd"><span class="prompt">$ </span>sudo apt update && sudo apt upgrade -y</div>
+          <div class="cmd"><span class="prompt">$ </span>sudo apt install -y curl git build-essential</div>
+        </div>
+        <div class="distro-panel" data-group="update" data-distro="fedora">
+          <div class="cmd"><span class="prompt">$ </span>sudo dnf upgrade --refresh -y</div>
+          <div class="cmd"><span class="prompt">$ </span>sudo dnf install -y curl git gcc gcc-c++ make</div>
+        </div>
       </div>
     </div>
 
@@ -569,10 +617,13 @@ body {
         <div class="step-line"></div>
       </div>
       <div>
-        <div class="step-title">Ghostty Terminal</div>
-        <div class="step-desc">A fast, GPU-accelerated terminal built for exactly this kind of work. Way better than the default Terminal app.</div>
-        <div class="step-time">~1 minute</div>
-        <div class="cmd"><span class="prompt">$ </span>brew install --cask ghostty</div>
+        <div class="step-title">Node.js via nvm</div>
+        <div class="step-desc">Node Version Manager is the cleanest way to install Node.js on Linux. No sudo required for global npm packages after this.</div>
+        <div class="step-time">~3 minutes</div>
+        <div class="cmd"><span class="prompt">$ </span>curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash</div>
+        <div class="cmd"><span class="comment"># Close and reopen your terminal, then:</span></div>
+        <div class="cmd"><span class="prompt">$ </span>nvm install --lts</div>
+        <div class="cmd"><span class="prompt">$ </span>node --version <span class="comment"># Should show v22+</span></div>
       </div>
     </div>
 
@@ -582,10 +633,23 @@ body {
         <div class="step-line"></div>
       </div>
       <div>
-        <div class="step-title">Node.js</div>
-        <div class="step-desc">JavaScript runtime. Required for Claude Code and most of the tools we'll be building.</div>
+        <div class="step-title">GitHub CLI</div>
+        <div class="step-desc">Manage repos, PRs, and issues straight from the terminal. This is how we interact with GitHub without ever opening a browser.</div>
         <div class="step-time">~2 minutes</div>
-        <div class="cmd"><span class="prompt">$ </span>brew install node</div>
+        <div class="distro-tabs" data-group="gh">
+          <button class="distro-tab active" data-distro="ubuntu">Ubuntu / Debian</button>
+          <button class="distro-tab" data-distro="fedora">Fedora / RHEL</button>
+        </div>
+        <div class="distro-panel active" data-group="gh" data-distro="ubuntu">
+          <div class="cmd"><span class="prompt">$ </span>sudo mkdir -p -m 755 /etc/apt/keyrings</div>
+          <div class="cmd"><span class="prompt">$ </span>wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null</div>
+          <div class="cmd"><span class="prompt">$ </span>echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null</div>
+          <div class="cmd"><span class="prompt">$ </span>sudo apt update && sudo apt install gh -y</div>
+        </div>
+        <div class="distro-panel" data-group="gh" data-distro="fedora">
+          <div class="cmd"><span class="prompt">$ </span>sudo dnf install gh -y</div>
+        </div>
+        <div class="cmd"><span class="prompt">$ </span>gh auth login</div>
       </div>
     </div>
 
@@ -595,11 +659,14 @@ body {
         <div class="step-line"></div>
       </div>
       <div>
-        <div class="step-title">Git + GitHub CLI</div>
-        <div class="step-desc">Version control and GitHub integration. You already know Git, so this will be fast. The CLI lets you manage repos, PRs, and issues from the terminal.</div>
-        <div class="step-time">~3 minutes</div>
-        <div class="cmd"><span class="prompt">$ </span>brew install git gh</div>
-        <div class="cmd"><span class="prompt">$ </span>gh auth login</div>
+        <div class="step-title">Terminal Setup</div>
+        <div class="step-desc">Your default terminal works fine. If you want something faster and GPU-accelerated, Ghostty and Kitty are both great options on Linux. Totally optional.</div>
+        <div class="step-time">~1 minute (optional)</div>
+        <div class="cmd"><span class="comment"># Option A: Ghostty (if your distro has it)</span></div>
+        <div class="cmd"><span class="comment"># Check https://ghostty.org/download for Linux packages</span></div>
+        <div class="cmd"><span class="comment"># Option B: Kitty (available everywhere)</span></div>
+        <div class="cmd"><span class="prompt">$ </span>curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin</div>
+        <div class="cmd"><span class="comment"># Option C: Just use your default terminal. It works.</span></div>
       </div>
     </div>
 
@@ -647,15 +714,15 @@ body {
     <div class="timeline-title">Full Timeline</div>
     <div class="timeline-row">
       <div class="timeline-min">0:00</div>
-      <div class="timeline-task">Install Homebrew</div>
+      <div class="timeline-task">Update system & install essentials</div>
     </div>
     <div class="timeline-row">
       <div class="timeline-min">0:05</div>
-      <div class="timeline-task">Install Ghostty, Node.js, Git, GitHub CLI</div>
+      <div class="timeline-task">Install Node.js via nvm</div>
     </div>
     <div class="timeline-row">
-      <div class="timeline-min">0:15</div>
-      <div class="timeline-task">Authenticate GitHub CLI</div>
+      <div class="timeline-min">0:10</div>
+      <div class="timeline-task">Install GitHub CLI & authenticate</div>
     </div>
     <div class="timeline-row">
       <div class="timeline-min">0:20</div>
@@ -715,7 +782,7 @@ body {
     </div>
     <div class="next-card r">
       <div class="next-card-title">PowerShell Factory</div>
-      <div class="next-card-text">Generate, test, and document PowerShell scripts for any Windows admin task. Bulk user management, GPO audits, event log analysis. Production-ready.</div>
+      <div class="next-card-text">Generate, test, and document PowerShell scripts for any Windows admin task. Bulk user management, GPO audits, event log analysis. Production-ready. PowerShell Core runs natively on Linux.</div>
     </div>
   </div>
 </section>
@@ -741,6 +808,22 @@ body {
   }, { threshold: 0.1, rootMargin: '0px 0px -32px 0px' });
   document.querySelectorAll('.r').forEach(el => obs.observe(el));
 })();
+
+/* Distro Tabs */
+document.querySelectorAll('.distro-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    const group = tab.parentElement.dataset.group;
+    const distro = tab.dataset.distro;
+
+    // Update tabs in this group
+    tab.parentElement.querySelectorAll('.distro-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+
+    // Update panels in this group
+    document.querySelectorAll(`.distro-panel[data-group="${group}"]`).forEach(p => p.classList.remove('active'));
+    document.querySelector(`.distro-panel[data-group="${group}"][data-distro="${distro}"]`).classList.add('active');
+  });
+});
 </script>
 </body>
 </html>
