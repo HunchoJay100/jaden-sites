@@ -648,8 +648,7 @@
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            grid-auto-rows: 240px;
-            gap: 1rem;
+            gap: 12px;
             margin-top: 3rem;
         }
 
@@ -657,44 +656,92 @@
             position: relative;
             overflow: hidden;
             cursor: pointer;
-            border-radius: 4px;
+            border-radius: 12px;
+            aspect-ratio: 4/3;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
+            transition: transform 0.5s cubic-bezier(0.2, 0, 0, 1),
+                        box-shadow 0.5s cubic-bezier(0.2, 0, 0, 1);
         }
 
-        .gallery-item.wide {
+        .gallery-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 14px rgba(0,0,0,0.15), 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .gallery-item.featured {
             grid-column: span 2;
+            grid-row: span 2;
+            aspect-ratio: auto;
         }
 
         .gallery-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.6s, filter 0.4s;
+            transition: transform 0.6s cubic-bezier(0.2, 0, 0, 1);
         }
 
         .gallery-item:hover .gallery-img {
-            transform: scale(1.05);
+            transform: scale(1.08);
         }
 
         .gallery-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, rgba(0, 48, 73, 0.8), transparent 60%);
+            background: linear-gradient(
+                to top,
+                rgba(0, 48, 73, 0.9) 0%,
+                rgba(0, 48, 73, 0.3) 40%,
+                transparent 70%
+            );
             opacity: 0;
-            transition: opacity 0.4s;
+            transition: opacity 0.4s cubic-bezier(0.2, 0, 0, 1);
             display: flex;
-            align-items: flex-end;
-            padding: 1.5rem;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 24px;
         }
 
         .gallery-item:hover .gallery-overlay {
             opacity: 1;
         }
 
-        .gallery-overlay span {
+        .gallery-overlay .gallery-label {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.1rem;
-            letter-spacing: 0.08em;
+            font-size: 1.25rem;
+            letter-spacing: 0.06em;
             color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .gallery-overlay .gallery-tag {
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--red);
+        }
+
+        .gallery-expand {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .gallery-item:hover .gallery-expand {
+            opacity: 1;
+            transform: scale(1);
         }
 
         .gallery-cta {
@@ -965,11 +1012,11 @@
 
             .gallery-grid {
                 grid-template-columns: repeat(2, 1fr);
-                grid-auto-rows: 200px;
             }
 
-            .gallery-item.wide {
-                grid-column: span 1;
+            .gallery-item.featured {
+                grid-column: span 2;
+                grid-row: span 1;
             }
         }
 
@@ -1009,7 +1056,10 @@
 
             .gallery-grid {
                 grid-template-columns: 1fr 1fr;
-                grid-auto-rows: 160px;
+            }
+
+            .gallery-item.featured {
+                grid-column: span 2;
             }
 
             .highlight-rows {
@@ -1192,29 +1242,65 @@
                 <div class="section-divider"></div>
             </div>
             <div class="gallery-grid">
-                <div class="gallery-item wide reveal">
+                <div class="gallery-item featured reveal">
                     <img class="gallery-img" src="images/kk/kk-04.jpg" alt="Room addition with windows and siding" loading="lazy">
-                    <div class="gallery-overlay"><span>Room Addition</span></div>
+                    <div class="gallery-overlay">
+                        <span class="gallery-label">Room Addition</span>
+                        <span class="gallery-tag">Additions</span>
+                    </div>
+                    <div class="gallery-expand">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                    </div>
                 </div>
                 <div class="gallery-item reveal">
                     <img class="gallery-img" src="images/kk/kk-15.jpg" alt="Custom deck and porch build" loading="lazy">
-                    <div class="gallery-overlay"><span>Custom Deck Build</span></div>
+                    <div class="gallery-overlay">
+                        <span class="gallery-label">Custom Deck Build</span>
+                        <span class="gallery-tag">Decks & Porches</span>
+                    </div>
+                    <div class="gallery-expand">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                    </div>
                 </div>
                 <div class="gallery-item reveal">
                     <img class="gallery-img" src="images/kk/kk-06.jpg" alt="Plumbing rough-in with PEX and PVC" loading="lazy">
-                    <div class="gallery-overlay"><span>Plumbing Rough-In</span></div>
+                    <div class="gallery-overlay">
+                        <span class="gallery-label">Plumbing Rough-In</span>
+                        <span class="gallery-tag">Plumbing</span>
+                    </div>
+                    <div class="gallery-expand">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                    </div>
                 </div>
                 <div class="gallery-item reveal">
                     <img class="gallery-img" src="images/kk/kk-05.jpg" alt="Bathroom vanity and toilet install" loading="lazy">
-                    <div class="gallery-overlay"><span>Bathroom Remodel</span></div>
+                    <div class="gallery-overlay">
+                        <span class="gallery-label">Bathroom Remodel</span>
+                        <span class="gallery-tag">Bathrooms</span>
+                    </div>
+                    <div class="gallery-expand">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                    </div>
                 </div>
                 <div class="gallery-item reveal">
                     <img class="gallery-img" src="images/kk/kk-11.jpg" alt="New construction two-story home" loading="lazy">
-                    <div class="gallery-overlay"><span>New Construction</span></div>
+                    <div class="gallery-overlay">
+                        <span class="gallery-label">New Construction</span>
+                        <span class="gallery-tag">New Builds</span>
+                    </div>
+                    <div class="gallery-expand">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                    </div>
                 </div>
                 <div class="gallery-item reveal">
                     <img class="gallery-img" src="images/kk/kk-09.jpg" alt="Commercial building project" loading="lazy">
-                    <div class="gallery-overlay"><span>Commercial Work</span></div>
+                    <div class="gallery-overlay">
+                        <span class="gallery-label">Commercial Work</span>
+                        <span class="gallery-tag">Commercial</span>
+                    </div>
+                    <div class="gallery-expand">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                    </div>
                 </div>
             </div>
             <div class="gallery-cta reveal">
