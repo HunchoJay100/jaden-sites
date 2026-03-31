@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Flynn & Co Blueprint</title>
+<title>Analytics Command Center Blueprint</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -496,16 +496,13 @@
   <div class="nav-inner">
     <div class="nav-left">
       <a href="project-board.html" class="nav-back">&larr; Board</a>
-      <span class="nav-title">Flynn & Co Blueprint</span>
+      <span class="nav-title">Analytics Command Center</span>
     </div>
     <div class="nav-links">
       <a href="#ship-it">Ship It</a>
       <a href="#problem">Problem</a>
-      <a href="#builds">Builds</a>
-      <a href="#clients">Clients</a>
-      <a href="#schedule">Schedule</a>
-      <a href="#design">Design</a>
       <a href="#architecture">Architecture</a>
+      <a href="#brands">Brands</a>
       <a href="#status">Status</a>
     </div>
   </div>
@@ -514,12 +511,12 @@
 <!-- HERO -->
 <div class="container">
   <section class="hero">
-    <div class="hero-badge">BOUTIQUE SOCIAL MEDIA AGENCY</div>
-    <h1>Flynn & Co <span class="accent">Blueprint</span></h1>
-    <p class="hero-sub">Megan Flynn's social media and video production agency. Brand site, concept mockup, and full client management system.</p>
+    <div class="hero-badge">AD INTELLIGENCE PLATFORM</div>
+    <h1>Analytics <span class="accent">Command Center</span></h1>
+    <p class="hero-sub">Multi-brand ad intelligence dashboard for Flynn Development's portfolio. Live Meta API integration with multi-account support across 4 brands.</p>
     <div class="hero-meta">
-      <span><span class="label">Owner:</span> Megan Flynn</span>
-      <span><span class="label">Location:</span> Middle Tennessee</span>
+      <span><span class="label">Owner:</span> Jaden Flynn</span>
+      <span><span class="label">Stack:</span> Next.js + TypeScript</span>
       <span><span class="label">Status:</span> In Progress</span>
     </div>
   </section>
@@ -533,113 +530,87 @@
     <div class="section-label">Priority</div>
     <h2 class="section-title">Ship It Checklist</h2>
 
-    <div class="callout">
-      <strong>Megan manages 4 clients entirely through text messages.</strong> Clients ghost, there's no accountability, and no visibility. She needs two things: a website to attract new clients, and a system to manage existing ones. Don't build both at once. <strong>Ship the website first.</strong>
-    </div>
-
-    <div class="phase-header">Phase A &mdash; Website</div>
+    <div class="phase-header">Phase A &mdash; Core Platform (Done)</div>
     <div class="checklist">
       <div class="check-item">
         <span class="check-num">1</span>
-        <div class="check-text">Color refinement on brand site<span class="check-note">Flagged as "too much orange", needs tweaking</span></div>
-        <span class="check-status status-not-started">NOT STARTED</span>
+        <div class="check-text">Next.js + TypeScript + Tailwind project setup<span class="check-note">~/analytics-dashboard/</span></div>
+        <span class="check-status status-done">DONE</span>
       </div>
       <div class="check-item">
         <span class="check-num">2</span>
-        <div class="check-text">Final content pass<span class="check-note">Megan's real portfolio, testimonials, pricing</span></div>
-        <span class="check-status status-not-started">NOT STARTED</span>
+        <div class="check-text">Meta Ads API integration<span class="check-note">Live campaign data, spend, leads, CPL</span></div>
+        <span class="check-status status-done">DONE</span>
       </div>
       <div class="check-item">
         <span class="check-num">3</span>
-        <div class="check-text">Domain purchase<span class="check-note">Need flynnandco.group or similar</span></div>
-        <span class="check-status status-not-started">NOT STARTED</span>
+        <div class="check-text">Multi-account support<span class="check-note">Business + personal ad accounts in parallel</span></div>
+        <span class="check-status status-done">DONE</span>
       </div>
       <div class="check-item">
         <span class="check-num">4</span>
-        <div class="check-text">Deploy to Vercel<span class="check-note">Currently just a local HTML file</span></div>
-        <span class="check-status status-not-started">NOT STARTED</span>
+        <div class="check-text">Brand detection via Facebook Page IDs<span class="check-note">Auto-tags campaigns to correct brand</span></div>
+        <span class="check-status status-done">DONE</span>
       </div>
-    </div>
-
-    <div class="phase-header">Phase B &mdash; Management App MVP</div>
-    <div class="checklist">
       <div class="check-item">
         <span class="check-num">5</span>
-        <div class="check-text">Next.js 16 + Supabase + Tailwind v4 project setup<span class="check-note">~/flynn-and-co/, 9+ commits</span></div>
+        <div class="check-text">Insights tab with audience analysis<span class="check-note">Age, gender, platform breakdowns, optimization alerts</span></div>
         <span class="check-status status-done">DONE</span>
       </div>
       <div class="check-item">
         <span class="check-num">6</span>
-        <div class="check-text">Dark theme UI with full design system<span class="check-note">HIG spacing, glassmorphism nav, spring animations, custom color palette</span></div>
+        <div class="check-text">Date range picker with presets<span class="check-note">7D, 30D, 90D, 6M, 1Y, All</span></div>
         <span class="check-status status-done">DONE</span>
       </div>
+    </div>
+
+    <div class="phase-header">Phase B &mdash; Production Ready</div>
+    <div class="checklist">
       <div class="check-item">
         <span class="check-num">7</span>
-        <div class="check-text">Client database + CRUD<span class="check-note">Supabase Postgres, RLS policies, 4 clients seeded</span></div>
-        <span class="check-status status-done">DONE</span>
+        <div class="check-text">Fix dashboard performance bug<span class="check-note">Slowing down machine</span></div>
+        <span class="check-status status-not-started">NOT STARTED</span>
       </div>
       <div class="check-item">
         <span class="check-num">8</span>
-        <div class="check-text">Filming calendar with Tue/Thu/Fri schedule<span class="check-note">Add/delete sessions, status progression, client color coding</span></div>
-        <span class="check-status status-done">DONE</span>
+        <div class="check-text">Long-lived Meta token<span class="check-note">Currently expires in 1hr, need 60-day token</span></div>
+        <span class="check-status status-not-started">NOT STARTED</span>
       </div>
       <div class="check-item">
         <span class="check-num">9</span>
-        <div class="check-text">Email confirmations via Resend<span class="check-note">Auto-sends on session create, client confirms via link (no login needed)</span></div>
-        <span class="check-status status-done">DONE</span>
+        <div class="check-text">Meta Pixel installation<span class="check-note">Pixel created (942834204826443), not on sites yet</span></div>
+        <span class="check-status status-not-started">NOT STARTED</span>
       </div>
       <div class="check-item">
         <span class="check-num">10</span>
-        <div class="check-text">48-hour auto-forfeit system<span class="check-note">Vercel cron every 6 hours, emails both parties on forfeit</span></div>
+        <div class="check-text">Active/inactive campaign detection<span class="check-note">Checks effective_status + 7-day spend</span></div>
         <span class="check-status status-done">DONE</span>
       </div>
+    </div>
+
+    <div class="phase-header">Phase C &mdash; Expand</div>
+    <div class="checklist">
       <div class="check-item">
         <span class="check-num">11</span>
-        <div class="check-text">Payment tracking dashboard<span class="check-note">Monthly revenue chart, per-client tracking, mark paid/undo</span></div>
-        <span class="check-status status-done">DONE</span>
+        <div class="check-text">Google Ads API integration<span class="check-note"></span></div>
+        <span class="check-status status-not-started">NOT STARTED</span>
       </div>
       <div class="check-item">
         <span class="check-num">12</span>
-        <div class="check-text">Auth + route protection<span class="check-note">Supabase auth, proxy middleware, admin/client role separation</span></div>
-        <span class="check-status status-done">DONE</span>
+        <div class="check-text">GA4 property + integration<span class="check-note"></span></div>
+        <span class="check-status status-not-started">NOT STARTED</span>
       </div>
       <div class="check-item">
         <span class="check-num">13</span>
-        <div class="check-text">Resend account + domain setup<span class="check-note">API key needed for email delivery</span></div>
+        <div class="check-text">Lead-to-close tracking<span class="check-note">Manual or via JobTread API</span></div>
         <span class="check-status status-not-started">NOT STARTED</span>
       </div>
       <div class="check-item">
         <span class="check-num">14</span>
-        <div class="check-text">Deploy to Vercel + custom domain<span class="check-note">Env vars configured, cron secret set</span></div>
+        <div class="check-text">Retargeting campaign builder<span class="check-note"></span></div>
         <span class="check-status status-not-started">NOT STARTED</span>
       </div>
     </div>
-
-    <div class="phase-header">Phase C &mdash; Client Portal Experience</div>
-    <div class="checklist">
-      <div class="check-item">
-        <span class="check-num">15</span>
-        <div class="check-text">Analytics dashboard<span class="check-note">Connect Meta/IG, show client their performance</span></div>
-        <span class="check-status status-not-started">NOT STARTED</span>
-      </div>
-      <div class="check-item">
-        <span class="check-num">16</span>
-        <div class="check-text">Content library<span class="check-note">Past shoots, deliverables, brand assets</span></div>
-        <span class="check-status status-not-started">NOT STARTED</span>
-      </div>
-      <div class="check-item">
-        <span class="check-num">17</span>
-        <div class="check-text">Trending content inspiration<span class="check-note">Cron-powered weekly feed of trending topics</span></div>
-        <span class="check-status status-not-started">NOT STARTED</span>
-      </div>
-      <div class="check-item">
-        <span class="check-num">18</span>
-        <div class="check-text">Algorithm news feed<span class="check-note">Latest platform changes and strategy updates</span></div>
-        <span class="check-status status-not-started">NOT STARTED</span>
-      </div>
-    </div>
-
-    <p style="margin-top:20px; font-size:13px; color:var(--text-tertiary);">Phase B is 90% complete. Resend setup + Vercel deploy remaining. Phase C is the premium client experience.</p>
   </section>
 </div>
 
@@ -652,34 +623,76 @@
     <h2 class="section-title">The Problem</h2>
     <div class="card-grid">
       <div class="card">
-        <div class="card-icon" style="background:rgba(181,105,90,0.12); color:var(--terra);">&#9993;</div>
-        <h3>Text-Based Booking</h3>
-        <p>Clients confirm (or ghost) via text. No system, no paper trail, no accountability.</p>
+        <div class="card-icon" style="background:rgba(181,105,90,0.12); color:var(--terra);">&#9107;</div>
+        <h3>Scattered Data</h3>
+        <p>Ad performance split across multiple Meta accounts, no unified view.</p>
       </div>
       <div class="card">
-        <div class="card-icon" style="background:rgba(255,69,58,0.1); color:var(--red);">&#10007;</div>
-        <h3>No Accountability</h3>
-        <p>Clients skip shoots with no consequences or tracking. Megan absorbs the lost time.</p>
+        <div class="card-icon" style="background:rgba(255,69,58,0.1); color:var(--red);">&#9998;</div>
+        <h3>Manual Reporting</h3>
+        <p>Checking Ads Manager for each brand individually, no cross-brand analysis.</p>
       </div>
       <div class="card">
-        <div class="card-icon" style="background:rgba(181,105,90,0.12); color:var(--terra);">&#36;</div>
-        <h3>Payment Blindness</h3>
-        <p>No visibility into who owes what. Invoicing is manual and inconsistent.</p>
+        <div class="card-icon" style="background:rgba(142,107,126,0.12); color:var(--plum);">&#9673;</div>
+        <h3>No Audience Intelligence</h3>
+        <p>Can't see which demographics or placements perform best across brands.</p>
       </div>
       <div class="card">
-        <div class="card-icon" style="background:rgba(142,107,126,0.12); color:var(--plum);">&#127760;</div>
-        <h3>No Web Presence</h3>
-        <p>No website, no portfolio, can't attract new clients. Word of mouth only.</p>
+        <div class="card-icon" style="background:rgba(255,214,10,0.1); color:var(--yellow);">&#36;</div>
+        <h3>Blind Spending</h3>
+        <p>No optimization alerts when CPL spikes or frequency gets too high.</p>
       </div>
       <div class="card">
-        <div class="card-icon" style="background:rgba(255,214,10,0.1); color:var(--yellow);">&#9650;</div>
-        <h3>Revenue Ceiling</h3>
-        <p>Stuck at $1,550/mo because she can't scale chaos. Growth requires structure.</p>
+        <div class="card-icon" style="background:rgba(94,142,155,0.12); color:var(--ocean);">&#9201;</div>
+        <h3>Token Headaches</h3>
+        <p>Meta API tokens expire hourly, need automated long-lived token management.</p>
       </div>
+      <div class="card">
+        <div class="card-icon" style="background:rgba(181,105,90,0.12); color:var(--terra);">&#9676;</div>
+        <h3>No Retargeting Visibility</h3>
+        <p>Can't see which audiences are being retargeted vs. prospected.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="divider"></div>
+
+<!-- SECTION 3: ARCHITECTURE -->
+<div class="container">
+  <section class="section" id="architecture">
+    <div class="section-label">Technical</div>
+    <h2 class="section-title">Architecture</h2>
+    <div class="card-grid-3">
       <div class="card">
         <div class="card-icon" style="background:rgba(94,142,155,0.12); color:var(--ocean);">&#9881;</div>
-        <h3>No Client Self-Service</h3>
-        <p>Everything flows through Megan manually. Booking, rescheduling, payments, questions.</p>
+        <h3>Next.js + TypeScript</h3>
+        <p>Server components, API routes, TypeScript throughout.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:rgba(142,107,126,0.12); color:var(--plum);">&#9729;</div>
+        <h3>Meta Marketing API</h3>
+        <p>Real-time campaign data, audience insights, creative performance.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:rgba(181,105,90,0.12); color:var(--terra);">&#8644;</div>
+        <h3>Multi-Account Queries</h3>
+        <p>Parallel fetches across business + personal ad accounts.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:rgba(94,142,155,0.12); color:var(--ocean);">&#9873;</div>
+        <h3>Brand Auto-Detection</h3>
+        <p>Facebook Page ID mapping auto-assigns campaigns to correct brand.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:rgba(142,107,126,0.12); color:var(--plum);">&#9636;</div>
+        <h3>Recharts Dashboards</h3>
+        <p>Interactive bar charts, trend lines, audience breakdowns.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:rgba(181,105,90,0.12); color:var(--terra);">&#9650;</div>
+        <h3>Vercel Deployment</h3>
+        <p>Runs locally at port 3001, ready for cloud deploy.</p>
       </div>
     </div>
   </section>
@@ -687,284 +700,128 @@
 
 <div class="divider"></div>
 
-<!-- SECTION 3: THREE BUILDS -->
+<!-- SECTION 4: BRANDS TRACKED -->
 <div class="container">
-  <section class="section" id="builds">
-    <div class="section-label">Deliverables</div>
-    <h2 class="section-title">Three Builds</h2>
-    <div class="card-grid-3">
-      <div class="card build-card">
-        <span class="check-status status-done build-status">DONE</span>
-        <span class="path">~/flynn-and-co-site/</span>
-        <h3>Brand / Marketing Site</h3>
-        <p>Funky-yet-professional agency website</p>
-        <ul>
-          <li>Capri theme + social media girl boss energy</li>
-          <li>Hero, social proof, 6 services, about, portfolio, process, testimonial, CTA</li>
-          <li>Git repo, 2 commits</li>
-        </ul>
-        <div class="needs">Needs: color fix, real content, deploy</div>
-      </div>
-      <div class="card build-card">
-        <span class="check-status status-done build-status">DONE</span>
-        <span class="path">~/flynn-and-co-vibe/</span>
-        <h3>Vibe Mockup</h3>
-        <p>Concept showing management system features</p>
-        <ul>
-          <li>Calendar, slot picker, booking flow</li>
-          <li>Client cards, portal, payments</li>
-          <li>Git repo, 1 commit</li>
-        </ul>
-      </div>
-      <div class="card build-card">
-        <span class="check-status status-in-progress build-status">90% BUILT</span>
-        <span class="path">~/flynn-and-co/</span>
-        <h3>Management System</h3>
-        <p>Full production app for client management</p>
-        <ul>
-          <li>Next.js 16 + Supabase + Tailwind v4</li>
-          <li>Dark theme, HIG design system, spring animations</li>
-          <li>Admin dashboard, client CRUD, filming calendar</li>
-          <li>Payment tracking with monthly revenue charts</li>
-          <li>Email confirmations via Resend (3 templates)</li>
-          <li>48-hour auto-forfeit cron system</li>
-          <li>Public confirm page (no client login needed)</li>
-          <li>Role-based auth with proxy middleware</li>
-        </ul>
-        <div class="needs">Needs: Resend account, Vercel deploy, client portal Phase C</div>
-      </div>
-    </div>
-  </section>
-</div>
-
-<div class="divider"></div>
-
-<!-- SECTION 4: CURRENT CLIENTS -->
-<div class="container">
-  <section class="section" id="clients">
-    <div class="section-label">Revenue</div>
-    <h2 class="section-title">Current Clients</h2>
+  <section class="section" id="brands">
+    <div class="section-label">Coverage</div>
+    <h2 class="section-title">Brands Tracked</h2>
     <div class="table-wrap">
       <table>
         <thead>
           <tr>
-            <th>Client</th>
-            <th>Monthly</th>
-            <th>Scope</th>
+            <th>Brand</th>
+            <th>Page ID</th>
+            <th>Type</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>RECO</td>
-            <td>$800/mo</td>
-            <td>Full shoot day reels</td>
+            <td>Flynn Development</td>
+            <td>315155705008602</td>
+            <td>Residential Construction</td>
           </tr>
           <tr>
-            <td>Babe Cave</td>
-            <td>$0 (exchange)</td>
-            <td>TBD</td>
+            <td>Modern Development</td>
+            <td>102530295707110</td>
+            <td>Residential Construction</td>
           </tr>
           <tr>
-            <td>Michelle Irvin</td>
-            <td>$150/mo</td>
-            <td>3 posts/week</td>
+            <td>Modern Roofing Group</td>
+            <td>101226319202630</td>
+            <td>Roofing</td>
           </tr>
           <tr>
-            <td>MRG</td>
-            <td>$600/mo</td>
-            <td>2 reels/week</td>
-          </tr>
-          <tr class="total-row">
-            <td>TOTAL</td>
-            <td>$1,550/mo</td>
-            <td>+ exchange</td>
+            <td>Complete Crete Coatings</td>
+            <td>(Phone: 2396505)</td>
+            <td>Coatings</td>
           </tr>
         </tbody>
       </table>
     </div>
-  </section>
-</div>
 
-<div class="divider"></div>
-
-<!-- SECTION 5: FILMING SCHEDULE -->
-<div class="container">
-  <section class="section" id="schedule">
-    <div class="section-label">Operations</div>
-    <h2 class="section-title">Filming Schedule</h2>
-    <div class="card-grid-3">
-      <div class="card sched-card">
-        <div class="day" style="color:var(--plum);">Tuesday</div>
-        <p>Pre-assigned client block</p>
-      </div>
-      <div class="card sched-card">
-        <div class="day" style="color:var(--ocean);">Thursday</div>
-        <p>Open booking day</p>
-      </div>
-      <div class="card sched-card">
-        <div class="day" style="color:var(--terra);">Friday</div>
-        <p>Pre-assigned client block</p>
-      </div>
+    <div class="callout" style="margin-top: 32px;">
+      <strong>$14K+ total Meta spend since Jan 2025.</strong> 1,424 leads at $10 avg CPL. 65+ males are best audience ($6.04 CPL). Facebook: $7.98 CPL vs Instagram: $58.84 CPL. Organic-style posts get 2-5x better CPL.
     </div>
   </section>
 </div>
 
 <div class="divider"></div>
 
-<!-- SECTION 6: DESIGN DIRECTION -->
-<div class="container">
-  <section class="section" id="design">
-    <div class="section-label">Creative</div>
-    <h2 class="section-title">Design Direction</h2>
-    <div class="card-grid">
-      <div class="card">
-        <div class="card-icon" style="background:rgba(142,107,126,0.12); color:var(--plum);">Aa</div>
-        <h3>Typography</h3>
-        <p>Playfair Display (bold serif) + Libre Bodoni (italic) + Caveat (handwritten) + Outfit (body)</p>
-      </div>
-      <div class="card">
-        <div class="card-icon" style="background:rgba(94,142,155,0.12); color:var(--ocean);">&#9679;</div>
-        <h3>Colors</h3>
-        <p>Earth tones + plum #8E6B7E + ocean #5E8E9B, terra #B5695A. Warm, not corporate.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon" style="background:rgba(181,105,90,0.12); color:var(--terra);">&#10022;</div>
-        <h3>Elements</h3>
-        <p>Checker textures, sparkle stars, sticker badges, handwritten annotations, scrapbook energy.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon" style="background:rgba(142,107,126,0.12); color:var(--plum);">&#9733;</div>
-        <h3>Inspiration</h3>
-        <p>Capri ThemeForest + Secret Socials + social media girl boss brands. Funky meets professional.</p>
-      </div>
-    </div>
-  </section>
-</div>
-
-<div class="divider"></div>
-
-<!-- SECTION 7: MANAGEMENT APP ARCHITECTURE -->
-<div class="container">
-  <section class="section" id="architecture">
-    <div class="section-label">Technical</div>
-    <h2 class="section-title">Management App Architecture</h2>
-    <div class="card-grid-3">
-      <div class="card">
-        <div class="card-icon" style="background:rgba(94,142,155,0.12); color:var(--ocean);">&#9881;</div>
-        <h3>Next.js + Supabase</h3>
-        <p>Proven stack. Server components, Postgres, real-time subscriptions.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon" style="background:rgba(142,107,126,0.12); color:var(--plum);">&#9650;</div>
-        <h3>Vercel Deployment</h3>
-        <p>Zero-config deploys, edge functions, automatic previews.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon" style="background:rgba(181,105,90,0.12); color:var(--terra);">&#128274;</div>
-        <h3>Role-Based Auth</h3>
-        <p>Megan = admin, clients = portal. Supabase RLS for data isolation.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon" style="background:rgba(94,142,155,0.12); color:var(--ocean);">&#128197;</div>
-        <h3>Real-Time Calendar</h3>
-        <p>Tue/Thu/Fri filming blocks. Client self-booking with confirmations.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon" style="background:rgba(142,107,126,0.12); color:var(--plum);">&#128179;</div>
-        <h3>Payment Tracking</h3>
-        <p>Monthly revenue charts, per-client billing, mark paid/undo. Stripe integration planned.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon" style="background:rgba(181,105,90,0.12); color:var(--terra);">&#128172;</div>
-        <h3>Resend Email Notifications</h3>
-        <p>3 branded dark-theme email templates. Auto-sends on session create, confirm, and forfeit.</p>
-      </div>
-    </div>
-  </section>
-</div>
-
-<div class="divider"></div>
-
-<!-- SECTION 8: BUILD STATUS -->
+<!-- SECTION 5: BUILD STATUS -->
 <div class="container">
   <section class="section" id="status">
     <div class="section-label">Progress</div>
     <h2 class="section-title">Build Status</h2>
     <div class="status-grid">
       <div class="status-row">
-        <span class="name">Brand Site HTML</span>
+        <span class="name">Project setup</span>
         <span class="check-status status-done">DONE</span>
-        <span class="detail">Mockup complete</span>
+        <span class="detail">Next.js + TypeScript + Tailwind</span>
       </div>
       <div class="status-row">
-        <span class="name">Brand Site Colors</span>
-        <span class="check-status status-needs-work">NEEDS WORK</span>
-        <span class="detail">Too much orange, needs tweaking</span>
-      </div>
-      <div class="status-row">
-        <span class="name">Vibe Mockup</span>
+        <span class="name">Meta Ads API</span>
         <span class="check-status status-done">DONE</span>
-        <span class="detail">Feature layout concept</span>
+        <span class="detail">Live data, all 5 endpoints</span>
       </div>
       <div class="status-row">
-        <span class="name">App Project Setup</span>
+        <span class="name">Multi-account</span>
         <span class="check-status status-done">DONE</span>
-        <span class="detail">Next.js 16 + Supabase + Tailwind v4</span>
+        <span class="detail">Business + personal accounts</span>
       </div>
       <div class="status-row">
-        <span class="name">Dark Theme UI</span>
+        <span class="name">Brand detection</span>
         <span class="check-status status-done">DONE</span>
-        <span class="detail">HIG design system, all pages consistent</span>
+        <span class="detail">Page ID mapping</span>
       </div>
       <div class="status-row">
-        <span class="name">Client Database</span>
+        <span class="name">Insights tab</span>
         <span class="check-status status-done">DONE</span>
-        <span class="detail">Supabase Postgres, RLS, CRUD, 4 clients seeded</span>
+        <span class="detail">Audience, creative, frequency analysis</span>
       </div>
       <div class="status-row">
-        <span class="name">Filming Calendar</span>
+        <span class="name">Date picker</span>
         <span class="check-status status-done">DONE</span>
-        <span class="detail">Add/delete sessions, status cycling, color coded</span>
+        <span class="detail">7 presets + custom range</span>
       </div>
       <div class="status-row">
-        <span class="name">Email Confirmations</span>
+        <span class="name">Active/inactive fix</span>
         <span class="check-status status-done">DONE</span>
-        <span class="detail">Resend integration, 3 templates, auto-send on create</span>
+        <span class="detail">effective_status + 7-day spend check</span>
       </div>
       <div class="status-row">
-        <span class="name">48hr Auto-Forfeit</span>
-        <span class="check-status status-done">DONE</span>
-        <span class="detail">Vercel cron every 6hrs, emails both parties</span>
-      </div>
-      <div class="status-row">
-        <span class="name">Payment Tracking</span>
-        <span class="check-status status-done">DONE</span>
-        <span class="detail">Monthly chart, per-client rows, mark paid</span>
-      </div>
-      <div class="status-row">
-        <span class="name">Auth + Route Protection</span>
-        <span class="check-status status-done">DONE</span>
-        <span class="detail">Proxy middleware, admin/client roles, RLS</span>
-      </div>
-      <div class="status-row">
-        <span class="name">Public Confirm Page</span>
-        <span class="check-status status-done">DONE</span>
-        <span class="detail">No login needed, UUID link is security</span>
-      </div>
-      <div class="status-row">
-        <span class="name">Resend Account Setup</span>
+        <span class="name">Performance bug fix</span>
         <span class="check-status status-not-started">NOT STARTED</span>
-        <span class="detail">Need API key + domain verification</span>
+        <span class="detail">Dashboard slowing machine</span>
       </div>
       <div class="status-row">
-        <span class="name">Vercel Deploy</span>
+        <span class="name">Long-lived token</span>
         <span class="check-status status-not-started">NOT STARTED</span>
-        <span class="detail">Waiting on domain purchase</span>
+        <span class="detail">Need App ID + App Secret exchange</span>
       </div>
       <div class="status-row">
-        <span class="name">Client Portal (Phase C)</span>
+        <span class="name">Meta Pixel install</span>
         <span class="check-status status-not-started">NOT STARTED</span>
-        <span class="detail">Analytics, content library, trending, algo news</span>
+        <span class="detail">Pixel ready, not on sites</span>
+      </div>
+      <div class="status-row">
+        <span class="name">Google Ads</span>
+        <span class="check-status status-not-started">NOT STARTED</span>
+        <span class="detail">Tab scaffolded with mock data</span>
+      </div>
+      <div class="status-row">
+        <span class="name">GA4</span>
+        <span class="check-status status-not-started">NOT STARTED</span>
+        <span class="detail">Tab scaffolded with mock data</span>
+      </div>
+      <div class="status-row">
+        <span class="name">Retargeting builder</span>
+        <span class="check-status status-not-started">NOT STARTED</span>
+        <span class="detail">Campaign spec exists</span>
+      </div>
+      <div class="status-row">
+        <span class="name">Lead tracking</span>
+        <span class="check-status status-not-started">NOT STARTED</span>
+        <span class="detail">Manual or JobTread API</span>
       </div>
     </div>
   </section>
@@ -973,7 +830,7 @@
 <!-- FOOTER -->
 <div class="container">
   <footer class="footer">
-    <div class="footer-brand">Flynn & Co</div>
+    <div class="footer-brand">Analytics Command Center</div>
     <div class="footer-date">Blueprint &middot; Updated March 30, 2026</div>
   </footer>
 </div>

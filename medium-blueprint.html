@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Medium Blueprint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Libre+Baskerville:ital,wght@0,400;1,400&family=Oxygen+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0D0D0D;
+    --surface: #161616;
+    --nested: #1E1E1E;
+    --plum: #f6462b;
+    --ocean: #f6462b;
+    --terra: #f6462b;
+    --text: #F0F0F0;
+    --text-secondary: rgba(240,240,240,0.50);
+    --text-tertiary: rgba(240,240,240,0.25);
+    --green: #34C759;
+    --red: #FF453A;
+    --yellow: #FFD60A;
+    --blue: #0A84FF;
+    --radius: 12px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Libre Baskerville', Georgia, serif;
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+    position: relative;
+  }
+
+  /* Film grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  h1, h2, h3, .playfair { font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 0.02em; }
+
+  /* NAV */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(26,18,21,0.88);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid rgba(246,70,43,0.12);
+    padding: 0 clamp(20px, 4vw, 48px);
+  }
+  .nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    gap: 16px;
+  }
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-width: 0;
+  }
+  .nav-back {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--plum);
+    text-decoration: none;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(246,70,43,0.35);
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .nav-back:hover { background: rgba(246,70,43,0.12); border-color: var(--plum); }
+  .nav-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .nav-links { display: flex; gap: 4px; flex-shrink: 0; }
+  .nav-links a {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-decoration: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  .nav-links a:hover { color: var(--text); background: rgba(246,70,43,0.08); }
+
+  /* LAYOUT */
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 4vw, 48px);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* HERO */
+  .hero {
+    padding: clamp(64px, 10vw, 120px) 0 clamp(48px, 6vw, 80px);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: rgba(246,70,43,0.08);
+    filter: blur(120px);
+    top: -20%;
+    right: -10%;
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: rgba(246,70,43,0.06);
+    filter: blur(100px);
+    bottom: -10%;
+    left: -10%;
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--plum);
+    background: rgba(246,70,43,0.1);
+    border: 1px solid rgba(246,70,43,0.2);
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-size: clamp(40px, 7vw, 64px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+  .hero h1 .accent { color: var(--plum); }
+  .hero-sub {
+    font-size: clamp(15px, 2vw, 17px);
+    color: var(--text-secondary);
+    max-width: 600px;
+    line-height: 1.65;
+    margin-bottom: 24px;
+  }
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    font-size: 13px;
+    color: var(--text-tertiary);
+  }
+  .hero-meta span { display: flex; align-items: center; gap: 6px; }
+  .hero-meta .label { color: var(--text-secondary); font-weight: 500; }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, var(--plum), transparent 70%);
+    opacity: 0.25;
+    margin: 0;
+  }
+
+  /* SECTIONS */
+  .section {
+    padding: clamp(48px, 6vw, 80px) 0;
+  }
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--plum);
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-size: clamp(24px, 4vw, 32px);
+    font-weight: 800;
+    letter-spacing: -0.015em;
+    margin-bottom: 32px;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--surface);
+    border: 1px solid rgba(246,70,43,0.08);
+    border-radius: var(--radius);
+    padding: clamp(20px, 3vw, 28px);
+    transition: all 0.25s ease;
+  }
+  .card:hover {
+    border-color: rgba(246,70,43,0.2);
+    box-shadow: 0 8px 32px rgba(246,70,43,0.08);
+  }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+  }
+  .card-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .card h3 {
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+  .card p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .card-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+
+  /* CALLOUT */
+  .callout {
+    background: var(--surface);
+    border-left: 3px solid var(--plum);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: clamp(20px, 3vw, 28px);
+    margin-bottom: 32px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .callout strong { color: var(--text); font-weight: 600; }
+
+  /* CHECKLIST */
+  .phase-header {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ocean);
+    margin: 28px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(246,70,43,0.15);
+  }
+  .phase-header:first-of-type { margin-top: 0; }
+  .checklist { display: flex; flex-direction: column; gap: 8px; }
+  .check-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--surface);
+    border: 1px solid rgba(246,70,43,0.06);
+    border-radius: 10px;
+    padding: 14px 18px;
+    transition: all 0.2s ease;
+  }
+  .check-item:hover { border-color: rgba(246,70,43,0.15); }
+  .check-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--nested);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+  }
+  .check-text {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    min-width: 0;
+  }
+  .check-note {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    font-weight: 400;
+    display: block;
+    margin-top: 2px;
+  }
+  .check-status {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 4px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .status-not-started {
+    color: var(--text-tertiary);
+    background: rgba(245,237,232,0.05);
+  }
+  .status-done {
+    color: var(--green);
+    background: rgba(52,199,89,0.1);
+  }
+  .status-needs-work {
+    color: var(--yellow);
+    background: rgba(255,214,10,0.1);
+  }
+  .status-in-progress {
+    color: var(--blue);
+    background: rgba(10,132,255,0.1);
+  }
+
+  /* TABLE */
+  .table-wrap {
+    overflow-x: auto;
+    border-radius: var(--radius);
+    border: 1px solid rgba(246,70,43,0.08);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  thead th {
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    background: var(--surface);
+    padding: 12px 18px;
+    border-bottom: 1px solid rgba(246,70,43,0.1);
+  }
+  tbody td {
+    padding: 14px 18px;
+    border-bottom: 1px solid rgba(246,70,43,0.05);
+    color: var(--text-secondary);
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: rgba(246,70,43,0.03); }
+  tbody td:first-child { color: var(--text); font-weight: 500; }
+
+  /* STATUS GRID */
+  .status-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .status-row {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 12px;
+    align-items: center;
+    background: var(--surface);
+    border: 1px solid rgba(246,70,43,0.06);
+    border-radius: 8px;
+    padding: 12px 18px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+  }
+  .status-row:hover { border-color: rgba(246,70,43,0.15); }
+  .status-row .name { font-weight: 500; color: var(--text); }
+  .status-row .detail { color: var(--text-tertiary); font-size: 13px; text-align: right; }
+
+  /* FOOTER */
+  .footer {
+    padding: 48px 0;
+    text-align: center;
+    border-top: 1px solid rgba(246,70,43,0.08);
+  }
+  .footer-brand {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-tertiary);
+    margin-bottom: 8px;
+  }
+  .footer-date {
+    font-size: 12px;
+    color: var(--text-tertiary);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .card-grid, .card-grid-3 { grid-template-columns: 1fr; }
+    .status-row { grid-template-columns: 1fr; gap: 6px; }
+    .status-row .detail { text-align: left; }
+    .hero-meta { flex-direction: column; gap: 8px; }
+    .check-item { flex-wrap: wrap; }
+    .check-status { margin-left: 40px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-left">
+      <a href="project-board.html" class="nav-back">&larr; Board</a>
+      <span class="nav-title">The Medium Blueprint</span>
+    </div>
+    <div class="nav-links">
+      <a href="#ship-it">Ship It</a>
+      <a href="#problem">Problem</a>
+      <a href="#brands">Brands</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#design">Design</a>
+      <a href="#status">Status</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="container">
+  <section class="hero">
+    <div class="hero-badge">CONTENT COMMAND CENTER</div>
+    <h1>The <span class="accent">Medium</span></h1>
+    <p class="hero-sub">Multi-brand content management system for 5 companies. Built for creating, organizing, and publishing social media content at scale. Known.is + Riot NYC inspired dark editorial aesthetic.</p>
+    <div class="hero-meta">
+      <span><span class="label">Owner:</span> Jaden Flynn</span>
+      <span><span class="label">Stack:</span> Next.js + React + Tailwind</span>
+      <span><span class="label">Status:</span> In Progress</span>
+    </div>
+  </section>
+</div>
+
+<div class="divider"></div>
+
+<!-- SECTION 1: SHIP IT CHECKLIST -->
+<div class="container">
+  <section class="section" id="ship-it">
+    <div class="section-label">Priority</div>
+    <h2 class="section-title">Ship It Checklist</h2>
+
+    <div class="phase-header">Phase A &mdash; Core Platform (Done)</div>
+    <div class="checklist">
+      <div class="check-item">
+        <span class="check-num">1</span>
+        <div class="check-text">Command View (multi-brand dashboard)<span class="check-note">Central hub for all 5 brands</span></div>
+        <span class="check-status status-done">DONE</span>
+      </div>
+      <div class="check-item">
+        <span class="check-num">2</span>
+        <div class="check-text">Brand Settings (voice profiles for all 5 brands)<span class="check-note">Flynn Dev, Mid TN Metals, Modern Roofing, Complete Crete, Blue Collar Hustle</span></div>
+        <span class="check-status status-done">DONE</span>
+      </div>
+      <div class="check-item">
+        <span class="check-num">3</span>
+        <div class="check-text">Caption Library (organized by brand + category)<span class="check-note">15 Flynn Dev Spring 2026 captions pre-loaded</span></div>
+        <span class="check-status status-done">DONE</span>
+      </div>
+      <div class="check-item">
+        <span class="check-num">4</span>
+        <div class="check-text">Design system (Known.is + Riot NYC inspired)<span class="check-note">Oswald, Libre Baskerville, Oxygen Mono, #f6462b accent</span></div>
+        <span class="check-status status-done">DONE</span>
+      </div>
+    </div>
+
+    <div class="phase-header">Phase B &mdash; Intelligence Layer</div>
+    <div class="checklist">
+      <div class="check-item">
+        <span class="check-num">5</span>
+        <div class="check-text">Real AI caption generator<span class="check-note">Need Anthropic API integration (currently mocked)</span></div>
+        <span class="check-status status-not-started">NOT STARTED</span>
+      </div>
+      <div class="check-item">
+        <span class="check-num">6</span>
+        <div class="check-text">Meta API integration<span class="check-note">Publish/schedule posts directly from The Medium</span></div>
+        <span class="check-status status-not-started">NOT STARTED</span>
+      </div>
+      <div class="check-item">
+        <span class="check-num">7</span>
+        <div class="check-text">Content calendar view<span class="check-note">Visual planning across brands</span></div>
+        <span class="check-status status-not-started">NOT STARTED</span>
+      </div>
+      <div class="check-item">
+        <span class="check-num">8</span>
+        <div class="check-text">Media vault<span class="check-note">IndexedDB for images/videos</span></div>
+        <span class="check-status status-not-started">NOT STARTED</span>
+      </div>
+    </div>
+
+    <div class="phase-header">Phase C &mdash; Distribution</div>
+    <div class="checklist">
+      <div class="check-item">
+        <span class="check-num">9</span>
+        <div class="check-text">Cloud sync for multi-machine access<span class="check-note">Currently localStorage only, need to work on new machine too</span></div>
+        <span class="check-status status-not-started">NOT STARTED</span>
+      </div>
+      <div class="check-item">
+        <span class="check-num">10</span>
+        <div class="check-text">Post builder (compose + preview)<span class="check-note">Full compose workflow with live preview</span></div>
+        <span class="check-status status-not-started">NOT STARTED</span>
+      </div>
+      <div class="check-item">
+        <span class="check-num">11</span>
+        <div class="check-text">Export improvements<span class="check-note">Currently zip export only, needs direct publishing</span></div>
+        <span class="check-status status-not-started">NOT STARTED</span>
+      </div>
+      <div class="check-item">
+        <span class="check-num">12</span>
+        <div class="check-text">Link to Analytics Command Center<span class="check-note">Share audience data to inform content strategy</span></div>
+        <span class="check-status status-not-started">NOT STARTED</span>
+      </div>
+    </div>
+
+    <p style="margin-top:20px; font-size:13px; color:var(--text-tertiary);">Phase A is complete. Phases B and C will add AI intelligence and multi-platform distribution.</p>
+  </section>
+</div>
+
+<div class="divider"></div>
+
+<!-- SECTION 2: THE PROBLEM -->
+<div class="container">
+  <section class="section" id="problem">
+    <div class="section-label">Context</div>
+    <h2 class="section-title">The Problem</h2>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon" style="background:rgba(246,70,43,0.12); color:var(--terra);">&#128194;</div>
+        <h3>Scattered Content</h3>
+        <p>Google Drive folders with no brand context. Captions in random docs.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:rgba(255,69,58,0.1); color:var(--red);">&#10007;</div>
+        <h3>No Brand Voice Control</h3>
+        <p>Each brand has a different voice but no system enforces it. Easy to go off-brand.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:rgba(246,70,43,0.12); color:var(--terra);">&#128203;</div>
+        <h3>Manual Publishing</h3>
+        <p>Copy-paste from docs to social platforms. No scheduling, no preview.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:rgba(246,70,43,0.12); color:var(--plum);">&#129302;</div>
+        <h3>No AI Integration</h3>
+        <p>Writing captions from scratch every time instead of using AI with brand voice guardrails.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:rgba(255,214,10,0.1); color:var(--yellow);">&#128187;</div>
+        <h3>Single Machine Lock-in</h3>
+        <p>All data lives in localStorage on one computer. Can't access from other machines.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:rgba(246,70,43,0.12); color:var(--ocean);">&#128200;</div>
+        <h3>Zero Analytics Feedback</h3>
+        <p>Content is created in a vacuum with no data on what's working. No connection to ad performance.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="divider"></div>
+
+<!-- SECTION 3: FIVE BRANDS -->
+<div class="container">
+  <section class="section" id="brands">
+    <div class="section-label">Coverage</div>
+    <h2 class="section-title">Five Brands</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Brand</th>
+            <th>Focus</th>
+            <th>Content Style</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Flynn Development</td>
+            <td>Residential Construction</td>
+            <td>Project showcases, trust-building</td>
+          </tr>
+          <tr>
+            <td>Middle TN Metals</td>
+            <td>Metal Fabrication</td>
+            <td>Industrial, craftsmanship</td>
+          </tr>
+          <tr>
+            <td>Modern Roofing Group</td>
+            <td>Roofing</td>
+            <td>Before/after, reliability</td>
+          </tr>
+          <tr>
+            <td>Complete Crete Coatings</td>
+            <td>Concrete Coatings</td>
+            <td>Transformations, durability</td>
+          </tr>
+          <tr>
+            <td>Blue Collar Hustle</td>
+            <td>Trades Media</td>
+            <td>Raw, motivational, educational</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<div class="divider"></div>
+
+<!-- SECTION 4: ARCHITECTURE -->
+<div class="container">
+  <section class="section" id="architecture">
+    <div class="section-label">Technical</div>
+    <h2 class="section-title">Architecture</h2>
+    <div class="card-grid-3">
+      <div class="card">
+        <div class="card-icon" style="background:rgba(246,70,43,0.12); color:var(--ocean);">&#9881;</div>
+        <h3>Next.js + React</h3>
+        <p>Component-based, TypeScript, Tailwind styling</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:rgba(246,70,43,0.12); color:var(--plum);">&#128190;</div>
+        <h3>LocalStorage + IndexedDB</h3>
+        <p>Text data in localStorage, media files in IndexedDB</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:rgba(246,70,43,0.12); color:var(--terra);">&#127912;</div>
+        <h3>Dark Editorial Design</h3>
+        <p>Known.is + Riot NYC inspired. Oswald headers, Libre Baskerville italic, grain overlay</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:rgba(246,70,43,0.12); color:var(--ocean);">&#128483;</div>
+        <h3>Brand Voice Profiles</h3>
+        <p>Pre-configured tone, vocabulary, and style per brand</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:rgba(246,70,43,0.12); color:var(--plum);">&#9889;</div>
+        <h3>AI Caption Engine</h3>
+        <p>Anthropic API for on-brand caption generation (planned)</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background:rgba(246,70,43,0.12); color:var(--terra);">&#128225;</div>
+        <h3>Meta Publishing API</h3>
+        <p>Direct post/schedule to Facebook + Instagram (planned)</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="divider"></div>
+
+<!-- SECTION 5: DESIGN DIRECTION -->
+<div class="container">
+  <section class="section" id="design">
+    <div class="section-label">Creative</div>
+    <h2 class="section-title">Design Direction</h2>
+    <div class="callout">
+      <strong>Dark editorial aesthetic inspired by Known.is and Riot.nyc.</strong> Bold Oswald typography, Libre Baskerville italic accents, Oxygen Mono for system text, #f6462b red-orange accent, massive whitespace, horizontal layouts, grain overlay. <strong>NOT Tron/neon/sci-fi.</strong>
+    </div>
+  </section>
+</div>
+
+<div class="divider"></div>
+
+<!-- SECTION 6: BUILD STATUS -->
+<div class="container">
+  <section class="section" id="status">
+    <div class="section-label">Progress</div>
+    <h2 class="section-title">Build Status</h2>
+    <div class="status-grid">
+      <div class="status-row">
+        <span class="name">Command View</span>
+        <span class="check-status status-done">DONE</span>
+        <span class="detail">Multi-brand dashboard</span>
+      </div>
+      <div class="status-row">
+        <span class="name">Brand Settings</span>
+        <span class="check-status status-done">DONE</span>
+        <span class="detail">5 voice profiles configured</span>
+      </div>
+      <div class="status-row">
+        <span class="name">Caption Library</span>
+        <span class="check-status status-done">DONE</span>
+        <span class="detail">Organized by brand + category</span>
+      </div>
+      <div class="status-row">
+        <span class="name">Design System</span>
+        <span class="check-status status-done">DONE</span>
+        <span class="detail">Dark editorial, Known.is inspired</span>
+      </div>
+      <div class="status-row">
+        <span class="name">Pre-loaded Content</span>
+        <span class="check-status status-done">DONE</span>
+        <span class="detail">15 Flynn Dev Spring 2026 captions</span>
+      </div>
+      <div class="status-row">
+        <span class="name">AI Caption Generator</span>
+        <span class="check-status status-not-started">NOT STARTED</span>
+        <span class="detail">Anthropic API mocked</span>
+      </div>
+      <div class="status-row">
+        <span class="name">Meta Publishing API</span>
+        <span class="check-status status-not-started">NOT STARTED</span>
+        <span class="detail">Direct post/schedule</span>
+      </div>
+      <div class="status-row">
+        <span class="name">Content Calendar</span>
+        <span class="check-status status-not-started">NOT STARTED</span>
+        <span class="detail">Visual planning</span>
+      </div>
+      <div class="status-row">
+        <span class="name">Media Vault</span>
+        <span class="check-status status-not-started">NOT STARTED</span>
+        <span class="detail">IndexedDB for files</span>
+      </div>
+      <div class="status-row">
+        <span class="name">Cloud Sync</span>
+        <span class="check-status status-not-started">NOT STARTED</span>
+        <span class="detail">Multi-machine access needed</span>
+      </div>
+      <div class="status-row">
+        <span class="name">Post Builder</span>
+        <span class="check-status status-not-started">NOT STARTED</span>
+        <span class="detail">Compose + preview</span>
+      </div>
+      <div class="status-row">
+        <span class="name">Export Improvements</span>
+        <span class="check-status status-not-started">NOT STARTED</span>
+        <span class="detail">Needs direct publishing</span>
+      </div>
+      <div class="status-row">
+        <span class="name">Analytics Link</span>
+        <span class="check-status status-not-started">NOT STARTED</span>
+        <span class="detail">Connect to Command Center data</span>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- FOOTER -->
+<div class="container">
+  <footer class="footer">
+    <div class="footer-brand">The Medium</div>
+    <div class="footer-date">Blueprint &middot; Updated March 30, 2026</div>
+  </footer>
+</div>
+
+</body>
+</html>
