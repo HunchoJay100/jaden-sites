@@ -5,29 +5,30 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Analytics Command Center Blueprint</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #1A1215;
-    --surface: #231A1E;
-    --nested: #2D2226;
-    --plum: #8E6B7E;
-    --ocean: #5E8E9B;
-    --terra: #B5695A;
-    --text: #F5EDE8;
-    --text-secondary: rgba(245,237,232,0.55);
-    --text-tertiary: rgba(245,237,232,0.28);
-    --green: #34C759;
-    --red: #FF453A;
-    --yellow: #FFD60A;
-    --blue: #0A84FF;
+    --bg: #0B1219;
+    --surface: #111D2A;
+    --nested: #182838;
+    --accent: #2EC4B6;
+    --accent-dim: rgba(46,196,182,0.12);
+    --blue: #3B82F6;
+    --blue-dim: rgba(59,130,246,0.12);
+    --terra: #F59E0B;
+    --text: #E8EDF2;
+    --text-secondary: rgba(232,237,242,0.55);
+    --text-tertiary: rgba(232,237,242,0.28);
+    --green: #34D399;
+    --red: #EF4444;
+    --yellow: #FBBF24;
     --radius: 12px;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    font-family: 'Outfit', -apple-system, sans-serif;
+    font-family: 'Geist', -apple-system, sans-serif;
     background: var(--bg);
     color: var(--text);
     -webkit-font-smoothing: antialiased;
@@ -40,23 +41,23 @@
     content: '';
     position: fixed;
     inset: 0;
-    background-image: radial-gradient(rgba(142,107,126,0.06) 1px, transparent 1px);
+    background-image: radial-gradient(rgba(46,196,182,0.06) 1px, transparent 1px);
     background-size: 24px 24px;
     pointer-events: none;
     z-index: 0;
   }
 
-  h1, h2, h3, .playfair { font-family: 'Playfair Display', Georgia, serif; }
+  h1, h2, h3, .mono { font-family: 'JetBrains Mono', monospace; }
 
   /* NAV */
   .nav {
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(26,18,21,0.88);
+    background: rgba(11,18,25,0.88);
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border-bottom: 1px solid rgba(142,107,126,0.12);
+    border-bottom: 1px solid rgba(46,196,182,0.12);
     padding: 0 clamp(20px, 4vw, 48px);
   }
   .nav-inner {
@@ -77,18 +78,18 @@
   .nav-back {
     font-size: 13px;
     font-weight: 600;
-    color: var(--plum);
+    color: var(--accent);
     text-decoration: none;
     padding: 6px 14px;
     border-radius: 20px;
-    border: 1px solid rgba(142,107,126,0.35);
+    border: 1px solid rgba(46,196,182,0.35);
     transition: all 0.2s ease;
     white-space: nowrap;
     flex-shrink: 0;
   }
-  .nav-back:hover { background: rgba(142,107,126,0.12); border-color: var(--plum); }
+  .nav-back:hover { background: rgba(46,196,182,0.12); border-color: var(--accent); }
   .nav-title {
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: 'Geist', -apple-system, sans-serif;
     font-size: 16px;
     font-weight: 800;
     color: var(--text);
@@ -107,7 +108,7 @@
     transition: all 0.2s ease;
     white-space: nowrap;
   }
-  .nav-links a:hover { color: var(--text); background: rgba(142,107,126,0.08); }
+  .nav-links a:hover { color: var(--text); background: rgba(46,196,182,0.08); }
 
   /* LAYOUT */
   .container {
@@ -130,7 +131,7 @@
     width: 500px;
     height: 500px;
     border-radius: 50%;
-    background: rgba(142,107,126,0.08);
+    background: rgba(46,196,182,0.08);
     filter: blur(120px);
     top: -20%;
     right: -10%;
@@ -142,7 +143,7 @@
     width: 400px;
     height: 400px;
     border-radius: 50%;
-    background: rgba(94,142,155,0.06);
+    background: rgba(59,130,246,0.06);
     filter: blur(100px);
     bottom: -10%;
     left: -10%;
@@ -154,9 +155,9 @@
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--plum);
-    background: rgba(142,107,126,0.1);
-    border: 1px solid rgba(142,107,126,0.2);
+    color: var(--accent);
+    background: rgba(46,196,182,0.1);
+    border: 1px solid rgba(46,196,182,0.2);
     padding: 6px 16px;
     border-radius: 20px;
     margin-bottom: 24px;
@@ -168,7 +169,7 @@
     letter-spacing: -0.02em;
     margin-bottom: 16px;
   }
-  .hero h1 .accent { color: var(--plum); }
+  .hero h1 .accent { color: var(--accent); }
   .hero-sub {
     font-size: clamp(15px, 2vw, 17px);
     color: var(--text-secondary);
@@ -189,7 +190,7 @@
   /* DIVIDER */
   .divider {
     height: 1px;
-    background: linear-gradient(90deg, var(--plum), transparent 70%);
+    background: linear-gradient(90deg, var(--accent), transparent 70%);
     opacity: 0.25;
     margin: 0;
   }
@@ -203,7 +204,7 @@
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--plum);
+    color: var(--accent);
     margin-bottom: 8px;
   }
   .section-title {
@@ -216,14 +217,14 @@
   /* CARDS */
   .card {
     background: var(--surface);
-    border: 1px solid rgba(142,107,126,0.08);
+    border: 1px solid rgba(46,196,182,0.08);
     border-radius: var(--radius);
     padding: clamp(20px, 3vw, 28px);
     transition: all 0.25s ease;
   }
   .card:hover {
-    border-color: rgba(142,107,126,0.2);
-    box-shadow: 0 8px 32px rgba(142,107,126,0.08);
+    border-color: rgba(46,196,182,0.2);
+    box-shadow: 0 8px 32px rgba(46,196,182,0.08);
   }
   .card-grid {
     display: grid;
@@ -260,7 +261,7 @@
   /* CALLOUT */
   .callout {
     background: var(--surface);
-    border-left: 3px solid var(--plum);
+    border-left: 3px solid var(--accent);
     border-radius: 0 var(--radius) var(--radius) 0;
     padding: clamp(20px, 3vw, 28px);
     margin-bottom: 32px;
@@ -276,10 +277,10 @@
     font-weight: 600;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--ocean);
+    color: var(--blue);
     margin: 28px 0 16px;
     padding-bottom: 8px;
-    border-bottom: 1px solid rgba(94,142,155,0.15);
+    border-bottom: 1px solid rgba(59,130,246,0.15);
   }
   .phase-header:first-of-type { margin-top: 0; }
   .checklist { display: flex; flex-direction: column; gap: 8px; }
@@ -288,12 +289,12 @@
     align-items: center;
     gap: 12px;
     background: var(--surface);
-    border: 1px solid rgba(142,107,126,0.06);
+    border: 1px solid rgba(46,196,182,0.06);
     border-radius: 10px;
     padding: 14px 18px;
     transition: all 0.2s ease;
   }
-  .check-item:hover { border-color: rgba(142,107,126,0.15); }
+  .check-item:hover { border-color: rgba(46,196,182,0.15); }
   .check-num {
     width: 28px;
     height: 28px;
@@ -351,7 +352,7 @@
   .table-wrap {
     overflow-x: auto;
     border-radius: var(--radius);
-    border: 1px solid rgba(142,107,126,0.08);
+    border: 1px solid rgba(46,196,182,0.08);
   }
   table {
     width: 100%;
@@ -367,21 +368,21 @@
     color: var(--text-tertiary);
     background: var(--surface);
     padding: 12px 18px;
-    border-bottom: 1px solid rgba(142,107,126,0.1);
+    border-bottom: 1px solid rgba(46,196,182,0.1);
   }
   tbody td {
     padding: 14px 18px;
-    border-bottom: 1px solid rgba(142,107,126,0.05);
+    border-bottom: 1px solid rgba(46,196,182,0.05);
     color: var(--text-secondary);
   }
   tbody tr:last-child td { border-bottom: none; }
-  tbody tr:hover { background: rgba(142,107,126,0.03); }
+  tbody tr:hover { background: rgba(46,196,182,0.03); }
   tbody td:first-child { color: var(--text); font-weight: 500; }
   .total-row td {
     font-weight: 600;
     color: var(--text) !important;
-    border-top: 1px solid rgba(142,107,126,0.15);
-    background: rgba(142,107,126,0.04);
+    border-top: 1px solid rgba(46,196,182,0.15);
+    background: rgba(46,196,182,0.04);
   }
 
   /* BUILD CARDS */
@@ -394,9 +395,9 @@
   .build-card h3 { padding-right: 90px; }
   .build-card .path {
     font-size: 12px;
-    font-family: 'SF Mono', 'Fira Code', monospace;
-    color: var(--plum);
-    background: rgba(142,107,126,0.08);
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent);
+    background: rgba(46,196,182,0.08);
     padding: 3px 8px;
     border-radius: 4px;
     display: inline-block;
@@ -416,14 +417,14 @@
   }
   .build-card ul li::before {
     content: '~';
-    color: var(--plum);
+    color: var(--accent);
     font-weight: 600;
     flex-shrink: 0;
   }
   .build-card .needs {
     margin-top: 12px;
     padding-top: 12px;
-    border-top: 1px solid rgba(142,107,126,0.08);
+    border-top: 1px solid rgba(46,196,182,0.08);
     font-size: 12px;
     color: var(--terra);
     font-weight: 500;
@@ -441,13 +442,13 @@
     gap: 12px;
     align-items: center;
     background: var(--surface);
-    border: 1px solid rgba(142,107,126,0.06);
+    border: 1px solid rgba(46,196,182,0.06);
     border-radius: 8px;
     padding: 12px 18px;
     font-size: 14px;
     transition: all 0.2s ease;
   }
-  .status-row:hover { border-color: rgba(142,107,126,0.15); }
+  .status-row:hover { border-color: rgba(46,196,182,0.15); }
   .status-row .name { font-weight: 500; color: var(--text); }
   .status-row .detail { color: var(--text-tertiary); font-size: 13px; text-align: right; }
 
@@ -455,7 +456,7 @@
   .sched-card .day {
     font-size: 20px;
     font-weight: 800;
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: 'Geist', -apple-system, sans-serif;
     margin-bottom: 6px;
   }
 
@@ -463,10 +464,10 @@
   .footer {
     padding: 48px 0;
     text-align: center;
-    border-top: 1px solid rgba(142,107,126,0.08);
+    border-top: 1px solid rgba(46,196,182,0.08);
   }
   .footer-brand {
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: 'Geist', -apple-system, sans-serif;
     font-size: 18px;
     font-weight: 800;
     color: var(--text-tertiary);
@@ -623,7 +624,7 @@
     <h2 class="section-title">The Problem</h2>
     <div class="card-grid">
       <div class="card">
-        <div class="card-icon" style="background:rgba(181,105,90,0.12); color:var(--terra);">&#9107;</div>
+        <div class="card-icon" style="background:rgba(245,158,11,0.12); color:var(--terra);">&#9107;</div>
         <h3>Scattered Data</h3>
         <p>Ad performance split across multiple Meta accounts, no unified view.</p>
       </div>
@@ -633,7 +634,7 @@
         <p>Checking Ads Manager for each brand individually, no cross-brand analysis.</p>
       </div>
       <div class="card">
-        <div class="card-icon" style="background:rgba(142,107,126,0.12); color:var(--plum);">&#9673;</div>
+        <div class="card-icon" style="background:rgba(46,196,182,0.12); color:var(--accent);">&#9673;</div>
         <h3>No Audience Intelligence</h3>
         <p>Can't see which demographics or placements perform best across brands.</p>
       </div>
@@ -643,12 +644,12 @@
         <p>No optimization alerts when CPL spikes or frequency gets too high.</p>
       </div>
       <div class="card">
-        <div class="card-icon" style="background:rgba(94,142,155,0.12); color:var(--ocean);">&#9201;</div>
+        <div class="card-icon" style="background:rgba(59,130,246,0.12); color:var(--blue);">&#9201;</div>
         <h3>Token Headaches</h3>
         <p>Meta API tokens expire hourly, need automated long-lived token management.</p>
       </div>
       <div class="card">
-        <div class="card-icon" style="background:rgba(181,105,90,0.12); color:var(--terra);">&#9676;</div>
+        <div class="card-icon" style="background:rgba(245,158,11,0.12); color:var(--terra);">&#9676;</div>
         <h3>No Retargeting Visibility</h3>
         <p>Can't see which audiences are being retargeted vs. prospected.</p>
       </div>
@@ -665,32 +666,32 @@
     <h2 class="section-title">Architecture</h2>
     <div class="card-grid-3">
       <div class="card">
-        <div class="card-icon" style="background:rgba(94,142,155,0.12); color:var(--ocean);">&#9881;</div>
+        <div class="card-icon" style="background:rgba(59,130,246,0.12); color:var(--blue);">&#9881;</div>
         <h3>Next.js + TypeScript</h3>
         <p>Server components, API routes, TypeScript throughout.</p>
       </div>
       <div class="card">
-        <div class="card-icon" style="background:rgba(142,107,126,0.12); color:var(--plum);">&#9729;</div>
+        <div class="card-icon" style="background:rgba(46,196,182,0.12); color:var(--accent);">&#9729;</div>
         <h3>Meta Marketing API</h3>
         <p>Real-time campaign data, audience insights, creative performance.</p>
       </div>
       <div class="card">
-        <div class="card-icon" style="background:rgba(181,105,90,0.12); color:var(--terra);">&#8644;</div>
+        <div class="card-icon" style="background:rgba(245,158,11,0.12); color:var(--terra);">&#8644;</div>
         <h3>Multi-Account Queries</h3>
         <p>Parallel fetches across business + personal ad accounts.</p>
       </div>
       <div class="card">
-        <div class="card-icon" style="background:rgba(94,142,155,0.12); color:var(--ocean);">&#9873;</div>
+        <div class="card-icon" style="background:rgba(59,130,246,0.12); color:var(--blue);">&#9873;</div>
         <h3>Brand Auto-Detection</h3>
         <p>Facebook Page ID mapping auto-assigns campaigns to correct brand.</p>
       </div>
       <div class="card">
-        <div class="card-icon" style="background:rgba(142,107,126,0.12); color:var(--plum);">&#9636;</div>
+        <div class="card-icon" style="background:rgba(46,196,182,0.12); color:var(--accent);">&#9636;</div>
         <h3>Recharts Dashboards</h3>
         <p>Interactive bar charts, trend lines, audience breakdowns.</p>
       </div>
       <div class="card">
-        <div class="card-icon" style="background:rgba(181,105,90,0.12); color:var(--terra);">&#9650;</div>
+        <div class="card-icon" style="background:rgba(245,158,11,0.12); color:var(--terra);">&#9650;</div>
         <h3>Vercel Deployment</h3>
         <p>Runs locally at port 3001, ready for cloud deploy.</p>
       </div>
