@@ -1,0 +1,1947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BL4INE. | "Brand New Me" Rollout Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #f0c040;
+    --gold-dim: rgba(240, 192, 64, 0.15);
+    --gold-glow: rgba(240, 192, 64, 0.3);
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --nested: #181818;
+    --text-primary: rgba(255, 255, 255, 1);
+    --text-secondary: rgba(255, 255, 255, 0.6);
+    --text-tertiary: rgba(255, 255, 255, 0.3);
+    --separator: rgba(255, 255, 255, 0.08);
+    --card-radius: 12px;
+    --btn-radius: 8px;
+    --spring: cubic-bezier(0.2, 0, 0, 1);
+    --spring-snappy: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --spring-modal: cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    background: var(--bg);
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    font-size: 17px;
+    font-weight: 400;
+    letter-spacing: -0.43px;
+    line-height: 22px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-size: 256px;
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  .nav-glass {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(10, 10, 10, 0.7);
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 0 24px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.3s var(--spring);
+  }
+
+  .nav-glass .nav-brand {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .nav-glass .nav-links {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+  }
+
+  .nav-glass .nav-links a {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.15s var(--spring);
+  }
+
+  .nav-glass .nav-links a:hover {
+    color: var(--gold);
+  }
+
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 24px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(240, 192, 64, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background: linear-gradient(to top, var(--bg), transparent);
+    pointer-events: none;
+  }
+
+  .hero-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 32px;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .hero-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(48px, 8vw, 96px);
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 1;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .hero-title .gold {
+    color: var(--gold);
+    text-shadow: 0 0 60px rgba(240, 192, 64, 0.25);
+  }
+
+  .hero-subtitle {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(20px, 3vw, 34px);
+    font-weight: 700;
+    letter-spacing: -1px;
+    line-height: 1.2;
+    color: var(--text-secondary);
+    margin-bottom: 48px;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .hero-meta-item {
+    text-align: center;
+  }
+
+  .hero-meta-item .value {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.8px;
+    color: var(--gold);
+  }
+
+  .hero-meta-item .label {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-top: 4px;
+  }
+
+  .hero-divider {
+    width: 1px;
+    height: 40px;
+    background: var(--separator);
+  }
+
+  .lyric-block {
+    padding: 80px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .lyric-block::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px;
+    height: 400px;
+    background: radial-gradient(ellipse, rgba(240, 192, 64, 0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .lyric-quote {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(22px, 4vw, 40px);
+    font-weight: 700;
+    letter-spacing: -1px;
+    line-height: 1.3;
+    color: var(--text-primary);
+    max-width: 800px;
+    margin: 0 auto 24px;
+    position: relative;
+  }
+
+  .lyric-quote::before {
+    content: '\201C';
+    font-size: 120px;
+    color: var(--gold);
+    opacity: 0.15;
+    position: absolute;
+    top: -50px;
+    left: -20px;
+    font-family: 'Syne', sans-serif;
+    line-height: 1;
+  }
+
+  .lyric-accent-line {
+    width: 60px;
+    height: 2px;
+    background: var(--gold);
+    margin: 0 auto 16px;
+    box-shadow: 0 0 12px rgba(240, 192, 64, 0.4);
+  }
+
+  .lyric-attribution {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+
+  .section {
+    padding: 80px 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    margin-bottom: 48px;
+  }
+
+  .section-number {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-number::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--gold), transparent);
+    opacity: 0.3;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 34px;
+    font-weight: 700;
+    letter-spacing: -1.05px;
+    line-height: 41px;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+  }
+
+  .section-subtitle {
+    font-size: 17px;
+    font-weight: 400;
+    letter-spacing: -0.43px;
+    line-height: 26px;
+    color: var(--text-secondary);
+    max-width: 700px;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.5s var(--spring), transform 0.5s var(--spring);
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .artist-card {
+    background: var(--surface);
+    border-radius: var(--card-radius);
+    padding: 32px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
+    transition: all 0.3s var(--spring);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+
+  .artist-card:hover {
+    box-shadow: 0 4px 14px rgba(0,0,0,0.15), 0 2px 6px rgba(0,0,0,0.1);
+    transform: translateY(-4px);
+  }
+
+  .artist-detail {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--separator);
+  }
+
+  .artist-detail:last-child {
+    border-bottom: none;
+  }
+
+  .artist-detail .detail-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+
+  .artist-detail .detail-value {
+    font-size: 16px;
+    color: var(--text-primary);
+    line-height: 24px;
+  }
+
+  .social-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .social-stat {
+    background: var(--nested);
+    border-radius: var(--card-radius);
+    padding: 24px 16px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
+    transition: all 0.3s var(--spring);
+  }
+
+  .social-stat:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.15), 0 2px 6px rgba(0,0,0,0.1);
+  }
+
+  .social-stat .platform {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 8px;
+  }
+
+  .social-stat .count {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: -0.8px;
+  }
+
+  .social-stat .handle {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+
+  .timeline {
+    position: relative;
+    padding-left: 40px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--gold), rgba(240, 192, 64, 0.1));
+  }
+
+  .timeline-phase {
+    position: relative;
+    margin-bottom: 48px;
+  }
+
+  .timeline-phase:last-child {
+    margin-bottom: 0;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -40px;
+    top: 4px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--gold);
+    box-shadow: 0 0 12px rgba(240, 192, 64, 0.3);
+    z-index: 2;
+  }
+
+  .timeline-dot.active {
+    background: var(--gold);
+  }
+
+  .timeline-dates {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .timeline-phase-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.7px;
+    line-height: 28px;
+    margin-bottom: 16px;
+  }
+
+  .timeline-items {
+    list-style: none;
+  }
+
+  .timeline-items li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 12px;
+    font-size: 15px;
+    line-height: 22px;
+    color: var(--text-secondary);
+  }
+
+  .timeline-items li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    opacity: 0.6;
+  }
+
+  .phase-card {
+    background: var(--surface);
+    border-radius: var(--card-radius);
+    padding: 32px;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
+    transition: all 0.3s var(--spring);
+    border-left: 3px solid var(--gold);
+  }
+
+  .phase-card:hover {
+    box-shadow: 0 4px 14px rgba(0,0,0,0.15), 0 2px 6px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+  }
+
+  .phase-card .phase-tag {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .phase-card .phase-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.7px;
+    margin-bottom: 8px;
+  }
+
+  .phase-card .phase-dates {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+  }
+
+  .phase-card .phase-desc {
+    font-size: 15px;
+    line-height: 24px;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+  }
+
+  .action-list {
+    list-style: none;
+  }
+
+  .action-list li {
+    position: relative;
+    padding: 10px 0 10px 28px;
+    border-bottom: 1px solid var(--separator);
+    font-size: 15px;
+    line-height: 22px;
+    color: var(--text-secondary);
+  }
+
+  .action-list li:last-child {
+    border-bottom: none;
+  }
+
+  .action-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 14px;
+    width: 12px;
+    height: 12px;
+    border: 2px solid var(--gold);
+    border-radius: 3px;
+    opacity: 0.5;
+  }
+
+  .action-list li strong {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  .calendar-container {
+    overflow-x: auto;
+    margin-top: 24px;
+    border-radius: var(--card-radius);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
+  }
+
+  .calendar-table {
+    width: 100%;
+    min-width: 700px;
+    border-collapse: collapse;
+    background: var(--surface);
+    border-radius: var(--card-radius);
+    overflow: hidden;
+  }
+
+  .calendar-table thead th {
+    background: #1a1a1a;
+    color: var(--gold);
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 16px 12px;
+    text-align: left;
+  }
+
+  .calendar-table tbody td {
+    padding: 12px;
+    border-bottom: 1px solid var(--separator);
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--text-secondary);
+    vertical-align: top;
+  }
+
+  .calendar-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .calendar-table tbody tr:hover {
+    background: rgba(240, 192, 64, 0.03);
+  }
+
+  .calendar-table .date-cell {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--text-primary);
+    white-space: nowrap;
+  }
+
+  .calendar-table .day-cell {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .tag-reel { background: rgba(240, 192, 64, 0.15); color: var(--gold); }
+  .tag-story { background: rgba(100, 180, 255, 0.12); color: #64b4ff; }
+  .tag-post { background: rgba(120, 220, 120, 0.12); color: #78dc78; }
+  .tag-live { background: rgba(255, 100, 100, 0.12); color: #ff6464; }
+  .tag-ad { background: rgba(200, 130, 255, 0.12); color: #c882ff; }
+
+  .release-day-row {
+    background: rgba(240, 192, 64, 0.06) !important;
+  }
+
+  .release-day-row td {
+    color: var(--gold) !important;
+    font-weight: 500;
+  }
+
+  .budget-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .budget-item {
+    background: var(--surface);
+    border-radius: var(--card-radius);
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
+    transition: all 0.3s var(--spring);
+  }
+
+  .budget-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.15), 0 2px 6px rgba(0,0,0,0.1);
+  }
+
+  .budget-item .budget-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 8px;
+  }
+
+  .budget-item .budget-amount {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: -0.8px;
+  }
+
+  .budget-item .budget-note {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 8px;
+    line-height: 18px;
+  }
+
+  .budget-total {
+    background: linear-gradient(135deg, rgba(240, 192, 64, 0.1), rgba(240, 192, 64, 0.05));
+    border: 1px solid rgba(240, 192, 64, 0.2);
+  }
+
+  .budget-total .budget-amount {
+    font-size: 34px;
+  }
+
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .metric-card {
+    background: var(--surface);
+    border-radius: var(--card-radius);
+    padding: 24px 16px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
+    transition: all 0.3s var(--spring);
+  }
+
+  .metric-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.15), 0 2px 6px rgba(0,0,0,0.1);
+  }
+
+  .metric-icon {
+    font-size: 24px;
+    margin-bottom: 8px;
+  }
+
+  .metric-name {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .metric-desc {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    line-height: 16px;
+  }
+
+  .pillar-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .pillar-card {
+    background: var(--surface);
+    border-radius: var(--card-radius);
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
+    transition: all 0.3s var(--spring);
+  }
+
+  .pillar-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.15), 0 2px 6px rgba(0,0,0,0.1);
+  }
+
+  .pillar-card .pillar-icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+
+  .pillar-card .pillar-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.43px;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .pillar-card .pillar-desc {
+    font-size: 14px;
+    line-height: 21px;
+    color: var(--text-secondary);
+  }
+
+  .playlist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .playlist-card {
+    background: var(--surface);
+    border-radius: var(--card-radius);
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
+    transition: all 0.3s var(--spring);
+  }
+
+  .playlist-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.15), 0 2px 6px rgba(0,0,0,0.1);
+  }
+
+  .playlist-card .pl-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+
+  .playlist-card .pl-desc {
+    font-size: 14px;
+    line-height: 21px;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+  }
+
+  .playlist-card .pl-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .genre-tag {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    background: var(--gold-dim);
+    color: var(--gold);
+  }
+
+  .h-timeline {
+    display: flex;
+    gap: 0;
+    margin: 32px 0;
+    overflow-x: auto;
+    padding-bottom: 16px;
+  }
+
+  .h-timeline-phase {
+    flex: 1;
+    min-width: 180px;
+    position: relative;
+    padding: 24px 16px 16px;
+    text-align: center;
+  }
+
+  .h-timeline-phase::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--gold);
+    opacity: 0.2;
+  }
+
+  .h-timeline-phase::after {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 12px rgba(240, 192, 64, 0.4);
+  }
+
+  .h-timeline-phase .ht-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+
+  .h-timeline-phase .ht-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .h-timeline-phase .ht-dates {
+    font-size: 12px;
+    color: var(--text-tertiary);
+  }
+
+  .footer {
+    padding: 80px 24px 48px;
+    text-align: center;
+    position: relative;
+  }
+
+  .footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 2px;
+    background: var(--gold);
+    opacity: 0.3;
+  }
+
+  .footer-tagline {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.7px;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+  }
+
+  .footer-credit {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    letter-spacing: 1px;
+  }
+
+  .footer-credit .gold {
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  .gold-divider {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .gold-divider-line {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    opacity: 0.15;
+  }
+
+  .callout {
+    background: linear-gradient(135deg, rgba(240, 192, 64, 0.08), rgba(240, 192, 64, 0.03));
+    border-left: 3px solid var(--gold);
+    border-radius: 0 var(--card-radius) var(--card-radius) 0;
+    padding: 24px;
+    margin: 24px 0;
+  }
+
+  .callout .callout-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .callout p {
+    font-size: 15px;
+    line-height: 24px;
+    color: var(--text-secondary);
+  }
+
+  @media (max-width: 768px) {
+    .artist-card {
+      grid-template-columns: 1fr;
+    }
+
+    .social-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .nav-glass .nav-links {
+      display: none;
+    }
+
+    .hero {
+      padding: 100px 16px 64px;
+    }
+
+    .section {
+      padding: 48px 16px;
+    }
+
+    .hero-meta {
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .hero-divider {
+      width: 40px;
+      height: 1px;
+    }
+
+    .budget-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .h-timeline {
+      flex-direction: column;
+    }
+
+    .h-timeline-phase::before {
+      display: none;
+    }
+
+    .h-timeline-phase::after {
+      display: none;
+    }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav-glass">
+  <div class="nav-brand">BL4INE.</div>
+  <ul class="nav-links">
+    <li><a href="#artist">Artist</a></li>
+    <li><a href="#timeline">Timeline</a></li>
+    <li><a href="#phases">Phases</a></li>
+    <li><a href="#calendar">Calendar</a></li>
+    <li><a href="#budget">Budget</a></li>
+    <li><a href="#playbook">Playbook</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-label" id="hero-label">Single Release Strategy</div>
+  <h1 class="hero-title" id="hero-title">
+    <span class="gold">"Brand New Me"</span><br>Rollout Plan
+  </h1>
+  <p class="hero-subtitle" id="hero-subtitle">A 21-day strategic launch for BL4INE.</p>
+  <div class="hero-meta" id="hero-meta">
+    <div class="hero-meta-item">
+      <div class="value">APR 20</div>
+      <div class="label">Release Date</div>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-meta-item">
+      <div class="value">21</div>
+      <div class="label">Days Out</div>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-meta-item">
+      <div class="value">5</div>
+      <div class="label">Phases</div>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-meta-item">
+      <div class="value">$300</div>
+      <div class="label">Budget</div>
+    </div>
+  </div>
+</section>
+
+<section class="lyric-block reveal">
+  <div class="lyric-accent-line"></div>
+  <blockquote class="lyric-quote">
+    I think this time it's safe to say, I finally made it to the other side of shame.
+  </blockquote>
+  <div class="lyric-attribution">BL4INE. / "Brand New Me"</div>
+</section>
+
+<div class="gold-divider"><div class="gold-divider-line"></div></div>
+
+<section class="section" id="artist">
+  <div class="section-header reveal">
+    <div class="section-number">01 / Artist Profile</div>
+    <h2 class="section-title">William Blaine Smith</h2>
+    <p class="section-subtitle">Baseball player turned songwriter. Signed in 2018, went independent, and spent the last decade becoming someone worth listening to.</p>
+  </div>
+
+  <div class="artist-card reveal">
+    <div>
+      <div class="artist-detail">
+        <div class="detail-label">Artist Name</div>
+        <div class="detail-value">BL4INE.</div>
+      </div>
+      <div class="artist-detail">
+        <div class="detail-label">Location</div>
+        <div class="detail-value">Tennessee</div>
+      </div>
+      <div class="artist-detail">
+        <div class="detail-label">Sound</div>
+        <div class="detail-value">Country, Rock, Indie Southern Rock</div>
+      </div>
+      <div class="artist-detail">
+        <div class="detail-label">Influences</div>
+        <div class="detail-value">Ernest, Mac Miller, Drake, Post Malone, Jelly Roll</div>
+      </div>
+    </div>
+    <div>
+      <div class="artist-detail">
+        <div class="detail-label">Track</div>
+        <div class="detail-value">"Brand New Me" (Single)</div>
+      </div>
+      <div class="artist-detail">
+        <div class="detail-label">Status</div>
+        <div class="detail-value">Recorded, mixed, mastered. Cover art complete.</div>
+      </div>
+      <div class="artist-detail">
+        <div class="detail-label">Distributor</div>
+        <div class="detail-value">DistroKid (setting up)</div>
+      </div>
+      <div class="artist-detail">
+        <div class="detail-label">Core Audience</div>
+        <div class="detail-value">20s and up, college age, broad range</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="social-grid reveal" style="margin-top: 24px;">
+    <div class="social-stat">
+      <div class="platform">Instagram</div>
+      <div class="count">1,660</div>
+      <div class="handle">@Bl41ne._</div>
+    </div>
+    <div class="social-stat">
+      <div class="platform">Facebook</div>
+      <div class="count">1,100</div>
+      <div class="handle">William Blaine Smith</div>
+    </div>
+    <div class="social-stat">
+      <div class="platform">TikTok</div>
+      <div class="count">60</div>
+      <div class="handle">@.bl41ne</div>
+    </div>
+  </div>
+
+  <div class="callout reveal" style="margin-top: 32px;">
+    <div class="callout-title">The Story</div>
+    <p>"Brand New Me" is a 3-year song that really covers a 10-year journey. Bad habits came to a head, and through real lifestyle change, Blaine became a completely different person. This track is the proof. The listeners who connect with this are going to feel it in their chest because they have lived the same fight.</p>
+  </div>
+</section>
+
+<div class="gold-divider"><div class="gold-divider-line"></div></div>
+
+<section class="section" id="timeline">
+  <div class="section-header reveal">
+    <div class="section-number">02 / Timeline Overview</div>
+    <h2 class="section-title">21 Days. 5 Phases. One Shot.</h2>
+    <p class="section-subtitle">This rollout moves fast. Every day counts. Here is the full sequence from today to two weeks post-release.</p>
+  </div>
+
+  <div class="h-timeline reveal">
+    <div class="h-timeline-phase">
+      <div class="ht-label">Phase 1</div>
+      <div class="ht-name">Foundation</div>
+      <div class="ht-dates">Mar 30 - Apr 5</div>
+    </div>
+    <div class="h-timeline-phase">
+      <div class="ht-label">Phase 2</div>
+      <div class="ht-name">Tease & Build</div>
+      <div class="ht-dates">Apr 6 - Apr 13</div>
+    </div>
+    <div class="h-timeline-phase">
+      <div class="ht-label">Phase 3</div>
+      <div class="ht-name">Pre-Release</div>
+      <div class="ht-dates">Apr 14 - Apr 19</div>
+    </div>
+    <div class="h-timeline-phase">
+      <div class="ht-label">Phase 4</div>
+      <div class="ht-name">Release Day</div>
+      <div class="ht-dates">Apr 20</div>
+    </div>
+    <div class="h-timeline-phase">
+      <div class="ht-label">Phase 5</div>
+      <div class="ht-name">Momentum</div>
+      <div class="ht-dates">Apr 21 - May 4</div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-divider"><div class="gold-divider-line"></div></div>
+
+<section class="section" id="phases">
+  <div class="section-header reveal">
+    <div class="section-number">03 / The Playbook</div>
+    <h2 class="section-title">Phase-by-Phase Breakdown</h2>
+    <p class="section-subtitle">Every action item, in order, with nothing left to guesswork. Check these off as you go.</p>
+  </div>
+
+  <div class="phase-card reveal">
+    <div class="phase-tag">Phase 1</div>
+    <div class="phase-name">Foundation</div>
+    <div class="phase-dates">March 30 - April 5 (This Week)</div>
+    <div class="phase-desc">This is the most important week. Everything that happens from here depends on what you set up now. The song is done. Now you build the infrastructure around it.</div>
+    <ul class="action-list">
+      <li><strong>Lock in DistroKid.</strong> Create your account today. Upload "Brand New Me" immediately. DistroKid needs at least 2 weeks to deliver to all stores, so time is tight. Do this first.</li>
+      <li><strong>Set up your pre-save link.</strong> Use DistroKid's HyperFollow or a free tool like Linktr.ee to create a page where people can pre-save the track on Spotify and Apple Music before it drops.</li>
+      <li><strong>Claim and optimize Spotify for Artists.</strong> Upload a header image, write a real bio (not placeholder text), set your artist pick, and make the profile look legitimate.</li>
+      <li><strong>Claim and optimize Apple Music for Artists.</strong> Same deal. Upload images, fill out the profile. These platforms surface artists who look active.</li>
+      <li><strong>Set up a Linktree (or similar).</strong> Since you don't have a website yet, this is your central hub. Include pre-save link, Instagram, TikTok, Facebook. Keep it clean.</li>
+      <li><strong>Content audit.</strong> Gather every piece of existing footage you have: studio clips, behind-the-scenes moments, photos, homemade TikToks. Put it all in one folder.</li>
+      <li><strong>Plan and batch-shoot teaser content.</strong> Film 5 to 7 short-form videos this week. You need content in the bank before the rollout starts heating up. Talking-head clips, audio snippets over visuals, raw moments.</li>
+      <li><strong>Prepare a press kit.</strong> One page with your bio, a high-quality photo, the cover art, and a short description of the song. You will need this for playlist pitching and media outreach.</li>
+    </ul>
+  </div>
+
+  <div class="phase-card reveal">
+    <div class="phase-tag">Phase 2</div>
+    <div class="phase-name">Tease & Build</div>
+    <div class="phase-dates">April 6 - April 13</div>
+    <div class="phase-desc">The foundation is built. Now you start putting heat behind it. This week is about creating anticipation and planting seeds with your community.</div>
+    <ul class="action-list">
+      <li><strong>Drop Teaser #1.</strong> A 15-second audio snippet over a cinematic visual or designed lyric card. Caption should hook the story: "3 years in the making. April 20."</li>
+      <li><strong>Post the story behind the song.</strong> A text post or talking-head video about what "Brand New Me" really means. This is where the 10-year journey becomes the hook. Be honest. The story sells the song.</li>
+      <li><strong>Share a behind-the-scenes studio moment.</strong> Something raw. The session, a vocal take, a moment with the producer. People want to see the process.</li>
+      <li><strong>Activate your church community.</strong> Let your pastor or worship leader know the single is coming. Ask if they would be willing to share or mention it. Your faith community is your most loyal base.</li>
+      <li><strong>Reach out to creator/influencer connections.</strong> You mentioned knowing a few people. Ask them now to be ready to share on release day. Give them the pre-save link.</li>
+      <li><strong>Run a small ad ($50-75).</strong> Boost the teaser post on Instagram and Facebook. Target males 18-34 in Tennessee who follow country/rock artists. Keep it focused.</li>
+      <li><strong>Daily stories.</strong> Countdown content, lyric snippets, process clips. Stay visible. The algorithm rewards consistency.</li>
+      <li><strong>Engage hard.</strong> Comment on posts from artists in your lane. Reply to every comment on your content. This is free growth.</li>
+    </ul>
+  </div>
+
+  <div class="phase-card reveal">
+    <div class="phase-tag">Phase 3</div>
+    <div class="phase-name">Pre-Release Push</div>
+    <div class="phase-dates">April 14 - April 19</div>
+    <div class="phase-desc">Final countdown. Everything ramps up here. You are building so much anticipation that when April 20 hits, people are already looking for it.</div>
+    <ul class="action-list">
+      <li><strong>Pitch to Spotify editorial playlists.</strong> Go into Spotify for Artists, use the playlist pitching tool, and submit "Brand New Me" for editorial consideration. Do this 7+ days before release (which means immediately).</li>
+      <li><strong>Pitch to independent playlist curators.</strong> Find country, indie, southern rock, Christian, and faith-based playlists on Spotify. DM the curators or use SubmitHub ($10-20 in credits) to submit directly.</li>
+      <li><strong>Drop Teaser #2.</strong> A different snippet this time, ideally the hook. Link to pre-save in bio. Make it clear the song is almost here.</li>
+      <li><strong>"5 Days Until Brand New Me" countdown series.</strong> One post per day counting down. Each one should reveal something new: a lyric, a story, a clip. Keep building the tension.</li>
+      <li><strong>Share the quotable lyric as a designed graphic.</strong> "I finally made it to the other side of shame." Make this visually striking. Gold text, dark background, minimal. Let it hit.</li>
+      <li><strong>Ask close friends and family to pre-save and share.</strong> Text them directly. Give them the link. Tell them what it would mean.</li>
+      <li><strong>Prepare release day content.</strong> Have your announcement post, story sequence, and a reel with the best 30 seconds ready to go. Do not scramble on release morning.</li>
+      <li><strong>If the music video is happening, film it now.</strong> If a full video is not in the budget, consider a visualizer: the cover art with subtle motion, or performance footage cut together.</li>
+      <li><strong>Run second ad push ($50-75).</strong> Target pre-save conversions this time. Point people directly to the HyperFollow link.</li>
+      <li><strong>Contact local media.</strong> Podcasts, blogs, local news. The comeback story is the angle. Tennessee artist, former baseball player, decade of change, new single. That is a story people want to tell.</li>
+      <li><strong>Sunday, April 19: Church mention.</strong> April 20 is a Monday. Ask your church to mention the release during Sunday service or in the bulletin. This is your strongest community.</li>
+    </ul>
+  </div>
+
+  <div class="phase-card reveal">
+    <div class="phase-tag">Phase 4</div>
+    <div class="phase-name">Release Day</div>
+    <div class="phase-dates">April 20, 2026</div>
+    <div class="phase-desc">This is it. Everything has been building to this day. Your job is to make as much noise as possible and make it impossible for people to miss.</div>
+    <ul class="action-list">
+      <li><strong>Post the official announcement at 12:01 AM or early morning.</strong> "Brand New Me is out everywhere." Include streaming links to Spotify, Apple Music, and everywhere else.</li>
+      <li><strong>Share streaming links across every platform.</strong> Instagram feed post, Instagram stories, TikTok, Facebook. Multiple posts, not just one.</li>
+      <li><strong>Pin the release post</strong> on Instagram and TikTok so it is the first thing anyone sees when they visit your profile.</li>
+      <li><strong>Go live on Instagram.</strong> Even if it is 15 minutes. Play the song, talk about what it means, thank people for the support. Lives get pushed by the algorithm.</li>
+      <li><strong>Text and DM everyone personally.</strong> Friends, family, supporters, church community. A personal message hits different from a mass story post. "Hey, my single just dropped. Would mean the world if you gave it a listen and shared it."</li>
+      <li><strong>Ask supporters to add to personal playlists.</strong> This is one of the most underrated moves. Every playlist add signals Spotify that the song is connecting.</li>
+      <li><strong>Post multiple times throughout the day.</strong> Morning announcement, midday reminder, evening gratitude post. Do not post once and disappear.</li>
+      <li><strong>Engage with every single comment and share.</strong> Every one. This is the day to be glued to your phone.</li>
+    </ul>
+  </div>
+
+  <div class="phase-card reveal">
+    <div class="phase-tag">Phase 5</div>
+    <div class="phase-name">Post-Release Momentum</div>
+    <div class="phase-dates">April 21 - May 4</div>
+    <div class="phase-desc">Most independent artists stop promoting after release day. That is a mistake. The two weeks after the drop are where you either fade or build real traction.</div>
+    <ul class="action-list">
+      <li><strong>Share streaming milestones.</strong> First 1,000 streams, first playlist add, anything that shows movement. People want to support winners. Show them the song is working.</li>
+      <li><strong>Post fan reactions and messages.</strong> Screenshots of DMs, comments, stories from people who connected with the song. Social proof is everything.</li>
+      <li><strong>Create "what this line means to me" content.</strong> Take specific lyrics and make short-form videos breaking down the meaning. This stretches one song into multiple pieces of content.</li>
+      <li><strong>Repurpose the song for TikTok trends and reels.</strong> Use the hook over relatable content. The more people hear it, the more it sticks.</li>
+      <li><strong>Continue playlist pitching.</strong> Independent curators accept submissions all the time. Keep submitting to country, indie, and faith playlists weekly.</li>
+      <li><strong>Explore booking a local show.</strong> A release show or even an open mic set within 30 days of release keeps the energy alive and gives you content for weeks.</li>
+      <li><strong>Use remaining budget for targeted ads.</strong> If the numbers look strong, put the last dollars behind whatever content is performing best.</li>
+      <li><strong>Pitch to local podcasts and blogs.</strong> The comeback story is timeless. Podcasters love an underdog narrative.</li>
+      <li><strong>Start teasing "what's next."</strong> Do not let the conversation end with one song. Even a hint that more music is coming keeps people paying attention.</li>
+    </ul>
+  </div>
+</section>
+
+<div class="gold-divider"><div class="gold-divider-line"></div></div>
+
+<section class="section" id="calendar">
+  <div class="section-header reveal">
+    <div class="section-number">04 / Content Calendar</div>
+    <h2 class="section-title">Day-by-Day Posting Guide</h2>
+    <p class="section-subtitle">Realistic for one person. One feed post per day plus stories. Focus on the platforms you are already on: Instagram, TikTok, Facebook.</p>
+  </div>
+
+  <div class="callout reveal">
+    <div class="callout-title">Posting Rhythm</div>
+    <p>1 feed post per day (IG + TikTok + FB). 3 to 5 stories throughout the day. You do not need to create net-new content every single day. Repurpose, reformat, and re-share. One video clip can be a Reel, a TikTok, a Story, and a Facebook post.</p>
+  </div>
+
+  <div class="calendar-container reveal">
+    <table class="calendar-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Day</th>
+          <th>Feed Post</th>
+          <th>Stories</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="date-cell">Mar 30</td>
+          <td class="day-cell">Sun</td>
+          <td>Setup day. No post required. Get DistroKid live.</td>
+          <td>BTS story: "Something big is coming"</td>
+          <td><span class="tag tag-story">Story</span></td>
+        </tr>
+        <tr>
+          <td class="date-cell">Mar 31</td>
+          <td class="day-cell">Mon</td>
+          <td>Cryptic teaser: studio photo or audio waveform, no details</td>
+          <td>3 stories: process clips, vibe check</td>
+          <td><span class="tag tag-post">Post</span></td>
+        </tr>
+        <tr>
+          <td class="date-cell">Apr 1</td>
+          <td class="day-cell">Tue</td>
+          <td>Content shoot day. Post a BTS reel of the session.</td>
+          <td>Raw clips from the shoot</td>
+          <td><span class="tag tag-reel">Reel</span></td>
+        </tr>
+        <tr>
+          <td class="date-cell">Apr 2</td>
+          <td class="day-cell">Wed</td>
+          <td>Talking head: "I have been working on something for 3 years..."</td>
+          <td>Countdown: "18 days"</td>
+          <td><span class="tag tag-reel">Reel</span></td>
+        </tr>
+        <tr>
+          <td class="date-cell">Apr 3</td>
+          <td class="day-cell">Thu</td>
+          <td>Cover art tease (cropped, partial reveal)</td>
+          <td>Poll: "New music soon. Ready?"</td>
+          <td><span class="tag tag-post">Post</span></td>
+        </tr>
+        <tr>
+          <td class="date-cell">Apr 4</td>
+          <td class="day-cell">Fri</td>
+          <td>Share pre-save link for the first time. "Link in bio."</td>
+          <td>Swipe-up/link story to pre-save</td>
+          <td><span class="tag tag-post">Post</span></td>
+        </tr>
+        <tr>
+          <td class="date-cell">Apr 5</td>
+          <td class="day-cell">Sat</td>
+          <td>Lifestyle post: the real you, outside the music. Build connection.</td>
+          <td>Weekend vibes, casual stories</td>
+          <td><span class="tag tag-post">Post</span></td>
+        </tr>
+        <tr>
+          <td class="date-cell">Apr 6</td>
+          <td class="day-cell">Sun</td>
+          <td><strong>TEASER #1:</strong> 15-sec audio snippet, cinematic visual. "April 20."</td>
+          <td>Share teaser to stories, ask people to share</td>
+          <td><span class="tag tag-reel">Reel</span> <span class="tag tag-ad">Ad</span></td>
+        </tr>
+        <tr>
+          <td class="date-cell">Apr 7</td>
+          <td class="day-cell">Mon</td>
+          <td>The Story: talking head about what the song means. Be real.</td>
+          <td>Lyric snippet stories</td>
+          <td><span class="tag tag-reel">Reel</span></td>
+        </tr>
+        <tr>
+          <td class="date-cell">Apr 8</td>
+          <td class="day-cell">Tue</td>
+          <td>Studio BTS clip: recording session moment</td>
+          <td>Pre-save reminder</td>
+          <td><span class="tag tag-reel">Reel</span></td>
+        </tr>
+        <tr>
+          <td class="date-cell">Apr 9</td>
+          <td class="day-cell">Wed</td>
+          <td>Engagement post: "What song changed your life? Mine drops Apr 20."</td>
+          <td>Reply to comments on stories</td>
+          <td><span class="tag tag-post">Post</span></td>
+        </tr>
+        <tr>
+          <td class="date-cell">Apr 10</td>
+          <td class="day-cell">Thu</td>
+          <td>Lyric card: one powerful line from the track (not the quotable yet)</td>
+          <td>Community engagement, comment on other artists</td>
+          <td><span class="tag tag-post">Post</span></td>
+        </tr>
+        <tr>
+          <td class="date-cell">Apr 11</td>
+          <td class="day-cell">Fri</td>
+          <td>Faith angle: how this song connects to your journey and growth</td>
+          <td>Pre-save push, "link in bio"</td>
+          <td><span class="tag tag-reel">Reel</span></td>
+        </tr>
+        <tr>
+          <td class="date-cell">Apr 12</td>
+          <td class="day-cell">Sat</td>
+          <td>Casual lifestyle content, keep it light</td>
+          <td>Weekend vibes, keep the presence up</td>
+          <td><span class="tag tag-post">Post</span></td>
+        </tr>
+        <tr>
+          <td class="date-cell">Apr 13</td>
+          <td class="day-cell">Sun</td>
+          <td>"One week." Simple graphic, cover art, date. Let it breathe.</td>
+          <td>Countdown: "7 days"</td>
+          <td><span class="tag tag-post">Post</span></td>
+        </tr>
+        <tr>
+          <td class="date-cell">Apr 14</td>
+          <td class="day-cell">Mon</td>
+          <td><strong>TEASER #2:</strong> Different snippet, the hook. Pre-save in bio.</td>
+          <td>Share teaser, "6 days" countdown</td>
+          <td><span class="tag tag-reel">Reel</span> <span class="tag tag-ad">Ad</span></td>
+        </tr>
+        <tr>
+          <td class="date-cell">Apr 15</td>
+          <td class="day-cell">Tue</td>
+          <td>Full cover art reveal. "5 days. Brand New Me."</td>
+          <td>Pre-save push, lyric stories</td>
+          <td><span class="tag tag-post">Post</span></td>
+        </tr>
+        <tr>
+          <td class="date-cell">Apr 16</td>
+          <td class="day-cell">Wed</td>
+          <td><strong>THE LYRIC:</strong> "I finally made it to the other side of shame." Gold text, dark BG.</td>
+          <td>"4 days" countdown, ask friends to share</td>
+          <td><span class="tag tag-post">Post</span></td>
+        </tr>
+        <tr>
+          <td class="date-cell">Apr 17</td>
+          <td class="day-cell">Thu</td>
+          <td>Gratitude post: thank the people who helped make it happen</td>
+          <td>"3 days" countdown</td>
+          <td><span class="tag tag-post">Post</span></td>
+        </tr>
+        <tr>
+          <td class="date-cell">Apr 18</td>
+          <td class="day-cell">Fri</td>
+          <td>Reel: raw clip of you listening to the final master for the first time</td>
+          <td>"2 days" countdown, final pre-save push</td>
+          <td><span class="tag tag-reel">Reel</span></td>
+        </tr>
+        <tr>
+          <td class="date-cell">Apr 19</td>
+          <td class="day-cell">Sat</td>
+          <td>"Tomorrow." Simple. Cover art. Let the anticipation speak.</td>
+          <td>Church mention today, "1 day" stories all day</td>
+          <td><span class="tag tag-post">Post</span></td>
+        </tr>
+        <tr class="release-day-row">
+          <td class="date-cell">Apr 20</td>
+          <td class="day-cell">Mon</td>
+          <td><strong>RELEASE DAY.</strong> "Brand New Me is out everywhere." Links in bio. Pin it.</td>
+          <td>Morning announcement, midday push, evening thank you. Go live.</td>
+          <td><span class="tag tag-reel">Reel</span> <span class="tag tag-live">Live</span></td>
+        </tr>
+        <tr>
+          <td class="date-cell">Apr 21</td>
+          <td class="day-cell">Tue</td>
+          <td>Thank you post. Share early reactions and DMs.</td>
+          <td>Share screenshots of people listening</td>
+          <td><span class="tag tag-post">Post</span></td>
+        </tr>
+        <tr>
+          <td class="date-cell">Apr 22</td>
+          <td class="day-cell">Wed</td>
+          <td>"What this line means to me" (pick a verse, break it down)</td>
+          <td>Streaming link reminders</td>
+          <td><span class="tag tag-reel">Reel</span></td>
+        </tr>
+        <tr>
+          <td class="date-cell">Apr 23</td>
+          <td class="day-cell">Thu</td>
+          <td>Fan reaction highlight: repost someone's story or comment</td>
+          <td>Keep engaging, reply to everything</td>
+          <td><span class="tag tag-post">Post</span></td>
+        </tr>
+        <tr>
+          <td class="date-cell">Apr 24</td>
+          <td class="day-cell">Fri</td>
+          <td>TikTok trend with the hook: relatable transformation content</td>
+          <td>Casual stories, weekend preview</td>
+          <td><span class="tag tag-reel">Reel</span></td>
+        </tr>
+        <tr>
+          <td class="date-cell">Apr 25</td>
+          <td class="day-cell">Sat</td>
+          <td>Lifestyle post, breather day. Stay present but don't force it.</td>
+          <td>Light stories</td>
+          <td><span class="tag tag-post">Post</span></td>
+        </tr>
+        <tr>
+          <td class="date-cell">Apr 26</td>
+          <td class="day-cell">Sun</td>
+          <td>First milestone post: "First week numbers. Here is where we are."</td>
+          <td>Gratitude, faith angle</td>
+          <td><span class="tag tag-post">Post</span></td>
+        </tr>
+        <tr>
+          <td class="date-cell">Apr 27</td>
+          <td class="day-cell">Mon</td>
+          <td>"What this line means to me" (different verse)</td>
+          <td>Streaming link, playlist add request</td>
+          <td><span class="tag tag-reel">Reel</span></td>
+        </tr>
+        <tr>
+          <td class="date-cell">Apr 28</td>
+          <td class="day-cell">Tue</td>
+          <td>Behind the lyrics: the real story behind one specific moment in the song</td>
+          <td>Engage, reply, comment on others</td>
+          <td><span class="tag tag-reel">Reel</span></td>
+        </tr>
+        <tr>
+          <td class="date-cell">Apr 29</td>
+          <td class="day-cell">Wed</td>
+          <td>User-generated content: challenge fans to use the song in a reel</td>
+          <td>Share any fan content</td>
+          <td><span class="tag tag-post">Post</span></td>
+        </tr>
+        <tr>
+          <td class="date-cell">Apr 30</td>
+          <td class="day-cell">Thu</td>
+          <td>Live performance clip: you playing/singing the song acoustically</td>
+          <td>Streaming reminders</td>
+          <td><span class="tag tag-reel">Reel</span></td>
+        </tr>
+        <tr>
+          <td class="date-cell">May 1</td>
+          <td class="day-cell">Fri</td>
+          <td>Tease the future: "Brand New Me was just the beginning..."</td>
+          <td>Hint at what is next</td>
+          <td><span class="tag tag-post">Post</span></td>
+        </tr>
+        <tr>
+          <td class="date-cell">May 2</td>
+          <td class="day-cell">Sat</td>
+          <td>Lifestyle content. Keep it real. Stay visible.</td>
+          <td>Weekend stories</td>
+          <td><span class="tag tag-post">Post</span></td>
+        </tr>
+        <tr>
+          <td class="date-cell">May 3</td>
+          <td class="day-cell">Sun</td>
+          <td>Two-week recap: what you learned, what moved, what is next</td>
+          <td>Gratitude stories</td>
+          <td><span class="tag tag-post">Post</span></td>
+        </tr>
+        <tr>
+          <td class="date-cell">May 4</td>
+          <td class="day-cell">Mon</td>
+          <td>Forward-looking post: "The next chapter starts now."</td>
+          <td>Transition to regular posting rhythm</td>
+          <td><span class="tag tag-post">Post</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="gold-divider"><div class="gold-divider-line"></div></div>
+
+<section class="section" id="playbook">
+  <div class="section-header reveal">
+    <div class="section-number">05 / Social Media Playbook</div>
+    <h2 class="section-title">Content Strategy & Engagement</h2>
+    <p class="section-subtitle">Four content pillars, a posting rhythm, and engagement tactics that actually work for independent artists.</p>
+  </div>
+
+  <div class="pillar-grid reveal">
+    <div class="pillar-card">
+      <div class="pillar-icon">&#127928;</div>
+      <div class="pillar-name">The Sound</div>
+      <div class="pillar-desc">Audio snippets, studio clips, vocal takes, beat breakdowns. Let people hear the music in raw form before they hear the polished version. Tease the hook, the bridge, the opening bars.</div>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-icon">&#128220;</div>
+      <div class="pillar-name">The Story</div>
+      <div class="pillar-desc">The 10-year journey. The bad habits, the turning point, the transformation. This is what makes "Brand New Me" more than a song. People connect with honesty. Tell yours.</div>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-icon">&#127909;</div>
+      <div class="pillar-name">The Grind</div>
+      <div class="pillar-desc">Behind the scenes. The studio sessions, the long nights, the process of making music independently. Show people what it actually takes. This builds respect and investment.</div>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-icon">&#10013;&#65039;</div>
+      <div class="pillar-name">The Faith</div>
+      <div class="pillar-desc">Your testimony angle. This is not about preaching. It is about being real about where you were and where you are now. Your church community is your foundation. Lean into it.</div>
+    </div>
+  </div>
+
+  <div class="phase-card reveal" style="margin-top: 32px;">
+    <div class="phase-tag">Posting Times</div>
+    <div class="phase-name">When to Post</div>
+    <div class="phase-desc">For a 20s-and-up audience on Instagram, TikTok, and Facebook:</div>
+    <ul class="action-list">
+      <li><strong>Instagram Reels/Feed:</strong> Tuesday through Friday, 11am to 1pm or 7pm to 9pm. Avoid Monday mornings and late nights.</li>
+      <li><strong>TikTok:</strong> Tuesday through Thursday, 10am to 12pm or 7pm to 9pm. TikTok is more flexible. Post and see what sticks.</li>
+      <li><strong>Facebook:</strong> Wednesday through Friday, 1pm to 4pm. Facebook skews slightly older. Great for the faith community content.</li>
+      <li><strong>Stories:</strong> Throughout the day. Morning, midday, evening. Stories are low-pressure and high-frequency.</li>
+    </ul>
+  </div>
+
+  <div class="phase-card reveal" style="margin-top: 16px;">
+    <div class="phase-tag">Hashtag Strategy</div>
+    <div class="phase-name">Tags That Work</div>
+    <div class="phase-desc">Mix broad reach with niche discovery. Never use more than 15 hashtags on Instagram. TikTok is more forgiving.</div>
+    <ul class="action-list">
+      <li><strong>Broad reach:</strong> #NewMusic #IndependentArtist #CountryMusic #NewSingle #MusicRelease</li>
+      <li><strong>Genre specific:</strong> #SouthernRock #IndieCountry #CountryRock #TennesseeMusic #NashvilleSound</li>
+      <li><strong>Story driven:</strong> #Comeback #Transformation #BrandNew #NewChapter #FaithJourney</li>
+      <li><strong>Artist specific:</strong> #BL4INE #BrandNewMe (create these and use them on every post so they build over time)</li>
+    </ul>
+  </div>
+
+  <div class="phase-card reveal" style="margin-top: 16px;">
+    <div class="phase-tag">Engagement Tactics</div>
+    <div class="phase-name">Growth Moves</div>
+    <ul class="action-list">
+      <li><strong>Reply to every comment within the first hour.</strong> The algorithm prioritizes posts with fast engagement. Your reply counts as a comment too, doubling your count.</li>
+      <li><strong>Comment on 10 to 15 similar artists' posts daily.</strong> Not spam. Real comments. "This is fire" does not count. Write something that shows you actually watched or listened.</li>
+      <li><strong>Use question stickers and polls in stories.</strong> "What is your favorite line from the teaser?" or "Spotify or Apple Music?" Gets people tapping.</li>
+      <li><strong>DM people who share your content.</strong> Thank them personally. This turns casual supporters into loyal fans.</li>
+      <li><strong>Duet and stitch other TikToks in your genre.</strong> React to country music content, respond to songwriting prompts. Borrow their audience.</li>
+    </ul>
+  </div>
+</section>
+
+<div class="gold-divider"><div class="gold-divider-line"></div></div>
+
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-number">06 / Playlist Strategy</div>
+    <h2 class="section-title">Getting on Playlists</h2>
+    <p class="section-subtitle">Playlists are the single biggest driver of streams for independent artists. Here is exactly how to approach it.</p>
+  </div>
+
+  <div class="playlist-grid reveal">
+    <div class="playlist-card">
+      <div class="pl-title">Spotify Editorial</div>
+      <div class="pl-desc">Submit through Spotify for Artists at least 7 days before release. Write a compelling pitch: mention the genre blend, the story, the production quality. Be specific, not generic.</div>
+      <div class="pl-tags">
+        <span class="genre-tag">Hot Country</span>
+        <span class="genre-tag">New Music Friday</span>
+        <span class="genre-tag">Fresh Finds</span>
+        <span class="genre-tag">Indie Spotlight</span>
+      </div>
+    </div>
+    <div class="playlist-card">
+      <div class="pl-title">Independent Curators</div>
+      <div class="pl-desc">Find playlists with 500 to 50,000 followers in your genre. DM the curator on Instagram or submit through SubmitHub. Focus on playlists that match your exact sound.</div>
+      <div class="pl-tags">
+        <span class="genre-tag">Country Vibes</span>
+        <span class="genre-tag">Southern Rock</span>
+        <span class="genre-tag">Indie Country</span>
+        <span class="genre-tag">Christian Rock</span>
+      </div>
+    </div>
+    <div class="playlist-card">
+      <div class="pl-title">SubmitHub</div>
+      <div class="pl-desc">$10 to $20 in premium credits gets your song in front of verified curators and bloggers. They are required to listen and respond. Worth the investment for feedback alone, even if you do not land every playlist.</div>
+      <div class="pl-tags">
+        <span class="genre-tag">Country</span>
+        <span class="genre-tag">Rock</span>
+        <span class="genre-tag">Faith</span>
+        <span class="genre-tag">Singer-Songwriter</span>
+      </div>
+    </div>
+    <div class="playlist-card">
+      <div class="pl-title">Personal Playlists</div>
+      <div class="pl-desc">Ask every single person you know to add "Brand New Me" to their personal Spotify playlists. Every add tells the algorithm this song matters. This is the most underrated move in independent music.</div>
+      <div class="pl-tags">
+        <span class="genre-tag">Friends</span>
+        <span class="genre-tag">Family</span>
+        <span class="genre-tag">Church</span>
+        <span class="genre-tag">Community</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout reveal" style="margin-top: 32px;">
+    <div class="callout-title">Playlist Pitch Template</div>
+    <p>"Brand New Me" is a country-rock single from BL4INE., an independent Tennessee artist. The track covers a decade-long journey of personal transformation, blending southern rock storytelling with a modern indie sound. Influences include Ernest, Mac Miller, and Jelly Roll. The song is fully produced, mixed, and mastered, with cover art completed. Release date: April 20, 2026. This is a standalone single with strong crossover potential across country, rock, indie, and faith-based playlists.</p>
+  </div>
+</section>
+
+<div class="gold-divider"><div class="gold-divider-line"></div></div>
+
+<section class="section" id="budget">
+  <div class="section-header reveal">
+    <div class="section-number">07 / Budget Breakdown</div>
+    <h2 class="section-title">$300 Total. Every Dollar Working.</h2>
+    <p class="section-subtitle">You said $100 to $500. Here is the recommended $300 allocation that maximizes every phase of the rollout.</p>
+  </div>
+
+  <div class="budget-grid reveal">
+    <div class="budget-item">
+      <div class="budget-label">Phase 2: Teaser Ads</div>
+      <div class="budget-amount">$75</div>
+      <div class="budget-note">Boost teaser #1 on Instagram and Facebook. Target males 18-34 in Tennessee, country/rock interests.</div>
+    </div>
+    <div class="budget-item">
+      <div class="budget-label">Phase 3: Pre-Save Ads</div>
+      <div class="budget-amount">$75</div>
+      <div class="budget-note">Drive pre-save conversions with teaser #2. Point directly to HyperFollow link.</div>
+    </div>
+    <div class="budget-item">
+      <div class="budget-label">Phase 4-5: Release Ads</div>
+      <div class="budget-amount">$100</div>
+      <div class="budget-note">Release week push. Boost the best-performing content. Extend to post-release if numbers are strong.</div>
+    </div>
+    <div class="budget-item">
+      <div class="budget-label">DistroKid</div>
+      <div class="budget-amount">$22.99</div>
+      <div class="budget-note">Annual subscription. Unlimited uploads. Keeps 100% of royalties. This is the industry standard for independents.</div>
+    </div>
+    <div class="budget-item">
+      <div class="budget-label">Linktree</div>
+      <div class="budget-amount">$0</div>
+      <div class="budget-note">Free tier is enough for now. Upgrade to Pro ($5/mo) only if you need analytics and custom branding.</div>
+    </div>
+    <div class="budget-item budget-total">
+      <div class="budget-label">Total Recommended</div>
+      <div class="budget-amount">~$300</div>
+      <div class="budget-note">$27 held in reserve for unexpected opportunities (SubmitHub credits, last-minute ad push, local event entry).</div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-divider"><div class="gold-divider-line"></div></div>
+
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-number">08 / Key Metrics</div>
+    <h2 class="section-title">What to Track</h2>
+    <p class="section-subtitle">These are the numbers that tell you if the rollout is working. Check them daily during release week, weekly after that.</p>
+  </div>
+
+  <div class="metrics-grid reveal">
+    <div class="metric-card">
+      <div class="metric-icon">&#128278;</div>
+      <div class="metric-name">Pre-Saves</div>
+      <div class="metric-desc">Track through DistroKid HyperFollow analytics. Target: 100+ pre-saves.</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-icon">&#9654;&#65039;</div>
+      <div class="metric-name">Day 1 Streams</div>
+      <div class="metric-desc">Check Spotify for Artists. Day 1 is your biggest signal to the algorithm.</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-icon">&#128200;</div>
+      <div class="metric-name">Week 1 Streams</div>
+      <div class="metric-desc">Total streams across all platforms. This determines editorial playlist consideration.</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-icon">&#128190;</div>
+      <div class="metric-name">Spotify Saves</div>
+      <div class="metric-desc">Saves signal repeat listeners. One of the strongest algorithmic triggers on Spotify.</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-icon">&#127911;</div>
+      <div class="metric-name">Playlist Adds</div>
+      <div class="metric-desc">Both editorial and personal. Every add extends the song's lifespan.</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-icon">&#128101;</div>
+      <div class="metric-name">Follower Growth</div>
+      <div class="metric-desc">Track across IG, TikTok, Facebook. Look for spikes around content drops.</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-icon">&#128172;</div>
+      <div class="metric-name">Engagement Rate</div>
+      <div class="metric-desc">Likes + comments + shares divided by impressions. Healthy is 3%+ on IG.</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-icon">&#127925;</div>
+      <div class="metric-name">Shazam</div>
+      <div class="metric-desc">Check Shazam for Artists. Discoveries mean people are hearing it in the wild.</div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-divider"><div class="gold-divider-line"></div></div>
+
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-number">09 / The Bigger Picture</div>
+    <h2 class="section-title">Where This Goes</h2>
+    <p class="section-subtitle">You said your 12-month vision is touring, working on an album, hopefully signed, and doing music full-time. Here is how "Brand New Me" becomes the first step toward that.</p>
+  </div>
+
+  <div class="timeline reveal">
+    <div class="timeline-phase">
+      <div class="timeline-dot active"></div>
+      <div class="timeline-dates">April 2026</div>
+      <div class="timeline-phase-title">"Brand New Me" Release</div>
+      <ul class="timeline-items">
+        <li>Execute this rollout plan completely</li>
+        <li>Build the foundation of listeners and followers</li>
+        <li>Prove to yourself (and the industry) that people connect with this music</li>
+      </ul>
+    </div>
+    <div class="timeline-phase">
+      <div class="timeline-dot"></div>
+      <div class="timeline-dates">May - June 2026</div>
+      <div class="timeline-phase-title">Build on the Momentum</div>
+      <ul class="timeline-items">
+        <li>Book 2 to 3 local shows or open mic sets</li>
+        <li>If "Brand New Me" gains traction, release a follow-up single by June</li>
+        <li>Start building a proper website with a press page</li>
+        <li>Continue growing TikTok with consistent posting</li>
+      </ul>
+    </div>
+    <div class="timeline-phase">
+      <div class="timeline-dot"></div>
+      <div class="timeline-dates">Summer 2026</div>
+      <div class="timeline-phase-title">Expand the Reach</div>
+      <ul class="timeline-items">
+        <li>Release 2 to 3 more singles to build a catalog</li>
+        <li>Play regional shows in Tennessee and surrounding states</li>
+        <li>Explore music video production for the strongest track</li>
+        <li>Start conversations with booking agents and managers</li>
+      </ul>
+    </div>
+    <div class="timeline-phase">
+      <div class="timeline-dot"></div>
+      <div class="timeline-dates">Fall 2026</div>
+      <div class="timeline-phase-title">Album Mode</div>
+      <ul class="timeline-items">
+        <li>Begin work on the full album with a clear concept</li>
+        <li>Use existing singles as the foundation</li>
+        <li>Build toward an album release in Q1 2027</li>
+        <li>Grow the live show circuit</li>
+      </ul>
+    </div>
+    <div class="timeline-phase">
+      <div class="timeline-dot"></div>
+      <div class="timeline-dates">2027</div>
+      <div class="timeline-phase-title">Full-Time Music</div>
+      <ul class="timeline-items">
+        <li>Album release with a proper rollout and regional tour</li>
+        <li>If numbers support it, have real conversations with labels</li>
+        <li>Build the team: manager, booking agent, publicist</li>
+        <li>Transition to music full-time</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="gold-divider"><div class="gold-divider-line"></div></div>
+
+<section class="lyric-block reveal">
+  <div class="lyric-accent-line"></div>
+  <blockquote class="lyric-quote" style="font-size: clamp(18px, 3vw, 28px);">
+    You have already done the hardest part. You made the music. You lived the story. Now it is about letting people hear it.
+  </blockquote>
+</section>
+
+<footer class="footer reveal">
+  <p class="footer-tagline">Let's get "Brand New Me" into the world.</p>
+  <p class="footer-credit">Curated by <span class="gold">Jaden Flynn</span></p>
+</footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const heroElements = [
+      { el: document.getElementById('hero-label'), delay: 200 },
+      { el: document.getElementById('hero-title'), delay: 400 },
+      { el: document.getElementById('hero-subtitle'), delay: 600 },
+      { el: document.getElementById('hero-meta'), delay: 800 }
+    ];
+
+    heroElements.forEach(({ el, delay }) => {
+      setTimeout(() => {
+        el.style.transition = 'opacity 0.6s cubic-bezier(0.2, 0, 0, 1), transform 0.6s cubic-bezier(0.2, 0, 0, 1)';
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+      }, delay);
+    });
+
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const siblings = entry.target.parentElement.querySelectorAll('.reveal');
+          let siblingIndex = 0;
+          siblings.forEach((sib, i) => {
+            if (sib === entry.target) siblingIndex = i;
+          });
+
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, siblingIndex * 50);
+
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    reveals.forEach(el => observer.observe(el));
+  });
+
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+</body>
+</html>
