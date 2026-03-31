@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paperclip | The Operating System for AI Companies</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent: #3B82F6;
+            --accent-dim: #2563EB;
+            --accent-glow: rgba(59, 130, 246, 0.15);
+            --accent-subtle: rgba(59, 130, 246, 0.06);
+            --warm: #F59E0B;
+            --warm-glow: rgba(245, 158, 11, 0.12);
+            --bg-base: #09090b;
+            --bg-surface: #111113;
+            --bg-nested: #1a1a1e;
+            --bg-elevated: #222226;
+            --text-primary: rgba(255, 255, 255, 0.95);
+            --text-secondary: rgba(255, 255, 255, 0.55);
+            --text-tertiary: rgba(255, 255, 255, 0.28);
+            --separator: rgba(255, 255, 255, 0.07);
+            --card-shadow: 0 1px 3px rgba(0,0,0,0.5), 0 1px 2px rgba(0,0,0,0.4);
+            --card-shadow-hover: 0 8px 24px rgba(0,0,0,0.6), 0 2px 8px rgba(0,0,0,0.4);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            background: var(--bg-base);
+            color: var(--text-primary);
+            font-size: 17px;
+            line-height: 26px;
+            letter-spacing: -0.2px;
+            overflow-x: hidden;
+        }
+
+        /* Grain Overlay */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.4;
+        }
+
+        .page { position: relative; z-index: 1; }
+
+        /* Nav */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 14px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(9, 9, 11, 0.75);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border-bottom: 1px solid var(--separator);
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 8px var(--accent-glow);
+            animation: navPulse 3s ease-in-out infinite;
+        }
+
+        .nav-title {
+            font-family: 'Manrope', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: var(--text-primary);
+        }
+
+        .nav-right {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            color: var(--text-tertiary);
+            letter-spacing: 0.5px;
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 80px 32px 48px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.08), transparent 60%);
+            pointer-events: none;
+        }
+
+        .hero-eyebrow {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 24px;
+            opacity: 0;
+            animation: fadeUp 0.7s cubic-bezier(0.2, 0, 0, 1) 0.3s forwards;
+        }
+
+        .hero h1 {
+            font-family: 'Manrope', sans-serif;
+            font-size: clamp(40px, 6.5vw, 76px);
+            font-weight: 800;
+            letter-spacing: -3px;
+            line-height: 1.02;
+            max-width: 850px;
+            margin-bottom: 24px;
+            opacity: 0;
+            animation: fadeUp 0.7s cubic-bezier(0.2, 0, 0, 1) 0.5s forwards;
+        }
+
+        .hero h1 .blue { color: var(--accent); }
+
+        .hero-sub {
+            font-size: 19px;
+            color: var(--text-secondary);
+            max-width: 540px;
+            line-height: 30px;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeUp 0.7s cubic-bezier(0.2, 0, 0, 1) 0.7s forwards;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 48px;
+            opacity: 0;
+            animation: fadeUp 0.7s cubic-bezier(0.2, 0, 0, 1) 0.9s forwards;
+        }
+
+        .hero-stat-num {
+            font-family: 'Manrope', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text-primary);
+            letter-spacing: -1px;
+        }
+
+        .hero-stat-label {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            margin-top: 4px;
+        }
+
+        /* Paperclip Banner */
+        .pc-banner {
+            width: 100%;
+            max-width: 900px;
+            margin: 48px auto 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow-hover);
+            opacity: 0;
+            animation: fadeUp 0.7s cubic-bezier(0.2, 0, 0, 1) 1.1s forwards;
+        }
+
+        .pc-banner img {
+            width: 100%;
+            display: block;
+        }
+
+        /* Sections */
+        section {
+            padding: 96px 32px;
+            max-width: 1060px;
+            margin: 0 auto;
+        }
+
+        .section-eyebrow {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-family: 'Manrope', sans-serif;
+            font-size: 34px;
+            font-weight: 800;
+            letter-spacing: -1.2px;
+            line-height: 40px;
+            margin-bottom: 16px;
+        }
+
+        .section-desc {
+            font-size: 17px;
+            color: var(--text-secondary);
+            line-height: 28px;
+            max-width: 620px;
+            margin-bottom: 48px;
+        }
+
+        /* Feature Grid */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--bg-surface);
+            border-radius: 12px;
+            padding: 28px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--separator);
+            transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--card-shadow-hover);
+            border-color: rgba(59, 130, 246, 0.1);
+        }
+
+        .card-icon {
+            font-size: 22px;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .card h3 {
+            font-family: 'Manrope', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        .card p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 23px;
+        }
+
+        .card .tag {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        /* The Shift Section */
+        .shift-block {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 48px;
+        }
+
+        .shift-side {
+            padding: 40px;
+        }
+
+        .shift-old {
+            background: var(--bg-nested);
+            border-right: 1px solid var(--separator);
+        }
+
+        .shift-new {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.06), rgba(59, 130, 246, 0.02));
+        }
+
+        .shift-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .shift-old .shift-label { color: var(--text-tertiary); }
+        .shift-new .shift-label { color: var(--accent); }
+
+        .shift-side h3 {
+            font-family: 'Manrope', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.7px;
+            margin-bottom: 16px;
+        }
+
+        .shift-side p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 24px;
+        }
+
+        .shift-list {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .shift-list li {
+            font-size: 15px;
+            color: var(--text-secondary);
+            padding: 6px 0;
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            line-height: 22px;
+        }
+
+        .shift-list .dot {
+            color: var(--text-tertiary);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .shift-list .check {
+            color: var(--accent);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* Power Levels */
+        .power-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .power-card {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--separator);
+            transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+        }
+
+        .power-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--card-shadow-hover);
+        }
+
+        .power-header {
+            padding: 28px;
+        }
+
+        .power-free .power-header {
+            background: var(--bg-nested);
+        }
+
+        .power-api .power-header {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(59, 130, 246, 0.03));
+        }
+
+        .power-badge {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .power-header h3 {
+            font-family: 'Manrope', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.6px;
+            margin-bottom: 4px;
+        }
+
+        .power-price {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 14px;
+            color: var(--text-tertiary);
+        }
+
+        .power-body {
+            padding: 28px;
+            background: var(--bg-surface);
+        }
+
+        .power-body p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 24px;
+            margin-bottom: 20px;
+        }
+
+        .power-list {
+            list-style: none;
+        }
+
+        .power-list li {
+            font-size: 14px;
+            color: var(--text-secondary);
+            padding: 6px 0;
+            display: flex;
+            gap: 10px;
+            line-height: 20px;
+        }
+
+        .power-list .c { color: var(--accent); flex-shrink: 0; }
+        .power-list .n { color: var(--text-tertiary); flex-shrink: 0; }
+
+        /* Future Section */
+        .future-card {
+            background: var(--bg-surface);
+            border-radius: 12px;
+            padding: 40px;
+            border: 1px solid var(--separator);
+            box-shadow: var(--card-shadow);
+            margin-bottom: 20px;
+        }
+
+        .future-card h3 {
+            font-family: 'Manrope', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.7px;
+            margin-bottom: 12px;
+        }
+
+        .future-card p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 26px;
+        }
+
+        .future-card .tag {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--warm);
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        /* Quote Block */
+        .quote-block {
+            border-left: 3px solid var(--accent);
+            padding: 24px 32px;
+            margin: 48px 0;
+            background: var(--bg-surface);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .quote-block p {
+            font-family: 'Manrope', sans-serif;
+            font-size: 20px;
+            font-weight: 600;
+            line-height: 30px;
+            letter-spacing: -0.5px;
+            color: var(--text-primary);
+        }
+
+        .quote-block .attr {
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--text-tertiary);
+            margin-top: 12px;
+            display: block;
+        }
+
+        /* CTA */
+        .cta-section {
+            text-align: center;
+            padding: 96px 32px;
+            position: relative;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.06), transparent 65%);
+            pointer-events: none;
+        }
+
+        .cta-section .section-title {
+            max-width: 550px;
+            margin: 0 auto 16px;
+        }
+
+        .cta-section .section-desc {
+            margin: 0 auto 40px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            background: var(--accent);
+            color: #fff;
+            font-family: 'Manrope', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 32px rgba(59, 130, 246, 0.35);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            background: transparent;
+            color: var(--text-primary);
+            font-family: 'Manrope', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            border-radius: 10px;
+            text-decoration: none;
+            border: 1px solid var(--separator);
+            transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255,255,255,0.15);
+            background: var(--bg-surface);
+        }
+
+        /* Footer */
+        .footer-art {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            display: block;
+            opacity: 0.6;
+        }
+
+        footer {
+            text-align: center;
+            padding: 32px;
+            border-top: 1px solid var(--separator);
+        }
+
+        footer p {
+            font-size: 13px;
+            color: var(--text-tertiary);
+        }
+
+        footer a { color: var(--accent); text-decoration: none; }
+
+        /* Scroll Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.7s cubic-bezier(0.2, 0, 0, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes navPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            nav { padding: 14px 16px; }
+            section { padding: 64px 16px; }
+            .hero { padding: 80px 16px 48px; }
+            .grid-3 { grid-template-columns: 1fr; }
+            .grid-2 { grid-template-columns: 1fr; }
+            .shift-block { grid-template-columns: 1fr; }
+            .shift-old { border-right: none; border-bottom: 1px solid var(--separator); }
+            .power-grid { grid-template-columns: 1fr; }
+            .hero-stats { gap: 32px; }
+            .hero h1 { letter-spacing: -2px; }
+            .cta-buttons { flex-direction: column; align-items: center; }
+            .quote-block p { font-size: 18px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="page">
+
+    <nav>
+        <div class="nav-left">
+            <div class="nav-dot"></div>
+            <span class="nav-title">Paperclip</span>
+        </div>
+        <span class="nav-right">open source / march 2026</span>
+    </nav>
+
+    <!-- Hero -->
+    <div class="hero">
+        <div class="hero-eyebrow">The next era of AI is organizational</div>
+        <h1>Stop Using AI.<br>Start <span class="blue">Running</span> It.</h1>
+        <p class="hero-sub">Paperclip is the free, open-source platform that turns your AI agents into a coordinated company. Org charts, budgets, scheduling, governance, and a full audit trail. One dashboard.</p>
+
+        <div class="hero-stats">
+            <div>
+                <div class="hero-stat-num">30K+</div>
+                <div class="hero-stat-label">GitHub Stars</div>
+            </div>
+            <div>
+                <div class="hero-stat-num">3 Weeks</div>
+                <div class="hero-stat-label">To Get There</div>
+            </div>
+            <div>
+                <div class="hero-stat-num">$0</div>
+                <div class="hero-stat-label">License Cost</div>
+            </div>
+        </div>
+
+        <div class="pc-banner">
+            <img src="https://github.com/paperclipai/paperclip/raw/master/doc/assets/header.png" alt="Paperclip - runs your business" loading="lazy">
+        </div>
+    </div>
+
+    <!-- What It Is -->
+    <section>
+        <div class="reveal">
+            <div class="section-eyebrow">What It Is</div>
+            <div class="section-title">The Operating System for AI Companies</div>
+            <p class="section-desc">Everyone's using AI. Almost nobody is managing it. You've got a Claude window here, a ChatGPT tab there, maybe some scripts running somewhere. None of them know about each other. There's no structure, no visibility, no accountability. Paperclip is the layer that turns those disconnected tools into an operation.</p>
+        </div>
+
+        <div class="grid-3">
+            <div class="card reveal">
+                <span class="card-icon">&#9635;</span>
+                <h3>Org Charts</h3>
+                <p>Define roles, reporting lines, and scope. CEO agent delegates to department heads, who delegate to specialists. Real hierarchy, real structure.</p>
+            </div>
+            <div class="card reveal">
+                <span class="card-icon">&#9776;</span>
+                <h3>Ticketing</h3>
+                <p>Every instruction, response, tool call, and decision logged in an immutable, append-only record. Full traceability on everything.</p>
+            </div>
+            <div class="card reveal">
+                <span class="card-icon">&#9201;</span>
+                <h3>Heartbeat Scheduling</h3>
+                <p>Agents wake on a schedule, check their task queue, execute, and go back to sleep. You set the cadence. They run without you.</p>
+            </div>
+            <div class="card reveal">
+                <span class="card-icon">&#9878;</span>
+                <h3>Budget Controls</h3>
+                <p>Per-agent monthly caps. Alerts at 80%. Auto-pause at 100%. No runaway costs. Hard limits enforced by the system, not by willpower.</p>
+            </div>
+            <div class="card reveal">
+                <span class="card-icon">&#9881;</span>
+                <h3>Skills System</h3>
+                <p>Extend agents with installable workflow files. Like giving a new hire an SOP manual. They learn your process at runtime.</p>
+            </div>
+            <div class="card reveal">
+                <span class="card-icon">&#9745;</span>
+                <h3>Governance</h3>
+                <p>You're the board of directors. Agents can't hire other agents, execute strategies, or go rogue. Autonomy is granted, not assumed.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Shift -->
+    <section>
+        <div class="reveal">
+            <div class="section-eyebrow">The Shift</div>
+            <div class="section-title">A Scheduler is Not a Company</div>
+            <p class="section-desc">Most people using AI right now are running scripts and chat sessions. That's a scheduler. Paperclip is the upgrade to a company. Here's what actually changes.</p>
+        </div>
+
+        <div class="shift-block reveal">
+            <div class="shift-side shift-old">
+                <span class="shift-label">What You're Doing Now</span>
+                <h3>Disconnected Tools</h3>
+                <p>Every AI session runs in isolation. You're the one routing context between them, reading logs, and deciding what runs when.</p>
+                <ul class="shift-list">
+                    <li><span class="dot">&#8226;</span> No communication between agents</li>
+                    <li><span class="dot">&#8226;</span> Every execution starts from zero context</li>
+                    <li><span class="dot">&#8226;</span> You're the bottleneck for every decision</li>
+                    <li><span class="dot">&#8226;</span> No audit trail of what happened</li>
+                    <li><span class="dot">&#8226;</span> No cost visibility across sessions</li>
+                </ul>
+            </div>
+            <div class="shift-side shift-new">
+                <span class="shift-label">What Paperclip Does</span>
+                <h3>Coordinated Operations</h3>
+                <p>Agents talk to each other. Work delegates through an org chart. Context persists across tasks. Operations continue whether you're watching or not.</p>
+                <ul class="shift-list">
+                    <li><span class="check">&#10003;</span> Agents create tickets for other agents</li>
+                    <li><span class="check">&#10003;</span> Persistent work history and context</li>
+                    <li><span class="check">&#10003;</span> Work flows without your involvement</li>
+                    <li><span class="check">&#10003;</span> Every decision traced and logged</li>
+                    <li><span class="check">&#10003;</span> Per-agent budgets and cost tracking</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="quote-block reveal">
+            <p>"If OpenClaw is an employee, Paperclip is the company."</p>
+            <span class="attr">Paperclip Project Description</span>
+        </div>
+    </section>
+
+    <!-- Two Power Levels -->
+    <section>
+        <div class="reveal">
+            <div class="section-eyebrow">Two Power Levels</div>
+            <div class="section-title">Start Free. Scale When Ready.</div>
+            <p class="section-desc">Paperclip gives you two ways to power your agents. One costs nothing extra. The other unlocks multi-model agent teams with zero constraints.</p>
+        </div>
+
+        <div class="power-grid">
+            <div class="power-card power-free reveal">
+                <div class="power-header">
+                    <span class="power-badge">Start Here</span>
+                    <h3>Claude Code Subscription</h3>
+                    <span class="power-price">$0 extra</span>
+                </div>
+                <div class="power-body">
+                    <p>Already paying for Claude Code? Paperclip has a built-in Claude Code adapter. Each agent runs as a Claude Code session on your machine. Same subscription, same usage, no API keys, no per-token billing.</p>
+                    <ul class="power-list">
+                        <li><span class="c">&#10003;</span> Runs on your existing plan</li>
+                        <li><span class="c">&#10003;</span> No API keys to manage</li>
+                        <li><span class="c">&#10003;</span> Zero additional cost</li>
+                        <li><span class="n">&#8226;</span> Shared rate limits</li>
+                        <li><span class="n">&#8226;</span> Single model (Claude)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="power-card power-api reveal">
+                <div class="power-header">
+                    <span class="power-badge">Full Power</span>
+                    <h3>API Tokens</h3>
+                    <span class="power-price">Pay per token</span>
+                </div>
+                <div class="power-body">
+                    <p>API tokens are keys from AI providers (Anthropic, OpenAI, Google) that let your code call models directly. You pay per token (roughly per word) in and out. This is how production AI systems work. A typical agent task costs a few cents.</p>
+                    <ul class="power-list">
+                        <li><span class="c">&#10003;</span> Mix models: Claude + GPT + Gemini</li>
+                        <li><span class="c">&#10003;</span> Unlimited parallel agents</li>
+                        <li><span class="c">&#10003;</span> No rate limit bottlenecks</li>
+                        <li><span class="c">&#10003;</span> OpenRouter: one key, 200+ models</li>
+                        <li><span class="c">&#10003;</span> Per-agent, per-task cost tracking</li>
+                        <li><span class="c">&#10003;</span> Production-grade infrastructure</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Multi-Model -->
+    <section>
+        <div class="reveal">
+            <div class="section-eyebrow">Multi-Model Teams</div>
+            <div class="section-title">The Right Model for the Right Job</div>
+            <p class="section-desc">When you go API, you're not locked to one model. You assign the best model to each role. That's the real unlock.</p>
+        </div>
+
+        <div class="grid-2">
+            <div class="card reveal">
+                <span class="tag">Strategy</span>
+                <h3>Claude Opus for Leadership</h3>
+                <p>Your CEO agent handling complex decisions, reviewing strategy, and delegating work. The most capable reasoning model gets the hardest problems.</p>
+            </div>
+            <div class="card reveal">
+                <span class="tag">Speed</span>
+                <h3>Claude Haiku for Processing</h3>
+                <p>Your triage agent that needs to sort 50 items fast. Cheap, quick, and doesn't need to be the smartest. It needs to be the fastest.</p>
+            </div>
+            <div class="card reveal">
+                <span class="tag">Code</span>
+                <h3>Sonnet for Engineering</h3>
+                <p>Your dev agent writing scripts and automations. Best balance of capability and cost for code generation tasks.</p>
+            </div>
+            <div class="card reveal">
+                <span class="tag">Content</span>
+                <h3>GPT-4 for Client Copy</h3>
+                <p>Some models write better in certain formats. Your outreach agent might draft better emails on a different model. Use whatever works.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Opportunity -->
+    <section>
+        <div class="reveal">
+            <div class="section-eyebrow">The Opportunity</div>
+            <div class="section-title">You're Building a Second Business Inside Your Business</div>
+            <p class="section-desc">This is the part that should make you stop and think. What Paperclip actually enables is something much bigger than task automation.</p>
+        </div>
+
+        <div class="future-card reveal">
+            <span class="tag">The Concept</span>
+            <h3>An AI Workforce Running Parallel to Your Human Team</h3>
+            <p>Think about what's actually happening here. You're defining roles, assigning responsibilities, setting budgets, and managing output. That's a company. It just happens to be staffed by AI agents. They wake up on schedules, do real work, hand off tasks to each other, and report results. Your human team focuses on the high-leverage stuff. Your AI team handles the volume. Two workforces, one operation, and the AI side scales without adding payroll.</p>
+        </div>
+
+        <div class="future-card reveal">
+            <span class="tag">Where This is Headed</span>
+            <h3>Agents Paying Agents</h3>
+            <p>Right now, agents do work and you pay for the compute. But the trajectory is clear: agents that can transact with each other. Your content agent needs a graphic, so it pays a design agent to make one. Your research agent needs specialized data, so it pays an external data agent for access. When agents have budgets and can spend them, they start forming their own supply chains. That's not science fiction. That's where the org chart, budget controls, and governance in Paperclip are already pointing.</p>
+        </div>
+
+        <div class="future-card reveal">
+            <span class="tag">The Crypto Connection</span>
+            <h3>Blockchain Was Built for This</h3>
+            <p>When machines need to pay machines, traditional banking doesn't work. No bank is processing a $0.003 transaction between two AI agents at 3am on a Tuesday. But a smart contract will. Crypto and blockchain were designed for exactly this: trustless, programmable, instant payments between parties that don't know each other. Stablecoins for value transfer, smart contracts for service agreements, on-chain records for accountability. The entire crypto infrastructure that's been waiting for a real use case? Autonomous AI agents transacting with each other might be it.</p>
+        </div>
+
+        <div class="future-card reveal">
+            <span class="tag">The Bigger Picture</span>
+            <h3>First Movers Build the Infrastructure Everyone Else Rents</h3>
+            <p>The businesses that figure out AI operations now are the ones that will own the playbooks, the workflows, and the institutional knowledge when this becomes standard. Everyone will eventually run AI workforces. The question is whether you're building the infrastructure or renting someone else's. Paperclip is open source. It runs on your machines. You own everything. That matters when this becomes the default way businesses operate.</p>
+        </div>
+    </section>
+
+    <!-- How to Start -->
+    <section>
+        <div class="reveal">
+            <div class="section-eyebrow">Getting Started</div>
+            <div class="section-title">One Command. Five Minutes.</div>
+            <p class="section-desc">Paperclip is a Node.js server with a React dashboard. It ships with an embedded database. Nothing to configure.</p>
+        </div>
+
+        <div class="grid-3">
+            <div class="card reveal" style="text-align: center;">
+                <span class="card-icon">&#9654;</span>
+                <h3>Install</h3>
+                <p style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--accent); background: var(--bg-nested); padding: 8px 12px; border-radius: 6px; margin-top: 8px;">npx paperclipai onboard --yes</p>
+            </div>
+            <div class="card reveal" style="text-align: center;">
+                <span class="card-icon">&#9998;</span>
+                <h3>Hire Agents</h3>
+                <p>Pick an adapter (Claude Code, OpenClaw, scripts, webhooks), assign a role and scope. Build your org chart.</p>
+            </div>
+            <div class="card reveal" style="text-align: center;">
+                <span class="card-icon">&#9776;</span>
+                <h3>Assign Work</h3>
+                <p>Create tickets, set goals, and let agents pick up tasks on their heartbeat schedule. Watch from the dashboard.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <div class="cta-section">
+        <div class="reveal">
+            <div class="section-eyebrow">Your Move</div>
+            <div class="section-title">30,000 devs got on this in three weeks. The window is open.</div>
+            <p class="section-desc">Free. Open source. Runs on your machine. Your data never leaves your network. There is no reason not to look at this today.</p>
+            <div class="cta-buttons">
+                <a href="https://github.com/paperclipai/paperclip" target="_blank" class="btn-primary">
+                    GitHub Repo
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+                <a href="https://paperclip.ing/" target="_blank" class="btn-secondary">
+                    Official Site
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <img src="https://github.com/paperclipai/paperclip/raw/master/doc/assets/footer.jpg" alt="Paperclip" class="footer-art" loading="lazy">
+
+    <footer>
+        <p>Built by <a href="#">Chief</a>. March 2026.</p>
+    </footer>
+
+</div>
+
+<script>
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
