@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paperclip | The Future of Your Business</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --green: #00E676;
+            --green-dim: #00C853;
+            --green-glow: rgba(0, 230, 118, 0.15);
+            --green-subtle: rgba(0, 230, 118, 0.06);
+            --bg-base: #0a0a0a;
+            --bg-surface: #111111;
+            --bg-nested: #1a1a1a;
+            --text-primary: rgba(255, 255, 255, 1);
+            --text-secondary: rgba(255, 255, 255, 0.6);
+            --text-tertiary: rgba(255, 255, 255, 0.3);
+            --separator: rgba(255, 255, 255, 0.08);
+            --card-shadow: 0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
+            --card-shadow-hover: 0 4px 14px rgba(0,0,0,0.5), 0 2px 6px rgba(0,0,0,0.35);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-base);
+            color: var(--text-primary);
+            font-size: 17px;
+            line-height: 22px;
+            letter-spacing: -0.43px;
+            overflow-x: hidden;
+        }
+
+        /* Matrix Rain Canvas */
+        #matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.04;
+            pointer-events: none;
+        }
+
+        .page-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Nav */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(12px) saturate(180%);
+            -webkit-backdrop-filter: blur(12px) saturate(180%);
+            border-bottom: 1px solid var(--separator);
+        }
+
+        .nav-logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--green);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .nav-tag {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 12px;
+            color: var(--text-tertiary);
+            letter-spacing: 0.12px;
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 48px 32px;
+            position: relative;
+        }
+
+        .hero-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--green);
+            margin-bottom: 32px;
+            opacity: 0;
+            animation: fadeUp 0.8s cubic-bezier(0.2, 0, 0, 1) 0.2s forwards;
+        }
+
+        .hero h1 {
+            font-family: 'Sora', sans-serif;
+            font-size: clamp(42px, 7vw, 80px);
+            font-weight: 800;
+            letter-spacing: -2.5px;
+            line-height: 1.05;
+            max-width: 900px;
+            margin-bottom: 24px;
+            opacity: 0;
+            animation: fadeUp 0.8s cubic-bezier(0.2, 0, 0, 1) 0.4s forwards;
+        }
+
+        .hero h1 .green { color: var(--green); }
+
+        .hero-sub {
+            font-size: 20px;
+            font-weight: 400;
+            color: var(--text-secondary);
+            max-width: 560px;
+            line-height: 28px;
+            letter-spacing: -0.6px;
+            margin-bottom: 48px;
+            opacity: 0;
+            animation: fadeUp 0.8s cubic-bezier(0.2, 0, 0, 1) 0.6s forwards;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 32px;
+            background: var(--green);
+            color: #000;
+            font-family: 'Sora', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: -0.2px;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+            box-shadow: 0 0 24px rgba(0, 230, 118, 0.2);
+            opacity: 0;
+            animation: fadeUp 0.8s cubic-bezier(0.2, 0, 0, 1) 0.8s forwards;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 40px rgba(0, 230, 118, 0.35);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            opacity: 0;
+            animation: fadeUp 0.8s cubic-bezier(0.2, 0, 0, 1) 1.2s forwards;
+        }
+
+        .scroll-indicator span {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 32px;
+            background: linear-gradient(to bottom, var(--green), transparent);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* Sections */
+        section {
+            padding: 96px 32px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--green);
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-family: 'Sora', sans-serif;
+            font-size: 34px;
+            font-weight: 700;
+            letter-spacing: -1.05px;
+            line-height: 41px;
+            margin-bottom: 16px;
+        }
+
+        .section-desc {
+            font-size: 17px;
+            color: var(--text-secondary);
+            line-height: 26px;
+            max-width: 640px;
+            margin-bottom: 48px;
+        }
+
+        /* Stat Bar */
+        .stat-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1px;
+            background: var(--separator);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 96px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .stat-item {
+            background: var(--bg-surface);
+            padding: 32px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Sora', sans-serif;
+            font-size: 34px;
+            font-weight: 800;
+            color: var(--green);
+            letter-spacing: -1px;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            letter-spacing: 0.03px;
+        }
+
+        /* Feature Cards */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: var(--bg-surface);
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+            border: 1px solid var(--separator);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--green-glow), transparent);
+            opacity: 0;
+            transition: opacity 0.3s cubic-bezier(0.2, 0, 0, 1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--card-shadow-hover);
+            border-color: rgba(0, 230, 118, 0.12);
+        }
+
+        .feature-card:hover::before { opacity: 1; }
+
+        .feature-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: var(--green-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        .feature-card h3 {
+            font-family: 'Sora', sans-serif;
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: -0.6px;
+            line-height: 25px;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 22px;
+            letter-spacing: 0px;
+        }
+
+        /* How It Works */
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            position: relative;
+        }
+
+        .steps::before {
+            content: '';
+            position: absolute;
+            left: 23px;
+            top: 48px;
+            bottom: 48px;
+            width: 1px;
+            background: linear-gradient(to bottom, var(--green), var(--green-dim), transparent);
+        }
+
+        .step {
+            display: flex;
+            gap: 32px;
+            padding: 32px 0;
+            align-items: flex-start;
+        }
+
+        .step-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--green);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 230, 118, 0.25);
+            background: var(--bg-surface);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-content h3 {
+            font-family: 'Sora', sans-serif;
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: -0.6px;
+            margin-bottom: 8px;
+        }
+
+        .step-content p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 24px;
+        }
+
+        .step-content code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            background: var(--bg-nested);
+            padding: 3px 8px;
+            border-radius: 6px;
+            color: var(--green);
+            border: 1px solid var(--separator);
+        }
+
+        /* Why MSP Section */
+        .why-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .why-card {
+            background: var(--bg-surface);
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--separator);
+            transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+        }
+
+        .why-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--card-shadow-hover);
+        }
+
+        .why-card h3 {
+            font-family: 'Sora', sans-serif;
+            font-size: 17px;
+            font-weight: 600;
+            letter-spacing: -0.43px;
+            margin-bottom: 8px;
+        }
+
+        .why-card p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 22px;
+        }
+
+        .why-card .tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--green);
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        /* Comparison */
+        .compare-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+        }
+
+        .compare-table th {
+            font-family: 'Sora', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            padding: 16px 24px;
+            text-align: left;
+            background: var(--bg-nested);
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--separator);
+        }
+
+        .compare-table th:last-child {
+            color: var(--green);
+        }
+
+        .compare-table td {
+            padding: 16px 24px;
+            font-size: 15px;
+            background: var(--bg-surface);
+            border-bottom: 1px solid var(--separator);
+            color: var(--text-secondary);
+        }
+
+        .compare-table tr:last-child td { border-bottom: none; }
+
+        .compare-table td:first-child {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .compare-table td:last-child {
+            color: var(--green);
+            font-weight: 500;
+        }
+
+        /* Path Comparison */
+        .path-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .path-card {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--separator);
+            transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+        }
+
+        .path-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--card-shadow-hover);
+        }
+
+        .path-header {
+            padding: 32px;
+            position: relative;
+        }
+
+        .path-free {
+            background: var(--bg-nested);
+        }
+
+        .path-pro {
+            background: linear-gradient(135deg, rgba(0, 230, 118, 0.12), rgba(0, 200, 83, 0.05));
+            border-bottom: 1px solid rgba(0, 230, 118, 0.15);
+        }
+
+        .path-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--green);
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .path-header h3 {
+            font-family: 'Sora', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.7px;
+            margin-bottom: 8px;
+        }
+
+        .path-price {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 15px;
+            color: var(--text-secondary);
+        }
+
+        .path-body {
+            padding: 32px;
+            background: var(--bg-surface);
+        }
+
+        .path-desc {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 24px;
+            margin-bottom: 24px;
+        }
+
+        .path-list {
+            list-style: none;
+            margin-bottom: 24px;
+        }
+
+        .path-list li {
+            font-size: 15px;
+            color: var(--text-secondary);
+            padding: 8px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            line-height: 20px;
+        }
+
+        .path-list .check {
+            color: var(--text-tertiary);
+            font-size: 14px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .path-list .green-check {
+            color: var(--green);
+        }
+
+        .path-list .neutral {
+            color: var(--text-tertiary);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .path-verdict {
+            font-size: 15px;
+            color: var(--text-primary);
+            line-height: 24px;
+            padding-top: 16px;
+            border-top: 1px solid var(--separator);
+            font-weight: 500;
+        }
+
+        /* Token Breakdown */
+        .token-breakdown {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .token-block {
+            background: var(--bg-surface);
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--separator);
+        }
+
+        .token-label {
+            font-family: 'Sora', sans-serif;
+            font-size: 17px;
+            font-weight: 600;
+            letter-spacing: -0.43px;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .token-block p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 24px;
+        }
+
+        /* Unlock Callout */
+        .unlock-callout {
+            margin-top: 48px;
+            background: linear-gradient(135deg, rgba(0, 230, 118, 0.08), rgba(0, 230, 118, 0.02));
+            border: 1px solid rgba(0, 230, 118, 0.15);
+            border-radius: 12px;
+            padding: 32px;
+            display: flex;
+            gap: 24px;
+            align-items: flex-start;
+        }
+
+        .unlock-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            background: rgba(0, 230, 118, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .unlock-text h3 {
+            font-family: 'Sora', sans-serif;
+            font-size: 17px;
+            font-weight: 600;
+            letter-spacing: -0.43px;
+            margin-bottom: 8px;
+            color: var(--green);
+        }
+
+        .unlock-text p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 24px;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            padding: 96px 32px;
+            position: relative;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(0, 230, 118, 0.06), transparent 70%);
+            pointer-events: none;
+        }
+
+        .cta-section .section-title {
+            max-width: 600px;
+            margin: 0 auto 16px;
+        }
+
+        .cta-section .section-desc {
+            margin: 0 auto 48px;
+            max-width: 480px;
+        }
+
+        .cta-links {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .cta-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 32px;
+            background: var(--green);
+            color: #000;
+            font-family: 'Sora', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+            box-shadow: 0 0 24px rgba(0, 230, 118, 0.2);
+        }
+
+        .cta-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 40px rgba(0, 230, 118, 0.35);
+        }
+
+        .cta-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 32px;
+            background: transparent;
+            color: var(--text-primary);
+            font-family: 'Sora', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 10px;
+            text-decoration: none;
+            border: 1px solid var(--separator);
+            transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+        }
+
+        .cta-secondary:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.2);
+            background: var(--bg-surface);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 48px 32px;
+            border-top: 1px solid var(--separator);
+        }
+
+        footer p {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            letter-spacing: 0.03px;
+        }
+
+        footer a {
+            color: var(--green);
+            text-decoration: none;
+        }
+
+        /* Scroll Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: all 0.8s cubic-bezier(0.2, 0, 0, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Keyframes */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            nav { padding: 16px 16px; }
+            section { padding: 64px 16px; }
+            .hero { padding: 48px 16px; }
+            .hero h1 { letter-spacing: -1.5px; }
+            .feature-grid { grid-template-columns: 1fr; }
+            .why-grid { grid-template-columns: 1fr; }
+            .stat-bar { grid-template-columns: 1fr 1fr; }
+            .step { gap: 20px; }
+            .steps::before { left: 23px; }
+            .compare-table { font-size: 13px; }
+            .compare-table th, .compare-table td { padding: 12px 16px; }
+            .cta-links { flex-direction: column; align-items: center; }
+            .path-grid { grid-template-columns: 1fr; }
+            .unlock-callout { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="matrix-rain"></canvas>
+
+<div class="page-wrapper">
+
+    <nav>
+        <div class="nav-logo">paperclip</div>
+        <div class="nav-tag">Built for Rik by Chief</div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="hero">
+        <div class="hero-badge">Open Source. Free. Yours.</div>
+        <h1>Your AI Agents Need a <span class="green">Company</span></h1>
+        <p class="hero-sub">Paperclip is the open-source operating system that turns disconnected AI sessions into a coordinated workforce. Org charts, budgets, scheduling, full audit trails. One dashboard.</p>
+        <a href="https://github.com/paperclipai/paperclip" target="_blank" class="hero-cta">
+            View on GitHub
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </div>
+
+    <!-- Stats -->
+    <section>
+        <div class="stat-bar reveal">
+            <div class="stat-item">
+                <div class="stat-number">30K+</div>
+                <div class="stat-label">GitHub Stars in 3 Weeks</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">$0</div>
+                <div class="stat-label">Cost (Open Source)</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">< 5 min</div>
+                <div class="stat-label">Setup Time</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Your Infrastructure</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What Is Paperclip -->
+    <section>
+        <div class="reveal">
+            <div class="section-label">The Problem</div>
+            <div class="section-title">You've Got AI Tools. You Don't Have AI Operations.</div>
+            <p class="section-desc">Right now you might have a Claude session open here, a Grok window there, maybe a script running somewhere else. Each one works in isolation. None of them know about each other. There's no structure, no accountability, no visibility into what's actually getting done. Paperclip fixes that.</p>
+        </div>
+
+        <div class="feature-grid">
+            <div class="feature-card reveal">
+                <div class="feature-icon">&#9635;</div>
+                <h3>Org Chart for AI</h3>
+                <p>Define roles: ops manager, content lead, support agent, auditor. Each agent knows its scope, who it reports to, and what it's responsible for. Real structure, not chaos.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon">&#9776;</div>
+                <h3>Ticketing System</h3>
+                <p>You communicate through structured tickets. Every instruction, response, and tool call is logged in an immutable, append-only record. Nothing happens in the dark.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon">&#9201;</div>
+                <h3>Heartbeat Scheduling</h3>
+                <p>Agents don't sit in a chat window waiting for you. They wake up on a schedule, check their task queue, execute, and go back to sleep. You set the cadence.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon">&#9878;</div>
+                <h3>Budget Controls</h3>
+                <p>Per-agent monthly spending caps with alerts at 80% and automatic pausing at 100%. No runaway costs, no surprise bills. Hard limits enforced by the system.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon">&#9881;</div>
+                <h3>Skills System</h3>
+                <p>Extend agents with installable skills that teach them domain-specific workflows. Write an SOP once, and every agent that needs it can learn your process on the fly.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon">&#9745;</div>
+                <h3>Full Governance</h3>
+                <p>You sit as the board of directors. Agents can't hire new agents, execute strategies, or make moves without your approval. Autonomy is a privilege you grant, not a default.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section>
+        <div class="reveal">
+            <div class="section-label">How It Works</div>
+            <div class="section-title">From Install to Operations in Minutes</div>
+            <p class="section-desc">Paperclip runs locally on your machine. It's a Node.js server with a React dashboard. Ships with an embedded database so there's nothing to configure on first run.</p>
+        </div>
+
+        <div class="steps">
+            <div class="step reveal">
+                <div class="step-num">01</div>
+                <div class="step-content">
+                    <h3>Install</h3>
+                    <p>One command: <code>npx paperclipai onboard --yes</code>. That's it. The server starts, the dashboard opens, and you're looking at an empty company ready to build.</p>
+                </div>
+            </div>
+            <div class="step reveal">
+                <div class="step-num">02</div>
+                <div class="step-content">
+                    <h3>Hire Agents</h3>
+                    <p>Create roles and assign agents. Pick an adapter (Claude Code, OpenClaw, custom scripts, webhooks) and give each agent a name, role, and scope. Define who reports to who.</p>
+                </div>
+            </div>
+            <div class="step reveal">
+                <div class="step-num">03</div>
+                <div class="step-content">
+                    <h3>Assign Work</h3>
+                    <p>Create tickets with goals and instructions. Agents pick up work on their next heartbeat. Cross-team delegation flows automatically through the org chart.</p>
+                </div>
+            </div>
+            <div class="step reveal">
+                <div class="step-num">04</div>
+                <div class="step-content">
+                    <h3>Monitor Everything</h3>
+                    <p>One dashboard shows every agent's status, task progress, cost, and complete audit trail. Every decision traced. Every tool call logged. Total visibility.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why This Matters for MSPs -->
+    <section>
+        <div class="reveal">
+            <div class="section-label">Why This Matters for You</div>
+            <div class="section-title">Think About What This Does for an MSP</div>
+            <p class="section-desc">You're running a managed services operation with a lean team. Every hour you spend on internal ops is an hour you're not spending on billable client work. Now imagine this:</p>
+        </div>
+
+        <div class="why-grid">
+            <div class="why-card reveal">
+                <span class="tag">Automation</span>
+                <h3>Ticket Triage Agent</h3>
+                <p>An AI agent that wakes up every 30 minutes, checks incoming tickets, categorizes severity, routes to the right person, and drafts initial responses. Before your team even looks at the queue, it's organized.</p>
+            </div>
+            <div class="why-card reveal">
+                <span class="tag">Reporting</span>
+                <h3>QBR Generator</h3>
+                <p>An agent that pulls client data on a monthly schedule, generates Quarterly Business Review decks, flags trending issues, and has the draft ready for your review before the meeting.</p>
+            </div>
+            <div class="why-card reveal">
+                <span class="tag">Security</span>
+                <h3>Compliance Auditor</h3>
+                <p>Schedule an agent to run security configuration checks across client environments weekly. It logs findings, flags drift from baselines, and generates remediation tickets automatically.</p>
+            </div>
+            <div class="why-card reveal">
+                <span class="tag">Operations</span>
+                <h3>Documentation Agent</h3>
+                <p>Every time a ticket gets resolved, an agent reviews the resolution, updates the internal knowledge base, and identifies gaps in your runbooks. Your documentation stays current without anyone doing it manually.</p>
+            </div>
+            <div class="why-card reveal">
+                <span class="tag">Sales</span>
+                <h3>Outreach Manager</h3>
+                <p>An agent that monitors local business listings, identifies prospects matching your ideal client profile, drafts personalized outreach, and queues it for your approval. Pipeline building on autopilot.</p>
+            </div>
+            <div class="why-card reveal">
+                <span class="tag">Monitoring</span>
+                <h3>Alert Analyzer</h3>
+                <p>Instead of your team wading through noise, an agent pre-processes monitoring alerts, correlates related events, filters false positives, and surfaces only what actually needs human attention.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison -->
+    <section>
+        <div class="reveal">
+            <div class="section-label">The Difference</div>
+            <div class="section-title">Scripts and Chat Windows vs. Paperclip</div>
+            <p class="section-desc">Here's what changes when you move from scattered AI usage to a structured AI operation.</p>
+        </div>
+
+        <table class="compare-table reveal">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Without Paperclip</th>
+                    <th>With Paperclip</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Agent Visibility</td>
+                    <td>Check each session manually</td>
+                    <td>One dashboard, all agents</td>
+                </tr>
+                <tr>
+                    <td>Accountability</td>
+                    <td>No record of decisions</td>
+                    <td>Immutable audit trail</td>
+                </tr>
+                <tr>
+                    <td>Cost Control</td>
+                    <td>Hope for the best</td>
+                    <td>Per-agent budgets, auto-pause</td>
+                </tr>
+                <tr>
+                    <td>Scheduling</td>
+                    <td>Cron scripts, manual triggers</td>
+                    <td>Built-in heartbeat system</td>
+                </tr>
+                <tr>
+                    <td>Delegation</td>
+                    <td>Copy-paste between windows</td>
+                    <td>Automatic cross-agent routing</td>
+                </tr>
+                <tr>
+                    <td>Governance</td>
+                    <td>Agents do whatever they want</td>
+                    <td>Approval gates, role scoping</td>
+                </tr>
+                <tr>
+                    <td>Onboarding New Agents</td>
+                    <td>Write a new script from scratch</td>
+                    <td>Define role, assign adapter, done</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Two Paths -->
+    <section>
+        <div class="reveal">
+            <div class="section-label">Two Ways to Run It</div>
+            <div class="section-title">Claude Code Subscription vs. API Tokens</div>
+            <p class="section-desc">Paperclip gives you two paths to power your agents. One costs nothing extra. The other unlocks the full potential of multi-model AI operations. Here's the difference and why it matters.</p>
+        </div>
+
+        <!-- Path Comparison -->
+        <div class="path-grid reveal">
+            <div class="path-card">
+                <div class="path-header path-free">
+                    <span class="path-badge">Starting Point</span>
+                    <h3>Claude Code Subscription</h3>
+                    <div class="path-price">$0 extra</div>
+                </div>
+                <div class="path-body">
+                    <p class="path-desc">If you already pay for a Claude Code plan (Pro or Max), Paperclip has a built-in Claude Code adapter. Each agent you "hire" runs as a Claude Code session on your machine, using your existing subscription. No API key needed. No per-token billing. No surprise charges.</p>
+                    <ul class="path-list">
+                        <li><span class="check">&#10003;</span> Runs on your existing subscription</li>
+                        <li><span class="check">&#10003;</span> No API keys to manage</li>
+                        <li><span class="check">&#10003;</span> Zero additional cost</li>
+                        <li><span class="check">&#10003;</span> Full Claude Code capabilities per agent</li>
+                        <li><span class="neutral">&#8226;</span> Limited by subscription rate limits</li>
+                        <li><span class="neutral">&#8226;</span> One model only (Claude)</li>
+                        <li><span class="neutral">&#8226;</span> Agents share the same usage pool</li>
+                    </ul>
+                    <p class="path-verdict">This is how you start. Get Paperclip running, build your org chart, and prove the concept with 2-3 agents on staggered schedules. No financial risk.</p>
+                </div>
+            </div>
+
+            <div class="path-card">
+                <div class="path-header path-pro">
+                    <span class="path-badge">Full Power</span>
+                    <h3>API Tokens</h3>
+                    <div class="path-price">Pay per token</div>
+                </div>
+                <div class="path-body">
+                    <p class="path-desc">API tokens are keys you get directly from AI providers (Anthropic, OpenAI, Google, etc.) that let you call their models programmatically. Instead of chatting through an app, your code sends requests and gets responses. You pay per token (roughly per word) that goes in and comes out. This is how production AI systems work.</p>
+                    <ul class="path-list">
+                        <li><span class="check green-check">&#10003;</span> Mix models: Claude for reasoning, GPT for drafting, Gemini for analysis</li>
+                        <li><span class="check green-check">&#10003;</span> No rate limits (scales with spend)</li>
+                        <li><span class="check green-check">&#10003;</span> Agents run fully parallel, no shared pool</li>
+                        <li><span class="check green-check">&#10003;</span> Access via OpenRouter: one key, dozens of models</li>
+                        <li><span class="check green-check">&#10003;</span> Fine-grained cost tracking per agent, per task</li>
+                        <li><span class="check green-check">&#10003;</span> Production-grade: the same way real companies deploy AI</li>
+                        <li><span class="check green-check">&#10003;</span> Paperclip budget controls prevent runaway spending</li>
+                    </ul>
+                    <p class="path-verdict">This is where it gets serious. When you need 5+ agents running simultaneously, different models for different jobs, and zero bottlenecks, API tokens remove every constraint.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How API Tokens Work -->
+    <section>
+        <div class="reveal">
+            <div class="section-label">How API Tokens Actually Work</div>
+            <div class="section-title">Think of It Like Hiring Contractors vs. Full-Time</div>
+            <p class="section-desc">Your Claude Code subscription is like a salaried employee. Fixed cost, always available, but you only get one person. API tokens are like hiring contractors. You pay by the hour, but you can hire as many as you need, from any firm, all working at the same time.</p>
+        </div>
+
+        <div class="token-breakdown reveal">
+            <div class="token-block">
+                <div class="token-label">What's a Token?</div>
+                <p>A token is roughly one word (sometimes part of a word). When you send a prompt to an AI model via API, you pay for the tokens going in (your instructions) and the tokens coming out (the response). For example, Claude Sonnet costs about $3 per million input tokens and $15 per million output tokens. A typical agent task might use 5,000-20,000 tokens total, costing a few cents.</p>
+            </div>
+            <div class="token-block">
+                <div class="token-label">Where Do You Get Them?</div>
+                <p>You sign up at the provider's developer platform (console.anthropic.com for Claude, platform.openai.com for GPT, etc.), add a credit card, and generate an API key. That key goes into Paperclip's config. Or use OpenRouter, which gives you one API key that routes to 200+ models from every major provider.</p>
+            </div>
+            <div class="token-block">
+                <div class="token-label">Why Would You Pay Per Token?</div>
+                <p>Because it removes every bottleneck. Your subscription plan has rate limits: only so many requests per minute, only so many concurrent sessions. API tokens scale with your wallet. Need 10 agents running at the same time? Done. Need one agent on Claude and another on GPT-4 because it's better at a specific task? Done. This is how you go from "AI assistant" to "AI workforce."</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Unlock -->
+    <section>
+        <div class="reveal">
+            <div class="section-label">The Unlock</div>
+            <div class="section-title">Multi-Model Agent Teams Change Everything</div>
+            <p class="section-desc">When you're running agents via API, you're not locked to one model. You pick the best model for each job. That's the real power move.</p>
+        </div>
+
+        <div class="why-grid">
+            <div class="why-card reveal">
+                <span class="tag">Best for Reasoning</span>
+                <h3>Claude Opus for Strategy</h3>
+                <p>Your CEO agent that reviews goals, makes decisions, and delegates work. Claude Opus is the best reasoning model on the market. Give it the hard problems.</p>
+            </div>
+            <div class="why-card reveal">
+                <span class="tag">Best for Speed</span>
+                <h3>Claude Haiku for Triage</h3>
+                <p>Your ticket triage agent that needs to process 50 alerts fast. Haiku is cheap and quick. It doesn't need to be the smartest, it needs to be the fastest.</p>
+            </div>
+            <div class="why-card reveal">
+                <span class="tag">Best for Code</span>
+                <h3>Claude Sonnet for Scripting</h3>
+                <p>Your PowerShell factory agent that generates deployment scripts. Sonnet hits the sweet spot between capability and cost for code generation tasks.</p>
+            </div>
+            <div class="why-card reveal">
+                <span class="tag">Best for Content</span>
+                <h3>GPT-4 for Client Emails</h3>
+                <p>Some models write more naturally for certain formats. Assign your outreach agent to GPT-4 if it drafts better client-facing copy. Use the right tool for the job.</p>
+            </div>
+        </div>
+
+        <div class="unlock-callout reveal">
+            <div class="unlock-icon">&#9889;</div>
+            <div class="unlock-text">
+                <h3>The Bottom Line</h3>
+                <p>Start with your Claude Code subscription. It costs nothing extra and proves the concept. When you see the value and want to remove the guardrails, add API tokens and go multi-model. Paperclip handles both. You scale when you're ready, not before.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Extras -->
+    <section>
+        <div class="feature-grid reveal" style="grid-template-columns: 1fr 1fr 1fr;">
+            <div class="feature-card" style="text-align: center;">
+                <div class="feature-icon" style="margin: 0 auto 20px;">&#9889;</div>
+                <h3>Free & Open Source</h3>
+                <p>MIT licensed. Run it on your own machine. No vendor lock-in. Fork it if you want.</p>
+            </div>
+            <div class="feature-card" style="text-align: center;">
+                <div class="feature-icon" style="margin: 0 auto 20px;">&#9731;</div>
+                <h3>Your Data Stays Local</h3>
+                <p>Everything runs on your infrastructure. No third-party cloud. No data leaving your network.</p>
+            </div>
+            <div class="feature-card" style="text-align: center;">
+                <div class="feature-icon" style="margin: 0 auto 20px;">&#9733;</div>
+                <h3>Clipmart Coming</h3>
+                <p>A marketplace of pre-built company templates. Download an entire MSP ops team and customize it.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <div class="cta-section">
+        <div class="reveal">
+            <div class="section-label">Next Move</div>
+            <div class="section-title">This is the kind of thing you look at now, not later.</div>
+            <p class="section-desc">30,000 developers jumped on this in three weeks. The MSP that figures out AI operations first wins the market. Be that MSP.</p>
+            <div class="cta-links">
+                <a href="https://github.com/paperclipai/paperclip" target="_blank" class="cta-primary">
+                    GitHub Repo
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+                <a href="https://paperclip.ing/" target="_blank" class="cta-secondary">
+                    Official Site
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Put together by <a href="#">Chief</a> for Rik Richter at Richter Technology. March 2026.</p>
+    </footer>
+
+</div>
+
+<script>
+    // Matrix Rain
+    const canvas = document.getElementById('matrix-rain');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789';
+    const fontSize = 14;
+    let columns = Math.floor(canvas.width / fontSize);
+    let drops = Array(columns).fill(1);
+
+    function drawMatrix() {
+        ctx.fillStyle = 'rgba(10, 10, 10, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#00E676';
+        ctx.font = fontSize + 'px monospace';
+
+        for (let i = 0; i < drops.length; i++) {
+            const text = chars[Math.floor(Math.random() * chars.length)];
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                drops[i] = 0;
+            }
+            drops[i]++;
+        }
+    }
+
+    setInterval(drawMatrix, 50);
+
+    window.addEventListener('resize', () => {
+        columns = Math.floor(canvas.width / fontSize);
+        drops = Array(columns).fill(1);
+    });
+
+    // Scroll Reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.classList.add('visible');
+                }, index * 50);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
