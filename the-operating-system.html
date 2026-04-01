@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE OPERATING SYSTEM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-base: #0A0A0C;
+    --bg-surface: #111114;
+    --bg-nested: #18181C;
+    --bg-elevated: #1E1E24;
+    --gold: #C5A55A;
+    --gold-dim: rgba(197,165,90,0.15);
+    --gold-glow: rgba(197,165,90,0.25);
+    --text-primary: rgba(255,255,255,0.92);
+    --text-secondary: rgba(255,255,255,0.58);
+    --text-tertiary: rgba(255,255,255,0.32);
+    --separator: rgba(255,255,255,0.08);
+    --hormozi-red: #E8453C;
+    --garyvee-blue: #3B82F6;
+    --mylett-green: #22C55E;
+    --radius-card: 12px;
+    --radius-btn: 8px;
+    --spring: cubic-bezier(0.2, 0, 0, 1);
+    --spring-snappy: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --font-display: 'Space Mono', monospace;
+    --font-body: 'Instrument Sans', -apple-system, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.5;
+    letter-spacing: -0.43px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── GLASS NAV ─── */
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(10,10,12,0.72);
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding: 0 24px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-brand {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 8px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: var(--radius-btn);
+    transition: all 0.15s var(--spring);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .nav-links a:hover {
+    color: var(--gold);
+    background: var(--gold-dim);
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    padding: 120px 24px 64px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(197,165,90,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-label {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    opacity: 0;
+    animation: fadeUp 0.6s var(--spring) 0.1s forwards;
+  }
+
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 6vw, 56px);
+    font-weight: 700;
+    letter-spacing: -2px;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    opacity: 0;
+    animation: fadeUp 0.6s var(--spring) 0.2s forwards;
+  }
+
+  .hero h1 span { color: var(--gold); }
+
+  .hero-sub {
+    font-size: 17px;
+    color: var(--text-secondary);
+    max-width: 560px;
+    margin: 0 auto;
+    opacity: 0;
+    animation: fadeUp 0.6s var(--spring) 0.3s forwards;
+  }
+
+  .mentor-tags {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.6s var(--spring) 0.4s forwards;
+  }
+
+  .mentor-tag {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 9999px;
+    font-weight: 700;
+  }
+
+  .mentor-tag.hormozi {
+    color: var(--hormozi-red);
+    background: rgba(232,69,60,0.1);
+    border: 1px solid rgba(232,69,60,0.2);
+  }
+
+  .mentor-tag.garyvee {
+    color: var(--garyvee-blue);
+    background: rgba(59,130,246,0.1);
+    border: 1px solid rgba(59,130,246,0.2);
+  }
+
+  .mentor-tag.mylett {
+    color: var(--mylett-green);
+    background: rgba(34,197,94,0.1);
+    border: 1px solid rgba(34,197,94,0.2);
+  }
+
+  /* ─── SECTIONS ─── */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  section {
+    padding: 64px 0;
+    border-top: 1px solid var(--separator);
+  }
+
+  .section-header {
+    margin-bottom: 32px;
+  }
+
+  .section-label {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.8px;
+    line-height: 1.2;
+  }
+
+  .section-desc {
+    color: var(--text-secondary);
+    margin-top: 8px;
+    font-size: 15px;
+    max-width: 640px;
+  }
+
+  /* ─── CARDS ─── */
+  .card {
+    background: var(--bg-surface);
+    border-radius: var(--radius-card);
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
+    transition: all 0.3s var(--spring);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.15), 0 2px 6px rgba(0,0,0,0.1);
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  .card h3 {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card p, .card li {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .card ul li {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--separator);
+    position: relative;
+    padding-left: 16px;
+  }
+
+  .card ul li:last-child { border-bottom: none; }
+
+  .card ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 14px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+
+  .source-tag {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 700;
+  }
+
+  .source-tag.h { color: var(--hormozi-red); background: rgba(232,69,60,0.1); }
+  .source-tag.g { color: var(--garyvee-blue); background: rgba(59,130,246,0.1); }
+  .source-tag.m { color: var(--mylett-green); background: rgba(34,197,94,0.1); }
+
+  /* ─── SCHEDULE TABLE ─── */
+  .schedule {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+  }
+
+  .schedule th {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-align: left;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--gold-dim);
+  }
+
+  .schedule td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--separator);
+    vertical-align: top;
+  }
+
+  .schedule tr:last-child td { border-bottom: none; }
+
+  .schedule .time-col {
+    font-family: var(--font-display);
+    font-size: 13px;
+    color: var(--gold);
+    white-space: nowrap;
+    width: 120px;
+  }
+
+  .schedule .block-name {
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .schedule .block-desc {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-top: 4px;
+  }
+
+  /* ─── FRAMEWORK BLOCKS ─── */
+  .framework {
+    background: var(--bg-surface);
+    border-radius: var(--radius-card);
+    padding: 32px;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
+    border-left: 3px solid;
+  }
+
+  .framework.hormozi { border-left-color: var(--hormozi-red); }
+  .framework.garyvee { border-left-color: var(--garyvee-blue); }
+  .framework.mylett { border-left-color: var(--mylett-green); }
+
+  .framework h3 {
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .framework h4 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-top: 16px;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+  }
+
+  .framework p, .framework li {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  .framework ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .framework ul li {
+    padding: 6px 0;
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .framework ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 14px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+
+  .framework .equation {
+    background: var(--bg-nested);
+    border-radius: var(--radius-btn);
+    padding: 16px 24px;
+    margin: 16px 0;
+    font-family: var(--font-display);
+    font-size: 15px;
+    text-align: center;
+    color: var(--gold);
+    letter-spacing: 0.5px;
+  }
+
+  /* ─── QUOTE BLOCKS ─── */
+  .quote-block {
+    background: var(--bg-surface);
+    border-radius: var(--radius-card);
+    padding: 24px 32px;
+    margin-bottom: 16px;
+    position: relative;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
+  }
+
+  .quote-block::before {
+    content: '"';
+    font-family: var(--font-display);
+    font-size: 48px;
+    color: var(--gold-dim);
+    position: absolute;
+    top: 8px;
+    left: 16px;
+    line-height: 1;
+  }
+
+  .quote-block p {
+    font-size: 17px;
+    font-style: italic;
+    color: var(--text-primary);
+    line-height: 1.6;
+    padding-left: 24px;
+  }
+
+  .quote-block .attribution {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-top: 8px;
+    padding-left: 24px;
+  }
+
+  /* ─── WEEKLY GRID ─── */
+  .week-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    margin-top: 24px;
+  }
+
+  .day-card {
+    background: var(--bg-surface);
+    border-radius: var(--radius-btn);
+    padding: 12px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
+  }
+
+  .day-card .day-name {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 8px;
+  }
+
+  .day-card .day-type {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .day-card .day-focus {
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  .day-card.maker { border-top: 2px solid var(--hormozi-red); }
+  .day-card.manager { border-top: 2px solid var(--garyvee-blue); }
+  .day-card.flex { border-top: 2px solid var(--mylett-green); }
+
+  /* ─── CONTENT CALENDAR ─── */
+  .content-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin-top: 16px;
+  }
+
+  .content-table th {
+    font-family: var(--font-display);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--gold-dim);
+  }
+
+  .content-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--separator);
+    color: var(--text-secondary);
+  }
+
+  .content-table tr:last-child td { border-bottom: none; }
+
+  /* ─── PRINCIPLES LIST ─── */
+  .principle {
+    display: flex;
+    gap: 16px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--separator);
+  }
+
+  .principle:last-child { border-bottom: none; }
+
+  .principle-num {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--gold);
+    min-width: 48px;
+    line-height: 1;
+    padding-top: 4px;
+  }
+
+  .principle-content h4 {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .principle-content p {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    text-align: center;
+    padding: 48px 24px;
+    border-top: 1px solid var(--separator);
+    color: var(--text-tertiary);
+    font-size: 13px;
+  }
+
+  .footer .gold { color: var(--gold); }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: all 0.6s var(--spring);
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .week-grid { grid-template-columns: repeat(3, 1fr); }
+    .nav-links { display: none; }
+    .framework { padding: 20px; }
+    .card { padding: 20px; }
+    section { padding: 48px 0; }
+  }
+
+  @media (max-width: 480px) {
+    .week-grid { grid-template-columns: repeat(2, 1fr); }
+    .container { padding: 0 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════ NAVIGATION ═══════ -->
+<nav class="nav">
+  <div class="nav-brand">The Operating System</div>
+  <ul class="nav-links">
+    <li><a href="#schedule">Schedule</a></li>
+    <li><a href="#frameworks">Frameworks</a></li>
+    <li><a href="#content">Content</a></li>
+    <li><a href="#mindset">Mindset</a></li>
+    <li><a href="#sales">Sales</a></li>
+    <li><a href="#principles">Principles</a></li>
+  </ul>
+</nav>
+
+<!-- ═══════ HERO ═══════ -->
+<header class="hero">
+  <div class="hero-label">Flynn Development // 2026</div>
+  <h1>The <span>Operating System</span></h1>
+  <p class="hero-sub">How Jaden Flynn runs his day, builds his brands, and hits $1.2M. Distilled from the playbooks of the three best in the game.</p>
+  <div class="mentor-tags">
+    <span class="mentor-tag hormozi">Hormozi</span>
+    <span class="mentor-tag garyvee">Gary Vee</span>
+    <span class="mentor-tag mylett">Ed Mylett</span>
+  </div>
+</header>
+
+<div class="container">
+
+<!-- ═══════ SECTION 1: THE DAILY SCHEDULE ═══════ -->
+<section id="schedule">
+  <div class="section-header">
+    <div class="section-label">01 // Daily Architecture</div>
+    <h2 class="section-title">The Three-Day Day</h2>
+    <p class="section-desc">Ed Mylett's time compression framework applied to your life. Three 6-hour "mini-days" inside every 24 hours. Each one gets a full day's intensity. You live 21 days every week while everyone else lives 7.</p>
+  </div>
+
+  <div class="card" style="overflow-x: auto;">
+    <table class="schedule">
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Block</th>
+          <th>What Happens</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="time-col">6:30 AM</td>
+          <td>
+            <div class="block-name">Wake + Prime</div>
+          </td>
+          <td>
+            <div class="block-desc">Coffee. No phone for 20 min. Prayer/visualization. Program your RAS: see the $1.2M, see the closed deals, see the finished builds. This is Mylett's reticular activating system work. What you focus on first, your brain hunts for all day. You don't need to be a 5AM guy. You need to be intentional with the first minutes you're awake.</div>
+          </td>
+        </tr>
+        <tr>
+          <td class="time-col">7:00 - 8:00</td>
+          <td>
+            <div class="block-name" style="color: var(--garyvee-blue);">Content Block</div>
+          </td>
+          <td>
+            <div class="block-desc"><strong>This is sacred.</strong> Gary Vee says the #1 mistake business owners make is going dark on content. Before your phone starts ringing, before subs need answers, you CREATE. Film 1-2 short videos, write posts, document what you're building. This is your "document don't create" window. One hour, every morning, before construction takes over. Even on busy days, you get this hour in.</div>
+          </td>
+        </tr>
+        <tr style="background: var(--bg-nested); border-radius: 8px;">
+          <td class="time-col" style="color: var(--mylett-green);">8:00</td>
+          <td>
+            <div class="block-name" style="color: var(--mylett-green);">Mini-Day 1 Reset</div>
+          </td>
+          <td>
+            <div class="block-desc">Content morning is DONE. Assess: did you create? Did you post? Check it off. Now shift gears completely. You're entering construction mode.</div>
+          </td>
+        </tr>
+        <tr>
+          <td class="time-col">8:00 - 12:00</td>
+          <td>
+            <div class="block-name" style="color: var(--hormozi-red);">Build + Manage</div>
+          </td>
+          <td>
+            <div class="block-desc">Jobsites, crew management, client calls, subs, inspections. This is your Hormozi "manager" block. Stack meetings back-to-back. No gaps between calls. Protect your maker time by batching all management here. Anything Jordan or your crew can handle, delegate it.</div>
+          </td>
+        </tr>
+        <tr style="background: var(--bg-nested); border-radius: 8px;">
+          <td class="time-col" style="color: var(--mylett-green);">12:00</td>
+          <td>
+            <div class="block-name" style="color: var(--mylett-green);">Mini-Day 2 Reset</div>
+          </td>
+          <td>
+            <div class="block-desc">Construction morning is DONE. Eat. Reassess. What got done? What didn't? Recalibrate for the afternoon. This is Mylett's "three evaluations per day" system. Most people evaluate once (at night, when it's too late to fix anything).</div>
+          </td>
+        </tr>
+        <tr>
+          <td class="time-col">12:30 - 2:00</td>
+          <td>
+            <div class="block-name" style="color: var(--hormozi-red);">Highest Leverage Work</div>
+          </td>
+          <td>
+            <div class="block-desc">This is your Hormozi "maker" block. The work that moves the needle most. Closing deals. Writing proposals. Following up with pipeline leads. Updating The Target. This is where the $1.2M lives. Hormozi says: "What is the highest-value activity I could do right now?" Do that. Nothing else.</div>
+          </td>
+        </tr>
+        <tr>
+          <td class="time-col">2:00 - 5:00</td>
+          <td>
+            <div class="block-name">Sell + Prospect</div>
+          </td>
+          <td>
+            <div class="block-desc">The sell-stop cycle is your biggest enemy. This block exists to kill it. Every single day: follow-up calls, new lead outreach, ad review, pipeline movement. Gary Vee: "You're one phone call away from changing your business." Hormozi: "Volume x Leverage = Output." Make the calls.</div>
+          </td>
+        </tr>
+        <tr style="background: var(--bg-nested); border-radius: 8px;">
+          <td class="time-col" style="color: var(--mylett-green);">5:00</td>
+          <td>
+            <div class="block-name" style="color: var(--mylett-green);">Mini-Day 3 Reset</div>
+          </td>
+          <td>
+            <div class="block-desc">Work day is DONE. Final assessment. What moved? What's blocked? Update The Target dashboard. Log any deals closed, payments received, pipeline changes. This is your daily scoreboard.</div>
+          </td>
+        </tr>
+        <tr>
+          <td class="time-col">5:00 - 6:30</td>
+          <td>
+            <div class="block-name">Gym</div>
+          </td>
+          <td>
+            <div class="block-desc">Non-negotiable. Hormozi, Gary Vee, and Mylett all train every single day. This is YOUR time. The discipline that holds everything else together. Train hard, decompress from the work day, reset your mind before family time.</div>
+          </td>
+        </tr>
+        <tr>
+          <td class="time-col">6:30 - 9:00</td>
+          <td>
+            <div class="block-name">Family + Dinner</div>
+          </td>
+          <td>
+            <div class="block-desc">Megan time. Dinner. Be present. No work talk unless she brings it up. Gary Vee is ruthless about being present with family when he's with them. This window recharges you for the night session.</div>
+          </td>
+        </tr>
+        <tr>
+          <td class="time-col">9:00 - 11:30</td>
+          <td>
+            <div class="block-name" style="color: var(--gold);">The Lab</div>
+          </td>
+          <td>
+            <div class="block-desc"><strong>You and Megan in the office.</strong> This is your secret weapon. The deep work session where the real building happens. Code, design, strategy, RoofPact, BCH, client projects, side ventures. Gary Vee's $1.80 engagement strategy fits here too: scroll, engage, post while winding down. Hormozi reads 1-2 hours every night. Mix in learning with building. This session is where empires get built while everyone else is watching Netflix.</div>
+          </td>
+        </tr>
+        <tr>
+          <td class="time-col">11:30 PM</td>
+          <td>
+            <div class="block-name">Lights Out</div>
+          </td>
+          <td>
+            <div class="block-desc">7 hours of sleep. Hormozi: "Sleep is the highest ROI activity." Consistent bedtime, consistent wake time. The night sessions are powerful but only if you protect the shutdown. 11:30 is the wall. No exceptions.</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════ SECTION 2: WEEKLY ARCHITECTURE ═══════ -->
+<section id="weekly">
+  <div class="section-header">
+    <div class="section-label">02 // Weekly Architecture</div>
+    <h2 class="section-title">Maker vs Manager Week</h2>
+    <p class="section-desc">Hormozi's weekly structure: batch meetings on manager days, protect maker days ruthlessly. One interruption on a maker day costs 10% of your weekly output.</p>
+  </div>
+
+  <div class="week-grid">
+    <div class="day-card manager">
+      <div class="day-name">Mon</div>
+      <div class="day-type">Manager</div>
+      <div class="day-focus">Meetings, crew sync, subs, client calls</div>
+    </div>
+    <div class="day-card manager">
+      <div class="day-name">Tue</div>
+      <div class="day-type">Manager</div>
+      <div class="day-focus">Jobsite visits, inspections, vendor calls</div>
+    </div>
+    <div class="day-card maker">
+      <div class="day-name">Wed</div>
+      <div class="day-type">Maker</div>
+      <div class="day-focus">Deep work. Proposals, deals, strategy. Zero meetings.</div>
+    </div>
+    <div class="day-card maker">
+      <div class="day-name">Thu</div>
+      <div class="day-type">Maker</div>
+      <div class="day-focus">Content batch day. Film, write, build assets.</div>
+    </div>
+    <div class="day-card maker">
+      <div class="day-name">Fri</div>
+      <div class="day-type">Maker</div>
+      <div class="day-focus">Sales push. Pipeline, follow-ups, closing.</div>
+    </div>
+    <div class="day-card flex">
+      <div class="day-name">Sat</div>
+      <div class="day-type">Flex</div>
+      <div class="day-focus">Catch-up, side projects, RoofPact, BCH</div>
+    </div>
+    <div class="day-card flex">
+      <div class="day-name">Sun</div>
+      <div class="day-type">Rest</div>
+      <div class="day-focus">Family, church, plan next week, recharge</div>
+    </div>
+  </div>
+
+  <div class="framework hormozi" style="margin-top: 24px;">
+    <h3><span class="source-tag h">Hormozi</span> Booking Rule</h3>
+    <p>Meetings book from the END of the day backward. First meeting Friday = 5PM, next = 4:30PM, etc. This protects your mornings for deep work. If someone needs you, they get the last slot available, not the first.</p>
+  </div>
+</section>
+
+<!-- ═══════ SECTION 3: BUSINESS FRAMEWORKS ═══════ -->
+<section id="frameworks">
+  <div class="section-header">
+    <div class="section-label">03 // Business Frameworks</div>
+    <h2 class="section-title">The Playbooks</h2>
+    <p class="section-desc">Core frameworks from all three mentors. These aren't theories. These are the exact systems they used to build 9-figure businesses.</p>
+  </div>
+
+  <div class="framework hormozi">
+    <h3><span class="source-tag h">Hormozi</span> The Value Equation</h3>
+    <p>Every offer you make (Flynn Dev proposals, Modern Dev consulting tiers, RoofPact memberships) should be evaluated through this lens:</p>
+    <div class="equation">Value = (Dream Outcome x Perceived Likelihood) / (Time Delay x Effort & Sacrifice)</div>
+    <h4>How to apply this to Flynn Dev:</h4>
+    <ul>
+      <li><strong>Increase Dream Outcome:</strong> Don't sell a house. Sell the life they'll live in it. The dinner parties, the kids growing up there, the equity growth. Paint the movie.</li>
+      <li><strong>Increase Perceived Likelihood:</strong> Portfolio, testimonials, process documentation, the client portal, the Modern Dev consulting articles. Every piece of content you create raises this.</li>
+      <li><strong>Decrease Time Delay:</strong> Fast communication, clear timelines, the draw schedule guidance, weekly updates via the client portal. Make them feel like it's happening NOW.</li>
+      <li><strong>Decrease Effort & Sacrifice:</strong> This is why Modern Dev Consulting exists. You take the complexity out of building. The client portal, the budget tracker, the article library. They don't have to figure anything out.</li>
+    </ul>
+  </div>
+
+  <div class="framework hormozi">
+    <h3><span class="source-tag h">Hormozi</span> The Four Types of Leverage</h3>
+    <p>Ranked from least to most scalable:</p>
+    <ul>
+      <li><strong>Labor:</strong> Jordan, Gavin, Kord, your subs. Scales linearly. You pay more to get more done. This is where Flynn Dev is now.</li>
+      <li><strong>Capital:</strong> Using money to make money. Meta ads, investing in equipment, buying tools. Your $75/day ad spend is capital leverage.</li>
+      <li><strong>Code:</strong> Automation, AI, systems. Chief, BidKit, the client portal, RoofPact's SaaS platform. This works 24/7 without headcount. You're already building this.</li>
+      <li><strong>Media:</strong> Content that works forever. A video you post today can generate leads in 2028. Blog posts, social content, your consulting articles. This is why the content block is first every morning. It's a compounding asset.</li>
+    </ul>
+    <p style="margin-top: 16px; color: var(--text-primary); font-weight: 600;">Code and media are "permissionless leverage." They don't need approval, hiring, or ongoing cost. Stack these aggressively.</p>
+  </div>
+
+  <div class="framework mylett">
+    <h3><span class="source-tag m">Mylett</span> The Thermostat Theory</h3>
+    <p>Your identity is a thermostat. It's set at a certain temperature. If your thermostat is set at $500K and you hit $800K, you'll unconsciously "turn on the air conditioning" and cool yourself back down. You'll stop selling, stop marketing, stop pushing. Sound familiar?</p>
+    <h4>How to raise your thermostat to $1.2M:</h4>
+    <ul>
+      <li><strong>Faith:</strong> Believe you're a $1.2M/year operator. Not hope. Belief. Pray on it. Visualize it. See yourself closing the deals that get you there.</li>
+      <li><strong>Associations:</strong> You become the average of who you spend time with. If your crew is at $100K, you'll gravitate there. Find people operating at $2-5M. Masterminds, events, online communities. The Hormozi Skool community. Builder groups.</li>
+      <li><strong>Promises to self:</strong> Keep every promise you make to yourself. Wake up when you say you will. Post when you say you will. Call the leads when you say you will. Every kept promise raises the thermostat one degree.</li>
+    </ul>
+  </div>
+
+  <div class="framework mylett">
+    <h3><span class="source-tag m">Mylett</span> The RAS (Reticular Activating System)</h3>
+    <p>Your brain has a built-in filter that decides what information reaches your conscious awareness. When you buy a new truck, suddenly you see that truck everywhere. It was always there. Your brain just wasn't tuned to it.</p>
+    <h4>How to program it:</h4>
+    <ul>
+      <li>Every morning during your prime block: visualize the specific deals, the specific number, the specific life you're building</li>
+      <li>Break the $1.2M into monthly ($100K/mo net), then weekly ($25K/week). See that number. Feel it.</li>
+      <li>Your brain will start spotting opportunities you've been walking past. Leads you'd have ignored. Partnerships you'd have missed. Upsells you'd have left on the table.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════ SECTION 4: CONTENT STRATEGY ═══════ -->
+<section id="content">
+  <div class="section-header">
+    <div class="section-label">04 // Content Strategy</div>
+    <h2 class="section-title">The Content Machine</h2>
+    <p class="section-desc">Gary Vee's content model + Hormozi's content system. One pillar piece becomes 30+ micro-content pieces. You spend 2 days creating, the system distributes for the other 28.</p>
+  </div>
+
+  <div class="framework garyvee">
+    <h3><span class="source-tag g">Gary Vee</span> The Reverse Pyramid</h3>
+    <h4>Step 1: Create One Pillar Piece</h4>
+    <p>Film yourself on the jobsite. Walk through a build. Explain a budget. Answer a common question. This takes 5-10 minutes. Do it during your content block.</p>
+    <h4>Step 2: Chop It Into Micro-Content</h4>
+    <ul>
+      <li>1 long-form video (YouTube/Facebook) = the pillar</li>
+      <li>3-5 short clips (TikTok, Reels, Shorts) = pulled from the best moments</li>
+      <li>5-10 quote graphics or carousel posts = key insights as images</li>
+      <li>1-2 written posts (LinkedIn, Facebook) = expand on one point from the video</li>
+      <li>1 thread (X/Twitter) = test ideas, see what resonates</li>
+    </ul>
+    <h4>Step 3: Distribute Contextually</h4>
+    <p>Each platform has its own culture. What works on TikTok doesn't work on LinkedIn. Adapt the format, not the message. Same core value, different packaging.</p>
+  </div>
+
+  <div class="framework hormozi">
+    <h3><span class="source-tag h">Hormozi</span> Content Creation System</h3>
+    <p>Hormozi's team posted 35,000 pieces of content in 40 months. He only spent 2 days per month creating. Here's how:</p>
+    <ul>
+      <li><strong>Test on X/Twitter first:</strong> Post your thoughts as tweets. The ones that get the most engagement become video scripts.</li>
+      <li><strong>Batch film:</strong> One day per week (Thursday in your schedule), film 10-15 short videos. That's 2-3 weeks of content in one session.</li>
+      <li><strong>Revenue per impression matters more than views:</strong> 1,000 views from homeowners looking to build is worth more than 100,000 views from random people. Target your content to your buyer.</li>
+    </ul>
+  </div>
+
+  <div class="framework garyvee">
+    <h3><span class="source-tag g">Gary Vee</span> The $1.80 Strategy</h3>
+    <p>Daily engagement that builds your audience organically. Do this during your 5:00-6:30 PM engage block:</p>
+    <ul>
+      <li>Find 10 hashtags relevant to your niche (#customhome, #homebuilder, #newconstruction, #cookeville, #tnbuilder, etc.)</li>
+      <li>Go to the top 9 posts for each hashtag</li>
+      <li>Leave a thoughtful comment on each one. Not "nice post." Actually engage. Add value. Share your perspective.</li>
+      <li>That's 90 touchpoints per day. 90 people who now see your name and profile.</li>
+      <li>Do this consistently and you'll build a real community, not just a follower count.</li>
+    </ul>
+  </div>
+
+  <div class="card" style="margin-top: 24px;">
+    <h3>Weekly Content Calendar</h3>
+    <table class="content-table">
+      <thead>
+        <tr>
+          <th>Day</th>
+          <th>Create</th>
+          <th>Post</th>
+          <th>Engage</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="font-weight: 600;">Mon</td>
+          <td>1 jobsite walkthrough video</td>
+          <td>Repurposed clips from last week</td>
+          <td>$1.80 strategy (90 comments)</td>
+        </tr>
+        <tr>
+          <td style="font-weight: 600;">Tue</td>
+          <td>1 tip/lesson video</td>
+          <td>Quote graphic + written post</td>
+          <td>$1.80 strategy</td>
+        </tr>
+        <tr>
+          <td style="font-weight: 600;">Wed</td>
+          <td>None (maker day)</td>
+          <td>Scheduled content auto-posts</td>
+          <td>Light engagement, DM replies</td>
+        </tr>
+        <tr>
+          <td style="font-weight: 600;">Thu</td>
+          <td style="color: var(--gold); font-weight: 600;">BATCH DAY: Film 8-12 videos</td>
+          <td>Carousel or before/after post</td>
+          <td>$1.80 strategy</td>
+        </tr>
+        <tr>
+          <td style="font-weight: 600;">Fri</td>
+          <td>1 sales-focused video (CTA)</td>
+          <td>Client testimonial or project reveal</td>
+          <td>$1.80 strategy</td>
+        </tr>
+        <tr>
+          <td style="font-weight: 600;">Sat</td>
+          <td>Optional: BCH or personal brand</td>
+          <td>Personal/lifestyle content</td>
+          <td>Casual engagement</td>
+        </tr>
+        <tr>
+          <td style="font-weight: 600;">Sun</td>
+          <td>Rest</td>
+          <td>Motivational or faith post</td>
+          <td>Rest</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════ SECTION 5: MINDSET ═══════ -->
+<section id="mindset">
+  <div class="section-header">
+    <div class="section-label">05 // Mindset Operating System</div>
+    <h2 class="section-title">The Mental Game</h2>
+    <p class="section-desc">The frameworks that keep you operating at peak when the work gets heavy, the deals slow down, and the voice in your head says "good enough."</p>
+  </div>
+
+  <div class="framework mylett">
+    <h3><span class="source-tag m">Mylett</span> Blissful Dissatisfaction</h3>
+    <p>You can be grateful and hungry at the same time. Most people think you have to choose. Mylett says that's a trap.</p>
+    <ul>
+      <li><strong>Blissful:</strong> Be genuinely thankful for Megan, for the business, for the crew, for the opportunity. Celebrate wins. Let yourself feel it.</li>
+      <li><strong>Dissatisfied:</strong> Never confuse gratitude with satisfaction. The gap between where you are and where you could be is what drives you. $621K contracted is incredible. But it's not $1.2M.</li>
+      <li><strong>The key:</strong> Don't let celebrating stop you from pushing. And don't let pushing stop you from celebrating. Hold both.</li>
+    </ul>
+  </div>
+
+  <div class="framework mylett">
+    <h3><span class="source-tag m">Mylett</span> One More</h3>
+    <p>When you think you're done, do one more.</p>
+    <ul>
+      <li>One more call after you think you've called enough</li>
+      <li>One more follow-up after they didn't respond</li>
+      <li>One more rep at the gym</li>
+      <li>One more video after you've already filmed 8</li>
+      <li>One more proposal after you've already sent 3 this week</li>
+    </ul>
+    <p style="margin-top: 12px;">The person who does "one more" every single day is operating at 15% above everyone else. Over a year, that compounds into a completely different life.</p>
+  </div>
+
+  <div class="framework hormozi">
+    <h3><span class="source-tag h">Hormozi</span> The Work Ethic Standard</h3>
+    <ul>
+      <li>"You don't work that hard. And that's why you're progressing so slowly."</li>
+      <li>"Your real standards are set when no one is looking."</li>
+      <li>"If you want to make yourself feel better, blame other people. If you want to make yourself get better, blame yourself."</li>
+      <li>"Seek out discomfort. It's the only place growth happens."</li>
+    </ul>
+    <p style="margin-top: 12px;">When the sell-stop cycle kicks in, it's not because you ran out of leads. It's because you stopped being uncomfortable. You got enough jobs to feel safe, so you stopped pushing. The Operating System exists to prevent that.</p>
+  </div>
+
+  <div class="framework garyvee">
+    <h3><span class="source-tag g">Gary Vee</span> Self-Awareness + Patience</h3>
+    <ul>
+      <li><strong>Self-awareness:</strong> Know what you're good at and double down on it. You're good at building, at vision, at selling face-to-face. You're not a desk jockey. Build your schedule around your strengths.</li>
+      <li><strong>Patience:</strong> "99% of the market is short term. The 1% that plays long term, and has talent, wins every time." You're 20-something. You have decades. The $1.2M is this year. The $10M is in 5. The $50M is in 10. Play the long game while executing the short one.</li>
+      <li><strong>No excuses:</strong> "Stop whining, start hustling." The market isn't bad. The leads aren't slow. Your effort is what needs to change. Every minute you're not creating, selling, or building, someone else is.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════ SECTION 6: SALES ═══════ -->
+<section id="sales">
+  <div class="section-header">
+    <div class="section-label">06 // Sales System</div>
+    <h2 class="section-title">The CLOSER Framework</h2>
+    <p class="section-desc">Hormozi's sales framework adapted for construction. Use this on every prospect call, every in-person meeting, every proposal presentation.</p>
+  </div>
+
+  <div class="framework hormozi">
+    <h3><span class="source-tag h">Hormozi</span> C.L.O.S.E.R.</h3>
+
+    <div class="principle">
+      <div class="principle-num">C</div>
+      <div class="principle-content">
+        <h4>Clarify Why They're Here</h4>
+        <p>"What made you reach out? What's going on with your current home situation?" Understand their real motivation. Are they building because they outgrew their house? Because they want equity? Because they're tired of renting? The real reason is your closing ammunition.</p>
+      </div>
+    </div>
+
+    <div class="principle">
+      <div class="principle-num">L</div>
+      <div class="principle-content">
+        <h4>Label the Problem</h4>
+        <p>"So it sounds like your biggest issue is [X]." Make them say yes to their own problem. "You've been looking for land for 8 months and every builder you talk to gives you a vague number and disappears." They need to own the pain before you can solve it.</p>
+      </div>
+    </div>
+
+    <div class="principle">
+      <div class="principle-num">O</div>
+      <div class="principle-content">
+        <h4>Overview Past Attempts</h4>
+        <p>"What have you tried so far? Have you talked to other builders?" This tells you what failed before you. Maybe another builder ghosted them. Maybe they got a quote that was way over budget. Use this: "So the last builder gave you a number with no breakdown and stopped returning calls. I get why you're frustrated. Here's how we do it differently."</p>
+      </div>
+    </div>
+
+    <div class="principle">
+      <div class="principle-num">S</div>
+      <div class="principle-content">
+        <h4>Sell the Vacation, Not the Flight</h4>
+        <p>Don't sell square footage, foundation types, or construction timelines. Sell the life. "Picture this: 6 months from now, you're grilling on your back deck, kids are playing in the yard, and you own every square foot of it. No landlord. No HOA telling you what color your mailbox has to be. That's what we build." Sell Maui, not the plane ride.</p>
+      </div>
+    </div>
+
+    <div class="principle">
+      <div class="principle-num">E</div>
+      <div class="principle-content">
+        <h4>Explain Away Concerns</h4>
+        <p>Every objection has an answer. "It's expensive." = "Compared to what? Renting for 30 years?" "The timeline is long." = "We have a draw schedule that keeps you informed every step. You'll never wonder where your money went." "I need to think about it." = "Totally understand. What specifically do you need to think through? Let's address it now so you can make a confident decision."</p>
+      </div>
+    </div>
+
+    <div class="principle">
+      <div class="principle-num">R</div>
+      <div class="principle-content">
+        <h4>Reinforce the Decision</h4>
+        <p>After they sign, the sale isn't over. The onboarding experience IS the next close. Send the welcome email immediately. Set up their client portal access. Schedule the first call. Make them feel like they made the best decision of their life. This prevents buyer's remorse AND generates referrals.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ SECTION 7: THE 12 OPERATING PRINCIPLES ═══════ -->
+<section id="principles">
+  <div class="section-header">
+    <div class="section-label">07 // Operating Principles</div>
+    <h2 class="section-title">The 12 Laws</h2>
+    <p class="section-desc">The non-negotiable rules that govern how you operate. Pulled from all three mentors, filtered through your specific situation.</p>
+  </div>
+
+  <div class="principle">
+    <div class="principle-num">01</div>
+    <div class="principle-content">
+      <h4>Never Go Dark on Content</h4>
+      <p><span class="source-tag g">Gary Vee</span> The content block is first every morning because it's the first thing you'll skip when you get busy. Content is a compounding asset. Every day you don't post, you lose ground to builders who do.</p>
+    </div>
+  </div>
+
+  <div class="principle">
+    <div class="principle-num">02</div>
+    <div class="principle-content">
+      <h4>Never Stop Selling</h4>
+      <p><span class="source-tag h">Hormozi</span> The sell-stop cycle is your #1 threat. Even when you have 12 active jobs. Even when pipeline feels full. The moment you stop prospecting, you're 90 days from a gap. Sell every single day.</p>
+    </div>
+  </div>
+
+  <div class="principle">
+    <div class="principle-num">03</div>
+    <div class="principle-content">
+      <h4>Three Days, Not One</h4>
+      <p><span class="source-tag m">Mylett</span> Every day has three mini-days. Three resets. Three chances to win. Most people get one shot at their day. You get three. Evaluate and recalibrate at 8am, noon, and 5pm.</p>
+    </div>
+  </div>
+
+  <div class="principle">
+    <div class="principle-num">04</div>
+    <div class="principle-content">
+      <h4>Protect Maker Time</h4>
+      <p><span class="source-tag h">Hormozi</span> Wednesday through Friday are sacred. No meetings. No calls that could be emails. One interruption on a maker day costs 10% of weekly output. Guard these blocks like your income depends on it. Because it does.</p>
+    </div>
+  </div>
+
+  <div class="principle">
+    <div class="principle-num">05</div>
+    <div class="principle-content">
+      <h4>Document, Don't Create</h4>
+      <p><span class="source-tag g">Gary Vee</span> You don't need to sit down and brainstorm content ideas. Film the jobsite. Film the problem you solved. Film the conversation you just had (anonymized). Your daily work IS the content. Just hit record.</p>
+    </div>
+  </div>
+
+  <div class="principle">
+    <div class="principle-num">06</div>
+    <div class="principle-content">
+      <h4>Raise the Thermostat</h4>
+      <p><span class="source-tag m">Mylett</span> Your identity governs your results. If you believe you're a $500K operator, you'll find ways to stay there. Surround yourself with people operating at $2-5M. Keep every promise you make to yourself. Every kept promise raises your temperature.</p>
+    </div>
+  </div>
+
+  <div class="principle">
+    <div class="principle-num">07</div>
+    <div class="principle-content">
+      <h4>Stack Code and Media Leverage</h4>
+      <p><span class="source-tag h">Hormozi</span> Labor and capital scale linearly. Code and media scale exponentially. RoofPact, BidKit, the client portal, Chief, your content library. These work while you sleep. Build more of them.</p>
+    </div>
+  </div>
+
+  <div class="principle">
+    <div class="principle-num">08</div>
+    <div class="principle-content">
+      <h4>Sell the Vacation</h4>
+      <p><span class="source-tag h">Hormozi</span> Nobody buys a custom home. They buy the life they'll live in it. Every proposal, every call, every piece of content should paint the destination, not describe the flight.</p>
+    </div>
+  </div>
+
+  <div class="principle">
+    <div class="principle-num">09</div>
+    <div class="principle-content">
+      <h4>Play Long, Execute Short</h4>
+      <p><span class="source-tag g">Gary Vee</span> The $1.2M is the 2026 target. But you're building a 20-year empire. Don't sacrifice reputation for a quick buck. Don't cut corners on builds to save time. The brand you're building now is what funds the $10M, $50M, $100M.</p>
+    </div>
+  </div>
+
+  <div class="principle">
+    <div class="principle-num">10</div>
+    <div class="principle-content">
+      <h4>One More</h4>
+      <p><span class="source-tag m">Mylett</span> When you think you're done, you're 40% done. One more call. One more follow-up. One more video. One more rep. The gap between good and great is one more, every single day.</p>
+    </div>
+  </div>
+
+  <div class="principle">
+    <div class="principle-num">11</div>
+    <div class="principle-content">
+      <h4>Volume x Leverage = Output</h4>
+      <p><span class="source-tag h">Hormozi</span> You can't optimize your way to $1.2M. You need volume first, then leverage. Make more calls. Post more content. Send more proposals. Then use systems to multiply the output of each one.</p>
+    </div>
+  </div>
+
+  <div class="principle">
+    <div class="principle-num">12</div>
+    <div class="principle-content">
+      <h4>Standards, Not Goals</h4>
+      <p><span class="source-tag m">Mylett</span> Goals are what you reach for. Standards are what you refuse to fall below. Don't set a goal to post content. Set a standard that you ARE someone who posts every day. Don't set a goal to make sales calls. Set a standard that you ARE someone who prospects daily. Identity drives behavior. Behavior drives results.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ QUOTES ═══════ -->
+<section>
+  <div class="section-header">
+    <div class="section-label">08 // Words to Live By</div>
+    <h2 class="section-title">Fuel</h2>
+  </div>
+
+  <div class="quote-block">
+    <p>You will fail. In fact, you will fail until you succeed. But you will fail far longer if you keep changing direction. Pick, then commit.</p>
+    <div class="attribution">Alex Hormozi</div>
+  </div>
+
+  <div class="quote-block">
+    <p>Skills are the only reliable plan. A diploma might get you a meeting; a skill gets you paid.</p>
+    <div class="attribution">Alex Hormozi</div>
+  </div>
+
+  <div class="quote-block">
+    <p>99% of the market is short term. The 1% that plays long term, and has the talent, wins every time.</p>
+    <div class="attribution">Gary Vaynerchuk</div>
+  </div>
+
+  <div class="quote-block">
+    <p>Stop whining, start hustling. Your excuses are getting in the way of your ambition.</p>
+    <div class="attribution">Gary Vaynerchuk</div>
+  </div>
+
+  <div class="quote-block">
+    <p>You weren't born to be average. You were born to do something great. And you know it.</p>
+    <div class="attribution">Ed Mylett</div>
+  </div>
+
+  <div class="quote-block">
+    <p>Winners get up earlier than the average person and usually finish their day later. But the difference is they love every minute of it.</p>
+    <div class="attribution">Ed Mylett</div>
+  </div>
+
+  <div class="quote-block">
+    <p>Where blame goes, power goes. If you want power over your life, take the blame for everything in it.</p>
+    <div class="attribution">Alex Hormozi</div>
+  </div>
+</section>
+
+<!-- ═══════ FOOTER ═══════ -->
+<div class="footer">
+  <p><span class="gold">The Operating System</span> // Flynn Development // 2026</p>
+  <p style="margin-top: 8px;">Built by Chief. Inspired by Hormozi, Gary Vee, and Ed Mylett.</p>
+  <p style="margin-top: 4px;">Last updated: April 1, 2026</p>
+</div>
+
+</div>
+
+<!-- ═══════ SCROLL REVEAL ═══════ -->
+<script>
+document.querySelectorAll('.framework, .card, .principle, .quote-block, .day-card').forEach(el => {
+  el.classList.add('reveal');
+});
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, index) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => {
+        entry.target.classList.add('visible');
+      }, index * 50);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
