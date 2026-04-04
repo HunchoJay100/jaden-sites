@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CCC Data Audit | ConnectTeam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Palette — concrete & copper */
+    --base: #111113;
+    --surface: #1a1a1e;
+    --nested: #222226;
+    --elevated: #2a2a2f;
+    --border: rgba(255,255,255,0.06);
+    --border-strong: rgba(255,255,255,0.1);
+
+    --text-primary: rgba(255,255,255,0.92);
+    --text-secondary: rgba(255,255,255,0.55);
+    --text-tertiary: rgba(255,255,255,0.30);
+
+    --accent: #D4915E;
+    --accent-glow: rgba(212,145,94,0.25);
+    --accent-dim: rgba(212,145,94,0.08);
+    --green: #5CB f78;
+    --green: #5CBF78;
+    --red: #E06060;
+    --amber: #E0B84A;
+    --blue: #5B9BD5;
+
+    /* Shadows */
+    --shadow-card: 0 1px 3px rgba(0,0,0,0.35), 0 1px 2px rgba(0,0,0,0.25);
+    --shadow-hover: 0 4px 14px rgba(0,0,0,0.45), 0 2px 6px rgba(0,0,0,0.3);
+    --shadow-modal: 0 8px 32px rgba(0,0,0,0.55);
+
+    /* Spring curves */
+    --spring: cubic-bezier(0.2, 0, 0, 1);
+    --spring-snappy: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --spring-sheet: cubic-bezier(0.32, 0.72, 0, 1);
+
+    /* Radius */
+    --r-card: 12px;
+    --r-btn: 8px;
+    --r-badge: 6px;
+    --r-pill: 9999px;
+
+    /* Spacing (8pt grid) */
+    --xs: 4px;
+    --s: 8px;
+    --m: 12px;
+    --l: 16px;
+    --xl: 24px;
+    --xxl: 32px;
+    --xxxl: 48px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', -apple-system, sans-serif;
+    background: var(--base);
+    color: var(--text-primary);
+    font-size: 17px;
+    font-weight: 400;
+    letter-spacing: -0.43px;
+    line-height: 22px;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  /* ── Glass Nav ──────────────────────────────────── */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(17,17,19,0.72);
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border-bottom: 1px solid var(--border);
+    padding: var(--l) var(--xl);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .topbar-brand {
+    display: flex;
+    align-items: center;
+    gap: var(--m);
+  }
+  .topbar-logo {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--r-btn);
+    background: linear-gradient(135deg, var(--accent), #B87A4A);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 15px;
+    color: #fff;
+    letter-spacing: -0.5px;
+  }
+  .topbar h1 {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.6px;
+    line-height: 25px;
+  }
+  .topbar h1 span {
+    color: var(--text-secondary);
+    font-weight: 400;
+  }
+  .topbar-meta {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.03px;
+  }
+
+  /* ── Layout ─────────────────────────────────────── */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--xxl) var(--xl);
+  }
+
+  /* ── Executive Summary ──────────────────────────── */
+  .exec-summary {
+    background: var(--surface);
+    border-radius: var(--r-card);
+    box-shadow: var(--shadow-card);
+    padding: var(--xl);
+    margin-bottom: var(--xxl);
+    border-left: 3px solid var(--accent);
+    opacity: 0;
+    transform: translateY(12px);
+    animation: fadeUp 0.5s var(--spring) forwards;
+  }
+  .exec-summary h2 {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--accent);
+    margin-bottom: var(--m);
+  }
+  .exec-summary p {
+    color: var(--text-secondary);
+    line-height: 26px;
+    font-size: 16px;
+  }
+  .exec-summary strong {
+    color: var(--text-primary);
+  }
+
+  /* ── Section Headers ────────────────────────────── */
+  .section {
+    margin-bottom: var(--xxxl);
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  .section.visible {
+    animation: fadeUp 0.5s var(--spring) forwards;
+  }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: var(--m);
+    margin-bottom: var(--xl);
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent);
+    background: var(--accent-dim);
+    padding: var(--xs) var(--s);
+    border-radius: var(--r-badge);
+    letter-spacing: 0.5px;
+  }
+  .section-title {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.7px;
+    line-height: 28px;
+  }
+
+  /* ── Stat Grid ──────────────────────────────────── */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--l);
+    margin-bottom: var(--xl);
+  }
+  .stat-card {
+    background: var(--surface);
+    border-radius: var(--r-card);
+    box-shadow: var(--shadow-card);
+    padding: var(--xl) var(--l);
+    transition: all 0.3s var(--spring);
+    position: relative;
+    overflow: hidden;
+  }
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity 0.3s var(--spring);
+  }
+  .stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+  }
+  .stat-card:hover::before { opacity: 1; }
+  .stat-label {
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-tertiary);
+    margin-bottom: var(--s);
+  }
+  .stat-value {
+    font-size: 34px;
+    font-weight: 700;
+    letter-spacing: -1.05px;
+    line-height: 41px;
+    font-variant-numeric: tabular-nums;
+  }
+  .stat-sub {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: var(--xs);
+    letter-spacing: 0.03px;
+  }
+  .stat-value.accent { color: var(--accent); }
+  .stat-value.green { color: var(--green); }
+  .stat-value.amber { color: var(--amber); }
+
+  /* ── Tables ─────────────────────────────────────── */
+  .table-wrap {
+    background: var(--surface);
+    border-radius: var(--r-card);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    margin-bottom: var(--xl);
+  }
+  .table-title {
+    font-size: 15px;
+    font-weight: 600;
+    padding: var(--l) var(--xl);
+    border-bottom: 1px solid var(--border);
+    letter-spacing: 0px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  th {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-tertiary);
+    text-align: left;
+    padding: var(--m) var(--xl);
+    border-bottom: 1px solid var(--border);
+    background: var(--nested);
+  }
+  td {
+    font-size: 15px;
+    padding: var(--m) var(--xl);
+    border-bottom: 1px solid var(--border);
+    letter-spacing: 0px;
+    line-height: 19px;
+    vertical-align: middle;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr {
+    transition: background 0.15s var(--spring);
+  }
+  tr:hover td { background: var(--nested); }
+  .mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+  }
+  .cell-right {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ── Role/Status Badges ─────────────────────────── */
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    padding: 3px 8px;
+    border-radius: var(--r-badge);
+    line-height: 14px;
+  }
+  .badge-owner {
+    background: rgba(212,145,94,0.12);
+    color: var(--accent);
+  }
+  .badge-office {
+    background: rgba(91,155,213,0.12);
+    color: var(--blue);
+  }
+  .badge-crew {
+    background: rgba(92,191,120,0.12);
+    color: var(--green);
+  }
+  .badge-empty {
+    background: rgba(224,96,96,0.1);
+    color: var(--red);
+  }
+  .badge-active {
+    background: rgba(92,191,120,0.1);
+    color: var(--green);
+  }
+
+  /* ── Hours Bar ──────────────────────────────────── */
+  .hours-bar-wrap {
+    display: flex;
+    align-items: center;
+    gap: var(--m);
+  }
+  .hours-bar {
+    flex: 1;
+    height: 6px;
+    background: var(--nested);
+    border-radius: var(--r-pill);
+    overflow: hidden;
+  }
+  .hours-bar-fill {
+    height: 100%;
+    border-radius: var(--r-pill);
+    background: linear-gradient(90deg, var(--accent), #D4915E);
+    transition: width 0.8s var(--spring-sheet);
+  }
+  .hours-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    min-width: 64px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ── Feature Status Grid ────────────────────────── */
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--l);
+    margin-bottom: var(--xl);
+  }
+  .feature-card {
+    background: var(--surface);
+    border-radius: var(--r-card);
+    box-shadow: var(--shadow-card);
+    padding: var(--l) var(--xl);
+    display: flex;
+    align-items: center;
+    gap: var(--l);
+    transition: all 0.3s var(--spring);
+  }
+  .feature-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+  }
+  .feature-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--r-btn);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .feature-icon.empty {
+    background: rgba(224,96,96,0.08);
+  }
+  .feature-icon.active {
+    background: rgba(92,191,120,0.08);
+  }
+  .feature-name {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0px;
+    line-height: 19px;
+  }
+  .feature-status {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.03px;
+    line-height: 16px;
+  }
+
+  /* ── Questions List ─────────────────────────────── */
+  .questions-list {
+    list-style: none;
+    counter-reset: q;
+  }
+  .questions-list li {
+    counter-increment: q;
+    background: var(--surface);
+    border-radius: var(--r-card);
+    box-shadow: var(--shadow-card);
+    padding: var(--l) var(--xl);
+    margin-bottom: var(--m);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--l);
+    transition: all 0.3s var(--spring);
+    min-height: 44px;
+  }
+  .questions-list li:hover {
+    transform: translateX(4px);
+    box-shadow: var(--shadow-hover);
+  }
+  .questions-list li::before {
+    content: counter(q, decimal-leading-zero);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent);
+    background: var(--accent-dim);
+    padding: var(--xs) var(--s);
+    border-radius: var(--r-badge);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .q-text {
+    flex: 1;
+  }
+  .q-text strong {
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .q-text span {
+    font-size: 13px;
+    color: var(--text-secondary);
+    letter-spacing: 0.03px;
+  }
+
+  /* ── Roadmap ────────────────────────────────────── */
+  .roadmap {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--l);
+  }
+  .roadmap-card {
+    background: var(--surface);
+    border-radius: var(--r-card);
+    box-shadow: var(--shadow-card);
+    padding: var(--xl);
+    transition: all 0.3s var(--spring);
+  }
+  .roadmap-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+  }
+  .roadmap-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: var(--m);
+    display: flex;
+    align-items: center;
+    gap: var(--s);
+  }
+  .roadmap-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+  .roadmap-card.now .roadmap-dot { background: var(--green); box-shadow: 0 0 8px rgba(92,191,120,0.5); }
+  .roadmap-card.now .roadmap-label { color: var(--green); }
+  .roadmap-card.next .roadmap-dot { background: var(--amber); box-shadow: 0 0 8px rgba(224,184,74,0.5); }
+  .roadmap-card.next .roadmap-label { color: var(--amber); }
+  .roadmap-card.later .roadmap-dot { background: var(--blue); box-shadow: 0 0 8px rgba(91,155,213,0.5); }
+  .roadmap-card.later .roadmap-label { color: var(--blue); }
+  .roadmap-card h3 {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.43px;
+    margin-bottom: var(--m);
+  }
+  .roadmap-card ul {
+    list-style: none;
+    padding: 0;
+  }
+  .roadmap-card li {
+    font-size: 14px;
+    color: var(--text-secondary);
+    padding: var(--xs) 0;
+    padding-left: var(--l);
+    position: relative;
+  }
+  .roadmap-card li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 11px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--text-tertiary);
+  }
+
+  /* ── Animations ─────────────────────────────────── */
+  @keyframes fadeUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ── Responsive ─────────────────────────────────── */
+  @media (max-width: 768px) {
+    .container { padding: var(--xl) var(--l); }
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+    .roadmap { grid-template-columns: 1fr; }
+    .table-wrap { border-radius: var(--r-btn); }
+    table { font-size: 14px; }
+    th, td { padding: var(--m) var(--l); }
+    .stat-value { font-size: 28px; }
+    .topbar h1 { font-size: 17px; }
+  }
+
+  /* ── Scrollbar ──────────────────────────────────── */
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: var(--base); }
+  ::-webkit-scrollbar-thumb {
+    background: var(--border-strong);
+    border-radius: var(--r-pill);
+  }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.15); }
+
+  /* ── Grain overlay ──────────────────────────────── */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  }
+</style>
+</head>
+<body>
+
+<!-- Top Bar -->
+<nav class="topbar">
+  <div class="topbar-brand">
+    <div class="topbar-logo">CC</div>
+    <h1>ConnectTeam Audit <span>/ Complete Crete</span></h1>
+  </div>
+  <div class="topbar-meta">Generated Apr 4, 2026 &middot; 120-day window</div>
+</nav>
+
+<div class="container">
+
+  <!-- Executive Summary -->
+  <div class="exec-summary">
+    <h2>Executive Summary</h2>
+    <p>ConnectTeam is being used for <strong>time tracking</strong> and <strong>job scheduling</strong>. Time clock data is solid with daily hours per employee. Jobs are created per client with freeform descriptions, but <strong>no structured pricing, revenue, or cost data exists</strong>. Forms, task boards, geofences, and pay rates are all unconfigured. ConnectTeam gives us labor hours per employee. Everything else needs to come from QuickBooks or Gavin.</p>
+  </div>
+
+  <!-- Top-Level Stats -->
+  <div class="stat-grid" id="stats">
+    <div class="stat-card">
+      <div class="stat-label">Total Jobs</div>
+      <div class="stat-value accent" data-count="151">0</div>
+      <div class="stat-sub">101 with GPS address</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Crew Members</div>
+      <div class="stat-value" data-count="10">0</div>
+      <div class="stat-sub">10 active, 0 archived</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Hours Logged</div>
+      <div class="stat-value green" data-count="1950">0</div>
+      <div class="stat-sub">Across 6 active crew</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Shifts Scheduled</div>
+      <div class="stat-value amber" data-count="101">0</div>
+      <div class="stat-sub">27 unique jobs</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Avg Hours / Day</div>
+      <div class="stat-value" data-count="7" data-suffix=".4">0</div>
+      <div class="stat-sub">Top crew avg</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Data Gaps</div>
+      <div class="stat-value" style="color: var(--red);" data-count="12">0</div>
+      <div class="stat-sub">Questions for Gavin</div>
+    </div>
+  </div>
+
+  <!-- Section 1: Crew Roster -->
+  <section class="section" data-delay="100">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Crew Roster</h2>
+    </div>
+    <div class="table-wrap">
+      <div class="table-title">All Users &middot; 10 total</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Phone</th>
+            <th>Start Date</th>
+            <th>Last Active</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Gavin Bartlett</strong></td>
+            <td><span class="badge badge-owner">Owner</span></td>
+            <td class="mono">(931) 239-6505</td>
+            <td>N/A</td>
+            <td>Apr 3, 2026</td>
+          </tr>
+          <tr>
+            <td><strong>Jules Baye</strong></td>
+            <td><span class="badge badge-crew">Crew</span></td>
+            <td class="mono">(931) 252-0819</td>
+            <td>N/A</td>
+            <td>Apr 4, 2026</td>
+          </tr>
+          <tr>
+            <td><strong>Jaden Flynn</strong></td>
+            <td><span class="badge badge-owner">Owner</span></td>
+            <td class="mono">(931) 510-6147</td>
+            <td>N/A</td>
+            <td>Feb 15, 2026</td>
+          </tr>
+          <tr>
+            <td><strong>Levi Stinson</strong></td>
+            <td><span class="badge badge-crew">Crew</span></td>
+            <td class="mono">(931) 239-8794</td>
+            <td>Mar 31, 2025</td>
+            <td>Feb 6, 2026</td>
+          </tr>
+          <tr>
+            <td><strong>Dylan Barstad</strong></td>
+            <td><span class="badge badge-crew">Crew</span></td>
+            <td class="mono">(931) 644-5273</td>
+            <td>N/A</td>
+            <td>Apr 1, 2026</td>
+          </tr>
+          <tr>
+            <td><strong>Jaike Vaughn</strong></td>
+            <td><span class="badge badge-crew">Crew</span></td>
+            <td class="mono">(931) 267-3807</td>
+            <td>N/A</td>
+            <td>Aug 7, 2025</td>
+          </tr>
+          <tr>
+            <td><strong>Emilio Alyea</strong></td>
+            <td><span class="badge badge-crew">Crew</span></td>
+            <td class="mono">(931) 239-3201</td>
+            <td>Sep 1, 2025</td>
+            <td>Sep 15, 2025</td>
+          </tr>
+          <tr>
+            <td><strong>Mathew Clairday</strong></td>
+            <td><span class="badge badge-crew">Crew</span></td>
+            <td class="mono">(931) 239-8040</td>
+            <td>Sep 1, 2025</td>
+            <td>Apr 3, 2026</td>
+          </tr>
+          <tr>
+            <td><strong>Jenna Flynn</strong></td>
+            <td><span class="badge badge-office">Office Mgr</span></td>
+            <td class="mono">(931) 510-5296</td>
+            <td>N/A</td>
+            <td>Mar 28, 2026</td>
+          </tr>
+          <tr>
+            <td><strong>Soda Pop Powers</strong></td>
+            <td><span class="badge badge-crew">Crew</span></td>
+            <td class="mono">(931) 644-2818</td>
+            <td>Dec 23, 2025</td>
+            <td>Mar 6, 2026</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Section 2: Jobs -->
+  <section class="section" data-delay="150">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Jobs & Projects</h2>
+    </div>
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-label">Total Jobs</div>
+        <div class="stat-value accent">151</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">With GPS</div>
+        <div class="stat-value">101</div>
+        <div class="stat-sub">67% geocoded</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">With Sq Ft</div>
+        <div class="stat-value">38</div>
+        <div class="stat-sub">In freeform description</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">With Price</div>
+        <div class="stat-value" style="color: var(--red);">3</div>
+        <div class="stat-sub">Only 3 have $ amounts</div>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <div class="table-title">Fields Available Per Job</div>
+      <table>
+        <thead>
+          <tr><th>Field</th><th>Type</th><th>Status</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>jobId</td><td class="mono">UUID</td><td><span class="badge badge-active">Has Data</span></td><td>Unique identifier</td></tr>
+          <tr><td>title</td><td class="mono">string</td><td><span class="badge badge-active">Has Data</span></td><td>Client name</td></tr>
+          <tr><td>description</td><td class="mono">HTML</td><td><span class="badge badge-active">Has Data</span></td><td>Freeform: sq ft, coating type, prep notes</td></tr>
+          <tr><td>gps</td><td class="mono">lat/lng</td><td><span class="badge badge-active">Has Data</span></td><td>67% of jobs have addresses</td></tr>
+          <tr><td>assign</td><td class="mono">userIds[]</td><td><span class="badge badge-active">Has Data</span></td><td>Crew assigned to job</td></tr>
+          <tr><td>customFields</td><td class="mono">array</td><td><span class="badge badge-empty">Empty</span></td><td>Defined but unused on all jobs</td></tr>
+          <tr><td>subJobs</td><td class="mono">array</td><td><span class="badge badge-empty">Empty</span></td><td>Feature exists, not used</td></tr>
+          <tr><td style="color: var(--text-tertiary);">revenue / price</td><td class="mono">-</td><td><span class="badge badge-empty">Missing</span></td><td>Does not exist in ConnectTeam</td></tr>
+          <tr><td style="color: var(--text-tertiary);">status</td><td class="mono">-</td><td><span class="badge badge-empty">Missing</span></td><td>No active/completed/pending</td></tr>
+          <tr><td style="color: var(--text-tertiary);">start / end dates</td><td class="mono">-</td><td><span class="badge badge-empty">Missing</span></td><td>No date tracking</td></tr>
+          <tr><td style="color: var(--text-tertiary);">material cost</td><td class="mono">-</td><td><span class="badge badge-empty">Missing</span></td><td>Not tracked anywhere in system</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Section 3: Time Tracking -->
+  <section class="section" data-delay="200">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Time Tracking</h2>
+    </div>
+    <div class="table-wrap">
+      <div class="table-title">Labor Hours by Employee &middot; Last 120 Days</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Employee</th>
+            <th>Total Hours</th>
+            <th class="cell-right">Days</th>
+            <th class="cell-right">Avg/Day</th>
+            <th style="width: 30%;">Distribution</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Jules Baye</strong></td>
+            <td>
+              <div class="hours-bar-wrap">
+                <div class="hours-bar"><div class="hours-bar-fill" data-width="100"></div></div>
+                <span class="hours-value">755.9</span>
+              </div>
+            </td>
+            <td class="cell-right mono">93</td>
+            <td class="cell-right mono">8.1</td>
+            <td style="color: var(--text-secondary); font-size: 13px;">38.8% of all hours</td>
+          </tr>
+          <tr>
+            <td><strong>Mathew Clairday</strong></td>
+            <td>
+              <div class="hours-bar-wrap">
+                <div class="hours-bar"><div class="hours-bar-fill" data-width="96"></div></div>
+                <span class="hours-value">727.7</span>
+              </div>
+            </td>
+            <td class="cell-right mono">91</td>
+            <td class="cell-right mono">8.0</td>
+            <td style="color: var(--text-secondary); font-size: 13px;">37.3% of all hours</td>
+          </tr>
+          <tr>
+            <td><strong>Soda Pop Powers</strong></td>
+            <td>
+              <div class="hours-bar-wrap">
+                <div class="hours-bar"><div class="hours-bar-fill" data-width="19"></div></div>
+                <span class="hours-value">145.2</span>
+              </div>
+            </td>
+            <td class="cell-right mono">22</td>
+            <td class="cell-right mono">6.6</td>
+            <td style="color: var(--text-secondary); font-size: 13px;">7.4% of all hours</td>
+          </tr>
+          <tr>
+            <td><strong>Gavin Bartlett</strong></td>
+            <td>
+              <div class="hours-bar-wrap">
+                <div class="hours-bar"><div class="hours-bar-fill" data-width="18"></div></div>
+                <span class="hours-value">138.2</span>
+              </div>
+            </td>
+            <td class="cell-right mono">34</td>
+            <td class="cell-right mono">4.1</td>
+            <td style="color: var(--text-secondary); font-size: 13px;">7.1% &middot; Estimating / managing</td>
+          </tr>
+          <tr>
+            <td><strong>Levi Stinson</strong></td>
+            <td>
+              <div class="hours-bar-wrap">
+                <div class="hours-bar"><div class="hours-bar-fill" data-width="13"></div></div>
+                <span class="hours-value">95.1</span>
+              </div>
+            </td>
+            <td class="cell-right mono">15</td>
+            <td class="cell-right mono">6.3</td>
+            <td style="color: var(--text-secondary); font-size: 13px;">4.9% of all hours</td>
+          </tr>
+          <tr>
+            <td><strong>Dylan Barstad</strong></td>
+            <td>
+              <div class="hours-bar-wrap">
+                <div class="hours-bar"><div class="hours-bar-fill" data-width="12"></div></div>
+                <span class="hours-value">87.4</span>
+              </div>
+            </td>
+            <td class="cell-right mono">18</td>
+            <td class="cell-right mono">4.9</td>
+            <td style="color: var(--text-secondary); font-size: 13px;">4.5% of all hours</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Section 4: Scheduling -->
+  <section class="section" data-delay="250">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Scheduling & Shifts</h2>
+    </div>
+    <div class="table-wrap">
+      <div class="table-title">Top 10 Most-Scheduled Jobs</div>
+      <table>
+        <thead>
+          <tr><th>Job / Client</th><th class="cell-right">Shifts</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Bob Moser</td><td class="cell-right mono">8</td></tr>
+          <tr><td>Donnie Suits (black house garage)</td><td class="cell-right mono">7</td></tr>
+          <tr><td>Jack Honeycut</td><td class="cell-right mono">7</td></tr>
+          <tr><td>Katrina Huddleston</td><td class="cell-right mono">6</td></tr>
+          <tr><td>Jenny Kennedy</td><td class="cell-right mono">5</td></tr>
+          <tr><td>Shawn Larson</td><td class="cell-right mono">5</td></tr>
+          <tr><td>Honeycut</td><td class="cell-right mono">4</td></tr>
+          <tr><td>Jill Moore</td><td class="cell-right mono">4</td></tr>
+          <tr><td>Trevor Dyer (basement)</td><td class="cell-right mono">4</td></tr>
+          <tr><td>Trash Room Knox</td><td class="cell-right mono">4</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Section 5: Feature Status -->
+  <section class="section" data-delay="300">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2 class="section-title">Feature Status</h2>
+    </div>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon active">&#x2705;</div>
+        <div>
+          <div class="feature-name">Time Clock</div>
+          <div class="feature-status">Active. Daily hours per employee.</div>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon active">&#x2705;</div>
+        <div>
+          <div class="feature-name">Job Scheduler</div>
+          <div class="feature-status">Active. Shifts linked to jobs.</div>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon active">&#x2705;</div>
+        <div>
+          <div class="feature-name">Jobs</div>
+          <div class="feature-status">151 jobs. Freeform descriptions.</div>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon empty">&#x274C;</div>
+        <div>
+          <div class="feature-name">Forms</div>
+          <div class="feature-status">Empty. No checklists or inspections.</div>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon empty">&#x274C;</div>
+        <div>
+          <div class="feature-name">Task Boards</div>
+          <div class="feature-status">Empty. No task management.</div>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon empty">&#x274C;</div>
+        <div>
+          <div class="feature-name">Geofences</div>
+          <div class="feature-status">Empty. GPS fencing not set up.</div>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon empty">&#x274C;</div>
+        <div>
+          <div class="feature-name">Pay Rates</div>
+          <div class="feature-status">Empty. No hourly rates in system.</div>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon empty">&#x274C;</div>
+        <div>
+          <div class="feature-name">Job Custom Fields</div>
+          <div class="feature-status">Defined but unused on all jobs.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 6: Questions for Gavin -->
+  <section class="section" data-delay="350">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2 class="section-title">Data Gaps for Gavin</h2>
+    </div>
+    <ol class="questions-list">
+      <li><div class="q-text"><strong>Hourly rates per crew member</strong><span>What does each person make? Needed for labor cost calculations.</span></div></li>
+      <li><div class="q-text"><strong>Job pricing / revenue</strong><span>What did each job sell for? Is this in QuickBooks?</span></div></li>
+      <li><div class="q-text"><strong>Material costs per job</strong><span>Where is this tracked? Receipts? QuickBooks?</span></div></li>
+      <li><div class="q-text"><strong>Job status tracking</strong><span>Which jobs are completed vs active vs pending?</span></div></li>
+      <li><div class="q-text"><strong>Job start / end dates</strong><span>When did each job start and finish?</span></div></li>
+      <li><div class="q-text"><strong>Job type categorization</strong><span>Garage flake, pool deck, stain & seal, metallic, etc.</span></div></li>
+      <li><div class="q-text"><strong>Square footage accuracy</strong><span>Descriptions have some. Is there a more reliable source?</span></div></li>
+      <li><div class="q-text"><strong>Overhead costs</strong><span>Insurance, equipment, vehicle costs, shop supplies?</span></div></li>
+      <li><div class="q-text"><strong>QuickBooks access</strong><span>Can we get a data export or API connection?</span></div></li>
+      <li><div class="q-text"><strong>Drive time</strong><span>Is crew time including drive to/from site, or just on-site?</span></div></li>
+      <li><div class="q-text"><strong>Subcontractor costs</strong><span>Any subs used on any jobs?</span></div></li>
+      <li><div class="q-text"><strong>Change orders</strong><span>Do jobs ever expand after the initial quote?</span></div></li>
+    </ol>
+  </section>
+
+  <!-- Section 7: Roadmap -->
+  <section class="section" data-delay="400">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2 class="section-title">What We Can Do</h2>
+    </div>
+    <div class="roadmap">
+      <div class="roadmap-card now">
+        <div class="roadmap-label"><span class="roadmap-dot"></span>Now</div>
+        <h3>No Extra Data Needed</h3>
+        <ul>
+          <li>Map labor hours to specific jobs</li>
+          <li>Identify highest-labor jobs</li>
+          <li>Crew utilization patterns</li>
+          <li>Geographic clustering analysis</li>
+        </ul>
+      </div>
+      <div class="roadmap-card next">
+        <div class="roadmap-label"><span class="roadmap-dot"></span>With Hourly Rates</div>
+        <h3>Labor Cost Analysis</h3>
+        <ul>
+          <li>Labor cost per job</li>
+          <li>Identify outlier jobs</li>
+          <li>Cost per sq ft by job type</li>
+          <li>Crew efficiency benchmarks</li>
+        </ul>
+      </div>
+      <div class="roadmap-card later">
+        <div class="roadmap-label"><span class="roadmap-dot"></span>With Revenue Data</div>
+        <h3>Full Profitability</h3>
+        <ul>
+          <li>Per-job P&L statements</li>
+          <li>Blended margin by job type</li>
+          <li>Best / worst margin jobs</li>
+          <li>Revenue per labor hour</li>
+          <li>Pricing recommendations</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  // ── Number counter animation ───────────────────────
+  function animateCount(el) {
+    const target = parseInt(el.dataset.count);
+    const suffix = el.dataset.suffix || '';
+    const duration = 1200;
+    const start = performance.now();
+
+    function tick(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.round(eased * target);
+      el.textContent = current.toLocaleString() + suffix;
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  // ── Hours bar animation ────────────────────────────
+  function animateBars() {
+    document.querySelectorAll('.hours-bar-fill').forEach((bar, i) => {
+      const width = bar.dataset.width;
+      setTimeout(() => {
+        bar.style.width = width + '%';
+      }, 200 + i * 80);
+    });
+  }
+
+  // ── Intersection Observer for sections ─────────────
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const delay = entry.target.dataset.delay || 0;
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, delay);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.section').forEach(s => observer.observe(s));
+
+  // ── Init on load ───────────────────────────────────
+  window.addEventListener('DOMContentLoaded', () => {
+    // Animate stat counters
+    setTimeout(() => {
+      document.querySelectorAll('[data-count]').forEach((el, i) => {
+        setTimeout(() => animateCount(el), i * 100);
+      });
+    }, 400);
+
+    // Animate hour bars
+    setTimeout(animateBars, 800);
+  });
+</script>
+
+</body>
+</html>
