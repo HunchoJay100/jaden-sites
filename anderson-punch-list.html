@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>478 Frank Anderson — Repair Punch List</title>
+<style>
+  :root {
+    --bg: #0e0e10;
+    --card: #17171a;
+    --border: #2a2a2f;
+    --text: #ececec;
+    --muted: #8a8a92;
+    --gold: #C5A55A;
+    --red: #e74c3c;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    padding: 24px 16px 80px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; }
+  header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  h1 {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+  }
+  .addr {
+    color: var(--muted);
+    font-size: 14px;
+  }
+  .deadline {
+    background: linear-gradient(135deg, rgba(231,76,60,0.15), rgba(231,76,60,0.05));
+    border: 1px solid rgba(231,76,60,0.4);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .deadline-icon {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--red);
+    display: grid; place-items: center;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .deadline-text { font-size: 14px; }
+  .deadline-text strong { color: #fff; display: block; margin-bottom: 2px; }
+  .deadline-text span { color: var(--muted); }
+
+  .count {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .count b { color: var(--gold); font-weight: 700; }
+
+  ul.items { list-style: none; }
+  li.item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .num {
+    color: var(--gold);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    font-size: 13px;
+    min-width: 44px;
+    padding-top: 2px;
+  }
+  .body { flex: 1; }
+  .title {
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 3px;
+  }
+  .desc {
+    color: var(--muted);
+    font-size: 14px;
+  }
+  footer {
+    margin-top: 32px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+  }
+  footer .gold { color: var(--gold); font-weight: 600; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="tag">Repair / Replacement Amendment</div>
+      <h1>478 Frank Anderson</h1>
+      <div class="addr">Sparta, TN 38583 · PSA Date 4-7-2026</div>
+    </header>
+
+    <div class="deadline">
+      <div class="deadline-icon">!</div>
+      <div class="deadline-text">
+        <strong>Deadline: 2 Weeks</strong>
+        <span>All items complete 5 days prior to closing</span>
+      </div>
+    </div>
+
+    <div class="count"><b>17</b> Items to Complete</div>
+
+    <ul class="items">
+      <li class="item"><div class="num">2.3.1</div><div class="body"><div class="title">Plumbing Vent Pipes</div><div class="desc">Seal fasteners with silicone</div></div></li>
+      <li class="item"><div class="num">3.9.1</div><div class="body"><div class="title">Siding & Trim — Front Door</div><div class="desc">Replace exterior trim and bottom of vinyl as noted in report</div></div></li>
+      <li class="item"><div class="num">3.9.2</div><div class="body"><div class="title">Siding & Trim</div><div class="desc">Fix improperly installed siding (one area)</div></div></li>
+      <li class="item"><div class="num">3.11.1</div><div class="body"><div class="title">Exterior Lights</div><div class="desc">Install bulbs</div></div></li>
+      <li class="item"><div class="num">3.12.1</div><div class="body"><div class="title">Windows</div><div class="desc">Review as noted in report</div></div></li>
+      <li class="item"><div class="num">3.14.1</div><div class="body"><div class="title">Exterior Caulking</div><div class="desc">Caulk around electrical box</div></div></li>
+      <li class="item"><div class="num">4.1.1</div><div class="body"><div class="title">Main Electrical Service Panel</div><div class="desc">Place wire nut</div></div></li>
+      <li class="item"><div class="num">5.5.1</div><div class="body"><div class="title">Self-Closing Hinges</div><div class="desc">Install pins</div></div></li>
+      <li class="item"><div class="num">7.2.1</div><div class="body"><div class="title">Duct Work</div><div class="desc">Repair ducts and seat vents properly</div></div></li>
+      <li class="item"><div class="num">7.2.2</div><div class="body"><div class="title">Distribution Systems</div><div class="desc">Seal duct</div></div></li>
+      <li class="item"><div class="num">9.5.1</div><div class="body"><div class="title">Range / Oven / Cooktop</div><div class="desc">Install anti-tip bracket</div></div></li>
+      <li class="item"><div class="num">10.2.1</div><div class="body"><div class="title">Dryer Vent</div><div class="desc">Install exterior dryer vent cover</div></div></li>
+      <li class="item"><div class="num">12.2.1</div><div class="body"><div class="title">Interior Door</div><div class="desc">Adjust interior door</div></div></li>
+      <li class="item"><div class="num">12.2.2</div><div class="body"><div class="title">Interior Doors</div><div class="desc">Add hinge door stops</div></div></li>
+      <li class="item"><div class="num">14.4.1</div><div class="body"><div class="title">Exterior Water Hose Bibs</div><div class="desc">Fix leak</div></div></li>
+      <li class="item"><div class="num">15.2.1</div><div class="body"><div class="title">Foundation Walls</div><div class="desc">HVAC ductwork penetration — no visible lintel installed. Review for possible steel lintel install.</div></div></li>
+      <li class="item"><div class="num">16.1</div><div class="body"><div class="title">Floor Joists</div><div class="desc">Fungus growth observed — treat affected areas</div></div></li>
+    </ul>
+
+    <footer>
+      <span class="gold">Flynn Development</span> · Design. Construct. Transform.
+    </footer>
+  </div>
+</body>
+</html>
