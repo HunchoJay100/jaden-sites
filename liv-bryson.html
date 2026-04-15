@@ -497,6 +497,144 @@
             z-index: 2;
         }
 
+        .timeline-day-header {
+            max-width: 700px;
+            margin: 0 auto 28px;
+            text-align: center;
+            position: relative;
+            padding: 20px 0 12px;
+        }
+        .timeline-day-header::before,
+        .timeline-day-header::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 80px;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--taupe));
+        }
+        .timeline-day-header::before { left: calc(50% - 140px); }
+        .timeline-day-header::after {
+            right: calc(50% - 140px);
+            background: linear-gradient(to left, transparent, var(--taupe));
+        }
+        .timeline-day-header h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 34px;
+            font-weight: 500;
+            letter-spacing: 8px;
+            color: var(--espresso);
+            text-transform: uppercase;
+        }
+        .timeline-day-header .date-sub {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--sage-dark);
+            margin-top: 6px;
+        }
+        .timeline + .timeline-day-header { margin-top: 60px; }
+
+        /* ===== VENDOR CONTACTS ===== */
+        .vendor-contacts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .vendor-card {
+            background: var(--warm-white);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            padding: 24px 26px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .vendor-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--sage), var(--gold), var(--sage), transparent);
+            opacity: 0.4;
+        }
+        .vendor-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 40px rgba(60, 50, 40, 0.08);
+            border-color: rgba(163, 177, 138, 0.35);
+        }
+        .vendor-card .vc-category {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--sage-dark);
+            margin-bottom: 8px;
+        }
+        .vendor-card .vc-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            font-weight: 500;
+            color: var(--espresso);
+            line-height: 1.25;
+            margin-bottom: 4px;
+        }
+        .vendor-card .vc-contact {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 15px;
+            font-style: italic;
+            color: var(--warm-gray);
+            margin-bottom: 14px;
+        }
+        .vendor-card .vc-phone {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--espresso);
+            text-decoration: none;
+            padding: 6px 12px;
+            background: var(--linen);
+            border-radius: 20px;
+            margin-bottom: 14px;
+            transition: all 0.3s ease;
+        }
+        .vendor-card .vc-phone:hover {
+            background: var(--sage-light);
+            color: var(--espresso);
+        }
+        .vendor-card .vc-times {
+            border-top: 1px solid var(--glass-border);
+            padding-top: 12px;
+            margin-top: 4px;
+        }
+        .vendor-card .vc-time-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 3px 0;
+        }
+        .vendor-card .vc-time-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--taupe-dark);
+        }
+        .vendor-card .vc-time-value {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--espresso);
+        }
+
         /* ===== BUDGET TABLE ===== */
         .budget-overview {
             display: grid;
@@ -1099,6 +1237,7 @@
     <ul class="nav-links" id="navLinks">
         <li><a href="#details">Details</a></li>
         <li><a href="#timeline">Timeline</a></li>
+        <li><a href="#vendors">Vendors</a></li>
         <li><a href="#budget">Budget</a></li>
         <li><a href="#action-items">To Do</a></li>
         <li><a href="#itinerary">Itinerary</a></li>
@@ -1216,91 +1355,408 @@
         <div class="section-header reveal">
             <div class="section-tag">The Schedule</div>
             <h2 class="section-title">Wedding Day Timeline</h2>
-            <div class="section-subtitle">A beautiful day, perfectly planned</div>
+            <div class="section-subtitle">Friday rehearsal through Saturday grand exit</div>
             <div class="section-line"></div>
+        </div>
+
+        <div class="timeline-day-header reveal">
+            <h3>Friday</h3>
+            <div class="date-sub">April 24 &bull; Rehearsal Day</div>
         </div>
 
         <div class="timeline">
             <div class="timeline-event reveal">
-                <div class="timeline-time"><h4>2:00 PM</h4></div>
+                <div class="timeline-time"><h4>Morning</h4></div>
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
-                    <h4>Vendor Arrival</h4>
-                    <p>Setup begins at Bluff Top</p>
+                    <h4>Rentals Delivered</h4>
+                    <p>Tables, chairs, and restrooms arrive on site</p>
                 </div>
             </div>
             <div class="timeline-event reveal">
-                <div class="timeline-time"><h4>3:00 PM</h4></div>
+                <div class="timeline-time"><h4>5:00 PM</h4></div>
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
-                    <h4>Hair &amp; Makeup</h4>
-                    <p>Bridal party gets ready</p>
-                </div>
-            </div>
-            <div class="timeline-event reveal">
-                <div class="timeline-time"><h4>4:30 PM</h4></div>
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <h4>First Look &amp; Photos</h4>
-                    <p>Couple portraits with Daphne</p>
-                </div>
-            </div>
-            <div class="timeline-event reveal">
-                <div class="timeline-time"><h4>5:30 PM</h4></div>
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <h4>Guests Arrive</h4>
-                    <p>Welcome and seating</p>
-                </div>
-            </div>
-            <div class="timeline-event reveal">
-                <div class="timeline-time"><h4>6:00 PM</h4></div>
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <h4>Ceremony</h4>
-                    <p>Vows and &ldquo;I Do&rdquo;</p>
-                </div>
-            </div>
-            <div class="timeline-event reveal">
-                <div class="timeline-time"><h4>6:30 PM</h4></div>
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <h4>Cocktail Hour</h4>
-                    <p>Drinks and mingling while the wedding party takes photos</p>
+                    <h4>Rehearsal at Venue</h4>
+                    <p>Wedding party walkthrough at Bluff Top</p>
                 </div>
             </div>
             <div class="timeline-event reveal">
                 <div class="timeline-time"><h4>7:30 PM</h4></div>
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
-                    <h4>Dinner</h4>
-                    <p>Habibas Mexican Food Truck serves</p>
+                    <h4>Rehearsal Dinner</h4>
+                    <p>Fire &amp; Vine</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-day-header reveal">
+            <h3>Saturday</h3>
+            <div class="date-sub">April 25 &bull; The Big Day</div>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-event reveal">
+                <div class="timeline-time"><h4>7:45 AM</h4></div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4>Coordinators Arrive</h4>
+                    <p>Meagan and London begin setup and vendor coordination</p>
+                </div>
+            </div>
+            <div class="timeline-event reveal">
+                <div class="timeline-time"><h4>8:00 AM</h4></div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4>Dance Floor Arrives</h4>
+                    <p>Phillips Rentals delivery and setup</p>
+                </div>
+            </div>
+            <div class="timeline-event reveal">
+                <div class="timeline-time"><h4>9:00 AM</h4></div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4>Hair &amp; Makeup Begins</h4>
+                    <p>Ange Mckernan and Kelsey Lane on site</p>
+                </div>
+            </div>
+            <div class="timeline-event reveal">
+                <div class="timeline-time"><h4>10:00 AM</h4></div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4>DJ Arrives</h4>
+                    <p>DJ Raulin setup and mini rehearsal with Liv</p>
+                </div>
+            </div>
+            <div class="timeline-event reveal">
+                <div class="timeline-time"><h4>10:15 AM</h4></div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4>Florals Pickup</h4>
+                    <p>London picks up florals from Glass Tangerine</p>
+                </div>
+            </div>
+            <div class="timeline-event reveal">
+                <div class="timeline-time"><h4>11:45 AM</h4></div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4>Photo &amp; Video Arrive</h4>
+                    <p>Daphne Engle and Matt Matheson on site</p>
+                </div>
+            </div>
+            <div class="timeline-event reveal">
+                <div class="timeline-time"><h4>2:30 PM</h4></div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4>Hair &amp; Makeup Complete</h4>
+                    <p>Bride gets dressed, bridal portraits begin</p>
+                </div>
+            </div>
+            <div class="timeline-event reveal">
+                <div class="timeline-time"><h4>2:50 PM</h4></div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4>First Look with Dad</h4>
+                    <p>Private moment before family photos</p>
+                </div>
+            </div>
+            <div class="timeline-event reveal">
+                <div class="timeline-time"><h4>3:10 PM</h4></div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4>Family &amp; Wedding Party Photos</h4>
+                    <p>Bridesmaids, groomsmen, and family portraits</p>
+                </div>
+            </div>
+            <div class="timeline-event reveal">
+                <div class="timeline-time"><h4>3:30 PM</h4></div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4>Food Truck Arrives</h4>
+                    <p>Habiba&rsquo;s Mexican Food Truck setup</p>
+                </div>
+            </div>
+            <div class="timeline-event reveal">
+                <div class="timeline-time"><h4>4:15 PM</h4></div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4>Photos Complete</h4>
+                    <p>Bride hidden before guests arrive</p>
+                </div>
+            </div>
+            <div class="timeline-event reveal">
+                <div class="timeline-time"><h4>4:30 PM</h4></div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4>Guests Arrive &bull; Cocktail Hour</h4>
+                    <p>Pre-ceremony drinks and mingling. Melissa arrives with the cake.</p>
+                </div>
+            </div>
+            <div class="timeline-event reveal">
+                <div class="timeline-time"><h4>5:15 PM</h4></div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4>Guests Seated</h4>
+                    <p>Guests walk to the ceremony site; wedding party lines up</p>
+                </div>
+            </div>
+            <div class="timeline-event reveal">
+                <div class="timeline-time"><h4>5:30 PM</h4></div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4>Ceremony Begins</h4>
+                    <p>Vows and &ldquo;I Do&rdquo;</p>
+                </div>
+            </div>
+            <div class="timeline-event reveal">
+                <div class="timeline-time"><h4>5:55 PM</h4></div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4>Private Vows in Gazebo</h4>
+                    <p>A moment just for the two of them</p>
+                </div>
+            </div>
+            <div class="timeline-event reveal">
+                <div class="timeline-time"><h4>6:15 PM</h4></div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4>Couple Portraits</h4>
+                    <p>Guests mingle while the reception space is flipped</p>
+                </div>
+            </div>
+            <div class="timeline-event reveal">
+                <div class="timeline-time"><h4>6:30 PM</h4></div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4>Food Truck Opens</h4>
+                    <p>Dinner is served</p>
+                </div>
+            </div>
+            <div class="timeline-event reveal">
+                <div class="timeline-time"><h4>6:50 PM</h4></div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4>Grand Entrances</h4>
+                    <p>The newlyweds and wedding party make their entrance</p>
+                </div>
+            </div>
+            <div class="timeline-event reveal">
+                <div class="timeline-time"><h4>7:10 PM</h4></div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4>Speeches</h4>
+                    <p>Toasts from family and wedding party</p>
+                </div>
+            </div>
+            <div class="timeline-event reveal">
+                <div class="timeline-time"><h4>7:25 PM</h4></div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4>First Dances</h4>
+                    <p>Couple, father-daughter, mother-son</p>
+                </div>
+            </div>
+            <div class="timeline-event reveal">
+                <div class="timeline-time"><h4>7:40 PM</h4></div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4>Open Dance Floor</h4>
+                    <p>DJ Raulin takes over</p>
                 </div>
             </div>
             <div class="timeline-event reveal">
                 <div class="timeline-time"><h4>8:00 PM</h4></div>
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
-                    <h4>Toasts &amp; First Dance</h4>
-                    <p>Speeches, father-daughter dance, mother-son dance</p>
+                    <h4>Photographer Departs</h4>
+                    <p>Cake cutting and bouquet/garter toss follow</p>
                 </div>
             </div>
             <div class="timeline-event reveal">
-                <div class="timeline-time"><h4>8:30 PM</h4></div>
+                <div class="timeline-time"><h4>9:15 PM</h4></div>
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
-                    <h4>Open Dancing</h4>
-                    <p>DJ Raulin takes over</p>
+                    <h4>Last Call at Bar</h4>
+                    <p>DJ begins winding down at 9:30</p>
                 </div>
             </div>
             <div class="timeline-event reveal">
-                <div class="timeline-time"><h4>10:30 PM</h4></div>
+                <div class="timeline-time"><h4>10:00 PM</h4></div>
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
-                    <h4>Grand Exit</h4>
-                    <p>Send-off for the newlyweds</p>
+                    <h4>Sparkler Grand Exit</h4>
+                    <p>Tony&rsquo;s limo arrives for pickup; DJ and videographer depart</p>
                 </div>
             </div>
+            <div class="timeline-event reveal">
+                <div class="timeline-time"><h4>11:00 PM</h4></div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4>Venue Cleared</h4>
+                    <p>Cleanup complete</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- VENDOR CONTACTS & ARRIVALS -->
+<section id="vendors">
+    <div class="section-container">
+        <div class="section-header reveal">
+            <div class="section-tag">On The Day</div>
+            <h2 class="section-title">Vendor Contacts &amp; Arrivals</h2>
+            <div class="section-subtitle">Tap any number to call &mdash; everyone you need in one place</div>
+            <div class="section-line"></div>
+        </div>
+
+        <div class="vendor-contacts-grid reveal">
+
+            <div class="vendor-card">
+                <div class="vc-category">Hair &amp; Makeup</div>
+                <div class="vc-name">Ange Mckernan</div>
+                <div class="vc-contact">Lead artist</div>
+                <a class="vc-phone" href="tel:+17604700570">&#9742; (760) 470-0570</a>
+                <div class="vc-times">
+                    <div class="vc-time-row"><span class="vc-time-label">Arrival</span><span class="vc-time-value">9:00 AM</span></div>
+                </div>
+            </div>
+
+            <div class="vendor-card">
+                <div class="vc-category">Hair &amp; Makeup</div>
+                <div class="vc-name">Kelsey Lane</div>
+                <div class="vc-contact">Second artist</div>
+                <a class="vc-phone" href="tel:+19313038358">&#9742; (931) 303-8358</a>
+                <div class="vc-times">
+                    <div class="vc-time-row"><span class="vc-time-label">Arrival</span><span class="vc-time-value">9:00 AM</span></div>
+                </div>
+            </div>
+
+            <div class="vendor-card">
+                <div class="vc-category">Florist</div>
+                <div class="vc-name">Glass Tangerine</div>
+                <div class="vc-contact">London picks up on the 25th</div>
+                <a class="vc-phone" href="tel:+19315598264">&#9742; (931) 559-8264</a>
+                <div class="vc-times">
+                    <div class="vc-time-row"><span class="vc-time-label">Pickup</span><span class="vc-time-value">10:15 AM</span></div>
+                </div>
+            </div>
+
+            <div class="vendor-card">
+                <div class="vc-category">Photography</div>
+                <div class="vc-name">Daphne Engle</div>
+                <div class="vc-contact">Lead photographer</div>
+                <span class="vc-phone">&#9742; Contact TBD</span>
+                <div class="vc-times">
+                    <div class="vc-time-row"><span class="vc-time-label">Arrival</span><span class="vc-time-value">12:00 PM</span></div>
+                </div>
+            </div>
+
+            <div class="vendor-card">
+                <div class="vc-category">Videography</div>
+                <div class="vc-name">Matt Matheson</div>
+                <div class="vc-contact">Video</div>
+                <a class="vc-phone" href="tel:+19312522070">&#9742; (931) 252-2070</a>
+                <div class="vc-times">
+                    <div class="vc-time-row"><span class="vc-time-label">Arrival</span><span class="vc-time-value">12:00 PM</span></div>
+                </div>
+            </div>
+
+            <div class="vendor-card">
+                <div class="vc-category">DJ</div>
+                <div class="vc-name">DJ Raulin</div>
+                <div class="vc-contact">Ceremony through reception</div>
+                <a class="vc-phone" href="tel:+17862593551">&#9742; (786) 259-3551</a>
+                <div class="vc-times">
+                    <div class="vc-time-row"><span class="vc-time-label">Arrival</span><span class="vc-time-value">10:00&ndash;11:00 AM</span></div>
+                    <div class="vc-time-row"><span class="vc-time-label">Depart</span><span class="vc-time-value">10:00 PM</span></div>
+                </div>
+            </div>
+
+            <div class="vendor-card">
+                <div class="vc-category">Cake</div>
+                <div class="vc-name">Melissa Harp</div>
+                <div class="vc-contact">Cake delivery</div>
+                <a class="vc-phone" href="tel:+19318814440">&#9742; (931) 881-4440</a>
+                <div class="vc-times">
+                    <div class="vc-time-row"><span class="vc-time-label">Arrival</span><span class="vc-time-value">4:45 PM</span></div>
+                </div>
+            </div>
+
+            <div class="vendor-card">
+                <div class="vc-category">Catering</div>
+                <div class="vc-name">Habiba&rsquo;s Food Truck</div>
+                <div class="vc-contact">Mexican food truck</div>
+                <a class="vc-phone" href="tel:+19312523618">&#9742; (931) 252-3618</a>
+                <div class="vc-times">
+                    <div class="vc-time-row"><span class="vc-time-label">Arrival</span><span class="vc-time-value">3:30 PM</span></div>
+                </div>
+            </div>
+
+            <div class="vendor-card">
+                <div class="vc-category">Tables &amp; Chairs</div>
+                <div class="vc-name">Party Source Rentals</div>
+                <div class="vc-contact">Trish Stover</div>
+                <a class="vc-phone" href="tel:+19315285724">&#9742; (931) 528-5724</a>
+                <div class="vc-times">
+                    <div class="vc-time-row"><span class="vc-time-label">Delivery</span><span class="vc-time-value">Thursday</span></div>
+                    <div class="vc-time-row"><span class="vc-time-label">Pickup</span><span class="vc-time-value">Sun/Mon</span></div>
+                </div>
+            </div>
+
+            <div class="vendor-card">
+                <div class="vc-category">Dance Floor</div>
+                <div class="vc-name">Phillips Rentals</div>
+                <div class="vc-contact">Phillip</div>
+                <a class="vc-phone" href="tel:+19312551211">&#9742; (931) 255-1211</a>
+                <div class="vc-times">
+                    <div class="vc-time-row"><span class="vc-time-label">Arrival</span><span class="vc-time-value">8:00 AM</span></div>
+                    <div class="vc-time-row"><span class="vc-time-label">Pickup</span><span class="vc-time-value">Mon Morning</span></div>
+                </div>
+            </div>
+
+            <div class="vendor-card">
+                <div class="vc-category">Restrooms</div>
+                <div class="vc-name">Middle TN Disposal</div>
+                <div class="vc-contact">Sabrina</div>
+                <a class="vc-phone" href="tel:+19312675660">&#9742; (931) 267-5660</a>
+                <div class="vc-times">
+                    <div class="vc-time-row"><span class="vc-time-label">Delivery</span><span class="vc-time-value">Fri Evening</span></div>
+                    <div class="vc-time-row"><span class="vc-time-label">Pickup</span><span class="vc-time-value">Sun/Mon</span></div>
+                </div>
+            </div>
+
+            <div class="vendor-card">
+                <div class="vc-category">Coordinator</div>
+                <div class="vc-name">Meagan Flynn</div>
+                <div class="vc-contact">Lead coordinator</div>
+                <a class="vc-phone" href="tel:+14235445787">&#9742; (423) 544-5787</a>
+                <div class="vc-times">
+                    <div class="vc-time-row"><span class="vc-time-label">Arrival</span><span class="vc-time-value">7:45&ndash;8:00 AM</span></div>
+                </div>
+            </div>
+
+            <div class="vendor-card">
+                <div class="vc-category">Coordinator</div>
+                <div class="vc-name">London Williams</div>
+                <div class="vc-contact">Co-coordinator &bull; handles florals pickup</div>
+                <a class="vc-phone" href="tel:+19316445280">&#9742; (931) 644-5280</a>
+                <div class="vc-times">
+                    <div class="vc-time-row"><span class="vc-time-label">Arrival</span><span class="vc-time-value">7:45&ndash;8:00 AM</span></div>
+                </div>
+            </div>
+
+            <div class="vendor-card">
+                <div class="vc-category">Transportation</div>
+                <div class="vc-name">Tony&rsquo;s Limo</div>
+                <div class="vc-contact">Grand exit pickup</div>
+                <a class="vc-phone" href="tel:+19318540488">&#9742; (931) 854-0488</a>
+                <div class="vc-times">
+                    <div class="vc-time-row"><span class="vc-time-label">Arrival</span><span class="vc-time-value">10:00 PM</span></div>
+                </div>
+            </div>
+
         </div>
     </div>
 </section>
@@ -1317,21 +1773,21 @@
 
         <div class="budget-overview reveal">
             <div class="budget-stat">
-                <div class="budget-stat-number">$10,000</div>
-                <div class="budget-stat-label">Total Budget</div>
+                <div class="budget-stat-number">$17,338</div>
+                <div class="budget-stat-label">Total Contracts</div>
             </div>
             <div class="budget-stat">
-                <div class="budget-stat-number gold">$2,050</div>
-                <div class="budget-stat-label">Spent So Far</div>
+                <div class="budget-stat-number gold">$6,803</div>
+                <div class="budget-stat-label">Paid So Far</div>
             </div>
             <div class="budget-stat">
-                <div class="budget-stat-number green">$7,950</div>
+                <div class="budget-stat-number green">$10,535</div>
                 <div class="budget-stat-label">Remaining</div>
             </div>
         </div>
 
         <div class="budget-progress reveal">
-            <div class="budget-progress-bar" style="width: 20.5%"></div>
+            <div class="budget-progress-bar" style="width: 39.2%"></div>
         </div>
 
         <div class="vendor-table-wrap reveal">
@@ -1348,107 +1804,99 @@
                 </thead>
                 <tbody>
                     <tr>
+                        <td>Florals</td>
+                        <td>Glass Tangerine</td>
+                        <td>$1,347.50</td>
+                        <td>$336.44</td>
+                        <td>$1,011.06</td>
+                        <td><span class="status-badge status-booked">&#x2713; Paid</span></td>
+                    </tr>
+                    <tr>
                         <td>Photography</td>
-                        <td>Daphne</td>
-                        <td>$3,500</td>
-                        <td>$700</td>
-                        <td>$2,800</td>
+                        <td>Daphne Engle</td>
+                        <td>$3,500.00</td>
+                        <td>$700.00</td>
+                        <td>$2,800.00</td>
+                        <td><span class="status-badge status-booked">&#x2713; Booked</span></td>
+                    </tr>
+                    <tr>
+                        <td>Catering</td>
+                        <td>Habiba&rsquo;s Food Truck</td>
+                        <td>$2,590.00</td>
+                        <td>$1,000.00</td>
+                        <td>$1,590.00</td>
+                        <td><span class="status-badge status-booked">&#x2713; Booked</span></td>
+                    </tr>
+                    <tr>
+                        <td>Transportation</td>
+                        <td>Tony&rsquo;s Limo</td>
+                        <td>$650.00</td>
+                        <td>$325.00</td>
+                        <td>$325.00</td>
                         <td><span class="status-badge status-booked">&#x2713; Booked</span></td>
                     </tr>
                     <tr>
                         <td>DJ / Music</td>
                         <td>DJ Raulin</td>
-                        <td>$1,525</td>
-                        <td>$350</td>
-                        <td>$1,175</td>
-                        <td><span class="status-badge status-booked">&#x2713; Booked</span></td>
+                        <td>$1,525.00</td>
+                        <td>$350.00</td>
+                        <td>$1,175.00</td>
+                        <td><span class="status-badge status-booked">&#x2713; Paid</span></td>
                     </tr>
                     <tr>
                         <td>Videography</td>
                         <td>Matt Matheson</td>
-                        <td>$2,500</td>
-                        <td>$0</td>
-                        <td>$2,500</td>
+                        <td>$2,500.00</td>
+                        <td>$0.00</td>
+                        <td>$2,500.00</td>
                         <td><span class="status-badge status-booked">&#x2713; Booked</span></td>
                     </tr>
                     <tr>
-                        <td>Catering</td>
-                        <td>Habiba's Mexican Food Truck</td>
-                        <td>TBD</td>
-                        <td>$1,000</td>
-                        <td>TBD</td>
-                        <td><span class="status-badge status-booked">&#x2713; Booked</span></td>
-                    </tr>
-                    <tr>
-                        <td>Florals</td>
-                        <td>Glass Tangerine</td>
-                        <td>TBD</td>
-                        <td>&mdash;</td>
-                        <td>TBD</td>
-                        <td><span class="status-badge status-booked">&#x2713; Booked</span></td>
-                    </tr>
-                    <tr>
-                        <td>Cake + Desserts</td>
-                        <td>Baby Cakes Bakery</td>
-                        <td>TBD</td>
-                        <td>&mdash;</td>
-                        <td>TBD</td>
-                        <td><span class="status-badge status-booked">&#x2713; Booked</span></td>
-                    </tr>
-                    <tr>
-                        <td>Rentals (Tables + Seating)</td>
-                        <td>Party Source Rentals</td>
-                        <td>TBD</td>
-                        <td>&mdash;</td>
-                        <td>TBD</td>
-                        <td><span class="status-badge status-booked">&#x2713; Booked</span></td>
-                    </tr>
-                    <tr>
-                        <td>Dance Floor</td>
-                        <td>Phillips Rentals</td>
-                        <td>TBD</td>
-                        <td>&mdash;</td>
-                        <td>TBD</td>
-                        <td><span class="status-badge status-booked">&#x2713; Booked</span></td>
-                    </tr>
-                    <tr>
-                        <td>Hair + Makeup</td>
-                        <td>Angie (Paula's sister)</td>
-                        <td>TBD</td>
-                        <td>&mdash;</td>
-                        <td>TBD</td>
-                        <td><span class="status-badge status-booked">&#x2713; Booked</span></td>
+                        <td>Cake</td>
+                        <td>Melissa Harp</td>
+                        <td>$702.34</td>
+                        <td>$351.17</td>
+                        <td>$351.17</td>
+                        <td><span class="status-badge status-booked">&#x2713; Paid</span></td>
                     </tr>
                     <tr>
                         <td>Restrooms</td>
-                        <td>Middle Tennessee Disposal</td>
-                        <td>TBD</td>
-                        <td>&mdash;</td>
-                        <td>TBD</td>
+                        <td>Middle TN Disposal</td>
+                        <td>$658.50</td>
+                        <td>$329.25</td>
+                        <td>$329.25</td>
+                        <td><span class="status-badge status-booked">&#x2713; Paid</span></td>
+                    </tr>
+                    <tr>
+                        <td>Dance Floor + Heaters</td>
+                        <td>Phillips Rentals</td>
+                        <td>$631.68</td>
+                        <td>$94.81</td>
+                        <td>$536.87</td>
                         <td><span class="status-badge status-booked">&#x2713; Booked</span></td>
                     </tr>
                     <tr>
-                        <td>Bar / Drinks</td>
-                        <td>Built-in bar (gazebo)</td>
-                        <td>TBD</td>
-                        <td>&mdash;</td>
-                        <td>TBD</td>
-                        <td><span class="status-badge status-pending">Planning</span></td>
+                        <td>Tables &amp; Chairs</td>
+                        <td>Party Source Rentals</td>
+                        <td>$3,232.75</td>
+                        <td>$450.00</td>
+                        <td>$2,782.75</td>
+                        <td><span class="status-badge status-booked">&#x2713; Booked</span></td>
                     </tr>
-                    <tr>
-                        <td>Transportation (Limo)</td>
+                    <tr style="border-top: 2px solid var(--sage); font-weight: 600;">
+                        <td><strong>Total</strong></td>
                         <td>&mdash;</td>
+                        <td><strong>$17,337.77</strong></td>
+                        <td><strong>$3,936.67</strong></td>
+                        <td><strong>$13,401.10</strong></td>
                         <td>&mdash;</td>
-                        <td>&mdash;</td>
-                        <td>&mdash;</td>
-                        <td><span class="status-badge status-pending">To Confirm</span></td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
         <p style="text-align: center; margin-top: 20px; font-size: 12px; color: var(--taupe); font-style: italic;">
-            Deposits paid include: Daphne (Photography) &mdash; Dec 2, 2025 &bull; DJ Raulin &mdash; Jan 19, 2026 &bull; Habiba's &mdash; $1,000 deposit
+            Paid in full: Florist &bull; DJ Raulin &bull; Cake &bull; Restrooms &nbsp;&bull;&nbsp; Deposits secured on all other vendors
         </p>
     </div>
 </section>
@@ -1872,7 +2320,7 @@
         <div class="coordinator-badge-dot"></div>
         <span>Your Wedding Coordinator</span>
     </div>
-    <div class="coordinator-name">Megan Flynn</div>
+    <div class="coordinator-name">Meagan Flynn</div>
     <div class="coordinator-title">Wedding &amp; Event Coordinator</div>
     <div class="coordinator-contact">Cookeville, Tennessee</div>
     <p class="footer-copy">&copy; 2026 &middot; Crafted with love for Liv &amp; Bryson</p>
