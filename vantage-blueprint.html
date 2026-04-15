@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Vantage Creative Blueprint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #050505;
+  --surface: #0D0D0D;
+  --surface-2: #141414;
+  --surface-3: #1C1C1C;
+  --accent: #C8FF00;
+  --accent-dim: rgba(200,255,0,0.10);
+  --accent-glow: rgba(200,255,0,0.28);
+  --accent-ink: #050505;
+  --text-1: #F5F5F5;
+  --text-2: rgba(245,245,245,0.62);
+  --text-3: rgba(245,245,245,0.36);
+  --text-4: rgba(245,245,245,0.20);
+  --line: rgba(245,245,245,0.08);
+  --line-2: rgba(245,245,245,0.14);
+  --font-display: 'Plus Jakarta Sans', -apple-system, sans-serif;
+  --font-ui: 'DM Sans', -apple-system, sans-serif;
+  --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px; --s-5:24px; --s-6:32px; --s-7:48px; --s-8:64px; --s-9:96px;
+  --r-sm:8px; --r-md:12px; --r-lg:16px; --r-xl:24px;
+  --ease: cubic-bezier(0.2,0,0,1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+body {
+  font-family: var(--font-ui);
+  background: var(--bg);
+  color: var(--text-1);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+body::before {
+  content:'';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  mix-blend-mode: overlay;
+}
+.shell { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 0 var(--s-5); }
+
+h1,h2,h3,h4 { font-family: var(--font-display); font-weight: 800; letter-spacing: -0.02em; }
+
+/* ── NAV ── */
+.nav {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(5,5,5,0.72);
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
+  border-bottom: 1px solid var(--line);
+}
+.nav-inner {
+  max-width: 1080px; margin: 0 auto;
+  padding: var(--s-3) var(--s-5);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--s-4);
+}
+.nav-brand {
+  display: flex; align-items: center; gap: var(--s-2);
+  font-family: var(--font-display);
+  font-size: 15px; font-weight: 800;
+  letter-spacing: -0.3px;
+}
+.nav-brand .mark { color: var(--accent); font-size: 22px; line-height: 1; }
+.nav-links { display: flex; gap: var(--s-5); list-style: none; }
+.nav-links a {
+  font-family: var(--font-ui);
+  font-size: 13px; font-weight: 500;
+  color: var(--text-2); text-decoration: none;
+  transition: color 0.2s var(--ease);
+}
+.nav-links a:hover { color: var(--accent); }
+@media (max-width: 680px) { .nav-links { display: none; } }
+
+/* ── HERO ── */
+.hero { padding: var(--s-9) 0 var(--s-8); position: relative; }
+.hero::before {
+  content:'';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 70% 20%, var(--accent-dim) 0%, transparent 55%);
+  pointer-events: none;
+}
+.eyebrow {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  font-family: var(--font-ui);
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--accent);
+  padding: var(--s-1) var(--s-3);
+  background: var(--accent-dim);
+  border: 1px solid var(--accent-glow);
+  border-radius: 9999px;
+  margin-bottom: var(--s-5);
+}
+.eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px var(--accent-glow); }
+.hero h1 {
+  font-size: clamp(52px, 10vw, 104px);
+  font-weight: 800;
+  letter-spacing: -4px;
+  line-height: 0.92;
+  margin-bottom: var(--s-5);
+}
+.hero h1 .lime { color: var(--accent); }
+.hero h1 .strike { position: relative; display: inline-block; }
+.hero h1 .strike::after {
+  content:''; position: absolute; left: -4%; right: -4%; top: 50%;
+  height: 6px; background: var(--accent);
+  transform: translateY(-1px) rotate(-1.5deg);
+}
+.hero .tagline {
+  font-size: clamp(17px, 2vw, 21px);
+  color: var(--text-2);
+  max-width: 620px;
+  line-height: 1.55;
+  margin-bottom: var(--s-6);
+}
+.hero-meta {
+  display: flex; flex-wrap: wrap; gap: var(--s-3);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--line);
+  max-width: 720px;
+}
+.meta-chip {
+  font-family: var(--font-ui);
+  font-size: 12px; font-weight: 500;
+  color: var(--text-2);
+  padding: var(--s-2) var(--s-3);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+}
+.meta-chip strong { color: var(--text-1); font-weight: 700; }
+
+/* ── SECTION ── */
+.section { padding: var(--s-9) 0; border-top: 1px solid var(--line); }
+.sec-label {
+  font-family: var(--font-ui);
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: var(--s-3);
+}
+.sec-title {
+  font-size: clamp(34px, 5.5vw, 58px);
+  font-weight: 800;
+  letter-spacing: -2px;
+  line-height: 1.02;
+  margin-bottom: var(--s-4);
+}
+.sec-title .lime { color: var(--accent); }
+.sec-sub {
+  font-size: 17px;
+  color: var(--text-2);
+  max-width: 680px;
+  line-height: 1.6;
+  margin-bottom: var(--s-7);
+}
+
+/* ── PHILOSOPHY PULL ── */
+.pull {
+  padding: var(--s-7) var(--s-6);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--r-lg);
+  margin-bottom: var(--s-5);
+}
+.pull-quote {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 3.5vw, 34px);
+  font-weight: 700;
+  letter-spacing: -0.8px;
+  line-height: 1.15;
+  color: var(--text-1);
+}
+.pull-quote .lime { color: var(--accent); }
+.pull-cite {
+  font-family: var(--font-ui);
+  font-size: 12px; font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-top: var(--s-4);
+}
+
+/* ── CORP STRUCTURE ── */
+.corp {
+  display: flex; flex-direction: column; align-items: center;
+  padding: var(--s-7) var(--s-5);
+  background: linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  position: relative;
+}
+.corp-parent {
+  width: 260px; padding: var(--s-5) var(--s-5);
+  background: var(--bg);
+  border: 2px solid var(--accent);
+  border-radius: var(--r-md);
+  text-align: center;
+  box-shadow: 0 0 40px var(--accent-dim);
+  position: relative;
+  margin-bottom: var(--s-7);
+}
+.corp-parent::after {
+  content: '';
+  position: absolute;
+  left: 50%; top: 100%;
+  width: 1px; height: var(--s-7);
+  background: linear-gradient(180deg, var(--accent), var(--line));
+}
+.corp-parent .label {
+  font-family: var(--font-ui);
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: var(--s-2);
+}
+.corp-parent .name {
+  font-family: var(--font-display);
+  font-size: 22px; font-weight: 800;
+  letter-spacing: -0.8px;
+}
+.corp-children {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--s-3);
+  width: 100%;
+  max-width: 840px;
+  position: relative;
+}
+.corp-children::before {
+  content:'';
+  position: absolute;
+  top: calc(-1 * var(--s-7));
+  left: 12.5%; right: 12.5%;
+  height: 1px;
+  background: var(--line-2);
+}
+.corp-child {
+  padding: var(--s-4);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  text-align: center;
+  position: relative;
+  transition: all 0.3s var(--ease);
+}
+.corp-child::before {
+  content:'';
+  position: absolute;
+  left: 50%; top: calc(-1 * var(--s-7));
+  width: 1px; height: var(--s-7);
+  background: var(--line-2);
+}
+.corp-child:hover {
+  border-color: var(--accent-glow);
+  transform: translateY(-2px);
+}
+.corp-child .kind {
+  font-family: var(--font-ui);
+  font-size: 9px; font-weight: 600;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: var(--s-2);
+}
+.corp-child .name {
+  font-family: var(--font-display);
+  font-size: 15px; font-weight: 700;
+  letter-spacing: -0.3px;
+  margin-bottom: var(--s-1);
+}
+.corp-child .runner {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  color: var(--text-3);
+}
+@media (max-width: 720px) {
+  .corp-children { grid-template-columns: repeat(2, 1fr); }
+  .corp-children::before { display: none; }
+  .corp-child::before { display: none; }
+}
+
+/* ── SERVICE GRID ── */
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--s-4); }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-4); }
+@media (max-width: 820px) {
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+}
+
+.service {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: var(--s-5);
+  transition: all 0.3s var(--ease);
+  position: relative; overflow: hidden;
+}
+.service:hover {
+  border-color: var(--line-2);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+}
+.service-num {
+  font-family: var(--font-display);
+  font-size: 13px; font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.5px;
+  margin-bottom: var(--s-3);
+}
+.service-title {
+  font-family: var(--font-display);
+  font-size: 22px; font-weight: 800;
+  letter-spacing: -0.6px;
+  margin-bottom: var(--s-2);
+}
+.service-copy {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.6;
+  margin-bottom: var(--s-3);
+}
+.service-price {
+  font-family: var(--font-display);
+  font-size: 13px; font-weight: 700;
+  color: var(--accent);
+  padding-top: var(--s-3);
+  border-top: 1px solid var(--line);
+}
+
+/* ── PRINCIPLES ── */
+.principles { display: flex; flex-direction: column; gap: var(--s-3); }
+.principle {
+  display: flex; gap: var(--s-4); align-items: flex-start;
+  padding: var(--s-4) var(--s-5);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--r-md) var(--r-md) 0;
+}
+.principle-key {
+  font-family: var(--font-display);
+  font-size: 15px; font-weight: 700;
+  letter-spacing: -0.2px;
+  color: var(--text-1);
+  flex-shrink: 0;
+  min-width: 200px;
+}
+.principle-val {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.55;
+}
+@media (max-width: 680px) {
+  .principle { flex-direction: column; gap: var(--s-2); }
+  .principle-key { min-width: 0; }
+}
+
+/* ── ROADMAP ── */
+.roadmap { display: flex; flex-direction: column; gap: var(--s-3); }
+.rm-item {
+  display: flex; gap: var(--s-4); align-items: center;
+  padding: var(--s-4) var(--s-5);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+}
+.rm-dot {
+  flex-shrink: 0;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+}
+.rm-dot.done { background: var(--accent); box-shadow: 0 0 8px var(--accent-glow); }
+.rm-dot.active { background: var(--accent); animation: pulse 2s ease-in-out infinite; }
+.rm-dot.pending { background: var(--text-4); border: 1px solid var(--line-2); }
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 var(--accent-glow); }
+  50% { box-shadow: 0 0 0 6px rgba(200,255,0,0); }
+}
+.rm-label {
+  font-family: var(--font-ui);
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  min-width: 80px;
+}
+.rm-label.done { color: var(--accent); }
+.rm-label.active { color: var(--accent); }
+.rm-label.pending { color: var(--text-3); }
+.rm-text {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.5;
+  flex: 1;
+}
+.rm-text strong { color: var(--text-1); font-weight: 600; }
+
+/* ── CTA ── */
+.cta-band {
+  padding: var(--s-9) 0;
+  text-align: center;
+  border-top: 1px solid var(--line);
+  position: relative;
+}
+.cta-band::before {
+  content:'';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, var(--accent-dim) 0%, transparent 60%);
+  pointer-events: none;
+}
+.cta-band h2 {
+  font-size: clamp(40px, 7vw, 78px);
+  letter-spacing: -2.5px;
+  line-height: 0.95;
+  margin-bottom: var(--s-5);
+  position: relative;
+}
+.cta-band h2 .lime { color: var(--accent); }
+.cta-band p {
+  font-size: 17px;
+  color: var(--text-2);
+  max-width: 540px;
+  margin: 0 auto var(--s-6);
+  line-height: 1.55;
+  position: relative;
+}
+
+footer {
+  padding: var(--s-6) 0 var(--s-7);
+  border-top: 1px solid var(--line);
+  text-align: center;
+}
+footer p {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand"><span class="mark">V</span> VANTAGE CREATIVE</div>
+    <ul class="nav-links">
+      <li><a href="#structure">Structure</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#principles">Principles</a></li>
+      <li><a href="#roadmap">Roadmap</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="shell">
+    <div class="eyebrow"><span class="dot"></span>Parent Company &middot; Est. 2026</div>
+    <h1>Strategic<br>Vantage. <span class="lime">Creative</span><br>Execution.</h1>
+    <p class="tagline">Vantage Creative is the parent company for everything outside of Flynn Development. Creative, production, web, apps, and business consulting &mdash; run by Jaden and Megan Flynn. One umbrella, five revenue lines, selective clients.</p>
+    <div class="hero-meta">
+      <div class="meta-chip"><strong>Owners:</strong> Jaden + Megan</div>
+      <div class="meta-chip"><strong>5</strong> Revenue Lines</div>
+      <div class="meta-chip"><strong>Parent</strong> of Flynn &amp; Co</div>
+      <div class="meta-chip"><strong>Selective</strong> Client Roster</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PHILOSOPHY ── -->
+<section class="section">
+  <div class="shell">
+    <div class="sec-label">01 / Operating Philosophy</div>
+    <h2 class="sec-title">Most marketing<br>problems <span class="lime">aren't</span><br>marketing problems.</h2>
+    <div class="pull">
+      <div class="pull-quote">They're <span class="lime">clarity</span> problems. <span class="lime">Positioning</span> problems. <span class="lime">Strategy</span> problems. We fix those first &mdash; then we turn on the cameras.</div>
+      <div class="pull-cite">&mdash; Vantage Operating Thesis</div>
+    </div>
+    <p class="sec-sub" style="margin-top: var(--s-5);">Every Vantage engagement starts with understanding the business before producing a single asset. We're not a content shop. We're a strategic partner that happens to execute at a very high level on creative, web, and media.</p>
+  </div>
+</section>
+
+<!-- ── STRUCTURE ── -->
+<section class="section" id="structure">
+  <div class="shell">
+    <div class="sec-label">02 / Corporate Structure</div>
+    <h2 class="sec-title">The Umbrella.</h2>
+    <p class="sec-sub">Vantage is the holding entity. Flynn &amp; Co lives underneath it. Client web, app, and consulting work also runs through Vantage directly. Flynn Development (construction) is a separate business entirely.</p>
+    <div class="corp">
+      <div class="corp-parent">
+        <div class="label">Parent Company</div>
+        <div class="name">Vantage Creative</div>
+      </div>
+      <div class="corp-children">
+        <div class="corp-child">
+          <div class="kind">Subsidiary</div>
+          <div class="name">Flynn &amp; Co</div>
+          <div class="runner">Run by Megan</div>
+        </div>
+        <div class="corp-child">
+          <div class="kind">Line</div>
+          <div class="name">Web &amp; Apps</div>
+          <div class="runner">Run by Jaden</div>
+        </div>
+        <div class="corp-child">
+          <div class="kind">Line</div>
+          <div class="name">Production</div>
+          <div class="runner">Shared</div>
+        </div>
+        <div class="corp-child">
+          <div class="kind">Line</div>
+          <div class="name">Consulting</div>
+          <div class="runner">Shared</div>
+        </div>
+      </div>
+    </div>
+    <p class="sec-sub" style="margin-top: var(--s-5); max-width: 780px;"><strong style="color:var(--text-1);">Important:</strong> Flynn &amp; Co is NOT Vantage Creative. Flynn &amp; Co is owned BY Vantage Creative. Megan runs Flynn &amp; Co day-to-day. Vantage is the holding layer.</p>
+  </div>
+</section>
+
+<!-- ── SERVICES ── -->
+<section class="section" id="services">
+  <div class="shell">
+    <div class="sec-label">03 / Service Lines</div>
+    <h2 class="sec-title">Five Ways<br>We Get Paid.</h2>
+    <p class="sec-sub">Strategy before execution. Every service line is built to stack with the others &mdash; a client might start with a $2K website and end up inside a full production retainer through Flynn &amp; Co. Vantage is built for depth, not volume.</p>
+    <div class="grid-2">
+      <div class="service">
+        <div class="service-num">01</div>
+        <div class="service-title">Web Development</div>
+        <div class="service-copy">Conversion-focused websites built around a client's strategy. Custom design, mobile-first, SEO-architected, booking or e-commerce ready. The website is one component of a bigger growth system &mdash; never a standalone product.</div>
+        <div class="service-price">$2K starter &middot; $5K full build</div>
+      </div>
+      <div class="service">
+        <div class="service-num">02</div>
+        <div class="service-title">App Development</div>
+        <div class="service-copy">Custom software projects for clients who need more than a website. Native mobile, web apps, internal tooling. Fast moving &mdash; we ship what a dev shop would quote $80K for, in a fraction of the timeline.</div>
+        <div class="service-price">Scoped per project</div>
+      </div>
+      <div class="service">
+        <div class="service-num">03</div>
+        <div class="service-title">Production &amp; Media</div>
+        <div class="service-copy">Video, photo, and social content. Delivered through Flynn &amp; Co but owned at the Vantage level. Strategic creative &mdash; every asset has a job to do, and we know what it is before the camera rolls.</div>
+        <div class="service-price">Retainer or project</div>
+      </div>
+      <div class="service">
+        <div class="service-num">04</div>
+        <div class="service-title">Social &amp; Marketing</div>
+        <div class="service-copy">Managed through Flynn &amp; Co. Campaign strategy, ad buying, content production, and ongoing account management. Not just posting &mdash; positioning and compounding.</div>
+        <div class="service-price">Flynn &amp; Co retainer tiers</div>
+      </div>
+      <div class="service">
+        <div class="service-num">05</div>
+        <div class="service-title">Business Consulting</div>
+        <div class="service-copy">Tech-forward advisory for growth-focused businesses outside of construction. How to position, how to price, how to systemize, how to find leverage. Not generic consulting &mdash; operator consulting.</div>
+        <div class="service-price">Scoped engagements</div>
+      </div>
+      <div class="service">
+        <div class="service-num">06</div>
+        <div class="service-title">Strategic Partnerships</div>
+        <div class="service-copy">The deepest tier. We function as an extension of the client's leadership team &mdash; not a vendor. Quarterly strategy, ongoing execution, real accountability. Small number of clients. Max depth.</div>
+        <div class="service-price">Invite only</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRINCIPLES ── -->
+<section class="section" id="principles">
+  <div class="shell">
+    <div class="sec-label">04 / How We Operate</div>
+    <h2 class="sec-title">The Rules<br>Of The House.</h2>
+    <p class="sec-sub">Vantage is built on a specific way of working. Clients who fit, thrive. Clients who don't, don't last &mdash; and that's fine.</p>
+    <div class="principles">
+      <div class="principle">
+        <div class="principle-key">Strategy before execution</div>
+        <div class="principle-val">We understand the business, the customer, and the market before any asset is produced. No campaigns that can't answer "why."</div>
+      </div>
+      <div class="principle">
+        <div class="principle-key">Signal, not noise</div>
+        <div class="principle-val">Marketing should clarify the brand's position in the market. If it can't be distinguished from a competitor's version, we don't ship it.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-key">Quality over volume</div>
+        <div class="principle-val">We work with a select group of clients. Saying no to the wrong fit is how we keep delivering for the right fit.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-key">Leadership extension</div>
+        <div class="principle-val">Every engagement aims to function like part of the client's team. Not a vendor. Not an agency-of-record. A partner.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-key">Ship, then refine</div>
+        <div class="principle-val">Perfect is the enemy of launched. We ship fast, learn from the market, and iterate. Planning meetings don't build brands.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-key">Own the system</div>
+        <div class="principle-val">We don't deliver assets in a vacuum. Every deliverable plugs into a larger growth system that clients own and can keep running.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── BRAND ── -->
+<section class="section">
+  <div class="shell">
+    <div class="sec-label">05 / Brand Identity</div>
+    <h2 class="sec-title">Dark. Bold.<br><span class="lime">Unapologetic.</span></h2>
+    <p class="sec-sub">The Vantage brand is built in the opposite direction of traditional agencies. Not editorial. Not warm. Not "creative agency serif on cream." This is closer to <em>riot.nyc</em>, <em>known.is</em>, and the Nike graphic system &mdash; bold, confident, and built to be noticed.</p>
+    <div class="grid-3">
+      <div class="service">
+        <div class="service-num">PALETTE</div>
+        <div class="service-title">Asphalt + Lime</div>
+        <div class="service-copy">Pure black surface. Electric lime <code style="background:var(--surface-3);padding:2px 6px;border-radius:4px;color:var(--accent);font-size:12px;">#C8FF00</code> as the only accent. No gradients. No secondary colors. The contrast is the brand.</div>
+      </div>
+      <div class="service">
+        <div class="service-num">TYPE</div>
+        <div class="service-title">Jakarta + DM Sans</div>
+        <div class="service-copy">Plus Jakarta Sans for display &mdash; tight tracking, heavy weight. DM Sans for body &mdash; clean, modern, highly legible. Sans-serif, full stop.</div>
+      </div>
+      <div class="service">
+        <div class="service-num">MOTION</div>
+        <div class="service-title">Kill The Noise</div>
+        <div class="service-copy">GSAP intro on the main site &mdash; glitch/flicker overlay on load, then reveals the page. Motion is used for emphasis, not decoration.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ROADMAP ── -->
+<section class="section" id="roadmap">
+  <div class="shell">
+    <div class="sec-label">06 / Build Status</div>
+    <h2 class="sec-title">Where<br>We Are.</h2>
+    <p class="sec-sub">Vantage is in setup. The vision, brand, and revenue lines are defined. The next 90 days are about shipping the site, formalizing onboarding, and landing the first external wins outside of internal projects.</p>
+    <div class="roadmap">
+      <div class="rm-item">
+        <div class="rm-dot done"></div>
+        <div class="rm-label done">Done</div>
+        <div class="rm-text"><strong>Vision board v2</strong> &mdash; Kill The Noise intro, brand direction, service outline, inspiration grid</div>
+      </div>
+      <div class="rm-item">
+        <div class="rm-dot done"></div>
+        <div class="rm-label done">Done</div>
+        <div class="rm-text"><strong>Brand identity</strong> &mdash; logo (V mark SVG/PNG), Asphalt + Lime palette, Plus Jakarta Sans + DM Sans locked</div>
+      </div>
+      <div class="rm-item">
+        <div class="rm-dot done"></div>
+        <div class="rm-label done">Done</div>
+        <div class="rm-text"><strong>Web packages defined</strong> &mdash; $2K starter and $5K full build tiers with clear scope</div>
+      </div>
+      <div class="rm-item">
+        <div class="rm-dot done"></div>
+        <div class="rm-label done">Done</div>
+        <div class="rm-text"><strong>Corporate structure</strong> &mdash; Flynn &amp; Co positioned as subsidiary, Jaden &amp; Megan as co-owners of the parent</div>
+      </div>
+      <div class="rm-item">
+        <div class="rm-dot active"></div>
+        <div class="rm-label active">Now</div>
+        <div class="rm-text"><strong>Blueprint locked</strong> &mdash; this document. Defines structure, services, principles, roadmap for the next 90 days.</div>
+      </div>
+      <div class="rm-item">
+        <div class="rm-dot pending"></div>
+        <div class="rm-label pending">Next</div>
+        <div class="rm-text"><strong>Domain purchase</strong> &mdash; vantagecreative.co or similar, plus DNS and email setup</div>
+      </div>
+      <div class="rm-item">
+        <div class="rm-dot pending"></div>
+        <div class="rm-label pending">Next</div>
+        <div class="rm-text"><strong>Brand website build</strong> &mdash; production site using the vision board as blueprint (considering Framer for Megan's visual editing)</div>
+      </div>
+      <div class="rm-item">
+        <div class="rm-dot pending"></div>
+        <div class="rm-label pending">Next</div>
+        <div class="rm-text"><strong>Client onboarding process</strong> &mdash; intake forms, discovery call script, contract templates, kickoff doc</div>
+      </div>
+      <div class="rm-item">
+        <div class="rm-dot pending"></div>
+        <div class="rm-label pending">Next</div>
+        <div class="rm-text"><strong>Portfolio buildout</strong> &mdash; Complete Crete Coatings as first web portfolio piece, then BL4INE., JPG Travel, Solar Body</div>
+      </div>
+      <div class="rm-item">
+        <div class="rm-dot pending"></div>
+        <div class="rm-label pending">Future</div>
+        <div class="rm-text"><strong>Analytics + attribution</strong> &mdash; Google Analytics, lead tracking, client reporting system shared with Flynn &amp; Co</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta-band">
+  <div class="shell">
+    <h2>Strategic vantage.<br><span class="lime">Creative</span> execution.</h2>
+    <p>The parent company for everything outside of construction. Built for clients who want a partner, not a vendor.</p>
+  </div>
+</section>
+
+<footer>
+  <p>Vantage Creative &middot; Blueprint &middot; April 2026</p>
+</footer>
+
+</body>
+</html>

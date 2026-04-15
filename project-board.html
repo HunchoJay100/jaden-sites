@@ -392,7 +392,7 @@
 
 <div class="stats">
   <div class="stat">
-    <div class="stat-num" style="color:var(--text-primary)">8</div>
+    <div class="stat-num" style="color:var(--text-primary)">10</div>
     <div class="stat-label">Projects</div>
   </div>
   <div class="stat">
@@ -400,7 +400,7 @@
     <div class="stat-label">Shipped</div>
   </div>
   <div class="stat">
-    <div class="stat-num" style="color:var(--blue)">8</div>
+    <div class="stat-num" style="color:var(--blue)">10</div>
     <div class="stat-label">In Progress</div>
   </div>
   <div class="stat">
@@ -419,12 +419,12 @@
         <div class="card-title">RoofPact</div>
         <div class="badge badge-progress">In Progress</div>
       </div>
-      <div class="card-desc">White-label roof protection memberships. Live on roofpact.com.</div>
+      <div class="card-desc">White-label roof protection memberships. Live on roofpact.com. Branded /[slug] pages, inspections, PDF reports built.</div>
       <div class="ship-list">
         <div class="ship-label">To Ship</div>
-        <div class="ship-item"><div class="ship-dot dot-red"></div>Stripe Connect (revenue blocker)</div>
-        <div class="ship-item"><div class="ship-dot dot-red"></div>Member portal branding</div>
-        <div class="ship-item"><div class="ship-dot dot-red"></div>Resend domain verification</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Stripe Connect (zero revenue without it)</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Member portal branding (company colors/logo)</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Resend domain verification (emails may spam)</div>
       </div>
       <div class="progress-row">
         <div class="progress-track"><div class="progress-fill fill-green" style="width:65%"></div></div>
@@ -486,18 +486,19 @@
         <div class="card-title">Flynn & Co</div>
         <div class="badge badge-progress">In Progress</div>
       </div>
-      <div class="card-desc">Megan's social media agency. Management app 90% built, Supabase live.</div>
+      <div class="card-desc">Megan's social media agency. Management app 90% built: dashboard, calendar, payments, auth, email templates, auto-forfeit cron.</div>
       <div class="ship-list">
         <div class="ship-label">To Ship</div>
-        <div class="ship-item"><div class="ship-dot dot-red"></div>Resend account + domain</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Resend account + domain (emails won't deliver)</div>
         <div class="ship-item"><div class="ship-dot dot-red"></div>Vercel deploy + custom domain</div>
-        <div class="ship-item"><div class="ship-dot dot-yellow"></div>Client portal Phase C (analytics, content)</div>
+        <div class="ship-item"><div class="ship-dot dot-yellow"></div>Client portal Phase C (analytics, content library)</div>
         <div class="ship-label" style="margin-top:6px">Done</div>
-        <div class="ship-item"><div class="ship-dot dot-green"></div>Admin dashboard, calendar, payments, auth, emails</div>
+        <div class="ship-item"><div class="ship-dot dot-green"></div>Admin dashboard, filming calendar, payment tracking</div>
+        <div class="ship-item"><div class="ship-dot dot-green"></div>Auth, 3 email templates, auto-forfeit cron, confirm flow</div>
       </div>
       <div class="progress-row">
-        <div class="progress-track"><div class="progress-fill fill-green" style="width:75%"></div></div>
-        <div class="progress-pct">75%</div>
+        <div class="progress-track"><div class="progress-fill fill-green" style="width:90%"></div></div>
+        <div class="progress-pct">90%</div>
       </div>
     </div>
   </a>
@@ -527,25 +528,64 @@
     </div>
   </a>
 
+  <!-- Fitness App -->
+  <a href="bch-fit-blueprint.html" class="project-card" style="animation-delay:0.27s">
+    <div style="width:100%;height:200px;display:flex;align-items:center;justify-content:center;background:#050506;position:relative;overflow:hidden;">
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 30% 40%,rgba(198,255,60,0.10) 0%,transparent 65%);"></div>
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 75% 70%,rgba(198,255,60,0.05) 0%,transparent 60%);"></div>
+      <div style="position:relative;z-index:1;text-align:center;">
+        <div style="font-family:'Oswald',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#C6FF3C;margin-bottom:10px;">Native iOS / Swift</div>
+        <div style="font-family:'Oswald',sans-serif;font-size:42px;font-weight:700;letter-spacing:-1.8px;color:#fff;line-height:1;text-transform:uppercase;">Fitness <span style="color:#C6FF3C;">App</span></div>
+        <div style="font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:0.15em;color:rgba(255,255,255,0.35);margin-top:12px;text-transform:uppercase;">6 Tracks &middot; $40/mo</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-title">Fitness App</div>
+        <div class="badge badge-building">Building</div>
+      </div>
+      <div class="card-desc">Native iOS fitness app for blue collar men. 6 training tracks, full nutrition system, $40/mo. Productizes Jaden's training method. BCH sub-brand.</div>
+      <div class="ship-list">
+        <div class="ship-label">To Ship</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Training methodology dump (blocks build)</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>App architecture decision (Supabase vs Core Data)</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Phase 1 build: onboarding + dashboard + first track</div>
+        <div class="ship-label" style="margin-top:6px">Done</div>
+        <div class="ship-item"><div class="ship-dot dot-green"></div>Visual design system LOCKED (Asphalt + Lime, 6 screens mocked)</div>
+        <div class="ship-item"><div class="ship-dot dot-green"></div>Exercise library (~380 exercises across 6 tracks)</div>
+        <div class="ship-item"><div class="ship-dot dot-green"></div>Nutrition system ~90% (formulas, phases, 16-rule engine)</div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-track"><div class="progress-fill fill-gold" style="width:35%"></div></div>
+        <div class="progress-pct">35%</div>
+      </div>
+    </div>
+  </a>
+
   <!-- Modern Dev Consulting -->
-  <a href="md-consulting-blueprint.html" class="project-card" style="animation-delay:0.25s">
+  <a href="md-consulting-blueprint.html" class="project-card" style="animation-delay:0.30s">
     <img class="card-image" src="images/md-consulting-screenshot.png" alt="MD Consulting">
     <div class="card-body">
       <div class="card-header">
         <div class="card-title">MD Consulting</div>
         <div class="badge badge-progress">In Progress</div>
       </div>
-      <div class="card-desc">Cloud construction consulting. 9/11 articles done. Building full Next.js + Supabase client portal.</div>
+      <div class="card-desc">Cloud construction consulting. Phases 1-6 of Next.js + Supabase portal BUILT. Full reskin pivot to light/professional SaaS locked (2026-04-15).</div>
       <div class="ship-list">
         <div class="ship-label">To Ship</div>
-        <div class="ship-item"><div class="ship-dot dot-red"></div>2 remaining articles</div>
-        <div class="ship-item"><div class="ship-dot dot-red"></div>Client portal (Next.js + Supabase)</div>
-        <div class="ship-item"><div class="ship-dot dot-red"></div>Pre-launch liability checklist</div>
-        <div class="ship-item"><div class="ship-dot dot-red"></div>Payment system (Stripe)</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Phase 7: polish + deploy portal</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>ConsultMD reskin migration (v5 mockup locked)</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>My Build interactive guide (Chunks 1-3)</div>
+        <div class="ship-item"><div class="ship-dot dot-yellow"></div>MD Assistant chatbot (Chunks 4-5)</div>
+        <div class="ship-item"><div class="ship-dot dot-yellow"></div>Landing page + funnel (VSL + application)</div>
+        <div class="ship-label" style="margin-top:6px">Done</div>
+        <div class="ship-item"><div class="ship-dot dot-green"></div>All 9 T1 deliverables + 9/11 articles + disclaimers</div>
+        <div class="ship-item"><div class="ship-dot dot-green"></div>Portal Phases 1-6 (Next.js + Supabase at ~/consultmd/)</div>
+        <div class="ship-item"><div class="ship-dot dot-green"></div>v5 reskin mockup locked, migration plan ready</div>
       </div>
       <div class="progress-row">
-        <div class="progress-track"><div class="progress-fill fill-gold" style="width:65%"></div></div>
-        <div class="progress-pct">65%</div>
+        <div class="progress-track"><div class="progress-fill fill-gold" style="width:72%"></div></div>
+        <div class="progress-pct">72%</div>
       </div>
     </div>
   </a>
@@ -591,8 +631,41 @@
     </div>
   </a>
 
+  <!-- Vantage Creative -->
+  <a href="vantage-blueprint.html" class="project-card" style="animation-delay:0.35s">
+    <div style="width:100%;height:200px;display:flex;align-items:center;justify-content:center;background:#050505;position:relative;overflow:hidden;">
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 60%,rgba(200,255,0,0.05) 0%,transparent 70%);"></div>
+      <div style="position:relative;z-index:1;text-align:center;">
+        <div style="font-family:'Geist',sans-serif;font-size:48px;font-weight:800;color:#C8FF00;line-height:1;letter-spacing:-2px;">V</div>
+        <div style="font-family:'Geist',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(200,255,0,0.5);margin-top:8px;">Vantage Co.</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-title">Vantage Co.</div>
+        <div class="badge badge-progress">In Progress</div>
+      </div>
+      <div class="card-desc">Parent company for all non-construction business. Creative, web, apps, consulting. Blueprint locked, corp structure defined, Flynn &amp; Co positioned as subsidiary.</div>
+      <div class="ship-list">
+        <div class="ship-label">To Ship</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Domain purchase + email setup</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Brand website build (Framer candidate)</div>
+        <div class="ship-item"><div class="ship-dot dot-yellow"></div>Client onboarding process + templates</div>
+        <div class="ship-item"><div class="ship-dot dot-yellow"></div>Portfolio buildout (Complete Crete, BL4INE., JPG, Solar Body)</div>
+        <div class="ship-label" style="margin-top:6px">Done</div>
+        <div class="ship-item"><div class="ship-dot dot-green"></div>Blueprint locked (structure, 6 service lines, principles)</div>
+        <div class="ship-item"><div class="ship-dot dot-green"></div>Vision board v2, logo, brand identity</div>
+        <div class="ship-item"><div class="ship-dot dot-green"></div>Web packages defined ($2K/$5K)</div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-track"><div class="progress-fill fill-gold" style="width:40%"></div></div>
+        <div class="progress-pct">40%</div>
+      </div>
+    </div>
+  </a>
+
   <!-- The Medium -->
-  <a href="medium-blueprint.html" class="project-card" style="animation-delay:0.35s">
+  <a href="medium-blueprint.html" class="project-card" style="animation-delay:0.4s">
     <div style="width:100%;height:200px;display:flex;align-items:center;justify-content:center;background:#0D0D0D;position:relative;overflow:hidden;">
       <div style="position:absolute;inset:0;background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27300%27 height=%27300%27%3E%3Cfilter id=%27n%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%270.9%27 numOctaves=%274%27 stitchTiles=%27stitch%27/%3E%3C/filter%3E%3Crect width=%27100%25%27 height=%27100%25%27 filter=%27url(%23n)%27 opacity=%271%27/%3E%3C/svg%3E');opacity:0.03;"></div>
       <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(246,70,43,0.3),transparent);"></div>
@@ -628,7 +701,7 @@
 
 <footer>
   <div class="fd-mark">Flynn Development</div>
-  <p>Last updated March 30, 2026</p>
+  <p>Last updated April 15, 2026</p>
 </footer>
 
 </div><!-- end page-content -->

@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Fitness App Blueprint | BCH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #050506;
+  --surface: #101013;
+  --surface-2: #17171B;
+  --surface-3: #1F1F25;
+  --accent: #C6FF3C;
+  --accent-dim: rgba(198,255,60,0.12);
+  --accent-glow: rgba(198,255,60,0.28);
+  --accent-ink: #050506;
+  --data-1: #C6FF3C;
+  --data-2: #F2EDE4;
+  --data-3: #7A8599;
+  --text-1: #F5F5F7;
+  --text-2: rgba(245,245,247,0.64);
+  --text-3: rgba(245,245,247,0.38);
+  --text-4: rgba(245,245,247,0.22);
+  --line: rgba(245,245,247,0.08);
+  --line-2: rgba(245,245,247,0.14);
+  --font-display: 'Oswald', sans-serif;
+  --font-ui: 'Inter', -apple-system, sans-serif;
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 24px; --s-6: 32px; --s-7: 48px; --s-8: 64px; --s-9: 96px;
+  --r-sm: 8px; --r-md: 12px; --r-lg: 16px; --r-xl: 24px;
+  --ease: cubic-bezier(0.2,0,0,1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+body {
+  font-family: var(--font-ui);
+  background: var(--bg);
+  color: var(--text-1);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  font-feature-settings: 'ss01','cv11','tnum';
+}
+
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  mix-blend-mode: overlay;
+}
+
+.shell { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 0 var(--s-5); }
+
+h1, h2, h3, h4, .disp { font-family: var(--font-display); font-weight: 700; }
+
+/* ── NAV ── */
+.nav {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(5,5,6,0.72);
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
+  border-bottom: 1px solid var(--line);
+}
+.nav-inner {
+  max-width: 1080px; margin: 0 auto;
+  padding: var(--s-3) var(--s-5);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--s-4);
+}
+.nav-brand {
+  font-family: var(--font-display);
+  font-size: 15px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--accent);
+}
+.nav-links { display: flex; gap: var(--s-5); list-style: none; }
+.nav-links a {
+  font-family: var(--font-display);
+  font-size: 12px; font-weight: 500;
+  letter-spacing: 1.2px; text-transform: uppercase;
+  color: var(--text-2); text-decoration: none;
+  transition: color 0.2s var(--ease);
+}
+.nav-links a:hover { color: var(--accent); }
+@media (max-width: 680px) { .nav-links { display: none; } }
+
+/* ── HERO ── */
+.hero {
+  padding: var(--s-9) 0 var(--s-8);
+  position: relative;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 30% 10%, var(--accent-dim) 0%, transparent 55%);
+  pointer-events: none;
+}
+.eyebrow {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  font-family: var(--font-display);
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--accent);
+  padding: var(--s-1) var(--s-3);
+  background: var(--accent-dim);
+  border: 1px solid var(--accent-glow);
+  border-radius: 9999px;
+  margin-bottom: var(--s-5);
+}
+.eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px var(--accent-glow); }
+.hero h1 {
+  font-size: clamp(56px, 11vw, 108px);
+  font-weight: 700;
+  letter-spacing: -3.2px;
+  line-height: 0.92;
+  text-transform: uppercase;
+  margin-bottom: var(--s-5);
+}
+.hero h1 .lime { color: var(--accent); }
+.hero .tagline {
+  font-size: clamp(17px, 2.2vw, 20px);
+  color: var(--text-2);
+  max-width: 620px;
+  line-height: 1.55;
+  margin-bottom: var(--s-6);
+}
+.hero-meta {
+  display: flex; flex-wrap: wrap; gap: var(--s-3);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--line);
+  max-width: 720px;
+}
+.meta-chip {
+  font-family: var(--font-display);
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--text-2);
+  padding: var(--s-2) var(--s-3);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+}
+.meta-chip strong { color: var(--text-1); }
+
+/* ── SECTION ── */
+.section { padding: var(--s-9) 0; border-top: 1px solid var(--line); }
+.sec-label {
+  font-family: var(--font-display);
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: var(--s-3);
+}
+.sec-title {
+  font-size: clamp(34px, 5.5vw, 56px);
+  font-weight: 700;
+  letter-spacing: -1.4px;
+  line-height: 1.02;
+  text-transform: uppercase;
+  margin-bottom: var(--s-4);
+}
+.sec-sub {
+  font-size: 17px;
+  color: var(--text-2);
+  max-width: 680px;
+  line-height: 1.6;
+  margin-bottom: var(--s-7);
+}
+
+/* ── CARD / GRID ── */
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--s-4); }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-4); }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s-3); }
+@media (max-width: 820px) {
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: var(--s-5);
+  transition: all 0.3s var(--ease);
+}
+.card:hover { border-color: var(--line-2); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,0,0,0.4); }
+
+.card-num {
+  font-family: var(--font-display);
+  font-size: 13px; font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--accent);
+  margin-bottom: var(--s-2);
+}
+.card-title {
+  font-family: var(--font-display);
+  font-size: 22px; font-weight: 700;
+  letter-spacing: -0.6px;
+  text-transform: uppercase;
+  margin-bottom: var(--s-2);
+}
+.card-desc {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+
+/* ── TRACKS ── */
+.track {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: var(--s-5);
+  display: flex; flex-direction: column; gap: var(--s-3);
+  position: relative; overflow: hidden;
+  transition: all 0.3s var(--ease);
+}
+.track:hover { border-color: var(--accent-glow); transform: translateY(-3px); }
+.track::after {
+  content: '';
+  position: absolute; top: 0; right: 0; width: 120px; height: 120px;
+  background: radial-gradient(circle at top right, var(--accent-dim), transparent 70%);
+  pointer-events: none;
+}
+.track-head { display: flex; align-items: baseline; gap: var(--s-3); position: relative; z-index: 1; }
+.track-num {
+  font-family: var(--font-display);
+  font-size: 38px; font-weight: 700;
+  letter-spacing: -1.5px;
+  color: var(--accent);
+  line-height: 1;
+}
+.track-name {
+  font-family: var(--font-display);
+  font-size: 22px; font-weight: 700;
+  letter-spacing: -0.5px;
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+.track-copy {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.55;
+  position: relative; z-index: 1;
+}
+.track-for {
+  font-family: var(--font-ui);
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--text-3);
+  text-transform: uppercase;
+  padding-top: var(--s-3);
+  border-top: 1px solid var(--line);
+  position: relative; z-index: 1;
+}
+.track-for span { color: var(--accent); }
+
+/* ── PHASE STEPS ── */
+.phase {
+  display: flex; gap: var(--s-4);
+  padding: var(--s-5);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  margin-bottom: var(--s-3);
+}
+.phase-num {
+  flex-shrink: 0;
+  width: 56px; height: 56px;
+  background: var(--accent-dim);
+  border: 1px solid var(--accent-glow);
+  border-radius: var(--r-md);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: 26px; font-weight: 700;
+  color: var(--accent);
+}
+.phase-body { flex: 1; }
+.phase-name {
+  font-family: var(--font-display);
+  font-size: 20px; font-weight: 600;
+  letter-spacing: -0.4px;
+  text-transform: uppercase;
+  margin-bottom: var(--s-1);
+}
+.phase-desc {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+
+/* ── PRINCIPLE LIST ── */
+.principles { display: flex; flex-direction: column; gap: var(--s-3); }
+.principle {
+  display: flex; gap: var(--s-4); align-items: flex-start;
+  padding: var(--s-4);
+  background: var(--surface);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--r-md) var(--r-md) 0;
+}
+.principle-key {
+  font-family: var(--font-display);
+  font-size: 14px; font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--accent);
+  flex-shrink: 0;
+  min-width: 160px;
+}
+.principle-val {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.55;
+}
+@media (max-width: 680px) {
+  .principle { flex-direction: column; gap: var(--s-2); }
+  .principle-key { min-width: 0; }
+}
+
+/* ── REVENUE TABLE ── */
+.rev-table {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+.rev-row {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1.4fr;
+  padding: var(--s-4) var(--s-5);
+  border-bottom: 1px solid var(--line);
+  align-items: baseline;
+}
+.rev-row:last-child { border-bottom: none; }
+.rev-row.head {
+  background: var(--surface-2);
+  font-family: var(--font-display);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.rev-row.head > * { color: var(--text-3); }
+.rev-period {
+  font-family: var(--font-display);
+  font-size: 17px; font-weight: 600;
+  letter-spacing: -0.2px;
+  color: var(--text-1);
+}
+.rev-users {
+  font-size: 14px;
+  color: var(--text-2);
+  font-variant-numeric: tabular-nums;
+}
+.rev-revenue {
+  font-family: var(--font-display);
+  font-size: 19px; font-weight: 700;
+  letter-spacing: -0.3px;
+  color: var(--accent);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── ROADMAP ── */
+.roadmap { display: flex; flex-direction: column; gap: var(--s-3); }
+.rm-item {
+  display: flex; gap: var(--s-4); align-items: center;
+  padding: var(--s-4) var(--s-5);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+}
+.rm-dot {
+  flex-shrink: 0;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+}
+.rm-dot.done { background: var(--accent); box-shadow: 0 0 8px var(--accent-glow); }
+.rm-dot.active { background: var(--accent); animation: pulse 2s ease-in-out infinite; }
+.rm-dot.pending { background: var(--text-4); border: 1px solid var(--line-2); }
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 var(--accent-glow); }
+  50% { box-shadow: 0 0 0 6px rgba(198,255,60,0); }
+}
+.rm-label {
+  font-family: var(--font-display);
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  min-width: 80px;
+}
+.rm-label.done { color: var(--accent); }
+.rm-label.active { color: var(--accent); }
+.rm-label.pending { color: var(--text-3); }
+.rm-text {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.5;
+  flex: 1;
+}
+.rm-text strong { color: var(--text-1); font-weight: 600; }
+
+/* ── DESIGN SYSTEM BAR ── */
+.ds-card {
+  background: linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  padding: var(--s-6);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-5);
+}
+@media (max-width: 720px) { .ds-card { grid-template-columns: 1fr; } }
+.ds-col h4 {
+  font-family: var(--font-display);
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: var(--s-3);
+}
+.ds-swatch-row { display: flex; gap: var(--s-2); margin-bottom: var(--s-4); }
+.ds-swatch {
+  width: 44px; height: 44px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--line-2);
+}
+.ds-line { font-size: 13px; color: var(--text-2); margin-bottom: var(--s-1); line-height: 1.5; }
+.ds-line code {
+  font-family: 'SF Mono', Menlo, monospace;
+  font-size: 12px;
+  background: var(--surface-3);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--accent);
+}
+
+/* ── CTA ── */
+.cta-band {
+  padding: var(--s-9) 0;
+  text-align: center;
+  border-top: 1px solid var(--line);
+  position: relative;
+}
+.cta-band::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, var(--accent-dim) 0%, transparent 60%);
+  pointer-events: none;
+}
+.cta-band h2 {
+  font-size: clamp(40px, 7vw, 72px);
+  letter-spacing: -2px;
+  text-transform: uppercase;
+  line-height: 0.95;
+  margin-bottom: var(--s-5);
+  position: relative;
+}
+.cta-band h2 .lime { color: var(--accent); }
+.cta-band p {
+  font-size: 17px;
+  color: var(--text-2);
+  max-width: 540px;
+  margin: 0 auto var(--s-6);
+  line-height: 1.55;
+  position: relative;
+}
+.cta-link {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  font-family: var(--font-display);
+  font-size: 14px; font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+  background: var(--accent);
+  padding: var(--s-3) var(--s-5);
+  border-radius: var(--r-md);
+  text-decoration: none;
+  position: relative;
+  transition: all 0.2s var(--ease);
+}
+.cta-link:hover { transform: translateY(-1px); box-shadow: 0 8px 20px var(--accent-glow); }
+
+footer {
+  padding: var(--s-6) 0 var(--s-7);
+  border-top: 1px solid var(--line);
+  text-align: center;
+}
+footer p {
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">BCH / Fitness App</div>
+    <ul class="nav-links">
+      <li><a href="#vision">Vision</a></li>
+      <li><a href="#tracks">Tracks</a></li>
+      <li><a href="#nutrition">Nutrition</a></li>
+      <li><a href="#revenue">Revenue</a></li>
+      <li><a href="#roadmap">Roadmap</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="shell">
+    <div class="eyebrow"><span class="dot"></span>Native iOS &middot; Building Now</div>
+    <h1>The App<br>That Replaces<br>Your <span class="lime">Trainer</span>.</h1>
+    <p class="tagline">A native iOS fitness app for blue collar men, dads, and the high-productivity guys who stopped prioritizing themselves. Training + nutrition, dialed in for guys with 30 minutes and no patience for fluff.</p>
+    <div class="hero-meta">
+      <div class="meta-chip"><strong>Swift</strong> / SwiftUI</div>
+      <div class="meta-chip"><strong>$40</strong>/mo</div>
+      <div class="meta-chip"><strong>6</strong> Training Tracks</div>
+      <div class="meta-chip"><strong>Offline</strong> Capable</div>
+      <div class="meta-chip"><strong>App Store</strong> First</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── VISION ── -->
+<section class="section" id="vision">
+  <div class="shell">
+    <div class="sec-label">01 / Vision</div>
+    <h2 class="sec-title">The Guy Nobody<br>Is Building For.</h2>
+    <p class="sec-sub">Fitness apps all chase the same demographic: 25-year-old gym rats with unlimited time. Nobody is building for the guy who works 12 hours, has 30 minutes, and needs a system that respects his schedule. This app is the trainer, the nutritionist, and the accountability partner &mdash; for $40 a month.</p>
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-num">AUDIENCE</div>
+        <div class="card-title">Blue Collar</div>
+        <div class="card-desc">Tradesmen, operators, guys on a job site. Hard-earned muscle, no time for fluff, willing to pay for a system that works.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">AUDIENCE</div>
+        <div class="card-title">Dads</div>
+        <div class="card-desc">Let themselves go after kids. Want to feel strong again, keep up with their family, stop being tired all the time.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">AUDIENCE</div>
+        <div class="card-title">Productivity Men</div>
+        <div class="card-desc">High output at work, stopped prioritizing fitness. They'll pay for efficiency. The app respects their calendar.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── THE PROOF ── -->
+<section class="section">
+  <div class="shell">
+    <div class="sec-label">02 / Why This Works</div>
+    <h2 class="sec-title">Productized<br>Proof of Work.</h2>
+    <p class="sec-sub">Jaden's background is the moat. Gym owner. Personal trainer. Meal prep restaurant owner. 100+ client transformations. This app is the entire coaching system converted into software so it runs without him. No calls, no groups, no trading time for money. The app IS the coach.</p>
+    <div class="grid-4">
+      <div class="card"><div class="card-title" style="font-size:32px;">100+</div><div class="card-desc">Client transformations delivered in person</div></div>
+      <div class="card"><div class="card-title" style="font-size:32px;">15yrs</div><div class="card-desc">Training, nutrition, and coaching experience</div></div>
+      <div class="card"><div class="card-title" style="font-size:32px;">6</div><div class="card-desc">Training tracks, every style programmed</div></div>
+      <div class="card"><div class="card-title" style="font-size:32px;">$40</div><div class="card-desc">Monthly price. No tiers. No upsells.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TRACKS ── -->
+<section class="section" id="tracks">
+  <div class="shell">
+    <div class="sec-label">03 / Training System</div>
+    <h2 class="sec-title">Six Tracks.<br>One Forever System.</h2>
+    <p class="sec-sub">Every track is a complete programming philosophy: exercise selection, rep schemes, progression model, deload cadence. Pick your goal, pick your equipment, pick your days. The app handles the rest. Block rotation means 3&ndash;4 years of training before a single repeat.</p>
+    <div class="grid-3">
+      <div class="track">
+        <div class="track-head">
+          <div class="track-num">01</div>
+          <div class="track-name">Hard<br>to Kill</div>
+        </div>
+        <div class="track-copy">The generalist. Strength, conditioning, mobility, longevity. Built to feel good and not break down. Our default recommendation.</div>
+        <div class="track-for">For the guy who wants <span>to not fall apart</span></div>
+      </div>
+      <div class="track">
+        <div class="track-head">
+          <div class="track-num">02</div>
+          <div class="track-name">Strength</div>
+        </div>
+        <div class="track-copy">Move heavy weight. Compound lifts, progressive overload, low rep ranges. For the guy with a rack and a number he wants to hit.</div>
+        <div class="track-for">For the guy who wants <span>bigger numbers</span></div>
+      </div>
+      <div class="track">
+        <div class="track-head">
+          <div class="track-num">03</div>
+          <div class="track-name">Hypertrophy</div>
+        </div>
+        <div class="track-copy">Build muscle. Look the part. Volume-focused. Nutrition is tightest here &mdash; the app enforces surplus and adjusts automatically.</div>
+        <div class="track-for">For the guy who wants <span>to look jacked</span></div>
+      </div>
+      <div class="track">
+        <div class="track-head">
+          <div class="track-num">04</div>
+          <div class="track-name">Performance</div>
+        </div>
+        <div class="track-copy">Athletic output. Speed, power, endurance, work capacity. For the guy who wants to keep up with his kids and feel like an athlete again.</div>
+        <div class="track-for">For the guy who wants <span>to feel athletic</span></div>
+      </div>
+      <div class="track">
+        <div class="track-head">
+          <div class="track-num">05</div>
+          <div class="track-name">The Reset</div>
+        </div>
+        <div class="track-copy">The on-ramp. Bodyweight basics, movement patterns, habit building. 4&ndash;6 weeks, then graduates into another track. Our recommendation for anyone 6+ months off.</div>
+        <div class="track-for">For the guy who needs <span>a starting line</span></div>
+      </div>
+      <div class="track">
+        <div class="track-head">
+          <div class="track-num">06</div>
+          <div class="track-name">No Gym</div>
+        </div>
+        <div class="track-copy">Real calisthenics. Not "bodyweight versions of gym exercises." Progression through movement complexity. Its own philosophy, its own progression system.</div>
+        <div class="track-for">For the guy with <span>no excuses left</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── NUTRITION ── -->
+<section class="section" id="nutrition">
+  <div class="shell">
+    <div class="sec-label">04 / Nutrition System</div>
+    <h2 class="sec-title">90% of<br>the Results.</h2>
+    <p class="sec-sub">The training is the scaffolding. The nutrition system is the building. Three phases, track-aware, built on Jaden's proprietary formulas and validated against his own numbers. The only fitness app where "what should I eat?" has a real answer.</p>
+    <div class="phase">
+      <div class="phase-num">1</div>
+      <div class="phase-body">
+        <div class="phase-name">Baseline Reset &middot; 14 Days</div>
+        <div class="phase-desc">Clean eating framework. No macros yet. Focus on WHAT, not HOW MUCH. The 14-day clean streak is required to advance. Break it, counter resets. Streak intelligence checks every food log against the rules and flags violations before they cost you the streak. 70&ndash;80% processed elimination &mdash; sustainability over perfection.</div>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="phase-num">2</div>
+      <div class="phase-body">
+        <div class="phase-name">Macro Optimization &middot; Unlocked</div>
+        <div class="phase-desc">Jaden's proprietary formula generates your personalized macro targets. Track-aware (Hypertrophy forces surplus, Hard to Kill runs maintenance, etc). Protein floor 150g, ceiling 250g. Calorie floor 1,800, ceiling 4,500. Full barcode scanning, meal templates, favorites, custom meals. Our own MyFitnessPal, built on Open Food Facts (3M+ products, free).</div>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="phase-num">3</div>
+      <div class="phase-body">
+        <div class="phase-name">Ongoing Adjustment &middot; 16 Rules</div>
+        <div class="phase-desc">16-rule adjustment engine. Daily emoji check-in (hunger/energy/training). Weight trending, macros recalculate automatically. Cardio before cuts &mdash; calorie drops are the LAST lever, not the first. The Prime Directive: guys feel BETTER, not worse. Inaction is the default; the app resists tinkering when signals are neutral.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PHILOSOPHY ── -->
+<section class="section">
+  <div class="shell">
+    <div class="sec-label">05 / Locked Principles</div>
+    <h2 class="sec-title">The Rules That<br>Don't Flex.</h2>
+    <p class="sec-sub">Every decision in the app traces back to one of these. If a feature can't justify itself against these principles, it doesn't ship.</p>
+    <div class="principles">
+      <div class="principle">
+        <div class="principle-key">Protein First</div>
+        <div class="principle-val">Every meal, swap, and recommendation leads with protein. No grilled cheese &mdash; there's no protein play.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-key">Older Brother Voice</div>
+        <div class="principle-val">No "studies show." No "research says." Experience-based, direct, no hedging. This isn't a doctor. It's the older brother who's been there.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-key">Feel Better, Not Worse</div>
+        <div class="principle-val">The Prime Directive of the adjustment engine. If a plan is tanking energy, mood, or training, the plan is wrong &mdash; not the user.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-key">Cardio Before Cuts</div>
+        <div class="principle-val">Refeed &rarr; cardio &rarr; more cardio &rarr; THEN a tiny cut. Calorie drops are the last lever, not the first. Most apps get this exactly backwards.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-key">Respect the Goal</div>
+        <div class="principle-val">If you picked Hypertrophy, we don't force you onto a cut. Track changes are optional and last resort. The app serves your goal, not ours.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-key">Offline First</div>
+        <div class="principle-val">Gyms have no signal. Job sites have no signal. Every workout must work without a connection. Nothing blocks on the network.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SMART FEATURES ── -->
+<section class="section">
+  <div class="shell">
+    <div class="sec-label">06 / Smart Features</div>
+    <h2 class="sec-title">The Coach<br>In Your Pocket.</h2>
+    <p class="sec-sub">Rule-based intelligence built on Jaden's decision trees. 90% of "coach features" that AI apps burn tokens on, we do with logic and zero marginal cost. The AI Coach layers on top for the last 10%.</p>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-num">FEATURE</div>
+        <div class="card-title">Smart Meal Suggestions</div>
+        <div class="card-desc">Knows your remaining macros, suggests meals from your favorites and history that land in range. Learns your patterns over time.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">FEATURE</div>
+        <div class="card-title">Streak Intelligence</div>
+        <div class="card-desc">Every food entry checked against Phase 1 rules. Flags problems before they break the streak. Identifies weak spots ("you fall off on weekends").</div>
+      </div>
+      <div class="card">
+        <div class="card-num">FEATURE</div>
+        <div class="card-title">Smart Swaps</div>
+        <div class="card-desc">Scan something rough, app suggests a better alternative in the same category. Gas station: jerky and nuts, not the hot dog.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">FEATURE</div>
+        <div class="card-title">Pre-Workout Timing</div>
+        <div class="card-desc">Knows your schedule. Nudges if no meal logged within 2&ndash;3 hours of training. Suggests food based on time until session.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">FEATURE</div>
+        <div class="card-title">Grocery List</div>
+        <div class="card-desc">Compiles the week's list from your meal plan, organized by store section. One Sunday trip. Prep the cooler. Done.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">FEATURE</div>
+        <div class="card-title">AI Coach (Claude)</div>
+        <div class="card-desc">Premium layer. Fed full user context &mdash; track, week, macros, training history. Answers anything with YOUR numbers, not generic advice.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── REVENUE ── -->
+<section class="section" id="revenue">
+  <div class="shell">
+    <div class="sec-label">07 / Economics</div>
+    <h2 class="sec-title">The Numbers<br>That Work.</h2>
+    <p class="sec-sub">$40/mo subscription. Net ~$28/mo after Apple's 15% small biz cut and RevenueCat. Warm audience via BCH. Cold traffic via Vantage Co. A dev shop would quote $80&ndash;150K for this build. We're building it with Claude Code instead.</p>
+    <div class="rev-table">
+      <div class="rev-row head">
+        <div>Timeline</div>
+        <div>Users</div>
+        <div style="text-align:right;">Monthly Net</div>
+      </div>
+      <div class="rev-row">
+        <div class="rev-period">Month 1&ndash;3</div>
+        <div class="rev-users">100&ndash;300</div>
+        <div class="rev-revenue">$2.8K&ndash;$8.4K</div>
+      </div>
+      <div class="rev-row">
+        <div class="rev-period">Month 6</div>
+        <div class="rev-users">500&ndash;1,000</div>
+        <div class="rev-revenue">$14K&ndash;$28K</div>
+      </div>
+      <div class="rev-row">
+        <div class="rev-period">Month 12</div>
+        <div class="rev-users">2,000&ndash;5,000</div>
+        <div class="rev-revenue">$56K&ndash;$140K</div>
+      </div>
+      <div class="rev-row">
+        <div class="rev-period">Month 24</div>
+        <div class="rev-users">5,000&ndash;15,000</div>
+        <div class="rev-revenue">$140K&ndash;$420K</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── DESIGN SYSTEM ── -->
+<section class="section">
+  <div class="shell">
+    <div class="sec-label">08 / Design System</div>
+    <h2 class="sec-title">Asphalt +<br>Electric Lime.</h2>
+    <p class="sec-sub">The visual system is locked. Pure grayscale with a single accent. Apple Activity ring language. Oswald + Inter. Every screen pulls from the same token set &mdash; one edit, everything reskins. Source of truth: <a href="bch-fit-app-mockups.html" style="color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent-glow);">bch-fit-app-mockups.html</a>.</p>
+    <div class="ds-card">
+      <div class="ds-col">
+        <h4>Palette</h4>
+        <div class="ds-swatch-row">
+          <div class="ds-swatch" style="background:#050506;"></div>
+          <div class="ds-swatch" style="background:#101013;"></div>
+          <div class="ds-swatch" style="background:#17171B;"></div>
+          <div class="ds-swatch" style="background:#1F1F25;"></div>
+          <div class="ds-swatch" style="background:#C6FF3C;"></div>
+        </div>
+        <div class="ds-line">Base <code>#050506</code></div>
+        <div class="ds-line">Surface <code>#101013</code></div>
+        <div class="ds-line">Accent <code>#C6FF3C</code></div>
+        <div class="ds-line">Data ramp: lime &rarr; bone &rarr; steel</div>
+      </div>
+      <div class="ds-col">
+        <h4>Type &amp; Tokens</h4>
+        <div class="ds-line">Display: <code>Oswald</code> 400&ndash;700</div>
+        <div class="ds-line">UI: <code>Inter</code> 400&ndash;700</div>
+        <div class="ds-line">Negative tracking at large sizes</div>
+        <div class="ds-line">Oswald on buttons (not Inter)</div>
+        <div class="ds-line">Spacing: 4 &middot; 8 &middot; 12 &middot; 16 &middot; 24 &middot; 32 &middot; 48</div>
+        <div class="ds-line">Radius: 12 primary, 24 hero</div>
+        <div class="ds-line">Icons: Lucide line set, 1.75 stroke</div>
+        <div class="ds-line">Rings: Apple Activity 3-ring</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ROADMAP ── -->
+<section class="section" id="roadmap">
+  <div class="shell">
+    <div class="sec-label">09 / Build Status</div>
+    <h2 class="sec-title">Where<br>We Are.</h2>
+    <p class="sec-sub">Pre-build work: mostly done. The methodology, exercise library, and 90% of the nutrition system are locked. Design system is locked. What's left is architecture decisions and shipping Phase 1.</p>
+    <div class="roadmap">
+      <div class="rm-item">
+        <div class="rm-dot done"></div>
+        <div class="rm-label done">Done</div>
+        <div class="rm-text"><strong>Visual design system locked</strong> &mdash; Asphalt + Electric Lime, Oswald + Inter, Apple Activity rings, 6 screens mocked (2026-04-15)</div>
+      </div>
+      <div class="rm-item">
+        <div class="rm-dot done"></div>
+        <div class="rm-label done">Done</div>
+        <div class="rm-text"><strong>Exercise library</strong> &mdash; ~380 exercises across 6 tracks, tagged by movement pattern, equipment, difficulty</div>
+      </div>
+      <div class="rm-item">
+        <div class="rm-dot done"></div>
+        <div class="rm-label done">Done</div>
+        <div class="rm-text"><strong>Nutrition system ~90%</strong> &mdash; Phase 1 rules, no-excuse swaps, protein/calorie/carb-fat formulas, obese ramp mode, 16-rule adjustment engine, voice &amp; tone guide</div>
+      </div>
+      <div class="rm-item">
+        <div class="rm-dot done"></div>
+        <div class="rm-label done">Done</div>
+        <div class="rm-text"><strong>Formula validation</strong> &mdash; ran against Jaden's actual Performance cut numbers, lands within 3&ndash;7% of real intake</div>
+      </div>
+      <div class="rm-item">
+        <div class="rm-dot active"></div>
+        <div class="rm-label active">Now</div>
+        <div class="rm-text"><strong>Training methodology dump</strong> &mdash; block template structures, progression rules, deload philosophy, days/week split logic</div>
+      </div>
+      <div class="rm-item">
+        <div class="rm-dot pending"></div>
+        <div class="rm-label pending">Next</div>
+        <div class="rm-text"><strong>App architecture</strong> &mdash; data layer, database schema, API structure (Supabase vs Core Data decision pending)</div>
+      </div>
+      <div class="rm-item">
+        <div class="rm-dot pending"></div>
+        <div class="rm-label pending">Next</div>
+        <div class="rm-text"><strong>Phase 1 build</strong> &mdash; onboarding flow, dashboard, first training track, Phase 1 nutrition, 7-day trial wall</div>
+      </div>
+      <div class="rm-item">
+        <div class="rm-dot pending"></div>
+        <div class="rm-label pending">Future</div>
+        <div class="rm-text"><strong>Apple Watch companion</strong>, HealthKit integration, AI image food recognition, LiDAR portioning</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta-band">
+  <div class="shell">
+    <h2>Replaces the<br>Coach. <span class="lime">Keeps</span><br>The Coach Paid.</h2>
+    <p>This is the self-sustaining revenue product of the BCH ecosystem. Trust engine runs on content. Cash engine runs here.</p>
+    <a href="bch-fit-app-mockups.html" class="cta-link">View Mockups &rarr;</a>
+  </div>
+</section>
+
+<footer>
+  <p>BCH &middot; Fitness App Blueprint &middot; April 2026</p>
+</footer>
+
+</body>
+</html>
