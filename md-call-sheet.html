@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>MD Lead Call Sheet</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #f5f5f7;
+    color: #1d1d1f;
+    padding: 0 0 env(safe-area-inset-bottom);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .header {
+    background: #1d1d1f;
+    color: #fff;
+    padding: 56px 20px 24px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+  .header p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    margin-top: 4px;
+  }
+  .header .count {
+    display: inline-block;
+    background: #C5A55A;
+    color: #1d1d1f;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #86868b;
+    padding: 24px 20px 8px;
+  }
+
+  .card-list { padding: 0 16px; }
+
+  .lead-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 18px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    transition: transform 0.2s ease;
+  }
+  .lead-card:active { transform: scale(0.98); }
+
+  .lead-name {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+    margin-bottom: 2px;
+  }
+
+  .lead-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 8px 0 14px;
+  }
+
+  .tag {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 8px;
+    background: #f0f0f2;
+    color: #6e6e73;
+  }
+  .tag.hot {
+    background: #ff3b3015;
+    color: #ff3b30;
+  }
+  .tag.warm {
+    background: #ff990015;
+    color: #e68a00;
+  }
+  .tag.asap {
+    background: #34c75915;
+    color: #248a3d;
+  }
+  .tag.budget-high {
+    background: #C5A55A18;
+    color: #a08840;
+  }
+
+  .lead-date {
+    font-size: 12px;
+    color: #aeaeb2;
+    margin-bottom: 12px;
+  }
+
+  .lead-email {
+    font-size: 13px;
+    color: #86868b;
+    margin-bottom: 14px;
+    word-break: break-all;
+  }
+
+  .actions {
+    display: flex;
+    gap: 8px;
+  }
+
+  .btn-call {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    min-height: 48px;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.15s ease;
+  }
+  .btn-call:active { opacity: 0.7; }
+
+  .btn-call.phone {
+    background: #34c759;
+    color: #fff;
+  }
+
+  .btn-call.text {
+    background: #007aff;
+    color: #fff;
+  }
+
+  .btn-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .script-box {
+    background: #f9f9fb;
+    border: 1px solid #e5e5ea;
+    border-radius: 12px;
+    padding: 16px;
+    margin: 20px 16px;
+  }
+  .script-box h3 {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #1d1d1f;
+  }
+  .script-box p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #48484a;
+  }
+  .script-box .highlight {
+    color: #C5A55A;
+    font-weight: 600;
+  }
+
+  .footer {
+    text-align: center;
+    padding: 24px 20px 40px;
+    font-size: 12px;
+    color: #aeaeb2;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>MD Call Sheet <span class="count">9</span></h1>
+  <p>Updated Apr 16, 2026</p>
+</div>
+
+<div class="script-box">
+  <h3>Quick Script</h3>
+  <p>"Hey [Name], this is Jenna calling from <span class="highlight">Modern Development</span>. You recently filled out a form about a custom home project and I wanted to reach out to see if we could set up a quick call or meeting with our team to talk through what you're looking for. Do you have a few minutes?"</p>
+</div>
+
+<div class="section-label">Priority (ASAP + $150K+)</div>
+<div class="card-list">
+
+  <div class="lead-card">
+    <div class="lead-name">Alison Fuqua</div>
+    <div class="lead-meta">
+      <span class="tag budget-high">$150K - $300K</span>
+      <span class="tag asap">ASAP</span>
+      <span class="tag">Custom</span>
+    </div>
+    <div class="lead-date">Apr 16 at 12:45 PM</div>
+    <div class="lead-email">alisonfuqua@stmg.org</div>
+    <div class="actions">
+      <a href="tel:+16153472148" class="btn-call phone">
+        <svg class="btn-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        Call
+      </a>
+      <a href="sms:+16153472148" class="btn-call text">
+        <svg class="btn-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        Text
+      </a>
+    </div>
+  </div>
+
+  <div class="lead-card">
+    <div class="lead-name">Margaret Conner</div>
+    <div class="lead-meta">
+      <span class="tag">$25K - $75K</span>
+      <span class="tag asap">ASAP</span>
+      <span class="tag">Custom</span>
+    </div>
+    <div class="lead-date">Apr 15 at 10:57 PM</div>
+    <div class="lead-email">margconner57@gmail.com</div>
+    <div class="actions">
+      <a href="tel:+19317042781" class="btn-call phone">
+        <svg class="btn-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        Call
+      </a>
+      <a href="sms:+19317042781" class="btn-call text">
+        <svg class="btn-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        Text
+      </a>
+    </div>
+  </div>
+
+  <div class="lead-card">
+    <div class="lead-name">Jamie Gourley Rowe</div>
+    <div class="lead-meta">
+      <span class="tag budget-high">$150K - $300K</span>
+      <span class="tag">Exploring</span>
+      <span class="tag">Custom</span>
+    </div>
+    <div class="lead-date">Apr 15 at 2:26 PM</div>
+    <div class="lead-email">jamiekg23@yahoo.com</div>
+    <div class="actions">
+      <a href="tel:+16158158781" class="btn-call phone">
+        <svg class="btn-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        Call
+      </a>
+      <a href="sms:+16158158781" class="btn-call text">
+        <svg class="btn-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        Text
+      </a>
+    </div>
+  </div>
+
+  <div class="lead-card">
+    <div class="lead-name">Jennifer Reeves</div>
+    <div class="lead-meta">
+      <span class="tag budget-high">$150K - $300K</span>
+      <span class="tag warm">1-3 months</span>
+      <span class="tag">Custom</span>
+    </div>
+    <div class="lead-date">Apr 15 at 12:17 PM</div>
+    <div class="lead-email">reeves.l.jennifer@gmail.com</div>
+    <div class="actions">
+      <a href="tel:+16159392945" class="btn-call phone">
+        <svg class="btn-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        Call
+      </a>
+      <a href="sms:+16159392945" class="btn-call text">
+        <svg class="btn-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        Text
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<div class="section-label">Today's Leads</div>
+<div class="card-list">
+
+  <div class="lead-card">
+    <div class="lead-name">Matt Smith</div>
+    <div class="lead-meta">
+      <span class="tag budget-high">$150K - $300K</span>
+      <span class="tag warm">1-3 months</span>
+      <span class="tag">Custom</span>
+    </div>
+    <div class="lead-date">Apr 16 at 1:49 AM</div>
+    <div class="lead-email">Olemissmatt33@gmail.com</div>
+    <div class="actions">
+      <a href="tel:+14232443673" class="btn-call phone">
+        <svg class="btn-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        Call
+      </a>
+      <a href="sms:+14232443673" class="btn-call text">
+        <svg class="btn-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        Text
+      </a>
+    </div>
+  </div>
+
+  <div class="lead-card">
+    <div class="lead-name">Sheri Lawson</div>
+    <div class="lead-meta">
+      <span class="tag">$25K - $75K</span>
+      <span class="tag">Exploring</span>
+      <span class="tag">Custom</span>
+    </div>
+    <div class="lead-date">Apr 16 at 3:50 PM</div>
+    <div class="lead-email">slawson74@hotmail.com</div>
+    <div class="actions">
+      <a href="tel:+14232519907" class="btn-call phone">
+        <svg class="btn-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        Call
+      </a>
+      <a href="sms:+14232519907" class="btn-call text">
+        <svg class="btn-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        Text
+      </a>
+    </div>
+  </div>
+
+  <div class="lead-card">
+    <div class="lead-name">John Bergman</div>
+    <div class="lead-meta">
+      <span class="tag">$25K - $75K</span>
+      <span class="tag">Exploring</span>
+      <span class="tag">Custom</span>
+    </div>
+    <div class="lead-date">Apr 16 at 8:30 AM</div>
+    <div class="lead-email">john.bergman1645@gmail.com</div>
+    <div class="actions">
+      <a href="tel:+19313382191" class="btn-call phone">
+        <svg class="btn-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        Call
+      </a>
+      <a href="sms:+19313382191" class="btn-call text">
+        <svg class="btn-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        Text
+      </a>
+    </div>
+  </div>
+
+  <div class="lead-card">
+    <div class="lead-name">Cheryl Johnston</div>
+    <div class="lead-meta">
+      <span class="tag">$25K - $75K</span>
+      <span class="tag">Exploring</span>
+      <span class="tag">Custom</span>
+    </div>
+    <div class="lead-date">Apr 16 at 12:52 AM</div>
+    <div class="lead-email">cheryljohnston81@gmail.com</div>
+    <div class="actions">
+      <a href="tel:+16154794221" class="btn-call phone">
+        <svg class="btn-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        Call
+      </a>
+      <a href="sms:+16154794221" class="btn-call text">
+        <svg class="btn-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        Text
+      </a>
+    </div>
+  </div>
+
+  <div class="lead-card">
+    <div class="lead-name">Nick Mitchell</div>
+    <div class="lead-meta">
+      <span class="tag">Not sure yet</span>
+      <span class="tag">Exploring</span>
+      <span class="tag">Custom</span>
+    </div>
+    <div class="lead-date">Apr 16 at 12:25 AM</div>
+    <div class="lead-email">nicholasmitchell604@gmail.com</div>
+    <div class="actions">
+      <a href="tel:+14239725419" class="btn-call phone">
+        <svg class="btn-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        Call
+      </a>
+      <a href="sms:+14239725419" class="btn-call text">
+        <svg class="btn-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        Text
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<div class="section-label">Older Uncontacted</div>
+<div class="card-list">
+
+  <div class="lead-card">
+    <div class="lead-name">Susan Smith</div>
+    <div class="lead-meta">
+      <span class="tag">$25K - $75K</span>
+      <span class="tag warm">1-3 months</span>
+      <span class="tag">Other</span>
+    </div>
+    <div class="lead-date">Apr 15 at 12:48 AM</div>
+    <div class="lead-email">chrismom199217@yahoo.com</div>
+    <div class="actions">
+      <a href="tel:+16157662399" class="btn-call phone">
+        <svg class="btn-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        Call
+      </a>
+      <a href="sms:+16157662399" class="btn-call text">
+        <svg class="btn-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        Text
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  Modern Development Co. | Updated Apr 16, 2026
+</div>
+
+</body>
+</html>
