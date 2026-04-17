@@ -243,11 +243,11 @@ footer p { color: var(--text-muted); font-size: 0.75rem; }
 <div class="summary">
   <div class="summary-card">
     <p class="label">Total Payroll</p>
-    <p class="value">$44,789.75</p>
+    <p class="value">$49,973.35</p>
   </div>
   <div class="summary-card">
     <p class="label">Total Hours</p>
-    <p class="value">1,279.71</p>
+    <p class="value">1,427.81</p>
   </div>
   <div class="summary-card">
     <p class="label">Jobs</p>
@@ -262,26 +262,26 @@ footer p { color: var(--text-muted); font-size: 0.75rem; }
         <tr><th>Job / Client</th><th>Total Pay</th><th>Hours</th></tr>
       </thead>
       <tbody>
-        <tr><td>Amy</td><td>$6,009.50</td><td>171.70</td></tr>
-        <tr><td>Freddie</td><td>$5,050.50</td><td>144.30</td></tr>
+        <tr><td>Amy</td><td>$6,769.00</td><td>193.40</td></tr>
+        <tr><td>Freddie</td><td>$5,484.50</td><td>156.70</td></tr>
+        <tr><td>Hice</td><td>$4,735.50</td><td>135.30</td></tr>
+        <tr><td>Gregory</td><td>$4,544.75</td><td>129.85</td></tr>
         <tr><td>Morgan</td><td>$4,172.00</td><td>119.20</td></tr>
-        <tr><td>Gregory</td><td>$4,145.75</td><td>118.45</td></tr>
-        <tr><td>Hice</td><td>$3,783.50</td><td>108.10</td></tr>
-        <tr><td>Trey</td><td>$3,395.00</td><td>97.00</td></tr>
+        <tr><td>Trey</td><td>$3,692.50</td><td>105.50</td></tr>
+        <tr><td>Frank</td><td>$3,130.75</td><td>89.45</td></tr>
         <tr><td>Home Church</td><td>$3,004.75</td><td>85.85</td></tr>
-        <tr><td>Frank</td><td>$2,721.25</td><td>77.75</td></tr>
-        <tr><td>Lee</td><td>$2,276.75</td><td>65.05</td></tr>
+        <tr><td>Lee</td><td>$2,896.25</td><td>82.75</td></tr>
+        <tr><td>Reco</td><td>$2,622.55</td><td>74.93</td></tr>
         <tr><td>Jimmy</td><td>$2,222.50</td><td>63.50</td></tr>
-        <tr><td>Reco</td><td>$1,975.00</td><td>56.43</td></tr>
         <tr><td>Gavin</td><td>$1,776.25</td><td>50.75</td></tr>
-        <tr><td>Petar</td><td>$1,275.00</td><td>36.43</td></tr>
+        <tr><td>Petar</td><td>$1,660.05</td><td>47.43</td></tr>
         <tr><td>Bethany</td><td>$1,260.00</td><td>36.00</td></tr>
-        <tr><td>Brycen</td><td>$794.50</td><td>22.70</td></tr>
+        <tr><td>Brycen</td><td>$1,074.50</td><td>30.70</td></tr>
         <tr><td>Joel</td><td>$402.50</td><td>11.50</td></tr>
         <tr><td>Dairy</td><td>$227.50</td><td>6.50</td></tr>
         <tr><td>Jersey</td><td>$157.50</td><td>4.50</td></tr>
         <tr><td>Nottingham</td><td>$140.00</td><td>4.00</td></tr>
-        <tr class="total-row"><td>TOTAL</td><td>$44,789.75</td><td>1,279.71</td></tr>
+        <tr class="total-row"><td>TOTAL</td><td>$49,973.35</td><td>1,427.81</td></tr>
       </tbody>
     </table>
   </div>
@@ -298,26 +298,26 @@ footer p { color: var(--text-muted); font-size: 0.75rem; }
 function downloadCSV() {
   const data = [
     ['Job/Client', 'Total Pay', 'Hours'],
-    ['Amy', 6009.50, 171.70],
-    ['Freddie', 5050.50, 144.30],
+    ['Amy', 6769.00, 193.40],
+    ['Freddie', 5484.50, 156.70],
+    ['Hice', 4735.50, 135.30],
+    ['Gregory', 4544.75, 129.85],
     ['Morgan', 4172.00, 119.20],
-    ['Gregory', 4145.75, 118.45],
-    ['Hice', 3783.50, 108.10],
-    ['Trey', 3395.00, 97.00],
+    ['Trey', 3692.50, 105.50],
+    ['Frank', 3130.75, 89.45],
     ['Home Church', 3004.75, 85.85],
-    ['Frank', 2721.25, 77.75],
-    ['Lee', 2276.75, 65.05],
+    ['Lee', 2896.25, 82.75],
+    ['Reco', 2622.55, 74.93],
     ['Jimmy', 2222.50, 63.50],
-    ['Reco', 1975.00, 56.43],
     ['Gavin', 1776.25, 50.75],
-    ['Petar', 1275.00, 36.43],
+    ['Petar', 1660.05, 47.43],
     ['Bethany', 1260.00, 36.00],
-    ['Brycen', 794.50, 22.70],
+    ['Brycen', 1074.50, 30.70],
     ['Joel', 402.50, 11.50],
     ['Dairy', 227.50, 6.50],
     ['Jersey', 157.50, 4.50],
     ['Nottingham', 140.00, 4.00],
-    ['TOTAL', 44789.75, 1279.71],
+    ['TOTAL', 49973.35, 1427.81],
   ];
   const csv = data.map(r => r.join(',')).join('\n');
   const blob = new Blob([csv], { type: 'text/csv' });

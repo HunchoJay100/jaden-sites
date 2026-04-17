@@ -257,19 +257,19 @@ footer p { color: var(--text-muted); font-size: 0.75rem; }
 <div class="summary">
   <div class="summary-card">
     <p class="label">Total Hours</p>
-    <p class="value">33.50</p>
+    <p class="value">57.50</p>
   </div>
   <div class="summary-card">
     <p class="label">Operator Cost</p>
-    <p class="value">$2,590</p>
+    <p class="value">$3,550</p>
   </div>
   <div class="summary-card">
     <p class="label">Total Billable</p>
-    <p class="value">$3,610</p>
+    <p class="value">$6,490</p>
   </div>
   <div class="summary-card profit">
     <p class="label">Profit</p>
-    <p class="value">$2,270</p>
+    <p class="value">$4,190</p>
   </div>
 </div>
 
@@ -294,6 +294,20 @@ footer p { color: var(--text-muted); font-size: 0.75rem; }
           <td>$1,260.00</td>
         </tr>
         <tr>
+          <td>Brycen</td>
+          <td>12.50</td>
+          <td>$500.00</td>
+          <td>$1,500.00</td>
+          <td>$1,000.00</td>
+        </tr>
+        <tr>
+          <td>Morgan</td>
+          <td>10.50</td>
+          <td>$420.00</td>
+          <td>$1,260.00</td>
+          <td>$840.00</td>
+        </tr>
+        <tr>
           <td>Freddie</td>
           <td>6.75</td>
           <td>$270.00</td>
@@ -308,18 +322,18 @@ footer p { color: var(--text-muted); font-size: 0.75rem; }
           <td>$30.00</td>
         </tr>
         <tr>
+          <td>Bethany</td>
+          <td>3.00</td>
+          <td>$120.00</td>
+          <td>$360.00</td>
+          <td>$240.00</td>
+        </tr>
+        <tr>
           <td>Gregory</td>
           <td>2.50</td>
           <td>$100.00</td>
           <td>$300.00</td>
           <td>$200.00</td>
-        </tr>
-        <tr>
-          <td>Morgan</td>
-          <td>2.00</td>
-          <td>$80.00</td>
-          <td>$240.00</td>
-          <td>$160.00</td>
         </tr>
         <tr>
           <td>Jimmy</td>
@@ -330,10 +344,10 @@ footer p { color: var(--text-muted); font-size: 0.75rem; }
         </tr>
         <tr class="total-row">
           <td>TOTAL</td>
-          <td>33.50</td>
-          <td>$1,340.00</td>
-          <td>$3,610.00</td>
-          <td>$2,270.00</td>
+          <td>57.50</td>
+          <td>$2,300.00</td>
+          <td>$6,490.00</td>
+          <td>$4,190.00</td>
         </tr>
       </tbody>
     </table>
@@ -366,7 +380,7 @@ footer p { color: var(--text-muted); font-size: 0.75rem; }
         <tr class="total-row">
           <td>TOTAL OPERATOR COST</td>
           <td></td>
-          <td>$2,590.00</td>
+          <td>$3,550.00</td>
           <td></td>
           <td></td>
         </tr>
@@ -374,7 +388,7 @@ footer p { color: var(--text-muted); font-size: 0.75rem; }
           <td>TOTAL BILLABLE</td>
           <td></td>
           <td></td>
-          <td>$3,610.00</td>
+          <td>$6,490.00</td>
           <td></td>
         </tr>
         <tr class="total-row">
@@ -382,7 +396,7 @@ footer p { color: var(--text-muted); font-size: 0.75rem; }
           <td></td>
           <td></td>
           <td></td>
-          <td>$2,270.00</td>
+          <td>$4,190.00</td>
         </tr>
       </tbody>
     </table>
@@ -401,18 +415,20 @@ function downloadCSV() {
   const data = [
     ['Job/Client', 'Hours', 'Operator Cost ($40/hr)', 'Bill to Customer ($120/hr)', 'Profit'],
     ['Amy', 15.75, 630.00, 1890.00, 1260.00],
+    ['Brycen', 12.50, 500.00, 1500.00, 1000.00],
+    ['Morgan', 10.50, 420.00, 1260.00, 840.00],
     ['Freddie', 6.75, 270.00, 810.00, 540.00],
     ['Petar (flat rate)', 5.50, 220.00, 250.00, 30.00],
+    ['Bethany', 3.00, 120.00, 360.00, 240.00],
     ['Gregory', 2.50, 100.00, 300.00, 200.00],
-    ['Morgan', 2.00, 80.00, 240.00, 160.00],
     ['Jimmy', 1.00, 40.00, 120.00, 80.00],
-    ['TOTAL', 33.50, 1340.00, 3610.00, 2270.00],
+    ['TOTAL', 57.50, 2300.00, 6490.00, 4190.00],
     ['', '', '', '', ''],
     ['Previous Operating', '', 1250.00, '', ''],
     ['', '', '', '', ''],
-    ['TOTAL OPERATOR COST', '', 2590.00, '', ''],
-    ['TOTAL BILLABLE', '', '', 3610.00, ''],
-    ['TOTAL PROFIT', '', '', '', 2270.00],
+    ['TOTAL OPERATOR COST', '', 3550.00, '', ''],
+    ['TOTAL BILLABLE', '', '', 6490.00, ''],
+    ['TOTAL PROFIT', '', '', '', 4190.00],
   ];
   const csv = data.map(r => r.join(',')).join('\n');
   const blob = new Blob([csv], { type: 'text/csv' });
