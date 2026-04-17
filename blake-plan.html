@@ -857,20 +857,20 @@ footer {
     <!-- COUNTDOWN -->
     <div class="countdown reveal d5">
       <div class="cd-cell highlight">
-        <span class="label">Days to Meet</span>
-        <span class="num cd-num" id="cd-days">—</span>
+        <span class="label">Meet Window</span>
+        <span class="num cd-num" style="font-size: clamp(36px,5vw,56px);">JAN <span style="color:var(--text-3);font-size:0.6em;">'27</span></span>
       </div>
       <div class="cd-cell">
-        <span class="label">Weeks</span>
-        <span class="num cd-num" id="cd-weeks">—</span>
+        <span class="label">Timeline</span>
+        <span class="num cd-num">~9 <span style="color:var(--text-3);font-size:0.5em;letter-spacing:0.15em;">MO</span></span>
       </div>
       <div class="cd-cell">
         <span class="label">Training Cycles</span>
-        <span class="num cd-num">3</span>
+        <span class="num cd-num">3<span style="color:var(--text-3);font-size:0.5em;letter-spacing:0.15em;"> + PEAK</span></span>
       </div>
       <div class="cd-cell">
-        <span class="label">Meet Date</span>
-        <span class="num cd-num" style="font-size: clamp(22px,3vw,32px);">JAN 16 <span style="color:var(--text-3);font-size:0.6em;">'27</span></span>
+        <span class="label">Weight Class</span>
+        <span class="num cd-num">275<span style="color:var(--text-3);font-size:0.5em;letter-spacing:0.15em;"> LB</span></span>
       </div>
     </div>
   </div>
@@ -1150,18 +1150,6 @@ footer {
 </div>
 
 <script>
-  // Meet countdown — January 16, 2027
-  const meet = new Date('2027-01-16T12:00:00-06:00');
-  const tick = () => {
-    const now = new Date();
-    const ms = meet - now;
-    const days = Math.max(0, Math.floor(ms / 86400000));
-    const weeks = Math.max(0, Math.floor(days / 7));
-    document.getElementById('cd-days').textContent = days.toLocaleString();
-    document.getElementById('cd-weeks').textContent = weeks.toLocaleString();
-  };
-  tick();
-
   // Updated stamp
   const today = new Date();
   const month = today.toLocaleString('en-US', { month: 'short' }).toUpperCase();
