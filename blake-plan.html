@@ -547,7 +547,28 @@ section {
 }
 
 .lift-list li:last-child { border-bottom: none; }
-.lift-list li .meta { color: var(--text-3); font-size: 12px; letter-spacing: 0.05em; }
+.lift-list li .meta { color: var(--text-3); font-size: 12px; letter-spacing: 0.05em; white-space: nowrap; }
+.lift-list li.main-lift {
+  color: var(--accent);
+  font-weight: 600;
+}
+.lift-list li.main-lift .meta.wave {
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.wave-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 480px) {
+  .lift-list li { font-size: 13px; gap: var(--s-2); }
+  .lift-list li .meta { font-size: 11px; }
+}
 
 /* ─── Cardio card ─── */
 .cardio {
@@ -902,11 +923,9 @@ footer {
           <span class="cal-unit">Calories / Day</span>
         </div>
         <p class="cal-note">
-          We're starting you on the <strong>lower end</strong> on purpose. You're a big guy with a
-          broken metabolic engine from years of desk work — clean food at full volume would be impossible
-          on day one. Hit these numbers, let the weight drop fast the first 4 weeks, and as your body
-          wakes up <strong>we'll ramp the food up.</strong> By block three you'll be eating more than
-          you are now and still dropping. That's the play.
+          We're starting you on the <strong>lower end</strong> on purpose. Let the weight drop fast the
+          first 4 weeks, and as your metabolism starts cranking <strong>we'll ramp the food up.</strong>
+          By block three you'll be eating more than you are now and still dropping. That's the play.
         </p>
       </div>
 
@@ -946,68 +965,75 @@ footer {
       <div class="eyebrow" style="text-align:right;">10-Week Cycle · Block A → B</div>
     </div>
 
-    <div class="split">
-      <!-- Wave -->
-      <div class="card reveal d1">
-        <h3>Percentage Wave</h3>
-        <p>Training max = 90% of your true 1RM. You set those numbers — pick what feels right off the rip, we'll dial in from there. Last set of the main lifts is AMRAP (as many as you can get with good form).</p>
-        <table class="wave-table">
-          <thead>
-            <tr><th>Wk</th><th>Scheme</th><th>% of TM</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>01</td><td>3×5, 1×5+</td><td>65 / 70 / 75 / 75</td></tr>
-            <tr><td>02</td><td>3×5, 1×5+</td><td>67 / 72 / 77 / 77</td></tr>
-            <tr><td>03</td><td>3×3, 1×3+</td><td>70 / 75 / 80 / 80</td></tr>
-            <tr><td>04</td><td>3×3, 1×3+</td><td>72 / 77 / 82 / 82</td></tr>
-            <tr class="deload"><td>05</td><td>3×5 · DELOAD</td><td>40 / 50 / 60</td></tr>
-            <tr><td>06</td><td>3×3, 1×3 PAUSED</td><td>75 / 80 / 85 / 85</td></tr>
-            <tr><td>07</td><td>3×3, 1×3 PAUSED</td><td>77 / 82 / 87 / 87</td></tr>
-            <tr><td>08</td><td>5 / 3 / 1+</td><td>82 / 88 / 93</td></tr>
-            <tr><td>09</td><td>5 / 3 / 1+</td><td>85 / 90 / 95</td></tr>
-            <tr class="deload"><td>10</td><td>REST · RETEST 1RM</td><td>—</td></tr>
-          </tbody>
-        </table>
-        <p style="margin-top:var(--s-4);">After Week 10 we retest, recalc your training max off the new 1RMs, and run the whole thing back harder. You'll lift three full cycles before the meet.</p>
+    <div class="card reveal d1" style="padding: var(--s-6);">
+      <h3 style="margin-bottom: var(--s-3);">3 Days / Week · Push · Pull · Legs</h3>
+      <p style="margin-bottom: var(--s-5);">
+        Six <span style="color:var(--accent);font-weight:600;">main lifts</span> run on the percentage wave below.
+        Accessories are straight sets to failure. Training max = 90% of your true 1RM — you set those
+        numbers, pick what feels right off the rip and we'll dial in from there.
+      </p>
+
+      <!-- Day blocks with main lift highlighting -->
+      <div class="day-block">
+        <div class="day-label">Push Day</div>
+        <ul class="lift-list">
+          <li class="main-lift"><span>Incline BB Bench</span> <span class="meta wave">wave →</span></li>
+          <li class="main-lift"><span>Standing Military Press</span> <span class="meta wave">wave →</span></li>
+          <li><span>Weighted Dips</span> <span class="meta">2 × failure, 6–8 reps</span></li>
+          <li><span>Lateral Raises</span> <span class="meta">2 × failure, 10–12 reps</span></li>
+          <li><span>Push-up AMRAP</span> <span class="meta">1 set to failure</span></li>
+        </ul>
       </div>
 
-      <!-- Splits -->
-      <div class="card reveal d2">
-        <h3>The Split · 3 Days / Week</h3>
+      <div class="day-block">
+        <div class="day-label">Pull Day</div>
+        <ul class="lift-list">
+          <li class="main-lift"><span>Barbell Rows</span> <span class="meta wave">wave →</span></li>
+          <li class="main-lift"><span>Rack Pulls</span> <span class="meta wave">wave →</span></li>
+          <li><span>Barbell Curls</span> <span class="meta">2 × failure, 8–12 reps</span></li>
+          <li><span>Face Pulls</span> <span class="meta">2 × failure, 10–12 reps</span></li>
+          <li><span>Pull-up AMRAP</span> <span class="meta">1 set to failure</span></li>
+        </ul>
+      </div>
 
-        <div class="day-block">
-          <div class="day-label">Push</div>
-          <ul class="lift-list">
-            <li>Incline BB Bench <span class="meta">main · wave</span></li>
-            <li>Standing Military Press <span class="meta">main · wave</span></li>
-            <li>Weighted Dips <span class="meta">2 × failure, 6–8</span></li>
-            <li>Lateral Raises <span class="meta">2 × failure, 10–12</span></li>
-            <li>Push-up AMRAP <span class="meta">1 set to failure</span></li>
-          </ul>
+      <div class="day-block">
+        <div class="day-label">Leg Day</div>
+        <ul class="lift-list">
+          <li class="main-lift"><span>Back Squat</span> <span class="meta wave">wave →</span></li>
+          <li class="main-lift"><span>Conventional Deadlift</span> <span class="meta wave">wave →</span></li>
+          <li><span>Leg Curls</span> <span class="meta">2 × failure, 8–10 reps</span></li>
+          <li><span>Air Squats</span> <span class="meta">1 × 50</span></li>
+        </ul>
+      </div>
+
+      <!-- Wave table applies to all MAIN lifts -->
+      <div style="margin-top: var(--s-6); padding-top: var(--s-5); border-top: 1px solid var(--hairline);">
+        <div class="label" style="margin-bottom: var(--s-3); color: var(--accent);">↑ Main Lifts Follow This Wave</div>
+        <p style="font-size: 13px; color: var(--text-3); margin-bottom: var(--s-4);">Last set of every main lift is AMRAP (as many as you can get with good form). Those rep counts drive the next cycle's numbers.</p>
+        <div class="wave-wrap">
+          <table class="wave-table">
+            <thead>
+              <tr><th>Wk</th><th>Scheme</th><th>% of Training Max</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>01</td><td>3×5, 1×5+</td><td>65 / 70 / 75 / 75</td></tr>
+              <tr><td>02</td><td>3×5, 1×5+</td><td>67 / 72 / 77 / 77</td></tr>
+              <tr><td>03</td><td>3×3, 1×3+</td><td>70 / 75 / 80 / 80</td></tr>
+              <tr><td>04</td><td>3×3, 1×3+</td><td>72 / 77 / 82 / 82</td></tr>
+              <tr class="deload"><td>05</td><td>3×5 · DELOAD</td><td>40 / 50 / 60</td></tr>
+              <tr><td>06</td><td>3×3, 1×3 PAUSED</td><td>75 / 80 / 85 / 85</td></tr>
+              <tr><td>07</td><td>3×3, 1×3 PAUSED</td><td>77 / 82 / 87 / 87</td></tr>
+              <tr><td>08</td><td>5 / 3 / 1+</td><td>82 / 88 / 93</td></tr>
+              <tr><td>09</td><td>5 / 3 / 1+</td><td>85 / 90 / 95</td></tr>
+              <tr class="deload"><td>10</td><td>REST · RETEST 1RM</td><td>—</td></tr>
+            </tbody>
+          </table>
         </div>
-
-        <div class="day-block">
-          <div class="day-label">Pull</div>
-          <ul class="lift-list">
-            <li>Barbell Rows <span class="meta">main · wave</span></li>
-            <li>Rack Pulls <span class="meta">main · wave</span></li>
-            <li>Barbell Curls <span class="meta">2 × failure, 8–12</span></li>
-            <li>Face Pulls <span class="meta">2 × failure, 10–12</span></li>
-            <li>Pull-up AMRAP <span class="meta">1 set to failure</span></li>
-          </ul>
-        </div>
-
-        <div class="day-block">
-          <div class="day-label">Legs</div>
-          <ul class="lift-list">
-            <li>Back Squat <span class="meta">main · wave</span></li>
-            <li>Conventional Deadlift <span class="meta">main · wave</span></li>
-            <li>Leg Curls <span class="meta">2 × failure, 8–10</span></li>
-            <li>Air Squats <span class="meta">1 × 50</span></li>
-          </ul>
-        </div>
-
-        <p style="margin-top:var(--s-5);font-size:13px;color:var(--text-3);line-height:1.6;">
+        <p style="margin-top: var(--s-5); font-size: 14px; color: var(--text-2); line-height: 1.6;">
+          After Week 10 we retest, recalc your training max off the new 1RMs, and run the whole thing
+          back harder. You'll lift <strong style="color:var(--accent);">three full cycles</strong> before the meet.
+        </p>
+        <p style="margin-top: var(--s-3); font-size: 13px; color: var(--text-3); line-height: 1.6;">
           Keeping incline as the primary press — a strong incline builds a strong flat bench.
           We'll cycle flat bench in as primary for the peak block before the meet.
         </p>
