@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>JASON — The Shred</title>
+<meta name="description" content="Jason Flynn's cut plan. 212 to shredded. No rush, no crash, just the process." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:           #050506;
+  --bg-2:         #0A0A0C;
+  --surface:      #101013;
+  --surface-2:    #17171B;
+  --surface-3:    #1F1F25;
+  --hairline:     rgba(255,255,255,0.06);
+  --hairline-2:   rgba(255,255,255,0.10);
+  --text:         rgba(245,245,247,1);
+  --text-2:       rgba(245,245,247,0.62);
+  --text-3:       rgba(245,245,247,0.34);
+  --accent:       #C6FF3C;
+  --accent-ink:   #050506;
+  --accent-dim:   #9BD21A;
+  --accent-soft:  rgba(198,255,60,0.12);
+  --accent-glow:  0 0 40px rgba(198,255,60,0.25);
+  --danger:       #FF5247;
+
+  --font-display: 'Oswald', -apple-system, sans-serif;
+  --font-ui:      'Inter', -apple-system, system-ui, sans-serif;
+
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px;
+  --s-5: 24px; --s-6: 32px; --s-7: 48px; --s-8: 64px; --s-9: 96px;
+
+  --r-sm: 8px; --r-md: 12px; --r-lg: 16px; --r-xl: 24px;
+
+  --shadow-1: 0 1px 3px rgba(0,0,0,0.45), 0 1px 2px rgba(0,0,0,0.25);
+  --shadow-2: 0 4px 14px rgba(0,0,0,0.55), 0 2px 6px rgba(0,0,0,0.35);
+  --shadow-3: 0 8px 32px rgba(0,0,0,0.65);
+
+  --spring: cubic-bezier(0.2, 0, 0, 1);
+  --spring-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-ui);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+.grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.glow {
+  position: fixed;
+  top: -30vh;
+  right: -20vw;
+  width: 70vw;
+  height: 70vw;
+  background: radial-gradient(circle, rgba(198,255,60,0.12), transparent 55%);
+  filter: blur(40px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 0.92;
+  text-transform: uppercase;
+}
+
+.eyebrow {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.label {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.num {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.shell {
+  position: relative;
+  z-index: 2;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: var(--s-7) var(--s-5);
+}
+
+@media (min-width: 768px) {
+  .shell { padding: var(--s-9) var(--s-7); }
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--s-9);
+  animation: fadeUp 0.6s var(--spring) both;
+}
+
+.stamp {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.stamp::before {
+  content: '';
+  width: 8px; height: 8px;
+  background: var(--accent);
+  box-shadow: var(--accent-glow);
+  border-radius: 50%;
+  animation: pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.status-pill {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  padding: var(--s-2) var(--s-3);
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-radius: 9999px;
+}
+
+.hero {
+  margin-bottom: var(--s-9);
+  animation: fadeUp 0.8s var(--spring) 0.1s both;
+}
+
+.hero-name {
+  font-size: clamp(80px, 18vw, 220px);
+}
+
+.hero-title {
+  font-size: clamp(28px, 4.5vw, 48px);
+  margin-top: var(--s-4);
+  color: var(--text);
+}
+
+.hero-sub {
+  font-family: var(--font-ui);
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--text-2);
+  max-width: 620px;
+  margin-top: var(--s-4);
+  letter-spacing: -0.01em;
+  text-transform: none;
+}
+
+section {
+  margin-bottom: var(--s-9);
+}
+
+.section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--s-5);
+  margin-bottom: var(--s-6);
+  padding-bottom: var(--s-4);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.section-title {
+  font-size: clamp(32px, 4.5vw, 48px);
+  line-height: 1;
+}
+
+.section-num {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.2em;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s-4);
+}
+
+@media (min-width: 768px) {
+  .stats { grid-template-columns: repeat(4, 1fr); }
+}
+
+.stat-card {
+  padding: var(--s-5);
+  background: var(--surface);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-1);
+  border-top: 1px solid var(--hairline);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card.hot {
+  background: linear-gradient(145deg, var(--surface) 0%, var(--surface-2) 100%);
+  border-top: 1px solid rgba(198,255,60,0.30);
+}
+
+.stat-card.hot::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 60px; height: 60px;
+  background: radial-gradient(circle at top right, var(--accent-soft), transparent 70%);
+}
+
+.stat-value {
+  font-size: clamp(36px, 4.5vw, 52px);
+  line-height: 1;
+  margin-top: var(--s-3);
+}
+
+.stat-delta {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin-top: var(--s-3);
+}
+
+.nutrition {
+  background: var(--surface);
+  border-radius: var(--r-xl);
+  padding: var(--s-6);
+  box-shadow: var(--shadow-2);
+  border-top: 1px solid var(--hairline-2);
+}
+
+@media (min-width: 768px) {
+  .nutrition { padding: var(--s-7); }
+}
+
+.nutrition-top {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-6);
+  margin-bottom: var(--s-6);
+  padding-bottom: var(--s-6);
+  border-bottom: 1px solid var(--hairline);
+}
+
+@media (min-width: 768px) {
+  .nutrition-top { grid-template-columns: auto 1fr; align-items: center; gap: var(--s-7); }
+}
+
+.cal-hero {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  align-items: flex-start;
+}
+
+.cal-num {
+  font-size: clamp(88px, 14vw, 144px);
+  color: var(--accent);
+  line-height: 0.9;
+}
+
+.cal-unit {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.25em;
+  color: var(--text-2);
+}
+
+.cal-note {
+  font-family: var(--font-ui);
+  font-size: 15px;
+  color: var(--text-2);
+  line-height: 1.55;
+  max-width: 480px;
+}
+
+.cal-note strong { color: var(--accent); font-weight: 600; }
+
+.macros {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-5);
+}
+
+.macro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+
+.macro-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.macro-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.macro-val {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 24px;
+  letter-spacing: -0.02em;
+}
+
+.macro-val .g {
+  font-size: 13px;
+  color: var(--text-3);
+  letter-spacing: 0.15em;
+  margin-left: var(--s-1);
+}
+
+.macro-bar {
+  height: 6px;
+  background: var(--surface-3);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.macro-bar > span {
+  display: block;
+  height: 100%;
+  border-radius: 9999px;
+  transform-origin: left;
+  animation: growX 1.2s var(--spring) 0.5s both;
+}
+
+.macro.protein .macro-bar > span { background: var(--accent); }
+.macro.carbs   .macro-bar > span { background: #F2EDE4; }
+.macro.fat     .macro-bar > span { background: #7A8599; }
+
+@keyframes growX {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+.day-block {
+  padding: var(--s-4);
+  background: var(--surface-2);
+  border-radius: var(--r-md);
+  margin-bottom: var(--s-3);
+  border-top: 1px solid var(--hairline);
+}
+
+.day-block:last-child { margin-bottom: 0; }
+
+.day-label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: var(--s-3);
+}
+
+.lift-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+}
+
+.lift-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s-3);
+  padding: var(--s-2) 0;
+  border-bottom: 1px solid var(--hairline);
+  font-size: 14px;
+  color: var(--text);
+}
+
+.lift-list li:last-child { border-bottom: none; }
+.lift-list li .meta { color: var(--text-3); font-size: 12px; letter-spacing: 0.05em; white-space: nowrap; }
+
+.card {
+  padding: var(--s-6);
+  background: var(--surface);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-1);
+  border-top: 1px solid var(--hairline);
+}
+
+.card h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--s-4);
+  text-transform: uppercase;
+}
+
+.card p {
+  color: var(--text-2);
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: var(--s-3);
+}
+
+.card p:last-child { margin-bottom: 0; }
+
+.split {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-5);
+}
+
+@media (min-width: 768px) {
+  .split { grid-template-columns: 1fr 1fr; }
+}
+
+.checkin {
+  background: var(--surface);
+  border-radius: var(--r-xl);
+  padding: var(--s-7);
+  box-shadow: var(--shadow-2);
+  border-top: 1px solid var(--hairline-2);
+}
+
+.checkin-top {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-5);
+  padding-bottom: var(--s-6);
+  margin-bottom: var(--s-6);
+  border-bottom: 1px solid var(--hairline);
+}
+
+@media (min-width: 768px) {
+  .checkin-top { grid-template-columns: auto 1fr; gap: var(--s-7); align-items: center; }
+}
+
+.sat-badge {
+  padding: var(--s-5) var(--s-6);
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-radius: var(--r-lg);
+  text-align: center;
+  box-shadow: 0 10px 30px -10px rgba(198,255,60,0.5);
+  min-width: 200px;
+}
+
+.sat-badge .big {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.sat-badge .small {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  margin-top: var(--s-2);
+}
+
+.checkin-text h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 32px;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  margin-bottom: var(--s-3);
+  line-height: 1;
+}
+
+.checkin-text p {
+  color: var(--text-2);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.log-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-3);
+}
+
+@media (min-width: 600px) {
+  .log-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (min-width: 900px) {
+  .log-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.log-item {
+  padding: var(--s-4);
+  background: var(--surface-2);
+  border-radius: var(--r-md);
+  border-top: 1px solid var(--hairline);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+}
+
+.log-item .k {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.log-item .v {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+.closer {
+  padding: var(--s-9) var(--s-6);
+  background: linear-gradient(180deg, var(--surface) 0%, var(--bg-2) 100%);
+  border-radius: var(--r-xl);
+  text-align: center;
+  border-top: 1px solid var(--hairline-2);
+  position: relative;
+  overflow: hidden;
+}
+
+.closer::before {
+  content: '';
+  position: absolute;
+  bottom: -40%; left: 50%;
+  transform: translateX(-50%);
+  width: 900px; height: 900px;
+  background: radial-gradient(circle, var(--accent-soft), transparent 55%);
+  pointer-events: none;
+}
+
+.closer-kicker {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: var(--s-5);
+  position: relative;
+}
+
+.closer-main {
+  font-size: clamp(44px, 7vw, 88px);
+  line-height: 1;
+  margin-bottom: var(--s-5);
+  position: relative;
+}
+
+.closer-main .lime { color: var(--accent); }
+
+.closer-sign {
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  color: var(--text-2);
+  text-transform: uppercase;
+  position: relative;
+  margin-top: var(--s-5);
+}
+
+footer {
+  margin-top: var(--s-8);
+  padding-top: var(--s-6);
+  border-top: 1px solid var(--hairline);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--s-4);
+  color: var(--text-3);
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-family: var(--font-display);
+  font-weight: 500;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+  opacity: 0;
+  animation: fadeUp 0.7s var(--spring) both;
+}
+
+.reveal.d1 { animation-delay: 0.05s; }
+.reveal.d2 { animation-delay: 0.12s; }
+.reveal.d3 { animation-delay: 0.20s; }
+.reveal.d4 { animation-delay: 0.28s; }
+.reveal.d5 { animation-delay: 0.36s; }
+.reveal.d6 { animation-delay: 0.44s; }
+
+::selection { background: var(--accent); color: var(--accent-ink); }
+
+/* ─── Swap section ─── */
+.swap-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-4);
+}
+
+@media (min-width: 768px) {
+  .swap-grid { grid-template-columns: 1fr 1fr; }
+}
+
+.swap-card {
+  padding: var(--s-5);
+  background: var(--surface-2);
+  border-radius: var(--r-md);
+  border-top: 1px solid var(--hairline);
+}
+
+.swap-card .swap-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: var(--s-3);
+}
+
+.swap-card ul {
+  list-style: none;
+  padding: 0;
+}
+
+.swap-card ul li {
+  font-size: 14px;
+  color: var(--text-2);
+  padding: var(--s-1) 0;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.swap-card ul li:last-child { border-bottom: none; }
+
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+<div class="glow"></div>
+
+<div class="shell">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="stamp">BCH&nbsp;FIT &nbsp;·&nbsp; PROGRAMMED BY JADEN</div>
+    <div class="status-pill">Active · Week 1</div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="eyebrow reveal d1">File 002 · The Shred</div>
+    <h1 class="display hero-name reveal d2">JASON</h1>
+    <div class="display hero-title reveal d3">Lean out. No rush. All process.</div>
+    <p class="hero-sub reveal d4">
+      You're already in solid shape at 212 and ~17% body fat. This isn't a rebuild, it's a refinement. We're going to strip the fat layer off methodically while you keep training hard. Four meals a day, all built from what's already in your kitchen.
+    </p>
+
+    <!-- STATS STRIP -->
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:var(--s-4);margin-top:var(--s-6);padding:var(--s-5);background:var(--surface);border-radius:var(--r-lg);box-shadow:var(--shadow-2);border-top:1px solid var(--hairline-2);" class="reveal d5">
+      <div>
+        <span class="label">Current Weight</span>
+        <div class="num" style="font-size:clamp(36px,5vw,56px);margin-top:var(--s-2);">212<span style="color:var(--text-3);font-size:0.4em;letter-spacing:0.1em;"> LB</span></div>
+      </div>
+      <div>
+        <span class="label">Body Fat</span>
+        <div class="num" style="font-size:clamp(36px,5vw,56px);margin-top:var(--s-2);">~17<span style="color:var(--text-3);font-size:0.4em;letter-spacing:0.1em;">%</span></div>
+      </div>
+      <div>
+        <span class="label">Height</span>
+        <div class="num" style="font-size:clamp(36px,5vw,56px);margin-top:var(--s-2);">6'1"</div>
+      </div>
+      <div>
+        <span class="label">Training</span>
+        <div class="num" style="font-size:clamp(36px,5vw,56px);margin-top:var(--s-2);">5<span style="color:var(--text-3);font-size:0.4em;letter-spacing:0.1em;">X / WK</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- THE NUMBERS -->
+  <section>
+    <div class="section-head">
+      <div>
+        <div class="section-num">&sect; 01</div>
+        <h2 class="display section-title">The Numbers</h2>
+      </div>
+      <div class="eyebrow" style="text-align:right;">Formula Output</div>
+    </div>
+
+    <div class="card reveal d1" style="margin-bottom:var(--s-5);">
+      <h3>How We Got Here</h3>
+      <p>BMR (Mifflin-St Jeor): <strong style="color:var(--text);">1,870 cal</strong></p>
+      <p>Occupation: On Your Feet / Trades (1.5) + Training 5x/week (+0.10) = <strong style="color:var(--text);">1.6x multiplier</strong></p>
+      <p>TDEE: <strong style="color:var(--text);">2,992 cal</strong></p>
+      <p>Cut modifier (-20%): <strong style="color:var(--accent);">2,394 cal target</strong></p>
+      <p style="margin-top:var(--s-3);font-size:13px;color:var(--text-3);">No age adjustment needed (under 55). This is a starting point. If energy tanks or the scale moves too fast, we bump calories up. Cardio gets added before food gets cut.</p>
+    </div>
+
+    <div class="nutrition reveal d2">
+      <div class="nutrition-top">
+        <div class="cal-hero">
+          <span class="num cal-num">2,394</span>
+          <span class="cal-unit">Calories / Day</span>
+        </div>
+        <p class="cal-note">
+          At 212 and 17%, you don't have far to go. A <strong>20% deficit</strong> is aggressive enough to see visible changes in 3 weeks without killing your performance at CrossFit or in the gym. We watch the scale and your energy. If something needs to move, <strong>we move cardio first, food last.</strong>
+        </p>
+      </div>
+
+      <div class="macros">
+        <div class="macro protein">
+          <div class="macro-head">
+            <span class="macro-name">Protein</span>
+            <span class="macro-val">233<span class="g">G</span></span>
+          </div>
+          <div class="macro-bar"><span style="width: 100%;"></span></div>
+        </div>
+        <div class="macro carbs">
+          <div class="macro-head">
+            <span class="macro-name">Carbs</span>
+            <span class="macro-val">222<span class="g">G</span></span>
+          </div>
+          <div class="macro-bar"><span style="width: 95%;"></span></div>
+        </div>
+        <div class="macro fat">
+          <div class="macro-head">
+            <span class="macro-name">Fat</span>
+            <span class="macro-val">64<span class="g">G</span></span>
+          </div>
+          <div class="macro-bar"><span style="width: 27%;"></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MEAL PLAN -->
+  <section>
+    <div class="section-head">
+      <div>
+        <div class="section-num">&sect; 02</div>
+        <h2 class="display section-title">Fuel</h2>
+      </div>
+      <div class="eyebrow" style="text-align:right;">4 Meals / Day</div>
+    </div>
+
+    <div class="label" style="margin-bottom:var(--s-5);color:var(--accent);">Your Daily Meal Plan — 2,394 Cal Target</div>
+
+    <div style="display:grid;grid-template-columns:1fr;gap:var(--s-4);">
+
+      <!-- MEAL 1 -->
+      <div class="day-block reveal d1" style="border-left: 3px solid var(--accent);">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:var(--s-3);">
+          <div class="day-label" style="margin-bottom:0;">Meal 1 — Breakfast</div>
+          <span class="label" style="color:var(--text-3);">~7:00 AM</span>
+        </div>
+        <ul class="lift-list">
+          <li><span>6 oz chicken breast, grilled or reheated</span></li>
+          <li><span>2 slices Dave's Killer Bread (thin)</span></li>
+          <li><span>1/2 avocado, sliced on top</span></li>
+          <li><span>Handful cherry tomatoes on the side</span></li>
+        </ul>
+        <div style="display:flex;gap:var(--s-5);margin-top:var(--s-3);padding-top:var(--s-3);border-top:1px solid var(--hairline);">
+          <span class="label" style="color:var(--accent);">520 cal</span>
+          <span class="label">44P</span>
+          <span class="label">34C</span>
+          <span class="label">21F</span>
+        </div>
+      </div>
+
+      <!-- MEAL 2 -->
+      <div class="day-block reveal d2" style="border-left: 3px solid var(--accent);">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:var(--s-3);">
+          <div class="day-label" style="margin-bottom:0;">Meal 2 — Lunch</div>
+          <span class="label" style="color:var(--text-3);">~12:00 PM</span>
+        </div>
+        <ul class="lift-list">
+          <li><span>8 oz chicken breast, grilled or baked</span></li>
+          <li><span>8 oz sweet potato, baked</span></li>
+          <li><span>Side of cherry tomatoes</span></li>
+          <li><span>1 tbsp olive oil drizzled on potato</span></li>
+        </ul>
+        <div style="display:flex;gap:var(--s-5);margin-top:var(--s-3);padding-top:var(--s-3);border-top:1px solid var(--hairline);">
+          <span class="label" style="color:var(--accent);">640 cal</span>
+          <span class="label">56P</span>
+          <span class="label">58C</span>
+          <span class="label">14F</span>
+        </div>
+      </div>
+
+      <!-- MEAL 3 -->
+      <div class="day-block reveal d3" style="border-left: 3px solid var(--accent);">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:var(--s-3);">
+          <div class="day-label" style="margin-bottom:0;">Meal 3 — Post-Training</div>
+          <span class="label" style="color:var(--text-3);">~5:00 PM</span>
+        </div>
+        <ul class="lift-list">
+          <li><span>8 oz steak (trim visible fat)</span></li>
+          <li><span>8 oz sweet potato, baked</span></li>
+          <li><span>1 apple</span></li>
+        </ul>
+        <div style="display:flex;gap:var(--s-5);margin-top:var(--s-3);padding-top:var(--s-3);border-top:1px solid var(--hairline);">
+          <span class="label" style="color:var(--accent);">700 cal</span>
+          <span class="label">58P</span>
+          <span class="label">76C</span>
+          <span class="label">14F</span>
+        </div>
+      </div>
+
+      <!-- MEAL 4 -->
+      <div class="day-block reveal d4" style="border-left: 3px solid var(--accent);">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:var(--s-3);">
+          <div class="day-label" style="margin-bottom:0;">Meal 4 — Last Meal</div>
+          <span class="label" style="color:var(--text-3);">~8:00 PM</span>
+        </div>
+        <ul class="lift-list">
+          <li><span>8 oz 93/7 ground beef, cooked</span></li>
+          <li><span>6 oz sweet potato, baked</span></li>
+          <li><span>2 chocolate rice cakes</span></li>
+        </ul>
+        <div style="display:flex;gap:var(--s-5);margin-top:var(--s-3);padding-top:var(--s-3);border-top:1px solid var(--hairline);">
+          <span class="label" style="color:var(--accent);">490 cal</span>
+          <span class="label">48P</span>
+          <span class="label">52C</span>
+          <span class="label">8F</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- DAILY TOTAL -->
+    <div style="margin-top:var(--s-5);padding:var(--s-5);background:var(--accent-soft);border-radius:var(--r-md);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:var(--s-3);">
+      <span class="macro-name" style="color:var(--accent);">Daily Total</span>
+      <div style="display:flex;gap:var(--s-6);flex-wrap:wrap;">
+        <span class="num" style="font-size:20px;color:var(--accent);">2,350<span style="font-size:11px;color:var(--text-3);letter-spacing:0.15em;margin-left:4px;">CAL</span></span>
+        <span class="num" style="font-size:20px;">206<span style="font-size:11px;color:var(--text-3);letter-spacing:0.15em;margin-left:4px;">P</span></span>
+        <span class="num" style="font-size:20px;">220<span style="font-size:11px;color:var(--text-3);letter-spacing:0.15em;margin-left:4px;">C</span></span>
+        <span class="num" style="font-size:20px;">57<span style="font-size:11px;color:var(--text-3);letter-spacing:0.15em;margin-left:4px;">F</span></span>
+      </div>
+    </div>
+
+    <p style="margin-top:var(--s-4);font-size:14px;color:var(--text-2);line-height:1.6;">
+      Protein is close from whole food alone. Add a <strong style="color:var(--accent);">protein shake (1.5 scoops whey in water, ~40g protein)</strong> any time during the day to close the gap. That brings you to <strong style="color:var(--text);">246P / 2,510 cal</strong> total. Even without the shake, 206g at 212 lbs is plenty to hold muscle on a cut.
+    </p>
+
+  </section>
+
+  <!-- SWAPS -->
+  <section>
+    <div class="section-head">
+      <div>
+        <div class="section-num">&sect; 03</div>
+        <h2 class="display section-title">Swaps</h2>
+      </div>
+      <div class="eyebrow" style="text-align:right;">Keep It Flexible</div>
+    </div>
+
+    <div class="swap-grid">
+      <div class="swap-card reveal d1">
+        <div class="swap-title">Protein Swaps</div>
+        <ul>
+          <li>Chicken breast ↔ steak ↔ ground beef (same oz)</li>
+          <li>Any ground meat, keep it 90/10 or leaner</li>
+          <li>Fish works too, same weight</li>
+        </ul>
+      </div>
+      <div class="swap-card reveal d2">
+        <div class="swap-title">Carb Swaps</div>
+        <ul>
+          <li>Sweet potato is your base, stick with it</li>
+          <li>Rice if you want to try it (use 2/3 the weight of sweet potato)</li>
+          <li>Apple ↔ banana ↔ berries (fruit is fruit)</li>
+          <li>Rice cakes are a free snack carb source</li>
+        </ul>
+      </div>
+      <div class="swap-card reveal d3">
+        <div class="swap-title">Fat Sources</div>
+        <ul>
+          <li>Avocado and olive oil are your main fats</li>
+          <li>Light and Fit yogurt works as a snack</li>
+          <li>Don't add extra fat, it's built into the meals</li>
+        </ul>
+      </div>
+      <div class="swap-card reveal d4">
+        <div class="swap-title">Cooking Notes</div>
+        <ul>
+          <li>Season everything however you want</li>
+          <li>Grill, bake, or air fry the proteins</li>
+          <li>Use the broth to cook ground beef for flavor</li>
+          <li>Batch cook: prep 3 days of chicken + sweet potatoes</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- GROCERY LIST -->
+  <section>
+    <div class="section-head">
+      <div>
+        <div class="section-num">&sect; 04</div>
+        <h2 class="display section-title">Weekly Grocery Run</h2>
+      </div>
+      <div class="eyebrow" style="text-align:right;">Restock List</div>
+    </div>
+
+    <div class="card reveal d1">
+      <h3>What to Buy Each Week</h3>
+      <div style="display:grid;grid-template-columns:1fr;gap:var(--s-4);">
+        <div>
+          <div class="label" style="color:var(--accent);margin-bottom:var(--s-2);">Protein</div>
+          <ul class="lift-list">
+            <li><span>Chicken breasts</span> <span class="meta">~3.5 lbs</span></li>
+            <li><span>Steak (any cut, trim fat)</span> <span class="meta">~3.5 lbs</span></li>
+            <li><span>Ground beef 93/7</span> <span class="meta">~3.5 lbs</span></li>
+            <li><span>Whey protein</span> <span class="meta">keep stocked</span></li>
+          </ul>
+        </div>
+        <div>
+          <div class="label" style="color:var(--accent);margin-bottom:var(--s-2);">Carbs</div>
+          <ul class="lift-list">
+            <li><span>Sweet potatoes</span> <span class="meta">~7-8 lbs</span></li>
+            <li><span>Dave's Killer Bread (thin)</span> <span class="meta">1 loaf</span></li>
+            <li><span>Apples</span> <span class="meta">7</span></li>
+            <li><span>Chocolate rice cakes</span> <span class="meta">1 pack</span></li>
+            <li><span>Cherry tomatoes</span> <span class="meta">2 pints</span></li>
+          </ul>
+        </div>
+        <div>
+          <div class="label" style="color:var(--accent);margin-bottom:var(--s-2);">Fats & Other</div>
+          <ul class="lift-list">
+            <li><span>Avocados</span> <span class="meta">4-5</span></li>
+            <li><span>Olive oil</span> <span class="meta">always stocked</span></li>
+            <li><span>Whey protein</span> <span class="meta">if running low</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHECK-IN -->
+  <section>
+    <div class="section-head">
+      <div>
+        <div class="section-num">&sect; 05</div>
+        <h2 class="display section-title">Check-In</h2>
+      </div>
+      <div class="eyebrow" style="text-align:right;">Weekly</div>
+    </div>
+
+    <div class="checkin reveal d1">
+      <div class="checkin-top">
+        <div class="sat-badge">
+          <div class="big">SAT</div>
+          <div class="small">EVERY WEEK</div>
+        </div>
+        <div class="checkin-text">
+          <h3>Weigh In + Check In</h3>
+          <p>Weigh yourself every morning, same conditions: after bathroom, before food or water. Saturday, send the week's numbers to Jaden. If something needs to change, we change it. No guessing.</p>
+        </div>
+      </div>
+
+      <div class="label" style="margin-bottom:var(--s-4);">What to Track</div>
+      <div class="log-grid">
+        <div class="log-item">
+          <div class="k">Weight (AM)</div>
+          <div class="v">Same scale, same time, every day. The trend matters, not any single day.</div>
+        </div>
+        <div class="log-item">
+          <div class="k">Energy 1-5</div>
+          <div class="v">If this drops below 3 for more than a few days, we adjust.</div>
+        </div>
+        <div class="log-item">
+          <div class="k">Hunger 1-5</div>
+          <div class="v">Some hunger on a cut is normal. Constant 5 is not.</div>
+        </div>
+        <div class="log-item">
+          <div class="k">Training Quality</div>
+          <div class="v">Are you keeping up at CrossFit? Strength holding? That tells us everything.</div>
+        </div>
+        <div class="log-item">
+          <div class="k">Meals Hit</div>
+          <div class="v">Did you hit all 4 meals? Close enough counts. Perfection is not the goal.</div>
+        </div>
+        <div class="log-item">
+          <div class="k">Notes</div>
+          <div class="v">Travel, bad sleep, went off plan, felt great. Context helps make better calls.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE RULES -->
+  <section>
+    <div class="section-head">
+      <div>
+        <div class="section-num">&sect; 06</div>
+        <h2 class="display section-title">The Rules</h2>
+      </div>
+    </div>
+
+    <div class="split">
+      <div class="card reveal d1">
+        <h3>Non-Negotiables</h3>
+        <p><strong style="color:var(--accent);">Protein first.</strong> Every meal starts with the protein. If you're short on time, eat the protein and skip the carb before you ever skip the protein.</p>
+        <p><strong style="color:var(--accent);">Don't skip meals.</strong> Four meals, every day. Skipping meals slows metabolism and leads to overeating later. Even if you're not hungry, eat.</p>
+        <p><strong style="color:var(--accent);">Water.</strong> Minimum a gallon a day. You're training 5 days a week and working construction. Dehydration will stall everything.</p>
+      </div>
+      <div class="card reveal d2">
+        <h3>If the Scale Stalls</h3>
+        <p>If weight doesn't move for 2 weeks straight, here's the order of operations:</p>
+        <p><strong style="color:var(--accent);">1.</strong> Add fasted walking. 20-30 min, 3-4 days a week.</p>
+        <p><strong style="color:var(--accent);">2.</strong> Add more walking. 5-6 days, or extend to 40 min.</p>
+        <p><strong style="color:var(--accent);">3.</strong> Only then do we touch food. And it's a small carb reduction, never protein.</p>
+        <p style="font-size:13px;color:var(--text-3);margin-top:var(--s-3);">Calories are the last lever. We protect your metabolism, your training, and your sanity in that order.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSER -->
+  <section>
+    <div class="closer">
+      <div class="closer-kicker">From Your Corner</div>
+      <h2 class="display closer-main">Same gym.<br>Same <span class="lime">grind.</span></h2>
+      <p style="position:relative;max-width:620px;margin:0 auto;font-size:17px;color:var(--text-2);line-height:1.6;">
+        You're already doing the hard part. Five days a week, CrossFit and your own sessions, running a construction company. This plan just dials in the fuel so the work you're already putting in actually shows. Trust the process, hit the meals, send the numbers. We'll handle the rest.
+      </p>
+      <div class="closer-sign">— Jaden &nbsp;·&nbsp; BCH Fit</div>
+    </div>
+  </section>
+
+  <footer>
+    <div>BCH FIT / THE SHRED / V1</div>
+    <div>Updated · <span id="stamp-date"></span></div>
+  </footer>
+
+</div>
+
+<script>
+  const today = new Date();
+  const month = today.toLocaleString('en-US', { month: 'short' }).toUpperCase();
+  document.getElementById('stamp-date').textContent =
+    `${month} ${String(today.getDate()).padStart(2,'0')} '${String(today.getFullYear()).slice(2)}`;
+</script>
+
+</body>
+</html>
