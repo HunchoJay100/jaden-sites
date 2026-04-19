@@ -1,1400 +1,615 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MD Consulting Blueprint</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ConsultMD — Blueprint</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Urbanist:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --base: #0D0D0D;
-    --surface: #171717;
-    --nested: #1F1F1F;
-    --gold: #C5A55A;
-    --gold-dim: rgba(197, 165, 90, 0.12);
-    --gold-glow: rgba(197, 165, 90, 0.25);
-    --light-bg: #F8F6F3;
-    --light-text: #1A1A1A;
-    --text-primary: #FFFFFF;
-    --text-secondary: rgba(255,255,255,0.6);
-    --text-tertiary: rgba(255,255,255,0.3);
-    --green: #34C759;
-    --red: #FF453A;
-    --yellow: #FFD60A;
-    --blue: #0A84FF;
-    --separator: rgba(255,255,255,0.06);
-    --radius-card: 12px;
-    --radius-btn: 10px;
-    --radius-badge: 6px;
-    --radius-pill: 9999px;
-    --spring: cubic-bezier(0.2, 0, 0, 1);
-    --spring-snappy: cubic-bezier(0.34, 1.56, 0.64, 1);
-    --spring-sheet: cubic-bezier(0.32, 0.72, 0, 1);
-  }
+:root{
+  --bg:#FFFFFF;
+  --bg-alt:#F7F8FA;
+  --bg-hover:#F2F4F7;
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  --ink-900:#0B1220;
+  --ink-800:#1A2332;
+  --ink-700:#344054;
+  --ink-600:#475467;
+  --ink-500:#667085;
+  --ink-400:#98A2B3;
+  --ink-300:#D0D5DD;
+  --ink-200:#E4E7EC;
+  --ink-100:#EAECF0;
+  --ink-50:#F2F4F7;
 
-  html { scroll-behavior: smooth; }
+  --blue:#2563EB;
+  --blue-600:#1D4ED8;
+  --blue-50:#EFF6FF;
+  --blue-100:#DBEAFE;
 
-  body {
-    font-family: 'DM Sans', -apple-system, sans-serif;
-    background: var(--base);
-    color: var(--text-primary);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    font-size: 17px;
-    font-weight: 400;
-    letter-spacing: -0.43px;
-    line-height: 22px;
-  }
+  --green:#12B76A;
+  --green-50:#ECFDF3;
+  --amber:#F79009;
+  --amber-50:#FFFAEB;
+  --red:#D92D20;
 
-  /* ── NAV ── */
-  .nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(13, 13, 13, 0.82);
-    backdrop-filter: blur(16px) saturate(180%);
-    -webkit-backdrop-filter: blur(16px) saturate(180%);
-    border-bottom: 1px solid var(--separator);
-    padding: 0 clamp(16px, 4vw, 48px);
-  }
-  .nav-inner {
-    max-width: 1080px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 56px;
-    gap: 16px;
-  }
-  .nav-left {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    min-width: 0;
-  }
-  .nav-back {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 14px;
-    border: 1px solid var(--gold);
-    border-radius: var(--radius-pill);
-    color: var(--gold);
-    text-decoration: none;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0.03px;
-    line-height: 16px;
-    transition: all 0.15s var(--spring);
-    white-space: nowrap;
-    min-height: 32px;
-  }
-  .nav-back:hover {
-    background: var(--gold-dim);
-  }
-  .nav-title {
-    font-family: 'Urbanist', sans-serif;
-    font-size: 15px;
-    font-weight: 600;
-    letter-spacing: 0px;
-    color: var(--text-secondary);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .nav-links {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-shrink: 0;
-  }
-  .nav-links a {
-    color: var(--text-tertiary);
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0.03px;
-    padding: 6px 10px;
-    border-radius: var(--radius-badge);
-    transition: all 0.15s var(--spring);
-    white-space: nowrap;
-  }
-  .nav-links a:hover {
-    color: var(--text-secondary);
-    background: rgba(255,255,255,0.04);
-  }
+  --line:#EAECF0;
+  --line-strong:#D0D5DD;
 
-  /* ── LAYOUT ── */
-  .container {
-    max-width: 1080px;
-    margin: 0 auto;
-    padding: 0 clamp(16px, 4vw, 48px);
-  }
-  section {
-    padding: 80px 0;
-  }
-  section + section {
-    border-top: 1px solid var(--separator);
-  }
+  --radius:6px;
+  --radius-md:8px;
+  --radius-lg:12px;
+  --radius-pill:9999px;
 
-  /* ── TYPOGRAPHY ── */
-  .large-title {
-    font-family: 'Urbanist', sans-serif;
-    font-size: clamp(28px, 5vw, 34px);
-    font-weight: 700;
-    letter-spacing: -1.05px;
-    line-height: 1.2;
-  }
-  .title-1 {
-    font-family: 'Urbanist', sans-serif;
-    font-size: 28px;
-    font-weight: 700;
-    letter-spacing: -0.8px;
-    line-height: 34px;
-  }
-  .title-2 {
-    font-family: 'Urbanist', sans-serif;
-    font-size: 22px;
-    font-weight: 700;
-    letter-spacing: -0.7px;
-    line-height: 28px;
-  }
-  .title-3 {
-    font-family: 'Urbanist', sans-serif;
-    font-size: 20px;
-    font-weight: 600;
-    letter-spacing: -0.6px;
-    line-height: 25px;
-  }
-  .headline {
-    font-size: 17px;
-    font-weight: 600;
-    letter-spacing: -0.43px;
-    line-height: 22px;
-  }
-  .subhead {
-    font-size: 15px;
-    font-weight: 400;
-    letter-spacing: 0px;
-    line-height: 20px;
-  }
-  .footnote {
-    font-size: 13px;
-    font-weight: 400;
-    letter-spacing: 0.03px;
-    line-height: 16px;
-  }
-  .caption {
-    font-size: 12px;
-    font-weight: 400;
-    letter-spacing: 0.12px;
-    line-height: 16px;
-  }
-  .gold { color: var(--gold); }
-  .secondary { color: var(--text-secondary); }
-  .tertiary { color: var(--text-tertiary); }
+  --shadow-xs:0 1px 2px rgba(16,24,40,.05);
+  --shadow-sm:0 1px 2px rgba(16,24,40,.06),0 1px 3px rgba(16,24,40,.10);
+  --shadow-md:0 2px 4px rgba(16,24,40,.06),0 4px 8px rgba(16,24,40,.10);
+  --shadow-lg:0 4px 8px rgba(16,24,40,.08),0 16px 32px rgba(16,24,40,.08);
+  --shadow-xl:0 20px 40px rgba(16,24,40,.10),0 40px 80px rgba(16,24,40,.08);
+}
+*{box-sizing:border-box;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg-alt);
+  color:var(--ink-900);
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-size:14px;line-height:1.55;letter-spacing:-.003em;
+  font-feature-settings:'cv11' 1,'ss01' 1;
+}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{margin:0;font-weight:600;letter-spacing:-.022em;color:var(--ink-900)}
+.mono{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:0}
 
-  /* ── HERO ── */
-  .hero {
-    padding: 96px 0 80px;
-    text-align: center;
-    position: relative;
-  }
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 600px;
-    height: 400px;
-    background: radial-gradient(ellipse, rgba(197,165,90,0.06) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .hero-badge {
-    display: inline-block;
-    font-family: 'Urbanist', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-    color: var(--gold);
-    background: var(--gold-dim);
-    padding: 6px 16px;
-    border-radius: var(--radius-pill);
-    margin-bottom: 24px;
-  }
-  .hero h1 {
-    font-family: 'Urbanist', sans-serif;
-    font-size: clamp(36px, 7vw, 56px);
-    font-weight: 800;
-    letter-spacing: -1.5px;
-    line-height: 1.08;
-    margin-bottom: 20px;
-  }
-  .hero-sub {
-    max-width: 640px;
-    margin: 0 auto 32px;
-    color: var(--text-secondary);
-    font-size: 17px;
-    line-height: 26px;
-    letter-spacing: -0.43px;
-  }
-  .hero-meta {
-    display: flex;
-    justify-content: center;
-    gap: 32px;
-    flex-wrap: wrap;
-  }
-  .hero-meta span {
-    font-size: 13px;
-    letter-spacing: 0.03px;
-    color: var(--text-tertiary);
-  }
-  .hero-meta strong {
-    color: var(--text-secondary);
-    font-weight: 500;
-  }
+/* NAV */
+.nav{position:sticky;top:0;z-index:50;height:56px;background:rgba(255,255,255,.85);backdrop-filter:blur(12px) saturate(180%);-webkit-backdrop-filter:blur(12px) saturate(180%);border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 32px;gap:16px}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.brand-mark{width:26px;height:26px;border-radius:6px;background:var(--ink-900);display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;letter-spacing:-.4px}
+.brand-text{font-size:14px;font-weight:600;letter-spacing:-.2px}
+.brand-text span{color:var(--ink-400);font-weight:500}
+.nav-back{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:var(--radius);color:var(--ink-600);font-size:13px;font-weight:500;transition:background .15s,color .15s}
+.nav-back:hover{background:var(--bg-alt);color:var(--ink-900)}
+.nav-spacer{flex:1}
+.nav-meta{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-500)}
+.pulse{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 rgba(18,183,106,.5);animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(18,183,106,.45)}70%{box-shadow:0 0 0 8px rgba(18,183,106,0)}100%{box-shadow:0 0 0 0 rgba(18,183,106,0)}}
 
-  /* ── CALLOUT BOX ── */
-  .callout {
-    background: var(--surface);
-    border-left: 3px solid var(--gold);
-    border-radius: 0 var(--radius-card) var(--radius-card) 0;
-    padding: 24px 32px;
-    margin-bottom: 48px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
-  }
-  .callout p {
-    color: var(--text-secondary);
-    line-height: 26px;
-  }
-  .callout strong {
-    color: var(--text-primary);
-    font-weight: 500;
-  }
+/* SHELL */
+.wrap{max-width:1180px;margin:0 auto;padding:0 32px}
 
-  /* ── STEP LIST ── */
-  .steps {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-  .step {
-    display: flex;
-    align-items: flex-start;
-    gap: 16px;
-    padding: 20px 24px;
-    background: var(--surface);
-    border-radius: var(--radius-card);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
-    transition: all 0.3s var(--spring);
-  }
-  .step:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 14px rgba(0,0,0,0.15), 0 2px 6px rgba(0,0,0,0.1);
-  }
-  .step-num {
-    flex-shrink: 0;
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--gold-dim);
-    color: var(--gold);
-    border-radius: 8px;
-    font-family: 'Urbanist', sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-  }
-  .step-content {
-    flex: 1;
-    min-width: 0;
-  }
-  .step-title {
-    font-weight: 500;
-    margin-bottom: 4px;
-  }
-  .step-detail {
-    color: var(--text-secondary);
-    font-size: 15px;
-    line-height: 22px;
-    letter-spacing: 0px;
-  }
-  .step-sub-list {
-    margin-top: 8px;
-    padding-left: 0;
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-  .step-sub-list li {
-    font-size: 15px;
-    color: var(--text-secondary);
-    letter-spacing: 0px;
-    line-height: 20px;
-    padding-left: 16px;
-    position: relative;
-  }
-  .step-sub-list li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 8px;
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    background: var(--text-tertiary);
-  }
+/* HERO */
+.hero{padding:80px 0 32px;position:relative}
+.hero::before{content:"";position:absolute;top:-40px;left:50%;transform:translateX(-50%);width:720px;height:320px;background:radial-gradient(ellipse,rgba(37,99,235,.06),transparent 70%);pointer-events:none}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:5px 11px;background:var(--blue-50);border:1px solid var(--blue-100);border-radius:var(--radius-pill);font-size:11.5px;font-weight:600;color:var(--blue-600);letter-spacing:.04em;text-transform:uppercase}
+.eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--blue)}
+.hero h1{font-size:clamp(38px,5.5vw,60px);font-weight:600;letter-spacing:-.032em;line-height:1.05;margin:18px 0 16px;max-width:880px}
+.hero h1 em{font-style:normal;color:var(--blue)}
+.hero-sub{font-size:18px;line-height:1.55;color:var(--ink-600);max-width:680px;letter-spacing:-.006em}
+.hero-meta{display:flex;gap:28px;margin-top:28px;flex-wrap:wrap}
+.hero-meta-item{display:flex;align-items:baseline;gap:8px}
+.hero-meta-item .k{font-size:11.5px;font-weight:600;color:var(--ink-500);text-transform:uppercase;letter-spacing:.06em}
+.hero-meta-item .v{font-size:13.5px;font-weight:500;color:var(--ink-800)}
 
-  /* ── BADGES ── */
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 3px 10px;
-    border-radius: var(--radius-badge);
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.12px;
-    line-height: 16px;
-    white-space: nowrap;
-  }
-  .badge-green {
-    background: rgba(52, 199, 89, 0.12);
-    color: var(--green);
-  }
-  .badge-red {
-    background: rgba(255, 69, 58, 0.12);
-    color: var(--red);
-  }
-  .badge-yellow {
-    background: rgba(255, 214, 10, 0.12);
-    color: var(--yellow);
-  }
-  .badge-blue {
-    background: rgba(10, 132, 255, 0.12);
-    color: var(--blue);
-  }
-  .badge-cut {
-    background: rgba(255,255,255,0.05);
-    color: var(--text-tertiary);
-    text-decoration: line-through;
-  }
+/* SCREENSHOT */
+.shot{margin:56px 0 8px;border-radius:var(--radius-lg);overflow:hidden;background:#fff;box-shadow:var(--shadow-xl);border:1px solid var(--line);position:relative}
+.shot::after{content:"";position:absolute;inset:0;border-radius:var(--radius-lg);box-shadow:inset 0 0 0 1px rgba(16,24,40,.04);pointer-events:none}
+.shot img{display:block;width:100%;height:auto}
+.shot-caption{text-align:center;font-size:12.5px;color:var(--ink-500);margin:16px 0 0}
+.shot-caption strong{color:var(--ink-700);font-weight:500}
 
-  /* ── CARD GRIDS ── */
-  .grid-2 {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 16px;
-  }
-  .grid-3 {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 16px;
-  }
-  .grid-4 {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 16px;
-  }
-  .card {
-    background: var(--surface);
-    border-radius: var(--radius-card);
-    padding: 24px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
-    transition: all 0.3s var(--spring);
-  }
-  .card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 4px 14px rgba(0,0,0,0.15), 0 2px 6px rgba(0,0,0,0.1);
-  }
-  .card-icon {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--gold-dim);
-    border-radius: 10px;
-    margin-bottom: 16px;
-    font-size: 18px;
-  }
-  .card h3 {
-    font-family: 'Urbanist', sans-serif;
-    font-size: 17px;
-    font-weight: 600;
-    letter-spacing: -0.43px;
-    margin-bottom: 8px;
-  }
-  .card p {
-    color: var(--text-secondary);
-    font-size: 15px;
-    letter-spacing: 0px;
-    line-height: 22px;
-  }
+/* STATUS STRIP */
+.strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:56px 0 24px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:var(--radius-md);padding:18px 20px;box-shadow:var(--shadow-xs)}
+.stat .label{font-size:11.5px;font-weight:600;color:var(--ink-500);text-transform:uppercase;letter-spacing:.06em}
+.stat .num{font-size:32px;font-weight:600;letter-spacing:-.028em;color:var(--ink-900);margin-top:8px;line-height:1}
+.stat .sub{font-size:12px;color:var(--ink-500);margin-top:6px}
+.stat .bar{height:4px;background:var(--ink-100);border-radius:2px;margin-top:12px;overflow:hidden}
+.stat .bar-fill{height:100%;background:var(--blue);border-radius:2px}
+.stat.green .num{color:var(--green)}
+.stat.green .bar-fill{background:var(--green)}
 
-  /* ── SECTION HEADER ── */
-  .section-label {
-    font-family: 'Urbanist', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 8px;
-  }
-  .section-head {
-    margin-bottom: 40px;
-  }
-  .section-head .title-1 {
-    margin-bottom: 8px;
-  }
-  .section-head p {
-    color: var(--text-secondary);
-    max-width: 640px;
-    line-height: 26px;
-  }
+/* SECTIONS */
+section{padding:48px 0}
+.section-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:24px;gap:16px}
+.section-label{font-size:11.5px;font-weight:600;color:var(--ink-500);text-transform:uppercase;letter-spacing:.08em}
+.section-head h2{font-size:28px;font-weight:600;letter-spacing:-.028em;margin-top:6px}
+.section-head .hint{font-size:13px;color:var(--ink-500);max-width:320px;text-align:right}
 
-  /* ── LIGHT SECTION ── */
-  .light-section {
-    background: var(--light-bg);
-    color: var(--light-text);
-    border-top: none;
-  }
-  .light-section + section {
-    border-top: none;
-  }
-  section + .light-section {
-    border-top: none;
-  }
-  .light-section .section-label {
-    color: #8B7440;
-  }
-  .light-section .title-1 {
-    color: var(--light-text);
-  }
-  .light-section .section-head p {
-    color: rgba(26, 26, 26, 0.6);
-  }
-  .light-section .card {
-    background: #FFFFFF;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-  }
-  .light-section .card:hover {
-    box-shadow: 0 4px 14px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.05);
-  }
-  .light-section .card h3 {
-    color: var(--light-text);
-  }
-  .light-section .card p,
-  .light-section .card li {
-    color: rgba(26, 26, 26, 0.6);
-  }
-  .light-section .card .gold {
-    color: #8B7440;
-  }
+/* SHIPPED GRID */
+.phases{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.phase{background:#fff;border:1px solid var(--line);border-radius:var(--radius-md);padding:20px 22px;display:flex;flex-direction:column;gap:10px;box-shadow:var(--shadow-xs);transition:transform .18s,box-shadow .18s}
+.phase:hover{transform:translateY(-1px);box-shadow:var(--shadow-md)}
+.phase-top{display:flex;align-items:center;gap:10px}
+.phase-num{width:22px;height:22px;border-radius:var(--radius-sm);background:var(--green-50);color:var(--green);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+.phase h3{font-size:15px;font-weight:600;letter-spacing:-.012em;flex:1}
+.phase-badge{display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:var(--radius-pill);background:var(--green-50);color:var(--green);font-size:11px;font-weight:600}
+.phase-badge.amber{background:var(--amber-50);color:var(--amber)}
+.phase-badge.blue{background:var(--blue-50);color:var(--blue-600)}
+.phase ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.phase li{font-size:13px;color:var(--ink-700);display:flex;gap:8px;line-height:1.5}
+.phase li::before{content:"";flex-shrink:0;margin-top:7px;width:4px;height:4px;border-radius:50%;background:var(--ink-300)}
 
-  /* ── TIER CARDS ── */
-  .tier-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 24px;
-  }
-  .tier-card {
-    background: #FFFFFF;
-    border-radius: var(--radius-card);
-    padding: 32px 28px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-    transition: all 0.3s var(--spring);
-    position: relative;
-  }
-  .tier-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 4px 14px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.05);
-  }
-  .tier-card.featured {
-    border: 2px solid var(--gold);
-    box-shadow: 0 2px 8px rgba(197,165,90,0.1), 0 1px 3px rgba(0,0,0,0.06);
-  }
-  .tier-card.featured:hover {
-    box-shadow: 0 8px 24px rgba(197,165,90,0.15), 0 4px 8px rgba(0,0,0,0.06);
-  }
-  .tier-card .featured-tag {
-    position: absolute;
-    top: -1px;
-    right: 24px;
-    background: var(--gold);
-    color: #0D0D0D;
-    font-family: 'Urbanist', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    padding: 4px 12px 6px;
-    border-radius: 0 0 6px 6px;
-  }
-  .tier-name {
-    font-family: 'Urbanist', sans-serif;
-    font-size: 20px;
-    font-weight: 600;
-    letter-spacing: -0.6px;
-    color: var(--light-text);
-    margin-bottom: 4px;
-  }
-  .tier-price {
-    font-family: 'Urbanist', sans-serif;
-    font-size: 34px;
-    font-weight: 800;
-    letter-spacing: -1.05px;
-    color: var(--light-text);
-    margin-bottom: 16px;
-  }
-  .tier-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .tier-list li {
-    font-size: 15px;
-    letter-spacing: 0px;
-    line-height: 20px;
-    color: rgba(26, 26, 26, 0.6);
-    padding-left: 20px;
-    position: relative;
-  }
-  .tier-list li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 7px;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--gold);
-  }
+/* NEXT UP LIST */
+.next{background:#fff;border:1px solid var(--line);border-radius:var(--radius-md);overflow:hidden;box-shadow:var(--shadow-sm)}
+.next-row{display:grid;grid-template-columns:40px 1fr auto;align-items:center;gap:16px;padding:16px 22px;border-bottom:1px solid var(--line);transition:background .15s}
+.next-row:last-child{border-bottom:none}
+.next-row:hover{background:var(--bg-alt)}
+.next-idx{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-400);font-weight:500}
+.next-body{display:flex;flex-direction:column;gap:2px;min-width:0}
+.next-title{font-size:14.5px;font-weight:600;color:var(--ink-900);letter-spacing:-.01em}
+.next-desc{font-size:12.5px;color:var(--ink-500);line-height:1.5}
+.next-tag{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:var(--radius-pill);font-size:11px;font-weight:600;letter-spacing:.02em;white-space:nowrap}
+.next-tag.now{background:var(--red);color:#fff}
+.next-tag.next{background:var(--amber-50);color:var(--amber);border:1px solid rgba(247,144,9,.2)}
+.next-tag.soon{background:var(--blue-50);color:var(--blue-600);border:1px solid var(--blue-100)}
+.next-tag.later{background:var(--ink-100);color:var(--ink-600)}
 
-  /* ── STATUS TABLE ── */
-  .status-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    background: var(--surface);
-    border-radius: var(--radius-card);
-    overflow: hidden;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
-  }
-  .status-table thead th {
-    text-align: left;
-    font-family: 'Urbanist', sans-serif;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--text-tertiary);
-    padding: 16px 20px;
-    border-bottom: 1px solid var(--separator);
-    background: var(--nested);
-  }
-  .status-table tbody td {
-    padding: 14px 20px;
-    font-size: 15px;
-    letter-spacing: 0px;
-    line-height: 20px;
-    border-bottom: 1px solid var(--separator);
-    vertical-align: middle;
-  }
-  .status-table tbody tr:last-child td {
-    border-bottom: none;
-  }
-  .status-table tbody tr {
-    transition: background 0.15s var(--spring);
-  }
-  .status-table tbody tr:hover {
-    background: rgba(255,255,255,0.02);
-  }
-  .status-table .item-name {
-    font-weight: 500;
-    color: var(--text-primary);
-  }
-  .status-table .item-note {
-    color: var(--text-tertiary);
-    font-size: 13px;
-    letter-spacing: 0.03px;
-  }
-  .status-table .cut-row .item-name {
-    text-decoration: line-through;
-    color: var(--text-tertiary);
-  }
+/* TIER GRID */
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.tier{background:#fff;border:1px solid var(--line);border-radius:var(--radius-md);padding:24px;display:flex;flex-direction:column;gap:8px;box-shadow:var(--shadow-xs);position:relative}
+.tier.featured{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-50),var(--shadow-sm)}
+.tier-name{font-size:11.5px;font-weight:600;color:var(--ink-500);text-transform:uppercase;letter-spacing:.08em}
+.tier-label{font-size:22px;font-weight:600;letter-spacing:-.022em;margin-top:4px}
+.tier-price{font-size:26px;font-weight:600;color:var(--ink-900);margin-top:12px;letter-spacing:-.025em}
+.tier-price span{font-size:13px;font-weight:500;color:var(--ink-500);letter-spacing:0}
+.tier-desc{font-size:13px;color:var(--ink-600);line-height:1.55;margin-top:8px}
+.tier-status{margin-top:14px;padding-top:14px;border-top:1px dashed var(--line);display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-600)}
+.tier-status .check{width:16px;height:16px;border-radius:50%;background:var(--green-50);color:var(--green);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700}
 
-  /* ── FILES TABLE ── */
-  .files-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    background: var(--surface);
-    border-radius: var(--radius-card);
-    overflow: hidden;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
-  }
-  .files-table thead th {
-    text-align: left;
-    font-family: 'Urbanist', sans-serif;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--text-tertiary);
-    padding: 16px 20px;
-    border-bottom: 1px solid var(--separator);
-    background: var(--nested);
-  }
-  .files-table tbody td {
-    padding: 14px 20px;
-    font-size: 15px;
-    letter-spacing: 0px;
-    line-height: 20px;
-    border-bottom: 1px solid var(--separator);
-  }
-  .files-table tbody tr:last-child td {
-    border-bottom: none;
-  }
-  .files-table tbody tr {
-    transition: background 0.15s var(--spring);
-  }
-  .files-table tbody tr:hover {
-    background: rgba(255,255,255,0.02);
-  }
-  .files-table .file-label {
-    font-weight: 500;
-    color: var(--text-primary);
-    white-space: nowrap;
-  }
-  .files-table .file-path {
-    font-family: 'SF Mono', 'Fira Code', monospace;
-    font-size: 13px;
-    letter-spacing: 0.03px;
-    color: var(--text-secondary);
-    word-break: break-all;
-  }
+/* TIMELINE */
+.timeline{position:relative;padding:8px 0 8px 24px}
+.timeline::before{content:"";position:absolute;left:7px;top:14px;bottom:14px;width:2px;background:linear-gradient(to bottom,var(--ink-200),var(--blue-100) 60%,var(--blue) 92%)}
+.tl-item{position:relative;padding:10px 0 10px 20px;display:flex;align-items:baseline;gap:14px}
+.tl-item::before{content:"";position:absolute;left:-23px;top:16px;width:12px;height:12px;border-radius:50%;background:#fff;border:2px solid var(--ink-300)}
+.tl-item.done::before{background:var(--green);border-color:var(--green)}
+.tl-item.done::after{content:"✓";position:absolute;left:-22px;top:13px;color:#fff;font-size:9px;font-weight:800;line-height:1}
+.tl-item.now::before{background:var(--blue);border-color:var(--blue);box-shadow:0 0 0 4px var(--blue-50)}
+.tl-item.future::before{background:#fff}
+.tl-date{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--ink-500);width:92px;flex-shrink:0;font-weight:500}
+.tl-body{flex:1}
+.tl-title{font-size:14px;font-weight:600;letter-spacing:-.008em;color:var(--ink-900)}
+.tl-desc{font-size:12.5px;color:var(--ink-600);margin-top:2px;line-height:1.5}
 
-  /* ── REVENUE CARDS ── */
-  .rev-card {
-    background: #FFFFFF;
-    border-radius: var(--radius-card);
-    padding: 28px 24px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-    transition: all 0.3s var(--spring);
-    text-align: center;
-  }
-  .rev-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 4px 14px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.05);
-  }
-  .rev-label {
-    font-size: 13px;
-    letter-spacing: 0.03px;
-    color: rgba(26,26,26,0.5);
-    margin-bottom: 8px;
-  }
-  .rev-amount {
-    font-family: 'Urbanist', sans-serif;
-    font-size: 28px;
-    font-weight: 800;
-    letter-spacing: -0.8px;
-    color: var(--light-text);
-    margin-bottom: 4px;
-  }
-  .rev-math {
-    font-size: 13px;
-    letter-spacing: 0.03px;
-    color: rgba(26,26,26,0.4);
-  }
-  .rev-card.blended {
-    border: 2px solid var(--gold);
-  }
-  .rev-card.blended .rev-amount {
-    color: #8B7440;
-  }
+/* STACK */
+.stack-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.chip{background:#fff;border:1px solid var(--line);border-radius:var(--radius-md);padding:14px;display:flex;flex-direction:column;gap:4px;align-items:flex-start;box-shadow:var(--shadow-xs)}
+.chip .k{font-size:10.5px;font-weight:600;color:var(--ink-500);text-transform:uppercase;letter-spacing:.06em}
+.chip .v{font-size:13px;font-weight:600;color:var(--ink-900);letter-spacing:-.008em}
 
-  /* ── DESIGN SYSTEM CARDS ── */
-  .ds-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 12px;
-  }
-  .ds-card {
-    background: var(--surface);
-    border-radius: var(--radius-card);
-    padding: 20px 24px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
-  }
-  .ds-card .ds-label {
-    font-family: 'Urbanist', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.03px;
-    color: var(--gold);
-    margin-bottom: 4px;
-  }
-  .ds-card .ds-value {
-    color: var(--text-secondary);
-    font-size: 15px;
-    letter-spacing: 0px;
-    line-height: 22px;
-  }
+/* CALLOUT */
+.callout{margin:32px 0;padding:24px 28px;background:linear-gradient(135deg,var(--ink-900) 0%,#0F1A2E 100%);border-radius:var(--radius-lg);color:#fff;display:flex;align-items:center;gap:24px;flex-wrap:wrap;box-shadow:var(--shadow-lg);position:relative;overflow:hidden}
+.callout::before{content:"";position:absolute;right:-40px;top:-40px;width:240px;height:240px;background:radial-gradient(circle,rgba(37,99,235,.3),transparent 70%);pointer-events:none}
+.callout-label{font-size:11.5px;font-weight:600;color:var(--blue-100);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px}
+.callout h3{color:#fff;font-size:22px;font-weight:600;letter-spacing:-.022em;line-height:1.3}
+.callout-body{flex:1;min-width:280px;z-index:1}
+.callout-sub{color:rgba(255,255,255,.7);font-size:13.5px;line-height:1.55;margin-top:6px;max-width:560px}
+.callout-kpi{z-index:1;text-align:right}
+.callout-kpi .d{font-size:44px;font-weight:600;letter-spacing:-.035em;line-height:1;background:linear-gradient(135deg,#fff,#93C5FD);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.callout-kpi .t{font-size:12px;color:rgba(255,255,255,.6);margin-top:6px;text-transform:uppercase;letter-spacing:.08em;font-weight:500}
 
-  /* ── CLOSING ── */
-  .closing-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    max-width: 680px;
-  }
-  .closing-list li {
-    font-size: 17px;
-    line-height: 26px;
-    letter-spacing: -0.43px;
-    color: var(--text-secondary);
-    padding-left: 24px;
-    position: relative;
-  }
-  .closing-list li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 10px;
-    width: 8px;
-    height: 2px;
-    background: var(--gold);
-    border-radius: 1px;
-  }
+/* FOOTER */
+footer{padding:48px 0 72px;border-top:1px solid var(--line);margin-top:48px}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-500)}
+.foot a{color:var(--ink-700);font-weight:500}
+.foot a:hover{color:var(--blue)}
 
-  /* ── FOOTER ── */
-  .footer {
-    border-top: 1px solid var(--separator);
-    padding: 32px 0;
-    text-align: center;
-  }
-  .footer-brand {
-    font-family: 'Urbanist', sans-serif;
-    font-size: 15px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--text-tertiary);
-    margin-bottom: 4px;
-  }
-  .footer-date {
-    font-size: 13px;
-    letter-spacing: 0.03px;
-    color: var(--text-tertiary);
-  }
+/* RESPONSIVE */
+@media (max-width:900px){
+  .strip{grid-template-columns:repeat(2,1fr)}
+  .phases{grid-template-columns:1fr}
+  .tiers{grid-template-columns:1fr}
+  .stack-grid{grid-template-columns:repeat(3,1fr)}
+  .section-head{flex-direction:column;align-items:flex-start}
+  .section-head .hint{text-align:left;max-width:none}
+}
+@media (max-width:600px){
+  .nav{padding:0 16px}
+  .wrap{padding:0 16px}
+  .hero{padding:48px 0 16px}
+  .hero h1{font-size:36px}
+  .hero-sub{font-size:15.5px}
+  .next-row{grid-template-columns:30px 1fr;padding:14px 16px}
+  .next-tag{grid-column:1/-1;justify-self:flex-start;margin-top:6px}
+  .callout{padding:20px}
+  .callout-kpi{text-align:left}
+  .stack-grid{grid-template-columns:repeat(2,1fr)}
+  .tl-date{width:auto}
+}
 
-  /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .animate {
-    opacity: 0;
-    animation: fadeUp 0.5s var(--spring) forwards;
-  }
-  .d1 { animation-delay: 0.05s; }
-  .d2 { animation-delay: 0.1s; }
-  .d3 { animation-delay: 0.15s; }
-  .d4 { animation-delay: 0.2s; }
-  .d5 { animation-delay: 0.25s; }
-  .d6 { animation-delay: 0.3s; }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 768px) {
-    section { padding: 56px 0; }
-    .hero { padding: 72px 0 56px; }
-    .nav-links { display: none; }
-    .nav-title { font-size: 13px; }
-    .hero h1 { font-size: 32px; letter-spacing: -1px; }
-    .hero-meta { gap: 16px; }
-    .callout { padding: 20px 24px; }
-    .tier-grid { grid-template-columns: 1fr; }
-    .grid-4 { grid-template-columns: 1fr 1fr; }
-    .ds-grid { grid-template-columns: 1fr; }
-    .status-table, .files-table { font-size: 14px; }
-    .status-table thead th, .files-table thead th { padding: 12px 16px; }
-    .status-table tbody td, .files-table tbody td { padding: 12px 16px; }
-  }
-  @media (max-width: 480px) {
-    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
-    .hero-meta { flex-direction: column; align-items: center; gap: 8px; }
-  }
+/* FADE IN */
+.fade{opacity:0;transform:translateY(8px);animation:fade .7s cubic-bezier(.2,0,0,1) forwards}
+.fade.d1{animation-delay:.05s}.fade.d2{animation-delay:.12s}.fade.d3{animation-delay:.2s}.fade.d4{animation-delay:.28s}.fade.d5{animation-delay:.36s}
+@keyframes fade{to{opacity:1;transform:none}}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav class="nav">
-  <div class="nav-inner">
-    <div class="nav-left">
-      <a href="project-board.html" class="nav-back">&larr; Board</a>
-      <span class="nav-title">MD Consulting Blueprint</span>
-    </div>
-    <div class="nav-links">
-      <a href="#ship-it">Ship It</a>
-      <a href="#what-it-is">What It Is</a>
-      <a href="#tiers">Tiers</a>
-      <a href="#deliverables">Deliverables</a>
-      <a href="#revenue">Revenue</a>
-    </div>
+  <a href="project-board.html" class="nav-back">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Project Board
+  </a>
+  <div class="nav-brand" style="margin-left:8px">
+    <div class="brand-mark">M</div>
+    <div class="brand-text">ConsultMD <span>/ Blueprint</span></div>
+  </div>
+  <div class="nav-spacer"></div>
+  <div class="nav-meta">
+    <span class="pulse"></span>
+    <span>Portal live on <b style="color:var(--ink-800);font-weight:600">reskin</b> branch</span>
   </div>
 </nav>
 
-<!-- HERO -->
-<header class="hero container">
-  <div class="animate d1">
-    <span class="hero-badge">MODERN DEVELOPMENT</span>
-  </div>
-  <h1 class="animate d2">MD Consulting<br><span class="gold">Blueprint</span></h1>
-  <p class="hero-sub animate d3">Cloud-based construction consulting for self-contracting homeowners. Three tiers. First-to-market nationally. 100% virtual, infinite scale.</p>
-  <div class="hero-meta animate d4">
-    <span>Brand: <strong>Modern Development</strong></span>
-    <span>Market: <strong>National</strong></span>
-    <span>Status: <strong class="gold">Building</strong></span>
-  </div>
-</header>
+<main class="wrap">
 
-<!-- SECTION 1: SHIP IT CHECKLIST -->
-<section id="ship-it">
-  <div class="container">
-    <div class="section-head">
-      <div class="section-label">Section 01</div>
-      <h2 class="title-1">Ship It Checklist</h2>
+  <section class="hero fade d1">
+    <span class="eyebrow"><span class="dot"></span>Modern Development · Flagship Product</span>
+    <h1>A full client portal for homeowners who <em>self-contract</em> their build.</h1>
+    <p class="hero-sub">ConsultMD replaces the PDF-and-spreadsheet delivery model with a real product. Six phases shipped, dashboard v5 reskin live, demoing to Acquisition.com in May.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><span class="k">Stack</span><span class="v">Next.js 16 · Supabase · Stripe · Anthropic</span></div>
+      <div class="hero-meta-item"><span class="k">Domain</span><span class="v">consultmd.co</span></div>
+      <div class="hero-meta-item"><span class="k">Repo</span><span class="v mono">~/consultmd/</span></div>
     </div>
+  </section>
 
+  <div class="fade d2">
+    <div class="shot">
+      <img src="images/md-consulting-screenshot.png" alt="ConsultMD portal dashboard v5" />
+    </div>
+    <p class="shot-caption"><strong>Dashboard v5</strong> — shipped 2026-04-16 · Inter, pure white, blue accent, built-in weather + phase stepper + activity feed</p>
+  </div>
+
+  <section class="fade d3">
+    <div class="strip">
+      <div class="stat">
+        <div class="label">Build Progress</div>
+        <div class="num">78<span style="font-size:18px;color:var(--ink-500)">%</span></div>
+        <div class="sub">Phases 1-6 of 7 complete</div>
+        <div class="bar"><div class="bar-fill" style="width:78%"></div></div>
+      </div>
+      <div class="stat">
+        <div class="label">Deliverables</div>
+        <div class="num">25</div>
+        <div class="sub">All tiers · 14 articles + trackers + forms</div>
+      </div>
+      <div class="stat">
+        <div class="label">DB Tables</div>
+        <div class="num">12</div>
+        <div class="sub">Supabase · RLS active · seeded</div>
+      </div>
+      <div class="stat green">
+        <div class="label">Demo</div>
+        <div class="num" style="font-size:22px;line-height:1.1;margin-top:12px">May&nbsp;27</div>
+        <div class="sub">Acquisition.com · Hormozi event</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div>
+        <div class="section-label">Shipped</div>
+        <h2>Portal phases 1-6 — live.</h2>
+      </div>
+      <p class="hint">Full Next.js + Supabase build. Auth, trackers, forms, articles, messaging, calls, AI pre-call scan. All wired to real data.</p>
+    </div>
+    <div class="phases">
+      <div class="phase">
+        <div class="phase-top">
+          <div class="phase-num">1</div>
+          <h3>Foundation & MVP</h3>
+          <span class="phase-badge">Done</span>
+        </div>
+        <ul>
+          <li>Next.js 16 scaffold, 12-table schema with RLS</li>
+          <li>Auth, middleware, portal/admin layouts</li>
+          <li>Budget tracker + Stripe webhook (4-tracker seed)</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div class="phase-top">
+          <div class="phase-num">2</div>
+          <h3>Remaining Trackers</h3>
+          <span class="phase-badge">Done</span>
+        </div>
+        <ul>
+          <li>Subs (28 trades) · Timeline (33 tasks) · Materials (21 items)</li>
+          <li>Phase-grouped, inline editing, 500ms auto-save</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div class="phase-top">
+          <div class="phase-num">3</div>
+          <h3>Forms & Guides</h3>
+          <span class="phase-badge">Done</span>
+        </div>
+        <ul>
+          <li>Permit checklist, work order, lien waivers</li>
+          <li>FormShell JSONB auto-save (800ms debounce)</li>
+          <li>Order of Operations — 10 phases, full task lists</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div class="phase-top">
+          <div class="phase-num">4</div>
+          <h3>Article Library</h3>
+          <span class="phase-badge">Done</span>
+        </div>
+        <ul>
+          <li>14 articles seeded with full source HTML</li>
+          <li>Category grouping · tier gating · iframe preservation</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div class="phase-top">
+          <div class="phase-num">5</div>
+          <h3>Documents & Messaging</h3>
+          <span class="phase-badge">Done</span>
+        </div>
+        <ul>
+          <li>Supabase Storage vault with category filters</li>
+          <li>Real-time messaging · admin inbox with unread badges</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div class="phase-top">
+          <div class="phase-num">6</div>
+          <h3>Calls & AI</h3>
+          <span class="phase-badge">Done</span>
+        </div>
+        <ul>
+          <li>Call balance, upcoming/past, status badges</li>
+          <li>AI pre-call scan · Claude API brief per client</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div>
+        <div class="section-label">Reskin</div>
+        <h2>Design direction — locked.</h2>
+      </div>
+      <p class="hint">Shifted from dark gold/Tesla aesthetic to restrained professional SaaS. Dashboard shipped 2026-04-16 on the <code style="font-family:inherit;color:var(--blue)">reskin</code> branch.</p>
+    </div>
+    <div class="phases" style="grid-template-columns:repeat(3,1fr)">
+      <div class="phase">
+        <div class="phase-top"><h3>Palette</h3></div>
+        <ul>
+          <li>Pure white surfaces (#FFFFFF)</li>
+          <li>Warm canvas (#F7F8FA)</li>
+          <li>Blue #2563EB accent — not amber</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div class="phase-top"><h3>Type</h3></div>
+        <ul>
+          <li>Inter throughout · 13px base</li>
+          <li>Tight letter-spacing (-.015em)</li>
+          <li>600 weight headings, no display font</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div class="phase-top"><h3>Feel</h3></div>
+        <ul>
+          <li>Stripe / Linear / JobTread energy</li>
+          <li>Fit-to-viewport, filled SF Symbols</li>
+          <li>Restraint over flash — $30K product</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div>
+        <div class="section-label">Next Up</div>
+        <h2>Road to Acquisition.com demo.</h2>
+      </div>
+      <p class="hint">Five priorities between now and May 27. Sidebar reskin is the last visual piece. My Build is the interactive spine clients spend 8-10 months on.</p>
+    </div>
+    <div class="next">
+      <div class="next-row">
+        <div class="next-idx">01</div>
+        <div class="next-body">
+          <div class="next-title">Sidebar reskin</div>
+          <div class="next-desc">Restyle portal-nav.tsx to match v5 — white bg, blue active, workspace switcher, badges.</div>
+        </div>
+        <span class="next-tag now">Now</span>
+      </div>
+      <div class="next-row">
+        <div class="next-idx">02</div>
+        <div class="next-body">
+          <div class="next-title">My Build — Chunks 1-3</div>
+          <div class="next-desc">Interactive phase-focused build guide. Horizontal stepper + one big phase card. Mockup done at mockup-my-build.html.</div>
+        </div>
+        <span class="next-tag next">Next</span>
+      </div>
+      <div class="next-row">
+        <div class="next-idx">03</div>
+        <div class="next-body">
+          <div class="next-title">MD Assistant — Chunks 4-5</div>
+          <div class="next-desc">AI consultant chatbot trained on 14 articles + each client's build data. Streaming Claude Sonnet. Tier-gated daily limits.</div>
+        </div>
+        <span class="next-tag soon">Soon</span>
+      </div>
+      <div class="next-row">
+        <div class="next-idx">04</div>
+        <div class="next-body">
+          <div class="next-title">Phase 7 polish + deploy</div>
+          <div class="next-desc">Profile page, first-login stepper, Tier 3 form types, mobile responsive, Vercel + consultmd.co domain.</div>
+        </div>
+        <span class="next-tag soon">Soon</span>
+      </div>
+      <div class="next-row">
+        <div class="next-idx">05</div>
+        <div class="next-body">
+          <div class="next-title">Landing page + funnel</div>
+          <div class="next-desc">consultmd.co hybrid — VSL + 2-3 free articles + application → Jaden closes → Stripe webhook onboards.</div>
+        </div>
+        <span class="next-tag later">Later</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div>
+        <div class="section-label">Product</div>
+        <h2>Three tiers. One portal.</h2>
+      </div>
+      <p class="hint">Tier 3 contains everything in Tier 2, which contains everything in Tier 1. Pricing reflects hands-on consulting depth.</p>
+    </div>
+    <div class="tiers">
+      <div class="tier">
+        <div class="tier-name">Tier 1</div>
+        <div class="tier-label">The Blueprint</div>
+        <div class="tier-price">$5,000 <span>· one-time · indefinite access</span></div>
+        <div class="tier-desc">Full self-serve toolkit. Every tracker, form, article, and guide. No calls included; add-on $500/30min.</div>
+        <div class="tier-status"><span class="check">✓</span> All 9 deliverables + 10 articles shipped</div>
+      </div>
+      <div class="tier featured">
+        <div class="tier-name">Tier 2 · Flagship</div>
+        <div class="tier-label">The Navigator</div>
+        <div class="tier-price">$12,500 <span>· 8-month engagement</span></div>
+        <div class="tier-desc">Blueprint + 1 call/month · communication framework · draw schedule guidance · 48hr email/text support.</div>
+        <div class="tier-status"><span class="check">✓</span> All deliverables + MD Assistant access</div>
+      </div>
+      <div class="tier">
+        <div class="tier-name">Tier 3</div>
+        <div class="tier-label">The Command</div>
+        <div class="tier-price">$25,000 <span>· 10-month engagement</span></div>
+        <div class="tier-desc">Navigator + 5 milestone walkthroughs · 6 bid reviews · 3 budget audits · 24hr support.</div>
+        <div class="tier-status"><span class="check">✓</span> Change order + punch list + walkthrough</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
     <div class="callout">
-      <p><strong>Tier 1 is 80% done.</strong> All 7 deliverables are complete. 6 of 11 articles are written. You need 5 more articles, a checkout page, and a delivery mechanism. That's it. This is the infinitely scalable tier: zero calls, just toolkit delivery. <strong>Ship it.</strong></p>
+      <div class="callout-body">
+        <div class="callout-label">Milestone</div>
+        <h3>Demo-ready for Hormozi's Acquisition.com event.</h3>
+        <p class="callout-sub">May 27-28. ConsultMD is the scalable machine: shows how construction consulting moves from one-off services to a productized, national SaaS. Equity deal comes off the top before 50/50 split with Jason.</p>
+      </div>
+      <div class="callout-kpi">
+        <div class="d">38</div>
+        <div class="t">Days to demo</div>
+      </div>
     </div>
+  </section>
 
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">1</div>
-        <div class="step-content">
-          <div class="step-title">Write remaining 5 articles <span class="badge badge-red">NOT STARTED</span></div>
-          <ul class="step-sub-list">
-            <li>Lender Requirements for Owner-Builders</li>
-            <li>Material Lead Times</li>
-            <li>Common Budget Mistakes</li>
-            <li>Navigating Building Permits</li>
-            <li>Why Foundation & Framing Make or Break Your Build</li>
-          </ul>
+  <section>
+    <div class="section-head">
+      <div>
+        <div class="section-label">Timeline</div>
+        <h2>How we got here.</h2>
+      </div>
+    </div>
+    <div class="timeline">
+      <div class="tl-item done">
+        <div class="tl-date">Mar 19</div>
+        <div class="tl-body">
+          <div class="tl-title">Article design system locked</div>
+          <div class="tl-desc">Plus Jakarta Sans + DM Sans, no em dashes, disclaimers on everything.</div>
         </div>
       </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <div class="step-content">
-          <div class="step-title">Payment system <span class="badge badge-red">NOT STARTED</span></div>
-          <div class="step-detail">Stripe checkout or Gumroad. Customer pays, gets access.</div>
+      <div class="tl-item done">
+        <div class="tl-date">Mar 31</div>
+        <div class="tl-body">
+          <div class="tl-title">Portal decision: full web app, not PDFs</div>
+          <div class="tl-desc">Killed the email-delivery model. Premium price needs premium product.</div>
         </div>
       </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <div class="step-content">
-          <div class="step-title">Delivery mechanism <span class="badge badge-red">NOT STARTED</span></div>
-          <div class="step-detail">How does the buyer receive the files? Gumroad auto-delivery, or Supabase + email.</div>
+      <div class="tl-item done">
+        <div class="tl-date">Apr 06</div>
+        <div class="tl-body">
+          <div class="tl-title">All Tier 2/3 deliverables complete</div>
+          <div class="tl-desc">Communication Framework, Sub Coordination, Problem-Solving Guide, Change Order, Punch List, Final Walkthrough.</div>
         </div>
       </div>
-      <div class="step">
-        <div class="step-num">4</div>
-        <div class="step-content">
-          <div class="step-title">Tier 1 product page update <span class="badge badge-yellow">PARTIAL</span></div>
-          <div class="step-detail">Page exists but needs checkout integration.</div>
+      <div class="tl-item done">
+        <div class="tl-date">Apr 07</div>
+        <div class="tl-body">
+          <div class="tl-title">Portal phases 1-6 built</div>
+          <div class="tl-desc">Foundation through Calls + AI. Real data wired across every tracker.</div>
+        </div>
+      </div>
+      <div class="tl-item done">
+        <div class="tl-date">Apr 09</div>
+        <div class="tl-body">
+          <div class="tl-title">My Build mockup + MD Assistant plan</div>
+          <div class="tl-desc">Phase-focused build guide. Rejected vertical scrolling for horizontal stepper.</div>
+        </div>
+      </div>
+      <div class="tl-item done">
+        <div class="tl-date">Apr 15</div>
+        <div class="tl-body">
+          <div class="tl-title">Reskin direction locked</div>
+          <div class="tl-desc">Light SaaS, Inter, blue. Kill the dark/gold aesthetic. Target Stripe/Linear professionalism.</div>
+        </div>
+      </div>
+      <div class="tl-item done">
+        <div class="tl-date">Apr 16</div>
+        <div class="tl-body">
+          <div class="tl-title">Dashboard v5 shipped</div>
+          <div class="tl-desc">Full reskin on <span class="mono" style="color:var(--blue)">reskin</span> branch. Code review passed. One bug fixed (build_sqft → square_footage).</div>
+        </div>
+      </div>
+      <div class="tl-item now">
+        <div class="tl-date">Apr 19</div>
+        <div class="tl-body">
+          <div class="tl-title">You are here</div>
+          <div class="tl-desc">Sidebar reskin next. My Build behind it. Assistant after that. API keys last.</div>
+        </div>
+      </div>
+      <div class="tl-item future">
+        <div class="tl-date">May 27</div>
+        <div class="tl-body">
+          <div class="tl-title">Acquisition.com demo</div>
+          <div class="tl-desc">Hormozi event. ConsultMD must be live on consultmd.co with full portal + landing page.</div>
         </div>
       </div>
     </div>
+  </section>
 
-    <p class="secondary" style="margin-top: 32px; font-size: 15px; letter-spacing: 0;">That's the ship list for Tier 1. Tier 2/3 come after.</p>
-  </div>
-</section>
-
-<!-- SECTION 2: WHAT IT IS -->
-<section id="what-it-is">
-  <div class="container">
+  <section>
     <div class="section-head">
-      <div class="section-label">Section 02</div>
-      <h2 class="title-1">What It Is</h2>
-      <p>Cloud-based consulting product for homeowners who self-contract their builds. Potentially the first cloud-based construction consulting company at scale. Serves clients who can't afford full-service GC work ($100K avg fee).</p>
-    </div>
-
-    <div class="grid-3">
-      <div class="card">
-        <div class="card-icon">&#9729;</div>
-        <h3>100% Cloud-Based</h3>
-        <p>No site visits. Virtual walkthroughs. National reach.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">&#9898;</div>
-        <h3>Zero Liability</h3>
-        <p>Budget tracker is tracking only, no estimating.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">&#9744;</div>
-        <h3>Unbranded Client Tools</h3>
-        <p>Work orders, forms go to subs with no branding.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">&#10023;</div>
-        <h3>Branded Education</h3>
-        <p>Guides and articles carry Modern Development brand.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">&#8734;</div>
-        <h3>Scalable by Design</h3>
-        <p>Tier 1 = zero calls, infinite customers.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">&#9670;</div>
-        <h3>Strategy First</h3>
-        <p>Consulting-led, not content-led.</p>
+      <div>
+        <div class="section-label">Stack</div>
+        <h2>What it's built on.</h2>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- SECTION 3: THREE TIERS -->
-<section id="tiers" class="light-section">
-  <div class="container">
-    <div class="section-head">
-      <div class="section-label">Section 03</div>
-      <h2 class="title-1">Three Tiers</h2>
+    <div class="stack-grid">
+      <div class="chip"><div class="k">Framework</div><div class="v">Next.js 16</div></div>
+      <div class="chip"><div class="k">Runtime</div><div class="v">React 19</div></div>
+      <div class="chip"><div class="k">Language</div><div class="v">TypeScript 5</div></div>
+      <div class="chip"><div class="k">Database</div><div class="v">Supabase</div></div>
+      <div class="chip"><div class="k">Styling</div><div class="v">Tailwind 4</div></div>
+      <div class="chip"><div class="k">Icons</div><div class="v">Lucide React</div></div>
+      <div class="chip"><div class="k">Email</div><div class="v">Resend</div></div>
+      <div class="chip"><div class="k">Payments</div><div class="v">Stripe Webhooks</div></div>
+      <div class="chip"><div class="k">AI</div><div class="v">Anthropic API</div></div>
+      <div class="chip"><div class="k">Storage</div><div class="v">Supabase Storage</div></div>
+      <div class="chip"><div class="k">Hosting</div><div class="v">Vercel</div></div>
+      <div class="chip"><div class="k">Domain</div><div class="v">consultmd.co</div></div>
     </div>
+  </section>
 
-    <div class="tier-grid">
-      <!-- Tier 1 -->
-      <div class="tier-card">
-        <div class="tier-name">The Blueprint</div>
-        <div class="tier-price">$5,000</div>
-        <ul class="tier-list">
-          <li>Full self-serve toolkit, no calls</li>
-          <li>Add-on calls $500/30 min</li>
-          <li>All 7 deliverables + 11 articles</li>
-          <li>Infinitely scalable</li>
-        </ul>
-      </div>
-      <!-- Tier 2 (featured) -->
-      <div class="tier-card featured">
-        <span class="featured-tag">Recommended</span>
-        <div class="tier-name">The Navigator</div>
-        <div class="tier-price">$12,500</div>
-        <ul class="tier-list">
-          <li>Everything in Tier 1</li>
-          <li>1 call/month (8 months max)</li>
-          <li>Communication framework + draw schedule guidance</li>
-          <li>Email/text support 48hr</li>
-          <li>Add-on calls $500/60 min</li>
-        </ul>
-      </div>
-      <!-- Tier 3 -->
-      <div class="tier-card">
-        <div class="tier-name">The Command</div>
-        <div class="tier-price">$25,000</div>
-        <ul class="tier-list">
-          <li>Everything in Tier 2</li>
-          <li>1 call/month (10 months max)</li>
-          <li>5 milestone walkthroughs</li>
-          <li>6 bid reviews, 3 budget audits</li>
-          <li>24hr email/text support</li>
-        </ul>
-      </div>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div>ConsultMD · Modern Development · A Flynn Development product</div>
+    <div style="display:flex;gap:20px">
+      <a href="md-consulting-blueprint-legacy.html">Legacy tier page</a>
+      <a href="project-board.html">← All projects</a>
     </div>
-  </div>
-</section>
-
-<!-- SECTION 4: TIER 1 DELIVERABLES -->
-<section id="deliverables">
-  <div class="container">
-    <div class="section-head">
-      <div class="section-label">Section 04</div>
-      <h2 class="title-1">Tier 1 Deliverables</h2>
-    </div>
-
-    <table class="status-table">
-      <thead>
-        <tr>
-          <th>Deliverable</th>
-          <th>Status</th>
-          <th>Notes</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="item-name">Order of Operations</td>
-          <td><span class="badge badge-green">COMPLETE</span></td>
-          <td class="item-note">Crown jewel, rebranded from A-to-Z</td>
-        </tr>
-        <tr>
-          <td class="item-name">Budget Tracking Spreadsheet</td>
-          <td><span class="badge badge-green">COMPLETE</span></td>
-          <td class="item-note">Excel, tracking only</td>
-        </tr>
-        <tr>
-          <td class="item-name">Subcontractor List Tracker</td>
-          <td><span class="badge badge-green">COMPLETE</span></td>
-          <td class="item-note">Excel</td>
-        </tr>
-        <tr>
-          <td class="item-name">Timeline Framework</td>
-          <td><span class="badge badge-green">COMPLETE</span></td>
-          <td class="item-note">Excel</td>
-        </tr>
-        <tr>
-          <td class="item-name">Sub Work Order & Insurance Form</td>
-          <td><span class="badge badge-green">COMPLETE</span></td>
-          <td class="item-note">PDF + HTML fillable</td>
-        </tr>
-        <tr>
-          <td class="item-name">How to Vet Subcontractors</td>
-          <td><span class="badge badge-green">COMPLETE</span></td>
-          <td class="item-note">PDF</td>
-        </tr>
-        <tr>
-          <td class="item-name">Permit Checklist</td>
-          <td><span class="badge badge-green">COMPLETE</span></td>
-          <td class="item-note">PDF</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<!-- SECTION 5: TIER 1 ARTICLES -->
-<section id="articles">
-  <div class="container">
-    <div class="section-head">
-      <div class="section-label">Section 05</div>
-      <h2 class="title-1">Tier 1 Articles</h2>
-    </div>
-
-    <table class="status-table">
-      <thead>
-        <tr>
-          <th>Article</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="item-name">What Is Self-Contracting</td>
-          <td><span class="badge badge-green">COMPLETE</span></td>
-        </tr>
-        <tr>
-          <td class="item-name">Understanding Draw Schedules</td>
-          <td><span class="badge badge-green">COMPLETE</span></td>
-        </tr>
-        <tr>
-          <td class="item-name">How to Read a Bid</td>
-          <td><span class="badge badge-green">COMPLETE</span></td>
-        </tr>
-        <tr>
-          <td class="item-name">Red Flags in Subcontractors</td>
-          <td><span class="badge badge-green">COMPLETE</span></td>
-        </tr>
-        <tr>
-          <td class="item-name">Managing Sub Relationships</td>
-          <td><span class="badge badge-green">COMPLETE</span></td>
-        </tr>
-        <tr>
-          <td class="item-name">Insurance Requirements Explained</td>
-          <td><span class="badge badge-green">COMPLETE</span></td>
-        </tr>
-        <tr>
-          <td class="item-name">Lender Requirements for Owner-Builders</td>
-          <td><span class="badge badge-red">NOT STARTED</span></td>
-        </tr>
-        <tr>
-          <td class="item-name">Material Lead Times</td>
-          <td><span class="badge badge-red">NOT STARTED</span></td>
-        </tr>
-        <tr>
-          <td class="item-name">Common Budget Mistakes</td>
-          <td><span class="badge badge-red">NOT STARTED</span></td>
-        </tr>
-        <tr>
-          <td class="item-name">Navigating Building Permits</td>
-          <td><span class="badge badge-red">NOT STARTED</span></td>
-        </tr>
-        <tr>
-          <td class="item-name">Why Foundation & Framing Make or Break Your Build</td>
-          <td><span class="badge badge-red">NOT STARTED</span></td>
-        </tr>
-        <tr class="cut-row">
-          <td class="item-name">When to Hire a GC</td>
-          <td><span class="badge badge-cut">CUT</span> <span class="item-note">They already bought the toolkit</span></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<!-- SECTION 6: TIER 2/3 DELIVERABLES -->
-<section>
-  <div class="container">
-    <div class="section-head">
-      <div class="section-label">Section 06</div>
-      <h2 class="title-1">Tier 2/3 Deliverables</h2>
-    </div>
-
-    <table class="status-table">
-      <thead>
-        <tr>
-          <th>Deliverable</th>
-          <th>Status</th>
-          <th>Tier</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="item-name">Communication Framework</td>
-          <td><span class="badge badge-red">NOT STARTED</span></td>
-          <td class="item-note">Tier 2</td>
-        </tr>
-        <tr>
-          <td class="item-name">Draw Schedule Guidance</td>
-          <td><span class="badge badge-red">NOT STARTED</span></td>
-          <td class="item-note">Tier 2</td>
-        </tr>
-        <tr>
-          <td class="item-name">Problem-Solving Guide</td>
-          <td><span class="badge badge-red">NOT STARTED</span></td>
-          <td class="item-note">Tier 3</td>
-        </tr>
-        <tr>
-          <td class="item-name">Change Order Template</td>
-          <td><span class="badge badge-red">NOT STARTED</span></td>
-          <td class="item-note">Tier 3</td>
-        </tr>
-        <tr>
-          <td class="item-name">Punch List Template</td>
-          <td><span class="badge badge-red">NOT STARTED</span></td>
-          <td class="item-note">Tier 3</td>
-        </tr>
-        <tr>
-          <td class="item-name">Final Walkthrough Checklist</td>
-          <td><span class="badge badge-red">NOT STARTED</span></td>
-          <td class="item-note">Tier 3</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<!-- SECTION 7: PRODUCT PAGES -->
-<section>
-  <div class="container">
-    <div class="section-head">
-      <div class="section-label">Section 07</div>
-      <h2 class="title-1">Product Pages</h2>
-    </div>
-
-    <table class="status-table">
-      <thead>
-        <tr>
-          <th>Page</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="item-name">Tier 1 "The Blueprint"</td>
-          <td><span class="badge badge-green">COMPLETE</span> <span class="item-note">Live on GitHub Pages</span></td>
-        </tr>
-        <tr>
-          <td class="item-name">Tier 2 "The Navigator"</td>
-          <td><span class="badge badge-red">NOT STARTED</span></td>
-        </tr>
-        <tr>
-          <td class="item-name">Tier 3 "The Command"</td>
-          <td><span class="badge badge-red">NOT STARTED</span></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<!-- SECTION 8: REVENUE MODEL -->
-<section id="revenue" class="light-section">
-  <div class="container">
-    <div class="section-head">
-      <div class="section-label">Section 08</div>
-      <h2 class="title-1">Revenue Model</h2>
-    </div>
-
-    <div class="grid-4">
-      <div class="rev-card">
-        <div class="rev-label">Tier 1 at Scale</div>
-        <div class="rev-amount">$100K</div>
-        <div class="rev-math">$5K x 20/month (zero calls)</div>
-      </div>
-      <div class="rev-card">
-        <div class="rev-label">Tier 2 Steady</div>
-        <div class="rev-amount">$62.5K</div>
-        <div class="rev-math">$12.5K x 5/month</div>
-      </div>
-      <div class="rev-card">
-        <div class="rev-label">Tier 3 Premium</div>
-        <div class="rev-amount">$50K</div>
-        <div class="rev-math">$25K x 2/month</div>
-      </div>
-      <div class="rev-card blended">
-        <div class="rev-label">Blended Target</div>
-        <div class="rev-amount">$212.5K</div>
-        <div class="rev-math">/month at capacity</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SECTION 9: ARTICLE DESIGN SYSTEM -->
-<section>
-  <div class="container">
-    <div class="section-head">
-      <div class="section-label">Section 09</div>
-      <h2 class="title-1">Article Design System</h2>
-    </div>
-
-    <div class="ds-grid">
-      <div class="ds-card">
-        <div class="ds-label">Fonts</div>
-        <div class="ds-value">Plus Jakarta Sans 800 (titles), DM Sans (body). No serifs.</div>
-      </div>
-      <div class="ds-card">
-        <div class="ds-label">Tables</div>
-        <div class="ds-value">Dark header (#1a1a1a), gold text (#C5A55A)</div>
-      </div>
-      <div class="ds-card">
-        <div class="ds-label">Pro Tips</div>
-        <div class="ds-value">Inline green text, no boxes</div>
-      </div>
-      <div class="ds-card">
-        <div class="ds-label">Warnings</div>
-        <div class="ds-value">Inline red text, no boxes</div>
-      </div>
-      <div class="ds-card">
-        <div class="ds-label">Writing Rules</div>
-        <div class="ds-value">No em dashes (signals AI writing)</div>
-      </div>
-      <div class="ds-card">
-        <div class="ds-label">Generated</div>
-        <div class="ds-value">Puppeteer HTML to PDF</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SECTION 10: KEY FILES -->
-<section>
-  <div class="container">
-    <div class="section-head">
-      <div class="section-label">Section 10</div>
-      <h2 class="title-1">Key Files</h2>
-    </div>
-
-    <table class="files-table">
-      <thead>
-        <tr>
-          <th>Resource</th>
-          <th>Path</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="file-label">Knowledge Base</td>
-          <td class="file-path">~/obsidian-vault/consulting/</td>
-        </tr>
-        <tr>
-          <td class="file-label">Deliverables</td>
-          <td class="file-path">~/obsidian-vault/consulting/deliverables/</td>
-        </tr>
-        <tr>
-          <td class="file-label">Articles</td>
-          <td class="file-path">~/obsidian-vault/consulting/deliverables/articles/</td>
-        </tr>
-        <tr>
-          <td class="file-label">Design Spec</td>
-          <td class="file-path">~/obsidian-vault/consulting/article-design-spec.md</td>
-        </tr>
-        <tr>
-          <td class="file-label">Distribution</td>
-          <td class="file-path">~/Desktop/Consulting.MD/Tier 1/</td>
-        </tr>
-        <tr>
-          <td class="file-label">Tier 1 Page</td>
-          <td class="file-path">~/jaden-sites/tier-1-blueprint.html</td>
-        </tr>
-        <tr>
-          <td class="file-label">Brand Assets</td>
-          <td class="file-path">~/Desktop/Modern Development/Brand Assetts/</td>
-        </tr>
-        <tr>
-          <td class="file-label">PDF Tools</td>
-          <td class="file-path">~/pdf-tools/</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<!-- SECTION 11: WHY THIS MATTERS -->
-<section id="why">
-  <div class="container">
-    <div class="section-head">
-      <div class="section-label">Section 11</div>
-      <h2 class="title-1">Why This Matters</h2>
-    </div>
-
-    <ul class="closing-list">
-      <li>Average GC fee is $100K+. Most homeowners can't afford that.</li>
-      <li>Self-contracting saves 20-30% on total build cost.</li>
-      <li>No one is doing cloud-based construction consulting at scale.</li>
-      <li>Tier 1 is infinitely scalable.</li>
-      <li>This could change the price of homes in the US.</li>
-    </ul>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="container">
-    <div class="footer-brand">Modern Development</div>
-    <div class="footer-date">March 2026</div>
   </div>
 </footer>
-
-<script>
-  // Intersection Observer for scroll-triggered animations
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        entry.target.style.animationDelay = `${i * 0.05}s`;
-        entry.target.classList.add('animate');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-  // Observe cards, steps, table rows for staggered reveal
-  document.querySelectorAll('.card, .step, .tier-card, .rev-card, .ds-card').forEach(el => {
-    el.style.opacity = '0';
-    observer.observe(el);
-  });
-</script>
 
 </body>
 </html>

@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Vantage Creative — Project Board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #C8FF00;
+    --accent-dim: rgba(200,255,0,0.10);
+    --accent-glow: rgba(200,255,0,0.25);
+    --bg: #050505;
+    --surface: #0F0F0F;
+    --surface-hover: #161616;
+    --nested: #1A1A1A;
+    --text-primary: #FFFFFF;
+    --text-secondary: rgba(255,255,255,0.55);
+    --text-tertiary: rgba(255,255,255,0.30);
+    --separator: rgba(255,255,255,0.06);
+    --green: #34D058;
+    --green-bg: rgba(52,208,88,0.10);
+    --yellow: #E3B341;
+    --yellow-bg: rgba(227,179,65,0.10);
+    --blue: #58A6FF;
+    --blue-bg: rgba(88,166,255,0.10);
+    --orange: #D29922;
+    --orange-bg: rgba(210,153,34,0.10);
+    --red: #F85149;
+    --red-bg: rgba(248,81,73,0.08);
+    --radius: 16px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    min-height: 100vh;
+    min-height: 100dvh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    padding: 56px 20px 36px;
+    text-align: center;
+    position: relative;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    width: 600px; height: 400px;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse, rgba(200,255,0,0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-v {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 20px;
+    position: relative;
+  }
+  .hero-v svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  .hero h1 {
+    font-size: clamp(28px, 7vw, 40px);
+    font-weight: 800;
+    letter-spacing: -1.2px;
+    line-height: 1.1;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+  }
+
+  .hero p {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    color: var(--text-secondary);
+    max-width: 400px;
+    margin: 0 auto;
+    line-height: 22px;
+  }
+
+  /* ─── STATS ROW ─── */
+  .stats {
+    display: flex;
+    gap: 8px;
+    padding: 0 20px 28px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    justify-content: center;
+  }
+  .stats::-webkit-scrollbar { display: none; }
+
+  .stat {
+    flex-shrink: 0;
+    background: var(--surface);
+    border: 1px solid var(--separator);
+    border-radius: 12px;
+    padding: 12px 20px;
+    min-width: 84px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.8px;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.8px;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* ─── SECTION DIVIDERS ─── */
+  .section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding: 0 20px 12px;
+    max-width: 920px;
+    margin: 20px auto 0;
+  }
+
+  /* ─── PROJECT GRID ─── */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 0 16px 20px;
+    max-width: 920px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 600px) {
+    .grid { grid-template-columns: 1fr 1fr; gap: 20px; padding: 0 24px 20px; }
+  }
+
+  /* ─── PROJECT CARD ─── */
+  .project-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    background: var(--surface);
+    border: 1px solid var(--separator);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.2,0,0,1);
+    opacity: 0;
+    transform: translateY(12px);
+    animation: cardReveal 0.4s cubic-bezier(0.2,0,0,1) forwards;
+  }
+
+  .project-card:hover, .project-card:active {
+    transform: translateY(-3px);
+    border-color: rgba(200,255,0,0.15);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 30px rgba(200,255,0,0.03);
+  }
+
+  @keyframes cardReveal {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .card-image {
+    width: 100%;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-body {
+    padding: 16px 16px 18px;
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 6px;
+  }
+
+  .card-title {
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    line-height: 24px;
+  }
+
+  .badge {
+    flex-shrink: 0;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 4px 10px;
+    border-radius: 9999px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .badge-live { background: var(--green-bg); color: var(--green); }
+  .badge-shipped { background: var(--accent-dim); color: var(--accent); }
+  .badge-building { background: var(--blue-bg); color: var(--blue); }
+  .badge-progress { background: var(--orange-bg); color: var(--orange); }
+
+  .card-desc {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 19px;
+    margin-bottom: 14px;
+  }
+
+  /* Ship list */
+  .ship-list { margin-bottom: 14px; }
+
+  .ship-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 5px;
+  }
+
+  .ship-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 3px 0;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 16px;
+  }
+
+  .ship-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .dot-red { background: var(--red); }
+  .dot-yellow { background: var(--yellow); }
+  .dot-green { background: var(--accent); }
+
+  /* Progress bar */
+  .progress-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .progress-track {
+    flex: 1;
+    height: 3px;
+    background: var(--nested);
+    border-radius: 9999px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    border-radius: 9999px;
+    transition: width 0.6s cubic-bezier(0.32,0.72,0,1);
+  }
+
+  .fill-green { background: var(--green); }
+  .fill-accent { background: var(--accent); }
+  .fill-blue { background: var(--blue); }
+  .fill-orange { background: var(--orange); }
+
+  .progress-pct {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    min-width: 28px;
+    text-align: right;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    text-align: center;
+    padding: 28px 16px 64px;
+  }
+
+  footer p {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.15px;
+  }
+
+  .vc-mark {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+
+  /* ─── AUTH GATE ─── */
+  .auth-gate {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: #050505;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .auth-gate.hidden { display: none; }
+  .auth-title {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--text-primary);
+  }
+  .auth-title span { color: var(--accent); }
+  .auth-input {
+    width: 280px;
+    height: 52px;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    padding: 0 20px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 16px;
+    color: #fff;
+    background: var(--surface);
+    outline: none;
+    text-align: center;
+    letter-spacing: 4px;
+    transition: border-color 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+  .auth-input:focus { border-color: var(--accent); }
+  .auth-input.shake {
+    animation: shake 0.4s ease;
+    border-color: var(--red);
+  }
+  .auth-hint {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--text-tertiary);
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-8px); }
+    40%, 80% { transform: translateX(8px); }
+  }
+  .page-content { display: none; }
+  .page-content.visible { display: block; }
+</style>
+</head>
+<body>
+
+<!-- Auth Gate -->
+<div class="auth-gate" id="authGate">
+  <div style="width:48px;height:48px;margin-bottom:4px;">
+    <svg viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path fill="#C8FF00" d="M431.46,358.53c-.92-1.38-1.89-2.37-1.59-3.81,1.46-1.5,3.22-.93,4.8-.93,14,-.03,28,0.09,42,-.02,8.44,-.07,14.64,2.15,19.75,10.18,19.95,31.33,40.73,62.14,61.42,93,3.11,4.65,3.52,8.01,-.21,12.69-7.36,9.24-13.97,19.08-20.9,28.67-0.95,1.31-1.69,2.87-3.99,3.63C498.63,454.56,464.68,407.02,431.46,358.53Z"/>
+      <path fill="#C8FF00" d="M563.64,453.22c-8.82-13.55-17.35-26.87-26.16-39.99-2.22-3.31-2.23-5.52,0.3-8.74,10.27-13.1,20.18-26.49,30.29-39.71,1.59-2.07,2.86-4.52,5.62-5.8,3.07,2.7,1.97,5.21,-.37,7.53-4.69,4.66-2.16,13.03,1.7,16.09,2.57,2.03,5.03,2.54,7.33,-.38,.82-1.05,1.86-1.95,2.54-3.08,6.35-10.52,15.96-15.87,27.23-20.48,7.12-2.91,13.61-5.01,21.09-4.63,1.12,.06,2.35,-.31,3.29,.78,.55,1.5,-.56,2.48-1.27,3.52-22,-31.55-44.02,-63.07-66,-94.63-1.7-2.44-3.19-4.16-5.58,-.28Z"/>
+      <path fill="#C8FF00" d="M512.19,565.96c0,1.49,.12,2.51,-.01,3.49,-.32,2.3,1.22,5.5-2.04,6.51-3.11,.97-6.09,.31-8.64-2.32-5.69-5.85-11.61-11.46-17.45-17.16,-.68,-.67-1.42-1.28-3.01-2.7,0,6.37,-.06,11.77,.02,17.18,.05,3.25,-.59,5.39-4.63,5.38-4.05,-.02-4.62-2.19-4.59-5.43,.07-7.66,-.07-15.32,.05-22.98,.03-2.14-1.12-5.23,1.97-5.99,2.97,-.73,6.11-1.05,8.78,1.76,5.38,5.68,11.04,11.09,16.61,16.6,.81,.81,1.75,1.49,3.13,2.64,1.24-5.82,.51-11.23,.65-16.57,.08-3.19,1.01-4.92,4.64-4.83,3.2,.08,4.55,1.29,4.52,4.45,-.06,6.49,0,12.99,.01,19.98Z"/>
+      <path fill="#C8FF00" d="M690.23,558.12c.2,3.4-1.58,4.12-4.09,4.1-4.33,-.03-8.66,-.03-13,0-2.28,.02-4.93,-.44-5,3.19,-.07,3.87,2.7,3.54,5.21,3.56,5.16,.05,10.33,.05,15.49,.11,2.6,.03,4.56,.66,4.45,3.95,-.11,3.21-2.25,3.24-4.49,3.24-8.5,.01-17,-.1-25.49,.04-3.57,.06-4.63-1.57-4.58-4.86,.12-8.5,.17-17,0.03-25.49,-.06-3.42,1.29-4.92,4.65-4.86,8.66,.15,17.32,.3,25.98,.37,2.32,.02,3.86,.54,3.86,3.3,0,3.02-1.79,3.54-4.25,3.52-5.66,-.03-11.33,.04-17,.01-2.34,-.02-3.86,.62-3.83,3.34,.03,2.72,1.65,3.36,3.91,3.36,4.5,0,9,-.04,13.5,.04,1.95,.04,4.18,-.16,4.66,3.07Z"/>
+      <path fill="#C8FF00" d="M648.35,563.96c-.06,8.05,-.49,8.78-7.58,11.28-7.51,2.65-15.04,2.6-22.44,-.54-6.18-2.56-10.01-6.98-10.68-13.84,-.73-7.55,1.95-13.35,8.62-17.17,8.8-5.04,23.31-4.14,30.33,2.06-1.36,3.56-3.33,5.24-7.46,3.45-4.88-2.11-9.99-2.41-15.11,-.67-4.52,1.53-7.81,5.65-7.64,10.05,.19,4.96,2.57,8.52,7.43,10.15,4.23,1.41,8.5,1.43,12.79,.28,2.23,-.6,3.45-1.93,3.15-4.35,-.34-2.68-2.41-2.27-4.21-2.3,-.83,-.01-1.67,.08-2.5,.07-1.76,-.01-3.39,-.19-3.45-2.57,-.06-2.17,.9-3.75,3.03-3.85,4.32,-.21,8.71,-.54,12.96,-.05,4.54,.63,2.12,4.76,2.77,7.83Z"/>
+      <path fill="#C8FF00" d="M452.09,352.95c4.16,7.54,8.73,14.45,12.07,22.08-6.58,2.36-8,1.97-11.27-3.48-1.35-2.25-2.92-3.39-5.6-3.24-3.15,.17-6.35,.28-9.48,0-4.62,-.42-7.89,.75-10.01,5.34-1.94,4.21-5.83,2.53-9.06,2.13-1.03-1.88,.11-3.11,.82-4.35,5.02-8.82,10.02-17.66,15.16-26.41,3.28-5.59,9.64-5.41,12.96,.23,1.43,2.44,2.83,4.9,4.42,7.67Zm-11.73-1.16c-1.83,2.87-3.8,5.68-4.73,9.33,3.8,.93,7.1,.97,10.78,-.04,-.6-3.76-2.49-7.27-6.05-9.29Z"/>
+      <path fill="#C8FF00" d="M581.5,541.51c2.44,-.31,3.84,.62,4.85,2.39,5.52,9.69,11.08,19.36,16.57,29.06,.37,.66,.33,1.55,.53,2.56-4.69,1.3-8.69,1.73-10.89-3.65-1.16-2.83-3.48-3.74-6.47-3.54-2.65,.17-5.34,.23-7.98,-.001-5,-0.46-8.88,.34-11.24,5.7-1.72,3.91-5.71,2-8.78,1.98-1.2-2.31,.26-3.77,1.11-5.27,4.69-8.25,9.61-16.37,14.12-24.71,1.82-3.36,3.99-5.15,8.2-4.5Zm-5.59,16.69c-1.06,1.81-1.77,3.61,1.44,3.5,2.69,-.09,5.58,.86,8.23-1.1-1.15-3.54-2.54-6.74-5.43-9.74-1.46,2.51-2.69,4.62-4.25,7.34Z"/>
+      <path fill="#C8FF00" d="M407.17,546.25c1.94-6.33,6.59-4.61,10.62-4.5,1.15,1.89,-.12,3.1,-.79,4.31-4.79,8.75-9.73,17.41-14.45,26.2-1.5,2.8-3.34,4.13-6.65,4.11-3.23,-.02-4.72-1.64-6.09-4.16-4.37-8.03-8.92-15.96-13.32-23.97-1.01-1.84-2.53-3.51-2.47-5.82,7.55-2.06,8.41-1.69,11.84,4.74,3.19,5.99,6.43,11.97,10.3,19.21,3.93-7.17,7.38-13.46,11-20.08Z"/>
+      <path fill="#C8FF00" d="M524.23,548.28c-3.2,.06-4.45-1.28-4.18-4.004,.24-2.49,2.09-2.54,4,-2.72,9.96,-.97,19.92,-.04,29.88,-.05,2.19,0,3.44,.67,3.46,3.11,.02,2.52-1.04,3.72-3.55,3.64,-.17,0,-.33,.01,-.5,.02-10.09,.7-10.09,.71-10.1,11.12,0,4.16,-.12,8.32,.02,12.47,.13,3.64-1.78,4.43-4.96,4.48-3.39,.04-4.34-1.65-4.31-4.61,.06-5.49,.04-10.97,.05-16.46,0-6.93,-.01-6.94-6.87-6.96,-.83,0-1.66,0-2.95,-.01Z"/>
+    </svg>
+  </div>
+  <div class="auth-title">Vantage <span>Creative</span></div>
+  <input type="password" class="auth-input" id="authInput" placeholder="Enter code" autofocus>
+  <div class="auth-hint">Project board access</div>
+</div>
+
+<script>
+(function() {
+  var hash = "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35";
+  var stored = sessionStorage.getItem("vc_auth");
+  if (stored === hash) { unlock(); return; }
+  var input = document.getElementById("authInput");
+  input.addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+      crypto.subtle.digest("SHA-256", new TextEncoder().encode(input.value)).then(function(buf) {
+        var h = Array.from(new Uint8Array(buf)).map(function(b) { return b.toString(16).padStart(2, "0"); }).join("");
+        if (h === hash) {
+          sessionStorage.setItem("vc_auth", hash);
+          unlock();
+        } else {
+          input.classList.add("shake");
+          input.value = "";
+          setTimeout(function() { input.classList.remove("shake"); }, 400);
+        }
+      });
+    }
+  });
+  function unlock() {
+    document.getElementById("authGate").classList.add("hidden");
+    document.getElementById("pageContent").classList.add("visible");
+  }
+})();
+</script>
+
+<div class="page-content" id="pageContent">
+
+<div class="hero">
+  <div class="hero-v">
+    <svg viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path fill="#C8FF00" d="M431.46,358.53c-.92-1.38-1.89-2.37-1.59-3.81,1.46-1.5,3.22-.93,4.8-.93,14,-.03,28,0.09,42,-.02,8.44,-.07,14.64,2.15,19.75,10.18,19.95,31.33,40.73,62.14,61.42,93,3.11,4.65,3.52,8.01,-.21,12.69-7.36,9.24-13.97,19.08-20.9,28.67-0.95,1.31-1.69,2.87-3.99,3.63C498.63,454.56,464.68,407.02,431.46,358.53Z"/>
+      <path fill="#C8FF00" d="M563.64,453.22c-8.82-13.55-17.35-26.87-26.16-39.99-2.22-3.31-2.23-5.52,0.3-8.74,10.27-13.1,20.18-26.49,30.29-39.71,1.59-2.07,2.86-4.52,5.62-5.8,3.07,2.7,1.97,5.21,-.37,7.53-4.69,4.66-2.16,13.03,1.7,16.09,2.57,2.03,5.03,2.54,7.33,-.38,.82-1.05,1.86-1.95,2.54-3.08,6.35-10.52,15.96-15.87,27.23-20.48,7.12-2.91,13.61-5.01,21.09-4.63,1.12,.06,2.35,-.31,3.29,.78,.55,1.5,-.56,2.48-1.27,3.52-22,-31.55-44.02,-63.07-66,-94.63-1.7-2.44-3.19-4.16-5.58,-.28Z"/>
+    </svg>
+  </div>
+  <div class="hero-label">Vantage Creative</div>
+  <h1>Project Board</h1>
+  <p>Every build under the Vantage umbrella. Strategy, creative, web, apps, consulting.</p>
+</div>
+
+<div class="stats">
+  <div class="stat">
+    <div class="stat-num" style="color:var(--text-primary)">12</div>
+    <div class="stat-label">Projects</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num" style="color:var(--accent)">3</div>
+    <div class="stat-label">Shipped</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num" style="color:var(--blue)">9</div>
+    <div class="stat-label">Building</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num" style="color:var(--red)">18</div>
+    <div class="stat-label">Blockers</div>
+  </div>
+</div>
+
+<!-- ═══════════════ INTERNAL TOOLS ═══════════════ -->
+<div class="section-label">Internal Tools</div>
+<div class="grid">
+
+  <!-- Vantage Creative Website -->
+  <div class="project-card" style="animation-delay:0.05s">
+    <div class="card-image" style="background:#0A0A0A;">
+      <svg viewBox="0 0 1024 1024" style="width:80px;height:80px;opacity:0.6;" fill="none">
+        <path fill="#C8FF00" d="M431.46,358.53c-.92-1.38-1.89-2.37-1.59-3.81,1.46-1.5,3.22-.93,4.8-.93,14,-.03,28,0.09,42,-.02,8.44,-.07,14.64,2.15,19.75,10.18,19.95,31.33,40.73,62.14,61.42,93,3.11,4.65,3.52,8.01,-.21,12.69-7.36,9.24-13.97,19.08-20.9,28.67-0.95,1.31-1.69,2.87-3.99,3.63C498.63,454.56,464.68,407.02,431.46,358.53Z"/>
+        <path fill="#C8FF00" d="M563.64,453.22c-8.82-13.55-17.35-26.87-26.16-39.99-2.22-3.31-2.23-5.52,0.3-8.74,10.27-13.1,20.18-26.49,30.29-39.71,1.59-2.07,2.86-4.52,5.62-5.8,3.07,2.7,1.97,5.21,-.37,7.53-4.69,4.66-2.16,13.03,1.7,16.09,2.57,2.03,5.03,2.54,7.33,-.38,.82-1.05,1.86-1.95,2.54-3.08,6.35-10.52,15.96-15.87,27.23-20.48,7.12-2.91,13.61-5.01,21.09-4.63,1.12,.06,2.35,-.31,3.29,.78,.55,1.5,-.56,2.48-1.27,3.52-22,-31.55-44.02,-63.07-66,-94.63-1.7-2.44-3.19-4.16-5.58,-.28Z"/>
+      </svg>
+    </div>
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-title">Vantage Website</div>
+        <div class="badge badge-progress">In Progress</div>
+      </div>
+      <div class="card-desc">The brand site. Vision board complete, actual build pending. Considering Framer for Megan's editing access.</div>
+      <div class="ship-list">
+        <div class="ship-label">To Ship</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Domain purchase</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Build actual website</div>
+        <div class="ship-item"><div class="ship-dot dot-yellow"></div>Google Analytics setup</div>
+        <div class="ship-item"><div class="ship-dot dot-yellow"></div>Service pricing structure</div>
+        <div class="ship-label" style="margin-top:6px">Done</div>
+        <div class="ship-item"><div class="ship-dot dot-green"></div>Vision board v2 (Carbon)</div>
+        <div class="ship-item"><div class="ship-dot dot-green"></div>Brand identity + logo</div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-track"><div class="progress-fill fill-accent" style="width:20%"></div></div>
+        <div class="progress-pct">20%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Flynn & Co -->
+  <div class="project-card" style="animation-delay:0.1s">
+    <div class="card-image" style="background:linear-gradient(135deg,#1a0a1e,#0a0a0a);">
+      <div style="text-align:center;">
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:24px;font-weight:800;color:#fff;letter-spacing:-1px;">Flynn <span style="color:#8E6B7E;">&</span> Co</div>
+        <div style="font-family:'DM Sans',sans-serif;font-size:10px;color:rgba(255,255,255,0.3);letter-spacing:2px;text-transform:uppercase;margin-top:6px;">Social Media Agency</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-title">Flynn & Co</div>
+        <div class="badge badge-building">Building</div>
+      </div>
+      <div class="card-desc">Megan's agency. Management app 90% built on Next.js + Supabase. Calendar, payments, auth, emails all working.</div>
+      <div class="ship-list">
+        <div class="ship-label">To Ship</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Resend account + API key</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Vercel deploy + custom domain</div>
+        <div class="ship-item"><div class="ship-dot dot-yellow"></div>Client portal Phase C (analytics, content)</div>
+        <div class="ship-label" style="margin-top:6px">Done</div>
+        <div class="ship-item"><div class="ship-dot dot-green"></div>Admin dashboard, calendar, payments, auth, emails</div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-track"><div class="progress-fill fill-accent" style="width:75%"></div></div>
+        <div class="progress-pct">75%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- The Medium -->
+  <div class="project-card" style="animation-delay:0.15s">
+    <div class="card-image" style="background:#0D0D0D;position:relative;">
+      <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(200,255,0,0.2),transparent);"></div>
+      <div style="position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(200,255,0,0.1),transparent);"></div>
+      <div style="position:absolute;top:16px;left:20px;font-family:monospace;font-size:9px;color:rgba(200,255,0,0.2);letter-spacing:0.1em;">OUTPOST://CONTENT.CMD</div>
+      <div style="text-align:center;position:relative;z-index:1;">
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:28px;font-weight:800;letter-spacing:-1.5px;color:#fff;">THE <span style="color:#f6462b;">MEDIUM</span></div>
+        <div style="font-family:monospace;font-size:9px;letter-spacing:0.15em;color:rgba(255,255,255,0.2);margin-top:6px;text-transform:uppercase;">Content Command / 5 Brands</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-title">The Medium</div>
+        <div class="badge badge-building">Building</div>
+      </div>
+      <div class="card-desc">Multi-brand content command center. 5 brands, caption library, AI generator. Next.js + known.is aesthetic.</div>
+      <div class="ship-list">
+        <div class="ship-label">To Ship</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>AI caption generator (Anthropic API)</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Meta API integration (publish/schedule)</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Cloud sync (multi-machine)</div>
+        <div class="ship-label" style="margin-top:6px">Done</div>
+        <div class="ship-item"><div class="ship-dot dot-green"></div>Command view, brand settings, caption library</div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-track"><div class="progress-fill fill-blue" style="width:50%"></div></div>
+        <div class="progress-pct">50%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Analytics Command Center -->
+  <div class="project-card" style="animation-delay:0.2s">
+    <div class="card-image" style="background:#0A0A0F;position:relative;overflow:hidden;">
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(88,166,255,0.08) 0%,transparent 70%);"></div>
+      <div style="position:absolute;bottom:20px;left:20px;right:20px;display:flex;gap:4px;align-items:flex-end;">
+        <div style="flex:1;height:36px;background:linear-gradient(180deg,rgba(200,255,0,0.3),rgba(200,255,0,0.1));border-radius:3px 3px 0 0;"></div>
+        <div style="flex:1;height:56px;background:linear-gradient(180deg,rgba(200,255,0,0.4),rgba(200,255,0,0.15));border-radius:3px 3px 0 0;"></div>
+        <div style="flex:1;height:44px;background:linear-gradient(180deg,rgba(200,255,0,0.3),rgba(200,255,0,0.1));border-radius:3px 3px 0 0;"></div>
+        <div style="flex:1;height:68px;background:linear-gradient(180deg,rgba(88,166,255,0.4),rgba(88,166,255,0.15));border-radius:3px 3px 0 0;"></div>
+        <div style="flex:1;height:52px;background:linear-gradient(180deg,rgba(200,255,0,0.3),rgba(200,255,0,0.1));border-radius:3px 3px 0 0;"></div>
+        <div style="flex:1;height:76px;background:linear-gradient(180deg,rgba(88,166,255,0.4),rgba(88,166,255,0.15));border-radius:3px 3px 0 0;"></div>
+      </div>
+      <div style="position:relative;z-index:1;text-align:center;">
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:9px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:rgba(200,255,0,0.4);margin-bottom:6px;">Ad Intelligence</div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800;letter-spacing:-1px;color:#fff;">MECA <span style="color:#58A6FF;">Analytics</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-title">Analytics Center</div>
+        <div class="badge badge-building">Building</div>
+      </div>
+      <div class="card-desc">Multi-brand ad intelligence. Live Meta API, multi-account. $14K spend tracked, 1,424 leads.</div>
+      <div class="ship-list">
+        <div class="ship-label">To Ship</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Fix performance bug</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Long-lived Meta token (60 days)</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Meta Pixel on brand sites</div>
+        <div class="ship-item"><div class="ship-dot dot-yellow"></div>Google Ads + GA4 integration</div>
+        <div class="ship-label" style="margin-top:6px">Done</div>
+        <div class="ship-item"><div class="ship-dot dot-green"></div>Meta Ads live, insights, audience, multi-account</div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-track"><div class="progress-fill fill-blue" style="width:60%"></div></div>
+        <div class="progress-pct">60%</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════ CLIENT PROJECTS ═══════════════ -->
+<div class="section-label" style="margin-top:12px;">Client Projects</div>
+<div class="grid">
+
+  <!-- Complete Crete -->
+  <div class="project-card" style="animation-delay:0.25s">
+    <div class="card-image" style="background:linear-gradient(135deg,#0a0a0a,#111);">
+      <div style="text-align:center;">
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:800;color:#c9a84c;letter-spacing:-0.5px;">COMPLETE CRETE</div>
+        <div style="font-family:'DM Sans',sans-serif;font-size:9px;color:rgba(255,255,255,0.25);letter-spacing:2px;text-transform:uppercase;margin-top:6px;">Coatings LLC</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-title">Complete Crete</div>
+        <div class="badge badge-building">Building</div>
+      </div>
+      <div class="card-desc">Concrete coatings business. 5-page site live on GitHub Pages. First Vantage web dev portfolio piece.</div>
+      <div class="ship-list">
+        <div class="ship-label">To Ship</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Domain purchase</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Logo files from designer</div>
+        <div class="ship-item"><div class="ship-dot dot-yellow"></div>Email form integration</div>
+        <div class="ship-item"><div class="ship-dot dot-yellow"></div>Real project photos</div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-track"><div class="progress-fill fill-accent" style="width:70%"></div></div>
+        <div class="progress-pct">70%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- K&K Remodeling -->
+  <div class="project-card" style="animation-delay:0.3s">
+    <div class="card-image" style="background:linear-gradient(135deg,#0a1628,#0a0a0a);">
+      <div style="text-align:center;">
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800;color:#FDF0D5;letter-spacing:-0.5px;">K&K</div>
+        <div style="font-family:'DM Sans',sans-serif;font-size:9px;color:rgba(255,255,255,0.25);letter-spacing:2px;text-transform:uppercase;margin-top:4px;">Remodeling</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-title">K&K Remodeling</div>
+        <div class="badge badge-building">Building</div>
+      </div>
+      <div class="card-desc">Kenny's remodeling business. Homepage + gallery live, still adding project photos.</div>
+      <div class="ship-list">
+        <div class="ship-label">To Ship</div>
+        <div class="ship-item"><div class="ship-dot dot-yellow"></div>More project photos</div>
+        <div class="ship-item"><div class="ship-dot dot-yellow"></div>Kenny final review</div>
+        <div class="ship-item"><div class="ship-dot dot-yellow"></div>Domain purchase</div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-track"><div class="progress-fill fill-accent" style="width:60%"></div></div>
+        <div class="progress-pct">60%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JPG Travel Solutions -->
+  <div class="project-card" style="animation-delay:0.35s">
+    <div class="card-image" style="background:linear-gradient(135deg,#060606,#0f0f0f);">
+      <div style="text-align:center;">
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:18px;font-weight:800;color:#C9A96E;letter-spacing:-0.5px;">JPG TRAVEL</div>
+        <div style="font-family:'DM Sans',sans-serif;font-size:9px;color:rgba(255,255,255,0.25);letter-spacing:2px;text-transform:uppercase;margin-top:4px;">Solutions</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-title">JPG Travel</div>
+        <div class="badge badge-progress">In Progress</div>
+      </div>
+      <div class="card-desc">Luxury travel agency. Website mockup + growth proposal delivered. 3-phase automation plan pitched.</div>
+      <div class="ship-list">
+        <div class="ship-label">To Ship</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Phase 1: Automation systems</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Phase 2: Website redesign + SEO</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Phase 3: AI agent + client portal</div>
+        <div class="ship-label" style="margin-top:6px">Done</div>
+        <div class="ship-item"><div class="ship-dot dot-green"></div>Website mockup + proposal (live on Pages)</div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-track"><div class="progress-fill fill-orange" style="width:35%"></div></div>
+        <div class="progress-pct">35%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Solar Body -->
+  <div class="project-card" style="animation-delay:0.4s">
+    <div class="card-image" style="background:linear-gradient(135deg,#1a1408,#0a0a0a);">
+      <div style="text-align:center;">
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:800;color:#F5D78E;letter-spacing:-0.5px;">SOLAR BODY</div>
+        <div style="font-family:'DM Sans',sans-serif;font-size:9px;color:rgba(255,255,255,0.25);letter-spacing:2px;text-transform:uppercase;margin-top:4px;">Jenna Flynn</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-title">Solar Body</div>
+        <div class="badge badge-progress">In Progress</div>
+      </div>
+      <div class="card-desc">Jenna's digital skincare brand. Quiz funnel mockup done. 6 revenue layers designed. $10K/mo target by Month 6.</div>
+      <div class="ship-list">
+        <div class="ship-label">To Ship</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Next.js + Supabase build</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Course platform (Skool)</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Email sequences (ConvertKit)</div>
+        <div class="ship-item"><div class="ship-dot dot-yellow"></div>Brand name finalize</div>
+        <div class="ship-label" style="margin-top:6px">Done</div>
+        <div class="ship-item"><div class="ship-dot dot-green"></div>Quiz funnel mockup, digest, Obsidian vault</div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-track"><div class="progress-fill fill-orange" style="width:25%"></div></div>
+        <div class="progress-pct">25%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Richter Technology -->
+  <div class="project-card" style="animation-delay:0.45s">
+    <div class="card-image" style="background:linear-gradient(135deg,#080f08,#0a0a0a);">
+      <div style="text-align:center;">
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:700;color:#fff;letter-spacing:1px;">RT</div>
+        <div style="font-family:'DM Sans',sans-serif;font-size:9px;color:rgba(255,255,255,0.25);letter-spacing:2px;text-transform:uppercase;margin-top:4px;">Richter Technology</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-title">Richter Technology</div>
+        <div class="badge badge-shipped">Shipped</div>
+      </div>
+      <div class="card-desc">Rik's MSP in Crossville. Brief, website rebuild, and onboarding guide all delivered and live.</div>
+      <div class="ship-list">
+        <div class="ship-label">Pending</div>
+        <div class="ship-item"><div class="ship-dot dot-yellow"></div>2-hour onboarding session with Rik</div>
+        <div class="ship-item"><div class="ship-dot dot-yellow"></div>Production website overhaul (Phase 2)</div>
+        <div class="ship-label" style="margin-top:6px">Done</div>
+        <div class="ship-item"><div class="ship-dot dot-green"></div>Technical brief, website rebuild, onboarding guide</div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-track"><div class="progress-fill fill-accent" style="width:85%"></div></div>
+        <div class="progress-pct">85%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BL4INE. -->
+  <div class="project-card" style="animation-delay:0.5s">
+    <div class="card-image" style="background:#0a0a0a;">
+      <div style="text-align:center;">
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:24px;font-weight:800;color:#f0c040;letter-spacing:2px;">BL4INE.</div>
+        <div style="font-family:'DM Sans',sans-serif;font-size:9px;color:rgba(255,255,255,0.25);letter-spacing:2px;text-transform:uppercase;margin-top:6px;">"Brand New Me" / Apr 20</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-title">BL4INE. Rollout</div>
+        <div class="badge badge-shipped">Shipped</div>
+      </div>
+      <div class="card-desc">Blaine's single rollout. Full strategy, content calendar, and 36 Google Calendar events delivered. Drop date April 20.</div>
+      <div class="ship-list">
+        <div class="ship-label">Waiting On</div>
+        <div class="ship-item"><div class="ship-dot dot-yellow"></div>Blaine executing the calendar</div>
+        <div class="ship-item"><div class="ship-dot dot-yellow"></div>DistroKid setup</div>
+        <div class="ship-label" style="margin-top:6px">Done</div>
+        <div class="ship-item"><div class="ship-dot dot-green"></div>Questionnaire, rollout plan, Google Calendar</div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-track"><div class="progress-fill fill-accent" style="width:90%"></div></div>
+        <div class="progress-pct">90%</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════ ECOSYSTEM ═══════════════ -->
+<div class="section-label" style="margin-top:12px;">Ecosystem</div>
+<div class="grid">
+
+  <!-- Blue Collar Hustle -->
+  <div class="project-card" style="animation-delay:0.55s">
+    <div class="card-image" style="background:#0D0D0D;position:relative;">
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(200,255,0,0.03) 0%,transparent 60%);"></div>
+      <div style="text-align:center;position:relative;z-index:1;">
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:18px;font-weight:800;color:#fff;letter-spacing:1px;text-transform:uppercase;">Blue Collar</div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:24px;font-weight:800;color:var(--accent);letter-spacing:-0.5px;margin-top:-2px;">HUSTLE</div>
+        <div style="font-family:monospace;font-size:8px;color:rgba(255,255,255,0.2);letter-spacing:0.2em;margin-top:6px;">THE OPERATOR MOVEMENT</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-title">Blue Collar Hustle</div>
+        <div class="badge badge-progress">In Progress</div>
+      </div>
+      <div class="card-desc">Trades media + education ecosystem. TikTok content machine feeding a consulting funnel. 4-Week Challenge content complete. Highest-scale project.</div>
+      <div class="ship-list">
+        <div class="ship-label">To Ship</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Equipment purchase (blocker)</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Landing page + domain</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Challenge app rebuild</div>
+        <div class="ship-item"><div class="ship-dot dot-red"></div>Funnel (Profit Audit + email sequence)</div>
+        <div class="ship-label" style="margin-top:6px">Done</div>
+        <div class="ship-item"><div class="ship-dot dot-green"></div>4-Week Operator Challenge (all scripts + PDFs)</div>
+        <div class="ship-item"><div class="ship-dot dot-green"></div>25+ email prompts, 6 video scripts, Obsidian vault</div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-track"><div class="progress-fill fill-orange" style="width:30%"></div></div>
+        <div class="progress-pct">30%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Web Packages -->
+  <div class="project-card" style="animation-delay:0.6s">
+    <div class="card-image" style="background:#0A0A0A;">
+      <div style="text-align:center;">
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:32px;font-weight:800;color:var(--accent);letter-spacing:-1px;line-height:1;">$2K / $5K</div>
+        <div style="font-family:'DM Sans',sans-serif;font-size:9px;color:rgba(255,255,255,0.25);letter-spacing:2px;text-transform:uppercase;margin-top:8px;">Web Dev Packages</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-title">Web Packages</div>
+        <div class="badge badge-shipped">Shipped</div>
+      </div>
+      <div class="card-desc">$2K (5 pages, basic SEO) and $5K (full strategy, brand guide, SEO, analytics, maintenance). Structure defined, ready to sell.</div>
+      <div class="ship-list">
+        <div class="ship-label">The Math</div>
+        <div class="ship-item"><div class="ship-dot dot-green"></div>$5K build + $100/mo = $1,200/yr recurring</div>
+        <div class="ship-item"><div class="ship-dot dot-green"></div>1 client/month = $60K builds + $14.4K recurring</div>
+        <div class="ship-label" style="margin-top:6px">Done</div>
+        <div class="ship-item"><div class="ship-dot dot-green"></div>Package structure, deliverables, pricing</div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-track"><div class="progress-fill fill-accent" style="width:100%"></div></div>
+        <div class="progress-pct">100%</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="vc-mark">Vantage Creative</div>
+  <p>Last updated April 1, 2026</p>
+</footer>
+
+</div><!-- end page-content -->
+
+</body>
+</html>

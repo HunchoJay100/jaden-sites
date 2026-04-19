@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meta Ads Playbook — Matt Matheson Creative</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #050505;
+  --bg-surface: #0d0d0d;
+  --bg-nested: #141414;
+  --fg: #ffffff;
+  --fg-70: rgba(255,255,255,0.7);
+  --fg-40: rgba(255,255,255,0.4);
+  --fg-15: rgba(255,255,255,0.15);
+  --fg-08: rgba(255,255,255,0.08);
+  --accent: #c8ff00;
+  --accent-dim: rgba(200,255,0,0.12);
+  --accent-glow: rgba(200,255,0,0.25);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --radius-lg: 16px;
+  --font: 'Plus Jakarta Sans', -apple-system, sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--fg);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  font-size: 17px;
+  line-height: 1.6;
+  letter-spacing: -0.43px;
+}
+::selection { background: var(--accent); color: var(--bg); }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 clamp(16px, 4vw, 48px);
+  height: 64px;
+  background: rgba(5,5,5,0.8);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border-bottom: 1px solid var(--fg-08);
+}
+.nav-brand {
+  font-family: var(--font);
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+.nav-brand span { color: var(--accent); }
+.nav-tag {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.15px;
+  color: var(--fg-40);
+  margin-left: 16px;
+}
+.nav-toc {
+  display: flex; gap: 24px;
+}
+.nav-toc a {
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--fg-40);
+  text-decoration: none;
+  transition: color 0.15s cubic-bezier(0.2,0,0,1);
+}
+.nav-toc a:hover { color: var(--fg); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 120px 16px 64px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 40%; left: 50%;
+  width: 700px; height: 700px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(200,255,0,0.05) 0%, transparent 70%);
+  pointer-events: none;
+  animation: ambientPulse 5s ease-in-out infinite;
+}
+@keyframes ambientPulse {
+  0%, 100% { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+  50% { opacity: 0.4; transform: translate(-50%,-50%) scale(1.1); }
+}
+.hero-badge {
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-dim);
+  padding: 8px 20px;
+  border-radius: 9999px;
+  margin-bottom: 32px;
+  opacity: 0;
+  transform: translateY(12px);
+  animation: fadeUp 0.6s cubic-bezier(0.2,0,0,1) 0.2s forwards;
+}
+.hero h1 {
+  font-family: var(--font);
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 800;
+  letter-spacing: -1.5px;
+  line-height: 1.05;
+  max-width: 800px;
+  opacity: 0;
+  transform: translateY(16px);
+  animation: fadeUp 0.6s cubic-bezier(0.2,0,0,1) 0.35s forwards;
+}
+.hero h1 .accent { color: var(--accent); }
+.hero-sub {
+  font-size: 17px;
+  color: var(--fg-70);
+  margin-top: 24px;
+  max-width: 560px;
+  opacity: 0;
+  transform: translateY(12px);
+  animation: fadeUp 0.6s cubic-bezier(0.2,0,0,1) 0.5s forwards;
+}
+.hero-meta {
+  display: flex;
+  gap: 32px;
+  margin-top: 48px;
+  opacity: 0;
+  transform: translateY(12px);
+  animation: fadeUp 0.6s cubic-bezier(0.2,0,0,1) 0.65s forwards;
+}
+.hero-meta-item {
+  text-align: center;
+}
+.hero-meta-item .val {
+  font-family: var(--font);
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.8px;
+  color: var(--accent);
+}
+.hero-meta-item .label {
+  font-size: 12px;
+  color: var(--fg-40);
+  letter-spacing: 0.12px;
+  margin-top: 4px;
+}
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── LAYOUT ── */
+.container {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 4vw, 48px);
+}
+
+/* ── SECTIONS ── */
+section {
+  padding: 64px 0 48px;
+  border-bottom: 1px solid var(--fg-08);
+}
+section:last-of-type { border-bottom: none; }
+
+.section-num {
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+h2 {
+  font-family: var(--font);
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.8px;
+  line-height: 34px;
+  margin-bottom: 24px;
+}
+h3 {
+  font-family: var(--font);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.6px;
+  line-height: 25px;
+  margin-top: 40px;
+  margin-bottom: 16px;
+}
+h4 {
+  font-family: var(--font);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.43px;
+  line-height: 22px;
+  margin-top: 32px;
+  margin-bottom: 12px;
+}
+p {
+  color: var(--fg-70);
+  margin-bottom: 16px;
+  line-height: 1.65;
+}
+p strong { color: var(--fg); font-weight: 600; }
+
+/* ── CARDS ── */
+.card {
+  background: var(--bg-surface);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin: 24px 0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.25), 0 1px 2px rgba(0,0,0,0.15);
+  transition: box-shadow 0.3s cubic-bezier(0.2,0,0,1), transform 0.3s cubic-bezier(0.2,0,0,1);
+}
+.card:hover {
+  box-shadow: 0 4px 14px rgba(0,0,0,0.3), 0 2px 6px rgba(0,0,0,0.2);
+  transform: translateY(-4px);
+}
+.card-accent {
+  border-left: 3px solid var(--accent);
+}
+
+/* ── WHY BOXES ── */
+.why-box {
+  background: var(--accent-dim);
+  border-radius: var(--radius-sm);
+  padding: 20px 24px;
+  margin: 16px 0 24px;
+}
+.why-box::before {
+  content: 'WHY';
+  display: block;
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.why-box p {
+  color: var(--fg-70);
+  margin-bottom: 0;
+  font-size: 15px;
+}
+
+/* ── STEP BLOCKS ── */
+.step {
+  display: flex;
+  gap: 20px;
+  margin: 24px 0;
+}
+.step-num {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--bg);
+  background: var(--accent);
+  border-radius: 10px;
+  margin-top: 2px;
+}
+.step-content h4 {
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+.step-content p {
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+
+/* ── STRUCTURE DIAGRAM ── */
+.structure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  margin: 32px 0;
+}
+.struct-box {
+  background: var(--bg-surface);
+  border-radius: var(--radius);
+  padding: 20px 32px;
+  text-align: center;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+}
+.struct-box.level-1 {
+  background: var(--accent);
+  color: var(--bg);
+}
+.struct-box.level-1 .struct-label { color: rgba(0,0,0,0.5); }
+.struct-box.level-2 {
+  background: var(--bg-nested);
+  border: 1px solid var(--fg-15);
+}
+.struct-box.level-3 {
+  background: var(--bg-surface);
+  border: 1px solid var(--fg-08);
+}
+.struct-label {
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--fg-40);
+}
+.struct-name {
+  font-family: var(--font);
+  font-size: 17px;
+  font-weight: 600;
+  margin-top: 4px;
+}
+.struct-desc {
+  font-size: 13px;
+  color: var(--fg-40);
+  margin-top: 4px;
+}
+.struct-box.level-1 .struct-desc { color: rgba(0,0,0,0.45); }
+.struct-connector {
+  width: 2px;
+  height: 24px;
+  background: var(--fg-15);
+}
+.struct-row {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  max-width: 420px;
+}
+.struct-row .struct-box {
+  flex: 1;
+  padding: 16px;
+}
+.struct-row .struct-name {
+  font-size: 13px;
+}
+.struct-row .struct-desc {
+  font-size: 11px;
+}
+
+/* ── SETTINGS TABLE ── */
+.settings-table {
+  width: 100%;
+  margin: 16px 0 24px;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--bg-surface);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+}
+.settings-table th {
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--fg-40);
+  text-align: left;
+  padding: 16px 20px;
+  background: var(--bg-nested);
+  border-bottom: 1px solid var(--fg-08);
+}
+.settings-table td {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--fg-08);
+  font-size: 15px;
+  vertical-align: top;
+}
+.settings-table tr:last-child td { border-bottom: none; }
+.settings-table td:first-child {
+  font-family: var(--font);
+  font-weight: 600;
+  color: var(--fg);
+  white-space: nowrap;
+  width: 180px;
+}
+.settings-table td:last-child {
+  color: var(--fg-70);
+}
+.val-accent {
+  color: var(--accent) !important;
+  font-weight: 600;
+}
+
+/* ── CALLOUT ── */
+.callout {
+  background: var(--bg-nested);
+  border: 1px solid var(--fg-15);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin: 24px 0;
+}
+.callout-title {
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.callout p {
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+.callout p:last-child { margin-bottom: 0; }
+
+/* ── LISTS ── */
+ul, ol {
+  padding-left: 24px;
+  margin: 12px 0 20px;
+}
+li {
+  color: var(--fg-70);
+  margin-bottom: 10px;
+  font-size: 15px;
+  line-height: 1.55;
+}
+li strong { color: var(--fg); }
+
+/* ── PHASE 2 BANNER ── */
+.phase-banner {
+  background: linear-gradient(135deg, var(--accent-dim) 0%, rgba(200,255,0,0.04) 100%);
+  border: 1px solid rgba(200,255,0,0.15);
+  border-radius: var(--radius-lg);
+  padding: 48px 32px;
+  text-align: center;
+  margin: 48px 0;
+}
+.phase-banner h2 {
+  margin-bottom: 12px;
+}
+.phase-banner p {
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* ── FOOTER ── */
+footer {
+  padding: 48px 0;
+  text-align: center;
+  border-top: 1px solid var(--fg-08);
+  margin-top: 32px;
+}
+.footer-brand {
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--fg-40);
+}
+.footer-brand span { color: var(--accent); }
+.footer-sub {
+  font-size: 13px;
+  color: var(--fg-40);
+  margin-top: 8px;
+  letter-spacing: 0.03px;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 640px) {
+  .hero-meta { flex-direction: column; gap: 16px; }
+  .struct-row { flex-direction: column; }
+  .settings-table td:first-child { width: auto; white-space: normal; }
+  .nav-toc { display: none; }
+  .step { flex-direction: column; gap: 12px; }
+}
+
+/* ── SCROLL REVEALS ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s cubic-bezier(0.2,0,0,1), transform 0.5s cubic-bezier(0.2,0,0,1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div style="display:flex;align-items:center;">
+    <div class="nav-brand">VANTAGE <span>CREATIVE</span></div>
+    <span class="nav-tag">Prepared for Matt Matheson Creative</span>
+  </div>
+  <div class="nav-toc">
+    <a href="#structure">Structure</a>
+    <a href="#campaign">Campaign</a>
+    <a href="#adset">Ad Set</a>
+    <a href="#ads">Ads</a>
+    <a href="#phase2">Phase 2</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">Meta Ads Playbook</div>
+  <h1>Your First <span class="accent">Brand Awareness</span> Campaign</h1>
+  <p class="hero-sub">A complete walkthrough for getting Matt Matheson Creative in front of the right people across Cookeville and Nashville. No jargon, just the steps and why they matter.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <div class="val">14</div>
+      <div class="label">Day Campaign</div>
+    </div>
+    <div class="hero-meta-item">
+      <div class="val">$25</div>
+      <div class="label">Per Day</div>
+    </div>
+    <div class="hero-meta-item">
+      <div class="val">$350</div>
+      <div class="label">Total Spend</div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 1: WHAT ARE META ADS -->
+<section id="structure">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-num">01 — The Basics</div>
+      <h2>How Meta Ads Are Structured</h2>
+      <p>Before we build anything, you need to understand how Meta organizes ads. There are three levels and they nest inside each other like folders on your computer.</p>
+    </div>
+
+    <div class="structure reveal">
+      <div class="struct-box level-1">
+        <div class="struct-label">Level 1</div>
+        <div class="struct-name">Campaign</div>
+        <div class="struct-desc">Your goal. What do you want to accomplish?</div>
+      </div>
+      <div class="struct-connector"></div>
+      <div class="struct-box level-2">
+        <div class="struct-label">Level 2</div>
+        <div class="struct-name">Ad Set</div>
+        <div class="struct-desc">Your audience. Who do you want to reach?</div>
+      </div>
+      <div class="struct-connector"></div>
+      <div class="struct-row">
+        <div class="struct-box level-3">
+          <div class="struct-label">Level 3</div>
+          <div class="struct-name">Ad 1</div>
+          <div class="struct-desc">Video</div>
+        </div>
+        <div class="struct-box level-3">
+          <div class="struct-label">Level 3</div>
+          <div class="struct-name">Ad 2</div>
+          <div class="struct-desc">Video</div>
+        </div>
+        <div class="struct-box level-3">
+          <div class="struct-label">Level 3</div>
+          <div class="struct-name">Ad 3</div>
+          <div class="struct-desc">Video</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-accent reveal">
+      <p style="margin-bottom:0;"><strong>Think of it like a job site.</strong> The campaign is the project (build a house). The ad set is the crew and location (who's working, where). The ads are the actual work getting done (framing, drywall, paint). You need all three levels to run an ad.</p>
+    </div>
+
+    <div class="why-box reveal">
+      <p>Understanding this structure matters because each level controls different things. You set your goal at the campaign level, your targeting at the ad set level, and your creative at the ad level. If something isn't working, knowing which level to adjust is the difference between fixing the problem and wasting money.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 2: WHY BRAND AWARENESS -->
+<section>
+  <div class="container">
+    <div class="reveal">
+      <div class="section-num">02 — The Strategy</div>
+      <h2>Why Brand Awareness First</h2>
+      <p>Your first instinct is probably "I want leads." That makes sense. But here's the problem: nobody hires a videographer they've never heard of from a cold ad in their feed.</p>
+      <p>Brand awareness solves this. For two weeks, you're paying Meta to put your best work in front of as many people as possible in Cookeville and Nashville. You're not asking them to do anything. No form to fill out, no link to click. Just your highlight reel in their feed.</p>
+    </div>
+
+    <div class="why-box reveal">
+      <p>This is how the biggest brands in the world advertise. They don't start with "buy now." They start with "here we are." When someone sees your work three or four times over two weeks, you go from a stranger to a name they recognize. Then in Phase 2, when you DO ask for the lead, the conversion rate is dramatically higher because they already know who you are.</p>
+    </div>
+
+    <h3 class="reveal">The Two-Phase Plan</h3>
+
+    <div class="card reveal">
+      <h4 style="margin-top:0;color:var(--accent);">Phase 1: Brand Awareness (This Guide)</h4>
+      <p><strong>Duration:</strong> 14 days</p>
+      <p><strong>Budget:</strong> $25/day ($350 total)</p>
+      <p><strong>Goal:</strong> Get your name and work in front of as many targeted people as possible</p>
+      <p style="margin-bottom:0;"><strong>What it builds:</strong> A custom audience of people who watched your videos. This audience is gold for Phase 2.</p>
+    </div>
+
+    <div class="card reveal">
+      <h4 style="margin-top:0;color:var(--fg-40);">Phase 2: Retargeting (After the 2 Weeks)</h4>
+      <p><strong>Duration:</strong> Ongoing</p>
+      <p><strong>Budget:</strong> $10-15/day</p>
+      <p><strong>Goal:</strong> Show a different ad to the people who already watched your videos, this time with a call to action</p>
+      <p style="margin-bottom:0;"><strong>Why it works:</strong> You're only spending money on people who already showed interest. These are warm leads, not cold strangers.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: CREATE THE CAMPAIGN -->
+<section id="campaign">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-num">03 — Build the Campaign</div>
+      <h2>Step-by-Step: Create Your Campaign</h2>
+      <p>This is the top level. You're telling Meta what your goal is and how much you want to spend. Here's exactly how to set it up.</p>
+    </div>
+
+    <div class="step reveal">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>Open Ads Manager</h4>
+        <p>Go to <strong>facebook.com/adsmanager</strong> on your computer (not your phone). Click the green <strong>"+ Create"</strong> button in the top left.</p>
+      </div>
+    </div>
+
+    <div class="step reveal">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>Choose Your Objective: Awareness</h4>
+        <p>Meta will show you six objectives. Pick <strong>"Awareness."</strong> This tells Meta to optimize for showing your ad to as many people as possible.</p>
+        <div class="why-box">
+          <p>The other objectives (Traffic, Leads, Sales) tell Meta to find people likely to click or fill out a form. That sounds better, but it's more expensive and you're unknown right now. Awareness gets your work in front of 5-10x more people for the same budget. Volume first, conversions later.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step reveal">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>Name Your Campaign</h4>
+        <p>Use something clear: <strong>"MMC Brand Awareness | Spring 2026"</strong></p>
+        <p>Naming convention matters when you have multiple campaigns running. Future you will thank present you.</p>
+      </div>
+    </div>
+
+    <div class="step reveal">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h4>Campaign Settings</h4>
+        <p>On the next screen, configure these settings:</p>
+      </div>
+    </div>
+
+    <table class="settings-table reveal">
+      <thead>
+        <tr><th>Setting</th><th>What to Pick</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Buying Type</td>
+          <td><span class="val-accent">Auction</span> (default, leave it)</td>
+        </tr>
+        <tr>
+          <td>Campaign Budget</td>
+          <td>Toggle <strong>ON</strong> "Campaign Budget Optimization" (also called CBO). This lets Meta distribute your budget automatically across your ad set.</td>
+        </tr>
+        <tr>
+          <td>Daily Budget</td>
+          <td><span class="val-accent">$25.00</span></td>
+        </tr>
+        <tr>
+          <td>Bid Strategy</td>
+          <td><span class="val-accent">Lowest Cost</span> (this is the default). Do NOT set a cost cap for awareness.</td>
+        </tr>
+        <tr>
+          <td>Campaign Schedule</td>
+          <td>Set a <strong>start date</strong> (whenever you're ready) and an <strong>end date 14 days later</strong>. This way the campaign stops automatically so you don't forget.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="why-box reveal">
+      <p><strong>Lowest Cost</strong> means you're telling Meta "spend my $25/day and get me as many eyeballs as possible." There's no reason to cap costs on awareness because you're paying for reach, and Meta is already incentivized to get you the most reach for your money.</p>
+    </div>
+
+    <div class="callout reveal">
+      <div class="callout-title">Important</div>
+      <p><strong>Campaign Budget Optimization (CBO)</strong> means Meta controls how the $25 is split across your ads. This is what you want. Meta will figure out which of your 3 videos is performing best and automatically push more budget toward it. You don't have to babysit it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4: CREATE THE AD SET -->
+<section id="adset">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-num">04 — Build the Ad Set</div>
+      <h2>Step-by-Step: Create Your Ad Set</h2>
+      <p>The ad set is where you tell Meta WHO to show your ads to and WHERE to show them. This is the most important part of the setup. Get this right and everything else falls into place.</p>
+    </div>
+
+    <div class="step reveal">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>Name Your Ad Set</h4>
+        <p><strong>"Broad | 21-55 | Cookeville + Nashville"</strong></p>
+        <p>Again, descriptive naming. You can see exactly what this ad set targets just from the name.</p>
+      </div>
+    </div>
+
+    <div class="step reveal">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>Optimization Goal: Reach</h4>
+        <p>Under "Optimization for Ad Delivery," select <strong>"Reach."</strong> This tells Meta to show your ad to as many unique people as possible, instead of showing it to the same people over and over.</p>
+      </div>
+    </div>
+
+    <div class="step reveal">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>Select Your Facebook Page</h4>
+        <p>Under "Identity," make sure <strong>"Matt Matheson Creative"</strong> is selected as your Facebook Page. This is the page your ads will come from.</p>
+      </div>
+    </div>
+
+    <div class="step reveal">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h4>Audience: Location</h4>
+        <p>This is where it matters. You want two locations:</p>
+        <ul>
+          <li><strong>Cookeville, Tennessee</strong> with a <strong>50-mile radius</strong></li>
+          <li><strong>Nashville, Tennessee</strong> with a <strong>30-mile radius</strong></li>
+        </ul>
+        <p>For location type, select <strong>"People living in or recently in this location."</strong></p>
+        <div class="why-box">
+          <p>The 50-mile radius around Cookeville covers your home turf and the surrounding towns. The 30-mile radius around Nashville covers the metro area without bleeding into places like Clarksville or Murfreesboro suburbs where your ideal clients probably aren't. Nashville is where the artists and bigger businesses are, so that's your growth market.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step reveal">
+      <div class="step-num">5</div>
+      <div class="step-content">
+        <h4>Audience: Age Range</h4>
+        <p>Set to <strong>21 - 55</strong>.</p>
+        <div class="why-box">
+          <p>Your three audiences (weddings, artists, businesses) all fall in this range. Engaged couples are typically 24-35, working musicians and artists 21-40, and business owners making hiring decisions 28-55. Going broad here lets Meta's algorithm figure out who's actually engaging with your content.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step reveal">
+      <div class="step-num">6</div>
+      <div class="step-content">
+        <h4>Audience: Interest Targeting</h4>
+        <p><strong>Leave this blank. No interest targeting.</strong></p>
+        <div class="why-box">
+          <p>This sounds counterintuitive, but interest targeting on brand awareness campaigns usually limits your reach without improving quality. Meta's algorithm is incredibly good at figuring out who engages with video content. Your videos will naturally attract the right people. Let the algorithm do its job.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step reveal">
+      <div class="step-num">7</div>
+      <div class="step-content">
+        <h4>Turn OFF Advantage+ Audience</h4>
+        <p>Meta will try to turn on "Advantage+ Audience" which lets them expand beyond your targeting. <strong>Turn this OFF.</strong></p>
+        <div class="why-box">
+          <p>With Advantage+ on, Meta will show your ads to people outside your Cookeville and Nashville radius. That's wasted money. If someone in Memphis sees your reel, cool, but they're not hiring a Cookeville videographer. Keep your budget focused on the areas where you actually do business.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step reveal">
+      <div class="step-num">8</div>
+      <div class="step-content">
+        <h4>Placements: Facebook Only</h4>
+        <p>Under Placements, switch from "Advantage+ Placements" to <strong>"Manual Placements."</strong> Then select <strong>Facebook only</strong>. Turn off Instagram, Audience Network, and Messenger.</p>
+        <p>Within Facebook, keep these placements on:</p>
+        <ul>
+          <li><strong>Feed</strong> (your main placement)</li>
+          <li><strong>Reels</strong></li>
+          <li><strong>Stories</strong></li>
+          <li><strong>In-stream videos</strong></li>
+          <li><strong>Search results</strong></li>
+        </ul>
+        <div class="why-box">
+          <p>The data across multiple campaigns shows Facebook delivers 5-7x cheaper reach than Instagram. Instagram looks sexier, but for pure awareness at this budget, Facebook gets your work in front of way more people per dollar. You can always add Instagram later when you have more budget.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout reveal">
+      <div class="callout-title">Full Ad Set Settings Reference</div>
+      <table class="settings-table" style="margin-top:12px;">
+        <thead>
+          <tr><th>Setting</th><th>Value</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Ad Set Name</td><td>Broad | 21-55 | Cookeville + Nashville</td></tr>
+          <tr><td>Optimization</td><td><span class="val-accent">Reach</span></td></tr>
+          <tr><td>Facebook Page</td><td>Matt Matheson Creative</td></tr>
+          <tr><td>Locations</td><td>Cookeville 50mi + Nashville 30mi</td></tr>
+          <tr><td>Location Type</td><td>Living in or recently in</td></tr>
+          <tr><td>Age</td><td><span class="val-accent">21 - 55</span></td></tr>
+          <tr><td>Gender</td><td>All</td></tr>
+          <tr><td>Interests</td><td>None (broad)</td></tr>
+          <tr><td>Advantage+</td><td><span style="color:#ff4444;">OFF</span></td></tr>
+          <tr><td>Platforms</td><td><span class="val-accent">Facebook only</span></td></tr>
+          <tr><td>Placements</td><td>Feed, Reels, Stories, In-stream, Search</td></tr>
+          <tr><td>Devices</td><td>Mobile + Desktop</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 5: CREATE THE ADS -->
+<section id="ads">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-num">05 — Build the Ads</div>
+      <h2>Step-by-Step: Create Your Ads</h2>
+      <p>This is where your work goes. You're uploading the videos that people will actually see in their feed. Here's the key: <strong>you need at least 3 ads in your ad set, not just 1.</strong></p>
+    </div>
+
+    <div class="card card-accent reveal">
+      <h4 style="margin-top:0;">Why 3 Ads Matters</h4>
+      <p>When you give Meta one ad, it has no choice. It just shows that one video to everyone whether they like it or not.</p>
+      <p>When you give it three ads, Meta runs a contest. It shows all three to small groups of people, measures which one gets the most engagement (watches, likes, shares), and automatically shifts more budget toward the winner.</p>
+      <p style="margin-bottom:0;">This is called <strong>"creative testing"</strong> and it happens automatically. You don't have to do anything. But it only works if you give Meta options to test. More options = better results = lower cost per person reached.</p>
+    </div>
+
+    <h3 class="reveal">What to Upload</h3>
+
+    <p class="reveal">You said you have a highlight reel from last year. That's great, but it's probably too long for a feed ad. Here's what I recommend:</p>
+
+    <div class="card reveal">
+      <h4 style="margin-top:0;">Ad 1: Wedding Reel Cut</h4>
+      <p><strong>Length:</strong> 15-20 seconds</p>
+      <p>Pull the best 15-20 seconds of wedding footage from your highlight reel. The most cinematic, emotional moments. First kiss, the venue wide shot, the exit. Think trailer, not full film.</p>
+      <p style="margin-bottom:0;"><strong>Name it:</strong> "MMC Wedding Reel Spring 2026"</p>
+    </div>
+
+    <div class="card reveal">
+      <h4 style="margin-top:0;">Ad 2: Commercial / Business Cut</h4>
+      <p><strong>Length:</strong> 15-20 seconds</p>
+      <p>Your best commercial or business work. Product shots, brand films, anything that shows businesses what you can do for them. High energy, clean cuts.</p>
+      <p style="margin-bottom:0;"><strong>Name it:</strong> "MMC Commercial Reel Spring 2026"</p>
+    </div>
+
+    <div class="card reveal">
+      <h4 style="margin-top:0;">Ad 3: Artist / Music Cut</h4>
+      <p><strong>Length:</strong> 15-20 seconds</p>
+      <p>Music video clips, artist sessions, live performance footage. Nashville is crawling with artists who need video work. This is your hook for that market.</p>
+      <p style="margin-bottom:0;"><strong>Name it:</strong> "MMC Artist Reel Spring 2026"</p>
+    </div>
+
+    <div class="why-box reveal">
+      <p><strong>Why 15-20 seconds?</strong> People scroll fast. The average person decides whether to keep watching within the first 3 seconds. A 2-minute reel means 90% of viewers drop off before seeing your best work. A tight 15-second cut keeps the hit rate high. Every second is your best second. You can always link your full reel on your page for people who want more.</p>
+    </div>
+
+    <h3 class="reveal">How to Create Each Ad</h3>
+
+    <div class="step reveal">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>Ad Name</h4>
+        <p>Use the names above. You'll create 3 separate ads inside the same ad set.</p>
+      </div>
+    </div>
+
+    <div class="step reveal">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>Identity</h4>
+        <p>Make sure <strong>Matt Matheson Creative</strong> is selected as the Facebook Page.</p>
+      </div>
+    </div>
+
+    <div class="step reveal">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>Ad Creative</h4>
+        <p>Select <strong>"Single image or video"</strong> then upload your video file. Use the highest quality version you have (1080p minimum, 4K if you have it).</p>
+      </div>
+    </div>
+
+    <div class="step reveal">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h4>Primary Text</h4>
+        <p>Keep it short and confident. No hard sell. Examples:</p>
+        <ul>
+          <li><strong>Wedding ad:</strong> "Your day deserves to be remembered like this."</li>
+          <li><strong>Commercial ad:</strong> "This is what your brand could look like."</li>
+          <li><strong>Artist ad:</strong> "Making the music look as good as it sounds."</li>
+        </ul>
+        <p>Two lines max. Let the video do the talking.</p>
+      </div>
+    </div>
+
+    <div class="step reveal">
+      <div class="step-num">5</div>
+      <div class="step-content">
+        <h4>Call to Action</h4>
+        <p>For awareness, either select <strong>"Learn More"</strong> or <strong>no button at all</strong>. You're not trying to drive clicks right now. If you do use Learn More, link it to your Facebook page or website.</p>
+      </div>
+    </div>
+
+    <div class="step reveal">
+      <div class="step-num">6</div>
+      <div class="step-content">
+        <h4>Repeat for All 3 Ads</h4>
+        <p>After creating the first ad, click <strong>"+ Create"</strong> within the same ad set to add your second and third videos. All three live inside the same ad set. Do NOT create separate ad sets for each video.</p>
+      </div>
+    </div>
+
+    <div class="callout reveal">
+      <div class="callout-title">Common Mistake</div>
+      <p>New advertisers often create one campaign per video, or one ad set per video. <strong>Don't do this.</strong> All 3 videos go inside the same ad set. This lets Meta test them against each other and push budget to the winner. Splitting them into separate ad sets splits your budget and kills the algorithm's ability to optimize.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 6: WHAT TO EXPECT -->
+<section>
+  <div class="container">
+    <div class="reveal">
+      <div class="section-num">06 — What to Expect</div>
+      <h2>After You Hit Publish</h2>
+    </div>
+
+    <h3 class="reveal">The First 48 Hours: Learning Phase</h3>
+    <p class="reveal">When your campaign starts, Meta enters what it calls the <strong>"Learning Phase."</strong> For the first 1-2 days, performance will look weird. Your reach might be low, your cost per result might be high. This is normal.</p>
+
+    <div class="why-box reveal">
+      <p>During the learning phase, Meta is testing different people, times of day, and placements to figure out where your videos perform best. It needs about 50 optimization events (in your case, 50 people reached efficiently) before it stabilizes. Don't touch anything during this period. Seriously. Resist the urge to edit, pause, or adjust. Let it learn.</p>
+    </div>
+
+    <h3 class="reveal">Projected Performance</h3>
+
+    <p class="reveal">Based on real campaign data running similar awareness campaigns in the Cookeville area, here's roughly what to expect from your $350 over 14 days:</p>
+
+    <table class="settings-table reveal">
+      <thead>
+        <tr><th>Metric</th><th>Expected Range</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Total Reach</td><td><span class="val-accent">40,000 - 60,000 people</span></td></tr>
+        <tr><td>Impressions</td><td>70,000 - 110,000</td></tr>
+        <tr><td>Frequency</td><td>1.5 - 2.0 (avg times each person sees your ad)</td></tr>
+        <tr><td>CPM</td><td>$3 - $5 (cost per 1,000 impressions)</td></tr>
+        <tr><td>Video Views</td><td>15,000 - 25,000</td></tr>
+        <tr><td>Leads</td><td><span style="color:var(--fg-40);">Zero (by design)</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="card card-accent reveal">
+      <h4 style="margin-top:0;">Do NOT Panic About Zero Leads</h4>
+      <p style="margin-bottom:0;">This campaign is not designed to generate leads. If someone happens to reach out after seeing your ad, great, but that's a bonus. The goal is reach and video views. Those video viewers become your retargeting audience in Phase 2. That's where the leads come from.</p>
+    </div>
+
+    <h3 class="reveal">Metrics That Actually Matter</h3>
+    <ul class="reveal">
+      <li><strong>Reach:</strong> How many unique people saw your ad. Higher is better.</li>
+      <li><strong>Frequency:</strong> How many times the average person saw it. You want 1.5-2.5. If it goes above 3.5, people are seeing it too many times and it starts to annoy them.</li>
+      <li><strong>Video Views (ThruPlay):</strong> People who watched at least 15 seconds. This is the audience you'll retarget.</li>
+      <li><strong>CPM:</strong> Cost per 1,000 impressions. Lower is better. Under $5 is solid for this area.</li>
+    </ul>
+
+    <h3 class="reveal">When to Check</h3>
+    <p class="reveal">Check your results <strong>once every 3-4 days</strong>. Not every hour. Not every day. The algorithm needs time to optimize and obsessively checking changes nothing except your stress level. Go to Ads Manager, look at reach and frequency, confirm everything is running, and close the tab.</p>
+  </div>
+</section>
+
+<!-- SECTION 7: PHASE 2 RETARGETING -->
+<section id="phase2">
+  <div class="container">
+    <div class="phase-banner reveal">
+      <div class="section-num">07 — Phase 2</div>
+      <h2>Retargeting: Where the Leads Come From</h2>
+      <p>After your 2-week awareness campaign ends, you'll have an audience of thousands of people who watched your videos. Now you run a second campaign that only targets those people.</p>
+    </div>
+
+    <div class="reveal">
+      <p>This is where the money gets made. Phase 1 was the introduction. Phase 2 is the follow-up. You're running a new ad, but only showing it to people who already know your work.</p>
+    </div>
+
+    <h3 class="reveal">Step 1: Create a Custom Audience</h3>
+    <p class="reveal">Before building Phase 2, you need to create the audience you're going to retarget.</p>
+
+    <div class="step reveal">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>Go to Audiences</h4>
+        <p>In Ads Manager, click the hamburger menu (three lines) in the top left, then <strong>All Tools > Audiences.</strong></p>
+      </div>
+    </div>
+
+    <div class="step reveal">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>Create Custom Audience</h4>
+        <p>Click <strong>"Create Audience" > "Custom Audience."</strong> Select <strong>"Video"</strong> as the source.</p>
+      </div>
+    </div>
+
+    <div class="step reveal">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>Configure the Audience</h4>
+        <p>Select <strong>"People who watched at least 50% of your video"</strong> from the dropdown. Then select all 3 of your awareness ads as the videos. Set the retention to <strong>180 days</strong>.</p>
+        <p>Name it: <strong>"MMC Video Viewers 50% | 180 Days"</strong></p>
+        <div class="why-box">
+          <p>Someone who watched 50% of your video is genuinely interested. They didn't just scroll past, they stopped and watched. 180 days gives this audience time to build up and stay populated. This is a warm audience of people who already know your work exists.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="reveal">Step 2: Build the Retargeting Campaign</h3>
+
+    <table class="settings-table reveal">
+      <thead>
+        <tr><th>Setting</th><th>Value</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Campaign Name</td><td>MMC Retargeting | Spring 2026</td></tr>
+        <tr><td>Objective</td><td><span class="val-accent">Leads</span> (or Traffic if you prefer website visits)</td></tr>
+        <tr><td>Daily Budget</td><td><span class="val-accent">$10-15/day</span></td></tr>
+        <tr><td>Bid Strategy</td><td>Lowest Cost</td></tr>
+        <tr><td>Ad Set Name</td><td>Video Viewers 50% | 180 Days</td></tr>
+        <tr><td>Audience</td><td>Your custom video viewers audience</td></tr>
+        <tr><td>Location</td><td>Same (Cookeville 50mi + Nashville 30mi)</td></tr>
+        <tr><td>Placements</td><td>Facebook only, same placements</td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="reveal">The Retargeting Ad</h3>
+    <p class="reveal">Your Phase 2 ad should be different from your awareness videos. These people already saw your work. Now you need to give them a reason to reach out.</p>
+
+    <div class="card reveal">
+      <h4 style="margin-top:0;">Ideas for Retargeting Ads</h4>
+      <ul>
+        <li><strong>Behind-the-scenes video:</strong> Show the process, not just the final product. This builds trust and makes you feel approachable.</li>
+        <li><strong>Client testimonial:</strong> A short clip of a happy client talking about working with you.</li>
+        <li><strong>Direct-to-camera pitch:</strong> You, talking naturally about what you do and why you love it. People hire people, not brands.</li>
+      </ul>
+      <p style="margin-bottom:0;">Keep the CTA clear: <strong>"Send Message"</strong> or <strong>"Learn More"</strong> pointing to your website or booking page.</p>
+    </div>
+
+    <div class="why-box reveal">
+      <p>The retargeting budget is lower ($10-15/day) because the audience is much smaller. You're not trying to reach 50,000 people anymore. You're reaching the few thousand who already watched your Phase 1 videos. Smaller audience = less spend needed = higher conversion rate. This is where ads start feeling efficient.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 8: OPTIMIZATION RULES -->
+<section>
+  <div class="container">
+    <div class="reveal">
+      <div class="section-num">08 — Optimization</div>
+      <h2>Rules to Live By</h2>
+      <p>Tape these to your desk. These are the guardrails that keep your money working.</p>
+    </div>
+
+    <div class="card reveal">
+      <h4 style="margin-top:0;">The Rules</h4>
+      <ol>
+        <li><strong>Don't touch anything for the first 48 hours.</strong> Let the learning phase finish. Edits during this period reset the learning.</li>
+        <li><strong>Check results every 3-4 days, not daily.</strong> Obsessive checking leads to panic changes that hurt performance.</li>
+        <li><strong>Watch the frequency.</strong> If it goes above 3.5, your audience is seeing the ads too often. Either expand your audience, refresh your creative (new videos), or pause the campaign.</li>
+        <li><strong>Refresh creative every 2-3 weeks.</strong> Even great ads go stale. If you run Phase 2 for more than a few weeks, swap in new videos.</li>
+        <li><strong>Never boost a post from your page.</strong> Always create ads through Ads Manager. Boosting gives you zero control over targeting and optimization. It's Meta's way of getting you to spend money with bad results.</li>
+        <li><strong>Kill what doesn't work.</strong> If one of your 3 videos has zero engagement after $25 spent, turn it off. Don't let it drain budget from the winners.</li>
+        <li><strong>Scale what does work.</strong> If one video is crushing it (high views, low CPM), you can increase your daily budget by 20% at a time. Never double a budget overnight, it resets the learning phase.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 9: GLOSSARY -->
+<section>
+  <div class="container">
+    <div class="reveal">
+      <div class="section-num">09 — Glossary</div>
+      <h2>Terms You'll See in Ads Manager</h2>
+      <p>Quick reference so you're not Googling while setting things up.</p>
+    </div>
+
+    <table class="settings-table reveal">
+      <thead>
+        <tr><th>Term</th><th>What It Means</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Reach</td><td>The number of unique people who saw your ad at least once</td></tr>
+        <tr><td>Impressions</td><td>Total number of times your ad was shown (one person can account for multiple impressions)</td></tr>
+        <tr><td>Frequency</td><td>Average number of times each person saw your ad (impressions / reach)</td></tr>
+        <tr><td>CPM</td><td>Cost Per 1,000 impressions. How much you're paying for every thousand times your ad is shown.</td></tr>
+        <tr><td>CPP</td><td>Cost Per Person reached. How much you're paying per unique person.</td></tr>
+        <tr><td>ThruPlay</td><td>A video view where someone watched at least 15 seconds (or the full video if under 15 seconds)</td></tr>
+        <tr><td>CBO</td><td>Campaign Budget Optimization. Meta distributes your budget automatically across ad sets.</td></tr>
+        <tr><td>Learning Phase</td><td>The first ~48 hours where Meta tests different delivery options. Performance is unstable during this time.</td></tr>
+        <tr><td>Ad Set</td><td>The targeting layer. Controls who sees your ads, where, and when.</td></tr>
+        <tr><td>Advantage+</td><td>Meta's AI-powered features that expand your targeting. Sometimes helpful, sometimes wastes money. We turn it off for this campaign.</td></tr>
+        <tr><td>Custom Audience</td><td>A group of people you define based on their behavior (watched your video, visited your website, etc.)</td></tr>
+        <tr><td>Retargeting</td><td>Showing ads to people who already interacted with your brand. Much cheaper and more effective than cold targeting.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-brand">VANTAGE <span>CREATIVE</span></div>
+    <p class="footer-sub">Prepared for Matt Matheson Creative | April 2026</p>
+  </div>
+</footer>
+
+<!-- SCROLL REVEAL -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, i * 50);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => observer.observe(el));
+});
+</script>
+
+</body>
+</html>
