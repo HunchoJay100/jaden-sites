@@ -1,0 +1,2117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Grace's Porch · Reconsidered</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bone: #F5F1E8;
+    --bone-deep: #EDE7D8;
+    --bone-warm: #FAF7EF;
+    --ink: #171512;
+    --ink-soft: #3A3530;
+    --ink-faded: #8A847C;
+    --gold: #C5A55A;
+    --gold-deep: #8B7340;
+    --gold-glow: rgba(197, 165, 90, 0.15);
+    --moss: #1F2E24;
+    --moss-deep: #14201A;
+    --rust: #A85D3C;
+    --hairline: rgba(23, 21, 18, 0.12);
+    --hairline-soft: rgba(23, 21, 18, 0.06);
+
+    --f-display: 'Fraunces', 'Cormorant Garamond', Georgia, serif;
+    --f-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --f-mono: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+
+    --spring-soft: cubic-bezier(0.2, 0, 0, 1);
+    --spring-snap: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --spring-long: cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--f-body);
+    background: var(--bone);
+    color: var(--ink);
+    font-size: 17px;
+    line-height: 1.55;
+    letter-spacing: -0.011em;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  /* ===== GRAIN OVERLAY ===== */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.035;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' seed='5'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  /* ===== TYPOGRAPHY PRIMITIVES ===== */
+  .f-display {
+    font-family: var(--f-display);
+    font-variation-settings: "opsz" 144, "SOFT" 50;
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+  }
+
+  .f-display-italic {
+    font-family: var(--f-display);
+    font-style: italic;
+    font-variation-settings: "opsz" 144, "SOFT" 100;
+    font-weight: 300;
+    letter-spacing: -0.04em;
+  }
+
+  .eyebrow {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-faded);
+  }
+
+  .eyebrow--gold {
+    color: var(--gold-deep);
+  }
+
+  .eyebrow--light {
+    color: rgba(245, 241, 232, 0.55);
+  }
+
+  .num-mono {
+    font-family: var(--f-mono);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    font-feature-settings: "tnum" 1;
+  }
+
+  /* ===== CONTAINER ===== */
+  .wrap {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  .wrap--narrow {
+    max-width: 920px;
+  }
+
+  /* ===== NAV ===== */
+  nav.topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 16px 40px;
+    background: rgba(245, 241, 232, 0.75);
+    backdrop-filter: blur(14px) saturate(180%);
+    -webkit-backdrop-filter: blur(14px) saturate(180%);
+    border-bottom: 1px solid var(--hairline-soft);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  nav .brand {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  nav .brand span {
+    color: var(--gold-deep);
+  }
+
+  nav .jump {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+  }
+
+  nav .jump a {
+    font-size: 13px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: color 0.2s var(--spring-soft);
+    letter-spacing: -0.005em;
+  }
+
+  nav .jump a:hover {
+    color: var(--gold-deep);
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    padding: 180px 0 120px;
+    position: relative;
+  }
+
+  .hero .meta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 72px;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+
+  .hero .meta-row > div {
+    display: flex;
+    gap: 40px;
+    align-items: baseline;
+  }
+
+  .hero .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .hero .meta-item .label {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--ink-faded);
+  }
+
+  .hero .meta-item .value {
+    font-size: 14px;
+    color: var(--ink-soft);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  .hero h1 {
+    font-family: var(--f-display);
+    font-variation-settings: "opsz" 144, "SOFT" 50;
+    font-size: clamp(64px, 11vw, 152px);
+    line-height: 0.9;
+    letter-spacing: -0.045em;
+    font-weight: 300;
+    color: var(--ink);
+    max-width: 1100px;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    font-variation-settings: "opsz" 144, "SOFT" 100;
+    color: var(--gold-deep);
+    font-weight: 300;
+  }
+
+  .hero .sub {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 60px;
+    margin-top: 80px;
+    padding-top: 40px;
+    border-top: 1px solid var(--hairline);
+    align-items: start;
+  }
+
+  .hero .sub .lead {
+    font-family: var(--f-display);
+    font-variation-settings: "opsz" 48;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 1.35;
+    color: var(--ink);
+    letter-spacing: -0.015em;
+  }
+
+  .hero .sub .body-copy {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    max-width: 580px;
+  }
+
+  .hero .sub .body-copy p + p {
+    margin-top: 18px;
+  }
+
+  /* ===== PRICE DELTA HERO ===== */
+  .delta {
+    margin-top: 120px;
+    padding: 56px 48px;
+    background: var(--bone-deep);
+    border-radius: 12px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 40px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+  }
+
+  .delta .side {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .delta .side.right {
+    text-align: right;
+    align-items: flex-end;
+  }
+
+  .delta .label {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-faded);
+  }
+
+  .delta .price {
+    font-family: var(--f-display);
+    font-variation-settings: "opsz" 144;
+    font-size: 72px;
+    font-weight: 300;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: var(--ink);
+  }
+
+  .delta .price.strike {
+    color: var(--ink-faded);
+    position: relative;
+  }
+
+  .delta .price.strike::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -4%;
+    right: -4%;
+    height: 2px;
+    background: var(--rust);
+    transform: rotate(-4deg);
+  }
+
+  .delta .price.new em {
+    font-style: italic;
+    color: var(--gold-deep);
+  }
+
+  .delta .arrow {
+    font-family: var(--f-display);
+    font-style: italic;
+    font-size: 22px;
+    color: var(--gold-deep);
+    white-space: nowrap;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .delta .arrow svg {
+    width: 80px;
+    height: 28px;
+  }
+
+  .delta .sub-label {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-top: 4px;
+  }
+
+  /* ===== SECTION HEADER ===== */
+  section {
+    padding: 120px 0;
+  }
+
+  .section-head {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 40px;
+    margin-bottom: 80px;
+    align-items: baseline;
+  }
+
+  .section-head .num {
+    font-family: var(--f-mono);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    color: var(--gold-deep);
+    padding-top: 12px;
+    border-top: 1px solid var(--gold);
+    width: 120px;
+  }
+
+  .section-head h2 {
+    font-family: var(--f-display);
+    font-variation-settings: "opsz" 144, "SOFT" 50;
+    font-size: clamp(40px, 5.5vw, 76px);
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    font-weight: 300;
+    max-width: 900px;
+  }
+
+  .section-head h2 em {
+    font-style: italic;
+    font-variation-settings: "opsz" 144, "SOFT" 100;
+    color: var(--gold-deep);
+    font-weight: 300;
+  }
+
+  /* ===== SITUATION CARDS ===== */
+  .situation-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+
+  .situation-card {
+    padding: 40px 32px;
+    background: var(--bone-warm);
+    border-radius: 12px;
+    position: relative;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+    transition: all 0.4s var(--spring-soft);
+  }
+
+  .situation-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+  }
+
+  .situation-card .tag {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin-bottom: 24px;
+  }
+
+  .situation-card h3 {
+    font-family: var(--f-display);
+    font-variation-settings: "opsz" 72;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    margin-bottom: 20px;
+    color: var(--ink);
+  }
+
+  .situation-card h3 em {
+    font-style: italic;
+    color: var(--gold-deep);
+  }
+
+  .situation-card p {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+  }
+
+  /* ===== INTERACTIVE SHOWCASE (DARK) ===== */
+  .showcase {
+    background: var(--moss);
+    color: var(--bone);
+    padding: 140px 0;
+    margin: 40px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .showcase::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold) 40%, var(--gold) 60%, transparent);
+    opacity: 0.4;
+  }
+
+  .showcase::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold) 40%, var(--gold) 60%, transparent);
+    opacity: 0.4;
+  }
+
+  .showcase .section-head h2 {
+    color: var(--bone);
+  }
+
+  .showcase .section-head .num {
+    color: var(--gold);
+    border-top-color: var(--gold);
+  }
+
+  .showcase .section-head h2 em {
+    color: var(--gold);
+  }
+
+  /* Demo container */
+  .demo {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    margin-top: 60px;
+  }
+
+  .demo-window {
+    position: relative;
+    aspect-ratio: 4/5;
+    max-width: 480px;
+    margin: 0 auto;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow:
+      0 30px 80px rgba(0, 0, 0, 0.4),
+      0 10px 30px rgba(0, 0, 0, 0.3),
+      inset 0 0 0 12px #2a1f15,
+      inset 0 0 0 14px #4a3820;
+  }
+
+  .sky {
+    position: absolute;
+    inset: 14px;
+    background:
+      linear-gradient(180deg, #c8d4d9 0%, #a8b8bd 45%, #8ba095 70%, #5a7060 100%);
+    overflow: hidden;
+  }
+
+  .sky::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 35%;
+    background:
+      radial-gradient(ellipse at 30% 100%, rgba(90, 110, 80, 0.9) 0%, transparent 70%),
+      radial-gradient(ellipse at 75% 100%, rgba(60, 85, 60, 0.85) 0%, transparent 60%),
+      linear-gradient(180deg, transparent, #3d5540 100%);
+  }
+
+  .sky::after {
+    content: '';
+    position: absolute;
+    top: 15%;
+    left: 10%;
+    width: 40%;
+    height: 15%;
+    background: radial-gradient(ellipse, rgba(255, 255, 255, 0.4), transparent 70%);
+    filter: blur(12px);
+  }
+
+  /* Rain effect for winter mode */
+  .rain {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.6s var(--spring-soft);
+  }
+
+  .rain.active {
+    opacity: 1;
+  }
+
+  .rain .drop {
+    position: absolute;
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(180deg, transparent, rgba(200, 220, 230, 0.6));
+    animation: rainfall 0.8s linear infinite;
+  }
+
+  @keyframes rainfall {
+    from { transform: translateY(-100px) translateX(-20px); }
+    to { transform: translateY(600px) translateX(-60px); }
+  }
+
+  /* Panels */
+  .panel {
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    height: 50%;
+    transition: all 0.9s var(--spring-long);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .panel-frame {
+    position: absolute;
+    inset: 0;
+    border: 2px solid #4a3820;
+    background: rgba(0, 0, 0, 0.05);
+  }
+
+  .panel-frame::before,
+  .panel-frame::after {
+    content: '';
+    position: absolute;
+    background: #4a3820;
+  }
+
+  .panel-frame::before {
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+  }
+
+  .panel-frame::after {
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 1px;
+  }
+
+  /* Screen panel: visible mesh */
+  .panel--screen .surface {
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(20, 20, 20, 0.55) 0 1px, transparent 1px 3px),
+      repeating-linear-gradient(90deg, rgba(20, 20, 20, 0.55) 0 1px, transparent 1px 3px);
+    background-color: rgba(0, 0, 0, 0.12);
+  }
+
+  /* Vinyl panel: slight tint, clear */
+  .panel--vinyl .surface {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(135deg, rgba(200, 220, 230, 0.25) 0%, rgba(180, 200, 210, 0.1) 50%, rgba(220, 230, 235, 0.3) 100%);
+    backdrop-filter: blur(0.5px);
+  }
+
+  .panel--vinyl .surface::before {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: 20%;
+    width: 30%;
+    height: 50%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.4), transparent 60%);
+    filter: blur(2px);
+  }
+
+  .panel--top {
+    top: 0;
+  }
+
+  .panel--bottom {
+    top: 50%;
+  }
+
+  /* Open state = move panel out of view (stacked) */
+  .panel.hidden {
+    transform: translateY(-110%);
+    opacity: 0;
+  }
+
+  .panel.hidden-down {
+    transform: translateY(110%);
+    opacity: 0;
+  }
+
+  /* Demo controls */
+  .demo-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .demo-controls .kicker {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .demo-controls h3 {
+    font-family: var(--f-display);
+    font-variation-settings: "opsz" 144, "SOFT" 50;
+    font-size: 48px;
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--bone);
+  }
+
+  .demo-controls h3 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .demo-controls p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: rgba(245, 241, 232, 0.7);
+    max-width: 480px;
+  }
+
+  .mode-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .mode-btn {
+    appearance: none;
+    border: 1px solid rgba(197, 165, 90, 0.25);
+    background: rgba(197, 165, 90, 0.04);
+    color: var(--bone);
+    padding: 18px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.3s var(--spring-soft);
+    font-family: var(--f-body);
+    min-height: 72px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    justify-content: center;
+  }
+
+  .mode-btn:hover {
+    border-color: rgba(197, 165, 90, 0.5);
+    background: rgba(197, 165, 90, 0.08);
+    transform: translateY(-2px);
+  }
+
+  .mode-btn.active {
+    border-color: var(--gold);
+    background: rgba(197, 165, 90, 0.15);
+    box-shadow: 0 0 0 1px var(--gold), 0 8px 24px rgba(197, 165, 90, 0.2);
+  }
+
+  .mode-btn .season {
+    font-family: var(--f-display);
+    font-variation-settings: "opsz" 48;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 20px;
+    color: var(--gold);
+    letter-spacing: -0.01em;
+  }
+
+  .mode-btn .desc {
+    font-size: 12px;
+    color: rgba(245, 241, 232, 0.6);
+    letter-spacing: -0.005em;
+  }
+
+  .mode-btn.active .desc {
+    color: rgba(245, 241, 232, 0.85);
+  }
+
+  /* State readout under window */
+  .state-readout {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 32px;
+    padding: 20px 24px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    border: 1px solid rgba(197, 165, 90, 0.15);
+  }
+
+  .state-readout .cell {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .state-readout .cell-label {
+    font-family: var(--f-mono);
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(197, 165, 90, 0.7);
+  }
+
+  .state-readout .cell-val {
+    font-family: var(--f-mono);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--bone);
+    letter-spacing: -0.01em;
+  }
+
+  /* ===== PATHS ===== */
+  .paths-intro {
+    margin-bottom: 60px;
+  }
+
+  .path {
+    display: grid;
+    grid-template-columns: 280px 1fr 360px;
+    gap: 60px;
+    padding: 72px 0;
+    border-top: 1px solid var(--hairline);
+    align-items: start;
+    position: relative;
+  }
+
+  .path:last-child {
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .path-tag {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: sticky;
+    top: 100px;
+  }
+
+  .path-tag .letter {
+    font-family: var(--f-display);
+    font-variation-settings: "opsz" 144;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 120px;
+    line-height: 0.85;
+    color: var(--gold);
+    letter-spacing: -0.04em;
+  }
+
+  .path-tag .letter-num {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--ink-faded);
+  }
+
+  .path-tag .status {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 6px 10px;
+    border-radius: 4px;
+    display: inline-block;
+    width: fit-content;
+    margin-top: 8px;
+  }
+
+  .status--rec {
+    background: var(--gold);
+    color: var(--moss-deep);
+  }
+
+  .status--premium {
+    background: transparent;
+    color: var(--ink-soft);
+    border: 1px solid var(--hairline);
+  }
+
+  .status--budget {
+    background: transparent;
+    color: var(--ink-soft);
+    border: 1px solid var(--hairline);
+  }
+
+  .path-body h3 {
+    font-family: var(--f-display);
+    font-variation-settings: "opsz" 144, "SOFT" 50;
+    font-weight: 300;
+    font-size: 52px;
+    line-height: 1;
+    letter-spacing: -0.035em;
+    margin-bottom: 4px;
+  }
+
+  .path-body h3 em {
+    font-style: italic;
+    color: var(--gold-deep);
+    font-variation-settings: "opsz" 144, "SOFT" 100;
+  }
+
+  .path-body .brand-line {
+    font-family: var(--f-mono);
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    color: var(--ink-faded);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+
+  .path-body .lead {
+    font-family: var(--f-display);
+    font-variation-settings: "opsz" 48;
+    font-size: 22px;
+    line-height: 1.4;
+    color: var(--ink);
+    letter-spacing: -0.015em;
+    margin-bottom: 32px;
+    font-weight: 400;
+  }
+
+  .path-body p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    margin-bottom: 18px;
+    max-width: 620px;
+  }
+
+  .spec-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px 40px;
+    margin-top: 32px;
+    padding-top: 32px;
+    border-top: 1px solid var(--hairline);
+  }
+
+  .spec {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .spec-label {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-faded);
+  }
+
+  .spec-val {
+    font-family: var(--f-display);
+    font-variation-settings: "opsz" 48;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--ink);
+    letter-spacing: -0.015em;
+  }
+
+  .spec-val.mono {
+    font-family: var(--f-mono);
+    font-weight: 400;
+  }
+
+  /* Price card */
+  .price-card {
+    background: var(--bone-warm);
+    padding: 36px 32px;
+    border-radius: 12px;
+    position: sticky;
+    top: 100px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+  }
+
+  .price-card.rec {
+    background: var(--moss);
+    color: var(--bone);
+    box-shadow: 0 8px 32px rgba(31, 46, 36, 0.3), 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .price-card .kicker {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin-bottom: 12px;
+  }
+
+  .price-card.rec .kicker {
+    color: var(--gold);
+  }
+
+  .price-card .amount {
+    font-family: var(--f-display);
+    font-variation-settings: "opsz" 144;
+    font-size: 68px;
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .price-card.rec .amount {
+    color: var(--bone);
+  }
+
+  .price-card .amount em {
+    font-style: italic;
+    color: var(--gold-deep);
+  }
+
+  .price-card.rec .amount em {
+    color: var(--gold);
+  }
+
+  .price-card .amount-range {
+    font-family: var(--f-mono);
+    font-size: 12px;
+    color: var(--ink-faded);
+    margin-bottom: 24px;
+    letter-spacing: 0.04em;
+  }
+
+  .price-card.rec .amount-range {
+    color: rgba(245, 241, 232, 0.55);
+  }
+
+  .price-card .savings {
+    padding: 16px;
+    background: var(--bone-deep);
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 24px;
+  }
+
+  .price-card.rec .savings {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(197, 165, 90, 0.2);
+  }
+
+  .price-card .savings .label {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-faded);
+  }
+
+  .price-card.rec .savings .label {
+    color: rgba(245, 241, 232, 0.55);
+  }
+
+  .price-card .savings .value {
+    font-family: var(--f-display);
+    font-variation-settings: "opsz" 48;
+    font-size: 24px;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--gold-deep);
+    letter-spacing: -0.015em;
+  }
+
+  .price-card.rec .savings .value {
+    color: var(--gold);
+  }
+
+  .price-card ul {
+    list-style: none;
+    margin-bottom: 24px;
+  }
+
+  .price-card li {
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--hairline-soft);
+    color: var(--ink-soft);
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .price-card.rec li {
+    color: rgba(245, 241, 232, 0.8);
+    border-bottom: 1px solid rgba(197, 165, 90, 0.12);
+  }
+
+  .price-card li:last-child {
+    border-bottom: none;
+  }
+
+  .price-card li::before {
+    content: '';
+    display: block;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--gold);
+    margin-top: 8px;
+    flex-shrink: 0;
+  }
+
+  /* ===== IMAGE GALLERY ===== */
+  .path-gallery {
+    grid-column: 1 / -1;
+    margin-top: 40px;
+    padding-top: 32px;
+    border-top: 1px solid var(--hairline-soft);
+  }
+
+  .gallery-label {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--ink-faded);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .gallery-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--hairline-soft);
+  }
+
+  .gallery {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-auto-rows: 200px;
+    gap: 16px;
+  }
+
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    background: var(--bone-deep);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+    transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.3s cubic-bezier(0.2, 0, 0, 1);
+    cursor: pointer;
+  }
+
+  .gallery-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  .gallery-item:hover img {
+    transform: scale(1.04);
+  }
+
+  .gallery-item.feature {
+    grid-row: span 2;
+  }
+
+  .gallery-item.wide {
+    grid-column: span 2;
+  }
+
+  .gallery-caption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 20px 16px 14px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.35) 60%, transparent 100%);
+    color: rgba(255, 255, 255, 0.95);
+    font-family: var(--f-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.3s cubic-bezier(0.2, 0, 0, 1), transform 0.3s cubic-bezier(0.2, 0, 0, 1);
+    pointer-events: none;
+  }
+
+  .gallery-item:hover .gallery-caption {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .gallery-item .gallery-chip {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: rgba(23, 21, 18, 0.72);
+    backdrop-filter: blur(8px) saturate(150%);
+    -webkit-backdrop-filter: blur(8px) saturate(150%);
+    color: var(--gold);
+    font-family: var(--f-mono);
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(197, 165, 90, 0.2);
+  }
+
+  @media (max-width: 960px) {
+    .gallery {
+      grid-template-columns: 1fr 1fr;
+      grid-auto-rows: 160px;
+    }
+    .gallery-item.feature { grid-row: span 2; }
+    .gallery-item.wide { grid-column: span 2; }
+  }
+
+  @media (max-width: 560px) {
+    .gallery {
+      grid-template-columns: 1fr;
+      grid-auto-rows: 180px;
+    }
+    .gallery-item.feature,
+    .gallery-item.wide { grid-row: auto; grid-column: auto; }
+  }
+
+  /* ===== COMPARISON TABLE ===== */
+  .compare-wrap {
+    background: var(--bone-warm);
+    padding: 56px 48px;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  }
+
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .compare-table th,
+  .compare-table td {
+    padding: 20px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--hairline-soft);
+    vertical-align: top;
+  }
+
+  .compare-table th {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-faded);
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .compare-table td:first-child {
+    font-family: var(--f-display);
+    font-variation-settings: "opsz" 48;
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--ink);
+    letter-spacing: -0.015em;
+  }
+
+  .compare-table td {
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+
+  .compare-table td.price {
+    font-family: var(--f-display);
+    font-variation-settings: "opsz" 72;
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+
+  .compare-table td.price em {
+    font-style: italic;
+    color: var(--gold-deep);
+  }
+
+  .compare-table tr.v6 td {
+    color: var(--ink-faded);
+  }
+
+  .compare-table tr.v6 td.price {
+    color: var(--rust);
+    text-decoration: line-through;
+    text-decoration-color: var(--rust);
+  }
+
+  .compare-table tr.rec {
+    background: var(--gold-glow);
+  }
+
+  .compare-table tr.rec td:first-child::before {
+    content: '★ ';
+    color: var(--gold-deep);
+  }
+
+  /* ===== CLOSING ===== */
+  .closing {
+    padding: 160px 0 140px;
+    text-align: center;
+  }
+
+  .closing .frame {
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  .closing h2 {
+    font-family: var(--f-display);
+    font-variation-settings: "opsz" 144, "SOFT" 50;
+    font-size: clamp(48px, 7vw, 96px);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    font-weight: 300;
+    margin-bottom: 32px;
+  }
+
+  .closing h2 em {
+    font-style: italic;
+    font-variation-settings: "opsz" 144, "SOFT" 100;
+    color: var(--gold-deep);
+  }
+
+  .closing p {
+    font-family: var(--f-display);
+    font-variation-settings: "opsz" 48;
+    font-size: 22px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 620px;
+    margin: 0 auto 48px;
+    letter-spacing: -0.015em;
+  }
+
+  .closing .decision-list {
+    text-align: left;
+    max-width: 680px;
+    margin: 60px auto 0;
+    padding: 40px;
+    background: var(--bone-deep);
+    border-radius: 12px;
+  }
+
+  .closing .decision-list .title {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin-bottom: 20px;
+  }
+
+  .closing .decision-list ol {
+    list-style: none;
+    counter-reset: item;
+  }
+
+  .closing .decision-list li {
+    counter-increment: item;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--hairline-soft);
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 16px;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+
+  .closing .decision-list li:last-child {
+    border-bottom: none;
+  }
+
+  .closing .decision-list li::before {
+    content: counter(item, decimal-leading-zero);
+    font-family: var(--f-mono);
+    font-size: 12px;
+    color: var(--gold-deep);
+    letter-spacing: 0.1em;
+    padding-top: 2px;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    padding: 40px 0 60px;
+    border-top: 1px solid var(--hairline);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  footer .brand {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--ink-faded);
+  }
+
+  footer .brand span {
+    color: var(--gold-deep);
+  }
+
+  footer .tag {
+    font-family: var(--f-display);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--ink-faded);
+    font-variation-settings: "opsz" 48;
+  }
+
+  /* ===== REVEAL ANIMATIONS ===== */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s var(--spring-soft), transform 0.8s var(--spring-soft);
+  }
+
+  .reveal.in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal:nth-child(2) { transition-delay: 80ms; }
+  .reveal:nth-child(3) { transition-delay: 160ms; }
+  .reveal:nth-child(4) { transition-delay: 240ms; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 960px) {
+    .wrap { padding: 0 24px; }
+    .hero { padding: 140px 0 80px; }
+    .hero .sub { grid-template-columns: 1fr; gap: 32px; }
+    .delta { grid-template-columns: 1fr; gap: 24px; text-align: center; padding: 40px 24px; }
+    .delta .side, .delta .side.right { text-align: center; align-items: center; }
+    .delta .price { font-size: 56px; }
+    .delta .arrow { transform: rotate(90deg); }
+    .situation-grid { grid-template-columns: 1fr; gap: 20px; }
+    .section-head { grid-template-columns: 1fr; gap: 20px; }
+    .demo { grid-template-columns: 1fr; gap: 48px; }
+    .path { grid-template-columns: 1fr; gap: 32px; padding: 48px 0; }
+    .path-tag { flex-direction: row; align-items: baseline; position: static; }
+    .path-tag .letter { font-size: 80px; }
+    .path-body h3 { font-size: 40px; }
+    .price-card { position: static; }
+    .compare-wrap { padding: 32px 20px; overflow-x: auto; }
+    .compare-table { min-width: 640px; }
+    .spec-grid { grid-template-columns: 1fr; gap: 16px; }
+    nav.topbar { padding: 12px 20px; }
+    nav .jump { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="topbar">
+  <div class="brand">FLYNN <span>·</span> DEVELOPMENT</div>
+  <div class="jump">
+    <a href="#situation">Situation</a>
+    <a href="#product">Product</a>
+    <a href="#paths">Paths</a>
+    <a href="#compare">Compare</a>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<header class="hero">
+  <div class="wrap">
+    <div class="meta-row reveal">
+      <div>
+        <div class="meta-item">
+          <span class="label">Client</span>
+          <span class="value">Grace</span>
+        </div>
+        <div class="meta-item">
+          <span class="label">Scope</span>
+          <span class="value">Rear Porch, ~400 sq ft</span>
+        </div>
+        <div class="meta-item">
+          <span class="label">Drawings</span>
+          <span class="value">House of KNA · A01–A04</span>
+        </div>
+      </div>
+      <div class="meta-item">
+        <span class="label">Prepared</span>
+        <span class="value">April 20, 2026</span>
+      </div>
+    </div>
+
+    <h1 class="reveal">
+      Grace's porch,<br/>
+      <em>reconsidered.</em>
+    </h1>
+
+    <div class="sub reveal">
+      <p class="lead">
+        Three ways to make it usable year-round without pulling a permit, upsizing the panel, or adding HVAC.
+      </p>
+      <div class="body-copy">
+        <p>
+          The V6 enclosure plan answers the problem thoroughly, but it answers a larger question than Grace asked.
+          Closing the porch in traditionally triggers electrical code, insulation, drywall, and conditioned-space HVAC — all before the first square foot is livable.
+        </p>
+        <p>
+          Her actual concern is simpler: sideways winter rain makes the porch unusable four months of the year.
+          Modern screen-and-vinyl systems solve that one problem directly, at roughly a third of the cost, without touching any of the code triggers above.
+        </p>
+      </div>
+    </div>
+
+    <!-- Price delta -->
+    <div class="delta reveal">
+      <div class="side">
+        <div class="label">Current V6 Bid</div>
+        <div class="price strike">$60,000</div>
+        <div class="sub-label">Full enclosure · permits · HVAC · electrical upsize</div>
+      </div>
+      <div class="arrow">
+        <svg viewBox="0 0 80 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 14 L74 14" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+          <path d="M64 6 L74 14 L64 22" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>recommended</span>
+      </div>
+      <div class="side right">
+        <div class="label">Recommended Path</div>
+        <div class="price new"><em>$34,000</em></div>
+        <div class="sub-label">Hybrid · motorized front wall + 4-track side walls</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===== SITUATION ===== -->
+<section id="situation">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="num">01 / SITUATION</div>
+      <h2>What changed after the second walkthrough.</h2>
+    </div>
+
+    <div class="situation-grid">
+      <div class="situation-card reveal">
+        <div class="tag">The V6 Plan</div>
+        <h3>Full conversion to conditioned <em>living space.</em></h3>
+        <p>
+          Framed walls, traditional windows, insulation, drywall, code-compliant electrical, and an HVAC branch extended from the house.
+          Beautiful. Permit-heavy. $60K.
+        </p>
+      </div>
+      <div class="situation-card reveal">
+        <div class="tag">Her Real Concern</div>
+        <h3>Winter rain comes in <em>sideways.</em></h3>
+        <p>
+          Grace doesn't need a heated office. She needs the porch to stop soaking through on wet Tennessee winters.
+          A screen porch alone won't cut it. Full enclosure is more than the problem requires.
+        </p>
+      </div>
+      <div class="situation-card reveal">
+        <div class="tag">The Alternative</div>
+        <h3>Operable vinyl over <em>existing openings.</em></h3>
+        <p>
+          The structure in A01–A04 is already there: roof, posts, knee walls, roof line.
+          Fill the openings with a 4-track system and she has screens in summer, sealed vinyl in winter, one product, one season-line.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== INTERACTIVE SHOWCASE ===== -->
+<section id="product" class="showcase">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="num">02 / PRODUCT</div>
+      <h2>One opening. <em>Four configurations.</em></h2>
+    </div>
+
+    <div class="demo">
+      <!-- Visual window -->
+      <div>
+        <div class="demo-window">
+          <div class="sky"></div>
+
+          <!-- Panels in 4-track frame -->
+          <div class="panel panel--screen panel--top" id="panel-top-screen">
+            <div class="panel-frame"></div>
+            <div class="surface"></div>
+          </div>
+          <div class="panel panel--screen panel--bottom" id="panel-bottom-screen">
+            <div class="panel-frame"></div>
+            <div class="surface"></div>
+          </div>
+          <div class="panel panel--vinyl panel--top hidden" id="panel-top-vinyl">
+            <div class="panel-frame"></div>
+            <div class="surface"></div>
+          </div>
+          <div class="panel panel--vinyl panel--bottom hidden" id="panel-bottom-vinyl">
+            <div class="panel-frame"></div>
+            <div class="surface"></div>
+          </div>
+
+          <!-- Rain overlay (winter only) -->
+          <div class="rain" id="rain"></div>
+        </div>
+
+        <div class="state-readout">
+          <div class="cell">
+            <span class="cell-label">Top Track</span>
+            <span class="cell-val" id="state-top">SCREEN</span>
+          </div>
+          <div class="cell">
+            <span class="cell-label">Bottom Track</span>
+            <span class="cell-val" id="state-bottom">SCREEN</span>
+          </div>
+          <div class="cell">
+            <span class="cell-label">Airflow</span>
+            <span class="cell-val" id="state-air">FULL</span>
+          </div>
+          <div class="cell">
+            <span class="cell-label">Weather Seal</span>
+            <span class="cell-val" id="state-seal">NONE</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controls + copy -->
+      <div class="demo-controls">
+        <span class="kicker">The 4-Track System</span>
+        <h3>How <em>4-track</em> works.</h3>
+        <p>
+          Four independent tracks. Two screen panels, two vinyl panels, all sliding vertically within one aluminum frame.
+          Grace reconfigures the opening by hand in three seconds. No motors, no controller, no subscription — this is the side-wall workhorse in the hybrid, and the full-porch product in Path A.
+        </p>
+
+        <div class="mode-buttons" id="modes">
+          <button class="mode-btn active" data-mode="summer">
+            <span class="season">Summer</span>
+            <span class="desc">Screens full · breeze open</span>
+          </button>
+          <button class="mode-btn" data-mode="fall">
+            <span class="season">Spring / Fall</span>
+            <span class="desc">Vented top · blocks splash</span>
+          </button>
+          <button class="mode-btn" data-mode="winter">
+            <span class="season">Winter</span>
+            <span class="desc">Full vinyl · weather sealed</span>
+          </button>
+          <button class="mode-btn" data-mode="open">
+            <span class="season">Open</span>
+            <span class="desc">All panels stacked · true porch</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PATHS ===== -->
+<section id="paths">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="num">03 / PATHS</div>
+      <h2>Three ways to solve it. <em>One we'd actually build.</em></h2>
+    </div>
+
+    <!-- PATH A -->
+    <div class="path">
+      <div class="path-tag">
+        <div class="letter-num">Path A</div>
+        <div class="letter">A</div>
+        <div class="status status--premium">Workhorse</div>
+      </div>
+      <div class="path-body">
+        <h3>Eze-Breeze <em>everywhere.</em></h3>
+        <div class="brand-line">PGT Eze-Breeze · 4-Track Vertical Vinyl & Screen</div>
+        <p class="lead">
+          The whole porch gets the same panel system. Always-on rain protection. One product, one install, the lowest-risk path to a usable winter porch.
+        </p>
+        <p>
+          Eze-Breeze is the industry-standard 4-track system from PGT, the largest vinyl-window manufacturer in the U.S. Each opening gets four sliding panels — two screen, two clear vinyl — that Grace reconfigures by hand. Slide vinyl down in winter and the porch is watertight. Slide it up in summer and she's on a screened porch.
+        </p>
+        <p>
+          For Grace's opening plan, we fill thirteen bays: four 4×6 main bays and four transoms across the front, four bays on the left, and the small 2×6 bay on the right. Existing exterior doors stay in place, both getting storm-door upgrades.
+        </p>
+
+        <div class="spec-grid">
+          <div class="spec">
+            <span class="spec-label">Panels</span>
+            <span class="spec-val mono">13 openings</span>
+          </div>
+          <div class="spec">
+            <span class="spec-label">Expected life</span>
+            <span class="spec-val">20+ years</span>
+          </div>
+          <div class="spec">
+            <span class="spec-label">Operation</span>
+            <span class="spec-val">Manual slide</span>
+          </div>
+          <div class="spec">
+            <span class="spec-label">Build time</span>
+            <span class="spec-val">~3 days on-site</span>
+          </div>
+          <div class="spec">
+            <span class="spec-label">Permit trigger</span>
+            <span class="spec-val">None (3-season)</span>
+          </div>
+          <div class="spec">
+            <span class="spec-label">HVAC required</span>
+            <span class="spec-val">No</span>
+          </div>
+        </div>
+      </div>
+      <div class="price-card">
+        <div class="kicker">Investment</div>
+        <div class="amount">$27,500</div>
+        <div class="amount-range">all-in · materials, labor, trim, finish</div>
+        <div class="savings">
+          <span class="label">Saved vs V6</span>
+          <span class="value">$32,500</span>
+        </div>
+        <ul>
+          <li>13 Eze-Breeze 4-track panels, installed</li>
+          <li>Opening prep + framing adjustments</li>
+          <li>Interior & exterior trim package</li>
+          <li>Knee wall cap and finish</li>
+          <li>Two storm-door upgrades</li>
+          <li>Sealant, flashing, site cleanup</li>
+        </ul>
+      </div>
+
+      <div class="path-gallery">
+        <div class="gallery-label">Eze-Breeze · Installed in the wild</div>
+        <div class="gallery">
+          <div class="gallery-item feature">
+            <img loading="lazy" src="https://ezebreeze.com/wp-content/uploads/2022/08/EZE_Exterior_Overall_F01.jpg" alt="Eze-Breeze porch exterior, overall view" />
+            <div class="gallery-chip">Exterior</div>
+            <div class="gallery-caption">Finished three-season porch, panels in summer screen mode</div>
+          </div>
+          <div class="gallery-item">
+            <img loading="lazy" src="https://ezebreeze.com/wp-content/uploads/2022/08/EZE_Interior_F01.jpg" alt="Eze-Breeze porch interior living space" />
+            <div class="gallery-caption">Interior · panels up, view-first</div>
+          </div>
+          <div class="gallery-item">
+            <img loading="lazy" src="https://ezebreeze.com/wp-content/uploads/2022/08/Key-6-PGT-01.jpg" alt="Eze-Breeze installed on back porch" />
+            <div class="gallery-caption">Panels in winter vinyl configuration</div>
+          </div>
+          <div class="gallery-item">
+            <img loading="lazy" src="https://ezebreeze.com/wp-content/uploads/2022/08/EZE_Exterior_Detail_F01.jpg" alt="Eze-Breeze frame close-up detail" />
+            <div class="gallery-chip">Detail</div>
+            <div class="gallery-caption">Aluminum frame detail · powder coat finish</div>
+          </div>
+          <div class="gallery-item">
+            <img loading="lazy" src="https://ezebreeze.com/wp-content/uploads/2022/08/Key-6-PGT-96.jpg" alt="Eze-Breeze porch dining setup" />
+            <div class="gallery-caption">Dining porch · all-season usable</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PATH B -->
+    <div class="path">
+      <div class="path-tag">
+        <div class="letter-num">Path B</div>
+        <div class="letter">B</div>
+        <div class="status status--rec">★ Recommended</div>
+      </div>
+      <div class="path-body">
+        <h3>The <em>hybrid.</em></h3>
+        <div class="brand-line">Phantom Executive Motorized · Eze-Breeze 4-Track · Side-by-Side</div>
+        <p class="lead">
+          Motorized Phantom clear-vinyl screens disappear into the ceiling on the front wall. Eze-Breeze 4-track panels handle the side walls. Grace gets the showstopper where it matters and the workhorse everywhere else.
+        </p>
+        <p>
+          The front wall is what she sees every morning from her desk. At the touch of a button, the Phantom motorized system rolls down from a hidden housing — clear vinyl for rain, screen mesh for bugs — and disappears back into the ceiling when the weather clears. Porch reads as wide open on good days, fully enclosed on bad ones.
+        </p>
+        <p>
+          The side walls get Eze-Breeze 4-track panels. Same manual sliders as Path A — bulletproof, always there, no motors to service. Best of both worlds: high-drama front, no-drama sides.
+        </p>
+
+        <div class="spec-grid">
+          <div class="spec">
+            <span class="spec-label">Front wall</span>
+            <span class="spec-val">Phantom motorized</span>
+          </div>
+          <div class="spec">
+            <span class="spec-label">Side walls</span>
+            <span class="spec-val">Eze-Breeze panels</span>
+          </div>
+          <div class="spec">
+            <span class="spec-label">Wind rating</span>
+            <span class="spec-val">75 mph (Phantom)</span>
+          </div>
+          <div class="spec">
+            <span class="spec-label">Control</span>
+            <span class="spec-val">Remote + wind sensor</span>
+          </div>
+          <div class="spec">
+            <span class="spec-label">Permit trigger</span>
+            <span class="spec-val">None (3-season)</span>
+          </div>
+          <div class="spec">
+            <span class="spec-label">HVAC required</span>
+            <span class="spec-val">No</span>
+          </div>
+        </div>
+      </div>
+      <div class="price-card rec">
+        <div class="kicker">Investment</div>
+        <div class="amount"><em>$34,000</em></div>
+        <div class="amount-range">range · $32K – $38K pending dealer quote</div>
+        <div class="savings">
+          <span class="label">Saved vs V6</span>
+          <span class="value">$26,000</span>
+        </div>
+        <ul>
+          <li>Phantom Executive motorized, front wall</li>
+          <li>Clear-vinyl + screen dual-deployment</li>
+          <li>Wind sensor + remote + wall switch</li>
+          <li>9 Eze-Breeze 4-track panels, sides</li>
+          <li>Low-voltage wiring (no panel upsize)</li>
+          <li>All trim, storm doors, finish</li>
+        </ul>
+      </div>
+
+      <div class="path-gallery">
+        <div class="gallery-label">Phantom motorized · Editorial gallery</div>
+        <div class="gallery">
+          <div class="gallery-item feature">
+            <img loading="lazy" src="https://myphantomscreens.com/wp-content/themes/phantom-theme-v1/conduit/assets/motorized-screens/luxury-vinyl/motorized-luxury-vinyl-applications-covered-patios-porches.jpg" alt="Phantom motorized clear vinyl on covered porch" />
+            <div class="gallery-chip">Covered porch</div>
+            <div class="gallery-caption">Exactly Grace's scenario · clear vinyl, deployed</div>
+          </div>
+          <div class="gallery-item">
+            <img loading="lazy" src="https://myphantomscreens.com/wp-content/themes/phantom-theme-v1/conduit/assets/motorized-screens/luxury-vinyl/motorized-luxury-vinyl-features-beautiful-views.jpg" alt="Phantom motorized screens preserving the view" />
+            <div class="gallery-caption">View preserved · no frames, no mullions</div>
+          </div>
+          <div class="gallery-item">
+            <img loading="lazy" src="https://myphantomscreens.com/wp-content/themes/phantom-theme-v1/conduit/assets/motorized-screens/luxury-vinyl/motorized-luxury-vinyl-features-sleek-modern-look.jpg" alt="Sleek modern Phantom install on architectural home" />
+            <div class="gallery-chip">Architectural</div>
+            <div class="gallery-caption">Sleek, modern, ceiling-housing concealed</div>
+          </div>
+          <div class="gallery-item">
+            <img loading="lazy" src="https://myphantomscreens.com/wp-content/themes/phantom-theme-v1/conduit/assets/motorized-screens/luxury-vinyl/motorized-luxury-vinyl-applications-pergolas-outdoor-kitchens.jpg" alt="Phantom over pergola outdoor kitchen" />
+            <div class="gallery-caption">Lifestyle · entertaining, all weather</div>
+          </div>
+          <div class="gallery-item">
+            <img loading="lazy" src="https://myphantomscreens.com/wp-content/themes/phantom-theme-v1/conduit/assets/motorized-screens/luxury-vinyl/motorized-luxury-vinyl-features-best-of-both-worlds.jpg" alt="Best of both worlds — screen plus vinyl dual deployment" />
+            <div class="gallery-caption">Dual roller · screen and vinyl, same opening</div>
+          </div>
+          <div class="gallery-item wide">
+            <img loading="lazy" src="https://myphantomscreens.com/wp-content/themes/phantom-theme-v1/conduit/assets/motorized-screens/luxury-vinyl/motorized-luxury-vinyl-gallery-05-1110x624.jpg" alt="Wide luxury Phantom motorized install" />
+            <div class="gallery-chip">Hybrid reference</div>
+            <div class="gallery-caption">The move: motorized front, 4-track sides, year-round usable</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PATH C -->
+    <div class="path">
+      <div class="path-tag">
+        <div class="letter-num">Path C</div>
+        <div class="letter">C</div>
+        <div class="status status--budget">Budget</div>
+      </div>
+      <div class="path-body">
+        <h3>Fixed screen + <em>roll-down curtains.</em></h3>
+        <div class="brand-line">Screeneze System + Clear Marine Vinyl Drops</div>
+        <p class="lead">
+          The most economical approach. Fixed premium screens year-round, with clear marine vinyl roll-down curtains that Grace deploys manually on the front when weather rolls in.
+        </p>
+        <p>
+          Screeneze is a taut-for-life aluminum-and-vinyl frame system with no spline — it won't sag or need re-stretching.
+          The drop curtains are UV-treated 20-gauge clear marine vinyl with weighted hems and stayput fasteners. Not as polished as the vinyl-panel paths, but absolutely functional.
+        </p>
+        <p>
+          This is the "solve the rain problem and stop" option. If Grace eventually wants to upgrade, the Screeneze stays in place and the curtains come down.
+        </p>
+
+        <div class="spec-grid">
+          <div class="spec">
+            <span class="spec-label">Screens</span>
+            <span class="spec-val">Screeneze, all sides</span>
+          </div>
+          <div class="spec">
+            <span class="spec-label">Weather layer</span>
+            <span class="spec-val">20 ga. marine vinyl</span>
+          </div>
+          <div class="spec">
+            <span class="spec-label">Operation</span>
+            <span class="spec-val">Manual roll-down</span>
+          </div>
+          <div class="spec">
+            <span class="spec-label">Build time</span>
+            <span class="spec-val">~2 days on-site</span>
+          </div>
+          <div class="spec">
+            <span class="spec-label">Permit trigger</span>
+            <span class="spec-val">None</span>
+          </div>
+          <div class="spec">
+            <span class="spec-label">HVAC required</span>
+            <span class="spec-val">No</span>
+          </div>
+        </div>
+      </div>
+      <div class="price-card">
+        <div class="kicker">Investment</div>
+        <div class="amount">$12,800</div>
+        <div class="amount-range">range · $11K – $14K</div>
+        <div class="savings">
+          <span class="label">Saved vs V6</span>
+          <span class="value">$47,200</span>
+        </div>
+        <ul>
+          <li>Screeneze frames + premium mesh</li>
+          <li>Clear marine vinyl curtains, front</li>
+          <li>Weighted hem + stayput hardware</li>
+          <li>Storm door upgrades</li>
+          <li>Minimal trim work</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== COMPARISON ===== -->
+<section id="compare">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="num">04 / COMPARE</div>
+      <h2>All four approaches, <em>side by side.</em></h2>
+    </div>
+
+    <div class="compare-wrap reveal">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Approach</th>
+            <th>Winter Seal</th>
+            <th>Summer Breeze</th>
+            <th>Permits / HVAC</th>
+            <th>Life</th>
+            <th style="text-align:right">Investment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="v6">
+            <td>V6 Full Enclosure</td>
+            <td>Year-round</td>
+            <td>Windows open</td>
+            <td>Required</td>
+            <td>30+ yrs</td>
+            <td class="price" style="text-align:right">$60,000</td>
+          </tr>
+          <tr>
+            <td>Path A · Eze-Breeze</td>
+            <td>Vinyl sealed</td>
+            <td>Full screen</td>
+            <td>None</td>
+            <td>20+ yrs</td>
+            <td class="price" style="text-align:right">$27,500</td>
+          </tr>
+          <tr class="rec">
+            <td>Path B · Hybrid (Phantom + Eze-Breeze)</td>
+            <td>Motorized + manual</td>
+            <td>Full retract front · screen sides</td>
+            <td>None</td>
+            <td>15–20 yrs</td>
+            <td class="price" style="text-align:right"><em>$34,000</em></td>
+          </tr>
+          <tr>
+            <td>Path C · Screen + Curtains</td>
+            <td>Manual curtain</td>
+            <td>Fixed screen</td>
+            <td>None</td>
+            <td>10–12 yrs</td>
+            <td class="price" style="text-align:right">$12,800</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CLOSING ===== -->
+<section class="closing">
+  <div class="wrap">
+    <div class="frame reveal">
+      <h2>Our call is <em>Path B.</em></h2>
+      <p>
+        The front wall is the moment — the view, the entertainment, the reason the porch exists. Phantom makes it theater. The side walls
+        don't need to be, and Eze-Breeze does that job for a third of the price. One product where it matters, the other where it doesn't.
+        Still $26,000 under the V6 plan, and none of the permit or panel-upsize triggers kick in.
+      </p>
+
+      <div class="decision-list">
+        <div class="title">Before we re-quote</div>
+        <ol>
+          <li>Confirm with Grace that year-round heated / cooled living space is off the list (her answer: no).</li>
+          <li>Verify with Putnam County that motorized screens + fixed panels stay outside the full-enclosure permit threshold.</li>
+          <li>Pull Phantom Executive dealer quote for the front wall (Nashville or Knoxville authorized installer).</li>
+          <li>Pull Eze-Breeze dealer quote for the nine side-wall openings.</li>
+          <li>Decide color direction: white frames (default), bronze, or charcoal to match existing trim.</li>
+          <li>Final walkthrough with Grace on the interior desk-bar detail on the left wall.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap;">
+    <div class="brand">FLYNN <span>·</span> DEVELOPMENT · COOKEVILLE, TN</div>
+    <div class="tag">Design. Construct. Transform.</div>
+  </div>
+</footer>
+
+<script>
+  // ===== Reveal on scroll =====
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
+
+  // ===== 4-Track mode control =====
+  const modes = {
+    summer: {
+      topScreen: 'visible', topVinyl: 'hidden',
+      bottomScreen: 'visible', bottomVinyl: 'hidden-down',
+      top: 'SCREEN', bottom: 'SCREEN', air: 'FULL', seal: 'NONE', rain: false
+    },
+    fall: {
+      topScreen: 'visible', topVinyl: 'hidden',
+      bottomScreen: 'hidden-down', bottomVinyl: 'visible',
+      top: 'SCREEN', bottom: 'VINYL', air: 'TOP ONLY', seal: 'PARTIAL', rain: false
+    },
+    winter: {
+      topScreen: 'hidden', topVinyl: 'visible',
+      bottomScreen: 'hidden-down', bottomVinyl: 'visible',
+      top: 'VINYL', bottom: 'VINYL', air: 'NONE', seal: 'FULL', rain: true
+    },
+    open: {
+      topScreen: 'hidden', topVinyl: 'hidden',
+      bottomScreen: 'hidden-down', bottomVinyl: 'hidden-down',
+      top: 'OPEN', bottom: 'OPEN', air: 'UNRESTRICTED', seal: 'NONE', rain: false
+    }
+  };
+
+  const elTopScreen = document.getElementById('panel-top-screen');
+  const elTopVinyl = document.getElementById('panel-top-vinyl');
+  const elBottomScreen = document.getElementById('panel-bottom-screen');
+  const elBottomVinyl = document.getElementById('panel-bottom-vinyl');
+  const stateTop = document.getElementById('state-top');
+  const stateBottom = document.getElementById('state-bottom');
+  const stateAir = document.getElementById('state-air');
+  const stateSeal = document.getElementById('state-seal');
+  const rainEl = document.getElementById('rain');
+
+  function setPanel(el, state) {
+    el.classList.remove('hidden', 'hidden-down');
+    if (state === 'hidden') el.classList.add('hidden');
+    if (state === 'hidden-down') el.classList.add('hidden-down');
+  }
+
+  function applyMode(name) {
+    const m = modes[name];
+    setPanel(elTopScreen, m.topScreen);
+    setPanel(elTopVinyl, m.topVinyl);
+    setPanel(elBottomScreen, m.bottomScreen);
+    setPanel(elBottomVinyl, m.bottomVinyl);
+    stateTop.textContent = m.top;
+    stateBottom.textContent = m.bottom;
+    stateAir.textContent = m.air;
+    stateSeal.textContent = m.seal;
+    rainEl.classList.toggle('active', m.rain);
+  }
+
+  document.querySelectorAll('.mode-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.mode-btn').forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      applyMode(btn.dataset.mode);
+    });
+  });
+
+  // ===== Rain drops =====
+  function buildRain() {
+    const frag = document.createDocumentFragment();
+    for (let i = 0; i < 40; i++) {
+      const d = document.createElement('div');
+      d.className = 'drop';
+      d.style.left = Math.random() * 120 - 10 + '%';
+      d.style.animationDelay = Math.random() * 0.8 + 's';
+      d.style.animationDuration = (0.5 + Math.random() * 0.6) + 's';
+      d.style.opacity = 0.4 + Math.random() * 0.5;
+      frag.appendChild(d);
+    }
+    rainEl.appendChild(frag);
+  }
+  buildRain();
+</script>
+
+</body>
+</html>
