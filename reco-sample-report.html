@@ -1,0 +1,4488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RECO Listing Performance Report</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #052561;
+    --navy-dark: #031842;
+    --navy-light: #0a3a8a;
+    --gold: #BE9D68;
+    --gold-light: #d4bb8e;
+    --gold-pale: #f5f0e6;
+    --white: #ffffff;
+    --off-white: #fafafa;
+    --gray-50: #f8f9fa;
+    --gray-100: #f0f1f3;
+    --gray-200: #e2e4e8;
+    --gray-400: #9ca3af;
+    --gray-600: #4b5563;
+    --gray-800: #1f2937;
+    --green: #059669;
+    --amber: #d97706;
+    --red: #dc2626;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Open Sans', sans-serif;
+    color: var(--gray-800);
+    background: var(--white);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---- COVER HEADER ---- */
+  .report-header {
+    background: var(--navy);
+    background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 60%, var(--navy-light) 100%);
+    color: var(--white);
+    padding: 48px 60px 44px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .report-header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 320px;
+    height: 100%;
+    background: linear-gradient(135deg, transparent 40%, rgba(190, 157, 104, 0.08) 100%);
+    pointer-events: none;
+  }
+
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+  }
+
+  .logo-container {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .logo-container img {
+    height: 48px;
+    width: auto;
+  }
+
+  .report-date {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .header-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+  }
+
+  .header-subtitle {
+    font-size: 15px;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.7);
+    letter-spacing: 0.2px;
+  }
+
+  .gold-rule {
+    width: 64px;
+    height: 3px;
+    background: var(--gold);
+    margin: 20px 0;
+    border: none;
+  }
+
+  /* ---- SUMMARY STATS BAR ---- */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    background: var(--white);
+    border-bottom: 1px solid var(--gray-200);
+  }
+
+  .stat-item {
+    padding: 28px 24px;
+    text-align: center;
+    border-right: 1px solid var(--gray-200);
+  }
+
+  .stat-item:last-child { border-right: none; }
+
+  .stat-value {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--gray-400);
+  }
+
+  /* ---- SECTIONS ---- */
+  .section {
+    padding: 40px 60px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .section-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--navy);
+    letter-spacing: -0.2px;
+  }
+
+  .section-count {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 0.5px;
+  }
+
+  /* ---- TOP PERFORMERS ---- */
+  .top-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  .top-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    transition: border-color 0.2s;
+  }
+
+  .top-card:first-child {
+    border-color: var(--gold);
+    background: var(--gold-pale);
+  }
+
+  .top-rank {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--gray-200);
+    line-height: 1;
+    min-width: 44px;
+  }
+
+  .top-card:first-child .top-rank { color: var(--gold); }
+
+  .top-address {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 2px;
+  }
+
+  .top-city {
+    font-size: 12px;
+    color: var(--gray-400);
+    margin-bottom: 8px;
+  }
+
+  .top-metrics {
+    font-size: 13px;
+    color: var(--gray-600);
+    margin-bottom: 4px;
+  }
+
+  .top-views { font-weight: 600; color: var(--navy); }
+  .top-divider { color: var(--gray-400); margin: 0 4px; }
+  .top-saves { color: var(--gray-600); }
+
+  .top-price {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--gold);
+  }
+
+  /* ---- ALERTS ---- */
+  .alert-section { background: var(--off-white); }
+
+  .alert-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-left: 4px solid var(--red);
+    border-radius: 6px;
+    margin-bottom: 10px;
+  }
+
+  .alert-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--red);
+    flex-shrink: 0;
+  }
+
+  .alert-content { flex: 1; }
+
+  .alert-address {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 2px;
+  }
+
+  .alert-details {
+    font-size: 12px;
+    color: var(--gray-600);
+  }
+
+  .alert-dom {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--red);
+    text-align: center;
+    min-width: 60px;
+  }
+
+  .alert-dom-label {
+    display: block;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--gray-400);
+  }
+
+  .no-alerts {
+    padding: 24px;
+    text-align: center;
+    color: var(--green);
+    font-weight: 600;
+    font-size: 14px;
+    background: rgba(5, 150, 105, 0.05);
+    border-radius: 8px;
+    border: 1px solid rgba(5, 150, 105, 0.15);
+  }
+
+  /* ---- FULL TABLE ---- */
+  .listings-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  .listings-table thead th {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    padding: 12px 16px;
+    border-bottom: 2px solid var(--navy);
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .listings-table thead th.metric-cell,
+  .listings-table thead th.tier-cell {
+    text-align: center;
+  }
+
+  .listings-table tbody tr {
+    border-bottom: 1px solid var(--gray-100);
+    transition: background 0.15s;
+  }
+
+  .listings-table tbody tr:hover { background: var(--gray-50); }
+
+  .listings-table td { padding: 14px 16px; vertical-align: middle; }
+
+  .rank-cell {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    color: var(--gray-400);
+    width: 40px;
+    text-align: center;
+  }
+
+  .address-main {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--navy);
+  }
+
+  .address-sub {
+    font-size: 11px;
+    color: var(--gray-400);
+    margin-top: 2px;
+  }
+
+  .price-cell {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    color: var(--gray-800);
+    white-space: nowrap;
+  }
+
+  .metric-cell {
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+  }
+
+  .views-cell { color: var(--navy); }
+  .saves-cell { color: var(--gray-600); }
+
+  .dom-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  .dom-new, .dom-fresh { background: rgba(5, 150, 105, 0.1); color: var(--green); }
+  .dom-active { background: rgba(5, 37, 97, 0.08); color: var(--navy); }
+  .dom-aging { background: rgba(217, 119, 6, 0.1); color: var(--amber); }
+  .dom-stale { background: rgba(220, 38, 38, 0.1); color: var(--red); }
+
+  .tier-cell { text-align: center; }
+
+  .tier-badge {
+    display: inline-block;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+
+  .tier-exceptional { background: var(--gold-pale); color: #8b6d2e; }
+  .tier-strong { background: rgba(5, 150, 105, 0.1); color: var(--green); }
+  .tier-average { background: var(--gray-100); color: var(--gray-600); }
+  .tier-low { background: rgba(220, 38, 38, 0.08); color: var(--red); }
+  .tier-none { background: var(--gray-100); color: var(--gray-400); }
+
+  /* ---- PRICE ANALYSIS ---- */
+  .price-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .price-card {
+    padding: 24px;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .price-card-value {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+
+  .price-card-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--gray-400);
+  }
+
+  /* ---- FOOTER ---- */
+  .report-footer {
+    padding: 32px 60px;
+    background: var(--navy-dark);
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 11px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-brand {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    color: var(--gold);
+    font-size: 12px;
+  }
+
+  .footer-disclaimer {
+    max-width: 500px;
+    text-align: right;
+    line-height: 1.5;
+  }
+
+  /* ---- PLATFORM TAGS ---- */
+  .top-platforms {
+    display: flex;
+    gap: 6px;
+    margin: 4px 0;
+  }
+
+  .platform-tag {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    letter-spacing: 0.3px;
+  }
+
+  .zillow-tag { background: rgba(0, 106, 255, 0.1); color: #006AFF; }
+  .redfin-tag { background: rgba(163, 25, 25, 0.1); color: #A31919; }
+  .homes-tag { background: rgba(0, 165, 98, 0.1); color: #00A562; }
+
+  .platform-header {
+    font-size: 11px !important;
+    letter-spacing: 0.5px !important;
+  }
+
+  .zillow-header { color: #006AFF !important; border-bottom: 2px solid #006AFF !important; }
+  .redfin-header { color: #A31919 !important; border-bottom: 2px solid #A31919 !important; }
+  .homes-header { color: #00A562 !important; border-bottom: 2px solid #00A562 !important; }
+  .homes-col { color: #00A562; }
+
+  .sub-header th {
+    font-size: 9px !important;
+    padding: 4px 16px !important;
+    border-bottom: 1px solid var(--gray-200) !important;
+    color: var(--gray-400) !important;
+  }
+
+  .redfin-col { color: #A31919; }
+
+  .platform-coverage {
+    font-size: 22px !important;
+    letter-spacing: 1px;
+  }
+
+  /* ---- PRINT / PDF ---- */
+  @media print {
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .section { page-break-inside: avoid; }
+    .report-header { page-break-after: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="report-header">
+  <div class="header-top">
+    <div class="logo-container">
+      <img src="https://idx-acnt-ihouseprd.b-cdn.net/AR1146160/file_manager/Logo/Logo.png" alt="RECO" />
+    </div>
+    <div class="report-date">March 24, 2026</div>
+  </div>
+  <hr class="gold-rule">
+  <div class="header-title">Listing Performance Report</div>
+  <div class="header-subtitle">Cross-platform engagement analytics across active RECO inventory</div>
+</div>
+
+<!-- SUMMARY STATS -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-value">192</div>
+    <div class="stat-label">Active Listings</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-value">126,564</div>
+    <div class="stat-label">Combined Views</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-value">883</div>
+    <div class="stat-label">Combined Saves</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-value">43</div>
+    <div class="stat-label">Avg Days on Market</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-value platform-coverage">17Z / 14R / 25H</div>
+    <div class="stat-label">Platform Coverage</div>
+  </div>
+</div>
+
+<!-- TOP PERFORMERS -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-title">Top Performers</div>
+    <div class="section-count">Highest engagement</div>
+  </div>
+  <div class="top-grid">
+    
+      <div class="top-card">
+        <div class="top-rank">01</div>
+        <div class="top-details">
+          <div class="top-address">335 N Dixie Ave</div>
+          <div class="top-city">Cookeville</div>
+          <div class="top-metrics">
+            <span class="top-views">13,516 total views</span>
+            <span class="top-divider">&middot;</span>
+            <span class="top-saves">0 saves</span>
+          </div>
+          <div class="top-platforms">
+            
+            
+            <span class="platform-tag homes-tag">H: 13,516</span>
+          </div>
+          <div class="top-price">$2,650,000</div>
+        </div>
+      </div>
+    
+      <div class="top-card">
+        <div class="top-rank">02</div>
+        <div class="top-details">
+          <div class="top-address">600 Freeze St</div>
+          <div class="top-city">Cookeville</div>
+          <div class="top-metrics">
+            <span class="top-views">12,134 total views</span>
+            <span class="top-divider">&middot;</span>
+            <span class="top-saves">5 saves</span>
+          </div>
+          <div class="top-platforms">
+            
+            
+            <span class="platform-tag homes-tag">H: 12,134</span>
+          </div>
+          <div class="top-price">$49,500</div>
+        </div>
+      </div>
+    
+      <div class="top-card">
+        <div class="top-rank">03</div>
+        <div class="top-details">
+          <div class="top-address">1325 Bridle Path</div>
+          <div class="top-city">Cookeville</div>
+          <div class="top-metrics">
+            <span class="top-views">10,034 total views</span>
+            <span class="top-divider">&middot;</span>
+            <span class="top-saves">1 saves</span>
+          </div>
+          <div class="top-platforms">
+            
+            
+            <span class="platform-tag homes-tag">H: 10,034</span>
+          </div>
+          <div class="top-price">$57,990</div>
+        </div>
+      </div>
+    
+      <div class="top-card">
+        <div class="top-rank">04</div>
+        <div class="top-details">
+          <div class="top-address">250 Dyer Ridge Rd</div>
+          <div class="top-city">Baxter</div>
+          <div class="top-metrics">
+            <span class="top-views">8,942 total views</span>
+            <span class="top-divider">&middot;</span>
+            <span class="top-saves">1 saves</span>
+          </div>
+          <div class="top-platforms">
+            
+            
+            <span class="platform-tag homes-tag">H: 8,942</span>
+          </div>
+          <div class="top-price">$115,000</div>
+        </div>
+      </div>
+    
+      <div class="top-card">
+        <div class="top-rank">05</div>
+        <div class="top-details">
+          <div class="top-address">920 Franklin Ct</div>
+          <div class="top-city">Cookeville</div>
+          <div class="top-metrics">
+            <span class="top-views">8,824 total views</span>
+            <span class="top-divider">&middot;</span>
+            <span class="top-saves">1 saves</span>
+          </div>
+          <div class="top-platforms">
+            
+            
+            <span class="platform-tag homes-tag">H: 8,824</span>
+          </div>
+          <div class="top-price">$550,000</div>
+        </div>
+      </div>
+    
+  </div>
+</div>
+
+<!-- ATTENTION NEEDED -->
+<div class="section alert-section">
+  <div class="section-header">
+    <div class="section-title">Attention Needed</div>
+    <div class="section-count">9 listings flagged</div>
+  </div>
+  
+        <div class="alert-row">
+          <div class="alert-indicator"></div>
+          <div class="alert-content">
+            <div class="alert-address">Cumberland Lakes Dr, Monterey</div>
+            <div class="alert-details">
+              $14,000 &middot; 388 days on market &middot; 31 views &middot; 0 saves
+            </div>
+          </div>
+          <div class="alert-dom">388<span class="alert-dom-label">DOM</span></div>
+        </div>
+      
+        <div class="alert-row">
+          <div class="alert-indicator"></div>
+          <div class="alert-content">
+            <div class="alert-address">13276 Old Baxter Rd, Silver Point</div>
+            <div class="alert-details">
+              $399,000 &middot; 179 days on market &middot; 493 views &middot; 22 saves
+            </div>
+          </div>
+          <div class="alert-dom">179<span class="alert-dom-label">DOM</span></div>
+        </div>
+      
+        <div class="alert-row">
+          <div class="alert-indicator"></div>
+          <div class="alert-content">
+            <div class="alert-address">600 Freeze St, Cookeville</div>
+            <div class="alert-details">
+              $49,500 &middot; 140 days on market &middot; -- views &middot; -- saves
+            </div>
+          </div>
+          <div class="alert-dom">140<span class="alert-dom-label">DOM</span></div>
+        </div>
+      
+        <div class="alert-row">
+          <div class="alert-indicator"></div>
+          <div class="alert-content">
+            <div class="alert-address">1325 Bridle Path, Cookeville</div>
+            <div class="alert-details">
+              $57,990 &middot; 126 days on market &middot; -- views &middot; -- saves
+            </div>
+          </div>
+          <div class="alert-dom">126<span class="alert-dom-label">DOM</span></div>
+        </div>
+      
+        <div class="alert-row">
+          <div class="alert-indicator"></div>
+          <div class="alert-content">
+            <div class="alert-address">335 N Dixie Ave, Cookeville</div>
+            <div class="alert-details">
+              $2,650,000 &middot; 88 days on market &middot; -- views &middot; -- saves
+            </div>
+          </div>
+          <div class="alert-dom">88<span class="alert-dom-label">DOM</span></div>
+        </div>
+      
+        <div class="alert-row">
+          <div class="alert-indicator"></div>
+          <div class="alert-content">
+            <div class="alert-address">920 Franklin Ct, Cookeville</div>
+            <div class="alert-details">
+              $550,000 &middot; 81 days on market &middot; -- views &middot; -- saves
+            </div>
+          </div>
+          <div class="alert-dom">81<span class="alert-dom-label">DOM</span></div>
+        </div>
+      
+        <div class="alert-row">
+          <div class="alert-indicator"></div>
+          <div class="alert-content">
+            <div class="alert-address">20 Cabot Lane, Cookeville</div>
+            <div class="alert-details">
+              $419,900 &middot; 71 days on market &middot; -- views &middot; -- saves
+            </div>
+          </div>
+          <div class="alert-dom">71<span class="alert-dom-label">DOM</span></div>
+        </div>
+      
+        <div class="alert-row">
+          <div class="alert-indicator"></div>
+          <div class="alert-content">
+            <div class="alert-address">3579 Hilham Rd, Cookeville</div>
+            <div class="alert-details">
+              $65,000 &middot; 63 days on market &middot; -- views &middot; -- saves
+            </div>
+          </div>
+          <div class="alert-dom">63<span class="alert-dom-label">DOM</span></div>
+        </div>
+      
+        <div class="alert-row">
+          <div class="alert-indicator"></div>
+          <div class="alert-content">
+            <div class="alert-address">5011 Ostego Dr, Crossville</div>
+            <div class="alert-details">
+              $14,000 &middot; 63 days on market &middot; -- views &middot; -- saves
+            </div>
+          </div>
+          <div class="alert-dom">63<span class="alert-dom-label">DOM</span></div>
+        </div>
+      
+</div>
+
+<!-- FULL LISTINGS TABLE -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-title">All Listings</div>
+    <div class="section-count">Ranked by total views</div>
+  </div>
+  <table class="listings-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Property</th>
+        <th>Price</th>
+        <th class="metric-cell platform-header zillow-header" colspan="2">Zillow</th>
+        <th class="metric-cell platform-header redfin-header" colspan="2">Redfin</th>
+        <th class="metric-cell platform-header homes-header" colspan="2">Homes.com</th>
+        <th class="metric-cell">DOM</th>
+        <th class="tier-cell">Engagement</th>
+      </tr>
+      <tr class="sub-header">
+        <th></th>
+        <th></th>
+        <th></th>
+        <th class="metric-cell">Views</th>
+        <th class="metric-cell">Saves</th>
+        <th class="metric-cell">Views</th>
+        <th class="metric-cell">Favs</th>
+        <th class="metric-cell">Views</th>
+        <th class="metric-cell">Favs</th>
+        <th class="metric-cell"></th>
+        <th class="tier-cell"></th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      <tr>
+        <td class="rank-cell">1</td>
+        <td class="address-cell">
+          <div class="address-main">1439 Thomas Cir</div>
+          <div class="address-sub">Cookeville &middot; MLS# 242819</div>
+        </td>
+        <td class="price-cell">$579,000</td>
+        <td class="metric-cell views-cell">2,958</td>
+        <td class="metric-cell saves-cell">168</td>
+        <td class="metric-cell views-cell redfin-col">134</td>
+        <td class="metric-cell saves-cell redfin-col">10</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-active">&#9679; 8</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-average">Average</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">2</td>
+        <td class="address-cell">
+          <div class="address-main">10433 Hopewell Rd</div>
+          <div class="address-sub">Silver Point &middot; MLS# 242821</div>
+        </td>
+        <td class="price-cell">$424,900</td>
+        <td class="metric-cell views-cell">2,670</td>
+        <td class="metric-cell saves-cell">171</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-active">&#9679; 8</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-average">Average</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">3</td>
+        <td class="address-cell">
+          <div class="address-main">725 Flatt Ave</div>
+          <div class="address-sub">Cookeville &middot; MLS# 242957</div>
+        </td>
+        <td class="price-cell">$369,900</td>
+        <td class="metric-cell views-cell">1,993</td>
+        <td class="metric-cell saves-cell">56</td>
+        <td class="metric-cell views-cell redfin-col">90</td>
+        <td class="metric-cell saves-cell redfin-col">2</td>
+        <td class="metric-cell views-cell homes-col">571</td>
+        <td class="metric-cell saves-cell homes-col">0</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-fresh">&#9679; 4</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-average">Average</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">4</td>
+        <td class="address-cell">
+          <div class="address-main">2244 Shipley School Rd</div>
+          <div class="address-sub">Cookeville &middot; MLS# 242840</div>
+        </td>
+        <td class="price-cell">$357,900</td>
+        <td class="metric-cell views-cell">1,935</td>
+        <td class="metric-cell saves-cell">99</td>
+        <td class="metric-cell views-cell redfin-col">86</td>
+        <td class="metric-cell saves-cell redfin-col">4</td>
+        <td class="metric-cell views-cell homes-col">790</td>
+        <td class="metric-cell saves-cell homes-col">4</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-active">&#9679; 8</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-average">Average</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">5</td>
+        <td class="address-cell">
+          <div class="address-main">41 McKinley St</div>
+          <div class="address-sub">Cookeville &middot; MLS# 242746</div>
+        </td>
+        <td class="price-cell">$325,000</td>
+        <td class="metric-cell views-cell">861</td>
+        <td class="metric-cell saves-cell">50</td>
+        <td class="metric-cell views-cell redfin-col">75</td>
+        <td class="metric-cell saves-cell redfin-col">4</td>
+        <td class="metric-cell views-cell homes-col">1,830</td>
+        <td class="metric-cell saves-cell homes-col">0</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-active">&#9679; 12</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-average">Average</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">6</td>
+        <td class="address-cell">
+          <div class="address-main">188 2nd Ave N</div>
+          <div class="address-sub">Cookeville &middot; MLS# 242974</div>
+        </td>
+        <td class="price-cell">$264,500</td>
+        <td class="metric-cell views-cell">797</td>
+        <td class="metric-cell saves-cell">46</td>
+        <td class="metric-cell views-cell redfin-col">107</td>
+        <td class="metric-cell saves-cell redfin-col">7</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-fresh">&#9679; 2</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">7</td>
+        <td class="address-cell">
+          <div class="address-main">683 Blue Water Dr</div>
+          <div class="address-sub">Cookeville &middot; MLS# 242723</div>
+        </td>
+        <td class="price-cell">$589,900</td>
+        <td class="metric-cell views-cell">753</td>
+        <td class="metric-cell saves-cell">59</td>
+        <td class="metric-cell views-cell redfin-col">60</td>
+        <td class="metric-cell saves-cell redfin-col">3</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-active">&#9679; 12</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">8</td>
+        <td class="address-cell">
+          <div class="address-main">609 Windmere Dr</div>
+          <div class="address-sub">Lebanon &middot; MLS# 242736</div>
+        </td>
+        <td class="price-cell">$479,900</td>
+        <td class="metric-cell views-cell">577</td>
+        <td class="metric-cell saves-cell">14</td>
+        <td class="metric-cell views-cell redfin-col">110</td>
+        <td class="metric-cell saves-cell redfin-col">3</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-active">&#9679; 11</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">9</td>
+        <td class="address-cell">
+          <div class="address-main">389 Trace Creek Rd</div>
+          <div class="address-sub">Red Boiling Springs &middot; MLS# 242737</div>
+        </td>
+        <td class="price-cell">$549,900</td>
+        <td class="metric-cell views-cell">510</td>
+        <td class="metric-cell saves-cell">27</td>
+        <td class="metric-cell views-cell redfin-col">71</td>
+        <td class="metric-cell saves-cell redfin-col">2</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-active">&#9679; 11</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">10</td>
+        <td class="address-cell">
+          <div class="address-main">13276 Old Baxter Rd</div>
+          <div class="address-sub">Silver Point &middot; MLS# 239542</div>
+        </td>
+        <td class="price-cell">$399,000</td>
+        <td class="metric-cell views-cell">493</td>
+        <td class="metric-cell saves-cell">22</td>
+        <td class="metric-cell views-cell redfin-col">162</td>
+        <td class="metric-cell saves-cell redfin-col">12</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-stale">&#9650; 179</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">11</td>
+        <td class="address-cell">
+          <div class="address-main">383 Old Coleytown Ln</div>
+          <div class="address-sub">Lafayette &middot; MLS# 242860</div>
+        </td>
+        <td class="price-cell">$394,900</td>
+        <td class="metric-cell views-cell">381</td>
+        <td class="metric-cell saves-cell">10</td>
+        <td class="metric-cell views-cell redfin-col">146</td>
+        <td class="metric-cell saves-cell redfin-col">7</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-fresh">&#9679; 6</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">12</td>
+        <td class="address-cell">
+          <div class="address-main">612 Dry Creek Rd</div>
+          <div class="address-sub">Smithville &middot; MLS# 242925</div>
+        </td>
+        <td class="price-cell">$299,000</td>
+        <td class="metric-cell views-cell">367</td>
+        <td class="metric-cell saves-cell">18</td>
+        <td class="metric-cell views-cell redfin-col">30</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-fresh">&#9679; 3</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">13</td>
+        <td class="address-cell">
+          <div class="address-main">1175 W Hutchins Bend</div>
+          <div class="address-sub">Sparta &middot; MLS# 242973</div>
+        </td>
+        <td class="price-cell">$949,900</td>
+        <td class="metric-cell views-cell">278</td>
+        <td class="metric-cell saves-cell">4</td>
+        <td class="metric-cell views-cell redfin-col">59</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">160</td>
+        <td class="metric-cell saves-cell homes-col">0</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-fresh">&#9679; 1</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">14</td>
+        <td class="address-cell">
+          <div class="address-main">123 Butler Lane</div>
+          <div class="address-sub">Gainesboro &middot; MLS# 242977</div>
+        </td>
+        <td class="price-cell">$284,900</td>
+        <td class="metric-cell views-cell">143</td>
+        <td class="metric-cell saves-cell">10</td>
+        <td class="metric-cell views-cell redfin-col">42</td>
+        <td class="metric-cell saves-cell redfin-col">5</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-fresh">&#9679; 2</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">15</td>
+        <td class="address-cell">
+          <div class="address-main">248 Strader Road</div>
+          <div class="address-sub">Evensville &middot; MLS# 242980</div>
+        </td>
+        <td class="price-cell">$179,900</td>
+        <td class="metric-cell views-cell">130</td>
+        <td class="metric-cell saves-cell">8</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-fresh">&#9679; 1</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">16</td>
+        <td class="address-cell">
+          <div class="address-main">301 Oliver Way</div>
+          <div class="address-sub">Baxter &middot; MLS# 242755</div>
+        </td>
+        <td class="price-cell">$385,000</td>
+        <td class="metric-cell views-cell">111</td>
+        <td class="metric-cell saves-cell">2</td>
+        <td class="metric-cell views-cell redfin-col">14</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-active">&#9679; 10</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">17</td>
+        <td class="address-cell">
+          <div class="address-main">Cumberland Lakes Dr</div>
+          <div class="address-sub">Monterey &middot; MLS# 242742</div>
+        </td>
+        <td class="price-cell">$14,000</td>
+        <td class="metric-cell views-cell">31</td>
+        <td class="metric-cell saves-cell">0</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-stale">&#9650; 388</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">18</td>
+        <td class="address-cell">
+          <div class="address-main">202 Sells Cemetery Rd</div>
+          <div class="address-sub">Wilder &middot; MLS# 240061</div>
+        </td>
+        <td class="price-cell">$67,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">19</td>
+        <td class="address-cell">
+          <div class="address-main">320 Greymoor Ln</div>
+          <div class="address-sub">Cookeville &middot; MLS# 242312</div>
+        </td>
+        <td class="price-cell">$649,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">20</td>
+        <td class="address-cell">
+          <div class="address-main">1603 Coon Hunt Rd</div>
+          <div class="address-sub">Baxter &middot; MLS# 242591</div>
+        </td>
+        <td class="price-cell">$375,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">1,996</td>
+        <td class="metric-cell saves-cell homes-col">7</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-active">&#9679; 13</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">21</td>
+        <td class="address-cell">
+          <div class="address-main">326 E Main St</div>
+          <div class="address-sub">Cookeville &middot; MLS# 242615</div>
+        </td>
+        <td class="price-cell">$299,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">2,932</td>
+        <td class="metric-cell saves-cell homes-col">8</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-active">&#9679; 18</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-average">Average</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">22</td>
+        <td class="address-cell">
+          <div class="address-main">234 Virginia Ave</div>
+          <div class="address-sub">Sparta &middot; MLS# 241260</div>
+        </td>
+        <td class="price-cell">$180,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">23</td>
+        <td class="address-cell">
+          <div class="address-main">770 E Hudgens St</div>
+          <div class="address-sub">Cookeville &middot; MLS# 242429</div>
+        </td>
+        <td class="price-cell">$285,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">24</td>
+        <td class="address-cell">
+          <div class="address-main">360 Avey Cir</div>
+          <div class="address-sub">Cookeville &middot; MLS# 242592</div>
+        </td>
+        <td class="price-cell">$650,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">173</td>
+        <td class="metric-cell saves-cell homes-col">0</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-fresh">&#9679; 1</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">25</td>
+        <td class="address-cell">
+          <div class="address-main">290 County Garage Rd</div>
+          <div class="address-sub">Crossville &middot; MLS# 239787</div>
+        </td>
+        <td class="price-cell">$299,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">26</td>
+        <td class="address-cell">
+          <div class="address-main">120 Joshua Rd</div>
+          <div class="address-sub">Cookeville &middot; MLS# 240863</div>
+        </td>
+        <td class="price-cell">$289,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">27</td>
+        <td class="address-cell">
+          <div class="address-main">623 Longstreet Dr</div>
+          <div class="address-sub">Cookeville &middot; MLS# 241628</div>
+        </td>
+        <td class="price-cell">$5,990,006</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">28</td>
+        <td class="address-cell">
+          <div class="address-main">201 Amherst Ln</div>
+          <div class="address-sub">Crossville &middot; MLS# 242336</div>
+        </td>
+        <td class="price-cell">$8,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">2,101</td>
+        <td class="metric-cell saves-cell homes-col">1</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-active">&#9679; 27</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-average">Average</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">29</td>
+        <td class="address-cell">
+          <div class="address-main">1325 Bridle Path</div>
+          <div class="address-sub">Cookeville &middot; MLS# 240673</div>
+        </td>
+        <td class="price-cell">$57,990</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">10,034</td>
+        <td class="metric-cell saves-cell homes-col">1</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-stale">&#9650; 126</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-exceptional">Exceptional</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">30</td>
+        <td class="address-cell">
+          <div class="address-main">1225 Neal St</div>
+          <div class="address-sub">Cookeville &middot; MLS# 239523</div>
+        </td>
+        <td class="price-cell">$1,790,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">31</td>
+        <td class="address-cell">
+          <div class="address-main">921 Barney Holt</div>
+          <div class="address-sub">Jamestown &middot; MLS# 240442</div>
+        </td>
+        <td class="price-cell">$229,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">32</td>
+        <td class="address-cell">
+          <div class="address-main">1364 Country Club Rd</div>
+          <div class="address-sub">Sparta &middot; MLS# 240688</div>
+        </td>
+        <td class="price-cell">$1,500,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">33</td>
+        <td class="address-cell">
+          <div class="address-main">1239 Pleasant View Drive</div>
+          <div class="address-sub">Cookeville &middot; MLS# 242238</div>
+        </td>
+        <td class="price-cell">$22,500</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">34</td>
+        <td class="address-cell">
+          <div class="address-main">Strutt St</div>
+          <div class="address-sub">Oliver Springs &middot; MLS# 242060</div>
+        </td>
+        <td class="price-cell">$15,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">35</td>
+        <td class="address-cell">
+          <div class="address-main">108 Apple St</div>
+          <div class="address-sub">Cookeville &middot; MLS# 242610</div>
+        </td>
+        <td class="price-cell">$229,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">36</td>
+        <td class="address-cell">
+          <div class="address-main">1064 Sugarhill Pl</div>
+          <div class="address-sub">Cookeville &middot; MLS# 240281</div>
+        </td>
+        <td class="price-cell">$43,990</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">37</td>
+        <td class="address-cell">
+          <div class="address-main">2725 Seven Springs Rd</div>
+          <div class="address-sub">Cookeville &middot; MLS# 241965</div>
+        </td>
+        <td class="price-cell">$150,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">38</td>
+        <td class="address-cell">
+          <div class="address-main">3433 Middleford Dr</div>
+          <div class="address-sub">Cookeville &middot; MLS# 241967</div>
+        </td>
+        <td class="price-cell">$3,749,005</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">3,024</td>
+        <td class="metric-cell saves-cell homes-col">7</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-aging">&#9650; 48</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-average">Average</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">39</td>
+        <td class="address-cell">
+          <div class="address-main">5685 Canoe Way</div>
+          <div class="address-sub">Baxter &middot; MLS# 242709</div>
+        </td>
+        <td class="price-cell">$90,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">40</td>
+        <td class="address-cell">
+          <div class="address-main">936 N Plantation Dr</div>
+          <div class="address-sub">Cookeville &middot; MLS# 242104</div>
+        </td>
+        <td class="price-cell">$77,500</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">41</td>
+        <td class="address-cell">
+          <div class="address-main">271 Country Meadows</div>
+          <div class="address-sub">Cookeville &middot; MLS# 241990</div>
+        </td>
+        <td class="price-cell">$27,500</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">42</td>
+        <td class="address-cell">
+          <div class="address-main">250 Dyer Ridge Rd</div>
+          <div class="address-sub">Baxter &middot; MLS# 242033</div>
+        </td>
+        <td class="price-cell">$115,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">8,942</td>
+        <td class="metric-cell saves-cell homes-col">1</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-aging">&#9650; 45</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-exceptional">Exceptional</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">43</td>
+        <td class="address-cell">
+          <div class="address-main">900 Kinniard Road</div>
+          <div class="address-sub">Cookeville &middot; MLS# 240936</div>
+        </td>
+        <td class="price-cell">$299,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">44</td>
+        <td class="address-cell">
+          <div class="address-main">100 Carlton Ave</div>
+          <div class="address-sub">Lebanon &middot; MLS# 242716</div>
+        </td>
+        <td class="price-cell">$349,999</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">45</td>
+        <td class="address-cell">
+          <div class="address-main">553 County Farm</div>
+          <div class="address-sub">Cookeville &middot; MLS# 239132</div>
+        </td>
+        <td class="price-cell">$525,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">46</td>
+        <td class="address-cell">
+          <div class="address-main">20 Cabot Lane</div>
+          <div class="address-sub">Cookeville &middot; MLS# 241503</div>
+        </td>
+        <td class="price-cell">$419,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">4,067</td>
+        <td class="metric-cell saves-cell homes-col">3</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-stale">&#9650; 71</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-strong">Strong</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">47</td>
+        <td class="address-cell">
+          <div class="address-main">6775 Thomas Twin Oak</div>
+          <div class="address-sub">Baxter &middot; MLS# 242669</div>
+        </td>
+        <td class="price-cell">$275,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">48</td>
+        <td class="address-cell">
+          <div class="address-main">15000 SE Dodson Branch Highway</div>
+          <div class="address-sub">Cookeville &middot; MLS# 241790</div>
+        </td>
+        <td class="price-cell">$3,249,005</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">49</td>
+        <td class="address-cell">
+          <div class="address-main">Greenfield Rd</div>
+          <div class="address-sub">Spencer &middot; MLS# 241851</div>
+        </td>
+        <td class="price-cell">$50,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">50</td>
+        <td class="address-cell">
+          <div class="address-main">Hickory Nut Trl</div>
+          <div class="address-sub">Spencer &middot; MLS# 235717</div>
+        </td>
+        <td class="price-cell">$38,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">51</td>
+        <td class="address-cell">
+          <div class="address-main">Glade Creek Rd</div>
+          <div class="address-sub">Sparta &middot; MLS# 242070</div>
+        </td>
+        <td class="price-cell">$119,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">52</td>
+        <td class="address-cell">
+          <div class="address-main">Baxter Norris Rd</div>
+          <div class="address-sub">Crab Orchard &middot; MLS# 240620</div>
+        </td>
+        <td class="price-cell">$440,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">53</td>
+        <td class="address-cell">
+          <div class="address-main">2265 Burgess Falls Rd</div>
+          <div class="address-sub">Cookeville &middot; MLS# 241219</div>
+        </td>
+        <td class="price-cell">$650,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">54</td>
+        <td class="address-cell">
+          <div class="address-main">309 W 12th St</div>
+          <div class="address-sub">Cookeville &middot; MLS# 238759</div>
+        </td>
+        <td class="price-cell">$2,650,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">55</td>
+        <td class="address-cell">
+          <div class="address-main">Peachtree Dr</div>
+          <div class="address-sub">Crossville &middot; MLS# 242532</div>
+        </td>
+        <td class="price-cell">$7,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">56</td>
+        <td class="address-cell">
+          <div class="address-main">Half Moon Shores Dr</div>
+          <div class="address-sub">Ten Mile &middot; MLS# 242057</div>
+        </td>
+        <td class="price-cell">$30,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">57</td>
+        <td class="address-cell">
+          <div class="address-main">221 Birchwood Lane</div>
+          <div class="address-sub">Other &middot; MLS# 242848</div>
+        </td>
+        <td class="price-cell">$575,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">58</td>
+        <td class="address-cell">
+          <div class="address-main">Burton Cove Rd</div>
+          <div class="address-sub">Cookeville &middot; MLS# 239791</div>
+        </td>
+        <td class="price-cell">$20,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">59</td>
+        <td class="address-cell">
+          <div class="address-main">148 Maple St</div>
+          <div class="address-sub">Gordonsville &middot; MLS# 240913</div>
+        </td>
+        <td class="price-cell">$419,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">60</td>
+        <td class="address-cell">
+          <div class="address-main">00 Duck Pond Rd</div>
+          <div class="address-sub">Sparta &middot; MLS# 241930</div>
+        </td>
+        <td class="price-cell">$199,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">61</td>
+        <td class="address-cell">
+          <div class="address-main">63 Leeds Ter</div>
+          <div class="address-sub">Fairfield Glade &middot; MLS# 241955</div>
+        </td>
+        <td class="price-cell">$3,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">62</td>
+        <td class="address-cell">
+          <div class="address-main">108 Crestview Ln</div>
+          <div class="address-sub">Livingston &middot; MLS# 242306</div>
+        </td>
+        <td class="price-cell">$45,990</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">2,256</td>
+        <td class="metric-cell saves-cell homes-col">2</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-active">&#9679; 29</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-average">Average</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">63</td>
+        <td class="address-cell">
+          <div class="address-main">1000 Bethel Palk Rd</div>
+          <div class="address-sub">Bloomington Springs &middot; MLS# 239146</div>
+        </td>
+        <td class="price-cell">$35,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">64</td>
+        <td class="address-cell">
+          <div class="address-main">8267 Hwy 127 S</div>
+          <div class="address-sub">Crossville &middot; MLS# 239851</div>
+        </td>
+        <td class="price-cell">$349,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">65</td>
+        <td class="address-cell">
+          <div class="address-main">363 Valley Loop</div>
+          <div class="address-sub">Crossville &middot; MLS# 241808</div>
+        </td>
+        <td class="price-cell">$48,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">66</td>
+        <td class="address-cell">
+          <div class="address-main">5461 Buffalo Valley Rd</div>
+          <div class="address-sub">Cookeville &middot; MLS# 241949</div>
+        </td>
+        <td class="price-cell">$450,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">5,475</td>
+        <td class="metric-cell saves-cell homes-col">4</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-aging">&#9650; 47</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-strong">Strong</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">67</td>
+        <td class="address-cell">
+          <div class="address-main">Lot 68B Bald Eagle Ln</div>
+          <div class="address-sub">Hilham &middot; MLS# 241985</div>
+        </td>
+        <td class="price-cell">$78,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">68</td>
+        <td class="address-cell">
+          <div class="address-main">1868 Herbert Garrett Rd</div>
+          <div class="address-sub">Cookeville &middot; MLS# 241121</div>
+        </td>
+        <td class="price-cell">$380,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">69</td>
+        <td class="address-cell">
+          <div class="address-main">99 Judkins Ln</div>
+          <div class="address-sub">Hickman &middot; MLS# 241254</div>
+        </td>
+        <td class="price-cell">$1,300,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">3,164</td>
+        <td class="metric-cell saves-cell homes-col">0</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-active">&#9679; 29</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-average">Average</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">70</td>
+        <td class="address-cell">
+          <div class="address-main">3231 Byrdstown Highway</div>
+          <div class="address-sub">Monroe &middot; MLS# 237293</div>
+        </td>
+        <td class="price-cell">$575,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">71</td>
+        <td class="address-cell">
+          <div class="address-main">773 Dunbar Rd</div>
+          <div class="address-sub">Crossville &middot; MLS# 238684</div>
+        </td>
+        <td class="price-cell">$245,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">72</td>
+        <td class="address-cell">
+          <div class="address-main">Lot 57 Harbor Pointe Dr</div>
+          <div class="address-sub">Silver Point &middot; MLS# 242902</div>
+        </td>
+        <td class="price-cell">N/A</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">73</td>
+        <td class="address-cell">
+          <div class="address-main">135 Young Mill Ln</div>
+          <div class="address-sub">Cookeville &middot; MLS# 239177</div>
+        </td>
+        <td class="price-cell">$169,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">74</td>
+        <td class="address-cell">
+          <div class="address-main">3013 Tulip Ln</div>
+          <div class="address-sub">Cookeville &middot; MLS# 241938</div>
+        </td>
+        <td class="price-cell">$965,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">6,374</td>
+        <td class="metric-cell saves-cell homes-col">4</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-aging">&#9650; 50</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-strong">Strong</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">75</td>
+        <td class="address-cell">
+          <div class="address-main">118 Glenwood Dr</div>
+          <div class="address-sub">Crossville &middot; MLS# 242431</div>
+        </td>
+        <td class="price-cell">$395,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">76</td>
+        <td class="address-cell">
+          <div class="address-main">344 Meadows Rd</div>
+          <div class="address-sub">Sparta &middot; MLS# 231431</div>
+        </td>
+        <td class="price-cell">$129,500</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">77</td>
+        <td class="address-cell">
+          <div class="address-main">788 Old Walton Road</div>
+          <div class="address-sub">Cookeville &middot; MLS# 237671</div>
+        </td>
+        <td class="price-cell">$750,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">78</td>
+        <td class="address-cell">
+          <div class="address-main">200 S South Lovelady Rd</div>
+          <div class="address-sub">Cookeville &middot; MLS# 242318</div>
+        </td>
+        <td class="price-cell">$54,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">79</td>
+        <td class="address-cell">
+          <div class="address-main">516 Heather Drive</div>
+          <div class="address-sub">Sparta &middot; MLS# 239859</div>
+        </td>
+        <td class="price-cell">$250,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">80</td>
+        <td class="address-cell">
+          <div class="address-main">9797 Nashville Hwy</div>
+          <div class="address-sub">Baxter &middot; MLS# 242551</div>
+        </td>
+        <td class="price-cell">$180,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">81</td>
+        <td class="address-cell">
+          <div class="address-main">330 Deerfield Rd</div>
+          <div class="address-sub">Sparta &middot; MLS# 242182</div>
+        </td>
+        <td class="price-cell">$33,990</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">82</td>
+        <td class="address-cell">
+          <div class="address-main">2165 Ben Mason Rd</div>
+          <div class="address-sub">Cookeville &middot; MLS# 242427</div>
+        </td>
+        <td class="price-cell">$470,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">83</td>
+        <td class="address-cell">
+          <div class="address-main">359 Cc Camp Rd</div>
+          <div class="address-sub">Cookeville &middot; MLS# 242705</div>
+        </td>
+        <td class="price-cell">$419,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">84</td>
+        <td class="address-cell">
+          <div class="address-main">820 Kinniard Road</div>
+          <div class="address-sub">Cookeville &middot; MLS# 240914</div>
+        </td>
+        <td class="price-cell">$339,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">85</td>
+        <td class="address-cell">
+          <div class="address-main">6579 McCormick Ridge Rd</div>
+          <div class="address-sub">Whitleyville &middot; MLS# 242459</div>
+        </td>
+        <td class="price-cell">$44,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">86</td>
+        <td class="address-cell">
+          <div class="address-main">Ensor Hollow Rd</div>
+          <div class="address-sub">Buffalo Valley &middot; MLS# 240645</div>
+        </td>
+        <td class="price-cell">$367,500</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">87</td>
+        <td class="address-cell">
+          <div class="address-main">3579 Hilham Rd</div>
+          <div class="address-sub">Cookeville &middot; MLS# 241695</div>
+        </td>
+        <td class="price-cell">$65,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">5,096</td>
+        <td class="metric-cell saves-cell homes-col">2</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-stale">&#9650; 63</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-strong">Strong</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">88</td>
+        <td class="address-cell">
+          <div class="address-main">Potts Camp Rd Lot 11</div>
+          <div class="address-sub">Smithville &middot; MLS# 239084</div>
+        </td>
+        <td class="price-cell">$120,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">89</td>
+        <td class="address-cell">
+          <div class="address-main">Topside Dr Lot 50</div>
+          <div class="address-sub">Spencer &middot; MLS# 237306</div>
+        </td>
+        <td class="price-cell">$90,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">90</td>
+        <td class="address-cell">
+          <div class="address-main">328 Wedgewood St</div>
+          <div class="address-sub">Cookeville &middot; MLS# 242990</div>
+        </td>
+        <td class="price-cell">$315,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">2,278</td>
+        <td class="metric-cell saves-cell homes-col">0</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-fresh">&#9679; 1</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-average">Average</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">91</td>
+        <td class="address-cell">
+          <div class="address-main">929 Kemah Ln</div>
+          <div class="address-sub">Crossville &middot; MLS# 238340</div>
+        </td>
+        <td class="price-cell">$8,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">92</td>
+        <td class="address-cell">
+          <div class="address-main">Lakeview Dr</div>
+          <div class="address-sub">Harriman &middot; MLS# 242059</div>
+        </td>
+        <td class="price-cell">$30,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">93</td>
+        <td class="address-cell">
+          <div class="address-main">Starlight Rd Off Of Rd Lot 11</div>
+          <div class="address-sub">Mcminnville &middot; MLS# 242967</div>
+        </td>
+        <td class="price-cell">$163,500</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">94</td>
+        <td class="address-cell">
+          <div class="address-main">1749 Walker Hill Road</div>
+          <div class="address-sub">Celina &middot; MLS# 240652</div>
+        </td>
+        <td class="price-cell">$399,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">95</td>
+        <td class="address-cell">
+          <div class="address-main">4934 N York Hwy</div>
+          <div class="address-sub">Pall Mall &middot; MLS# 240715</div>
+        </td>
+        <td class="price-cell">$34,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">96</td>
+        <td class="address-cell">
+          <div class="address-main">Lot 8 Anne Rd</div>
+          <div class="address-sub">Monterey &middot; MLS# 241181</div>
+        </td>
+        <td class="price-cell">$269,993</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">97</td>
+        <td class="address-cell">
+          <div class="address-main">410 Franklin Rd</div>
+          <div class="address-sub">Lebanon &middot; MLS# 242246</div>
+        </td>
+        <td class="price-cell">$269,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">98</td>
+        <td class="address-cell">
+          <div class="address-main">5740 South York Highway</div>
+          <div class="address-sub">Clarkrange &middot; MLS# 237829</div>
+        </td>
+        <td class="price-cell">$199,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">99</td>
+        <td class="address-cell">
+          <div class="address-main">Narcissus St</div>
+          <div class="address-sub">Crossville &middot; MLS# 242531</div>
+        </td>
+        <td class="price-cell">$7,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">100</td>
+        <td class="address-cell">
+          <div class="address-main">1364 Country Club Rd</div>
+          <div class="address-sub">Sparta &middot; MLS# 240333</div>
+        </td>
+        <td class="price-cell">$720,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">101</td>
+        <td class="address-cell">
+          <div class="address-main">102 Glen Abbey Drive</div>
+          <div class="address-sub">Cookeville &middot; MLS# 241429</div>
+        </td>
+        <td class="price-cell">$72,990</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">102</td>
+        <td class="address-cell">
+          <div class="address-main">Lot 11 H O Allison</div>
+          <div class="address-sub">Baxter &middot; MLS# 235875</div>
+        </td>
+        <td class="price-cell">$45,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">103</td>
+        <td class="address-cell">
+          <div class="address-main">604 Hickory Lane</div>
+          <div class="address-sub">Hilham &middot; MLS# 240195</div>
+        </td>
+        <td class="price-cell">$424,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">104</td>
+        <td class="address-cell">
+          <div class="address-main">3040 Oklahoma Dr</div>
+          <div class="address-sub">Crossville &middot; MLS# 238339</div>
+        </td>
+        <td class="price-cell">$8,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">105</td>
+        <td class="address-cell">
+          <div class="address-main">107 Burchette Dr</div>
+          <div class="address-sub">Crossville &middot; MLS# 242174</div>
+        </td>
+        <td class="price-cell">$249,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">106</td>
+        <td class="address-cell">
+          <div class="address-main">14305 Old Kentucky Rd</div>
+          <div class="address-sub">Walling &middot; MLS# 242426</div>
+        </td>
+        <td class="price-cell">$299,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">4,995</td>
+        <td class="metric-cell saves-cell homes-col">7</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-active">&#9679; 22</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-strong">Strong</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">107</td>
+        <td class="address-cell">
+          <div class="address-main">501 Scenic Ln</div>
+          <div class="address-sub">Cookeville &middot; MLS# 242631</div>
+        </td>
+        <td class="price-cell">$325,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">108</td>
+        <td class="address-cell">
+          <div class="address-main">374 Rotherham Dr</div>
+          <div class="address-sub">Fairfield Glade &middot; MLS# 238710</div>
+        </td>
+        <td class="price-cell">$7,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">109</td>
+        <td class="address-cell">
+          <div class="address-main">1128 Moreno Ln</div>
+          <div class="address-sub">Lewisburg &middot; MLS# 242692</div>
+        </td>
+        <td class="price-cell">$274,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">110</td>
+        <td class="address-cell">
+          <div class="address-main">2050 W Broad St</div>
+          <div class="address-sub">Cookeville &middot; MLS# 242268</div>
+        </td>
+        <td class="price-cell">$472,500</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">111</td>
+        <td class="address-cell">
+          <div class="address-main">Airport Rd</div>
+          <div class="address-sub">Rockwood &middot; MLS# 242056</div>
+        </td>
+        <td class="price-cell">$15,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">112</td>
+        <td class="address-cell">
+          <div class="address-main">00 The Terrace</div>
+          <div class="address-sub">Crossville &middot; MLS# 236761</div>
+        </td>
+        <td class="price-cell">$30,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">113</td>
+        <td class="address-cell">
+          <div class="address-main">Bald Eagle Rd Lot 54b</div>
+          <div class="address-sub">Hilham &middot; MLS# 240596</div>
+        </td>
+        <td class="price-cell">$135,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">114</td>
+        <td class="address-cell">
+          <div class="address-main">00 Byrdstown Highway</div>
+          <div class="address-sub">Monroe &middot; MLS# 237292</div>
+        </td>
+        <td class="price-cell">$900,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">115</td>
+        <td class="address-cell">
+          <div class="address-main">106 Hilton Ln</div>
+          <div class="address-sub">Crossville &middot; MLS# 242039</div>
+        </td>
+        <td class="price-cell">$18,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">116</td>
+        <td class="address-cell">
+          <div class="address-main">370 Briargate Way</div>
+          <div class="address-sub">Cookeville &middot; MLS# 241594</div>
+        </td>
+        <td class="price-cell">$309,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">117</td>
+        <td class="address-cell">
+          <div class="address-main">Mountain Ash Drive</div>
+          <div class="address-sub">Monterey &middot; MLS# 236190</div>
+        </td>
+        <td class="price-cell">$20,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">118</td>
+        <td class="address-cell">
+          <div class="address-main">303 Amit St</div>
+          <div class="address-sub">La Vergne &middot; MLS# 242317</div>
+        </td>
+        <td class="price-cell">$399,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">119</td>
+        <td class="address-cell">
+          <div class="address-main">477 Lincolnshire Dr</div>
+          <div class="address-sub">Crossville &middot; MLS# 241291</div>
+        </td>
+        <td class="price-cell">$299,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">120</td>
+        <td class="address-cell">
+          <div class="address-main">104 Leigh Anna Cir</div>
+          <div class="address-sub">Lafayette &middot; MLS# 240694</div>
+        </td>
+        <td class="price-cell">$268,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">121</td>
+        <td class="address-cell">
+          <div class="address-main">Hurrican Branch Rd</div>
+          <div class="address-sub">Gainesboro &middot; MLS# 236905</div>
+        </td>
+        <td class="price-cell">$165,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">122</td>
+        <td class="address-cell">
+          <div class="address-main">Lot 9 H O Allison</div>
+          <div class="address-sub">Baxter &middot; MLS# 235910</div>
+        </td>
+        <td class="price-cell">$45,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">123</td>
+        <td class="address-cell">
+          <div class="address-main">149 Horseshoe Cir</div>
+          <div class="address-sub">Jamestown &middot; MLS# 242210</div>
+        </td>
+        <td class="price-cell">N/A</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">124</td>
+        <td class="address-cell">
+          <div class="address-main">5594 Poston Ln</div>
+          <div class="address-sub">Cookeville &middot; MLS# 242289</div>
+        </td>
+        <td class="price-cell">$1,350,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">125</td>
+        <td class="address-cell">
+          <div class="address-main">Muddy Branch Rd</div>
+          <div class="address-sub">Crossville &middot; MLS# 236192</div>
+        </td>
+        <td class="price-cell">$70,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">126</td>
+        <td class="address-cell">
+          <div class="address-main">1000 Noel Drive</div>
+          <div class="address-sub">Cookeville &middot; MLS# 240563</div>
+        </td>
+        <td class="price-cell">$310,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">127</td>
+        <td class="address-cell">
+          <div class="address-main">Homestead Ln</div>
+          <div class="address-sub">Crawford &middot; MLS# 243014</div>
+        </td>
+        <td class="price-cell">$199,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">128</td>
+        <td class="address-cell">
+          <div class="address-main">1164 Davidson Dr</div>
+          <div class="address-sub">Monterey &middot; MLS# 236065</div>
+        </td>
+        <td class="price-cell">$499,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">129</td>
+        <td class="address-cell">
+          <div class="address-main">Wragg Blvd</div>
+          <div class="address-sub">Rock Island &middot; MLS# 242058</div>
+        </td>
+        <td class="price-cell">$6,500,010</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">130</td>
+        <td class="address-cell">
+          <div class="address-main">Martins Creek Hwy</div>
+          <div class="address-sub">Granville &middot; MLS# 240705</div>
+        </td>
+        <td class="price-cell">$29,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">131</td>
+        <td class="address-cell">
+          <div class="address-main">164 Prosperity Dr</div>
+          <div class="address-sub">Sparta &middot; MLS# 242633</div>
+        </td>
+        <td class="price-cell">$299,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">132</td>
+        <td class="address-cell">
+          <div class="address-main">415 Old Morrison Rd</div>
+          <div class="address-sub">Mcminnville &middot; MLS# 242031</div>
+        </td>
+        <td class="price-cell">$3,250,005</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">133</td>
+        <td class="address-cell">
+          <div class="address-main">940 Kinniard Road</div>
+          <div class="address-sub">Cookeville &middot; MLS# 240933</div>
+        </td>
+        <td class="price-cell">$284,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">134</td>
+        <td class="address-cell">
+          <div class="address-main">920 Kinniard Road</div>
+          <div class="address-sub">Cookeville &middot; MLS# 240937</div>
+        </td>
+        <td class="price-cell">$289,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">135</td>
+        <td class="address-cell">
+          <div class="address-main">152 Hill Ave</div>
+          <div class="address-sub">Cookeville &middot; MLS# 241953</div>
+        </td>
+        <td class="price-cell">$220,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">136</td>
+        <td class="address-cell">
+          <div class="address-main">Holly Bend Dr</div>
+          <div class="address-sub">Byrdstown &middot; MLS# 241624</div>
+        </td>
+        <td class="price-cell">$75,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">137</td>
+        <td class="address-cell">
+          <div class="address-main">Old Tanner Cemetery Rd</div>
+          <div class="address-sub">Crossville &middot; MLS# 239306</div>
+        </td>
+        <td class="price-cell">$77,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">138</td>
+        <td class="address-cell">
+          <div class="address-main">281 Barnes Rd</div>
+          <div class="address-sub">Cookeville &middot; MLS# 242004</div>
+        </td>
+        <td class="price-cell">$575,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">139</td>
+        <td class="address-cell">
+          <div class="address-main">1805 Birdie Ct</div>
+          <div class="address-sub">Cookeville &middot; MLS# 238309</div>
+        </td>
+        <td class="price-cell">$324,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">140</td>
+        <td class="address-cell">
+          <div class="address-main">1551 Star Point Rd</div>
+          <div class="address-sub">Celina &middot; MLS# 238983</div>
+        </td>
+        <td class="price-cell">$300,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">141</td>
+        <td class="address-cell">
+          <div class="address-main">1538 Turnberry Place</div>
+          <div class="address-sub">Cookeville &middot; MLS# 242702</div>
+        </td>
+        <td class="price-cell">$625,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">142</td>
+        <td class="address-cell">
+          <div class="address-main">309 New Heritage Drive</div>
+          <div class="address-sub">Cookeville &middot; MLS# 241913</div>
+        </td>
+        <td class="price-cell">$559,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">143</td>
+        <td class="address-cell">
+          <div class="address-main">112 Hilton Ln</div>
+          <div class="address-sub">Crossville &middot; MLS# 242530</div>
+        </td>
+        <td class="price-cell">$14,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">144</td>
+        <td class="address-cell">
+          <div class="address-main">Lloyd Stover Rd</div>
+          <div class="address-sub">Allons &middot; MLS# 241740</div>
+        </td>
+        <td class="price-cell">$12,500</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">145</td>
+        <td class="address-cell">
+          <div class="address-main">124 Nunally Dr</div>
+          <div class="address-sub">Baxter &middot; MLS# 241801</div>
+        </td>
+        <td class="price-cell">$34,590</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">146</td>
+        <td class="address-cell">
+          <div class="address-main">155 Rachelle Pl</div>
+          <div class="address-sub">Baxter &middot; MLS# 239371</div>
+        </td>
+        <td class="price-cell">$354,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">147</td>
+        <td class="address-cell">
+          <div class="address-main">3659 Mustang Ln</div>
+          <div class="address-sub">Cookeville &middot; MLS# 240711</div>
+        </td>
+        <td class="price-cell">$319,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">148</td>
+        <td class="address-cell">
+          <div class="address-main">4050 Baxter Road</div>
+          <div class="address-sub">Baxter &middot; MLS# 242067</div>
+        </td>
+        <td class="price-cell">$3,449,005</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">149</td>
+        <td class="address-cell">
+          <div class="address-main">706 Industrial Dr.</div>
+          <div class="address-sub">Monterey &middot; MLS# 241327</div>
+        </td>
+        <td class="price-cell">$250,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">150</td>
+        <td class="address-cell">
+          <div class="address-main">227 Harris Ln</div>
+          <div class="address-sub">Baxter &middot; MLS# 241143</div>
+        </td>
+        <td class="price-cell">$3,450,005</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">151</td>
+        <td class="address-cell">
+          <div class="address-main">3038 Oklahoma Dr</div>
+          <div class="address-sub">Crossville &middot; MLS# 238338</div>
+        </td>
+        <td class="price-cell">$8,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">152</td>
+        <td class="address-cell">
+          <div class="address-main">Lot 9&10 H O Allison</div>
+          <div class="address-sub">Baxter &middot; MLS# 235908</div>
+        </td>
+        <td class="price-cell">$80,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">153</td>
+        <td class="address-cell">
+          <div class="address-main">850 Kinniard Road</div>
+          <div class="address-sub">Cookeville &middot; MLS# 240935</div>
+        </td>
+        <td class="price-cell">$329,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">154</td>
+        <td class="address-cell">
+          <div class="address-main">Lot 10 H O Allison</div>
+          <div class="address-sub">Baxter &middot; MLS# 235911</div>
+        </td>
+        <td class="price-cell">$45,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">155</td>
+        <td class="address-cell">
+          <div class="address-main">908 Riverchase Trl</div>
+          <div class="address-sub">Clarkrange &middot; MLS# 240113</div>
+        </td>
+        <td class="price-cell">$450,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">156</td>
+        <td class="address-cell">
+          <div class="address-main">Dogwood Pl</div>
+          <div class="address-sub">Harriman &middot; MLS# 242061</div>
+        </td>
+        <td class="price-cell">$25,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">157</td>
+        <td class="address-cell">
+          <div class="address-main">134 Hardys Chapel Rd.</div>
+          <div class="address-sub">Cookeville &middot; MLS# 241478</div>
+        </td>
+        <td class="price-cell">$100,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">158</td>
+        <td class="address-cell">
+          <div class="address-main">335 N Dixie Ave</div>
+          <div class="address-sub">Cookeville &middot; MLS# 241217</div>
+        </td>
+        <td class="price-cell">$2,650,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">13,516</td>
+        <td class="metric-cell saves-cell homes-col">0</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-stale">&#9650; 88</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-exceptional">Exceptional</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">159</td>
+        <td class="address-cell">
+          <div class="address-main">1223 N Quail Hollow Circle</div>
+          <div class="address-sub">Cookeville &middot; MLS# 241397</div>
+        </td>
+        <td class="price-cell">$2,600,005</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">160</td>
+        <td class="address-cell">
+          <div class="address-main">Lot 8 Hidden River Rd</div>
+          <div class="address-sub">Rock Island &middot; MLS# 241419</div>
+        </td>
+        <td class="price-cell">$115,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">161</td>
+        <td class="address-cell">
+          <div class="address-main">0 Lot 55 Milky Way Rd</div>
+          <div class="address-sub">Jamestown &middot; MLS# 239395</div>
+        </td>
+        <td class="price-cell">$16,500</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">162</td>
+        <td class="address-cell">
+          <div class="address-main">301 W Everett St</div>
+          <div class="address-sub">Sparta &middot; MLS# 240719</div>
+        </td>
+        <td class="price-cell">$33,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">163</td>
+        <td class="address-cell">
+          <div class="address-main">5011 Ostego Dr</div>
+          <div class="address-sub">Crossville &middot; MLS# 241475</div>
+        </td>
+        <td class="price-cell">$14,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">3,367</td>
+        <td class="metric-cell saves-cell homes-col">2</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-stale">&#9650; 63</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-average">Average</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">164</td>
+        <td class="address-cell">
+          <div class="address-main">Moonlight Bay Dr</div>
+          <div class="address-sub">Sparta &middot; MLS# 238144</div>
+        </td>
+        <td class="price-cell">$41,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">165</td>
+        <td class="address-cell">
+          <div class="address-main">62 B Eastgate Circle</div>
+          <div class="address-sub">Cookeville &middot; MLS# 242434</div>
+        </td>
+        <td class="price-cell">$298,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">166</td>
+        <td class="address-cell">
+          <div class="address-main">808 Riverside Circle</div>
+          <div class="address-sub">Celina &middot; MLS# 239670</div>
+        </td>
+        <td class="price-cell">$25,990</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">167</td>
+        <td class="address-cell">
+          <div class="address-main">2533 Wedgewood Dr</div>
+          <div class="address-sub">Hohenwald &middot; MLS# 236652</div>
+        </td>
+        <td class="price-cell">$135,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">168</td>
+        <td class="address-cell">
+          <div class="address-main">1671 Golf Ln</div>
+          <div class="address-sub">Livingston &middot; MLS# 240923</div>
+        </td>
+        <td class="price-cell">$949,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">169</td>
+        <td class="address-cell">
+          <div class="address-main">2387 Mountain Reserve Dr</div>
+          <div class="address-sub">Cookeville &middot; MLS# 241387</div>
+        </td>
+        <td class="price-cell">$4,999,909</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">170</td>
+        <td class="address-cell">
+          <div class="address-main">LOT 13 Holly Bend Dr</div>
+          <div class="address-sub">Byrdstown &middot; MLS# 241915</div>
+        </td>
+        <td class="price-cell">$40,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">171</td>
+        <td class="address-cell">
+          <div class="address-main">1079 South Lane</div>
+          <div class="address-sub">Grimsley &middot; MLS# 242186</div>
+        </td>
+        <td class="price-cell">$559,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">172</td>
+        <td class="address-cell">
+          <div class="address-main">Tower Pl</div>
+          <div class="address-sub">Monterey &middot; MLS# 236193</div>
+        </td>
+        <td class="price-cell">$30,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">173</td>
+        <td class="address-cell">
+          <div class="address-main">Lot 3&4 W Laurel Way</div>
+          <div class="address-sub">Monterey &middot; MLS# 239896</div>
+        </td>
+        <td class="price-cell">$150,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">174</td>
+        <td class="address-cell">
+          <div class="address-main">45 N Greenhill Rd</div>
+          <div class="address-sub">Mount Juliet &middot; MLS# 240995</div>
+        </td>
+        <td class="price-cell">$321,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">175</td>
+        <td class="address-cell">
+          <div class="address-main">600 Freeze St</div>
+          <div class="address-sub">Cookeville &middot; MLS# 240384</div>
+        </td>
+        <td class="price-cell">$49,500</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">12,134</td>
+        <td class="metric-cell saves-cell homes-col">5</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-stale">&#9650; 140</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-exceptional">Exceptional</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">176</td>
+        <td class="address-cell">
+          <div class="address-main">5534 S York Highway</div>
+          <div class="address-sub">Grimsley &middot; MLS# 237314</div>
+        </td>
+        <td class="price-cell">$369,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">177</td>
+        <td class="address-cell">
+          <div class="address-main">322 New Heritage Dr</div>
+          <div class="address-sub">Cookeville &middot; MLS# 240135</div>
+        </td>
+        <td class="price-cell">$665,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">178</td>
+        <td class="address-cell">
+          <div class="address-main">9024 Barnes Ridge Rd</div>
+          <div class="address-sub">Monroe &middot; MLS# 242499</div>
+        </td>
+        <td class="price-cell">$169,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">179</td>
+        <td class="address-cell">
+          <div class="address-main">336 Lakeview Drive</div>
+          <div class="address-sub">Crossville &middot; MLS# 242040</div>
+        </td>
+        <td class="price-cell">$18,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">180</td>
+        <td class="address-cell">
+          <div class="address-main">314 Avondale Ct</div>
+          <div class="address-sub">Cookeville &middot; MLS# 239934</div>
+        </td>
+        <td class="price-cell">$399,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">181</td>
+        <td class="address-cell">
+          <div class="address-main">329 Rugby Rd</div>
+          <div class="address-sub">Crossville &middot; MLS# 242678</div>
+        </td>
+        <td class="price-cell">$195,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">182</td>
+        <td class="address-cell">
+          <div class="address-main">00 Hwy 70 North</div>
+          <div class="address-sub">Crossville &middot; MLS# 236762</div>
+        </td>
+        <td class="price-cell">$30,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">183</td>
+        <td class="address-cell">
+          <div class="address-main">407 Whaley St</div>
+          <div class="address-sub">Smithville &middot; MLS# 242022</div>
+        </td>
+        <td class="price-cell">$364,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">184</td>
+        <td class="address-cell">
+          <div class="address-main">1799 Fairway Dr</div>
+          <div class="address-sub">Cookeville &middot; MLS# 240366</div>
+        </td>
+        <td class="price-cell">$339,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">185</td>
+        <td class="address-cell">
+          <div class="address-main">920 Franklin Ct</div>
+          <div class="address-sub">Cookeville &middot; MLS# 241281</div>
+        </td>
+        <td class="price-cell">$550,000</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">8,824</td>
+        <td class="metric-cell saves-cell homes-col">1</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-stale">&#9650; 81</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-exceptional">Exceptional</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">186</td>
+        <td class="address-cell">
+          <div class="address-main">203 Crestview Ln</div>
+          <div class="address-sub">Sparta &middot; MLS# 241239</div>
+        </td>
+        <td class="price-cell">$134,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">5,943</td>
+        <td class="metric-cell saves-cell homes-col">1</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-active">&#9679; 13</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-strong">Strong</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">187</td>
+        <td class="address-cell">
+          <div class="address-main">1360 Charles St</div>
+          <div class="address-sub">Cookeville &middot; MLS# 241700</div>
+        </td>
+        <td class="price-cell">$5,100,005</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">188</td>
+        <td class="address-cell">
+          <div class="address-main">1171 W Hutchins Bend Rd</div>
+          <div class="address-sub">Sparta &middot; MLS# 241731</div>
+        </td>
+        <td class="price-cell">$899,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">189</td>
+        <td class="address-cell">
+          <div class="address-main">700 Falls Road</div>
+          <div class="address-sub">Monterey &middot; MLS# 241299</div>
+        </td>
+        <td class="price-cell">$79,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">190</td>
+        <td class="address-cell">
+          <div class="address-main">3930 Olyvia Ct</div>
+          <div class="address-sub">Cookeville &middot; MLS# 238552</div>
+        </td>
+        <td class="price-cell">$3,975,001</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">191</td>
+        <td class="address-cell">
+          <div class="address-main">179 River Front Dr</div>
+          <div class="address-sub">Sparta &middot; MLS# 242717</div>
+        </td>
+        <td class="price-cell">$149,900</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">348</td>
+        <td class="metric-cell saves-cell homes-col">0</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-active">&#9679; 10</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+      <tr>
+        <td class="rank-cell">192</td>
+        <td class="address-cell">
+          <div class="address-main">425 S Young St</div>
+          <div class="address-sub">Sparta &middot; MLS# 241962</div>
+        </td>
+        <td class="price-cell">$27,790</td>
+        <td class="metric-cell views-cell">--</td>
+        <td class="metric-cell saves-cell">--</td>
+        <td class="metric-cell views-cell redfin-col">--</td>
+        <td class="metric-cell saves-cell redfin-col">--</td>
+        <td class="metric-cell views-cell homes-col">--</td>
+        <td class="metric-cell saves-cell homes-col">--</td>
+        <td class="metric-cell dom-cell">
+          <span class="dom-badge dom-new">&#9679; --</span>
+        </td>
+        <td class="tier-cell"><span class="tier-badge tier-low">Low</span></td>
+      </tr>
+    
+    </tbody>
+  </table>
+</div>
+
+<!-- PRICE ANALYSIS -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-title">Price Analysis</div>
+    <div class="section-count">Active inventory</div>
+  </div>
+  <div class="price-grid">
+    <div class="price-card">
+      <div class="price-card-value">$101,172,681</div>
+      <div class="price-card-label">Total Inventory Value</div>
+    </div>
+    <div class="price-card">
+      <div class="price-card-value">$526,941</div>
+      <div class="price-card-label">Average List Price</div>
+    </div>
+    <div class="price-card">
+      <div class="price-card-value">$6,500,010</div>
+      <div class="price-card-label">Highest Listing</div>
+    </div>
+    <div class="price-card">
+      <div class="price-card-value">N/A</div>
+      <div class="price-card-label">Lowest Listing</div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="report-footer">
+  <div class="footer-brand">The Real Estate Collective &middot; Cookeville, TN</div>
+  <div class="footer-disclaimer">
+    Data sourced from Zillow, Redfin, and Homes.com. Views and saves reflect platform engagement
+    at time of report generation. This report is confidential and intended for internal use only.
+  </div>
+</div>
+
+</body>
+</html>
