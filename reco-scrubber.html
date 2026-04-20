@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The RECO Scrubber · Proprietary Listing Intelligence</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+    --navy:#0a1628;
+    --navy-2:#0e1b30;
+    --navy-3:#111d33;
+    --navy-4:#162340;
+    --gold:#c9a84c;
+    --gold-light:#e6c96e;
+    --gold-deep:#a8882f;
+    --gold-subtle:rgba(201,168,76,.08);
+    --gold-border:rgba(201,168,76,.18);
+    --gold-glow:rgba(201,168,76,.12);
+    --white:#f8f6f1;
+    --text:#e8e4dc;
+    --text-muted:rgba(232,228,220,.58);
+    --text-dim:rgba(232,228,220,.32);
+    --separator:rgba(201,168,76,.1);
+    --line:rgba(232,228,220,.08);
+}
+
+html{scroll-behavior:smooth}
+body{
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    background:var(--navy);
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    font-weight:400;
+}
+
+.grain{
+    position:fixed;top:0;left:0;width:100%;height:100%;
+    z-index:9999;pointer-events:none;opacity:.02;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ===== NAV ===== */
+nav{
+    position:fixed;top:0;left:0;right:0;z-index:1000;
+    padding:0 48px;height:72px;
+    display:flex;align-items:center;justify-content:space-between;
+    background:rgba(10,22,40,.85);
+    backdrop-filter:blur(40px) saturate(180%);
+    -webkit-backdrop-filter:blur(40px) saturate(180%);
+    border-bottom:1px solid var(--separator);
+}
+.nav-brand{display:flex;align-items:center;gap:14px}
+.nav-logo{
+    height:44px;width:auto;
+    display:block;
+    filter:brightness(1.05);
+}
+.nav-divider{width:1px;height:20px;background:var(--gold-border)}
+.nav-tag{
+    font-size:10px;font-weight:600;letter-spacing:3px;
+    text-transform:uppercase;color:var(--text-muted);
+}
+.nav-status{
+    display:flex;align-items:center;gap:10px;
+    font-size:11px;font-weight:500;letter-spacing:2px;
+    text-transform:uppercase;color:var(--text-muted);
+}
+.status-dot{
+    width:7px;height:7px;border-radius:50%;background:#4ade80;
+    box-shadow:0 0 10px rgba(74,222,128,.6);
+    animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+
+/* ===== HERO ===== */
+.hero{
+    position:relative;min-height:100vh;
+    display:flex;align-items:center;
+    padding:140px 48px 100px;
+    overflow:hidden;
+}
+.hero-bg-1{
+    position:absolute;top:-30%;right:-20%;
+    width:900px;height:900px;
+    background:radial-gradient(circle,rgba(201,168,76,.06),transparent 70%);
+    pointer-events:none;
+}
+.hero-bg-2{
+    position:absolute;bottom:-20%;left:-10%;
+    width:700px;height:700px;
+    background:radial-gradient(circle,rgba(201,168,76,.03),transparent 70%);
+    pointer-events:none;
+}
+.hero-grid-lines{
+    position:absolute;top:0;left:0;right:0;bottom:0;
+    background-image:
+        linear-gradient(to right,var(--line) 1px,transparent 1px),
+        linear-gradient(to bottom,var(--line) 1px,transparent 1px);
+    background-size:80px 80px;
+    mask-image:radial-gradient(ellipse at center,black 30%,transparent 75%);
+    -webkit-mask-image:radial-gradient(ellipse at center,black 30%,transparent 75%);
+    opacity:.5;pointer-events:none;
+}
+.hero-inner{
+    position:relative;z-index:2;
+    max-width:1280px;margin:0 auto;width:100%;
+    display:grid;grid-template-columns:1.1fr .9fr;
+    gap:80px;align-items:center;
+}
+.hero-eyebrow{
+    display:inline-flex;align-items:center;gap:14px;
+    margin-bottom:32px;
+    animation:fadeUp .9s ease-out .1s both;
+}
+.hero-eyebrow-line{width:48px;height:1px;background:var(--gold)}
+.hero-eyebrow-text{
+    font-size:11px;font-weight:700;letter-spacing:4px;
+    text-transform:uppercase;color:var(--gold);
+}
+.hero h1{
+    font-family:'Playfair Display',Georgia,serif;
+    font-size:clamp(48px,7vw,92px);
+    font-weight:700;line-height:1.02;
+    letter-spacing:-2px;color:var(--white);
+    margin-bottom:28px;
+    animation:fadeUp .9s ease-out .25s both;
+}
+.hero h1 .italic{font-style:italic;font-weight:400;color:var(--gold)}
+.hero h1 .thin{font-weight:300}
+.hero-desc{
+    font-size:20px;line-height:1.7;
+    color:var(--text-muted);max-width:560px;
+    font-weight:400;margin-bottom:40px;
+    animation:fadeUp .9s ease-out .4s both;
+}
+.hero-meta{
+    display:flex;gap:40px;padding-top:32px;
+    border-top:1px solid var(--line);
+    animation:fadeUp .9s ease-out .55s both;
+}
+.hero-meta-item{display:flex;flex-direction:column;gap:6px}
+.hero-meta-label{
+    font-size:10px;font-weight:600;letter-spacing:2.5px;
+    text-transform:uppercase;color:var(--text-dim);
+}
+.hero-meta-value{
+    font-family:'Playfair Display',serif;
+    font-size:22px;font-weight:600;color:var(--white);
+}
+.hero-meta-value .gold{color:var(--gold)}
+
+/* ===== TERMINAL ===== */
+.terminal{
+    position:relative;
+    border:1px solid var(--gold-border);
+    background:linear-gradient(180deg,rgba(17,29,51,.9),rgba(14,27,48,.9));
+    border-radius:12px;overflow:hidden;
+    box-shadow:0 30px 80px rgba(0,0,0,.4),0 0 60px rgba(201,168,76,.06);
+    animation:fadeUp 1s ease-out .7s both;
+}
+.terminal-bar{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 20px;
+    border-bottom:1px solid var(--line);
+    background:rgba(10,22,40,.6);
+}
+.terminal-dots{display:flex;gap:6px}
+.terminal-dots span{
+    width:10px;height:10px;border-radius:50%;
+    background:var(--line);
+}
+.terminal-title{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;letter-spacing:1.5px;
+    color:var(--text-dim);text-transform:uppercase;
+}
+.terminal-body{padding:24px;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.9}
+.tl-prompt{color:var(--gold)}
+.tl-cmd{color:var(--white)}
+.tl-muted{color:var(--text-dim)}
+.tl-ok{color:#4ade80}
+.tl-warn{color:#fbbf24}
+.tl-listing{
+    display:grid;grid-template-columns:1fr auto auto auto;
+    gap:16px;padding:10px 0;
+    border-bottom:1px dashed var(--line);
+    font-size:11.5px;
+}
+.tl-listing:last-child{border:none}
+.tl-addr{color:var(--text);font-weight:500}
+.tl-stat{color:var(--gold);font-weight:600}
+.tl-plat{color:var(--text-muted);font-size:10px;letter-spacing:1px}
+.cursor{
+    display:inline-block;width:8px;height:14px;
+    background:var(--gold);margin-left:4px;vertical-align:middle;
+    animation:blink 1s steps(1) infinite;
+}
+@keyframes blink{50%{opacity:0}}
+
+/* ===== SECTION SHELL ===== */
+section{position:relative;padding:120px 48px;overflow:hidden}
+.section-inner{max-width:1280px;margin:0 auto}
+.section-header{margin-bottom:80px;max-width:780px}
+.section-eyebrow{
+    display:inline-flex;align-items:center;gap:12px;
+    margin-bottom:24px;
+}
+.section-eyebrow-line{width:32px;height:1px;background:var(--gold)}
+.section-eyebrow-text{
+    font-size:11px;font-weight:700;letter-spacing:3.5px;
+    text-transform:uppercase;color:var(--gold);
+}
+.section-title{
+    font-family:'Playfair Display',Georgia,serif;
+    font-size:clamp(36px,5vw,56px);
+    font-weight:700;line-height:1.08;
+    letter-spacing:-1.2px;color:var(--white);
+    margin-bottom:20px;
+}
+.section-title .italic{font-style:italic;color:var(--gold);font-weight:400}
+.section-desc{
+    font-size:18px;line-height:1.7;
+    color:var(--text-muted);max-width:620px;
+}
+
+/* ===== STATS STRIP ===== */
+.stats-strip{
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    padding:60px 48px;
+    background:linear-gradient(180deg,transparent,rgba(201,168,76,.015),transparent);
+}
+.stats-grid{
+    max-width:1280px;margin:0 auto;
+    display:grid;grid-template-columns:repeat(4,1fr);
+    gap:40px;
+}
+.stat{text-align:left;position:relative;padding-left:24px}
+.stat::before{
+    content:'';position:absolute;left:0;top:4px;bottom:4px;
+    width:2px;background:var(--gold);
+}
+.stat-value{
+    font-family:'Playfair Display',serif;
+    font-size:44px;font-weight:700;color:var(--white);
+    letter-spacing:-1.5px;line-height:1;margin-bottom:10px;
+}
+.stat-value .unit{
+    font-size:20px;color:var(--gold);font-weight:500;margin-left:4px;
+}
+.stat-label{
+    font-size:11px;font-weight:600;letter-spacing:2px;
+    text-transform:uppercase;color:var(--text-muted);
+}
+
+/* ===== PILLARS (What It Does) ===== */
+.pillars{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:0;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+}
+.pillar{
+    padding:56px 40px;position:relative;
+    border-right:1px solid var(--line);
+    transition:background .4s ease;
+}
+.pillar:last-child{border-right:none}
+.pillar:hover{background:rgba(201,168,76,.025)}
+.pillar-num{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;letter-spacing:2px;color:var(--gold);
+    margin-bottom:24px;
+}
+.pillar-icon{
+    width:44px;height:44px;margin-bottom:28px;
+    color:var(--gold);
+}
+.pillar h3{
+    font-family:'Playfair Display',serif;
+    font-size:26px;font-weight:600;color:var(--white);
+    margin-bottom:14px;letter-spacing:-.3px;
+}
+.pillar p{
+    font-size:15.5px;line-height:1.7;color:var(--text-muted);
+}
+
+/* ===== PLATFORMS ===== */
+.platforms-bg{
+    position:absolute;inset:0;
+    background:radial-gradient(ellipse at top right,rgba(201,168,76,.04),transparent 60%);
+    pointer-events:none;
+}
+.platforms-grid{
+    display:grid;grid-template-columns:repeat(5,1fr);gap:20px;
+}
+.platform{
+    padding:36px 28px;
+    border:1px solid var(--line);
+    background:rgba(17,29,51,.3);
+    border-radius:8px;
+    position:relative;overflow:hidden;
+    transition:all .4s cubic-bezier(.2,.8,.2,1);
+}
+.platform:hover{
+    border-color:var(--gold-border);
+    transform:translateY(-4px);
+    background:rgba(17,29,51,.6);
+}
+.platform-accent{
+    position:absolute;top:0;left:0;right:0;height:2px;
+}
+.platform.z .platform-accent{background:#006AFF}
+.platform.r .platform-accent{background:#A31919}
+.platform.h .platform-accent{background:#00A562}
+.platform.rlt .platform-accent{background:#D92228}
+.platform.f .platform-accent{background:#1877F2}
+.platform-name{
+    font-family:'Playfair Display',serif;
+    font-size:22px;font-weight:600;color:var(--white);
+    margin-bottom:6px;letter-spacing:-.3px;
+}
+.platform-sub{
+    font-size:10px;font-weight:600;letter-spacing:1.8px;
+    text-transform:uppercase;color:var(--text-dim);
+    margin-bottom:28px;
+}
+.platform-metrics{display:flex;flex-direction:column;gap:8px}
+.platform-metric{
+    display:flex;justify-content:space-between;
+    font-size:12px;
+}
+.platform-metric-label{color:var(--text-muted)}
+.platform-metric-check{color:var(--gold);font-weight:600}
+.platform.locked{opacity:.55}
+.platform.locked .platform-metric-check{color:var(--text-dim)}
+.platform-badge{
+    position:absolute;top:14px;right:14px;
+    font-size:9px;font-weight:700;letter-spacing:1.5px;
+    text-transform:uppercase;color:var(--gold);
+    padding:4px 8px;border:1px solid var(--gold-border);border-radius:3px;
+}
+
+/* ===== METRICS MATRIX ===== */
+.matrix-wrap{
+    border:1px solid var(--gold-border);
+    border-radius:12px;overflow:hidden;
+    background:linear-gradient(180deg,rgba(17,29,51,.5),rgba(10,22,40,.8));
+}
+.matrix-head{
+    padding:28px 40px;
+    border-bottom:1px solid var(--line);
+    display:flex;align-items:center;justify-content:space-between;
+    background:rgba(10,22,40,.5);
+}
+.matrix-head-title{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;letter-spacing:2px;
+    color:var(--gold);text-transform:uppercase;font-weight:600;
+}
+.matrix-head-meta{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;letter-spacing:1.5px;
+    color:var(--text-dim);text-transform:uppercase;
+}
+.matrix{
+    display:grid;grid-template-columns:repeat(4,1fr);
+}
+.matrix-cell{
+    padding:36px 32px;
+    border-right:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+}
+.matrix-cell:nth-child(4n){border-right:none}
+.matrix-cell:nth-last-child(-n+4){border-bottom:none}
+.matrix-cell-label{
+    font-size:10px;font-weight:600;letter-spacing:2px;
+    text-transform:uppercase;color:var(--gold);
+    margin-bottom:14px;
+}
+.matrix-cell-title{
+    font-family:'Playfair Display',serif;
+    font-size:22px;font-weight:600;color:var(--white);
+    margin-bottom:8px;letter-spacing:-.3px;
+}
+.matrix-cell-desc{
+    font-size:13px;line-height:1.6;color:var(--text-muted);
+}
+
+/* ===== WORKFLOW ===== */
+.workflow{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+    position:relative;
+}
+.workflow::before{
+    content:'';position:absolute;top:32px;left:5%;right:5%;
+    height:1px;background:linear-gradient(to right,transparent,var(--gold-border),var(--gold-border),transparent);
+    z-index:1;
+}
+.step{position:relative;z-index:2;padding:0 16px;text-align:center}
+.step-num{
+    width:64px;height:64px;margin:0 auto 24px;
+    border:1px solid var(--gold-border);
+    background:var(--navy);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Playfair Display',serif;
+    font-size:24px;font-weight:700;color:var(--gold);
+    border-radius:50%;
+    transition:all .4s ease;
+}
+.step:hover .step-num{
+    background:var(--gold);color:var(--navy);
+    box-shadow:0 0 40px rgba(201,168,76,.3);
+}
+.step-title{
+    font-family:'Playfair Display',serif;
+    font-size:19px;font-weight:600;color:var(--white);
+    margin-bottom:8px;
+}
+.step-desc{font-size:13.5px;line-height:1.6;color:var(--text-muted);max-width:220px;margin:0 auto}
+
+/* ===== EDGE ===== */
+.edge-section{
+    background:linear-gradient(180deg,transparent,rgba(201,168,76,.02));
+    border-top:1px solid var(--line);
+}
+.edge-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;
+}
+.edge-points{display:flex;flex-direction:column;gap:32px}
+.edge-point{
+    display:grid;grid-template-columns:auto 1fr;gap:24px;
+    padding-bottom:32px;border-bottom:1px solid var(--line);
+}
+.edge-point:last-child{border-bottom:none;padding-bottom:0}
+.edge-point-num{
+    font-family:'Playfair Display',serif;
+    font-size:28px;font-weight:400;font-style:italic;
+    color:var(--gold);line-height:1;
+}
+.edge-point h4{
+    font-family:'Playfair Display',serif;
+    font-size:22px;font-weight:600;color:var(--white);
+    margin-bottom:10px;letter-spacing:-.3px;
+}
+.edge-point p{font-size:15px;line-height:1.7;color:var(--text-muted)}
+
+/* ===== CLOSER ===== */
+.closer{
+    padding:140px 48px 100px;
+    text-align:center;position:relative;overflow:hidden;
+    border-top:1px solid var(--line);
+}
+.closer-bg{
+    position:absolute;inset:0;
+    background:radial-gradient(ellipse at center,rgba(201,168,76,.04),transparent 60%);
+    pointer-events:none;
+}
+.closer-quote{
+    font-family:'Playfair Display',serif;
+    font-size:clamp(32px,4.5vw,52px);
+    font-weight:400;font-style:italic;line-height:1.25;
+    color:var(--white);letter-spacing:-.8px;
+    max-width:900px;margin:0 auto 40px;
+}
+.closer-quote .gold{color:var(--gold);font-style:normal;font-weight:600}
+.closer-attr{
+    font-size:11px;font-weight:600;letter-spacing:3px;
+    text-transform:uppercase;color:var(--text-muted);
+}
+
+/* ===== FOOTER ===== */
+footer{
+    border-top:1px solid var(--line);
+    padding:48px;
+}
+.footer-inner{
+    max-width:1280px;margin:0 auto;
+    display:flex;justify-content:space-between;align-items:center;
+    font-size:11px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--text-dim);font-weight:500;
+}
+.footer-brand{display:flex;align-items:center;gap:14px}
+.footer-logo{height:36px;width:auto;display:block;opacity:.9}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeUp{
+    from{opacity:0;transform:translateY(24px)}
+    to{opacity:1;transform:translateY(0)}
+}
+.reveal{opacity:0;transform:translateY(30px);transition:all 1s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:translateY(0)}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width:1024px){
+    .hero-inner{grid-template-columns:1fr;gap:60px}
+    .stats-grid{grid-template-columns:repeat(2,1fr);gap:32px}
+    .pillars{grid-template-columns:1fr}
+    .pillar{border-right:none;border-bottom:1px solid var(--line)}
+    .platforms-grid{grid-template-columns:repeat(2,1fr)}
+    .matrix{grid-template-columns:repeat(2,1fr)}
+    .matrix-cell{border-right:1px solid var(--line) !important;border-bottom:1px solid var(--line) !important}
+    .matrix-cell:nth-child(2n){border-right:none !important}
+    .workflow{grid-template-columns:repeat(2,1fr);gap:40px}
+    .workflow::before{display:none}
+    .edge-grid{grid-template-columns:1fr;gap:40px}
+}
+@media (max-width:640px){
+    nav{padding:0 20px}
+    .nav-divider,.nav-tag{display:none}
+    section{padding:80px 20px}
+    .hero{padding:120px 20px 60px}
+    .stats-strip{padding:40px 20px}
+    .stats-grid{grid-template-columns:1fr;gap:24px}
+    .hero-meta{flex-direction:column;gap:20px}
+    .platforms-grid{grid-template-columns:1fr}
+    .matrix{grid-template-columns:1fr}
+    .matrix-cell{border-right:none !important}
+    .workflow{grid-template-columns:1fr}
+    .closer{padding:80px 20px}
+    footer{padding:32px 20px;flex-direction:column;gap:16px;text-align:center}
+    .footer-inner{flex-direction:column;gap:16px;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<nav>
+    <div class="nav-brand">
+        <img class="nav-logo" src="https://idx-acnt-ihouseprd.b-cdn.net/AR1146160/file_manager/Logo/Logo.png" alt="The Real Estate Collective">
+        <div class="nav-divider"></div>
+        <div class="nav-tag">The Scrubber</div>
+    </div>
+    <div class="nav-status">
+        <div class="status-dot"></div>
+        <span>System Online</span>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-bg-1"></div>
+    <div class="hero-bg-2"></div>
+    <div class="hero-grid-lines"></div>
+
+    <div class="hero-inner">
+        <div class="hero-text">
+            <div class="hero-eyebrow">
+                <div class="hero-eyebrow-line"></div>
+                <div class="hero-eyebrow-text">Proprietary Intelligence · Built In House</div>
+            </div>
+            <h1>
+                The <span class="italic">RECO</span><br>
+                <span class="thin">Scrubber.</span>
+            </h1>
+            <p class="hero-desc">
+                An automated listing intelligence engine that pulls live performance data
+                from every major real estate platform. Every listing, every agent, every night.
+                Built by RECO. Owned by RECO.
+            </p>
+            <div class="hero-meta">
+                <div class="hero-meta-item">
+                    <div class="hero-meta-label">Platforms Tracked</div>
+                    <div class="hero-meta-value"><span class="gold">4</span> +1</div>
+                </div>
+                <div class="hero-meta-item">
+                    <div class="hero-meta-label">Active Listings</div>
+                    <div class="hero-meta-value">460<span class="gold">+</span></div>
+                </div>
+                <div class="hero-meta-item">
+                    <div class="hero-meta-label">Refresh Cadence</div>
+                    <div class="hero-meta-value">Nightly</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="terminal">
+            <div class="terminal-bar">
+                <div class="terminal-dots"><span></span><span></span><span></span></div>
+                <div class="terminal-title">reco-scrubber // live</div>
+            </div>
+            <div class="terminal-body">
+                <div><span class="tl-prompt">$</span> <span class="tl-cmd">scrub --all-platforms</span></div>
+                <div class="tl-muted">› initializing persistent session…</div>
+                <div><span class="tl-ok">✓</span> <span class="tl-muted">IDX inventory synced</span> <span class="tl-plat">192 listings</span></div>
+                <div><span class="tl-ok">✓</span> <span class="tl-muted">Zillow engagement captured</span></div>
+                <div><span class="tl-ok">✓</span> <span class="tl-muted">Redfin favorites captured</span></div>
+                <div><span class="tl-ok">✓</span> <span class="tl-muted">Homes.com leads captured</span></div>
+                <div style="margin-top:14px;padding-top:14px;border-top:1px dashed var(--line)">
+                    <div class="tl-listing">
+                        <span class="tl-addr">1247 Crestview Dr</span>
+                        <span class="tl-plat">Z</span><span class="tl-stat">1,284</span><span class="tl-plat">views</span>
+                    </div>
+                    <div class="tl-listing">
+                        <span class="tl-addr">308 Magnolia Ln</span>
+                        <span class="tl-plat">R</span><span class="tl-stat">42</span><span class="tl-plat">saves</span>
+                    </div>
+                    <div class="tl-listing">
+                        <span class="tl-addr">92 Redwood Cir</span>
+                        <span class="tl-plat">H</span><span class="tl-stat">7</span><span class="tl-plat">leads</span>
+                    </div>
+                </div>
+                <div style="margin-top:14px"><span class="tl-prompt">$</span> <span class="cursor"></span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="stats-strip">
+    <div class="stats-grid">
+        <div class="stat">
+            <div class="stat-value">87<span class="unit">agents</span></div>
+            <div class="stat-label">Across The Collective</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">$270<span class="unit">M</span></div>
+            <div class="stat-label">Annual Volume</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">13<span class="unit">markets</span></div>
+            <div class="stat-label">Tennessee Coverage</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">24/7</div>
+            <div class="stat-label">Automated Oversight</div>
+        </div>
+    </div>
+</div>
+
+<!-- PILLARS -->
+<section>
+    <div class="section-inner">
+        <div class="section-header">
+            <div class="section-eyebrow">
+                <div class="section-eyebrow-line"></div>
+                <div class="section-eyebrow-text">The Thesis</div>
+            </div>
+            <h2 class="section-title">
+                Most brokerages <span class="italic">guess</span>.<br>
+                RECO measures.
+            </h2>
+            <p class="section-desc">
+                Every listing RECO represents is being watched across every platform buyers actually use. Not quarterly reports. Not anecdotes. Ground truth, pulled automatically, stored in our own database, translated into decisions.
+            </p>
+        </div>
+    </div>
+
+    <div class="pillars">
+        <div class="pillar">
+            <div class="pillar-num">01</div>
+            <svg class="pillar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                <path d="M3 10h18M10 3v18"/>
+                <circle cx="16.5" cy="16.5" r="2.5" fill="currentColor" opacity=".3"/>
+            </svg>
+            <h3>Automated Capture</h3>
+            <p>A headless browser orchestrator logs into each platform, runs through every RECO listing, and records views, saves, favorites, leads, and days on market. No human touches anything.</p>
+        </div>
+        <div class="pillar">
+            <div class="pillar-num">02</div>
+            <svg class="pillar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                <path d="M3 12h4l3-8 4 16 3-8h4"/>
+            </svg>
+            <h3>Unified Intelligence</h3>
+            <p>Every data point from every platform is normalized into a single database RECO owns. One source of truth. One query. Cross-platform comparisons no individual agent or competitor can run.</p>
+        </div>
+        <div class="pillar">
+            <div class="pillar-num">03</div>
+            <svg class="pillar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <path d="M14 2v6h6M9 13h6M9 17h6"/>
+            </svg>
+            <h3>Agent-Ready Reports</h3>
+            <p>A VA searches an address, the Scrubber pulls live data, and a branded performance report is generated in under a minute. Ready to hand to the listing agent or the seller.</p>
+        </div>
+    </div>
+</section>
+
+<!-- PLATFORMS -->
+<section style="background:linear-gradient(180deg,var(--navy),var(--navy-2))">
+    <div class="platforms-bg"></div>
+    <div class="section-inner">
+        <div class="section-header">
+            <div class="section-eyebrow">
+                <div class="section-eyebrow-line"></div>
+                <div class="section-eyebrow-text">Platforms Under Watch</div>
+            </div>
+            <h2 class="section-title">
+                Every channel <span class="italic">a buyer uses</span>.
+            </h2>
+            <p class="section-desc">
+                The Scrubber reaches past bot defenses most off-the-shelf tools can't touch. Persistent browser sessions, authenticated agent dashboards, and custom matching logic for each platform's MLS format.
+            </p>
+        </div>
+
+        <div class="platforms-grid">
+            <div class="platform z">
+                <div class="platform-accent"></div>
+                <div class="platform-badge">Live</div>
+                <div class="platform-name">Zillow</div>
+                <div class="platform-sub">The Volume King</div>
+                <div class="platform-metrics">
+                    <div class="platform-metric"><span class="platform-metric-label">Page views</span><span class="platform-metric-check">✓</span></div>
+                    <div class="platform-metric"><span class="platform-metric-label">Saves</span><span class="platform-metric-check">✓</span></div>
+                    <div class="platform-metric"><span class="platform-metric-label">Days on market</span><span class="platform-metric-check">✓</span></div>
+                </div>
+            </div>
+
+            <div class="platform r">
+                <div class="platform-accent"></div>
+                <div class="platform-badge">Live</div>
+                <div class="platform-name">Redfin</div>
+                <div class="platform-sub">The Serious Buyer</div>
+                <div class="platform-metrics">
+                    <div class="platform-metric"><span class="platform-metric-label">Page views</span><span class="platform-metric-check">✓</span></div>
+                    <div class="platform-metric"><span class="platform-metric-label">Favorites</span><span class="platform-metric-check">✓</span></div>
+                    <div class="platform-metric"><span class="platform-metric-label">Days on market</span><span class="platform-metric-check">✓</span></div>
+                </div>
+            </div>
+
+            <div class="platform h">
+                <div class="platform-accent"></div>
+                <div class="platform-badge">Live</div>
+                <div class="platform-name">Homes.com</div>
+                <div class="platform-sub">The Lead Engine</div>
+                <div class="platform-metrics">
+                    <div class="platform-metric"><span class="platform-metric-label">Views</span><span class="platform-metric-check">✓</span></div>
+                    <div class="platform-metric"><span class="platform-metric-label">Favorites</span><span class="platform-metric-check">✓</span></div>
+                    <div class="platform-metric"><span class="platform-metric-label">Qualified leads</span><span class="platform-metric-check">✓</span></div>
+                </div>
+            </div>
+
+            <div class="platform rlt">
+                <div class="platform-accent"></div>
+                <div class="platform-badge">Q2</div>
+                <div class="platform-name">Realtor</div>
+                <div class="platform-sub">The Legacy Network</div>
+                <div class="platform-metrics">
+                    <div class="platform-metric"><span class="platform-metric-label">URL resolution</span><span class="platform-metric-check">✓</span></div>
+                    <div class="platform-metric"><span class="platform-metric-label">Engagement</span><span class="platform-metric-check">◷</span></div>
+                    <div class="platform-metric"><span class="platform-metric-label">DOM tracking</span><span class="platform-metric-check">◷</span></div>
+                </div>
+            </div>
+
+            <div class="platform f">
+                <div class="platform-accent"></div>
+                <div class="platform-badge">Q3</div>
+                <div class="platform-name">Facebook</div>
+                <div class="platform-sub">The Social Signal</div>
+                <div class="platform-metrics">
+                    <div class="platform-metric"><span class="platform-metric-label">Marketplace reach</span><span class="platform-metric-check">◷</span></div>
+                    <div class="platform-metric"><span class="platform-metric-label">Ad engagement</span><span class="platform-metric-check">◷</span></div>
+                    <div class="platform-metric"><span class="platform-metric-label">Share velocity</span><span class="platform-metric-check">◷</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- METRICS MATRIX -->
+<section>
+    <div class="section-inner">
+        <div class="section-header">
+            <div class="section-eyebrow">
+                <div class="section-eyebrow-line"></div>
+                <div class="section-eyebrow-text">The Data Captured</div>
+            </div>
+            <h2 class="section-title">
+                Signals other brokerages <span class="italic">never see</span>.
+            </h2>
+        </div>
+
+        <div class="matrix-wrap">
+            <div class="matrix-head">
+                <div class="matrix-head-title">// Snapshot Schema</div>
+                <div class="matrix-head-meta">Nightly · Per Listing · Per Platform</div>
+            </div>
+            <div class="matrix">
+                <div class="matrix-cell">
+                    <div class="matrix-cell-label">Metric 01</div>
+                    <div class="matrix-cell-title">Impressions</div>
+                    <div class="matrix-cell-desc">Total page views across Zillow, Redfin, Homes.com. Trended nightly.</div>
+                </div>
+                <div class="matrix-cell">
+                    <div class="matrix-cell-label">Metric 02</div>
+                    <div class="matrix-cell-title">Saves & Favorites</div>
+                    <div class="matrix-cell-desc">Buyer intent signal. A buyer who saves is 4x more likely to tour.</div>
+                </div>
+                <div class="matrix-cell">
+                    <div class="matrix-cell-label">Metric 03</div>
+                    <div class="matrix-cell-title">Qualified Leads</div>
+                    <div class="matrix-cell-desc">Contact form submissions and inquiries captured straight from platform dashboards.</div>
+                </div>
+                <div class="matrix-cell">
+                    <div class="matrix-cell-label">Metric 04</div>
+                    <div class="matrix-cell-title">Days on Market</div>
+                    <div class="matrix-cell-desc">Cross-referenced against market median to flag under- or over-performers.</div>
+                </div>
+                <div class="matrix-cell">
+                    <div class="matrix-cell-label">Metric 05</div>
+                    <div class="matrix-cell-title">Engagement Tier</div>
+                    <div class="matrix-cell-desc">Listings auto-bucketed into tiers so the team knows where to focus first.</div>
+                </div>
+                <div class="matrix-cell">
+                    <div class="matrix-cell-label">Metric 06</div>
+                    <div class="matrix-cell-title">Platform Coverage</div>
+                    <div class="matrix-cell-desc">Which listings are live on which channels. Gaps mean lost eyeballs.</div>
+                </div>
+                <div class="matrix-cell">
+                    <div class="matrix-cell-label">Metric 07</div>
+                    <div class="matrix-cell-title">Trend Velocity</div>
+                    <div class="matrix-cell-desc">Week-over-week deltas surface listings losing momentum before price changes are needed.</div>
+                </div>
+                <div class="matrix-cell">
+                    <div class="matrix-cell-label">Metric 08</div>
+                    <div class="matrix-cell-title">Underperformer Alerts</div>
+                    <div class="matrix-cell-desc">Automated flags when a listing drops below engagement thresholds. Early warning for seller conversations.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- WORKFLOW -->
+<section style="background:linear-gradient(180deg,var(--navy-2),var(--navy))">
+    <div class="section-inner">
+        <div class="section-header" style="text-align:center;margin:0 auto 80px">
+            <div class="section-eyebrow" style="justify-content:center">
+                <div class="section-eyebrow-line"></div>
+                <div class="section-eyebrow-text">The VA Workflow</div>
+            </div>
+            <h2 class="section-title">
+                From address to answer in <span class="italic">sixty seconds</span>.
+            </h2>
+        </div>
+
+        <div class="workflow">
+            <div class="step">
+                <div class="step-num">01</div>
+                <div class="step-title">Search</div>
+                <div class="step-desc">VA types a RECO address into the dashboard.</div>
+            </div>
+            <div class="step">
+                <div class="step-num">02</div>
+                <div class="step-title">Scrub</div>
+                <div class="step-desc">Engine pulls live engagement from every platform in parallel.</div>
+            </div>
+            <div class="step">
+                <div class="step-num">03</div>
+                <div class="step-title">Report</div>
+                <div class="step-desc">Branded PDF is generated with trends, tiers, and recommendations.</div>
+            </div>
+            <div class="step">
+                <div class="step-num">04</div>
+                <div class="step-title">Deliver</div>
+                <div class="step-desc">Agent receives a premium performance report. They never log in.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- EDGE -->
+<section class="edge-section">
+    <div class="section-inner">
+        <div class="edge-grid">
+            <div>
+                <div class="section-eyebrow">
+                    <div class="section-eyebrow-line"></div>
+                    <div class="section-eyebrow-text">Why It Matters</div>
+                </div>
+                <h2 class="section-title">
+                    The brokerage with <span class="italic">the data</span> wins the seller.
+                </h2>
+                <p class="section-desc">
+                    When a RECO agent sits at a listing appointment, they don't pitch promises. They open a report. That shift, from salesmanship to evidence, is what separates a $250M brokerage from a $500M one.
+                </p>
+            </div>
+
+            <div class="edge-points">
+                <div class="edge-point">
+                    <div class="edge-point-num">i.</div>
+                    <div>
+                        <h4>Recruiting magnet</h4>
+                        <p>Top agents don't leave for splits. They leave for tools. The Scrubber is something no independent agent can replicate alone.</p>
+                    </div>
+                </div>
+                <div class="edge-point">
+                    <div class="edge-point-num">ii.</div>
+                    <div>
+                        <h4>Seller confidence</h4>
+                        <p>Weekly performance reports build trust, reduce "why isn't it selling?" calls, and make price-reduction conversations data-driven instead of awkward.</p>
+                    </div>
+                </div>
+                <div class="edge-point">
+                    <div class="edge-point-num">iii.</div>
+                    <div>
+                        <h4>Market positioning</h4>
+                        <p>Competitors buy their tech from vendors. RECO owns its stack. The database, the automation, the intelligence. Owned infrastructure becomes owned narrative.</p>
+                    </div>
+                </div>
+                <div class="edge-point">
+                    <div class="edge-point-num">iv.</div>
+                    <div>
+                        <h4>Compounding advantage</h4>
+                        <p>Every night the Scrubber runs, the database grows. Historical trend data is a moat competitors can't catch up on overnight.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CLOSER -->
+<section class="closer">
+    <div class="closer-bg"></div>
+    <div style="position:relative;z-index:2">
+        <p class="closer-quote">
+            "Other brokerages have <span class="gold">agents</span>.<br>
+            RECO has agents <span class="gold">and infrastructure</span>."
+        </p>
+        <div class="closer-attr">The Real Estate Collective</div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <img class="footer-logo" src="https://idx-acnt-ihouseprd.b-cdn.net/AR1146160/file_manager/Logo/Logo.png" alt="The Real Estate Collective">
+        </div>
+        <div>Proprietary · Confidential · © 2026</div>
+    </div>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.1, rootMargin: '0px 0px -80px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
