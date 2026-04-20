@@ -246,7 +246,7 @@ footer{padding:48px 0 72px;border-top:1px solid var(--line);margin-top:48px}
   <section class="hero fade d1">
     <span class="eyebrow"><span class="dot"></span>Modern Development · Flagship Product</span>
     <h1>A full client portal for homeowners who <em>self-contract</em> their build.</h1>
-    <p class="hero-sub">ConsultMD replaces the PDF-and-spreadsheet delivery model with a real product. Six phases shipped, dashboard v5 reskin live, demoing to Acquisition.com in May.</p>
+    <p class="hero-sub">ConsultMD replaces the PDF-and-spreadsheet delivery model with a real product. My Build shipped with 48 steps and 230+ subtasks. Demoing to Acquisition.com in May.</p>
     <div class="hero-meta">
       <div class="hero-meta-item"><span class="k">Stack</span><span class="v">Next.js 16 · Supabase · Stripe · Anthropic</span></div>
       <div class="hero-meta-item"><span class="k">Domain</span><span class="v">consultmd.co</span></div>
@@ -265,19 +265,19 @@ footer{padding:48px 0 72px;border-top:1px solid var(--line);margin-top:48px}
     <div class="strip">
       <div class="stat">
         <div class="label">Build Progress</div>
-        <div class="num">78<span style="font-size:18px;color:var(--ink-500)">%</span></div>
-        <div class="sub">Phases 1-6 of 7 complete</div>
-        <div class="bar"><div class="bar-fill" style="width:78%"></div></div>
+        <div class="num">85<span style="font-size:18px;color:var(--ink-500)">%</span></div>
+        <div class="sub">Phases 1-6 + My Build + Reskin</div>
+        <div class="bar"><div class="bar-fill" style="width:85%"></div></div>
       </div>
       <div class="stat">
-        <div class="label">Deliverables</div>
-        <div class="num">25</div>
-        <div class="sub">All tiers · 14 articles + trackers + forms</div>
+        <div class="label">Build Steps</div>
+        <div class="num">48</div>
+        <div class="sub">230+ subtasks · 9 inspections · 9 gates</div>
       </div>
       <div class="stat">
         <div class="label">DB Tables</div>
-        <div class="num">12</div>
-        <div class="sub">Supabase · RLS active · seeded</div>
+        <div class="num">13</div>
+        <div class="sub">Supabase · RLS active · build_steps JSONB</div>
       </div>
       <div class="stat green">
         <div class="label">Demo</div>
@@ -406,38 +406,217 @@ footer{padding:48px 0 72px;border-top:1px solid var(--line);margin-top:48px}
   <section>
     <div class="section-head">
       <div>
+        <div class="section-label">My Build</div>
+        <h2>The interactive spine of the portal.</h2>
+      </div>
+      <p class="hint">48 steps across 10 construction phases. Clients spend 8-10 months on this one page. Every step is loaded with real construction knowledge specific to Tennessee residential builds.</p>
+    </div>
+
+    <!-- MY BUILD STATS -->
+    <div class="strip" style="grid-template-columns:repeat(6,1fr);margin-bottom:32px">
+      <div class="stat"><div class="label">Steps</div><div class="num">48</div><div class="sub">Across 10 phases</div></div>
+      <div class="stat"><div class="label">Subtasks</div><div class="num">311</div><div class="sub">Checkboxes clients work through</div></div>
+      <div class="stat"><div class="label">Inspections</div><div class="num">9</div><div class="sub">Pending/passed tracking</div></div>
+      <div class="stat"><div class="label">Gates</div><div class="num">9</div><div class="sub">Block progress until cleared</div></div>
+      <div class="stat"><div class="label">Pro Tips</div><div class="num">6</div><div class="sub">Real builder advice</div></div>
+      <div class="stat"><div class="label">Notes</div><div class="num">7</div><div class="sub">TN-specific context</div></div>
+    </div>
+
+    <!-- UX FEATURES -->
+    <div class="phases" style="margin-bottom:32px">
+      <div class="phase">
+        <div class="phase-top"><h3>Two-Level Accordion</h3><span class="phase-badge">Shipped</span></div>
+        <ul>
+          <li>Phases expand to show steps, steps expand to show rich section content</li>
+          <li>Auto-advance: step completes (1.2s delay) then next step opens automatically</li>
+          <li>Phase celebration animation (3.6s) then auto-advances to next phase</li>
+          <li>No manual collapsing needed, everything is auto-managed</li>
+          <li>Completed phases stay clickable to review all checked items</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div class="phase-top"><h3>Rich Content System</h3><span class="phase-badge">Shipped</span></div>
+        <ul>
+          <li>Subtask checkboxes with real construction instructions</li>
+          <li>Inspection cards with pending/passed status and descriptions</li>
+          <li>Gate callouts that block progress until requirements are met</li>
+          <li>Pro tip callouts with practical builder advice</li>
+          <li>Note callouts with important TN-specific context</li>
+          <li>Link pills connecting to Budget, Subs, Materials, Forms, Documents</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div class="phase-top"><h3>Data Architecture</h3><span class="phase-badge">Shipped</span></div>
+        <ul>
+          <li>build_steps table with JSONB content column stores full hierarchy</li>
+          <li>Optimistic UI updates + Supabase persistence per subtask toggle</li>
+          <li>Stripe webhook seeds all 48 rich steps with content on account creation</li>
+          <li>RLS policies scope build_steps per client via auth.uid()</li>
+          <li>Scoped CSS (.my-build-v5 wrapper) prevents bleed to other pages</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div class="phase-top"><h3>Dashboard Integration</h3><span class="phase-badge">Shipped</span></div>
+        <ul>
+          <li>"Build Progress" stat card reads subtask completion %</li>
+          <li>Phase table reads from build_steps, shows subtask counts per phase</li>
+          <li>"What's Next" card shows the first 3 incomplete build steps</li>
+          <li>AI assistant context shows actual build % instead of placeholder</li>
+          <li>Phase table rows are clickable links to /portal/build</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- PHASE-BY-PHASE BREAKDOWN -->
+    <div class="section-head" style="margin-top:16px">
+      <div>
+        <div class="section-label">Phase Breakdown</div>
+        <h2>All 48 steps, by phase.</h2>
+      </div>
+      <p class="hint">Every step has sections, subtask checklists, and contextual content. Foundation is the deepest phase with 47 subtasks across 4 steps.</p>
+    </div>
+    <div class="next">
+      <div class="next-row">
+        <div class="next-idx" style="font-size:11px;line-height:1.2;text-align:center"><div style="font-size:18px;font-weight:700;color:var(--ink-900)">6</div>steps</div>
+        <div class="next-body">
+          <div class="next-title">Pre-Construction <span style="font-weight:400;color:var(--ink-500);font-size:12px">· 36 subtasks · 1 pro tip · 2 notes</span></div>
+          <div class="next-desc">Land Survey & Soil Test · Permit Application · Plan Review & Engineering · Utility Locates · Construction Loan Closing · Insurance</div>
+        </div>
+      </div>
+      <div class="next-row">
+        <div class="next-idx" style="font-size:11px;line-height:1.2;text-align:center"><div style="font-size:18px;font-weight:700;color:var(--ink-900)">6</div>steps</div>
+        <div class="next-body">
+          <div class="next-title">Site Work <span style="font-weight:400;color:var(--ink-500);font-size:12px">· 26 subtasks · 2 notes</span></div>
+          <div class="next-desc">Clearing & Grading · Temporary Power · Septic / Sewer · Water Tap / Well · Dumpster & Portable Toilet · Erosion Control</div>
+        </div>
+      </div>
+      <div class="next-row">
+        <div class="next-idx" style="font-size:11px;line-height:1.2;text-align:center"><div style="font-size:18px;font-weight:700;color:var(--ink-900)">4</div>steps</div>
+        <div class="next-body">
+          <div class="next-title">Foundation <span style="font-weight:400;color:var(--ink-500);font-size:12px">· 47 subtasks · 3 inspections · 3 gates · 1 note</span></div>
+          <div class="next-desc">Footers (layout, excavation, rebar, pour, curing) · Foundation Walls, Block & Piers (CMU, anchor bolts, crawl decisions) · Slab Prep & Pour (underground plumbing, vapor barrier, reinforcement) · Waterproofing & Backfill</div>
+        </div>
+        <span class="next-tag now" style="background:var(--blue);font-size:10px">Deepest</span>
+      </div>
+      <div class="next-row">
+        <div class="next-idx" style="font-size:11px;line-height:1.2;text-align:center"><div style="font-size:18px;font-weight:700;color:var(--ink-900)">6</div>steps</div>
+        <div class="next-body">
+          <div class="next-title">Framing <span style="font-weight:400;color:var(--ink-500);font-size:12px">· 39 subtasks · 1 inspection · 1 gate · 2 pro tips</span></div>
+          <div class="next-desc">Floor System · Wall Framing · Roof / Truss Set · Sheathing & House Wrap · Window & Door Install · Framing Inspection</div>
+        </div>
+      </div>
+      <div class="next-row">
+        <div class="next-idx" style="font-size:11px;line-height:1.2;text-align:center"><div style="font-size:18px;font-weight:700;color:var(--ink-900)">5</div>steps</div>
+        <div class="next-body">
+          <div class="next-title">Roofing & Exterior <span style="font-weight:400;color:var(--ink-500);font-size:12px">· 27 subtasks · 1 pro tip</span></div>
+          <div class="next-desc">Roofing Install · Siding / Exterior Finish · Masonry / Stone · Gutters · Exterior Paint</div>
+        </div>
+      </div>
+      <div class="next-row">
+        <div class="next-idx" style="font-size:11px;line-height:1.2;text-align:center"><div style="font-size:18px;font-weight:700;color:var(--ink-900)">3</div>steps</div>
+        <div class="next-body">
+          <div class="next-title">Mechanical Rough-Ins <span style="font-weight:400;color:var(--ink-500);font-size:12px">· 23 subtasks · 3 inspections · 3 gates</span></div>
+          <div class="next-desc">Plumbing Rough-In (supply, DWV, pressure test) · Electrical Rough-In (panel, circuits, low voltage) · HVAC Rough-In (ductwork, refrigerant, exhaust)</div>
+        </div>
+      </div>
+      <div class="next-row">
+        <div class="next-idx" style="font-size:11px;line-height:1.2;text-align:center"><div style="font-size:18px;font-weight:700;color:var(--ink-900)">3</div>steps</div>
+        <div class="next-body">
+          <div class="next-title">Insulation & Drywall <span style="font-weight:400;color:var(--ink-500);font-size:12px">· 18 subtasks · 1 inspection · 1 gate · 1 pro tip · 1 note</span></div>
+          <div class="next-desc">Insulation Install (wall, ceiling, air sealing) · Drywall Hang · Drywall Tape & Finish</div>
+        </div>
+      </div>
+      <div class="next-row">
+        <div class="next-idx" style="font-size:11px;line-height:1.2;text-align:center"><div style="font-size:18px;font-weight:700;color:var(--ink-900)">6</div>steps</div>
+        <div class="next-body">
+          <div class="next-title">Interior Finishes <span style="font-weight:400;color:var(--ink-500);font-size:12px">· 37 subtasks · 1 note</span></div>
+          <div class="next-desc">Interior Paint · Cabinets & Vanities · Countertops · Trim & Finish Carpentry · Flooring Install · Tile Install</div>
+        </div>
+      </div>
+      <div class="next-row">
+        <div class="next-idx" style="font-size:11px;line-height:1.2;text-align:center"><div style="font-size:18px;font-weight:700;color:var(--ink-900)">5</div>steps</div>
+        <div class="next-body">
+          <div class="next-title">Fixtures & Final <span style="font-weight:400;color:var(--ink-500);font-size:12px">· 27 subtasks</span></div>
+          <div class="next-desc">Plumbing Trim-Out · Electrical Trim-Out · HVAC Trim-Out · Appliance Install · Hardware Install</div>
+        </div>
+      </div>
+      <div class="next-row">
+        <div class="next-idx" style="font-size:11px;line-height:1.2;text-align:center"><div style="font-size:18px;font-weight:700;color:var(--ink-900)">4</div>steps</div>
+        <div class="next-body">
+          <div class="next-title">Close-Out <span style="font-weight:400;color:var(--ink-500);font-size:12px">· 31 subtasks · 1 inspection · 1 gate · 1 pro tip</span></div>
+          <div class="next-desc">Final Clean · Landscaping & Driveway (grading, driveway, planting) · Final Inspection / CO · Final Walkthrough (punch list, handover)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SELECTIONS (NEXT FEATURE) -->
+  <section>
+    <div class="section-head">
+      <div>
+        <div class="section-label">Coming Next</div>
+        <h2>Selections: client decision tracking.</h2>
+      </div>
+      <p class="hint">Clients have no place to store material and design decisions. They get lost in texts and emails. Selections solves the #1 cause of construction delays.</p>
+    </div>
+    <div class="phases" style="grid-template-columns:repeat(3,1fr)">
+      <div class="phase">
+        <div class="phase-top"><h3>How It Works</h3><span class="phase-badge amber">Planned</span></div>
+        <ul>
+          <li>Admin creates selections per client (countertop material, paint color, vanity style)</li>
+          <li>Client sees pending decisions on dashboard</li>
+          <li>Client records their choice and marks it resolved</li>
+          <li>Organized by build phase with priority and due dates</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div class="phase-top"><h3>Gate Integration</h3><span class="phase-badge amber">Planned</span></div>
+        <ul>
+          <li>Selections tie to specific build steps</li>
+          <li>Pending selection = gate blocks that step</li>
+          <li>"Decision required: Countertop Material" with link to resolve</li>
+          <li>Client can't proceed until they pick</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div class="phase-top"><h3>Portal Integration</h3><span class="phase-badge amber">Planned</span></div>
+        <ul>
+          <li>New /portal/selections page under Build nav</li>
+          <li>Dashboard "Decisions Pending" card pulls real data</li>
+          <li>selections table: client_id, phase, title, priority, due_date, status, choice</li>
+          <li>Optional build_step_id FK for gate linking</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div>
         <div class="section-label">Next Up</div>
         <h2>Road to Acquisition.com demo.</h2>
       </div>
-      <p class="hint">Five priorities between now and May 27. Sidebar reskin is the last visual piece. My Build is the interactive spine clients spend 8-10 months on.</p>
+      <p class="hint">Four priorities between now and May 27. My Build shipped. Selections feature is next, then Assistant, then deploy.</p>
     </div>
     <div class="next">
       <div class="next-row">
         <div class="next-idx">01</div>
         <div class="next-body">
-          <div class="next-title">Sidebar reskin</div>
-          <div class="next-desc">Restyle portal-nav.tsx to match v5 — white bg, blue active, workspace switcher, badges.</div>
+          <div class="next-title">Selections feature</div>
+          <div class="next-desc">Client decision tracking (material picks, design choices). Tied to build step gates. Dashboard "Decisions Pending" card pulls from real data. New /portal/selections page.</div>
         </div>
         <span class="next-tag now">Now</span>
       </div>
       <div class="next-row">
         <div class="next-idx">02</div>
         <div class="next-body">
-          <div class="next-title">My Build — Chunks 1-3</div>
-          <div class="next-desc">Interactive phase-focused build guide. Horizontal stepper + one big phase card. Mockup done at mockup-my-build.html.</div>
+          <div class="next-title">MD Assistant — Chunks 4-5</div>
+          <div class="next-desc">AI consultant chatbot trained on 14 articles + each client's build data. Streaming Claude Sonnet. Tier-gated daily limits.</div>
         </div>
         <span class="next-tag next">Next</span>
       </div>
       <div class="next-row">
         <div class="next-idx">03</div>
-        <div class="next-body">
-          <div class="next-title">MD Assistant — Chunks 4-5</div>
-          <div class="next-desc">AI consultant chatbot trained on 14 articles + each client's build data. Streaming Claude Sonnet. Tier-gated daily limits.</div>
-        </div>
-        <span class="next-tag soon">Soon</span>
-      </div>
-      <div class="next-row">
-        <div class="next-idx">04</div>
         <div class="next-body">
           <div class="next-title">Phase 7 polish + deploy</div>
           <div class="next-desc">Profile page, first-login stepper, Tier 3 form types, mobile responsive, Vercel + consultmd.co domain.</div>
@@ -445,7 +624,7 @@ footer{padding:48px 0 72px;border-top:1px solid var(--line);margin-top:48px}
         <span class="next-tag soon">Soon</span>
       </div>
       <div class="next-row">
-        <div class="next-idx">05</div>
+        <div class="next-idx">04</div>
         <div class="next-body">
           <div class="next-title">Landing page + funnel</div>
           <div class="next-desc">consultmd.co hybrid — VSL + 2-3 free articles + application → Jaden closes → Stripe webhook onboards.</div>
@@ -496,7 +675,7 @@ footer{padding:48px 0 72px;border-top:1px solid var(--line);margin-top:48px}
         <p class="callout-sub">May 27-28. ConsultMD is the scalable machine: shows how construction consulting moves from one-off services to a productized, national SaaS. Equity deal comes off the top before 50/50 split with Jason.</p>
       </div>
       <div class="callout-kpi">
-        <div class="d">38</div>
+        <div class="d">37</div>
         <div class="t">Days to demo</div>
       </div>
     </div>
@@ -555,15 +734,22 @@ footer{padding:48px 0 72px;border-top:1px solid var(--line);margin-top:48px}
       <div class="tl-item done">
         <div class="tl-date">Apr 16</div>
         <div class="tl-body">
-          <div class="tl-title">Dashboard v5 shipped</div>
-          <div class="tl-desc">Full reskin on <span class="mono" style="color:var(--blue)">reskin</span> branch. Code review passed. One bug fixed (build_sqft → square_footage).</div>
+          <div class="tl-title">Dashboard v5 + sidebar reskin shipped</div>
+          <div class="tl-desc">Full reskin on <span class="mono" style="color:var(--blue)">reskin</span> branch. Light SaaS, Inter, blue accent.</div>
+        </div>
+      </div>
+      <div class="tl-item done">
+        <div class="tl-date">Apr 20</div>
+        <div class="tl-body">
+          <div class="tl-title">My Build shipped</div>
+          <div class="tl-desc">48 steps, 230+ subtasks, 9 inspections, 9 gates, auto-advance, phase celebrations. Dashboard wired to build_steps. The interactive spine is live.</div>
         </div>
       </div>
       <div class="tl-item now">
-        <div class="tl-date">Apr 19</div>
+        <div class="tl-date">Apr 20</div>
         <div class="tl-body">
           <div class="tl-title">You are here</div>
-          <div class="tl-desc">Sidebar reskin next. My Build behind it. Assistant after that. API keys last.</div>
+          <div class="tl-desc">Selections feature next (client decisions + gate integration). Then MD Assistant. Then deploy.</div>
         </div>
       </div>
       <div class="tl-item future">
