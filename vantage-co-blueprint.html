@@ -1,0 +1,711 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vantage Co. — Blueprint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0A0A0A;
+  --bg-alt:#101010;
+  --bg-surface:#151515;
+  --bg-hover:#1A1A1A;
+
+  --ink-900:#F5F5F5;
+  --ink-800:#E8E8E8;
+  --ink-700:#CCCCCC;
+  --ink-600:#A0A0A0;
+  --ink-500:#888888;
+  --ink-400:#666666;
+  --ink-300:#444444;
+  --ink-200:#2A2A2A;
+  --ink-100:#1E1E1E;
+  --ink-50:#151515;
+
+  --white:#F5F5F5;
+  --white-soft:rgba(245,245,245,.78);
+  --white-dim:rgba(245,245,245,.55);
+  --white-faint:rgba(245,245,245,.32);
+
+  --line:rgba(255,255,255,.08);
+  --line-strong:rgba(255,255,255,.16);
+
+  --green:#34D399;
+  --green-dim:rgba(52,211,153,.12);
+  --amber:#F59E0B;
+  --amber-dim:rgba(245,158,11,.12);
+  --red:#EF4444;
+
+  --radius:6px;
+  --radius-md:8px;
+  --radius-lg:12px;
+  --radius-pill:9999px;
+
+  --shadow-xs:0 1px 2px rgba(0,0,0,.3);
+  --shadow-sm:0 1px 3px rgba(0,0,0,.4);
+  --shadow-md:0 4px 12px rgba(0,0,0,.4);
+  --shadow-lg:0 8px 24px rgba(0,0,0,.5);
+
+  /* Light section vars */
+  --l-bg:#FAFAFA;
+  --l-text:#0A0A0A;
+  --l-text-soft:rgba(10,10,10,.82);
+  --l-text-dim:rgba(10,10,10,.56);
+  --l-border:rgba(10,10,10,.09);
+}
+*{box-sizing:border-box;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg);
+  color:var(--ink-900);
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-size:14px;line-height:1.55;letter-spacing:-.003em;
+  font-feature-settings:'cv11' 1,'ss01' 1;
+}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{margin:0;font-weight:600;letter-spacing:-.022em;color:var(--ink-900)}
+.mono{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:0}
+em{font-style:italic;font-weight:600}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:50;height:56px;background:rgba(10,10,10,.85);backdrop-filter:blur(12px) saturate(180%);-webkit-backdrop-filter:blur(12px) saturate(180%);border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 32px;gap:16px}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.brand-mark{font-family:'Inter',sans-serif;font-size:24px;font-weight:500;font-style:italic;color:var(--ink-900);letter-spacing:-1px}
+.brand-text{font-size:14px;font-weight:600;letter-spacing:-.2px}
+.brand-text span{color:var(--ink-500);font-weight:500}
+.nav-back{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:var(--radius);color:var(--ink-600);font-size:13px;font-weight:500;transition:background .15s,color .15s}
+.nav-back:hover{background:var(--bg-hover);color:var(--ink-900)}
+.nav-spacer{flex:1}
+.nav-meta{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-500)}
+.nav-link{padding:6px 14px;border-radius:var(--radius-pill);border:1px solid var(--line-strong);color:var(--ink-700);font-size:12px;font-weight:500;transition:all .2s}
+.nav-link:hover{border-color:var(--ink-500);color:var(--ink-900)}
+
+/* SHELL */
+.wrap{max-width:1180px;margin:0 auto;padding:0 32px}
+
+/* HERO */
+.hero{padding:80px 0 32px;position:relative}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:5px 11px;background:var(--bg-surface);border:1px solid var(--line-strong);border-radius:var(--radius-pill);font-size:11.5px;font-weight:600;color:var(--ink-600);letter-spacing:.04em;text-transform:uppercase}
+.eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--ink-500)}
+.hero h1{font-size:clamp(38px,5.5vw,60px);font-weight:600;letter-spacing:-.04em;line-height:1.05;margin:18px 0 16px;max-width:880px}
+.hero h1 em{font-style:italic;font-weight:600;color:var(--ink-900)}
+.hero-sub{font-size:18px;line-height:1.55;color:var(--ink-600);max-width:680px;letter-spacing:-.006em}
+.hero-meta{display:flex;gap:28px;margin-top:28px;flex-wrap:wrap}
+.hero-meta-item{display:flex;align-items:baseline;gap:8px}
+.hero-meta-item .k{font-size:11.5px;font-weight:600;color:var(--ink-500);text-transform:uppercase;letter-spacing:.06em}
+.hero-meta-item .v{font-size:13.5px;font-weight:500;color:var(--ink-800)}
+
+/* STATUS STRIP */
+.strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:56px 0 24px}
+.stat{background:var(--bg-surface);border:1px solid var(--line);border-radius:var(--radius-md);padding:18px 20px;box-shadow:var(--shadow-xs)}
+.stat .label{font-size:11.5px;font-weight:600;color:var(--ink-500);text-transform:uppercase;letter-spacing:.06em}
+.stat .num{font-size:32px;font-weight:600;letter-spacing:-.028em;color:var(--ink-900);margin-top:8px;line-height:1}
+.stat .sub{font-size:12px;color:var(--ink-500);margin-top:6px}
+.stat .bar{height:4px;background:var(--ink-200);border-radius:2px;margin-top:12px;overflow:hidden}
+.stat .bar-fill{height:100%;border-radius:2px;background:var(--ink-900)}
+.stat.green .num{color:var(--green)}
+.stat.green .bar-fill{background:var(--green)}
+
+/* SECTIONS */
+section{padding:48px 0}
+.section-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:24px;gap:16px}
+.section-label{font-size:11.5px;font-weight:600;color:var(--ink-500);text-transform:uppercase;letter-spacing:.08em}
+.section-head h2{font-size:28px;font-weight:600;letter-spacing:-.028em;margin-top:6px}
+.section-head .hint{font-size:13px;color:var(--ink-500);max-width:320px;text-align:right}
+
+/* LIGHT SECTION */
+.section-light{background:var(--l-bg);color:var(--l-text);padding:56px 0;margin:0 -9999px;padding-left:9999px;padding-right:9999px}
+.section-light .section-label{color:var(--l-text-dim)}
+.section-light h2{color:var(--l-text)}
+.section-light .hint{color:var(--l-text-dim)}
+.section-light .phase{background:#fff;border-color:var(--l-border)}
+.section-light .phase h3{color:var(--l-text)}
+.section-light .phase li{color:var(--l-text-soft)}
+.section-light .phase li::before{background:rgba(10,10,10,.2)}
+.section-light .phase-badge{background:rgba(52,211,153,.08);color:#059669}
+.section-light .phase-badge.amber{background:rgba(245,158,11,.08);color:#D97706}
+.section-light .pillar-num{color:var(--l-text-dim)}
+.section-light .pillar h3{color:var(--l-text)}
+.section-light .pillar p{color:var(--l-text-soft)}
+.section-light .pillar li{color:var(--l-text-soft)}
+.section-light .pillar li::before{background:rgba(10,10,10,.2)}
+
+/* PHASE CARDS */
+.phases{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.phase{background:var(--bg-surface);border:1px solid var(--line);border-radius:var(--radius-md);padding:20px 22px;display:flex;flex-direction:column;gap:10px;box-shadow:var(--shadow-xs);transition:transform .18s cubic-bezier(.2,0,0,1),box-shadow .18s cubic-bezier(.2,0,0,1)}
+.phase:hover{transform:translateY(-1px);box-shadow:var(--shadow-md)}
+.phase-top{display:flex;align-items:center;gap:10px}
+.phase h3{font-size:15px;font-weight:600;letter-spacing:-.012em;flex:1}
+.phase-badge{display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:var(--radius-pill);background:var(--green-dim);color:var(--green);font-size:11px;font-weight:600}
+.phase-badge.amber{background:var(--amber-dim);color:var(--amber)}
+.phase ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.phase li{font-size:13px;color:var(--ink-700);display:flex;gap:8px;line-height:1.5}
+.phase li::before{content:"";flex-shrink:0;margin-top:7px;width:4px;height:4px;border-radius:50%;background:var(--ink-400)}
+
+/* PILLAR GRID */
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.pillar{display:flex;flex-direction:column;gap:8px}
+.pillar-num{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-400);font-weight:500}
+.pillar h3{font-size:18px;font-weight:600;letter-spacing:-.018em}
+.pillar h3 em{font-style:italic;font-weight:600}
+.pillar p{font-size:13.5px;color:var(--ink-600);line-height:1.55;margin-top:4px}
+.pillar ul{list-style:none;margin:4px 0 0;padding:0;display:flex;flex-direction:column;gap:5px}
+.pillar li{font-size:12.5px;color:var(--ink-600);display:flex;gap:7px;line-height:1.5}
+.pillar li::before{content:"";flex-shrink:0;margin-top:7px;width:3px;height:3px;border-radius:50%;background:var(--ink-400)}
+
+/* NEXT UP LIST */
+.next{background:var(--bg-surface);border:1px solid var(--line);border-radius:var(--radius-md);overflow:hidden;box-shadow:var(--shadow-sm)}
+.next-row{display:grid;grid-template-columns:40px 1fr auto;align-items:center;gap:16px;padding:16px 22px;border-bottom:1px solid var(--line);transition:background .15s}
+.next-row:last-child{border-bottom:none}
+.next-row:hover{background:var(--bg-hover)}
+.next-idx{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-400);font-weight:500}
+.next-body{display:flex;flex-direction:column;gap:2px;min-width:0}
+.next-title{font-size:14.5px;font-weight:600;color:var(--ink-900);letter-spacing:-.01em}
+.next-desc{font-size:12.5px;color:var(--ink-500);line-height:1.5}
+.next-tag{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:var(--radius-pill);font-size:11px;font-weight:600;letter-spacing:.02em;white-space:nowrap}
+.next-tag.now{background:var(--ink-900);color:var(--bg)}
+.next-tag.next{background:var(--amber-dim);color:var(--amber);border:1px solid rgba(245,158,11,.2)}
+.next-tag.soon{background:var(--bg-surface);color:var(--ink-600);border:1px solid var(--line-strong)}
+.next-tag.later{background:var(--bg-surface);color:var(--ink-500);border:1px solid var(--line)}
+
+/* AESTHETIC SHOWCASE */
+.aesthetic-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.aesthetic-card{background:var(--bg-surface);border:1px solid var(--line);border-radius:var(--radius-md);padding:24px;display:flex;flex-direction:column;gap:12px;box-shadow:var(--shadow-xs)}
+.aesthetic-card h3{font-size:15px;font-weight:600;letter-spacing:-.012em}
+.aesthetic-swatch{display:flex;gap:8px;align-items:center}
+.swatch{width:32px;height:32px;border-radius:var(--radius);border:1px solid var(--line)}
+.swatch-label{font-size:12px;color:var(--ink-500)}
+.aesthetic-type{font-size:clamp(28px,4vw,42px);font-weight:600;letter-spacing:-.04em;line-height:1.1}
+.aesthetic-type em{font-style:italic;font-weight:600}
+
+/* CALLOUT */
+.callout{margin:32px 0;padding:24px 28px;background:var(--l-bg);border-radius:var(--radius-lg);color:var(--l-text);display:flex;align-items:center;gap:24px;flex-wrap:wrap;box-shadow:var(--shadow-lg);position:relative;overflow:hidden}
+.callout-label{font-size:11.5px;font-weight:600;color:var(--l-text-dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px}
+.callout h3{color:var(--l-text);font-size:22px;font-weight:600;letter-spacing:-.022em;line-height:1.3}
+.callout-body{flex:1;min-width:280px;z-index:1}
+.callout-sub{color:var(--l-text-soft);font-size:13.5px;line-height:1.55;margin-top:6px;max-width:560px}
+
+/* TIMELINE */
+.timeline{position:relative;padding:8px 0 8px 24px}
+.timeline::before{content:"";position:absolute;left:7px;top:14px;bottom:14px;width:2px;background:linear-gradient(to bottom,var(--ink-300),var(--ink-500) 60%,var(--ink-900) 92%)}
+.tl-item{position:relative;padding:10px 0 10px 20px;display:flex;align-items:baseline;gap:14px}
+.tl-item::before{content:"";position:absolute;left:-23px;top:16px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--ink-300)}
+.tl-item.done::before{background:var(--green);border-color:var(--green)}
+.tl-item.done::after{content:"\2713";position:absolute;left:-22px;top:13px;color:#fff;font-size:9px;font-weight:800;line-height:1}
+.tl-item.now::before{background:var(--ink-900);border-color:var(--ink-900);box-shadow:0 0 0 4px rgba(245,245,245,.12)}
+.tl-item.future::before{background:var(--bg)}
+.tl-date{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--ink-500);width:92px;flex-shrink:0;font-weight:500}
+.tl-body{flex:1}
+.tl-title{font-size:14px;font-weight:600;letter-spacing:-.008em;color:var(--ink-900)}
+.tl-desc{font-size:12.5px;color:var(--ink-600);margin-top:2px;line-height:1.5}
+
+/* STACK */
+.stack-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.chip{background:var(--bg-surface);border:1px solid var(--line);border-radius:var(--radius-md);padding:14px;display:flex;flex-direction:column;gap:4px;align-items:flex-start;box-shadow:var(--shadow-xs)}
+.chip .k{font-size:10.5px;font-weight:600;color:var(--ink-500);text-transform:uppercase;letter-spacing:.06em}
+.chip .v{font-size:13px;font-weight:600;color:var(--ink-900);letter-spacing:-.008em}
+
+/* FOOTER */
+footer{padding:48px 0 72px;border-top:1px solid var(--line);margin-top:48px}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-500)}
+.foot a{color:var(--ink-700);font-weight:500}
+.foot a:hover{color:var(--ink-900)}
+
+/* RESPONSIVE */
+@media (max-width:900px){
+  .strip{grid-template-columns:repeat(2,1fr)}
+  .phases{grid-template-columns:1fr}
+  .pillars{grid-template-columns:1fr}
+  .aesthetic-grid{grid-template-columns:1fr}
+  .section-head{flex-direction:column;align-items:flex-start}
+  .section-head .hint{text-align:left;max-width:none}
+  .stack-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media (max-width:600px){
+  .nav{padding:0 16px}
+  .wrap{padding:0 16px}
+  .hero{padding:48px 0 16px}
+  .hero h1{font-size:36px}
+  .hero-sub{font-size:15.5px}
+  .next-row{grid-template-columns:30px 1fr;padding:14px 16px}
+  .next-tag{grid-column:1/-1;justify-self:flex-start;margin-top:6px}
+  .stack-grid{grid-template-columns:repeat(2,1fr)}
+  .tl-date{width:auto}
+}
+
+/* FADE IN */
+.fade{opacity:0;transform:translateY(8px);animation:fade .7s cubic-bezier(.2,0,0,1) forwards}
+.fade.d1{animation-delay:.05s}.fade.d2{animation-delay:.12s}.fade.d3{animation-delay:.2s}.fade.d4{animation-delay:.28s}.fade.d5{animation-delay:.36s}
+@keyframes fade{to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="project-board.html" class="nav-back">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Project Board
+  </a>
+  <div class="nav-brand" style="margin-left:8px">
+    <div class="brand-mark">V</div>
+    <div class="brand-text">Vantage Co. <span>/ Blueprint</span></div>
+  </div>
+  <div class="nav-spacer"></div>
+  <a href="https://hunchojay100.github.io/vantage-co/" target="_blank" rel="noopener" class="nav-link">View Live Site &rarr;</a>
+</nav>
+
+<main class="wrap">
+
+  <section class="hero fade d1">
+    <span class="eyebrow"><span class="dot"></span>Vantage Creative &middot; Consulting Front Door</span>
+    <h1>An <em>operator's</em> consultancy. Strategy, systems, and <em>growth.</em></h1>
+    <p class="hero-sub">Vantage Co. is the consulting-first front door for Jaden and Meagan. Operator-to-operator. No fluff, no agency theater. Pure monochrome aesthetic with italic emphasis as the only signature.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><span class="k">Domain</span><span class="v">vantage.co</span></div>
+      <div class="hero-meta-item"><span class="k">Repo</span><span class="v mono">HunchoJay100/vantage-co</span></div>
+      <div class="hero-meta-item"><span class="k">Local</span><span class="v mono">~/Desktop/Claude Projects/Vantage-Co/</span></div>
+      <div class="hero-meta-item"><span class="k">Deploy</span><span class="v">GitHub Pages</span></div>
+    </div>
+  </section>
+
+  <section class="fade d2">
+    <div class="strip">
+      <div class="stat">
+        <div class="label">Progress</div>
+        <div class="num">55<span style="font-size:18px;color:var(--ink-500)">%</span></div>
+        <div class="sub">Design locked, sections built</div>
+        <div class="bar"><div class="bar-fill" style="width:55%"></div></div>
+      </div>
+      <div class="stat">
+        <div class="label">Sections</div>
+        <div class="num">7</div>
+        <div class="sub">Hero &middot; Thesis &middot; Peek &middot; Work &middot; About &middot; Contact &middot; Footer</div>
+      </div>
+      <div class="stat">
+        <div class="label">Service Pillars</div>
+        <div class="num">3</div>
+        <div class="sub">Strategy &middot; Systems &middot; Growth</div>
+      </div>
+      <div class="stat">
+        <div class="label">Design</div>
+        <div class="num" style="font-size:22px;line-height:1.1;margin-top:12px">Locked</div>
+        <div class="sub">Pure mono &middot; italic emphasis &middot; Inter</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DESIGN DIRECTION -->
+  <section>
+    <div class="section-head">
+      <div>
+        <div class="section-label">Aesthetic</div>
+        <h2>Design direction &mdash; <em>locked.</em></h2>
+      </div>
+      <p class="hint">After iterating through Rolex-heritage, NVIDIA-edge, Linear-violet, teal+amber, and amber-accent directions. All rejected. This is the one.</p>
+    </div>
+    <div class="aesthetic-grid">
+      <div class="aesthetic-card">
+        <h3>Palette</h3>
+        <div style="display:flex;gap:16px;flex-wrap:wrap">
+          <div class="aesthetic-swatch">
+            <div class="swatch" style="background:#0A0A0A"></div>
+            <div class="swatch-label">#0A0A0A<br>Dark sections</div>
+          </div>
+          <div class="aesthetic-swatch">
+            <div class="swatch" style="background:#FAFAFA;border-color:var(--ink-300)"></div>
+            <div class="swatch-label">#FAFAFA<br>Light sections</div>
+          </div>
+          <div class="aesthetic-swatch">
+            <div class="swatch" style="background:#F5F5F5;border-color:var(--ink-300)"></div>
+            <div class="swatch-label">#F5F5F5<br>Text on dark</div>
+          </div>
+          <div class="aesthetic-swatch">
+            <div class="swatch" style="background:#0A0A0A"></div>
+            <div class="swatch-label">#0A0A0A<br>Text on light</div>
+          </div>
+        </div>
+        <p style="font-size:12.5px;color:var(--ink-500);margin-top:4px">No colored accent. Zero. Color comes from the work (portfolio screenshots).</p>
+      </div>
+      <div class="aesthetic-card">
+        <h3>Typography</h3>
+        <div class="aesthetic-type">We build the <em>operating</em> system.</div>
+        <p style="font-size:12.5px;color:var(--ink-500);margin-top:4px">Inter throughout. Weight 500-600 display, tight letter-spacing -0.04em. Italic + weight bump = the signature move. Porto Rocha pattern.</p>
+      </div>
+      <div class="aesthetic-card">
+        <h3>Layout Pattern</h3>
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:5px">
+          <li style="font-size:13px;color:var(--ink-700);display:flex;gap:8px"><span style="color:var(--ink-500);font-size:12px;width:60px;flex-shrink:0">Hero</span> Eyebrow + headline, hairline rule, two-column sub-bar</li>
+          <li style="font-size:13px;color:var(--ink-700);display:flex;gap:8px"><span style="color:var(--ink-500);font-size:12px;width:60px;flex-shrink:0">Thesis</span> 5fr/4fr asymmetric header, 3-column grid with hairlines</li>
+          <li style="font-size:13px;color:var(--ink-700);display:flex;gap:8px"><span style="color:var(--ink-500);font-size:12px;width:60px;flex-shrink:0">Peek</span> 1fr/3fr asymmetric (eyebrow left, statement right)</li>
+          <li style="font-size:13px;color:var(--ink-700);display:flex;gap:8px"><span style="color:var(--ink-500);font-size:12px;width:60px;flex-shrink:0">Work</span> 4fr/5fr per pillar (number + italic left, content right)</li>
+          <li style="font-size:13px;color:var(--ink-700);display:flex;gap:8px"><span style="color:var(--ink-500);font-size:12px;width:60px;flex-shrink:0">Contact</span> 5fr/4fr header, 2-column form grid</li>
+        </ul>
+      </div>
+      <div class="aesthetic-card">
+        <h3>Synthesis Reference</h3>
+        <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:4px">
+          <div style="font-size:13px;color:var(--ink-700)"><span style="font-weight:600">Apple / Tesla</span><br><span style="color:var(--ink-500);font-size:12px">Stark contrast, massive type, hard transitions</span></div>
+          <div style="font-size:13px;color:var(--ink-700)"><span style="font-weight:600">Linear</span><br><span style="color:var(--ink-500);font-size:12px">Tight type, restrained chrome, pill buttons</span></div>
+          <div style="font-size:13px;color:var(--ink-700)"><span style="font-weight:600">Porto Rocha</span><br><span style="color:var(--ink-500);font-size:12px">Italic emphasis, editorial asymmetry, character</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICE PILLARS (light section) -->
+  <div class="section-light">
+    <div class="wrap">
+      <section style="padding:0">
+        <div class="section-head">
+          <div>
+            <div class="section-label">What We Do</div>
+            <h2>Three pillars. One <em>partner.</em></h2>
+          </div>
+          <p class="hint">Consulting-first. AI-native systems. Creative execution via Flynn & Co.</p>
+        </div>
+        <div class="pillars">
+          <div class="pillar">
+            <div class="pillar-num">01</div>
+            <h3><em>Strategy</em></h3>
+            <p>Positioning, messaging, and market clarity. We fix the thinking before anyone touches a camera or a keyboard.</p>
+            <ul>
+              <li>Brand positioning audits</li>
+              <li>Go-to-market strategy</li>
+              <li>Competitive landscape analysis</li>
+              <li>Messaging frameworks</li>
+            </ul>
+          </div>
+          <div class="pillar">
+            <div class="pillar-num">02</div>
+            <h3><em>Systems</em></h3>
+            <p>Web apps, portals, dashboards, automation. We build the tools that scale your operation.</p>
+            <ul>
+              <li>Custom web applications</li>
+              <li>Client portals and dashboards</li>
+              <li>CRM and workflow automation</li>
+              <li>Data infrastructure</li>
+            </ul>
+          </div>
+          <div class="pillar">
+            <div class="pillar-num">03</div>
+            <h3><em>Growth</em></h3>
+            <p>Paid media, organic content, and audience systems. Flynn & Co executes what we architect.</p>
+            <ul>
+              <li>Meta/Google ad campaigns</li>
+              <li>Content strategy and production</li>
+              <li>Social media management</li>
+              <li>Analytics and attribution</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- BUILT SECTIONS -->
+  <section>
+    <div class="section-head">
+      <div>
+        <div class="section-label">Shipped</div>
+        <h2>What's built so far.</h2>
+      </div>
+      <p class="hint">Full single-page landing with alternating light/dark sections. Pushed to GitHub Pages. Formspree and real headshots still pending.</p>
+    </div>
+    <div class="phases">
+      <div class="phase">
+        <div class="phase-top">
+          <h3>Hero Section</h3>
+          <span class="phase-badge">Done</span>
+        </div>
+        <ul>
+          <li>Eyebrow + massive headline with italic emphasis keywords</li>
+          <li>Hairline rule with two-column sub-bar (subhead left, CTAs right)</li>
+          <li>Pill buttons (Start a Conversation + See the Work)</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div class="phase-top">
+          <h3>Thesis Section</h3>
+          <span class="phase-badge">Done</span>
+        </div>
+        <ul>
+          <li>5fr/4fr asymmetric header ("What we actually do")</li>
+          <li>3-column grid with hairline dividers (no card shadows)</li>
+          <li>Strategy / Systems / Growth breakdown</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div class="phase-top">
+          <h3>Peek Section</h3>
+          <span class="phase-badge">Done</span>
+        </div>
+        <ul>
+          <li>1fr/3fr asymmetric layout</li>
+          <li>Bold statement: "One partner who fixes the machine"</li>
+          <li>Italicized emphasis throughout</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div class="phase-top">
+          <h3>What We Do Section</h3>
+          <span class="phase-badge">Done</span>
+        </div>
+        <ul>
+          <li>4fr/5fr per pillar (number + italic headline left, description + list right)</li>
+          <li>Three service pillars with detailed breakdowns</li>
+          <li>Editorial asymmetric layout</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div class="phase-top">
+          <h3>About Section</h3>
+          <span class="phase-badge">Done</span>
+        </div>
+        <ul>
+          <li>5fr/4fr header layout</li>
+          <li>Two-column partner grid (Jaden + Meagan)</li>
+          <li>Placeholder portraits (real headshots pending)</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div class="phase-top">
+          <h3>Contact + Footer</h3>
+          <span class="phase-badge">Done</span>
+        </div>
+        <ul>
+          <li>5fr/4fr header, 2-column form grid</li>
+          <li>Formspree form (FORM_ID placeholder, not yet wired)</li>
+          <li>Clean footer with copyright + nav links</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CORPORATE STRUCTURE -->
+  <section>
+    <div class="section-head">
+      <div>
+        <div class="section-label">Structure</div>
+        <h2>How Vantage fits together.</h2>
+      </div>
+      <p class="hint">Vantage Creative is the parent. Vantage Co. is the consulting site. Flynn & Co is the execution arm Meagan runs. Three entities, clear lanes.</p>
+    </div>
+    <div class="phases" style="grid-template-columns:repeat(3,1fr)">
+      <div class="phase">
+        <div class="phase-top"><h3>Vantage Creative</h3></div>
+        <ul>
+          <li>Parent company (umbrella entity)</li>
+          <li>Owns all non-construction business</li>
+          <li>Jaden + Meagan, co-owned</li>
+          <li>Web/app dev, consulting, production</li>
+        </ul>
+      </div>
+      <div class="phase" style="border-color:var(--line-strong)">
+        <div class="phase-top"><h3>Vantage Co.</h3></div>
+        <ul>
+          <li>Consulting-first front door</li>
+          <li>Operator-to-operator positioning</li>
+          <li>Strategy, Systems, Growth pillars</li>
+          <li>This site (vantage.co)</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div class="phase-top"><h3>Flynn & Co</h3></div>
+        <ul>
+          <li>Social media + video production</li>
+          <li>Meagan runs day-to-day</li>
+          <li>Subsidiary of Vantage Creative</li>
+          <li>Execution arm behind Growth pillar</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO PIECES (planned) -->
+  <section>
+    <div class="callout">
+      <div class="callout-body">
+        <div class="callout-label">Work Grid</div>
+        <h3>Portfolio screenshots will carry all the color.</h3>
+        <p class="callout-sub">The site is a monochrome frame. The work is the picture. Real screenshots from Modern Dev, Chief, Complete Crete, RoofPact, BL4INE, Roofr scraper, and more. This is the section that sells.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEXT UP -->
+  <section>
+    <div class="section-head">
+      <div>
+        <div class="section-label">Next Up</div>
+        <h2>Road to <em>launch.</em></h2>
+      </div>
+      <p class="hint">Design is locked. Content and integration work remains before vantage.co goes live.</p>
+    </div>
+    <div class="next">
+      <div class="next-row">
+        <div class="next-idx">01</div>
+        <div class="next-body">
+          <div class="next-title">Work grid with real screenshots</div>
+          <div class="next-desc">Portfolio section showing Modern Dev, Chief, The Target, Complete Crete, RoofPact, BL4INE. Real screenshots bring color to the monochrome frame.</div>
+        </div>
+        <span class="next-tag now">Now</span>
+      </div>
+      <div class="next-row">
+        <div class="next-idx">02</div>
+        <div class="next-body">
+          <div class="next-title">Domain purchase + GitHub Pages deploy</div>
+          <div class="next-desc">Buy vantage.co, point DNS to GitHub Pages. Currently live at hunchojay100.github.io/vantage-co/.</div>
+        </div>
+        <span class="next-tag now">Now</span>
+      </div>
+      <div class="next-row">
+        <div class="next-idx">03</div>
+        <div class="next-body">
+          <div class="next-title">Real headshots (Jaden + Meagan)</div>
+          <div class="next-desc">About section has placeholder portraits. Need real professional headshots swapped in.</div>
+        </div>
+        <span class="next-tag next">Next</span>
+      </div>
+      <div class="next-row">
+        <div class="next-idx">04</div>
+        <div class="next-body">
+          <div class="next-title">Formspree endpoint + real hero copy</div>
+          <div class="next-desc">Wire the contact form to a real Formspree endpoint. Write final hero subhead copy.</div>
+        </div>
+        <span class="next-tag next">Next</span>
+      </div>
+      <div class="next-row">
+        <div class="next-idx">05</div>
+        <div class="next-body">
+          <div class="next-title">Mobile polish + accessibility sweep</div>
+          <div class="next-desc">Responsive breakpoints, touch targets, WCAG contrast, focus states. Final QA pass.</div>
+        </div>
+        <span class="next-tag soon">Soon</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- REJECTED DIRECTIONS -->
+  <section>
+    <div class="section-head">
+      <div>
+        <div class="section-label">Rejected</div>
+        <h2>What we tried and <em>killed.</em></h2>
+      </div>
+      <p class="hint">Five color directions explored before locking pure mono. Each was built, reviewed, and rejected. The constraint is the feature.</p>
+    </div>
+    <div class="phases" style="grid-template-columns:repeat(3,1fr)">
+      <div class="phase">
+        <div class="phase-top"><h3>Rolex Heritage</h3></div>
+        <ul><li>Gold accent, serif display type</li><li>Felt like a jeweler, not a consultancy</li></ul>
+      </div>
+      <div class="phase">
+        <div class="phase-top"><h3>NVIDIA Edge</h3></div>
+        <ul><li>Electric green, gradient mesh backgrounds</li><li>Too tech-company, wrong audience signal</li></ul>
+      </div>
+      <div class="phase">
+        <div class="phase-top"><h3>Linear Violet</h3></div>
+        <ul><li>Purple accent, dev-tool energy</li><li>Felt SaaS, not operator</li></ul>
+      </div>
+      <div class="phase">
+        <div class="phase-top"><h3>Teal + Amber</h3></div>
+        <ul><li>Dual accent, warm-cool balance</li><li>Too busy, diluted the message</li></ul>
+      </div>
+      <div class="phase">
+        <div class="phase-top"><h3>Amber Accent</h3></div>
+        <ul><li>Gold/amber as single accent</li><li>Close but felt like Flynn Dev, not Vantage</li></ul>
+      </div>
+      <div class="phase">
+        <div class="phase-top"><h3 style="color:var(--green)">Pure Mono &#10003;</h3></div>
+        <ul><li>Zero color, italic emphasis only</li><li>"Color pops come from screenshots and such"</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section>
+    <div class="section-head">
+      <div>
+        <div class="section-label">Timeline</div>
+        <h2>How we got here.</h2>
+      </div>
+    </div>
+    <div class="timeline">
+      <div class="tl-item done">
+        <div class="tl-date">Apr 2026</div>
+        <div class="tl-body">
+          <div class="tl-title">Corporate structure decided</div>
+          <div class="tl-desc">Vantage Creative = umbrella. Vantage Co. = consulting. Flynn & Co = execution (Meagan).</div>
+        </div>
+      </div>
+      <div class="tl-item done">
+        <div class="tl-date">Apr 2026</div>
+        <div class="tl-body">
+          <div class="tl-title">Service pillars defined</div>
+          <div class="tl-desc">Strategy, Systems, Growth. Operator-to-operator positioning locked.</div>
+        </div>
+      </div>
+      <div class="tl-item done">
+        <div class="tl-date">Apr 21</div>
+        <div class="tl-body">
+          <div class="tl-title">Design direction locked after heavy iteration</div>
+          <div class="tl-desc">5 color directions rejected. Pure mono + italic emphasis chosen. Linear x Porto Rocha x Apple x Tesla synthesis.</div>
+        </div>
+      </div>
+      <div class="tl-item done">
+        <div class="tl-date">Apr 21</div>
+        <div class="tl-body">
+          <div class="tl-title">All 7 sections built and pushed</div>
+          <div class="tl-desc">Hero, Thesis, Peek, What We Do, About, Contact, Footer. Alternating light/dark. GitHub repo initialized.</div>
+        </div>
+      </div>
+      <div class="tl-item now">
+        <div class="tl-date">Apr 22</div>
+        <div class="tl-body">
+          <div class="tl-title">You are here</div>
+          <div class="tl-desc">Work grid (real screenshots), domain purchase, headshots, Formspree wiring remain.</div>
+        </div>
+      </div>
+      <div class="tl-item future">
+        <div class="tl-date">TBD</div>
+        <div class="tl-body">
+          <div class="tl-title">vantage.co live</div>
+          <div class="tl-desc">Domain pointed, form wired, headshots swapped, mobile polished. Ship it.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section>
+    <div class="section-head">
+      <div>
+        <div class="section-label">Stack</div>
+        <h2>What it's built on.</h2>
+      </div>
+    </div>
+    <div class="stack-grid" style="grid-template-columns:repeat(4,1fr)">
+      <div class="chip"><div class="k">Type</div><div class="v">Single-file HTML</div></div>
+      <div class="chip"><div class="k">Font</div><div class="v">Inter</div></div>
+      <div class="chip"><div class="k">Hosting</div><div class="v">GitHub Pages</div></div>
+      <div class="chip"><div class="k">Form</div><div class="v">Formspree</div></div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div>Vantage Co. &middot; Vantage Creative &middot; Jaden & Meagan Flynn</div>
+    <div style="display:flex;gap:20px">
+      <a href="https://hunchojay100.github.io/vantage-co/" target="_blank" rel="noopener">Live site</a>
+      <a href="project-board.html">&larr; All projects</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
