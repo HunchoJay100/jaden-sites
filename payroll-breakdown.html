@@ -182,6 +182,46 @@ header {
   font-size: 1rem;
 }
 
+/* Billed-to-Dad markers */
+.pay-table tr.billed td {
+  background: rgba(197,165,90,0.06);
+}
+.pay-table tr.billed td:first-child {
+  border-left: 2px solid var(--gold);
+}
+.billed-pill {
+  display: inline-block;
+  margin-left: 12px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  background: rgba(197,165,90,0.12);
+  border: 1px solid rgba(197,165,90,0.35);
+  padding: 3px 8px;
+  border-radius: 6px;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.billed-pill.partial {
+  color: var(--gold);
+  background: rgba(197,165,90,0.18);
+}
+.billed-legend {
+  max-width: 900px; margin: 0 auto 16px;
+  padding: 14px 18px;
+  background: rgba(197,165,90,0.05);
+  border: 1px solid rgba(197,165,90,0.2);
+  border-left: 3px solid var(--gold);
+  border-radius: 10px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+.billed-legend strong { color: var(--gold-light); font-weight: 600; }
+
 footer {
   position: relative; z-index: 1;
   text-align: center; padding: 40px 30px;
@@ -243,11 +283,11 @@ footer p { color: var(--text-muted); font-size: 0.75rem; }
 <div class="summary">
   <div class="summary-card">
     <p class="label">Total Payroll</p>
-    <p class="value">$49,973.35</p>
+    <p class="value">$52,653.81</p>
   </div>
   <div class="summary-card">
     <p class="label">Total Hours</p>
-    <p class="value">1,427.81</p>
+    <p class="value">1,529.11</p>
   </div>
   <div class="summary-card">
     <p class="label">Jobs</p>
@@ -257,31 +297,34 @@ footer p { color: var(--text-muted); font-size: 0.75rem; }
 
 <div class="table-section">
   <div class="container">
+    <div class="billed-legend">
+      <strong>Billed to Dad &middot;</strong> Jobs marked with the gold pill have been billed to Jason Flynn as the responsible party. Totals $5,508.46 across 181.10 hours. Full breakdown on the <em>Dad Settle Up</em> sheet.
+    </div>
     <table class="pay-table">
       <thead>
         <tr><th>Job / Client</th><th>Total Pay</th><th>Hours</th></tr>
       </thead>
       <tbody>
         <tr><td>Amy</td><td>$6,769.00</td><td>193.40</td></tr>
-        <tr><td>Freddie</td><td>$5,484.50</td><td>156.70</td></tr>
-        <tr><td>Hice</td><td>$4,735.50</td><td>135.30</td></tr>
-        <tr><td>Gregory</td><td>$4,544.75</td><td>129.85</td></tr>
-        <tr><td>Morgan</td><td>$4,172.00</td><td>119.20</td></tr>
+        <tr><td>Freddie</td><td>$5,746.65</td><td>164.19</td></tr>
+        <tr><td>Lee</td><td>$5,387.55</td><td>153.93</td></tr>
+        <tr><td>Hice</td><td>$5,068.00</td><td>144.80</td></tr>
+        <tr><td>Gregory</td><td>$4,877.25</td><td>139.35</td></tr>
+        <tr><td>Morgan</td><td>$4,277.00</td><td>122.20</td></tr>
         <tr><td>Trey</td><td>$3,692.50</td><td>105.50</td></tr>
+        <tr><td>Reco</td><td>$3,415.65</td><td>97.59</td></tr>
         <tr><td>Frank</td><td>$3,130.75</td><td>89.45</td></tr>
         <tr><td>Home Church</td><td>$3,004.75</td><td>85.85</td></tr>
-        <tr><td>Lee</td><td>$2,896.25</td><td>82.75</td></tr>
-        <tr><td>Reco</td><td>$2,622.55</td><td>74.93</td></tr>
-        <tr><td>Jimmy</td><td>$2,222.50</td><td>63.50</td></tr>
+        <tr class="billed"><td>Brycen<span class="billed-pill">Billed to Dad</span></td><td>$1,790.95</td><td>51.17</td></tr>
         <tr><td>Gavin</td><td>$1,776.25</td><td>50.75</td></tr>
-        <tr><td>Petar</td><td>$1,660.05</td><td>47.43</td></tr>
-        <tr><td>Bethany</td><td>$1,260.00</td><td>36.00</td></tr>
-        <tr><td>Brycen</td><td>$1,074.50</td><td>30.70</td></tr>
-        <tr><td>Joel</td><td>$402.50</td><td>11.50</td></tr>
-        <tr><td>Dairy</td><td>$227.50</td><td>6.50</td></tr>
-        <tr><td>Jersey</td><td>$157.50</td><td>4.50</td></tr>
-        <tr><td>Nottingham</td><td>$140.00</td><td>4.00</td></tr>
-        <tr class="total-row"><td>TOTAL</td><td>$49,973.35</td><td>1,427.81</td></tr>
+        <tr class="billed"><td>Petar<span class="billed-pill partial">Billed to Dad &middot; Partial Paid</span></td><td>$795.01</td><td>47.43</td></tr>
+        <tr class="billed"><td>Bethany<span class="billed-pill">Billed to Dad</span></td><td>$1,260.00</td><td>36.00</td></tr>
+        <tr class="billed"><td>Joel<span class="billed-pill">Billed to Dad</span></td><td>$1,067.50</td><td>30.50</td></tr>
+        <tr class="billed"><td>Dairy<span class="billed-pill">Billed to Dad</span></td><td>$227.50</td><td>6.50</td></tr>
+        <tr class="billed"><td>Jersey<span class="billed-pill">Billed to Dad</span></td><td>$157.50</td><td>4.50</td></tr>
+        <tr class="billed"><td>Nottingham<span class="billed-pill">Billed to Dad</span></td><td>$140.00</td><td>4.00</td></tr>
+        <tr class="billed"><td>555 Harley's Ridge<span class="billed-pill">Billed to Dad</span></td><td>$70.00</td><td>2.00</td></tr>
+        <tr class="total-row"><td>TOTAL</td><td>$52,653.81</td><td>1,529.11</td></tr>
       </tbody>
     </table>
   </div>
@@ -297,27 +340,27 @@ footer p { color: var(--text-muted); font-size: 0.75rem; }
 <script>
 function downloadCSV() {
   const data = [
-    ['Job/Client', 'Total Pay', 'Hours'],
-    ['Amy', 6769.00, 193.40],
-    ['Freddie', 5484.50, 156.70],
-    ['Hice', 4735.50, 135.30],
-    ['Gregory', 4544.75, 129.85],
-    ['Morgan', 4172.00, 119.20],
-    ['Trey', 3692.50, 105.50],
-    ['Frank', 3130.75, 89.45],
-    ['Home Church', 3004.75, 85.85],
-    ['Lee', 2896.25, 82.75],
-    ['Reco', 2622.55, 74.93],
-    ['Jimmy', 2222.50, 63.50],
-    ['Gavin', 1776.25, 50.75],
-    ['Petar', 1660.05, 47.43],
-    ['Bethany', 1260.00, 36.00],
-    ['Brycen', 1074.50, 30.70],
-    ['Joel', 402.50, 11.50],
-    ['Dairy', 227.50, 6.50],
-    ['Jersey', 157.50, 4.50],
-    ['Nottingham', 140.00, 4.00],
-    ['TOTAL', 49973.35, 1427.81],
+    ['Job/Client', 'Total Pay', 'Hours', 'Billed To'],
+    ['Amy', 6769.00, 193.40, ''],
+    ['Freddie', 5746.65, 164.19, ''],
+    ['Lee', 5387.55, 153.93, ''],
+    ['Hice', 5068.00, 144.80, ''],
+    ['Gregory', 4877.25, 139.35, ''],
+    ['Morgan', 4277.00, 122.20, ''],
+    ['Trey', 3692.50, 105.50, ''],
+    ['Reco', 3415.65, 97.59, ''],
+    ['Frank', 3130.75, 89.45, ''],
+    ['Home Church', 3004.75, 85.85, ''],
+    ['Brycen', 1790.95, 51.17, 'Dad'],
+    ['Gavin', 1776.25, 50.75, ''],
+    ['Petar', 795.01, 47.43, 'Dad (partial paid)'],
+    ['Bethany', 1260.00, 36.00, 'Dad'],
+    ['Joel', 1067.50, 30.50, 'Dad'],
+    ['Dairy', 227.50, 6.50, 'Dad'],
+    ['Jersey', 157.50, 4.50, 'Dad'],
+    ['Nottingham', 140.00, 4.00, 'Dad'],
+    ["555 Harley's Ridge", 70.00, 2.00, 'Dad'],
+    ['TOTAL', 52653.81, 1529.11, ''],
   ];
   const csv = data.map(r => r.join(',')).join('\n');
   const blob = new Blob([csv], { type: 'text/csv' });

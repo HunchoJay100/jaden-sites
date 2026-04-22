@@ -194,6 +194,42 @@ header {
   color: var(--green);
 }
 
+/* Billed-to-Dad markers */
+.bill-table tr.billed td {
+  background: rgba(197,165,90,0.08);
+}
+.bill-table tr.billed td:first-child {
+  border-left: 2px solid var(--gold);
+}
+.billed-pill {
+  display: inline-block;
+  margin-left: 12px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  background: rgba(197,165,90,0.12);
+  border: 1px solid rgba(197,165,90,0.35);
+  padding: 3px 8px;
+  border-radius: 6px;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.billed-legend {
+  max-width: 960px; margin: 0 auto 16px;
+  padding: 14px 18px;
+  background: rgba(197,165,90,0.05);
+  border: 1px solid rgba(197,165,90,0.2);
+  border-left: 3px solid var(--gold);
+  border-radius: 10px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+.billed-legend strong { color: var(--gold-light); font-weight: 600; }
+
 footer {
   position: relative; z-index: 1;
   text-align: center; padding: 40px 30px;
@@ -257,24 +293,27 @@ footer p { color: var(--text-muted); font-size: 0.75rem; }
 <div class="summary">
   <div class="summary-card">
     <p class="label">Total Hours</p>
-    <p class="value">57.50</p>
+    <p class="value">52.00</p>
   </div>
   <div class="summary-card">
     <p class="label">Operator Cost</p>
-    <p class="value">$3,550</p>
+    <p class="value">$3,330</p>
   </div>
   <div class="summary-card">
     <p class="label">Total Billable</p>
-    <p class="value">$6,490</p>
+    <p class="value">$6,240</p>
   </div>
   <div class="summary-card profit">
     <p class="label">Profit</p>
-    <p class="value">$4,190</p>
+    <p class="value">$4,160</p>
   </div>
 </div>
 
 <div class="table-section">
   <div class="container">
+    <div class="billed-legend">
+      <strong>Billed to Dad &middot;</strong> Jobs marked with the gold pill have been billed to Jason Flynn as the responsible party. Totals $1,860.00 across 15.50 hours of skid steer. Full breakdown on the <em>Dad Settle Up</em> sheet.
+    </div>
     <table class="bill-table">
       <thead>
         <tr>
@@ -293,8 +332,8 @@ footer p { color: var(--text-muted); font-size: 0.75rem; }
           <td>$1,890.00</td>
           <td>$1,260.00</td>
         </tr>
-        <tr>
-          <td>Brycen</td>
+        <tr class="billed">
+          <td>Brycen<span class="billed-pill">Billed to Dad</span></td>
           <td>12.50</td>
           <td>$500.00</td>
           <td>$1,500.00</td>
@@ -314,15 +353,8 @@ footer p { color: var(--text-muted); font-size: 0.75rem; }
           <td>$810.00</td>
           <td>$540.00</td>
         </tr>
-        <tr>
-          <td>Petar <span class="note">(flat rate)</span></td>
-          <td>5.50</td>
-          <td>$220.00</td>
-          <td>$250.00</td>
-          <td>$30.00</td>
-        </tr>
-        <tr>
-          <td>Bethany</td>
+        <tr class="billed">
+          <td>Bethany<span class="billed-pill">Billed to Dad</span></td>
           <td>3.00</td>
           <td>$120.00</td>
           <td>$360.00</td>
@@ -344,10 +376,10 @@ footer p { color: var(--text-muted); font-size: 0.75rem; }
         </tr>
         <tr class="total-row">
           <td>TOTAL</td>
-          <td>57.50</td>
-          <td>$2,300.00</td>
-          <td>$6,490.00</td>
-          <td>$4,190.00</td>
+          <td>52.00</td>
+          <td>$2,080.00</td>
+          <td>$6,240.00</td>
+          <td>$4,160.00</td>
         </tr>
       </tbody>
     </table>
@@ -380,7 +412,7 @@ footer p { color: var(--text-muted); font-size: 0.75rem; }
         <tr class="total-row">
           <td>TOTAL OPERATOR COST</td>
           <td></td>
-          <td>$3,550.00</td>
+          <td>$3,330.00</td>
           <td></td>
           <td></td>
         </tr>
@@ -388,7 +420,7 @@ footer p { color: var(--text-muted); font-size: 0.75rem; }
           <td>TOTAL BILLABLE</td>
           <td></td>
           <td></td>
-          <td>$6,490.00</td>
+          <td>$6,240.00</td>
           <td></td>
         </tr>
         <tr class="total-row">
@@ -396,7 +428,7 @@ footer p { color: var(--text-muted); font-size: 0.75rem; }
           <td></td>
           <td></td>
           <td></td>
-          <td>$4,190.00</td>
+          <td>$4,160.00</td>
         </tr>
       </tbody>
     </table>
@@ -413,22 +445,21 @@ footer p { color: var(--text-muted); font-size: 0.75rem; }
 <script>
 function downloadCSV() {
   const data = [
-    ['Job/Client', 'Hours', 'Operator Cost ($40/hr)', 'Bill to Customer ($120/hr)', 'Profit'],
-    ['Amy', 15.75, 630.00, 1890.00, 1260.00],
-    ['Brycen', 12.50, 500.00, 1500.00, 1000.00],
-    ['Morgan', 10.50, 420.00, 1260.00, 840.00],
-    ['Freddie', 6.75, 270.00, 810.00, 540.00],
-    ['Petar (flat rate)', 5.50, 220.00, 250.00, 30.00],
-    ['Bethany', 3.00, 120.00, 360.00, 240.00],
-    ['Gregory', 2.50, 100.00, 300.00, 200.00],
-    ['Jimmy', 1.00, 40.00, 120.00, 80.00],
-    ['TOTAL', 57.50, 2300.00, 6490.00, 4190.00],
-    ['', '', '', '', ''],
-    ['Previous Operating', '', 1250.00, '', ''],
-    ['', '', '', '', ''],
-    ['TOTAL OPERATOR COST', '', 3550.00, '', ''],
-    ['TOTAL BILLABLE', '', '', 6490.00, ''],
-    ['TOTAL PROFIT', '', '', '', 4190.00],
+    ['Job/Client', 'Hours', 'Operator Cost ($40/hr)', 'Bill to Customer ($120/hr)', 'Profit', 'Billed To'],
+    ['Amy', 15.75, 630.00, 1890.00, 1260.00, ''],
+    ['Brycen', 12.50, 500.00, 1500.00, 1000.00, 'Dad'],
+    ['Morgan', 10.50, 420.00, 1260.00, 840.00, ''],
+    ['Freddie', 6.75, 270.00, 810.00, 540.00, ''],
+    ['Bethany', 3.00, 120.00, 360.00, 240.00, 'Dad'],
+    ['Gregory', 2.50, 100.00, 300.00, 200.00, ''],
+    ['Jimmy', 1.00, 40.00, 120.00, 80.00, ''],
+    ['TOTAL', 52.00, 2080.00, 6240.00, 4160.00, ''],
+    ['', '', '', '', '', ''],
+    ['Previous Operating', '', 1250.00, '', '', ''],
+    ['', '', '', '', '', ''],
+    ['TOTAL OPERATOR COST', '', 3330.00, '', '', ''],
+    ['TOTAL BILLABLE', '', '', 6240.00, '', ''],
+    ['TOTAL PROFIT', '', '', '', 4160.00, ''],
   ];
   const csv = data.map(r => r.join(',')).join('\n');
   const blob = new Blob([csv], { type: 'text/csv' });
