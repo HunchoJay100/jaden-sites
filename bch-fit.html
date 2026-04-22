@@ -1,0 +1,3403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BCH Fit — The Coach In Your Pocket</title>
+<meta name="description" content="Training, nutrition, and recovery. One system. Built for blue collar men, dads, and operators. Native iOS, $40/mo." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ════════════════════════════════════════════════════════════════════
+   BCH FIT · SHOWCASE — DESIGN TOKENS (mirrors the app)
+   ════════════════════════════════════════════════════════════════════ */
+:root {
+  /* Asphalt ramp */
+  --bg:         #050506;
+  --bg-2:       #0A0A0C;
+  --surface:    #101013;
+  --surface-2:  #17171B;
+  --surface-3:  #1F1F25;
+
+  /* Hairlines */
+  --hairline:        rgba(255,255,255,0.06);
+  --hairline-2:      rgba(255,255,255,0.10);
+  --hairline-accent: rgba(198,255,60,0.30);
+
+  /* Text */
+  --text:   rgba(245,245,247,1);
+  --text-2: rgba(245,245,247,0.62);
+  --text-3: rgba(245,245,247,0.34);
+
+  /* Electric Lime */
+  --accent:      #C6FF3C;
+  --accent-ink:  #050506;
+  --accent-dim:  #9BD21A;
+  --accent-soft: rgba(198,255,60,0.12);
+  --accent-glow: 0 0 24px rgba(198,255,60,0.35);
+
+  /* Data ramp */
+  --data-1: #C6FF3C;
+  --data-2: #F2EDE4;
+  --data-3: #7A8599;
+
+  /* Typography */
+  --font-display: 'Oswald', -apple-system, sans-serif;
+  --font-ui:      'Inter', -apple-system, system-ui, sans-serif;
+
+  /* Spacing · 8pt grid */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px;
+  --s-5: 24px; --s-6: 32px; --s-7: 48px; --s-8: 72px;
+  --s-9: 112px;
+
+  /* Radius */
+  --r-xs: 6px; --r-sm: 8px; --r-md: 12px; --r-lg: 16px;
+  --r-xl: 24px; --r-full: 9999px;
+
+  /* Shadows */
+  --shadow-1: 0 1px 3px rgba(0,0,0,0.45), 0 1px 2px rgba(0,0,0,0.25);
+  --shadow-2: 0 4px 14px rgba(0,0,0,0.55), 0 2px 6px rgba(0,0,0,0.35);
+  --shadow-3: 0 8px 32px rgba(0,0,0,0.65);
+  --shadow-accent: 0 10px 30px -10px rgba(198,255,60,0.45);
+
+  /* Motion */
+  --ease-std:  cubic-bezier(0.2, 0, 0, 1);
+  --ease-snap: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   RESET & BASE
+   ════════════════════════════════════════════════════════════════════ */
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-feature-settings: "ss01", "cv11", "tnum";
+  font-variant-numeric: tabular-nums;
+  scroll-behavior: smooth;
+}
+body {
+  background:
+    radial-gradient(900px 700px at 80% -5%, rgba(198,255,60,0.06), transparent 55%),
+    radial-gradient(1100px 900px at 10% 20%, rgba(60,60,80,0.18), transparent 60%),
+    var(--bg);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+svg { display: block; }
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; background: transparent; border: 0; color: inherit; }
+
+/* Grain overlay */
+body::after {
+  content: "";
+  position: fixed; inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   LAYOUT PRIMITIVES
+   ════════════════════════════════════════════════════════════════════ */
+.wrap {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 var(--s-6);
+  position: relative;
+  z-index: 2;
+}
+
+.eyebrow {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.eyebrow .n { color: var(--accent); margin-right: var(--s-2); }
+
+.section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--s-5);
+  padding: var(--s-8) 0 var(--s-6);
+  border-bottom: 1px solid var(--hairline);
+  margin-bottom: var(--s-7);
+  flex-wrap: wrap;
+}
+.section-head .title-group { display: flex; flex-direction: column; gap: var(--s-3); max-width: 780px; }
+.section-head h2 {
+  font-family: var(--font-display);
+  font-size: clamp(34px, 5vw, 52px);
+  font-weight: 700;
+  letter-spacing: -1.4px;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+.section-head h2 em { font-style: italic; color: var(--accent); font-weight: 600; letter-spacing: -1.2px; }
+.section-head .desc {
+  font-size: 14px;
+  color: var(--text-2);
+  max-width: 360px;
+  text-align: right;
+  line-height: 1.6;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   TOP BAR
+   ════════════════════════════════════════════════════════════════════ */
+.topbar {
+  position: sticky; top: 0;
+  z-index: 100;
+  background: rgba(5,5,6,0.72);
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  border-bottom: 1px solid var(--hairline);
+}
+.topbar .wrap {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-top: var(--s-3); padding-bottom: var(--s-3);
+}
+.brand-mark {
+  display: flex; align-items: center; gap: var(--s-3);
+}
+.brand-mark .logo {
+  width: 36px; height: 36px;
+  border-radius: var(--r-sm);
+  background: linear-gradient(135deg, #15151A, #050506);
+  border: 1px solid var(--hairline-2);
+  display: grid; place-items: center;
+  color: var(--accent);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+}
+.brand-mark .logo svg { width: 18px; height: 18px; }
+.brand-mark .wordmark {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  line-height: 1;
+}
+.brand-mark .wordmark em {
+  font-style: normal;
+  color: var(--accent);
+}
+.topbar .meta {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--text-3);
+  display: flex; align-items: center; gap: var(--s-3);
+}
+.topbar .meta .dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: var(--accent-glow);
+}
+@media (max-width: 600px) {
+  .topbar .meta .label-extra { display: none; }
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   HERO · SECTION 00
+   ════════════════════════════════════════════════════════════════════ */
+.hero {
+  padding: clamp(60px, 10vw, 120px) 0 var(--s-8);
+  position: relative;
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: var(--s-8);
+  align-items: center;
+}
+@media (max-width: 980px) {
+  .hero-grid { grid-template-columns: 1fr; gap: var(--s-7); }
+}
+.hero .kicker {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  padding: var(--s-2) var(--s-3);
+  background: var(--accent-soft);
+  border: 1px solid var(--hairline-accent);
+  border-radius: var(--r-full);
+  margin-bottom: var(--s-5);
+}
+.hero .kicker::before {
+  content: ""; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent); box-shadow: var(--accent-glow);
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(52px, 9vw, 108px);
+  font-weight: 700;
+  line-height: 0.92;
+  letter-spacing: -3px;
+  text-transform: uppercase;
+  margin-bottom: var(--s-5);
+}
+.hero h1 .line-2 {
+  display: block;
+  color: var(--text-2);
+}
+.hero h1 em {
+  font-style: italic;
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: -2.5px;
+}
+.hero .lede {
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--text-2);
+  max-width: 540px;
+  margin-bottom: var(--s-6);
+}
+.hero .lede b { color: var(--text); font-weight: 600; }
+.hero-chips {
+  display: flex; gap: var(--s-2); flex-wrap: wrap;
+}
+.chip {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  padding: var(--s-2) var(--s-4);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-full);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-2);
+  height: 32px;
+}
+.chip.lime {
+  background: var(--accent-soft);
+  border-color: var(--hairline-accent);
+  color: var(--accent);
+}
+.hero-phone {
+  justify-self: center;
+  position: relative;
+}
+.hero-phone::before {
+  content: "";
+  position: absolute;
+  inset: -40px;
+  background: radial-gradient(closest-side, rgba(198,255,60,0.25), transparent 70%);
+  filter: blur(30px);
+  z-index: -1;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   iPHONE FRAME (ported from mockup — identical spec)
+   ════════════════════════════════════════════════════════════════════ */
+.phone {
+  width: 340px;
+  height: 720px;
+  border-radius: 52px;
+  padding: 9px;
+  background: #000;
+  position: relative;
+  box-shadow:
+    0 50px 100px -20px rgba(0,0,0,0.9),
+    0 30px 60px -30px rgba(0,0,0,0.8),
+    0 0 0 2px #1A1A1F,
+    0 0 0 3px #2D2D33,
+    inset 0 0 0 1px rgba(255,255,255,0.04);
+  flex-shrink: 0;
+}
+.phone::before {
+  content: ""; position: absolute;
+  top: 20px; left: 50%;
+  transform: translateX(-50%);
+  width: 118px; height: 34px;
+  background: #000;
+  border-radius: 20px;
+  z-index: 20;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.phone::after {
+  content: ""; position: absolute;
+  bottom: 10px; left: 50%;
+  transform: translateX(-50%);
+  width: 128px; height: 4px;
+  background: rgba(255,255,255,0.35);
+  border-radius: 2px;
+  z-index: 20;
+}
+.vp {
+  width: 100%; height: 100%;
+  border-radius: 44px;
+  overflow: hidden;
+  background: var(--bg-2);
+  position: relative;
+  display: flex; flex-direction: column;
+}
+
+/* Phone internal components (copied from mockup) */
+.statusbar {
+  height: 54px;
+  display: flex; align-items: flex-end; justify-content: space-between;
+  padding: 0 var(--s-5) var(--s-2);
+  font-size: 14px; font-weight: 600;
+  color: var(--text);
+  flex-shrink: 0;
+}
+.statusbar .time { font-variant-numeric: tabular-nums; letter-spacing: -0.3px; }
+.statusbar .sys { display: flex; align-items: center; gap: var(--s-1); }
+.statusbar .sys svg { width: 16px; height: 16px; }
+
+.appbar {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--s-3);
+  padding: var(--s-3) var(--s-4) var(--s-4);
+  flex-shrink: 0;
+}
+.appbar .nav-btn {
+  width: 40px; height: 40px;
+  border-radius: var(--r-md);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  display: grid; place-items: center;
+  color: var(--text); flex-shrink: 0;
+}
+.appbar .nav-btn svg { width: 18px; height: 18px; stroke-width: 1.75; }
+.appbar .title-block { flex: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 2px; }
+.appbar .title-block.center { align-items: center; text-align: center; }
+.appbar .eyebrow-s {
+  font-family: var(--font-ui);
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--text-3);
+}
+.appbar .title {
+  font-family: var(--font-display);
+  font-size: 26px; font-weight: 700;
+  letter-spacing: -0.8px; text-transform: uppercase;
+  line-height: 1;
+}
+
+.content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: var(--s-1) var(--s-4) var(--s-4);
+  display: flex; flex-direction: column;
+  gap: var(--s-3);
+  scrollbar-width: none;
+}
+.content::-webkit-scrollbar { display: none; }
+.content > * { flex-shrink: 0; }
+
+.card {
+  background: var(--surface);
+  border-radius: var(--r-md);
+  padding: var(--s-4);
+  box-shadow: var(--shadow-1);
+  border: 1px solid var(--hairline);
+}
+.card-label {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: var(--s-3);
+}
+
+.tabbar {
+  position: absolute;
+  left: var(--s-3); right: var(--s-3); bottom: var(--s-3);
+  height: 72px;
+  border-radius: 28px;
+  background: rgba(16,16,20,0.82);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid var(--hairline-2);
+  display: flex; align-items: center; justify-content: space-around;
+  padding: 0 var(--s-3);
+  box-shadow: var(--shadow-3), inset 0 1px 0 rgba(255,255,255,0.08);
+  z-index: 10;
+}
+.tab {
+  flex: 1;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: var(--s-1);
+  height: 100%;
+  color: var(--text-3);
+}
+.tab svg { width: 22px; height: 22px; stroke-width: 1.75; }
+.tab .tab-label {
+  font-size: 9px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase;
+}
+.tab.active { color: var(--accent); }
+.content-below-tab { padding-bottom: 100px; }
+
+/* Phone screen 01 — Today */
+.hero-workout {
+  position: relative;
+  border-radius: var(--r-lg);
+  padding: var(--s-5);
+  background:
+    linear-gradient(135deg, rgba(198,255,60,0.12) 0%, rgba(198,255,60,0) 55%),
+    linear-gradient(180deg, #14141A, #0A0A0D);
+  border: 1px solid var(--hairline-accent);
+  box-shadow: var(--shadow-2);
+  overflow: hidden;
+}
+.hero-workout::before {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(500px 180px at 100% 0%, rgba(198,255,60,0.18), transparent 60%);
+  pointer-events: none;
+}
+.hero-workout .tag {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  padding: var(--s-1) var(--s-2);
+  background: var(--accent-soft);
+  border: 1px solid var(--hairline-accent);
+  border-radius: var(--r-xs);
+  font-size: 9px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--accent);
+  height: 22px; position: relative;
+}
+.hero-workout .tag .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); box-shadow: var(--accent-glow); }
+.hero-workout h3 {
+  font-family: var(--font-display);
+  font-size: 28px; font-weight: 700;
+  letter-spacing: -0.8px; line-height: 1.05;
+  text-transform: uppercase;
+  margin: var(--s-3) 0 var(--s-1);
+  position: relative;
+}
+.hero-workout .subtitle { font-size: 12px; color: var(--text-2); margin-bottom: var(--s-4); position: relative; }
+.meta-stats {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-3); margin-bottom: var(--s-4); position: relative;
+}
+.meta-stats .stat { text-align: center; }
+.meta-stats .stat .v {
+  font-family: var(--font-display);
+  font-size: 20px; font-weight: 700;
+  color: var(--text); letter-spacing: -0.4px; line-height: 1;
+}
+.meta-stats .stat .v small {
+  font-size: 10px; color: var(--text-3); font-weight: 500;
+  margin-left: 2px; font-family: var(--font-ui); letter-spacing: 0.5px;
+}
+.meta-stats .stat .l {
+  font-size: 9px; font-weight: 600;
+  letter-spacing: 1.2px; text-transform: uppercase;
+  color: var(--text-3); margin-top: var(--s-1);
+}
+
+.btn-primary-phone {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: var(--s-2); height: 48px; width: 100%;
+  padding: 0 var(--s-5);
+  border-radius: var(--r-md);
+  font-family: var(--font-display);
+  font-size: 15px; font-weight: 600;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  background: var(--accent); color: var(--accent-ink);
+  box-shadow: var(--shadow-accent), inset 0 1px 0 rgba(255,255,255,0.25);
+  position: relative;
+}
+.btn-primary-phone svg { width: 18px; height: 18px; }
+
+.nutrition-card { display: flex; flex-direction: column; align-items: center; gap: var(--s-4); }
+.rings-wrap {
+  position: relative; width: 180px; height: 180px; margin: 0 auto;
+}
+.rings-wrap svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.rings-center {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; pointer-events: none;
+}
+.rings-center .v {
+  font-family: var(--font-display);
+  font-size: 32px; font-weight: 700;
+  letter-spacing: -1px; line-height: 1; color: var(--text);
+}
+.rings-center .l {
+  font-size: 9px; font-weight: 600;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--text-3); margin-top: var(--s-1);
+}
+.macro-row {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-3); width: 100%;
+  padding-top: var(--s-3); border-top: 1px solid var(--hairline);
+}
+.macro-col { display: flex; flex-direction: column; align-items: center; gap: var(--s-1); text-align: center; }
+.macro-col .dot { width: 8px; height: 8px; border-radius: 50%; }
+.macro-col .nm {
+  font-size: 9px; font-weight: 600;
+  letter-spacing: 1.2px; text-transform: uppercase;
+  color: var(--text-3);
+}
+.macro-col .vl {
+  font-family: var(--font-display);
+  font-size: 15px; font-weight: 700;
+  color: var(--text); letter-spacing: -0.3px;
+}
+.macro-col .vl span { color: var(--text-3); font-weight: 500; font-size: 11px; }
+
+.streak {
+  display: flex; align-items: center; gap: var(--s-3);
+  padding: var(--s-3) var(--s-4);
+  background: linear-gradient(135deg, rgba(198,255,60,0.06), transparent);
+  border: 1px solid rgba(198,255,60,0.22);
+  border-radius: var(--r-md);
+}
+.streak-icon {
+  width: 40px; height: 40px;
+  border-radius: var(--r-sm);
+  background: rgba(198,255,60,0.10);
+  border: 1px solid rgba(198,255,60,0.28);
+  display: grid; place-items: center;
+  color: var(--accent); flex-shrink: 0;
+}
+.streak-icon svg { width: 20px; height: 20px; stroke-width: 1.75; }
+.streak-text { flex: 1; min-width: 0; }
+.streak-text .t {
+  font-family: var(--font-display);
+  font-size: 15px; font-weight: 600;
+  letter-spacing: -0.3px; text-transform: uppercase; line-height: 1.1;
+}
+.streak-text .s { font-size: 11px; color: var(--text-2); margin-top: 2px; }
+.streak-days {
+  font-family: var(--font-display);
+  font-size: 28px; font-weight: 700;
+  color: var(--accent); letter-spacing: -0.8px; line-height: 1;
+}
+
+/* Phone screen 02 — Active Workout */
+.workout-title-block { padding: 0 var(--s-1); }
+.workout-title-block .eyebrow-lime {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 1.8px; text-transform: uppercase;
+  color: var(--accent);
+  display: inline-block; margin-bottom: var(--s-2);
+}
+.workout-title-block h3 {
+  font-family: var(--font-display);
+  font-size: 28px; font-weight: 700;
+  letter-spacing: -0.8px; line-height: 1.02; text-transform: uppercase;
+}
+.workout-title-block .muscles {
+  font-size: 12px; color: var(--text-2); margin-top: var(--s-2);
+}
+.ex-media {
+  height: 132px; border-radius: var(--r-md);
+  background:
+    radial-gradient(circle at 50% 40%, rgba(198,255,60,0.10), transparent 65%),
+    linear-gradient(180deg, #18181E, #0C0C10);
+  border: 1px solid var(--hairline);
+  position: relative; overflow: hidden;
+  display: grid; place-items: center;
+}
+.ex-media .tag {
+  position: absolute; top: var(--s-3); left: var(--s-3);
+  padding: var(--s-1) var(--s-2); border-radius: var(--r-xs);
+  background: rgba(0,0,0,0.55); backdrop-filter: blur(10px);
+  border: 1px solid var(--hairline-2);
+  font-size: 9px; font-weight: 600;
+  letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-2);
+}
+.ex-media .play {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: rgba(255,255,255,0.08); backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.16);
+  display: grid; place-items: center; color: #fff;
+}
+.ex-media .play svg { width: 22px; height: 22px; margin-left: 3px; }
+
+.sets { display: flex; flex-direction: column; gap: var(--s-2); }
+.set-row {
+  display: grid;
+  grid-template-columns: 40px 1fr 1fr 28px;
+  align-items: center; gap: var(--s-3);
+  padding: var(--s-3) var(--s-4);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+  min-height: 52px;
+}
+.set-row .n {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 1.2px; text-transform: uppercase;
+  color: var(--text-3); text-align: center;
+}
+.set-row .v {
+  font-family: var(--font-display);
+  font-size: 17px; font-weight: 600;
+  color: var(--text); text-align: center; letter-spacing: -0.4px;
+}
+.set-row .v small {
+  display: block; font-size: 9px; font-weight: 500;
+  color: var(--text-3); font-family: var(--font-ui);
+  letter-spacing: 1px; text-transform: uppercase; margin-top: 2px;
+}
+.set-row .chk {
+  width: 28px; height: 28px;
+  border-radius: var(--r-sm);
+  background: var(--surface-3);
+  border: 1px solid var(--hairline-2);
+  display: grid; place-items: center;
+  justify-self: end;
+}
+.set-row.done { background: rgba(198,255,60,0.05); border-color: rgba(198,255,60,0.22); }
+.set-row.done .chk { background: var(--accent); border-color: var(--accent); }
+.set-row.done .chk svg { width: 14px; height: 14px; color: var(--accent-ink); stroke-width: 3.5; }
+.set-row.current {
+  background: rgba(198,255,60,0.08);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(198,255,60,0.10);
+}
+.set-row.current .v { color: var(--accent); }
+
+.rest-bar {
+  position: absolute;
+  left: var(--s-3); right: var(--s-3); bottom: var(--s-3);
+  height: 72px;
+  border-radius: 28px;
+  background: rgba(20,22,14,0.88);
+  backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid var(--hairline-accent);
+  display: flex; align-items: center;
+  padding: 0 var(--s-4);
+  box-shadow: var(--shadow-3), 0 0 40px -10px rgba(198,255,60,0.25);
+  z-index: 10;
+}
+.rest-left, .rest-right { flex: 1; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.rest-left .l, .rest-right .l {
+  font-size: 9px; font-weight: 700; letter-spacing: 1.3px;
+  text-transform: uppercase; color: var(--text-3);
+}
+.rest-left .v {
+  font-family: var(--font-display);
+  font-size: 24px; font-weight: 700;
+  color: var(--accent); letter-spacing: -0.6px; line-height: 1; margin-top: 4px;
+}
+.rest-sep { width: 1px; height: 36px; background: var(--hairline-2); }
+.rest-right .v { font-family: var(--font-ui); font-size: 12px; font-weight: 600; color: var(--text); line-height: 1; margin-top: 6px; }
+
+/* Phone screen 03 — Fuel */
+.macro-bars { display: flex; flex-direction: column; gap: var(--s-3); }
+.macro-bar { display: flex; flex-direction: column; gap: var(--s-1); }
+.macro-bar .top { display: flex; align-items: baseline; justify-content: space-between; }
+.macro-bar .n {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-2);
+}
+.macro-bar .v {
+  font-family: var(--font-display);
+  font-size: 15px; font-weight: 700;
+  color: var(--text); letter-spacing: -0.3px;
+}
+.macro-bar .v span { color: var(--text-3); font-weight: 500; font-size: 11px; }
+.bar-track { height: 6px; background: rgba(255,255,255,0.06); border-radius: var(--r-full); overflow: hidden; }
+.bar-fill { height: 100%; border-radius: var(--r-full); }
+.bar-fill.p { background: var(--data-1); width: 72%; box-shadow: 0 0 12px rgba(198,255,60,0.4); }
+.bar-fill.c { background: var(--data-2); width: 54%; }
+.bar-fill.f { background: var(--data-3); width: 80%; }
+
+.scan-cta {
+  display: flex; align-items: center; gap: var(--s-3);
+  padding: var(--s-3) var(--s-4);
+  min-height: 64px;
+  background: linear-gradient(180deg, #17171B, #0E0E12);
+  border: 1px solid var(--hairline-2);
+  border-radius: var(--r-md);
+  position: relative; overflow: hidden;
+}
+.scan-cta::before {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(280px 80px at 0% 50%, rgba(198,255,60,0.10), transparent 65%);
+}
+.scan-icon {
+  width: 44px; height: 44px;
+  border-radius: var(--r-sm);
+  background: rgba(198,255,60,0.10);
+  border: 1px solid rgba(198,255,60,0.28);
+  display: grid; place-items: center;
+  color: var(--accent); flex-shrink: 0; position: relative;
+}
+.scan-icon svg { width: 20px; height: 20px; stroke-width: 1.75; }
+.scan-text { flex: 1; position: relative; }
+.scan-text .t {
+  font-family: var(--font-display);
+  font-size: 14px; font-weight: 600;
+  letter-spacing: -0.3px; text-transform: uppercase; line-height: 1.1;
+}
+.scan-text .s { font-size: 11px; color: var(--text-2); margin-top: 2px; }
+.scan-chev { color: var(--text-3); position: relative; flex-shrink: 0; }
+.scan-chev svg { width: 18px; height: 18px; }
+
+.meal-list { display: flex; flex-direction: column; gap: var(--s-2); }
+.meal {
+  display: grid; grid-template-columns: 40px 1fr auto;
+  align-items: center; gap: var(--s-3);
+  padding: var(--s-3);
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+  min-height: 56px;
+}
+.meal-ico {
+  width: 40px; height: 40px;
+  border-radius: var(--r-sm);
+  background: linear-gradient(135deg, #1E1E24, #0C0C10);
+  border: 1px solid var(--hairline-2);
+  display: grid; place-items: center; color: var(--text-2);
+}
+.meal-ico svg { width: 18px; height: 18px; stroke-width: 1.75; }
+.meal-info { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.meal-info .n {
+  font-size: 13px; font-weight: 600;
+  letter-spacing: -0.2px; color: var(--text);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.meal-info .s {
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.8px; text-transform: uppercase; color: var(--text-3);
+}
+.meal-kcal { text-align: right; font-family: var(--font-display); }
+.meal-kcal .k {
+  font-size: 16px; font-weight: 700;
+  color: var(--text); letter-spacing: -0.4px; line-height: 1;
+}
+.meal-kcal .u {
+  font-size: 9px; font-weight: 500;
+  color: var(--text-3); letter-spacing: 1.2px;
+  text-transform: uppercase; font-family: var(--font-ui);
+  margin-top: 3px; display: block;
+}
+
+/* Phone screen 04 — Onboarding */
+.onb-progress { display: flex; gap: var(--s-1); padding: 0 var(--s-1); margin-bottom: var(--s-4); }
+.onb-progress span { flex: 1; height: 3px; border-radius: var(--r-full); background: rgba(255,255,255,0.08); }
+.onb-progress span.done { background: var(--accent); box-shadow: 0 0 8px rgba(198,255,60,0.5); }
+
+.onb-title { padding: 0 var(--s-1); }
+.onb-title .step {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-3);
+}
+.onb-title h3 {
+  font-family: var(--font-display);
+  font-size: 32px; font-weight: 700;
+  letter-spacing: -1px; line-height: 1; text-transform: uppercase;
+  margin-top: var(--s-2);
+}
+.onb-title p { font-size: 13px; color: var(--text-2); margin-top: var(--s-3); line-height: 1.5; }
+.onb-title b { color: var(--accent); font-weight: 600; }
+
+.tracks-phone { display: flex; flex-direction: column; gap: var(--s-2); margin-top: var(--s-3); }
+.track-row {
+  display: grid; grid-template-columns: 42px 1fr auto;
+  align-items: center; gap: var(--s-3);
+  padding: var(--s-3);
+  min-height: 62px;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+}
+.track-row.selected {
+  background: linear-gradient(135deg, rgba(198,255,60,0.10), rgba(198,255,60,0.01));
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(198,255,60,0.10);
+}
+.track-ico {
+  width: 42px; height: 42px;
+  border-radius: var(--r-sm);
+  background: linear-gradient(135deg, #1F1F26, #0C0C10);
+  border: 1px solid var(--hairline-2);
+  display: grid; place-items: center; color: var(--text-2);
+}
+.track-ico svg { width: 20px; height: 20px; stroke-width: 1.75; }
+.track-row.selected .track-ico {
+  background: linear-gradient(135deg, rgba(198,255,60,0.22), rgba(198,255,60,0.03));
+  border-color: var(--hairline-accent);
+  color: var(--accent);
+}
+.track-info { min-width: 0; }
+.track-info .n {
+  font-family: var(--font-display);
+  font-size: 15px; font-weight: 600;
+  letter-spacing: -0.3px; text-transform: uppercase;
+  color: var(--text); line-height: 1.1;
+}
+.track-info .s {
+  font-size: 10px; letter-spacing: 0.6px;
+  color: var(--text-3); margin-top: 3px;
+}
+.track-pill {
+  font-size: 8px; font-weight: 700;
+  letter-spacing: 1.2px; text-transform: uppercase;
+  padding: var(--s-1) var(--s-2);
+  border-radius: var(--r-xs);
+  background: var(--accent);
+  color: var(--accent-ink);
+  height: 20px;
+  display: flex; align-items: center; flex-shrink: 0;
+}
+.onb-cta-wrap {
+  position: absolute;
+  left: var(--s-3); right: var(--s-3); bottom: var(--s-3);
+  padding: var(--s-3);
+  background: rgba(10,10,12,0.88);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--hairline-2);
+  border-radius: 28px;
+  z-index: 10;
+}
+
+/* Phone screen 05 — Coach */
+.coach-appbar {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--s-3);
+  padding: var(--s-3) var(--s-4) var(--s-4);
+}
+.coach-profile { display: flex; align-items: center; gap: var(--s-3); }
+.coach-avatar {
+  width: 44px; height: 44px;
+  border-radius: var(--r-md);
+  background: linear-gradient(135deg, var(--accent), var(--accent-dim));
+  color: var(--accent-ink);
+  font-family: var(--font-display);
+  font-size: 18px; font-weight: 700;
+  display: grid; place-items: center;
+  box-shadow: var(--shadow-accent), inset 0 1px 0 rgba(255,255,255,0.3);
+}
+.coach-info .n {
+  font-family: var(--font-display);
+  font-size: 17px; font-weight: 600;
+  letter-spacing: -0.4px; text-transform: uppercase; line-height: 1;
+}
+.coach-info .s {
+  font-size: 10px; font-weight: 600;
+  color: var(--accent); margin-top: 4px;
+  display: flex; align-items: center; gap: var(--s-1);
+  letter-spacing: 0.8px; text-transform: uppercase;
+}
+.coach-info .s::before {
+  content: ""; width: 6px; height: 6px;
+  border-radius: 50%; background: var(--accent);
+  box-shadow: var(--accent-glow);
+}
+.context-chip {
+  align-self: flex-start;
+  font-size: 9px; font-weight: 700;
+  letter-spacing: 1.3px; text-transform: uppercase;
+  color: var(--text-3);
+  padding: var(--s-1) var(--s-3);
+  border-radius: var(--r-xs);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  display: inline-flex; align-items: center;
+  gap: var(--s-2); height: 22px;
+}
+.context-chip::before {
+  content: ""; width: 5px; height: 5px;
+  border-radius: 50%; background: var(--accent);
+}
+.msgs {
+  display: flex; flex-direction: column;
+  gap: var(--s-2); flex: 1; overflow: hidden;
+}
+.msg {
+  max-width: 82%;
+  padding: var(--s-3) var(--s-4);
+  border-radius: var(--r-lg);
+  font-size: 13px; line-height: 1.5; letter-spacing: -0.1px;
+}
+.msg.bot {
+  align-self: flex-start;
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+  color: var(--text);
+  border-bottom-left-radius: var(--s-2);
+}
+.msg.bot b { color: var(--accent); font-weight: 600; }
+.msg.you {
+  align-self: flex-end;
+  background: var(--accent); color: var(--accent-ink);
+  font-weight: 500;
+  border-bottom-right-radius: var(--s-2);
+  box-shadow: var(--shadow-accent);
+}
+.composer {
+  margin-top: auto;
+  display: flex; align-items: center; gap: var(--s-2);
+  padding: var(--s-2) var(--s-2) var(--s-2) var(--s-4);
+  background: var(--surface-2);
+  border: 1px solid var(--hairline-2);
+  border-radius: var(--r-full);
+  min-height: 52px;
+}
+.composer input {
+  flex: 1; background: transparent; border: 0; outline: 0;
+  color: var(--text); font-family: var(--font-ui); font-size: 13px;
+}
+.composer input::placeholder { color: var(--text-3); }
+.composer .send {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: var(--accent); color: var(--accent-ink);
+  display: grid; place-items: center;
+  border: 0; flex-shrink: 0;
+}
+.composer .send svg { width: 16px; height: 16px; stroke-width: 2; }
+
+/* Phone screen 06 — Progress */
+.week-strip {
+  display: grid; grid-template-columns: repeat(7, 1fr);
+  gap: var(--s-1); padding: 0 var(--s-1);
+}
+.day {
+  aspect-ratio: 0.85;
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: var(--s-1); position: relative;
+}
+.day .d {
+  font-size: 9px; font-weight: 700;
+  letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-3);
+}
+.day .val {
+  font-family: var(--font-display);
+  font-size: 14px; font-weight: 700;
+  color: var(--text); letter-spacing: -0.3px;
+}
+.day.done { background: rgba(198,255,60,0.06); border-color: rgba(198,255,60,0.22); }
+.day.done .val { color: var(--accent); }
+.day.today {
+  background: linear-gradient(180deg, rgba(198,255,60,0.18), rgba(198,255,60,0.02));
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(198,255,60,0.10);
+}
+.day.today .val { color: var(--accent); }
+.day.rest .val { color: var(--text-3); font-size: 9px; letter-spacing: 0.5px; }
+
+.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-2); }
+.stat-card {
+  padding: var(--s-4);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+  display: flex; flex-direction: column; gap: var(--s-2);
+  min-height: 96px;
+}
+.stat-card.accent {
+  background: linear-gradient(135deg, rgba(198,255,60,0.10), rgba(198,255,60,0.01));
+  border-color: var(--hairline-accent);
+}
+.stat-card .l {
+  font-size: 9px; font-weight: 700;
+  letter-spacing: 1.3px; text-transform: uppercase; color: var(--text-3);
+}
+.stat-card .v {
+  font-family: var(--font-display);
+  font-size: 26px; font-weight: 700;
+  color: var(--text); letter-spacing: -0.7px; line-height: 1;
+}
+.stat-card.accent .v { color: var(--accent); }
+.stat-card .v small {
+  font-size: 12px; color: var(--text-3);
+  font-weight: 500; letter-spacing: 0; margin-left: 2px;
+}
+.stat-card .trend {
+  font-size: 10px; color: var(--accent);
+  display: flex; align-items: center; gap: var(--s-1); font-weight: 500;
+}
+.stat-card .trend svg { width: 12px; height: 12px; stroke-width: 2; }
+.report-btn {
+  display: grid; grid-template-columns: 40px 1fr 18px;
+  align-items: center; gap: var(--s-3);
+  padding: var(--s-3) var(--s-4);
+  background: var(--surface);
+  border: 1px solid var(--hairline-2);
+  border-radius: var(--r-md);
+  min-height: 60px;
+}
+.report-btn .rb-ico {
+  width: 40px; height: 40px;
+  border-radius: var(--r-sm);
+  background: rgba(198,255,60,0.10);
+  border: 1px solid rgba(198,255,60,0.28);
+  color: var(--accent);
+  display: grid; place-items: center;
+}
+.report-btn .rb-ico svg { width: 18px; height: 18px; stroke-width: 1.75; }
+.report-btn .rb-txt { display: flex; flex-direction: column; gap: 2px; }
+.report-btn .rb-txt .n {
+  font-family: var(--font-display);
+  font-size: 14px; font-weight: 600;
+  letter-spacing: -0.3px; text-transform: uppercase; line-height: 1;
+}
+.report-btn .rb-txt .s { font-size: 11px; color: var(--text-3); }
+.report-btn svg { color: var(--text-3); }
+
+/* ════════════════════════════════════════════════════════════════════
+   PERSONA CARDS · SECTION 01
+   ════════════════════════════════════════════════════════════════════ */
+.lede-statement {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3vw, 38px);
+  font-weight: 600;
+  letter-spacing: -0.8px;
+  line-height: 1.15;
+  text-transform: uppercase;
+  max-width: 900px;
+  margin-bottom: var(--s-7);
+}
+.lede-statement em { font-style: italic; color: var(--accent); font-weight: 500; }
+
+.persona-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-4);
+}
+@media (max-width: 820px) { .persona-grid { grid-template-columns: 1fr; } }
+
+.persona {
+  padding: var(--s-6);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+  position: relative;
+  overflow: hidden;
+  min-height: 280px;
+  display: flex; flex-direction: column;
+  justify-content: space-between;
+  gap: var(--s-5);
+  transition: transform 0.3s var(--ease-std), border-color 0.3s var(--ease-std);
+}
+.persona:hover {
+  transform: translateY(-2px);
+  border-color: var(--hairline-accent);
+}
+.persona::before {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(400px 200px at 100% 0%, rgba(198,255,60,0.06), transparent 60%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-std);
+}
+.persona:hover::before { opacity: 1; }
+
+.persona .num {
+  font-family: var(--font-display);
+  font-size: 13px; font-weight: 500;
+  color: var(--text-3);
+  letter-spacing: 2.5px;
+  position: relative;
+  z-index: 1;
+}
+.persona .headline {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.8px;
+  line-height: 1.05;
+  text-transform: uppercase;
+  position: relative;
+  z-index: 1;
+}
+.persona .detail {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-2);
+  position: relative;
+  z-index: 1;
+}
+.persona .tags {
+  display: flex; gap: var(--s-2); flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+.persona .tags span {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--text-3);
+  padding: var(--s-1) var(--s-3);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-full);
+}
+
+.persona-close {
+  margin-top: var(--s-7);
+  padding: var(--s-5) 0;
+  border-top: 1px solid var(--hairline);
+  display: flex; justify-content: space-between; align-items: center;
+  gap: var(--s-4); flex-wrap: wrap;
+}
+.persona-close .big {
+  font-family: var(--font-display);
+  font-size: 20px; font-weight: 600;
+  letter-spacing: -0.4px; text-transform: uppercase;
+}
+.persona-close .small { font-size: 12px; color: var(--text-3); letter-spacing: 1px; text-transform: uppercase; }
+
+/* ════════════════════════════════════════════════════════════════════
+   SESSION BLUEPRINTS · SECTION 02
+   ════════════════════════════════════════════════════════════════════ */
+.tracks-stack {
+  display: flex; flex-direction: column;
+  gap: var(--s-4);
+}
+.track-card {
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+  padding: var(--s-6);
+  transition: border-color 0.3s var(--ease-std);
+}
+.track-card:hover { border-color: var(--hairline-accent); }
+
+.track-head {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: var(--s-5);
+  align-items: center;
+  margin-bottom: var(--s-5);
+  padding-bottom: var(--s-5);
+  border-bottom: 1px solid var(--hairline);
+}
+@media (max-width: 720px) {
+  .track-head {
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+  }
+  .track-head .id { grid-row: 1 / 3; }
+  .track-head .for-line { grid-column: 2 / 3; }
+}
+.track-head .id {
+  width: 56px; height: 56px;
+  border-radius: var(--r-md);
+  background: linear-gradient(135deg, #1F1F26, #0C0C10);
+  border: 1px solid var(--hairline-2);
+  display: grid; place-items: center;
+  color: var(--accent);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+}
+.track-head .id svg { width: 26px; height: 26px; stroke-width: 1.75; }
+.track-head .name-block { display: flex; flex-direction: column; gap: var(--s-1); }
+.track-head .name-block .num-in {
+  font-family: var(--font-display);
+  font-size: 11px; font-weight: 500;
+  color: var(--text-3); letter-spacing: 2.5px;
+}
+.track-head .name-block h3 {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.5vw, 40px);
+  font-weight: 700; letter-spacing: -1.2px;
+  line-height: 1; text-transform: uppercase;
+}
+.track-head .name-block .positioning {
+  font-size: 13px; color: var(--text-2); margin-top: var(--s-2);
+  max-width: 520px; line-height: 1.5;
+}
+.track-head .for-line {
+  text-align: right;
+  font-size: 11px; color: var(--text-3);
+  letter-spacing: 1.5px; text-transform: uppercase;
+  max-width: 240px;
+  line-height: 1.7;
+  font-weight: 600;
+}
+@media (max-width: 720px) { .track-head .for-line { text-align: left; margin-top: var(--s-3); } }
+.track-head .for-line strong { color: var(--text); font-weight: 700; }
+
+.blueprint-block {
+  margin-bottom: var(--s-5);
+}
+.blueprint-title {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: var(--s-3);
+}
+
+.blueprint {
+  display: flex;
+  gap: var(--s-2);
+  overflow-x: auto;
+  padding-bottom: var(--s-3);
+  scrollbar-width: thin;
+  scrollbar-color: var(--surface-3) transparent;
+}
+.blueprint::-webkit-scrollbar { height: 6px; }
+.blueprint::-webkit-scrollbar-track { background: transparent; }
+.blueprint::-webkit-scrollbar-thumb { background: var(--surface-3); border-radius: 3px; }
+
+.slot {
+  flex: 1;
+  min-width: 110px;
+  padding: var(--s-3) var(--s-3);
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-sm);
+  display: flex; flex-direction: column;
+  gap: var(--s-2);
+  position: relative;
+}
+.slot .slot-num {
+  font-family: var(--font-display);
+  font-size: 10px; font-weight: 500;
+  color: var(--text-3); letter-spacing: 1.8px;
+}
+.slot .slot-name {
+  font-family: var(--font-display);
+  font-size: 13px; font-weight: 600;
+  color: var(--text); letter-spacing: 0.3px;
+  text-transform: uppercase; line-height: 1.15;
+}
+.slot .slot-note {
+  font-size: 10px;
+  color: var(--text-3);
+  letter-spacing: 0.3px;
+  line-height: 1.3;
+  margin-top: auto;
+}
+.slot.signature {
+  background: linear-gradient(135deg, rgba(198,255,60,0.10), rgba(198,255,60,0.01));
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(198,255,60,0.08);
+}
+.slot.signature .slot-num { color: var(--accent); font-weight: 700; }
+.slot.signature .slot-name { color: var(--accent); }
+.slot.signature .slot-note { color: rgba(198,255,60,0.7); }
+.slot.ghost {
+  opacity: 0.4;
+  border-style: dashed;
+}
+
+.track-tags {
+  display: flex; gap: var(--s-2); flex-wrap: wrap;
+}
+.track-tags span {
+  display: inline-flex; align-items: center;
+  padding: var(--s-2) var(--s-3);
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-full);
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 1.3px; text-transform: uppercase;
+  color: var(--text-2);
+}
+.track-tags span.lime {
+  background: var(--accent-soft);
+  border-color: var(--hairline-accent);
+  color: var(--accent);
+}
+
+.track-smart-rec {
+  margin-top: var(--s-6);
+  padding: var(--s-5) var(--s-6);
+  background: linear-gradient(135deg, rgba(198,255,60,0.08), rgba(198,255,60,0.01));
+  border: 1px solid var(--hairline-accent);
+  border-radius: var(--r-md);
+  display: flex; align-items: center; gap: var(--s-5);
+  flex-wrap: wrap;
+}
+.track-smart-rec .icon {
+  width: 48px; height: 48px;
+  border-radius: var(--r-md);
+  background: rgba(198,255,60,0.15);
+  border: 1px solid var(--hairline-accent);
+  display: grid; place-items: center;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.track-smart-rec .icon svg { width: 22px; height: 22px; stroke-width: 1.75; }
+.track-smart-rec .body { flex: 1; min-width: 240px; }
+.track-smart-rec .body .t {
+  font-family: var(--font-display);
+  font-size: 17px; font-weight: 600;
+  letter-spacing: -0.3px; text-transform: uppercase;
+}
+.track-smart-rec .body .s {
+  font-size: 13px; color: var(--text-2);
+  margin-top: var(--s-1); line-height: 1.5;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   PHONE SCREENS GRID · SECTION 03
+   ════════════════════════════════════════════════════════════════════ */
+.screens-wall {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: var(--s-8) var(--s-5);
+  justify-items: center;
+}
+.screen-unit { display: flex; flex-direction: column; align-items: center; gap: var(--s-4); max-width: 360px; }
+.screen-caption {
+  text-align: center;
+  display: flex; flex-direction: column; gap: var(--s-1);
+  align-items: center;
+}
+.screen-caption .screen-label {
+  display: flex; align-items: center; gap: var(--s-2);
+  font-family: var(--font-display);
+  font-size: 13px; font-weight: 500;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--text-3);
+}
+.screen-caption .screen-label .n { color: var(--accent); font-weight: 700; }
+.screen-caption .screen-label .bullet { width: 4px; height: 4px; border-radius: 50%; background: var(--text-3); }
+.screen-caption .screen-desc {
+  font-size: 12px;
+  color: var(--text-2);
+  max-width: 260px;
+  line-height: 1.5;
+  margin-top: var(--s-1);
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   NUTRITION SECTION · 04 — PHASES, SCENARIOS, STYLES
+   ════════════════════════════════════════════════════════════════════ */
+.nut-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-7);
+  align-items: center;
+  margin-bottom: var(--s-8);
+}
+@media (max-width: 820px) { .nut-hero { grid-template-columns: 1fr; } }
+
+.nut-hero .claim {
+  font-family: var(--font-display);
+  font-size: clamp(38px, 5vw, 62px);
+  font-weight: 700;
+  letter-spacing: -1.6px;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+.nut-hero .claim em { font-style: italic; color: var(--accent); font-weight: 600; }
+.nut-hero .sub {
+  font-size: 15px; color: var(--text-2);
+  margin-top: var(--s-4); line-height: 1.6;
+  max-width: 420px;
+}
+
+/* Phase timeline */
+.phase-timeline {
+  position: relative;
+  padding: var(--s-5);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+}
+.phase-axis {
+  position: relative;
+  height: 4px;
+  background: var(--surface-3);
+  border-radius: 2px;
+  margin: var(--s-6) var(--s-4) var(--s-4);
+}
+.phase-axis::before {
+  content: "";
+  position: absolute; left: 0;
+  top: 0; height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, var(--accent) 0%, var(--accent) 35%, var(--data-2) 35%, var(--data-2) 70%, var(--data-3) 70%, var(--data-3) 100%);
+  border-radius: 2px;
+  opacity: 0.7;
+}
+.phase-axis .tick {
+  position: absolute;
+  top: -6px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--accent);
+  box-shadow: var(--accent-glow);
+}
+.phase-axis .tick.t1 { left: 0; }
+.phase-axis .tick.t2 { left: 35%; }
+.phase-axis .tick.t3 { left: 70%; }
+.phase-axis .tick.t4 { left: calc(100% - 14px); background: var(--accent); }
+
+.phase-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-4);
+  margin-top: var(--s-6);
+}
+@media (max-width: 700px) { .phase-row { grid-template-columns: 1fr; } }
+.phase {
+  padding: var(--s-4);
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-sm);
+  display: flex; flex-direction: column; gap: var(--s-2);
+}
+.phase .phase-tag {
+  font-size: 9px; font-weight: 700;
+  letter-spacing: 1.8px; text-transform: uppercase;
+  color: var(--accent);
+}
+.phase .phase-name {
+  font-family: var(--font-display);
+  font-size: 18px; font-weight: 700;
+  letter-spacing: -0.4px; text-transform: uppercase;
+}
+.phase .phase-days {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 1.3px; text-transform: uppercase;
+  color: var(--text-3);
+}
+.phase .phase-desc {
+  font-size: 12px; color: var(--text-2);
+  line-height: 1.55; margin-top: var(--s-2);
+}
+
+/* Nutrition scenarios */
+.scenarios-head {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2.5vw, 28px);
+  font-weight: 600;
+  letter-spacing: -0.6px;
+  text-transform: uppercase;
+  margin-bottom: var(--s-5);
+}
+.scenario-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-5);
+  margin-bottom: var(--s-7);
+}
+@media (max-width: 820px) { .scenario-grid { grid-template-columns: 1fr; } }
+.scenario {
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+  padding: var(--s-6);
+  display: flex; flex-direction: column;
+  gap: var(--s-4);
+}
+.scenario .scen-num {
+  font-family: var(--font-display);
+  font-size: 11px; font-weight: 500;
+  color: var(--text-3); letter-spacing: 2.5px;
+}
+.scenario .scen-title {
+  font-family: var(--font-display);
+  font-size: 22px; font-weight: 700;
+  letter-spacing: -0.6px; text-transform: uppercase;
+  line-height: 1.1;
+}
+.scen-flow {
+  display: flex; flex-direction: column; gap: var(--s-2);
+  margin-top: var(--s-2);
+}
+.scen-step {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: var(--s-3);
+  align-items: flex-start;
+  padding: var(--s-3);
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-sm);
+  position: relative;
+}
+.scen-step.highlight {
+  background: linear-gradient(135deg, rgba(198,255,60,0.08), rgba(198,255,60,0.01));
+  border-color: var(--hairline-accent);
+}
+.scen-step .step-num {
+  width: 24px; height: 24px;
+  border-radius: var(--r-xs);
+  background: var(--surface-3);
+  border: 1px solid var(--hairline-2);
+  display: grid; place-items: center;
+  font-family: var(--font-display);
+  font-size: 11px; font-weight: 700;
+  color: var(--text-2);
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+}
+.scen-step.highlight .step-num {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+.scen-step .step-body { min-width: 0; }
+.scen-step .step-action {
+  font-family: var(--font-display);
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--text-3);
+  line-height: 1;
+}
+.scen-step.highlight .step-action { color: var(--accent); }
+.scen-step .step-detail {
+  font-size: 13px; color: var(--text); margin-top: 4px;
+  line-height: 1.4;
+}
+.scen-step .step-detail b { color: var(--accent); font-weight: 600; }
+
+/* Smart features inline strip */
+.features-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--s-3);
+  padding: var(--s-6);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+  margin-bottom: var(--s-7);
+}
+.feature-tile {
+  display: flex; flex-direction: column; gap: var(--s-2);
+  padding: var(--s-4);
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-sm);
+}
+.feature-tile .icon {
+  width: 36px; height: 36px;
+  border-radius: var(--r-sm);
+  background: var(--accent-soft);
+  border: 1px solid var(--hairline-accent);
+  color: var(--accent);
+  display: grid; place-items: center;
+}
+.feature-tile .icon svg { width: 18px; height: 18px; stroke-width: 1.75; }
+.feature-tile .ft-name {
+  font-family: var(--font-display);
+  font-size: 13px; font-weight: 600;
+  letter-spacing: -0.2px; text-transform: uppercase; line-height: 1.1;
+}
+.feature-tile .ft-desc {
+  font-size: 11px; color: var(--text-2);
+  line-height: 1.45;
+}
+
+/* Nutrition styles */
+.nut-styles {
+  padding: var(--s-6);
+  background: linear-gradient(135deg, rgba(198,255,60,0.06), transparent);
+  border: 1px solid var(--hairline-accent);
+  border-radius: var(--r-md);
+}
+.nut-styles .head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: var(--s-4); flex-wrap: wrap; margin-bottom: var(--s-5);
+}
+.nut-styles .head .t {
+  font-family: var(--font-display);
+  font-size: 22px; font-weight: 700;
+  letter-spacing: -0.6px; text-transform: uppercase;
+}
+.nut-styles .head .s { font-size: 12px; color: var(--text-2); max-width: 400px; }
+.style-row {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-3);
+}
+@media (max-width: 700px) { .style-row { grid-template-columns: 1fr; } }
+.style-tile {
+  padding: var(--s-4);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-sm);
+  display: flex; flex-direction: column; gap: var(--s-2);
+}
+.style-tile .n {
+  font-family: var(--font-display);
+  font-size: 15px; font-weight: 700;
+  letter-spacing: -0.3px; text-transform: uppercase;
+}
+.style-tile .for {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 1.3px; text-transform: uppercase;
+  color: var(--accent);
+}
+.style-tile .d {
+  font-size: 12px; color: var(--text-2);
+  line-height: 1.5; margin-top: var(--s-1);
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   TRAINING ENGINE · SECTION 05
+   ════════════════════════════════════════════════════════════════════ */
+.engine-head {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4.5vw, 56px);
+  font-weight: 700;
+  letter-spacing: -1.4px;
+  line-height: 1;
+  text-transform: uppercase;
+  margin-bottom: var(--s-3);
+}
+.engine-sub {
+  font-size: 15px; color: var(--text-2);
+  max-width: 600px; line-height: 1.6;
+  margin-bottom: var(--s-7);
+}
+
+/* Rotation matrix */
+.rotation-card {
+  padding: var(--s-7);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+  margin-bottom: var(--s-5);
+}
+.rotation-equation {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2.5vw, 30px);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  display: flex; align-items: center;
+  gap: var(--s-3); flex-wrap: wrap;
+  margin-bottom: var(--s-2);
+}
+.rotation-equation .op { color: var(--text-3); font-weight: 400; }
+.rotation-equation .num-pill {
+  padding: var(--s-2) var(--s-3);
+  background: var(--surface-3);
+  border-radius: var(--r-xs);
+  letter-spacing: 0.2px;
+}
+.rotation-result {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4.5vw, 56px);
+  font-weight: 700; letter-spacing: -1.2px;
+  line-height: 0.95; text-transform: uppercase;
+  margin: var(--s-5) 0 var(--s-6);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--hairline);
+}
+.rotation-result em { color: var(--accent); font-style: italic; font-weight: 600; }
+
+.rotation-matrix {
+  display: grid;
+  grid-template-columns: 140px repeat(4, 1fr);
+  gap: 2px;
+  background: var(--hairline);
+  border: 1px solid var(--hairline-2);
+  border-radius: var(--r-sm);
+  overflow: hidden;
+}
+.rm-head, .rm-cell, .rm-row-label {
+  padding: var(--s-3);
+  background: var(--surface);
+  font-size: 11px;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.rm-head {
+  color: var(--text-3);
+  font-size: 10px;
+  letter-spacing: 1.8px;
+  background: var(--surface-2);
+  text-align: center;
+}
+.rm-row-label {
+  color: var(--text);
+  background: var(--surface-2);
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.5px;
+}
+.rm-cell {
+  color: var(--text-2);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: none;
+  font-family: var(--font-ui);
+  text-align: center;
+  line-height: 1.3;
+}
+.rm-cell.empty { color: var(--text-3); font-style: italic; opacity: 0.55; }
+
+/* Recovery Engine decision tree */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-5);
+  margin-bottom: var(--s-5);
+}
+@media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
+
+.engine-sub-card {
+  padding: var(--s-6);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+  display: flex; flex-direction: column;
+  gap: var(--s-4);
+}
+.engine-sub-card .tag {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--accent);
+}
+.engine-sub-card .t {
+  font-family: var(--font-display);
+  font-size: 26px; font-weight: 700;
+  letter-spacing: -0.7px;
+  line-height: 1.05; text-transform: uppercase;
+}
+.engine-sub-card .t em { font-style: italic; color: var(--accent); font-weight: 600; }
+.engine-sub-card .desc { font-size: 13px; color: var(--text-2); line-height: 1.5; }
+
+/* Decision tree flow */
+.tree {
+  display: flex; flex-direction: column; gap: var(--s-3);
+  margin-top: var(--s-2);
+}
+.tree-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-2);
+}
+.tree-row .tree-node {
+  padding: var(--s-3) var(--s-4);
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-sm);
+  font-size: 12px;
+  letter-spacing: 0.3px;
+  line-height: 1.4;
+}
+.tree-row .tree-node .role {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 9px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 4px;
+}
+.tree-row .tree-node.trigger {
+  background: linear-gradient(135deg, rgba(255,82,71,0.08), transparent);
+  border-color: rgba(255,82,71,0.3);
+}
+.tree-row .tree-node.trigger .role { color: #FF9088; }
+.tree-row .tree-node.fire {
+  background: linear-gradient(135deg, rgba(198,255,60,0.08), transparent);
+  border-color: var(--hairline-accent);
+}
+.tree-row .tree-node.fire .role { color: var(--accent); }
+.tree-arrow {
+  display: flex; justify-content: center;
+  color: var(--text-3);
+}
+.tree-arrow svg { width: 16px; height: 16px; }
+.tree-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-2);
+}
+@media (max-width: 560px) { .tree-options { grid-template-columns: 1fr; } }
+.tree-opt {
+  padding: var(--s-3);
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-sm);
+  text-align: center;
+}
+.tree-opt .on {
+  font-family: var(--font-display);
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.8px; text-transform: uppercase; color: var(--text);
+  display: block;
+}
+.tree-opt .os {
+  font-size: 10px; color: var(--text-3);
+  letter-spacing: 0.3px; margin-top: 3px;
+  line-height: 1.3;
+}
+
+/* Session scaling */
+.scaling-grid {
+  display: flex; flex-direction: column; gap: var(--s-2);
+  margin-top: var(--s-2);
+}
+.scale-row {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: var(--s-3);
+  align-items: stretch;
+}
+.scale-label {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: var(--s-2);
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-sm);
+}
+.scale-label .v {
+  font-family: var(--font-display);
+  font-size: 20px; font-weight: 700;
+  color: var(--text); letter-spacing: -0.4px; line-height: 1;
+}
+.scale-label .u {
+  font-size: 9px; font-weight: 600;
+  letter-spacing: 1.3px; text-transform: uppercase;
+  color: var(--text-3); margin-top: 3px;
+}
+.scale-slots {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  padding: var(--s-2);
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-sm);
+  align-items: stretch;
+}
+.scale-slot {
+  flex: 1;
+  min-width: 58px;
+  padding: var(--s-2) var(--s-1);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-xs);
+  font-size: 9px;
+  text-align: center;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--text-2);
+  display: flex; align-items: center; justify-content: center;
+}
+.scale-slot.keep {
+  background: var(--accent-soft);
+  border-color: var(--hairline-accent);
+  color: var(--accent);
+}
+.scale-slot.drop { opacity: 0.2; border-style: dashed; }
+
+/* ════════════════════════════════════════════════════════════════════
+   AI COACH · SECTION 06
+   ════════════════════════════════════════════════════════════════════ */
+.coach-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-6);
+}
+@media (max-width: 900px) { .coach-grid { grid-template-columns: 1fr; } }
+
+.coach-context-card {
+  padding: var(--s-6);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+}
+.coach-context-card .t {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 700;
+  letter-spacing: -0.8px;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+.coach-context-card .t em { font-style: italic; color: var(--accent); font-weight: 600; }
+.coach-context-card .desc {
+  font-size: 14px; color: var(--text-2);
+  line-height: 1.55; margin: var(--s-4) 0 var(--s-5);
+}
+.ctx-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-2);
+}
+.ctx-item {
+  padding: var(--s-3);
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-sm);
+  display: flex; align-items: center; gap: var(--s-3);
+}
+.ctx-item .icon {
+  width: 32px; height: 32px;
+  border-radius: var(--r-xs);
+  background: var(--accent-soft);
+  border: 1px solid var(--hairline-accent);
+  color: var(--accent);
+  display: grid; place-items: center;
+  flex-shrink: 0;
+}
+.ctx-item .icon svg { width: 16px; height: 16px; stroke-width: 1.75; }
+.ctx-item .t {
+  font-family: var(--font-display);
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 0.3px; text-transform: uppercase;
+  color: var(--text); line-height: 1.1;
+}
+
+.coach-samples {
+  display: flex; flex-direction: column;
+  gap: var(--s-3);
+}
+.coach-sample {
+  padding: var(--s-5);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+}
+.coach-sample .cs-num {
+  font-family: var(--font-display);
+  font-size: 10px; font-weight: 500;
+  color: var(--text-3); letter-spacing: 2.5px;
+  margin-bottom: var(--s-3);
+}
+.coach-sample .cs-label {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  padding: var(--s-1) var(--s-3);
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-full);
+  font-size: 9px; font-weight: 700;
+  letter-spacing: 1.3px; text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: var(--s-3);
+  height: 22px;
+}
+.coach-sample .cs-label::before {
+  content: ""; width: 5px; height: 5px;
+  border-radius: 50%; background: var(--accent);
+  box-shadow: var(--accent-glow);
+}
+.cs-flow { display: flex; flex-direction: column; gap: var(--s-2); }
+.cs-msg {
+  padding: var(--s-3) var(--s-4);
+  border-radius: var(--r-lg);
+  font-size: 13px; line-height: 1.5;
+  max-width: 85%;
+}
+.cs-msg.user {
+  align-self: flex-end;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 500;
+  border-bottom-right-radius: var(--s-2);
+}
+.cs-msg.coach {
+  align-self: flex-start;
+  background: var(--surface-2);
+  color: var(--text);
+  border: 1px solid var(--hairline);
+  border-bottom-left-radius: var(--s-2);
+}
+.cs-msg.coach b { color: var(--accent); font-weight: 600; }
+
+/* ════════════════════════════════════════════════════════════════════
+   DIFFERENTIATION · SECTION 07
+   ════════════════════════════════════════════════════════════════════ */
+.contrast-stack {
+  display: flex; flex-direction: column; gap: var(--s-2);
+  margin-bottom: var(--s-8);
+}
+.contrast {
+  padding: var(--s-7) var(--s-6);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s var(--ease-std);
+}
+.contrast:hover { border-color: var(--hairline-accent); }
+.contrast::before {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(700px 300px at 0% 50%, rgba(198,255,60,0.04), transparent 65%);
+  pointer-events: none;
+}
+.contrast-num {
+  font-family: var(--font-display);
+  font-size: 11px; font-weight: 500;
+  color: var(--text-3); letter-spacing: 2.5px;
+  position: relative; z-index: 1;
+  margin-bottom: var(--s-3);
+}
+.contrast-text {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 700;
+  letter-spacing: -1.2px;
+  line-height: 1.05;
+  text-transform: uppercase;
+  position: relative; z-index: 1;
+}
+.contrast-text em { font-style: italic; color: var(--accent); font-weight: 600; }
+.contrast-text .muted { color: var(--text-3); font-weight: 500; }
+
+/* Product facts strip */
+.facts-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--s-4);
+  padding: var(--s-6);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+}
+.fact {
+  display: flex; flex-direction: column; gap: var(--s-1);
+  padding: var(--s-3);
+}
+.fact .fv {
+  font-family: var(--font-display);
+  font-size: 24px; font-weight: 700;
+  color: var(--text); letter-spacing: -0.6px; line-height: 1;
+}
+.fact .fv em { font-style: italic; color: var(--accent); font-weight: 600; }
+.fact .fl {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--text-3); margin-top: 4px;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   FOOTER
+   ════════════════════════════════════════════════════════════════════ */
+.site-footer {
+  margin-top: var(--s-9);
+  padding: var(--s-6) 0;
+  border-top: 1px solid var(--hairline);
+}
+.site-footer .wrap {
+  display: flex; justify-content: space-between;
+  align-items: center; gap: var(--s-4); flex-wrap: wrap;
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 1.8px; text-transform: uppercase;
+  color: var(--text-3);
+}
+.site-footer .wrap .left { display: flex; align-items: center; gap: var(--s-3); }
+.site-footer .wrap .dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--accent); box-shadow: var(--accent-glow);
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════
+     TOP BAR
+     ════════════════════════════════════════════════════════ -->
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand-mark">
+      <div class="logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      </div>
+      <div class="wordmark">BCH <em>Fit</em></div>
+    </div>
+    <div class="meta">
+      <span class="dot"></span>
+      <span>Native iOS</span>
+      <span class="label-extra">· $40 / mo · 7-day trial</span>
+    </div>
+  </div>
+</header>
+
+<!-- ════════════════════════════════════════════════════════
+     HERO · 00
+     ════════════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <div class="kicker">Built for Operators</div>
+        <h1>
+          Training.<br>
+          Nutrition.<br>
+          <em>Recovery.</em><br>
+          <span class="line-2">One system.</span>
+        </h1>
+        <p class="lede">
+          A native iOS fitness app for men who work 12 hours, have 30 minutes, and need a system that respects their schedule. <b>The coach in your pocket</b> — training, nutrition, and recovery, all connected.
+        </p>
+        <div class="hero-chips">
+          <div class="chip lime">iOS · SwiftUI</div>
+          <div class="chip">$40 / Month</div>
+          <div class="chip">7-day free trial</div>
+          <div class="chip">Offline capable</div>
+        </div>
+      </div>
+
+      <div class="hero-phone">
+        <!-- Today screen phone -->
+        <div class="phone"><div class="vp">
+          <div class="statusbar">
+            <span class="time">9:41</span>
+            <div class="sys">
+              <svg viewBox="0 0 16 12" fill="currentColor"><path d="M1 8h1v3H1zm3-2h1v5H4zm3-2h1v7H7zm3-2h1v9h-1zm3-2h1v11h-1z"/></svg>
+              <svg viewBox="0 0 24 12" fill="none" stroke="currentColor" stroke-width="1"><rect x="1" y="2" width="20" height="8" rx="2"/><rect x="3" y="4" width="14" height="4" fill="currentColor"/><rect x="22" y="4" width="1" height="4" fill="currentColor"/></svg>
+            </div>
+          </div>
+          <div class="appbar">
+            <div class="title-block">
+              <div class="eyebrow-s">Tuesday · Apr 15</div>
+              <div class="title">Today</div>
+            </div>
+            <div class="nav-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+            </div>
+          </div>
+          <div class="content content-below-tab">
+            <div class="hero-workout">
+              <span class="tag"><span class="dot"></span>Hard to Kill · W4 · D2</span>
+              <h3>Heavy Push +<br>Pull Accessory</h3>
+              <div class="subtitle">52 min · 6 movements · Full gym</div>
+              <div class="meta-stats">
+                <div class="stat"><div class="v">52<small>MIN</small></div><div class="l">Duration</div></div>
+                <div class="stat"><div class="v">24</div><div class="l">Work Sets</div></div>
+                <div class="stat"><div class="v">412<small>K</small></div><div class="l">Volume LB</div></div>
+              </div>
+              <div class="btn-primary-phone">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                Start Workout
+              </div>
+            </div>
+
+            <div class="card nutrition-card">
+              <div class="card-label" style="align-self:flex-start;margin-bottom:0;">Fuel · 2,380 kcal Target</div>
+              <div class="rings-wrap">
+                <svg viewBox="0 0 180 180">
+                  <circle cx="90" cy="90" r="75" fill="none" stroke="rgba(198,255,60,0.10)" stroke-width="12"/>
+                  <circle cx="90" cy="90" r="59" fill="none" stroke="rgba(242,237,228,0.08)" stroke-width="12"/>
+                  <circle cx="90" cy="90" r="43" fill="none" stroke="rgba(122,133,153,0.14)" stroke-width="12"/>
+                  <g transform="rotate(-90 90 90)">
+                    <circle cx="90" cy="90" r="75" fill="none" stroke="#C6FF3C" stroke-width="12" stroke-linecap="round" stroke-dasharray="471.24" stroke-dashoffset="134" style="filter:drop-shadow(0 0 6px rgba(198,255,60,0.4))"/>
+                    <circle cx="90" cy="90" r="59" fill="none" stroke="#F2EDE4" stroke-width="12" stroke-linecap="round" stroke-dasharray="370.71" stroke-dashoffset="170"/>
+                    <circle cx="90" cy="90" r="43" fill="none" stroke="#7A8599" stroke-width="12" stroke-linecap="round" stroke-dasharray="270.18" stroke-dashoffset="54"/>
+                  </g>
+                </svg>
+                <div class="rings-center">
+                  <div class="v">1,540</div>
+                  <div class="l">of 2,380 kcal</div>
+                </div>
+              </div>
+              <div class="macro-row">
+                <div class="macro-col"><span class="dot" style="background:var(--data-1)"></span><div class="nm">Protein</div><div class="vl">168<span>/235</span></div></div>
+                <div class="macro-col"><span class="dot" style="background:var(--data-2)"></span><div class="nm">Carbs</div><div class="vl">122<span>/225</span></div></div>
+                <div class="macro-col"><span class="dot" style="background:var(--data-3)"></span><div class="nm">Fat</div><div class="vl">48<span>/60</span></div></div>
+              </div>
+            </div>
+
+            <div class="streak">
+              <div class="streak-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"/></svg>
+              </div>
+              <div class="streak-text">
+                <div class="t">Clean Streak</div>
+                <div class="s">Phase 1 · You're locked in</div>
+              </div>
+              <div class="streak-days">11</div>
+            </div>
+          </div>
+          <nav class="tabbar">
+            <div class="tab active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg><span class="tab-label">Today</span></div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5v11M3 9.5v5M17.5 6.5v11M21 9.5v5M6.5 12h11"/></svg><span class="tab-label">Train</span></div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M4 5v4a4 4 0 0 0 4 4M20 5v4a4 4 0 0 1-4 4"/></svg><span class="tab-label">Fuel</span></div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg><span class="tab-label">Coach</span></div>
+          </nav>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     WHO THIS IS FOR · 01
+     ════════════════════════════════════════════════════════ -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <div class="title-group">
+        <div class="eyebrow"><span class="n">01</span>Who This Is For</div>
+        <h2>Built for the guy<br>nobody's <em>building for.</em></h2>
+      </div>
+      <div class="desc">Three entry points. Same problem — limited time, no current system, needs someone to tell him what to do.</div>
+    </div>
+
+    <p class="lede-statement">
+      Nobody builds for the guy who works 12 hours, has 30 minutes, and needs a system that <em>respects his schedule.</em>
+    </p>
+
+    <div class="persona-grid">
+      <div class="persona">
+        <div>
+          <div class="num">01</div>
+          <div class="headline" style="margin-top:var(--s-3);">The Blue<br>Collar Guy</div>
+        </div>
+        <div class="detail">Wakes at 5. On a job site by 7. Doesn't have the energy or the ego to figure it out himself. He needs a plan, not philosophy.</div>
+        <div class="tags">
+          <span>12-hour days</span>
+          <span>Cooler prep</span>
+          <span>No gym time</span>
+        </div>
+      </div>
+
+      <div class="persona">
+        <div>
+          <div class="num">02</div>
+          <div class="headline" style="margin-top:var(--s-3);">The Dad Who<br>Let Himself Go</div>
+        </div>
+        <div class="detail">Used to train. Life got in the way. Kids, career, couch. He remembers what it felt like to be in shape — and he wants it back without starting over from scratch.</div>
+        <div class="tags">
+          <span>35-50</span>
+          <span>Rebuild</span>
+          <span>30 min sessions</span>
+        </div>
+      </div>
+
+      <div class="persona">
+        <div>
+          <div class="num">03</div>
+          <div class="headline" style="margin-top:var(--s-3);">The High<br>Output Man</div>
+        </div>
+        <div class="detail">Built a company. Runs hard. Moved fitness to the bottom of the list three years ago. Now he's 20 lbs up and tired — and he's done with that.</div>
+        <div class="tags">
+          <span>Operator</span>
+          <span>Optimization</span>
+          <span>Accountability</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="persona-close">
+      <div class="big">Same man. Three entry points.</div>
+      <div class="small">→ Limited time · No system · Needs a coach</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     THE 6 TRACKS · SECTION BLUEPRINTS · 02
+     ════════════════════════════════════════════════════════ -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <div class="title-group">
+        <div class="eyebrow"><span class="n">02</span>Six Tracks</div>
+        <h2>One system.<br>Six ways to <em>run it.</em></h2>
+      </div>
+      <div class="desc">Each track has a locked session structure. Split scales with how many days you pick. Lime highlights the slot that defines each track.</div>
+    </div>
+
+    <div class="tracks-stack">
+
+      <!-- HARD TO KILL -->
+      <article class="track-card">
+        <div class="track-head">
+          <div class="id">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L3 6v6c0 5 3.8 9.7 9 11 5.2-1.3 9-6 9-11V6l-9-4z"/></svg>
+          </div>
+          <div class="name-block">
+            <div class="num-in">Track 01</div>
+            <h3>Hard to Kill</h3>
+            <div class="positioning">The generalist. Strength, conditioning, and mobility every session. No accessories — conditioning block replaces volume work.</div>
+          </div>
+          <div class="for-line"><strong>For:</strong><br>The guy who doesn't have a specific goal. Wants to feel good, move well, not break down.</div>
+        </div>
+
+        <div class="blueprint-block">
+          <div class="blueprint-title">Session Blueprint</div>
+          <div class="blueprint">
+            <div class="slot"><div class="slot-num">01</div><div class="slot-name">Warm-Up</div><div class="slot-note">5 min</div></div>
+            <div class="slot"><div class="slot-num">02</div><div class="slot-name">Primary<br>Compound</div><div class="slot-note">Locked per block</div></div>
+            <div class="slot"><div class="slot-num">03</div><div class="slot-name">Secondary<br>Lift</div><div class="slot-note">Rotates weekly</div></div>
+            <div class="slot signature"><div class="slot-num">04</div><div class="slot-name">Conditioning<br>Block</div><div class="slot-note">10-16 min · 4 formats</div></div>
+            <div class="slot"><div class="slot-num">05</div><div class="slot-name">Track<br>Finisher</div><div class="slot-note">AMRAP</div></div>
+          </div>
+        </div>
+
+        <div class="track-tags">
+          <span class="lime">Signature · Conditioning replaces accessories</span>
+          <span>Weekly undulating · 5-8 / 8-10 / 3-5 / 8-10</span>
+          <span>EMOM · For Time · Circuit · AMRAP</span>
+          <span>Strict pull-ups only</span>
+          <span>3-6 days / week</span>
+        </div>
+      </article>
+
+      <!-- STRENGTH -->
+      <article class="track-card">
+        <div class="track-head">
+          <div class="id">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5v11M3 9.5v5M17.5 6.5v11M21 9.5v5M6.5 12h11"/></svg>
+          </div>
+          <div class="name-block">
+            <div class="num-in">Track 02</div>
+            <h3>Strength</h3>
+            <div class="positioning">Heavy weight, real numbers. Percentage-based wave loading off a 90% training max. 10-week blocks.</div>
+          </div>
+          <div class="for-line"><strong>For:</strong><br>The guy with a rack. Wants a bigger bench, squat, deadlift. Wants to know what he'll hit in 8 weeks.</div>
+        </div>
+
+        <div class="blueprint-block">
+          <div class="blueprint-title">Session Blueprint · Upper / Lower Split</div>
+          <div class="blueprint">
+            <div class="slot"><div class="slot-num">01</div><div class="slot-name">Warm-Up<br>+ Ramps</div><div class="slot-note">Percentage-based</div></div>
+            <div class="slot signature"><div class="slot-num">02</div><div class="slot-name">Main Lift<br>Wave</div><div class="slot-note">65-95% 1RM</div></div>
+            <div class="slot signature"><div class="slot-num">03</div><div class="slot-name">Second<br>Main Lift</div><div class="slot-note">Wave loaded</div></div>
+            <div class="slot"><div class="slot-num">04</div><div class="slot-name">Accessory<br>× 2-3</div><div class="slot-note">Supportive</div></div>
+            <div class="slot"><div class="slot-num">05</div><div class="slot-name">Core<br>Finisher</div><div class="slot-note">Optional</div></div>
+          </div>
+        </div>
+
+        <div class="track-tags">
+          <span class="lime">Signature · Percentage-based waves · 10-wk arc</span>
+          <span>Block A: Accumulation (5s → 3s, 65-82%)</span>
+          <span>Block B: Realization (paused + peak singles, 75-95%)</span>
+          <span>6 main lifts · Incline / OHP / Row / Rack Pull / Squat / Dead</span>
+          <span>4 days / week</span>
+        </div>
+      </article>
+
+      <!-- HYPERTROPHY -->
+      <article class="track-card">
+        <div class="track-head">
+          <div class="id">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"/></svg>
+          </div>
+          <div class="name-block">
+            <div class="num-in">Track 03</div>
+            <h3>Hypertrophy</h3>
+            <div class="positioning">Build muscle. Volume, rotation, time under tension. Logbook-based progression — beat the last set.</div>
+          </div>
+          <div class="for-line"><strong>For:</strong><br>The guy who wants to look different in 12 months. Mirror goals.</div>
+        </div>
+
+        <div class="blueprint-block">
+          <div class="blueprint-title">Session Blueprint · Push / Pull / Legs</div>
+          <div class="blueprint">
+            <div class="slot"><div class="slot-num">01</div><div class="slot-name">Warm-Up</div><div class="slot-note">Activation</div></div>
+            <div class="slot"><div class="slot-num">02</div><div class="slot-name">Primary<br>Compound</div><div class="slot-note">Rotates every 4 wks</div></div>
+            <div class="slot"><div class="slot-num">03</div><div class="slot-name">Secondary<br>Lift</div><div class="slot-note">Stretch-biased</div></div>
+            <div class="slot signature"><div class="slot-num">04</div><div class="slot-name">Accessory<br>+ Volume Set</div><div class="slot-note">Hypertrophy core</div></div>
+            <div class="slot"><div class="slot-num">05</div><div class="slot-name">Accessory<br>× 2</div><div class="slot-note">To failure</div></div>
+            <div class="slot"><div class="slot-num">06</div><div class="slot-name">Stretch<br>Finisher</div><div class="slot-note">Lengthened load</div></div>
+          </div>
+        </div>
+
+        <div class="track-tags">
+          <span class="lime">Signature · Volume set + stretch-position loading</span>
+          <span>Logbook progression (beat the last set)</span>
+          <span>SFR rating on every exercise</span>
+          <span>Exercise rotation every 4 weeks</span>
+          <span>Tightest nutrition link · surplus enforced</span>
+          <span>3-6 days / week</span>
+        </div>
+      </article>
+
+      <!-- PERFORMANCE -->
+      <article class="track-card">
+        <div class="track-head">
+          <div class="id">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <div class="name-block">
+            <div class="num-in">Track 04</div>
+            <h3>Performance</h3>
+            <div class="positioning">Athletic output. Every session opens with CNS-fresh explosive work before the heavy compound. Block C unlocks Olympic lifts.</div>
+          </div>
+          <div class="for-line"><strong>For:</strong><br>Ex-athletes. Guys who want to keep up with their kids. Feel like an athlete again.</div>
+        </div>
+
+        <div class="blueprint-block">
+          <div class="blueprint-title">Session Blueprint · Athletic PPL</div>
+          <div class="blueprint">
+            <div class="slot"><div class="slot-num">01</div><div class="slot-name">Warm-Up<br>+ Activation</div><div class="slot-note">Full prep</div></div>
+            <div class="slot signature"><div class="slot-num">02</div><div class="slot-name">Explosive<br>Opener</div><div class="slot-note">CNS-tiered</div></div>
+            <div class="slot"><div class="slot-num">03</div><div class="slot-name">Primary<br>Compound</div><div class="slot-note">Double-progress</div></div>
+            <div class="slot"><div class="slot-num">04</div><div class="slot-name">Secondary<br>+ Volume</div><div class="slot-note">Accessory work</div></div>
+            <div class="slot"><div class="slot-num">05</div><div class="slot-name">Conditioning<br>Finisher</div><div class="slot-note">8-12 min</div></div>
+            <div class="slot"><div class="slot-num">06</div><div class="slot-name">Track<br>AMRAP</div><div class="slot-note">Output test</div></div>
+          </div>
+        </div>
+
+        <div class="track-tags">
+          <span class="lime">Signature · CNS-tiered opener (Low / Mid / High / DE)</span>
+          <span>Block A: Strength-Speed</span>
+          <span>Block B: Power / Explosive</span>
+          <span>Block C: Olympic lifts (skill-gated)</span>
+          <span>Sled work every session in Block C</span>
+          <span>3-5 days / week</span>
+        </div>
+      </article>
+
+      <!-- THE RESET -->
+      <article class="track-card">
+        <div class="track-head">
+          <div class="id">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+          </div>
+          <div class="name-block">
+            <div class="num-in">Track 05</div>
+            <h3>The Reset</h3>
+            <div class="positioning">The on-ramp. 8-week linear arc, full-body 3×/week. Not PPL. Not a split. Just movement. Graduates into a real track.</div>
+          </div>
+          <div class="for-line"><strong>For:</strong><br>Guys 6+ months off. Deconditioned. Never trained. Rebuilding from zero.</div>
+        </div>
+
+        <div class="blueprint-block">
+          <div class="blueprint-title">Session Blueprint · Full Body</div>
+          <div class="blueprint">
+            <div class="slot"><div class="slot-num">01</div><div class="slot-name">Warm-Up</div><div class="slot-note">Movement prep</div></div>
+            <div class="slot signature"><div class="slot-num">02</div><div class="slot-name">Primary<br>Compound</div><div class="slot-note">Single lift per pattern</div></div>
+            <div class="slot"><div class="slot-num">03</div><div class="slot-name">Assistance<br>Lift</div><div class="slot-note">2 sets Wk 1-3</div></div>
+            <div class="slot"><div class="slot-num">04</div><div class="slot-name">Short<br>Conditioning</div><div class="slot-note">5 → 14 min ramp</div></div>
+          </div>
+        </div>
+
+        <div class="track-tags">
+          <span class="lime">Signature · 45-min commitment · No 30-min option</span>
+          <span>8-week linear progression · no deload</span>
+          <span>Barbells introduced Week 5</span>
+          <span>Cardio days Tue/Thu · 15 → 30 min</span>
+          <span>Auto-graduation prompt at Week 8</span>
+          <span>3 days / week (fixed)</span>
+        </div>
+      </article>
+
+      <!-- NO GYM -->
+      <article class="track-card">
+        <div class="track-head">
+          <div class="id">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <div class="name-block">
+            <div class="num-in">Track 06</div>
+            <h3>No Gym</h3>
+            <div class="positioning">Calisthenics. Progression through <em>complexity</em>, not load. Every pattern has a ladder. Bodyweight-only, no excuses.</div>
+          </div>
+          <div class="for-line"><strong>For:</strong><br>No gym, no cost, no excuses. Travel, night shift, new parents.</div>
+        </div>
+
+        <div class="blueprint-block">
+          <div class="blueprint-title">Session Blueprint · Bodyweight PPL</div>
+          <div class="blueprint">
+            <div class="slot"><div class="slot-num">01</div><div class="slot-name">Warm-Up</div><div class="slot-note">Mobility</div></div>
+            <div class="slot signature"><div class="slot-num">02</div><div class="slot-name">Skill<br>Work</div><div class="slot-note">CNS-fresh</div></div>
+            <div class="slot"><div class="slot-num">03</div><div class="slot-name">Primary<br>Pattern</div><div class="slot-note">Ladder level</div></div>
+            <div class="slot"><div class="slot-num">04</div><div class="slot-name">Accessory<br>+ Volume Set</div><div class="slot-note">Density work</div></div>
+            <div class="slot"><div class="slot-num">05</div><div class="slot-name">Conditioning<br>Finisher</div><div class="slot-note">Bodyweight metcon</div></div>
+            <div class="slot"><div class="slot-num">06</div><div class="slot-name">Track<br>AMRAP</div><div class="slot-note">Regressed level</div></div>
+          </div>
+        </div>
+
+        <div class="track-tags">
+          <span class="lime">Signature · Ladder-level progression (not weight)</span>
+          <span>Push / Pull / Squat / Dip / Core / Handstand ladders</span>
+          <span>Level up at 3 clean sets at top of range</span>
+          <span>Block C skill-gated (free HS + archer PU + pistol)</span>
+          <span>Running integrated · 200m → mile-tempo</span>
+          <span>Tempo · 100-rep · Weighted backpack protocols</span>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="track-smart-rec">
+      <div class="icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+      </div>
+      <div class="body">
+        <div class="t">Smart Track Selection</div>
+        <div class="s">Answer 6 onboarding questions — bodyweight, occupation, session length, days/week, training history. App recommends the right track. You can override anytime.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     SEE IT IN ACTION · 03
+     ════════════════════════════════════════════════════════ -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <div class="title-group">
+        <div class="eyebrow"><span class="n">03</span>See It In Action</div>
+        <h2>Six screens.<br>One <em>connected</em> system.</h2>
+      </div>
+      <div class="desc">Every screen pulls from the same design tokens. Apple Activity rings, Lucide line icons, Oswald + Inter — native SwiftUI target.</div>
+    </div>
+
+    <div class="screens-wall">
+
+      <!-- SCREEN 01 — TODAY -->
+      <div class="screen-unit">
+        <div class="phone"><div class="vp">
+          <div class="statusbar">
+            <span class="time">9:41</span>
+            <div class="sys">
+              <svg viewBox="0 0 16 12" fill="currentColor"><path d="M1 8h1v3H1zm3-2h1v5H4zm3-2h1v7H7zm3-2h1v9h-1zm3-2h1v11h-1z"/></svg>
+              <svg viewBox="0 0 24 12" fill="none" stroke="currentColor" stroke-width="1"><rect x="1" y="2" width="20" height="8" rx="2"/><rect x="3" y="4" width="14" height="4" fill="currentColor"/><rect x="22" y="4" width="1" height="4" fill="currentColor"/></svg>
+            </div>
+          </div>
+          <div class="appbar">
+            <div class="title-block">
+              <div class="eyebrow-s">Tuesday · Apr 15</div>
+              <div class="title">Today</div>
+            </div>
+            <div class="nav-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+            </div>
+          </div>
+          <div class="content content-below-tab">
+            <div class="hero-workout">
+              <span class="tag"><span class="dot"></span>Hard to Kill · W4 · D2</span>
+              <h3>Heavy Push +<br>Pull Accessory</h3>
+              <div class="subtitle">52 min · 6 movements · Full gym</div>
+              <div class="meta-stats">
+                <div class="stat"><div class="v">52<small>MIN</small></div><div class="l">Duration</div></div>
+                <div class="stat"><div class="v">24</div><div class="l">Work Sets</div></div>
+                <div class="stat"><div class="v">412<small>K</small></div><div class="l">Volume LB</div></div>
+              </div>
+              <div class="btn-primary-phone">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Start Workout
+              </div>
+            </div>
+            <div class="card nutrition-card">
+              <div class="card-label" style="align-self:flex-start;margin-bottom:0;">Fuel · 2,380 kcal Target</div>
+              <div class="rings-wrap">
+                <svg viewBox="0 0 180 180">
+                  <circle cx="90" cy="90" r="75" fill="none" stroke="rgba(198,255,60,0.10)" stroke-width="12"/>
+                  <circle cx="90" cy="90" r="59" fill="none" stroke="rgba(242,237,228,0.08)" stroke-width="12"/>
+                  <circle cx="90" cy="90" r="43" fill="none" stroke="rgba(122,133,153,0.14)" stroke-width="12"/>
+                  <g transform="rotate(-90 90 90)">
+                    <circle cx="90" cy="90" r="75" fill="none" stroke="#C6FF3C" stroke-width="12" stroke-linecap="round" stroke-dasharray="471.24" stroke-dashoffset="134" style="filter:drop-shadow(0 0 6px rgba(198,255,60,0.4))"/>
+                    <circle cx="90" cy="90" r="59" fill="none" stroke="#F2EDE4" stroke-width="12" stroke-linecap="round" stroke-dasharray="370.71" stroke-dashoffset="170"/>
+                    <circle cx="90" cy="90" r="43" fill="none" stroke="#7A8599" stroke-width="12" stroke-linecap="round" stroke-dasharray="270.18" stroke-dashoffset="54"/>
+                  </g>
+                </svg>
+                <div class="rings-center">
+                  <div class="v">1,540</div>
+                  <div class="l">of 2,380 kcal</div>
+                </div>
+              </div>
+              <div class="macro-row">
+                <div class="macro-col"><span class="dot" style="background:var(--data-1)"></span><div class="nm">Protein</div><div class="vl">168<span>/235</span></div></div>
+                <div class="macro-col"><span class="dot" style="background:var(--data-2)"></span><div class="nm">Carbs</div><div class="vl">122<span>/225</span></div></div>
+                <div class="macro-col"><span class="dot" style="background:var(--data-3)"></span><div class="nm">Fat</div><div class="vl">48<span>/60</span></div></div>
+              </div>
+            </div>
+            <div class="streak">
+              <div class="streak-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"/></svg>
+              </div>
+              <div class="streak-text"><div class="t">Clean Streak</div><div class="s">Phase 1 · You're locked in</div></div>
+              <div class="streak-days">11</div>
+            </div>
+          </div>
+          <nav class="tabbar">
+            <div class="tab active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg><span class="tab-label">Today</span></div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5v11M3 9.5v5M17.5 6.5v11M21 9.5v5M6.5 12h11"/></svg><span class="tab-label">Train</span></div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M4 5v4a4 4 0 0 0 4 4M20 5v4a4 4 0 0 1-4 4"/></svg><span class="tab-label">Fuel</span></div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg><span class="tab-label">Coach</span></div>
+          </nav>
+        </div></div>
+        <div class="screen-caption">
+          <div class="screen-label"><span class="n">01</span><span class="bullet"></span>Today Dashboard</div>
+          <div class="screen-desc">Hero workout card, live macros on Activity rings, clean-eating streak. One screen, the whole day.</div>
+        </div>
+      </div>
+
+      <!-- SCREEN 02 — ACTIVE WORKOUT -->
+      <div class="screen-unit">
+        <div class="phone"><div class="vp">
+          <div class="statusbar">
+            <span class="time">9:42</span>
+            <div class="sys">
+              <svg viewBox="0 0 16 12" fill="currentColor"><path d="M1 8h1v3H1zm3-2h1v5H4zm3-2h1v7H7zm3-2h1v9h-1zm3-2h1v11h-1z"/></svg>
+              <svg viewBox="0 0 24 12" fill="none" stroke="currentColor" stroke-width="1"><rect x="1" y="2" width="20" height="8" rx="2"/><rect x="3" y="4" width="14" height="4" fill="currentColor"/><rect x="22" y="4" width="1" height="4" fill="currentColor"/></svg>
+            </div>
+          </div>
+          <div class="appbar">
+            <div class="nav-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></div>
+            <div class="title-block center">
+              <div class="eyebrow-s">Exercise 3 of 6</div>
+              <div class="title" style="font-size:22px;">12:47</div>
+            </div>
+            <div class="nav-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="6" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="18" r="1.5"/></svg></div>
+          </div>
+          <div class="content content-below-tab">
+            <div class="workout-title-block">
+              <div class="eyebrow-lime">Compound · Push</div>
+              <h3>Barbell<br>Bench Press</h3>
+              <div class="muscles">Chest · Triceps · Anterior Delt</div>
+            </div>
+            <div class="ex-media">
+              <div class="tag">Form Video</div>
+              <div class="play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+            </div>
+            <div class="sets">
+              <div class="set-row done"><div class="n">Set 1</div><div class="v">185<small>LB</small></div><div class="v">8<small>REPS</small></div><div class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div></div>
+              <div class="set-row done"><div class="n">Set 2</div><div class="v">205<small>LB</small></div><div class="v">6<small>REPS</small></div><div class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div></div>
+              <div class="set-row current"><div class="n">Set 3</div><div class="v">225<small>LB</small></div><div class="v">—</div><div class="chk"></div></div>
+              <div class="set-row"><div class="n">Set 4</div><div class="v" style="color:var(--text-3)">225<small>LB</small></div><div class="v" style="color:var(--text-3)">—</div><div class="chk"></div></div>
+            </div>
+          </div>
+          <div class="rest-bar">
+            <div class="rest-left"><div class="l">Rest Timer</div><div class="v">1:47</div></div>
+            <div class="rest-sep"></div>
+            <div class="rest-right"><div class="l">Next Up</div><div class="v">Incline DB Press</div></div>
+          </div>
+        </div></div>
+        <div class="screen-caption">
+          <div class="screen-label"><span class="n">02</span><span class="bullet"></span>Active Workout</div>
+          <div class="screen-desc">Current set is highlighted. Rest timer + next exercise always visible. Form video one tap away.</div>
+        </div>
+      </div>
+
+      <!-- SCREEN 03 — FUEL -->
+      <div class="screen-unit">
+        <div class="phone"><div class="vp">
+          <div class="statusbar">
+            <span class="time">1:14</span>
+            <div class="sys">
+              <svg viewBox="0 0 16 12" fill="currentColor"><path d="M1 8h1v3H1zm3-2h1v5H4zm3-2h1v7H7zm3-2h1v9h-1zm3-2h1v11h-1z"/></svg>
+              <svg viewBox="0 0 24 12" fill="none" stroke="currentColor" stroke-width="1"><rect x="1" y="2" width="20" height="8" rx="2"/><rect x="3" y="4" width="14" height="4" fill="currentColor"/><rect x="22" y="4" width="1" height="4" fill="currentColor"/></svg>
+            </div>
+          </div>
+          <div class="appbar">
+            <div class="title-block">
+              <div class="eyebrow-s">Tuesday · Lunch</div>
+              <div class="title">Fuel</div>
+            </div>
+            <div class="nav-btn" style="background:var(--accent);border-color:var(--accent);color:var(--accent-ink)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+            </div>
+          </div>
+          <div class="content content-below-tab">
+            <div class="card">
+              <div class="card-label">Remaining · 840 kcal</div>
+              <div class="macro-bars">
+                <div class="macro-bar"><div class="top"><span class="n">Protein</span><span class="v">168<span> / 235g</span></span></div><div class="bar-track"><div class="bar-fill p"></div></div></div>
+                <div class="macro-bar"><div class="top"><span class="n">Carbs</span><span class="v">122<span> / 225g</span></span></div><div class="bar-track"><div class="bar-fill c"></div></div></div>
+                <div class="macro-bar"><div class="top"><span class="n">Fat</span><span class="v">48<span> / 60g</span></span></div><div class="bar-track"><div class="bar-fill f"></div></div></div>
+              </div>
+            </div>
+            <div class="scan-cta">
+              <div class="scan-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 4v16M11 4v16M15 4v16M19 4v16"/></svg></div>
+              <div class="scan-text"><div class="t">Scan Barcode</div><div class="s">Or search 3M+ foods</div></div>
+              <div class="scan-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></div>
+            </div>
+            <div class="card" style="padding:var(--s-4) var(--s-4) var(--s-3);">
+              <div class="card-label">Logged Today</div>
+              <div class="meal-list">
+                <div class="meal"><div class="meal-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15.4 15.4c-2.1.7-4.4.4-6.2-.5l-1.7 1.6a1 1 0 0 1-1.1.2l-2-.7a1 1 0 0 1-.6-1l.1-2.1a1 1 0 0 1 .3-.7l1.7-1.6c-.9-1.8-1.2-4-.5-6.2C6.4.2 8.6-.7 10.7.6c1.5.9 2.5 2.5 3.3 3.2.7.8 2.3 1.8 3.2 3.3 1.4 2.1.4 4.4-3.8 5.7"/></svg></div><div class="meal-info"><div class="n">Ground Beef + Rice</div><div class="s">Meal Prep · 350g</div></div><div class="meal-kcal"><div class="k">720</div><span class="u">kcal</span></div></div>
+                <div class="meal"><div class="meal-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c-4.4 0-8-3.5-8-7.8 0-4.3 3.6-10.2 8-12.2 4.4 2 8 7.9 8 12.2 0 4.3-3.6 7.8-8 7.8z"/></svg></div><div class="meal-info"><div class="n">4 Eggs + Sourdough</div><div class="s">Breakfast · 06:20</div></div><div class="meal-kcal"><div class="k">540</div><span class="u">kcal</span></div></div>
+                <div class="meal"><div class="meal-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2h8l-1 3h-6l-1-3zM6 5h12l-1 15a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L6 5z"/></svg></div><div class="meal-info"><div class="n">Whey Shake</div><div class="s">Post-Workout</div></div><div class="meal-kcal"><div class="k">280</div><span class="u">kcal</span></div></div>
+              </div>
+            </div>
+          </div>
+          <nav class="tabbar">
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg><span class="tab-label">Today</span></div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5v11M3 9.5v5M17.5 6.5v11M21 9.5v5M6.5 12h11"/></svg><span class="tab-label">Train</span></div>
+            <div class="tab active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M4 5v4a4 4 0 0 0 4 4M20 5v4a4 4 0 0 1-4 4"/></svg><span class="tab-label">Fuel</span></div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg><span class="tab-label">Coach</span></div>
+          </nav>
+        </div></div>
+        <div class="screen-caption">
+          <div class="screen-label"><span class="n">03</span><span class="bullet"></span>Nutrition Log</div>
+          <div class="screen-desc">Remaining macros, barcode scanner, meal log. Open Food Facts — 3M+ products.</div>
+        </div>
+      </div>
+
+      <!-- SCREEN 04 — ONBOARDING -->
+      <div class="screen-unit">
+        <div class="phone"><div class="vp">
+          <div class="statusbar">
+            <span class="time">9:41</span>
+            <div class="sys">
+              <svg viewBox="0 0 16 12" fill="currentColor"><path d="M1 8h1v3H1zm3-2h1v5H4zm3-2h1v7H7zm3-2h1v9h-1zm3-2h1v11h-1z"/></svg>
+              <svg viewBox="0 0 24 12" fill="none" stroke="currentColor" stroke-width="1"><rect x="1" y="2" width="20" height="8" rx="2"/><rect x="3" y="4" width="14" height="4" fill="currentColor"/><rect x="22" y="4" width="1" height="4" fill="currentColor"/></svg>
+            </div>
+          </div>
+          <div class="appbar">
+            <div class="nav-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></div>
+            <div class="title-block center">
+              <div class="eyebrow-s">Step 6 of 6</div>
+              <div class="title" style="font-size:14px;letter-spacing:1.5px;">Setup</div>
+            </div>
+            <div class="nav-btn" style="visibility:hidden;"></div>
+          </div>
+          <div class="content" style="padding-bottom:120px;">
+            <div class="onb-progress">
+              <span class="done"></span><span class="done"></span><span class="done"></span>
+              <span class="done"></span><span class="done"></span><span class="done"></span>
+            </div>
+            <div class="onb-title">
+              <div class="step">Final Step</div>
+              <h3>Pick Your<br>Track</h3>
+              <p>Based on your history, we recommend <b>Hard to Kill</b>. You can switch anytime.</p>
+            </div>
+            <div class="tracks-phone">
+              <div class="track-row selected">
+                <div class="track-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L3 6v6c0 5 3.8 9.7 9 11 5.2-1.3 9-6 9-11V6l-9-4z"/></svg></div>
+                <div class="track-info"><div class="n">Hard to Kill</div><div class="s">Strength · Conditioning · Longevity</div></div>
+                <div class="track-pill">Pick for You</div>
+              </div>
+              <div class="track-row">
+                <div class="track-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5v11M3 9.5v5M17.5 6.5v11M21 9.5v5M6.5 12h11"/></svg></div>
+                <div class="track-info"><div class="n">Strength</div><div class="s">Heavy compounds · Low reps</div></div>
+              </div>
+              <div class="track-row">
+                <div class="track-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"/></svg></div>
+                <div class="track-info"><div class="n">Hypertrophy</div><div class="s">Volume · Build muscle</div></div>
+              </div>
+              <div class="track-row">
+                <div class="track-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+                <div class="track-info"><div class="n">Performance</div><div class="s">Power · Speed · Athleticism</div></div>
+              </div>
+              <div class="track-row">
+                <div class="track-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg></div>
+                <div class="track-info"><div class="n">The Reset</div><div class="s">8-week on-ramp</div></div>
+              </div>
+              <div class="track-row">
+                <div class="track-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+                <div class="track-info"><div class="n">No Gym</div><div class="s">Calisthenics · Bodyweight</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="onb-cta-wrap">
+            <div class="btn-primary-phone">Start 7-Day Trial</div>
+          </div>
+        </div></div>
+        <div class="screen-caption">
+          <div class="screen-label"><span class="n">04</span><span class="bullet"></span>Track Select</div>
+          <div class="screen-desc">Final step of a 6-question onboarding. Smart recommendation surfaces. User can override.</div>
+        </div>
+      </div>
+
+      <!-- SCREEN 05 — COACH -->
+      <div class="screen-unit">
+        <div class="phone"><div class="vp">
+          <div class="statusbar">
+            <span class="time">8:22</span>
+            <div class="sys">
+              <svg viewBox="0 0 16 12" fill="currentColor"><path d="M1 8h1v3H1zm3-2h1v5H4zm3-2h1v7H7zm3-2h1v9h-1zm3-2h1v11h-1z"/></svg>
+              <svg viewBox="0 0 24 12" fill="none" stroke="currentColor" stroke-width="1"><rect x="1" y="2" width="20" height="8" rx="2"/><rect x="3" y="4" width="14" height="4" fill="currentColor"/><rect x="22" y="4" width="1" height="4" fill="currentColor"/></svg>
+            </div>
+          </div>
+          <div class="coach-appbar">
+            <div class="coach-profile">
+              <div class="coach-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+              <div class="coach-info">
+                <div class="n">Coach</div>
+                <div class="s">Your Coach · Always On</div>
+              </div>
+            </div>
+            <div class="nav-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="6" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="18" r="1.5"/></svg></div>
+          </div>
+          <div class="content" style="gap:var(--s-2);padding-bottom:var(--s-4);">
+            <div class="context-chip"><span>Reading Week 4 Data</span></div>
+            <div class="msgs">
+              <div class="msg bot">Morning. You trained heavy yesterday and slept 7.2 hours. Today's push session is <b>on</b>. Don't skip it.</div>
+              <div class="msg you">Only at 140g protein and it's 2pm. Am I cooked?</div>
+              <div class="msg bot">Not cooked. You've got <b>95g left</b> and 6 hours. Two chicken thighs + greek yogurt tonight closes the gap easy.</div>
+              <div class="msg you">Cravings tonight?</div>
+              <div class="msg bot">Day 11 of your clean streak. Don't throw it away. 40g whey + PB + frozen banana → legit cookie dough texture. That's your move.</div>
+            </div>
+            <div class="composer">
+              <input placeholder="Ask Coach anything…" />
+              <button class="send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
+            </div>
+          </div>
+        </div></div>
+        <div class="screen-caption">
+          <div class="screen-label"><span class="n">05</span><span class="bullet"></span>AI Coach</div>
+          <div class="screen-desc">Reads your current week. Personalized to YOUR macros, YOUR training, YOUR fatigue.</div>
+        </div>
+      </div>
+
+      <!-- SCREEN 06 — PROGRESS -->
+      <div class="screen-unit">
+        <div class="phone"><div class="vp">
+          <div class="statusbar">
+            <span class="time">6:30</span>
+            <div class="sys">
+              <svg viewBox="0 0 16 12" fill="currentColor"><path d="M1 8h1v3H1zm3-2h1v5H4zm3-2h1v7H7zm3-2h1v9h-1zm3-2h1v11h-1z"/></svg>
+              <svg viewBox="0 0 24 12" fill="none" stroke="currentColor" stroke-width="1"><rect x="1" y="2" width="20" height="8" rx="2"/><rect x="3" y="4" width="14" height="4" fill="currentColor"/><rect x="22" y="4" width="1" height="4" fill="currentColor"/></svg>
+            </div>
+          </div>
+          <div class="appbar">
+            <div class="title-block">
+              <div class="eyebrow-s">Week 4 · Hard to Kill</div>
+              <div class="title">Progress</div>
+            </div>
+            <div class="nav-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+          </div>
+          <div class="content content-below-tab">
+            <div>
+              <div class="card-label" style="padding-left:var(--s-1);">This Week</div>
+              <div class="week-strip">
+                <div class="day done"><div class="d">Mon</div><div class="val">✓</div></div>
+                <div class="day today"><div class="d">Tue</div><div class="val">•</div></div>
+                <div class="day"><div class="d">Wed</div><div class="val">·</div></div>
+                <div class="day rest"><div class="d">Thu</div><div class="val">Rest</div></div>
+                <div class="day"><div class="d">Fri</div><div class="val">·</div></div>
+                <div class="day"><div class="d">Sat</div><div class="val">·</div></div>
+                <div class="day rest"><div class="d">Sun</div><div class="val">Rest</div></div>
+              </div>
+            </div>
+            <div class="stat-grid">
+              <div class="stat-card accent"><div class="l">Bodyweight</div><div class="v">208.4<small>LB</small></div><div class="trend"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M23 18l-9.5-9.5-5 5L1 6"/><path d="M17 18h6v-6"/></svg>1.6 lb this week</div></div>
+              <div class="stat-card"><div class="l">Clean Days</div><div class="v">11<small>/14</small></div><div class="trend">Streak alive</div></div>
+              <div class="stat-card"><div class="l">Bench PR</div><div class="v">245<small>LB</small></div><div class="trend"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></svg>+10 lb · 4 wks</div></div>
+              <div class="stat-card"><div class="l">Volume</div><div class="v">42.1<small>K</small></div><div class="trend"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></svg>+8% vs last wk</div></div>
+            </div>
+            <div class="report-btn">
+              <div class="rb-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg></div>
+              <div class="rb-txt"><div class="n">Sunday Report Card</div><div class="s">Full week breakdown</div></div>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+            </div>
+          </div>
+          <nav class="tabbar">
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg><span class="tab-label">Today</span></div>
+            <div class="tab active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5v11M3 9.5v5M17.5 6.5v11M21 9.5v5M6.5 12h11"/></svg><span class="tab-label">Train</span></div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M4 5v4a4 4 0 0 0 4 4M20 5v4a4 4 0 0 1-4 4"/></svg><span class="tab-label">Fuel</span></div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg><span class="tab-label">Coach</span></div>
+          </nav>
+        </div></div>
+        <div class="screen-caption">
+          <div class="screen-label"><span class="n">06</span><span class="bullet"></span>Weekly Progress</div>
+          <div class="screen-desc">Week strip, key stats, PR tracking. Sunday Report Card breaks the week down.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     NUTRITION · 04
+     ════════════════════════════════════════════════════════ -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <div class="title-group">
+        <div class="eyebrow"><span class="n">04</span>Nutrition System</div>
+        <h2>90% of results.<br>Finally <em>automated.</em></h2>
+      </div>
+      <div class="desc">Three-phase system. Clean eating first, then macros, then ongoing adjustment. No calorie-counting on day one.</div>
+    </div>
+
+    <div class="nut-hero">
+      <div>
+        <div class="claim">Most apps<br>track food.<br><em>We tell you<br>what to eat.</em></div>
+        <div class="sub">Protein-first. 70-80% processed elimination. Scenarios the app already knows — gas station runs, fast food, cooler prep. Real answers, not a food diary.</div>
+      </div>
+
+      <div class="phase-timeline">
+        <div class="card-label">Your First 30 Days</div>
+        <div class="phase-axis">
+          <div class="tick t1"></div>
+          <div class="tick t2"></div>
+          <div class="tick t3"></div>
+          <div class="tick t4"></div>
+        </div>
+        <div class="phase-row">
+          <div class="phase">
+            <div class="phase-tag">Phase 1</div>
+            <div class="phase-name">Baseline<br>Reset</div>
+            <div class="phase-days">Day 1 → 14</div>
+            <div class="phase-desc">Clean eating framework. No macro counting. Focus on WHAT you eat, not HOW MUCH. Build a 14-day clean streak to unlock Phase 2.</div>
+          </div>
+          <div class="phase">
+            <div class="phase-tag">Phase 2</div>
+            <div class="phase-name">Macro<br>Optimization</div>
+            <div class="phase-days">Day 14 → 30</div>
+            <div class="phase-desc">Proprietary formula generates personal targets from bodyweight, track, and goal. Full food tracking activates with barcode scanner.</div>
+          </div>
+          <div class="phase">
+            <div class="phase-tag">Phase 3</div>
+            <div class="phase-name">Ongoing<br>Adjustment</div>
+            <div class="phase-days">Day 30+</div>
+            <div class="phase-desc">Weight trends → macros recalculate. Track-aware. 16-rule engine. Cardio before cuts. Prime Directive: you feel BETTER, not worse.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCENARIOS -->
+    <div class="scenarios-head">Watch the system work.</div>
+    <div class="scenario-grid">
+      <div class="scenario">
+        <div class="scen-num">Scenario 01 · Gas Station</div>
+        <div class="scen-title">You scan a hot dog.<br>App rescues the day.</div>
+        <div class="scen-flow">
+          <div class="scen-step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <div class="step-action">Scan</div>
+              <div class="step-detail">You scan the barcode at a QuikTrip. App reads <b>Oscar Mayer · 290 kcal · 11g protein · 24g fat</b>.</div>
+            </div>
+          </div>
+          <div class="scen-step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <div class="step-action">Flag</div>
+              <div class="step-detail">App flags: "This uses <b>40% of remaining fat</b> for 11g protein. Weak trade for your macros today."</div>
+            </div>
+          </div>
+          <div class="scen-step highlight">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <div class="step-action">Smart Swap</div>
+              <div class="step-detail"><b>Better choice:</b> Beef jerky (1oz) + mixed nuts (1oz). Same store. 14g protein · 18g fat · lands within range.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="scenario">
+        <div class="scen-num">Scenario 02 · Weekly Pattern</div>
+        <div class="scen-title">Under protein<br>three days running.</div>
+        <div class="scen-flow">
+          <div class="scen-step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <div class="step-action">Detect</div>
+              <div class="step-detail">App sees you've hit under <b>180g / 235g protein</b> Mon, Tue, Wed. Three-day pattern.</div>
+            </div>
+          </div>
+          <div class="scen-step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <div class="step-action">Sunday Report</div>
+              <div class="step-detail">Weekly report flags it: "Weak spot — <b>afternoon protein gap</b>. You eat breakfast + dinner protein, lunch and snacks drift carby."</div>
+            </div>
+          </div>
+          <div class="scen-step highlight">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <div class="step-action">Prep Strategy</div>
+              <div class="step-detail">App generates a <b>Sunday prep plan</b>: 2 lb ground beef + 8 chicken thighs + 2 dozen eggs. Portioned for your afternoon gap.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SMART FEATURES STRIP -->
+    <div class="features-strip">
+      <div class="feature-tile">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 4v16M11 4v16M15 4v16M19 4v16"/></svg></div>
+        <div class="ft-name">Barcode Scan</div>
+        <div class="ft-desc">3M+ foods via Open Food Facts. Offline-capable.</div>
+      </div>
+      <div class="feature-tile">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M4 5v4a4 4 0 0 0 4 4M20 5v4a4 4 0 0 1-4 4"/></svg></div>
+        <div class="ft-name">Smart Swaps</div>
+        <div class="ft-desc">Gas station, fast food, grocery — better choice same store.</div>
+      </div>
+      <div class="feature-tile">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"/></svg></div>
+        <div class="ft-name">Streak Intel</div>
+        <div class="ft-desc">Flags risky foods before the streak breaks.</div>
+      </div>
+      <div class="feature-tile">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11h.01M15 11h.01M9 15h6M3 4h18M3 4l1 16a2 2 0 002 2h12a2 2 0 002-2l1-16"/></svg></div>
+        <div class="ft-name">Grocery List</div>
+        <div class="ft-desc">Auto-built from your plan, organized by store section.</div>
+      </div>
+      <div class="feature-tile">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 6v6l4 2"/></svg></div>
+        <div class="ft-name">Pre-Workout Timing</div>
+        <div class="ft-desc">Nudges meal timing 2-3 hours before your session.</div>
+      </div>
+      <div class="feature-tile">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg></div>
+        <div class="ft-name">Sunday Report</div>
+        <div class="ft-desc">Weekly visual — what you nailed, what slipped.</div>
+      </div>
+    </div>
+
+    <!-- NUTRITION STYLES -->
+    <div class="nut-styles">
+      <div class="head">
+        <div class="t">Three Styles. Pick What Fits.</div>
+        <div class="s">Set once in onboarding. App hides features you won't use. Switchable anytime — no data loss.</div>
+      </div>
+      <div class="style-row">
+        <div class="style-tile">
+          <div class="n">All In</div>
+          <div class="for">Full system</div>
+          <div class="d">Meal library, grocery list generator, full macro tracking, Sunday prep plans. Optimization mode.</div>
+        </div>
+        <div class="style-tile">
+          <div class="n">Flexible</div>
+          <div class="for">Track + learn</div>
+          <div class="d">Full macro tracking, meal library, no grocery list automation. Eat what you want within range.</div>
+        </div>
+        <div class="style-tile">
+          <div class="n">No Prep</div>
+          <div class="for">Life is busy</div>
+          <div class="d">Macro tracking + swap suggestions only. No grocery lists, no meal plans. Just hit the numbers.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     TRAINING ENGINE · 05
+     ════════════════════════════════════════════════════════ -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <div class="title-group">
+        <div class="eyebrow"><span class="n">05</span>Training Engine</div>
+        <h2>410+ exercises.<br>Never the <em>same way twice.</em></h2>
+      </div>
+      <div class="desc">Cycle model, rotation logic, recovery adaptation, session scaling. Four systems running underneath every workout.</div>
+    </div>
+
+    <!-- ROTATION MATH -->
+    <div class="rotation-card">
+      <div class="card-label" style="color:var(--accent);letter-spacing:2px;">The Rotation Math</div>
+      <div class="rotation-equation">
+        <span class="num-pill">6 Tracks</span>
+        <span class="op">×</span>
+        <span class="num-pill">3-4 Variations</span>
+        <span class="op">×</span>
+        <span class="num-pill">15-wk Cycles</span>
+      </div>
+      <div class="rotation-result">= <em>3 to 4 years</em><br>before an exact repeat.</div>
+
+      <div class="rotation-matrix">
+        <div class="rm-head"></div>
+        <div class="rm-head">Cycle A</div>
+        <div class="rm-head">Cycle B</div>
+        <div class="rm-head">Cycle C</div>
+        <div class="rm-head">Cycle D</div>
+
+        <div class="rm-row-label">Hard to Kill</div>
+        <div class="rm-cell">Strength-leaning</div>
+        <div class="rm-cell">Conditioning-heavy</div>
+        <div class="rm-cell">Athletic / explosive</div>
+        <div class="rm-cell empty">app-generated</div>
+
+        <div class="rm-row-label">Strength</div>
+        <div class="rm-cell">Accumulation</div>
+        <div class="rm-cell">Realization</div>
+        <div class="rm-cell empty">rebuild</div>
+        <div class="rm-cell empty">retest</div>
+
+        <div class="rm-row-label">Hypertrophy</div>
+        <div class="rm-cell">Push / Pull / Legs A</div>
+        <div class="rm-cell">Push / Pull / Legs B</div>
+        <div class="rm-cell">Push / Pull / Legs C</div>
+        <div class="rm-cell empty">app-generated</div>
+
+        <div class="rm-row-label">Performance</div>
+        <div class="rm-cell">Strength-Speed</div>
+        <div class="rm-cell">Power / Explosive</div>
+        <div class="rm-cell">Olympic / Capacity</div>
+        <div class="rm-cell empty">app-generated</div>
+
+        <div class="rm-row-label">Reset</div>
+        <div class="rm-cell">8-wk on-ramp</div>
+        <div class="rm-cell empty">graduate</div>
+        <div class="rm-cell empty">—</div>
+        <div class="rm-cell empty">—</div>
+
+        <div class="rm-row-label">No Gym</div>
+        <div class="rm-cell">Foundation</div>
+        <div class="rm-cell">Unilateral / Explosive</div>
+        <div class="rm-cell">Density / Engine</div>
+        <div class="rm-cell empty">app-generated</div>
+      </div>
+    </div>
+
+    <!-- RECOVERY ENGINE + SESSION SCALING -->
+    <div class="two-col">
+      <!-- RECOVERY ENGINE -->
+      <div class="engine-sub-card">
+        <div class="tag">Recovery & Adaptation Engine</div>
+        <div class="t"><em>The program</em><br>listens back.</div>
+        <div class="desc">Daily 4-question check-in. Rolling 7-day window. 5 intervention tiers. User always overrides.</div>
+
+        <div class="tree">
+          <div class="tree-row">
+            <div class="tree-node trigger">
+              <span class="role">Trigger</span>
+              3 Red check-ins this week · AMRAP reps dropped 2 sessions
+            </div>
+          </div>
+          <div class="tree-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          </div>
+          <div class="tree-row">
+            <div class="tree-node fire">
+              <span class="role">Tier 2 · Session Modification</span>
+              Pre-session prompt fires. You pick.
+            </div>
+          </div>
+          <div class="tree-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          </div>
+          <div class="tree-options">
+            <div class="tree-opt">
+              <span class="on">Planned</span>
+              <span class="os">Run it as programmed</span>
+            </div>
+            <div class="tree-opt">
+              <span class="on">Modified</span>
+              <span class="os">Lighter · shorter · smarter</span>
+            </div>
+            <div class="tree-opt">
+              <span class="on">Active Rec</span>
+              <span class="os">Mobility + walk · streak holds</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="track-tags" style="margin-top:var(--s-3);">
+          <span>5 Tiers · nudge → safety</span>
+          <span>Pain flag · always visible</span>
+          <span>Auto-sub alternatives</span>
+        </div>
+      </div>
+
+      <!-- SESSION SCALING -->
+      <div class="engine-sub-card">
+        <div class="tag">Session-Length Scaling</div>
+        <div class="t">30. 45. 60.<br><em>Same core quality.</em></div>
+        <div class="desc">Pick your time at onboarding. Switch daily. Primary always fires. Core always present. Cycle math never touched.</div>
+
+        <div class="scaling-grid">
+          <div class="scale-row">
+            <div class="scale-label"><div class="v">60</div><div class="u">min</div></div>
+            <div class="scale-slots">
+              <div class="scale-slot keep">Warm</div>
+              <div class="scale-slot keep">Primary</div>
+              <div class="scale-slot keep">Secondary</div>
+              <div class="scale-slot">Acc 1</div>
+              <div class="scale-slot">Acc 2</div>
+              <div class="scale-slot">Cond</div>
+              <div class="scale-slot keep">Core</div>
+              <div class="scale-slot keep">AMRAP</div>
+            </div>
+          </div>
+          <div class="scale-row">
+            <div class="scale-label"><div class="v">45</div><div class="u">min</div></div>
+            <div class="scale-slots">
+              <div class="scale-slot keep">Warm</div>
+              <div class="scale-slot keep">Primary</div>
+              <div class="scale-slot keep">Secondary</div>
+              <div class="scale-slot">Acc 1</div>
+              <div class="scale-slot drop">Acc 2</div>
+              <div class="scale-slot">Cond −30%</div>
+              <div class="scale-slot keep">Core</div>
+              <div class="scale-slot keep">AMRAP</div>
+            </div>
+          </div>
+          <div class="scale-row">
+            <div class="scale-label"><div class="v">30</div><div class="u">min</div></div>
+            <div class="scale-slots">
+              <div class="scale-slot keep">Warm</div>
+              <div class="scale-slot keep">Primary</div>
+              <div class="scale-slot">Sec 1+AMRAP</div>
+              <div class="scale-slot drop">Acc 1</div>
+              <div class="scale-slot drop">Acc 2</div>
+              <div class="scale-slot">Cond short</div>
+              <div class="scale-slot keep">Core</div>
+              <div class="scale-slot keep">AMRAP</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="track-tags" style="margin-top:var(--s-3);">
+          <span class="lime">Never drop · Warm · Primary · Core · AMRAP</span>
+          <span>Mid-session cut-short button</span>
+          <span>Reset locked to 45 min min.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- EQUIPMENT-AWARE + EXERCISES -->
+    <div class="two-col">
+      <div class="engine-sub-card">
+        <div class="tag">Equipment-Aware Programming</div>
+        <div class="t">Your kit.<br>Your <em>program.</em></div>
+        <div class="desc">Onboarding asks what you have. App fills the same slot different ways for different equipment. Same session template, different movements.</div>
+
+        <div class="track-tags" style="margin-top:var(--s-2);">
+          <span class="lime">Full commercial gym</span>
+          <span>Home garage rack</span>
+          <span>Dumbbells only</span>
+          <span>Bodyweight only</span>
+          <span>Rare equipment (boards, sleds) gated behind confirmation</span>
+        </div>
+      </div>
+
+      <div class="engine-sub-card">
+        <div class="tag">Exercise Library · 410+</div>
+        <div class="t">Every movement.<br>Every <em>track.</em></div>
+        <div class="desc">Hand-categorized by pattern, equipment, track, difficulty. Coach-influenced additions (Westside, DeFranco, Turley, Dan John, Efferding).</div>
+
+        <div class="track-tags" style="margin-top:var(--s-2);">
+          <span>Hypertrophy · 137</span>
+          <span>Performance · 127</span>
+          <span>Strength · 65</span>
+          <span>No Gym · 50</span>
+          <span>Coach Additions · 30</span>
+          <span>SFR + stretch-position tags on hypertrophy</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     AI COACH · 06
+     ════════════════════════════════════════════════════════ -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <div class="title-group">
+        <div class="eyebrow"><span class="n">06</span>AI Coach</div>
+        <h2>Not ChatGPT.<br>Trained on <em>you.</em></h2>
+      </div>
+      <div class="desc">The coach reads your current block, week, macros, adherence, and training fatigue before it answers anything.</div>
+    </div>
+
+    <div class="coach-grid">
+      <div class="coach-context-card">
+        <div class="tag" style="color:var(--accent);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:var(--s-3);">What Coach Knows About You</div>
+        <div class="t">Personalized<br>to the <em>move you're on.</em></div>
+        <div class="desc">Every response is conditioned on your current training + nutrition state. No generic answers. The coach speaks to YOUR week.</div>
+
+        <div class="ctx-grid">
+          <div class="ctx-item"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L3 6v6c0 5 3.8 9.7 9 11 5.2-1.3 9-6 9-11V6l-9-4z"/></svg></div><div class="t">Your Track</div></div>
+          <div class="ctx-item"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div><div class="t">Cycle Week</div></div>
+          <div class="ctx-item"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M4 5v4a4 4 0 0 0 4 4M20 5v4a4 4 0 0 1-4 4"/></svg></div><div class="t">Macro Targets</div></div>
+          <div class="ctx-item"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"/></svg></div><div class="t">Adherence</div></div>
+          <div class="ctx-item"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5v11M3 9.5v5M17.5 6.5v11M21 9.5v5M6.5 12h11"/></svg></div><div class="t">Training History</div></div>
+          <div class="ctx-item"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 6v6l4 2"/></svg></div><div class="t">Logged Fatigue</div></div>
+        </div>
+
+        <div class="track-tags" style="margin-top:var(--s-5);">
+          <span class="lime">Rule-based coach · free tier · handles 90%</span>
+          <span>Full AI coach · every plan</span>
+          <span>Zero-token mode offline</span>
+        </div>
+      </div>
+
+      <div class="coach-samples">
+        <div class="coach-sample">
+          <div class="cs-num">Sample 01 · Fuel Check</div>
+          <div class="cs-label">Pulls remaining macros</div>
+          <div class="cs-flow">
+            <div class="cs-msg user">Only at 140g protein and it's 2pm. Am I cooked?</div>
+            <div class="cs-msg coach">Not cooked. You've got <b>95g left</b> and 6 hours. Two chicken thighs + greek yogurt tonight closes the gap easy.</div>
+          </div>
+        </div>
+
+        <div class="coach-sample">
+          <div class="cs-num">Sample 02 · Recovery Call</div>
+          <div class="cs-label">Reads cycle week + sleep log</div>
+          <div class="cs-flow">
+            <div class="cs-msg user">Should I skip tomorrow?</div>
+            <div class="cs-msg coach">You're <b>Week 4 of Block B</b> — deload next week. Tomorrow's session is conditioning + core, not heavy. Go. Sleep was 7.4hr, you're fine.</div>
+          </div>
+        </div>
+
+        <div class="coach-sample">
+          <div class="cs-num">Sample 03 · Pain Flag</div>
+          <div class="cs-label">Auto-swap from library</div>
+          <div class="cs-flow">
+            <div class="cs-msg user">Back squat is hurting my right knee.</div>
+            <div class="cs-msg coach">Swapping to <b>goblet squat</b> for this block. Same pattern, knee-friendly load. If it's still tight in 3 sessions, flag again — we'll go to leg press.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     WHAT MAKES IT DIFFERENT · 07
+     ════════════════════════════════════════════════════════ -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <div class="title-group">
+        <div class="eyebrow"><span class="n">07</span>What Makes It Different</div>
+        <h2>Not a tracker.<br>Not a template. <em>A coach.</em></h2>
+      </div>
+      <div class="desc">Most fitness apps track or program. BCH Fit does both — and connects them to your recovery in one loop.</div>
+    </div>
+
+    <div class="contrast-stack">
+      <div class="contrast">
+        <div class="contrast-num">01</div>
+        <div class="contrast-text"><span class="muted">MyFitnessPal tracks food.</span><br>We <em>tell you what to eat.</em></div>
+      </div>
+      <div class="contrast">
+        <div class="contrast-num">02</div>
+        <div class="contrast-text"><span class="muted">Caliber programs training.</span><br>We connect <em>training, nutrition, recovery.</em></div>
+      </div>
+      <div class="contrast">
+        <div class="contrast-num">03</div>
+        <div class="contrast-text"><span class="muted">Future sells a trainer for $200.</span><br>We <em>are the trainer</em> for $40.</div>
+      </div>
+    </div>
+
+    <div class="facts-strip">
+      <div class="fact"><div class="fv"><em>$40</em> / mo</div><div class="fl">Subscription</div></div>
+      <div class="fact"><div class="fv">7-day</div><div class="fl">Free trial</div></div>
+      <div class="fact"><div class="fv">iOS</div><div class="fl">Native · SwiftUI</div></div>
+      <div class="fact"><div class="fv">Offline</div><div class="fl">Gym · Job Site</div></div>
+      <div class="fact"><div class="fv">Apple</div><div class="fl">Watch · Coming</div></div>
+      <div class="fact"><div class="fv">410+</div><div class="fl">Exercises</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     FOOTER
+     ════════════════════════════════════════════════════════ -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="left">
+      <span class="dot"></span>
+      <span>BCH Fit · Native iOS · In Development</span>
+    </div>
+    <div>v1 · Showcase · Asphalt + Lime</div>
+  </div>
+</footer>
+
+</body>
+</html>
