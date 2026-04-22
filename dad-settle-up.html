@@ -241,12 +241,127 @@ footer .note {
   .brand img { height: 50px; }
 }
 
+/* Print button (on-screen only) */
+.print-btn-wrap {
+  position: relative; z-index: 2;
+  max-width: 800px; margin: 0 auto;
+  padding: 20px 30px 0;
+  display: flex; justify-content: flex-end;
+}
+.print-btn {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  padding: 10px 18px; border-radius: 8px;
+  background: var(--gradient-gold); color: #0a0a0a;
+  border: none; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.print-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(197,165,90,0.3);
+}
+.print-btn svg { width: 14px; height: 14px; }
+
 @media print {
-  .bg-texture, .bg-glow { display: none; }
-  body { background: #fff; color: #111; }
-  .inv-table td { background: #f8f6f0; }
-  .inv-table tr.group-total td { background: #f0e8d0; }
-  .grand-total-card { background: #C5A55A; }
+  @page { margin: 0.5in; size: letter; }
+
+  /* Hide decorative layers */
+  .bg-texture, .bg-glow, .print-btn-wrap, .gold-line { display: none !important; }
+
+  /* Flip the theme */
+  body {
+    background: #ffffff !important;
+    color: #0a0a0a !important;
+    padding: 0 !important;
+  }
+  body::after { display: none !important; }
+
+  /* Preserve gold + text colors for print */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  /* Headers */
+  header {
+    padding: 10px 0 16px;
+    border-bottom: 2px solid #C5A55A;
+  }
+  .brand-text h1 {
+    background: none !important;
+    -webkit-text-fill-color: #A8893D !important;
+    color: #A8893D !important;
+  }
+  .brand-text .tagline { color: #A8893D !important; }
+  .invoice-meta p { color: #333 !important; }
+  .invoice-meta strong { color: #0a0a0a !important; }
+
+  /* Invoice titles */
+  .invoice-title h2 { color: #0a0a0a !important; }
+  .invoice-title h2 span {
+    background: none !important;
+    -webkit-text-fill-color: #A8893D !important;
+    color: #A8893D !important;
+  }
+  .invoice-badge {
+    background: #f5eed6 !important;
+    color: #7a6024 !important;
+    border-color: #C5A55A !important;
+  }
+
+  /* Parties */
+  .party-card {
+    background: #ffffff !important;
+    border: 1px solid #C5A55A !important;
+    backdrop-filter: none !important;
+    break-inside: avoid;
+  }
+  .party-card .label { color: #7a6024 !important; }
+  .party-card .name { color: #0a0a0a !important; }
+  .party-card .detail { color: #555 !important; }
+  .arrow { color: #A8893D !important; }
+
+  /* Tables */
+  .group-label { color: #7a6024 !important; }
+  .inv-table th {
+    color: #7a6024 !important;
+    border-bottom: 1.5px solid #C5A55A !important;
+  }
+  .inv-table td {
+    background: #fafaf7 !important;
+    color: #0a0a0a !important;
+    border-color: #ddd !important;
+  }
+  .inv-table td:first-child { color: #333 !important; }
+  .inv-table tr.group-total td {
+    background: #f5eed6 !important;
+    color: #7a6024 !important;
+    border-top: 2px solid #C5A55A !important;
+  }
+
+  /* Grand total cards */
+  .grand-total-card {
+    background: #C5A55A !important;
+    color: #0a0a0a !important;
+    box-shadow: none !important;
+  }
+  .grand-total-card .gt-label,
+  .grand-total-card .gt-amount {
+    color: #0a0a0a !important;
+  }
+
+  /* Page-break hygiene */
+  .invoice-title, .parties, .grand-total { break-inside: avoid; }
+  .inv-table { break-inside: avoid; }
+  footer { break-inside: avoid; }
+
+  /* Footer */
+  footer img { filter: none !important; }
+  footer p { color: #555 !important; }
+  footer .tagline-footer { color: #A8893D !important; }
 }
 </style>
 </head>
@@ -254,6 +369,13 @@ footer .note {
 
 <div class="bg-texture"></div>
 <div class="bg-glow"></div>
+
+<div class="print-btn-wrap">
+  <button class="print-btn" onclick="window.print()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+    Print &amp; Save PDF
+  </button>
+</div>
 
 <hr class="gold-line">
 
