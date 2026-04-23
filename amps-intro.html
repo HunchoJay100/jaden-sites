@@ -1152,93 +1152,148 @@ section {
 .amps-site {
   background: #050505;
   color: #FAFAFA;
-  padding: 0;
   font-family: 'Space Grotesk', sans-serif;
   position: relative;
   overflow: hidden;
 }
-.amps-site::before {
-  content: '';
+.amps-grid-bg {
   position: absolute;
-  top: -40%; right: -20%;
-  width: 70vmax; height: 70vmax;
-  background: radial-gradient(circle, rgba(242,233,43,0.06) 0%, transparent 50%);
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse at top right, #000 0%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse at top right, #000 0%, transparent 70%);
   pointer-events: none;
+  z-index: 0;
 }
+.amps-site > * { position: relative; z-index: 1; }
+
+/* NAV */
 .amps-nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 18px 24px;
+  padding: 20px clamp(18px, 3.5vw, 40px);
   border-bottom: 1px solid rgba(255,255,255,0.08);
-  position: relative;
-  z-index: 2;
   gap: 16px;
+  background: rgba(5,5,5,0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
-.amps-logo {
+.amps-wordmark { line-height: 1; }
+.amps-wordmark-top {
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 700;
-  font-size: clamp(22px, 3.5vw, 30px);
+  font-size: clamp(22px, 3.2vw, 30px);
   letter-spacing: -0.05em;
   color: #FFFFFF;
   line-height: 1;
 }
+.amps-wordmark-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.26em;
+  color: var(--accent);
+  margin-top: 5px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
 .amps-menu {
   display: none;
-  gap: 26px;
+  gap: 28px;
+  align-items: center;
 }
 .amps-menu span {
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 500;
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  color: rgba(255,255,255,0.68);
+  font-size: 12px;
+  color: rgba(255,255,255,0.72);
+  letter-spacing: -0.005em;
+  cursor: pointer;
 }
-@media (min-width: 640px) { .amps-menu { display: flex; } }
+.amps-menu span:hover { color: var(--accent); }
+@media (min-width: 780px) { .amps-menu { display: flex; } }
 .amps-phone {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 8px 14px;
-  border: 1px solid rgba(242,233,43,0.4);
-  border-radius: 999px;
-  background: rgba(242,233,43,0.04);
-}
-.amps-phone-lbl {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9.5px;
-  letter-spacing: 0.16em;
-  color: var(--accent);
-  font-weight: 600;
-  border-right: 1px solid rgba(242,233,43,0.3);
-  padding-right: 10px;
-}
-.amps-phone-num {
+  gap: 8px;
+  padding: 9px 14px;
+  background: var(--accent);
+  color: #000;
+  border-radius: 6px;
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 600;
   font-size: 12px;
-  color: #FAFAFA;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.005em;
+  text-decoration: none;
 }
-@media (max-width: 420px) {
-  .amps-phone-num { display: none; }
-}
+.amps-phone svg { stroke-width: 2.4; }
+.amps-phone-num { white-space: nowrap; }
+@media (max-width: 420px) { .amps-phone-num { display: none; } }
+
+/* HERO */
 .amps-hero {
-  padding: clamp(44px, 7vw, 90px) clamp(20px, 4vw, 48px) clamp(40px, 6vw, 72px);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 36px;
+  padding: clamp(40px, 6vw, 80px) clamp(18px, 3.5vw, 40px) clamp(36px, 5vw, 60px);
   position: relative;
-  z-index: 2;
 }
-.amps-tag {
+@media (min-width: 880px) {
+  .amps-hero {
+    grid-template-columns: 28px 1fr 280px;
+    gap: 40px;
+    align-items: start;
+  }
+}
+.amps-hero-rail {
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 8px;
+  border-left: 1px solid rgba(255,255,255,0.08);
+  padding-left: 14px;
+}
+@media (min-width: 880px) { .amps-hero-rail { display: flex; } }
+.amps-rail-i {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  color: rgba(255,255,255,0.32);
+  text-transform: uppercase;
+  white-space: nowrap;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+.amps-rail-active {
+  color: var(--accent);
+  position: relative;
+}
+.amps-rail-active::before {
+  content: '';
+  position: absolute;
+  left: -19px; top: 50%;
+  transform: translateY(-50%);
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 14px var(--accent);
+}
+.amps-hero-content { min-width: 0; }
+.amps-eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 10px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 10.5px;
+  font-size: 10px;
   letter-spacing: 0.22em;
   color: rgba(255,255,255,0.75);
-  padding: 6px 12px;
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 4px;
+  padding: 7px 12px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.02);
+  border-radius: 2px;
   margin-bottom: 28px;
   text-transform: uppercase;
 }
@@ -1246,13 +1301,13 @@ section {
   width: 6px; height: 6px;
   border-radius: 50%;
   background: var(--accent);
-  box-shadow: 0 0 12px var(--accent);
+  box-shadow: 0 0 10px var(--accent);
 }
 .amps-headline {
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 700;
-  font-size: clamp(48px, 9.5vw, 120px);
-  line-height: 0.88;
+  font-size: clamp(44px, 8.8vw, 108px);
+  line-height: 0.9;
   letter-spacing: -0.055em;
   color: #FAFAFA;
   text-transform: uppercase;
@@ -1262,31 +1317,32 @@ section {
 .amps-sub {
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 400;
-  font-size: clamp(15px, 1.6vw, 18px);
-  color: rgba(255,255,255,0.65);
-  max-width: 460px;
-  line-height: 1.5;
+  font-size: clamp(14px, 1.5vw, 17px);
+  color: rgba(255,255,255,0.68);
+  max-width: 480px;
+  line-height: 1.55;
   margin-bottom: 32px;
   letter-spacing: -0.005em;
 }
 .amps-btns {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
 }
 .amps-btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 14px 22px;
+  gap: 10px;
+  padding: 13px 22px;
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 600;
   font-size: 13px;
-  letter-spacing: 0.02em;
-  border-radius: 999px;
+  letter-spacing: -0.005em;
+  border-radius: 6px;
   cursor: pointer;
   text-decoration: none;
   transition: transform 0.25s var(--ease);
+  min-height: 44px;
 }
 .amps-btn.primary {
   background: var(--accent);
@@ -1295,39 +1351,219 @@ section {
 .amps-btn.ghost {
   background: transparent;
   color: #FAFAFA;
-  border: 1px solid rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.16);
 }
 .amps-btn:hover { transform: translateY(-2px); }
+.amps-btn .arr {
+  transition: transform 0.25s var(--ease);
+}
+.amps-btn:hover .arr { transform: translateX(3px); }
+
+/* HERO METER CARD */
+.amps-hero-meter {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 18px;
+  position: relative;
+}
+.amps-meter-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.amps-meter-label::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+  animation: pulse 1.8s ease-in-out infinite;
+}
+.amps-meter-bars {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 3px;
+  height: 48px;
+  align-items: end;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.amps-meter-bars span {
+  background: linear-gradient(180deg, var(--accent), rgba(242,233,43,0.25));
+  height: var(--h);
+  border-radius: 1px 1px 0 0;
+  min-height: 8%;
+}
+.amps-meter-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  color: rgba(255,255,255,0.62);
+  border-bottom: 1px dashed rgba(255,255,255,0.05);
+}
+.amps-meter-row:last-child { border-bottom: none; padding-bottom: 0; }
+.amps-meter-row b {
+  font-weight: 600;
+  color: #FAFAFA;
+  font-size: 14px;
+  letter-spacing: -0.01em;
+}
+
+/* CAPS */
+.amps-caps {
+  padding: clamp(40px, 5vw, 72px) clamp(18px, 3.5vw, 40px);
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.amps-caps-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 36px;
+  max-width: 640px;
+}
+.amps-caps-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+.amps-caps-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: clamp(24px, 3.6vw, 40px);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  color: #FAFAFA;
+}
+.amps-caps-title .hl { color: var(--accent); }
+.amps-caps-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+@media (min-width: 640px) { .amps-caps-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 960px) { .amps-caps-grid { grid-template-columns: repeat(4, 1fr); } }
+.amps-cap {
+  background: #050505;
+  padding: 24px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  transition: background 0.3s var(--ease);
+}
+.amps-cap:hover { background: #0A0A0A; }
+.amps-cap-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  color: rgba(255,255,255,0.28);
+  margin-bottom: 4px;
+}
+.amps-cap-icon {
+  width: 44px; height: 44px;
+  border: 1px solid rgba(242,233,43,0.4);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  margin-bottom: 10px;
+  background: rgba(242,233,43,0.04);
+}
+.amps-cap-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  color: #FAFAFA;
+  letter-spacing: -0.02em;
+}
+.amps-cap-desc {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(255,255,255,0.6);
+}
+
+/* STATS STRIP */
 .amps-strip {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  border-top: 1px solid rgba(255,255,255,0.08);
-  position: relative;
-  z-index: 2;
+  border-top: 1px solid rgba(255,255,255,0.06);
 }
 @media (min-width: 740px) { .amps-strip { grid-template-columns: repeat(4, 1fr); } }
 .amps-strip-item {
-  padding: 22px 20px;
+  padding: 22px 22px;
   border-right: 1px solid rgba(255,255,255,0.06);
   border-bottom: 1px solid rgba(255,255,255,0.06);
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
 }
 .amps-strip-item .n {
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 700;
-  font-size: clamp(20px, 2.4vw, 26px);
-  letter-spacing: -0.02em;
+  font-size: clamp(24px, 2.8vw, 32px);
+  letter-spacing: -0.03em;
   color: var(--accent);
+  line-height: 1;
 }
 .amps-strip-item .l {
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 400;
   font-size: 11.5px;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.5);
+  color: rgba(255,255,255,0.48);
+}
+
+/* FOOTER */
+.amps-foot {
+  padding: 36px clamp(18px, 3.5vw, 40px);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  background: #030303;
+}
+@media (min-width: 720px) {
+  .amps-foot { flex-direction: row; justify-content: space-between; align-items: center; }
+}
+.amps-foot-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.22em;
+  color: rgba(255,255,255,0.42);
+  margin-top: 6px;
+  text-transform: uppercase;
+}
+.amps-foot-cta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.amps-foot-lbl {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  color: rgba(255,255,255,0.62);
+  font-weight: 400;
+  letter-spacing: -0.005em;
 }
 
 /* META REVEAL */
@@ -1921,39 +2157,123 @@ footer {
         <div class="frame-body">
           <div class="amps-site">
 
-            <div class="amps-nav">
-              <div class="amps-logo">AMPS</div>
+            <div class="amps-grid-bg"></div>
+
+            <header class="amps-nav">
+              <div class="amps-wordmark">
+                <div class="amps-wordmark-top">AMPS</div>
+                <div class="amps-wordmark-sub">ELECTRICAL INTEGRATORS</div>
+              </div>
               <nav class="amps-menu">
-                <span>WORK</span>
-                <span>SERVICES</span>
-                <span>ABOUT</span>
-                <span>CONTACT</span>
+                <span>Work</span>
+                <span>Services</span>
+                <span>About</span>
+                <span>Careers</span>
+                <span>Contact</span>
               </nav>
-              <div class="amps-phone">
-                <span class="amps-phone-lbl">24/7</span>
+              <a class="amps-phone">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                 <span class="amps-phone-num">(931) 520-4994</span>
-              </div>
-            </div>
+              </a>
+            </header>
 
-            <div class="amps-hero">
-              <div class="amps-tag">
-                <span class="amps-dot"></span>
-                RESIDENTIAL · COMMERCIAL · INTEGRATION
+            <section class="amps-hero">
+              <div class="amps-hero-rail">
+                <span class="amps-rail-i">01 / HOME</span>
+                <span class="amps-rail-i amps-rail-active">HERO</span>
+                <span class="amps-rail-i">SERVICES</span>
+                <span class="amps-rail-i">WORK</span>
               </div>
-              <h1 class="amps-headline">POWER<br>THAT SHOWS<br><span class="hl">UP.</span></h1>
-              <p class="amps-sub">Three decades wiring the Upper Cumberland. No job too big or too small.</p>
-              <div class="amps-btns">
-                <a class="amps-btn primary">Request a bid</a>
-                <a class="amps-btn ghost">See our work <span>→</span></a>
+              <div class="amps-hero-content">
+                <div class="amps-eyebrow">
+                  <span class="amps-dot"></span>
+                  COOKEVILLE · UPPER CUMBERLAND · TENNESSEE STATEWIDE
+                </div>
+                <h1 class="amps-headline">
+                  NO JOB<br>
+                  TOO BIG.<br>
+                  <span class="hl">NO JOB</span><br>
+                  <span class="hl">TOO SMALL.</span>
+                </h1>
+                <p class="amps-sub">
+                  Three decades of precision electrical work across the Upper Cumberland. Residential, commercial, and full-scope integration. Answered by a human. Billed on the scope we quoted.
+                </p>
+                <div class="amps-btns">
+                  <a class="amps-btn primary">Request a bid<span class="arr">→</span></a>
+                  <a class="amps-btn ghost">See our work</a>
+                </div>
               </div>
-            </div>
+              <div class="amps-hero-meter">
+                <div class="amps-meter-label">LIVE · 24/7 DISPATCH</div>
+                <div class="amps-meter-bars">
+                  <span style="--h:38%"></span><span style="--h:62%"></span><span style="--h:44%"></span><span style="--h:78%"></span>
+                  <span style="--h:52%"></span><span style="--h:86%"></span><span style="--h:68%"></span><span style="--h:94%"></span>
+                  <span style="--h:74%"></span><span style="--h:58%"></span><span style="--h:82%"></span><span style="--h:46%"></span>
+                </div>
+                <div class="amps-meter-row"><span>Crews dispatched today</span><b>7</b></div>
+                <div class="amps-meter-row"><span>Avg. response time</span><b>&lt; 2h</b></div>
+                <div class="amps-meter-row"><span>Active service areas</span><b>14</b></div>
+              </div>
+            </section>
 
-            <div class="amps-strip">
+            <section class="amps-caps">
+              <div class="amps-caps-header">
+                <div class="amps-caps-label">SERVICES</div>
+                <h2 class="amps-caps-title">Full-scope <span class="hl">electrical integration.</span></h2>
+              </div>
+              <div class="amps-caps-grid">
+                <div class="amps-cap">
+                  <div class="amps-cap-num">01</div>
+                  <div class="amps-cap-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                  </div>
+                  <div class="amps-cap-name">Residential</div>
+                  <div class="amps-cap-desc">Panel upgrades, whole-home rewires, smart integration, generator installs. Built like we'd wire our own place.</div>
+                </div>
+                <div class="amps-cap">
+                  <div class="amps-cap-num">02</div>
+                  <div class="amps-cap-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="1"/><line x1="9" y1="4" x2="9" y2="21"/><line x1="15" y1="4" x2="15" y2="21"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="3" y1="16" x2="21" y2="16"/></svg>
+                  </div>
+                  <div class="amps-cap-name">Commercial</div>
+                  <div class="amps-cap-desc">Tenant fit-outs, retail buildouts, medical, hospitality, multi-site rollouts. On schedule. On budget. On code.</div>
+                </div>
+                <div class="amps-cap">
+                  <div class="amps-cap-num">03</div>
+                  <div class="amps-cap-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                  </div>
+                  <div class="amps-cap-name">Integration</div>
+                  <div class="amps-cap-desc">Low-voltage, structured cabling, control systems, AV, security. The part most contractors subcontract out, we do in-house.</div>
+                </div>
+                <div class="amps-cap">
+                  <div class="amps-cap-num">04</div>
+                  <div class="amps-cap-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                  </div>
+                  <div class="amps-cap-name">24/7 Emergency</div>
+                  <div class="amps-cap-desc">Power's out. Breaker's down. Something's burning. One number, answered any hour, every day of the year.</div>
+                </div>
+              </div>
+            </section>
+
+            <section class="amps-strip">
               <div class="amps-strip-item"><span class="n">30+</span><span class="l">Years in the trade</span></div>
               <div class="amps-strip-item"><span class="n">24/7</span><span class="l">Emergency response</span></div>
               <div class="amps-strip-item"><span class="n">TN</span><span class="l">Statewide service</span></div>
-              <div class="amps-strip-item"><span class="n">RES · COM · INT</span><span class="l">Full scope integrators</span></div>
-            </div>
+              <div class="amps-strip-item"><span class="n">2</span><span class="l">Sister companies, one standard</span></div>
+            </section>
+
+            <footer class="amps-foot">
+              <div class="amps-foot-mark">
+                <div class="amps-wordmark-top" style="font-size:28px;">AMPS</div>
+                <div class="amps-foot-sub">Electrical Integrators · Fidelity · Cookeville TN</div>
+              </div>
+              <div class="amps-foot-cta">
+                <span class="amps-foot-lbl">Start your next project</span>
+                <a class="amps-btn primary">Request a bid<span class="arr">→</span></a>
+              </div>
+            </footer>
 
           </div>
         </div>
