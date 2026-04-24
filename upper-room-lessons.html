@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lessons — The Upper Room</title>
+<meta name="description" content="Lesson notes from The Upper Room men's group in Cookeville, TN. Catch up on what you missed." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400..700;1,14..32,400..700&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --bg:    #FAFAFA;
+    --ink:   #0A0A0A;
+    --ink-2: #52525B;
+    --ink-3: #A1A1AA;
+    --rule:  rgba(10,10,10,0.12);
+    --rule-strong: rgba(10,10,10,0.28);
+    --ease:  cubic-bezier(0.2, 0, 0, 1);
+
+    --s-xs: 4px; --s-s: 8px; --s-m: 12px; --s-l: 16px;
+    --s-xl: 24px; --s-2xl: 32px; --s-3xl: 48px; --s-4xl: 80px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--bg); color: var(--ink);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 17px; line-height: 1.55;
+    font-feature-settings: "ss01", "cv11";
+    font-variation-settings: "opsz" 18;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body { overflow-x: hidden; }
+
+  .wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 var(--s-xl);
+  }
+  @media (min-width: 720px) { .wrap { padding: 0 var(--s-3xl); } }
+
+  h1, h2, h3 {
+    font-weight: 600; letter-spacing: -0.04em; line-height: 1.05;
+    font-variation-settings: "opsz" 32;
+  }
+  em.hit { font-style: italic; font-weight: 600; color: var(--ink); }
+
+  /* NAV */
+  .nav {
+    padding: var(--s-xl) 0;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: var(--s-l);
+    font-size: 13px; font-weight: 500; letter-spacing: -0.01em;
+    border-bottom: 1px solid var(--rule);
+  }
+  .nav .mark {
+    color: var(--ink); text-decoration: none;
+    font-weight: 600; letter-spacing: -0.025em; font-size: 15px;
+  }
+  .nav-links { display: flex; gap: var(--s-xl); align-items: center; }
+  .nav-links a {
+    color: var(--ink-2); text-decoration: none;
+    transition: color 0.15s var(--ease);
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--ink); }
+  @media (max-width: 520px) { .nav-links { gap: var(--s-l); } .nav { font-size: 12px; } }
+
+  /* PAGE HERO */
+  .page-hero {
+    padding: var(--s-4xl) 0 var(--s-3xl);
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: var(--s-4xl);
+  }
+  .eyebrow {
+    font-size: 12px; font-weight: 500; letter-spacing: -0.005em;
+    text-transform: uppercase; color: var(--ink-2);
+    margin-bottom: var(--s-xl);
+  }
+  h1 {
+    font-size: clamp(40px, 6.5vw, 72px);
+    letter-spacing: -0.05em; line-height: 0.98;
+    font-weight: 600;
+    margin-bottom: var(--s-xl);
+    max-width: 14ch;
+  }
+  .lede {
+    font-size: clamp(19px, 2vw, 23px);
+    line-height: 1.45; font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--ink-2);
+    max-width: 52ch;
+  }
+  .lede em.hit { color: var(--ink); }
+
+  /* FILTER */
+  .filter {
+    display: flex; gap: 4px; flex-wrap: wrap;
+    margin-bottom: var(--s-3xl);
+    padding-bottom: var(--s-l);
+    border-bottom: 1px solid var(--rule);
+    align-items: center;
+  }
+  .filter .label {
+    font-size: 12px; font-weight: 500; letter-spacing: -0.005em;
+    text-transform: uppercase; color: var(--ink-2);
+    margin-right: var(--s-l);
+  }
+  .chip {
+    font-family: inherit;
+    font-size: 13px; font-weight: 500; letter-spacing: -0.01em;
+    padding: 8px 14px; border-radius: 999px;
+    background: transparent; color: var(--ink-2);
+    cursor: pointer; border: 1px solid transparent;
+    transition: all 0.2s var(--ease);
+  }
+  .chip:hover { color: var(--ink); background: rgba(10,10,10,0.05); }
+  .chip.on { background: var(--ink); color: var(--bg); }
+
+  /* LESSON */
+  .lessons { display: grid; gap: 0; }
+  .lesson {
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: var(--s-3xl);
+    margin-bottom: var(--s-xl);
+    background: var(--bg);
+  }
+  @media (max-width: 640px) { .lesson { padding: var(--s-2xl); } }
+
+  .lesson-head {
+    display: grid; gap: var(--s-l);
+    grid-template-columns: auto 1fr;
+    align-items: start;
+    margin-bottom: var(--s-xl);
+    padding-bottom: var(--s-xl);
+    border-bottom: 1px solid var(--rule);
+  }
+  @media (max-width: 560px) { .lesson-head { grid-template-columns: 1fr; } }
+
+  .date-stamp {
+    padding: var(--s-m) var(--s-l);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    text-align: center;
+    min-width: 80px;
+  }
+  .date-stamp .m {
+    font-size: 11px; font-weight: 500; letter-spacing: -0.005em;
+    text-transform: uppercase; color: var(--ink-2);
+  }
+  .date-stamp .d {
+    font-size: 28px; font-weight: 600; letter-spacing: -0.04em;
+    color: var(--ink); line-height: 1; margin-top: 2px;
+  }
+
+  .lesson-title {
+    font-size: clamp(24px, 3vw, 32px);
+    letter-spacing: -0.04em; line-height: 1.05;
+    color: var(--ink); font-weight: 600;
+    margin-bottom: var(--s-xs);
+  }
+  .lesson-ref {
+    font-size: 13px; font-weight: 500;
+    letter-spacing: -0.005em; text-transform: uppercase;
+    color: var(--ink-2);
+  }
+
+  .lesson-body > * + * { margin-top: var(--s-l); }
+  .lesson-body p {
+    font-size: 16px; line-height: 1.65; color: var(--ink-2);
+    letter-spacing: -0.005em; max-width: 62ch;
+  }
+  .lesson-body p em.hit { color: var(--ink); }
+
+  .key-takeaways {
+    margin-top: var(--s-xl);
+    padding-left: var(--s-xl);
+    border-left: 2px solid var(--ink);
+  }
+  .key-takeaways .label {
+    font-size: 12px; font-weight: 500; letter-spacing: -0.005em;
+    text-transform: uppercase; color: var(--ink-2);
+    margin-bottom: var(--s-m);
+  }
+  .key-takeaways ul { list-style: none; display: grid; gap: var(--s-s); }
+  .key-takeaways li {
+    font-size: 17px; font-weight: 500; line-height: 1.45;
+    letter-spacing: -0.02em;
+    font-style: italic;
+    color: var(--ink);
+  }
+
+  .questions { margin-top: var(--s-xl); }
+  .questions .label {
+    font-size: 12px; font-weight: 500; letter-spacing: -0.005em;
+    text-transform: uppercase; color: var(--ink-2);
+    margin-bottom: var(--s-m);
+  }
+  .questions ol {
+    list-style: none; counter-reset: q;
+    display: grid; gap: 0;
+  }
+  .questions li {
+    counter-increment: q;
+    display: grid; grid-template-columns: 32px 1fr;
+    gap: var(--s-m); align-items: baseline;
+    padding: var(--s-m) 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: 16px; line-height: 1.5;
+    color: var(--ink); letter-spacing: -0.005em;
+  }
+  .questions li:first-child { border-top: 1px solid var(--rule); }
+  .questions li::before {
+    content: counter(q, decimal-leading-zero);
+    font-size: 11px; font-weight: 500;
+    color: var(--ink-2); letter-spacing: -0.005em;
+    padding-top: 3px;
+  }
+
+  .scripture-quote {
+    margin-top: var(--s-xl);
+    padding: var(--s-l) var(--s-xl);
+    background: rgba(10,10,10,0.04);
+    border-radius: 6px;
+  }
+  .scripture-quote .q {
+    display: block;
+    font-style: italic; font-weight: 500;
+    font-size: clamp(17px, 1.9vw, 20px);
+    line-height: 1.4; letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .scripture-quote cite {
+    display: block; font-style: normal;
+    font-size: 11px; font-weight: 500;
+    color: var(--ink-2);
+    letter-spacing: -0.005em; text-transform: uppercase;
+    margin-top: var(--s-s);
+  }
+
+  /* Empty state */
+  .empty-note {
+    margin-top: var(--s-2xl);
+    padding: var(--s-2xl);
+    text-align: center;
+    border: 1px dashed var(--rule-strong);
+    border-radius: 8px;
+  }
+  .empty-note p {
+    font-size: 15px; font-style: italic;
+    color: var(--ink-2); max-width: 440px; margin: 0 auto;
+    line-height: 1.5; letter-spacing: -0.01em;
+  }
+
+  /* CTA */
+  .cta-join {
+    padding: var(--s-4xl) 0 var(--s-3xl);
+  }
+  .cta-join h2 {
+    font-size: clamp(30px, 4.5vw, 44px);
+    letter-spacing: -0.045em; line-height: 1.02;
+    color: var(--ink); margin-bottom: var(--s-l);
+    max-width: 18ch; font-weight: 600;
+  }
+  .cta-join p {
+    font-size: 17px; line-height: 1.55;
+    color: var(--ink-2); max-width: 52ch;
+    margin-bottom: var(--s-xl); letter-spacing: -0.005em;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: var(--s-s);
+    padding: 12px 22px;
+    background: var(--ink); color: var(--bg);
+    font-family: inherit; font-weight: 600;
+    font-size: 13px; letter-spacing: -0.01em;
+    border-radius: 999px; text-decoration: none;
+    transition: all 0.2s var(--ease);
+  }
+  .btn:hover { background: #1F1F22; transform: translateY(-1px); }
+  .btn::after { content: '→'; font-weight: 500; }
+
+  footer {
+    border-top: 1px solid var(--rule);
+    padding: var(--s-3xl) 0 var(--s-2xl);
+    margin-top: var(--s-3xl);
+  }
+  .foot-row {
+    display: flex; justify-content: space-between; gap: var(--s-l);
+    align-items: baseline;
+    font-size: 12px; font-weight: 500;
+    color: var(--ink-2); letter-spacing: -0.005em;
+    text-transform: uppercase;
+  }
+
+  ::selection { background: var(--ink); color: var(--bg); }
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <div class="nav">
+    <a href="upper-room.html" class="mark">The Upper Room</a>
+    <div class="nav-links">
+      <a href="upper-room.html">Home</a>
+      <a href="upper-room-lessons.html" class="active">Lessons</a>
+      <a href="upper-room-events.html">Events</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <section class="page-hero wrap">
+    <div class="eyebrow">Catch Up · Dig Deeper</div>
+    <h1>The <em class="hit">Lessons</em>.</h1>
+    <p class="lede">
+      Notes from the table. If you missed a Thursday, <em class="hit">start here</em>.
+      If you are curious what we actually talk about, read it in your own time.
+    </p>
+  </section>
+
+  <section class="wrap">
+    <div class="filter" role="tablist" aria-label="Filter lessons">
+      <span class="label">Series</span>
+      <button class="chip on" data-filter="all">All</button>
+      <button class="chip" data-filter="proverbs">Proverbs</button>
+    </div>
+
+    <div class="lessons">
+
+      <article class="lesson" data-series="proverbs">
+        <div class="lesson-head">
+          <div class="date-stamp"><div class="m">Apr</div><div class="d">17</div></div>
+          <div>
+            <h2 class="lesson-title">Guard the <em class="hit">well</em>.</h2>
+            <div class="lesson-ref">Proverbs 4 · Keep Your Heart</div>
+          </div>
+        </div>
+
+        <div class="lesson-body">
+          <p>
+            Chapter four opens with a father talking to his son. Get wisdom. Hold onto it.
+            Do not let go. The warning is about what happens when a man stops guarding
+            what is coming into his life.
+          </p>
+          <p>
+            The room landed on the line, "keep your heart with all vigilance, for from it
+            flow the springs of life." We talked about what a man is actually
+            <em class="hit">letting through the gate</em> in his day. What he watches. What
+            he scrolls. What he tolerates in his own head. A polluted source poisons
+            everything downstream.
+          </p>
+        </div>
+
+        <div class="key-takeaways">
+          <div class="label">Takeaways</div>
+          <ul>
+            <li>The heart is the well. Everything else drinks from it.</li>
+            <li>A man is responsible for what he lets through the gate.</li>
+            <li>Small inputs over time become the whole direction of a life.</li>
+          </ul>
+        </div>
+
+        <div class="questions">
+          <div class="label">The Three Questions</div>
+          <ol>
+            <li>What are you letting into your life right now that you would not let into your son's life?</li>
+            <li>Where has wisdom been trying to get your attention and you have kept walking?</li>
+            <li>Name one gate you need to start guarding this week.</li>
+          </ol>
+        </div>
+
+        <div class="scripture-quote">
+          <div class="q">"Keep your heart with all vigilance, for from it flow the springs of life."</div>
+          <cite>Proverbs 4:23</cite>
+        </div>
+      </article>
+
+      <article class="lesson" data-series="proverbs">
+        <div class="lesson-head">
+          <div class="date-stamp"><div class="m">Apr</div><div class="d">10</div></div>
+          <div>
+            <h2 class="lesson-title">Trust before you <em class="hit">understand</em>.</h2>
+            <div class="lesson-ref">Proverbs 3 · Trust in the Lord</div>
+          </div>
+        </div>
+
+        <div class="lesson-body">
+          <p>
+            Proverbs 3 is one of the chapters most men know a verse from without ever
+            having read the whole thing. We read it together and what kept coming back
+            around the room was the lines about honoring God with your
+            <em class="hit">first</em>, not your leftovers.
+          </p>
+          <p>
+            What it actually looks like to trust when the numbers do not make sense yet.
+            The men who had the most to say were the ones who had been burned by their
+            own plan.
+          </p>
+        </div>
+
+        <div class="key-takeaways">
+          <div class="label">Takeaways</div>
+          <ul>
+            <li>Trust is a decision you make before you see the outcome.</li>
+            <li>Your first offering tells the truth about who you trust.</li>
+            <li>God promises direction, not a map. There is a difference.</li>
+          </ul>
+        </div>
+
+        <div class="questions">
+          <div class="label">The Three Questions</div>
+          <ol>
+            <li>Where is your plan working, and where is it breaking?</li>
+            <li>What would change if you gave God the first and not the last?</li>
+            <li>What is one step forward that requires trust this week?</li>
+          </ol>
+        </div>
+
+        <div class="scripture-quote">
+          <div class="q">"Trust in the Lord with all your heart, and do not lean on your own understanding."</div>
+          <cite>Proverbs 3:5</cite>
+        </div>
+      </article>
+
+      <article class="lesson" data-series="proverbs">
+        <div class="lesson-head">
+          <div class="date-stamp"><div class="m">Apr</div><div class="d">03</div></div>
+          <div>
+            <h2 class="lesson-title">Wisdom is <em class="hit">loud</em>.</h2>
+            <div class="lesson-ref">Proverbs 1 · Wisdom Calls Aloud</div>
+          </div>
+        </div>
+
+        <div class="lesson-body">
+          <p>
+            First chapter. Solomon does not open quietly. Wisdom is personified as a
+            woman standing in the public square yelling at men who keep walking past her.
+            The question that hung in the room was simple. How often are we the guys
+            walking past?
+          </p>
+          <p>
+            Wisdom usually shows up long before the consequence. In a gut feeling. In
+            a mentor's warning. In scripture you already read. The
+            <em class="hit">ignoring</em> is the part that costs.
+          </p>
+        </div>
+
+        <div class="key-takeaways">
+          <div class="label">Takeaways</div>
+          <ul>
+            <li>Wisdom is not hiding. It is usually already speaking.</li>
+            <li>Fools are not dumb. They are just men who will not listen.</li>
+            <li>The fear of the Lord is where real knowledge starts.</li>
+          </ul>
+        </div>
+
+        <div class="questions">
+          <div class="label">The Three Questions</div>
+          <ol>
+            <li>Who has been telling you something true that you keep dismissing?</li>
+            <li>Where is a gut check you have been ignoring?</li>
+            <li>What does "the fear of the Lord" look like in your Monday?</li>
+          </ol>
+        </div>
+
+        <div class="scripture-quote">
+          <div class="q">"The fear of the Lord is the beginning of knowledge; fools despise wisdom and instruction."</div>
+          <cite>Proverbs 1:7</cite>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="empty-note">
+      <p>
+        New lessons are posted the Friday after each Thursday gathering.
+        Miss a week and this page will catch you up.
+      </p>
+    </div>
+  </section>
+
+  <section class="cta-join wrap">
+    <div class="eyebrow">Come Sit at the Table</div>
+    <h2>Ready to join <em class="hit">Thursday</em>?</h2>
+    <p>
+      Thursdays at 6. 1227 N Washington Ave, Suite 202. Walk in and grab a seat.
+    </p>
+    <a href="upper-room.html" class="btn">Learn more</a>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <div class="foot-row">
+    <span>The Upper Room · Cookeville, TN</span>
+    <span>Thursdays at 6</span>
+  </div>
+</footer>
+
+<script>
+  const chips = document.querySelectorAll('.chip');
+  const lessons = document.querySelectorAll('.lesson');
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      chips.forEach(c => c.classList.remove('on'));
+      chip.classList.add('on');
+      const f = chip.dataset.filter;
+      lessons.forEach(l => {
+        l.style.display = (f === 'all' || l.dataset.series === f) ? '' : 'none';
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

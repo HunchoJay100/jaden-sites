@@ -1,0 +1,620 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Upper Room — Cookeville, TN</title>
+<meta name="description" content="A no-pressure brotherhood of men in Cookeville, Tennessee. Thursdays at 6." />
+
+<meta property="og:title" content="The Upper Room" />
+<meta property="og:description" content="Faith-based men. Thursdays at 6. Cookeville, TN." />
+<meta property="og:type" content="website" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400..700;1,14..32,400..700&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --bg:    #FAFAFA;
+    --ink:   #0A0A0A;
+    --ink-2: #52525B;
+    --ink-3: #A1A1AA;
+    --rule:  rgba(10,10,10,0.12);
+    --rule-strong: rgba(10,10,10,0.28);
+    --ease: cubic-bezier(0.2, 0, 0, 1);
+
+    --s-xs: 4px; --s-s: 8px; --s-m: 12px; --s-l: 16px;
+    --s-xl: 24px; --s-2xl: 32px; --s-3xl: 48px; --s-4xl: 80px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--bg); color: var(--ink);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 17px; line-height: 1.55;
+    font-feature-settings: "ss01", "cv11";
+    font-variation-settings: "opsz" 18;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body { overflow-x: hidden; }
+
+  .wrap {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0 var(--s-xl);
+  }
+  @media (min-width: 720px) { .wrap { padding: 0 var(--s-3xl); } }
+
+  h1, h2, h3 {
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+    font-variation-settings: "opsz" 32;
+  }
+  em.hit { font-style: italic; font-weight: 600; color: var(--ink); }
+
+  /* ===== NAV ===== */
+  .nav {
+    padding: var(--s-xl) 0;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: var(--s-l);
+    font-size: 13px; font-weight: 500; letter-spacing: -0.01em;
+    border-bottom: 1px solid var(--rule);
+  }
+  .nav .mark {
+    color: var(--ink); text-decoration: none;
+    font-weight: 600; letter-spacing: -0.025em; font-size: 15px;
+  }
+  .nav-links { display: flex; gap: var(--s-xl); align-items: center; }
+  .nav-links a {
+    color: var(--ink-2); text-decoration: none;
+    transition: color 0.15s var(--ease);
+  }
+  .nav-links a:hover,
+  .nav-links a.active { color: var(--ink); }
+  @media (max-width: 520px) { .nav-links { gap: var(--s-l); } .nav { font-size: 12px; } }
+
+  /* ===== HERO ===== */
+  .hero { padding: var(--s-4xl) 0 var(--s-4xl); }
+
+  .eyebrow {
+    font-size: 12px; font-weight: 500; letter-spacing: -0.005em;
+    text-transform: uppercase; color: var(--ink-2);
+    margin-bottom: var(--s-xl);
+    opacity: 0; animation: fadeUp 0.8s var(--ease) 0.1s forwards;
+  }
+
+  h1.display {
+    font-size: clamp(44px, 7.5vw, 84px);
+    letter-spacing: -0.05em; line-height: 0.98;
+    font-weight: 600;
+    margin-bottom: var(--s-xl);
+    max-width: 14ch;
+    opacity: 0; animation: fadeUp 1s var(--ease) 0.2s forwards;
+  }
+
+  .tagline {
+    font-size: clamp(18px, 2vw, 22px);
+    line-height: 1.4; font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--ink-2);
+    max-width: 44ch;
+    margin-bottom: var(--s-4xl);
+    opacity: 0; animation: fadeUp 1s var(--ease) 0.35s forwards;
+  }
+  .tagline em.hit { color: var(--ink); }
+
+  /* Meeting card */
+  .meeting {
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: var(--s-2xl);
+    display: grid;
+    gap: var(--s-xl);
+    opacity: 0; animation: fadeUp 1s var(--ease) 0.5s forwards;
+    background: var(--bg);
+  }
+  @media (min-width: 640px) {
+    .meeting {
+      grid-template-columns: 1fr 1px 1fr auto;
+      align-items: center;
+      padding: var(--s-2xl) var(--s-3xl);
+      gap: var(--s-2xl);
+    }
+    .meeting .divider { background: var(--rule); width: 1px; height: 44px; }
+  }
+  @media (max-width: 639px) { .meeting .divider { display: none; } }
+
+  .meeting .label {
+    font-size: 11px; font-weight: 500; letter-spacing: -0.005em;
+    text-transform: uppercase; color: var(--ink-2);
+    margin-bottom: var(--s-xs);
+  }
+  .meeting .value {
+    font-size: 17px; font-weight: 600;
+    letter-spacing: -0.02em; color: var(--ink); line-height: 1.3;
+  }
+  .meeting .value .muted { color: var(--ink-2); font-weight: 500; }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: var(--s-s);
+    padding: 10px 18px;
+    background: var(--ink); color: var(--bg);
+    font-size: 12px; font-weight: 600;
+    letter-spacing: -0.005em;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .badge::before {
+    content: ''; width: 6px; height: 6px;
+    background: var(--bg); border-radius: 50%;
+  }
+
+  /* ===== ORNAMENT (hairline rule) ===== */
+  .ornament {
+    padding: var(--s-4xl) 0;
+    display: flex; justify-content: center;
+  }
+  .ornament .line {
+    width: 100%; max-width: 880px;
+    height: 1px; background: var(--rule);
+  }
+
+  /* ===== SECTIONS ===== */
+  section.block { padding: var(--s-4xl) 0; }
+
+  .section-eyebrow {
+    font-size: 12px; font-weight: 500; letter-spacing: -0.005em;
+    text-transform: uppercase; color: var(--ink-2);
+    margin-bottom: var(--s-l);
+  }
+
+  h2 {
+    font-size: clamp(30px, 4.5vw, 48px);
+    letter-spacing: -0.045em; line-height: 1.02;
+    font-weight: 600;
+    margin-bottom: var(--s-xl);
+    max-width: 20ch;
+  }
+
+  p.lede {
+    font-size: clamp(19px, 2vw, 23px);
+    line-height: 1.45; font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    max-width: 58ch;
+    margin-bottom: var(--s-xl);
+  }
+  p.lede em.hit, p.body em.hit { color: var(--ink); }
+
+  p.body {
+    font-size: 17px; line-height: 1.65;
+    color: var(--ink-2); letter-spacing: -0.005em;
+    max-width: 62ch;
+    margin-bottom: var(--s-l);
+  }
+
+  /* Scripture pull */
+  .scripture {
+    margin: var(--s-2xl) 0;
+    padding-left: var(--s-xl);
+    border-left: 2px solid var(--ink);
+    max-width: 48ch;
+  }
+  .scripture q {
+    display: block; quotes: none;
+    font-style: italic; font-weight: 500;
+    font-size: clamp(20px, 2.2vw, 26px);
+    line-height: 1.35; letter-spacing: -0.025em;
+    color: var(--ink);
+  }
+  .scripture q::before, .scripture q::after { content: ''; }
+  .scripture cite {
+    display: block; font-style: normal;
+    font-size: 11px; font-weight: 500;
+    color: var(--ink-2);
+    letter-spacing: -0.005em;
+    text-transform: uppercase;
+    margin-top: var(--s-m);
+  }
+
+  /* Flow list */
+  ol.flow {
+    counter-reset: step;
+    list-style: none;
+    margin-top: var(--s-xl);
+    display: grid;
+    gap: 0;
+    max-width: 680px;
+  }
+  ol.flow li {
+    counter-increment: step;
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: var(--s-l);
+    align-items: baseline;
+    padding: var(--s-l) 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  ol.flow li:first-child { border-top: 1px solid var(--rule); }
+  ol.flow li::before {
+    content: counter(step, decimal-leading-zero);
+    font-size: 12px; font-weight: 500;
+    color: var(--ink-2);
+    letter-spacing: -0.005em;
+  }
+  ol.flow li p {
+    font-size: 16px; line-height: 1.55;
+    color: var(--ink-2); letter-spacing: -0.005em;
+  }
+  ol.flow li strong {
+    color: var(--ink); font-weight: 600;
+  }
+
+  /* Brotherhood tiles — hairline */
+  .tiles {
+    display: grid; gap: 0;
+    margin-top: var(--s-xl);
+    border-top: 1px solid var(--rule);
+  }
+  @media (min-width: 640px) {
+    .tiles {
+      grid-template-columns: 1fr 1fr;
+      border-right: 1px solid var(--rule);
+    }
+    .tile { border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+    .tile:nth-child(2n) { border-right: 0; }
+    .tiles > :last-child,
+    .tiles > :nth-last-child(2) { border-bottom: 1px solid var(--rule); }
+  }
+  .tile {
+    padding: var(--s-2xl);
+    border-bottom: 1px solid var(--rule);
+  }
+  .tile .hour {
+    font-size: 12px; font-weight: 500;
+    letter-spacing: -0.005em; text-transform: uppercase;
+    color: var(--ink-2);
+    margin-bottom: var(--s-l);
+  }
+  .tile h3 {
+    font-size: 24px;
+    letter-spacing: -0.035em;
+    margin-bottom: var(--s-m);
+    font-weight: 600;
+  }
+  .tile p {
+    font-size: 16px; line-height: 1.55;
+    color: var(--ink-2);
+    letter-spacing: -0.005em;
+  }
+
+  /* Partner card */
+  .partner {
+    padding: var(--s-3xl);
+    background: var(--ink);
+    color: var(--bg);
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+  .partner::before {
+    content: 'Y';
+    position: absolute;
+    right: -30px; bottom: -80px;
+    font-size: 320px;
+    font-weight: 700;
+    font-style: italic;
+    line-height: 1;
+    color: var(--bg);
+    opacity: 0.07;
+    pointer-events: none;
+    letter-spacing: -0.05em;
+  }
+  .partner .tag {
+    font-size: 12px; font-weight: 500;
+    letter-spacing: -0.005em; text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: var(--s-l);
+  }
+  .partner h3 {
+    font-size: clamp(24px, 3vw, 34px);
+    letter-spacing: -0.04em; line-height: 1.1;
+    color: var(--bg);
+    margin-bottom: var(--s-l);
+    max-width: 22ch;
+    font-weight: 600;
+  }
+  .partner h3 em { font-style: italic; font-weight: 600; }
+  .partner p {
+    font-size: 17px; line-height: 1.6;
+    color: var(--ink-3);
+    max-width: 56ch;
+    position: relative; z-index: 1;
+    letter-spacing: -0.005em;
+  }
+  .partner p em.hit { color: var(--bg); }
+
+  /* CTA */
+  .cta {
+    padding: var(--s-4xl) 0;
+  }
+  .cta h2 {
+    font-size: clamp(36px, 6vw, 64px);
+    margin-bottom: var(--s-2xl);
+    letter-spacing: -0.05em;
+  }
+  .cta .details {
+    display: grid; gap: 0;
+    margin-bottom: var(--s-2xl);
+    max-width: 560px;
+  }
+  .cta .details .row {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: var(--s-l);
+    padding: var(--s-m) 0;
+    align-items: baseline;
+    border-bottom: 1px solid var(--rule);
+  }
+  .cta .details .row:first-child { border-top: 1px solid var(--rule); }
+  .cta .details .k {
+    font-size: 12px; font-weight: 500; letter-spacing: -0.005em;
+    text-transform: uppercase; color: var(--ink-2);
+  }
+  .cta .details .v {
+    font-size: 17px; font-weight: 600; letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .cta .details .v .muted { color: var(--ink-2); font-weight: 500; }
+  .cta .final {
+    font-size: clamp(18px, 2vw, 22px);
+    line-height: 1.45; font-weight: 500;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    max-width: 44ch;
+  }
+  .cta .final em { font-style: italic; font-weight: 600; }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--rule);
+    padding: var(--s-3xl) 0 var(--s-2xl);
+    margin-top: var(--s-3xl);
+  }
+  .foot-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    gap: var(--s-l);
+    flex-wrap: wrap;
+  }
+  .foot-verse {
+    font-style: italic; font-weight: 500;
+    font-size: 15px; line-height: 1.5;
+    color: var(--ink);
+    max-width: 48ch; letter-spacing: -0.015em;
+  }
+  .foot-verse cite {
+    display: block; font-style: normal;
+    font-size: 11px; font-weight: 500;
+    color: var(--ink-2);
+    letter-spacing: -0.005em;
+    text-transform: uppercase;
+    margin-top: var(--s-s);
+  }
+  .foot-mark {
+    font-size: 12px; font-weight: 500;
+    color: var(--ink-2); letter-spacing: -0.005em;
+    text-transform: uppercase;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+  ::selection { background: var(--ink); color: var(--bg); }
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <div class="nav">
+    <a href="upper-room.html" class="mark">The Upper Room</a>
+    <div class="nav-links">
+      <a href="upper-room.html" class="active">Home</a>
+      <a href="upper-room-lessons.html">Lessons</a>
+      <a href="upper-room-events.html">Events</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero wrap">
+    <div class="eyebrow">Cookeville, TN · Every Thursday</div>
+
+    <h1 class="display">
+      The Upper <em class="hit">Room</em>.
+    </h1>
+
+    <p class="tagline">
+      A brotherhood of men learning what it means to
+      <em class="hit">walk with God</em> in a world that keeps telling us
+      otherwise.
+    </p>
+
+    <div class="meeting">
+      <div>
+        <div class="label">When</div>
+        <div class="value">Thursdays <span class="muted">· 6 to 7:30 PM</span></div>
+      </div>
+      <div class="divider"></div>
+      <div>
+        <div class="label">Where</div>
+        <div class="value">1227 N Washington Ave <span class="muted">· Suite 202</span></div>
+      </div>
+      <div class="badge">Just show up</div>
+    </div>
+  </section>
+
+  <div class="ornament"><span class="line"></span></div>
+
+  <!-- THE NAME -->
+  <section class="block wrap">
+    <div class="section-eyebrow">The Name</div>
+    <h2>Why <em class="hit">the upper room</em>.</h2>
+    <p class="lede">
+      In Acts 2, a handful of ordinary men gathered in an upper room.
+      It was there the Holy Spirit showed up and changed them.
+      Ordinary men walked out <em class="hit">different</em>.
+    </p>
+    <p class="body">
+      That is the posture we meet with. A borrowed room on the second
+      floor of an office building in Cookeville. Men who come in
+      carrying the week and leave carrying something else.
+    </p>
+  </section>
+
+  <div class="ornament"><span class="line"></span></div>
+
+  <!-- WHAT WE'RE ABOUT -->
+  <section class="block wrap">
+    <div class="section-eyebrow">What We're About</div>
+    <h2>Faith-based men. <em class="hit">No pressure.</em></h2>
+
+    <p class="lede">
+      Faith-based men learning what it means to be a man by biblical
+      standards. We gather to walk with God and <em class="hit">stand strong</em>
+      in our faith, whatever the world is saying that week.
+    </p>
+    <p class="body">
+      Our mission is tactical. We take what is in the word and figure
+      out how to <em class="hit">actually use it</em>. Monday morning. Tuesday
+      afternoon. At 2 AM when your kid is sick. At 5 PM when the job
+      falls apart.
+    </p>
+    <p class="body">
+      No performance. No hierarchy. No pressure to believe a certain
+      way, speak up, or be anywhere on your journey other than where
+      you are. If you are curious what a walk with God actually looks
+      like, this is a place to come look.
+    </p>
+
+    <div class="scripture">
+      <q>As iron sharpens iron, so one man sharpens another.</q>
+      <cite>Proverbs 27:17</cite>
+    </div>
+  </section>
+
+  <div class="ornament"><span class="line"></span></div>
+
+  <!-- A TYPICAL THURSDAY -->
+  <section class="block wrap">
+    <div class="section-eyebrow">A Typical Thursday</div>
+    <h2>How we <em class="hit">gather</em>.</h2>
+    <p class="body">
+      Not a lecture. Not a traditional Bible study either. A room full
+      of guys, a chapter of scripture, and honest conversation about
+      what the week is putting in front of us.
+    </p>
+
+    <ol class="flow">
+      <li><p><strong>Walk in.</strong> Food and drinks are usually around. Grab some.</p></li>
+      <li><p><strong>Open a chapter.</strong> Right now we are working through Proverbs, a chapter at a time.</p></li>
+      <li><p><strong>Small groups.</strong> Four or five men to a group. No assigned seating.</p></li>
+      <li><p><strong>Read together.</strong> Each man reads a handful of verses. If there are 35 verses and 5 men, you read 7.</p></li>
+      <li><p><strong>Three questions.</strong> Three prompts that keep pulling us back to where the word lands on our actual lives.</p></li>
+      <li><p><strong>Listen or speak.</strong> Both are welcome. Sit back the whole first night. Nobody puts you on the spot.</p></li>
+    </ol>
+  </section>
+
+  <div class="ornament"><span class="line"></span></div>
+
+  <!-- BROTHERHOOD -->
+  <section class="block wrap">
+    <div class="section-eyebrow">The Brotherhood</div>
+    <h2>The kind of men <em class="hit">we build with</em>.</h2>
+    <p class="body">
+      The goal is not attendance. The goal is the kind of brotherhood
+      where the phone rings at 3 AM and a man answers. Where somebody
+      is in the room when things go sideways and cheering when things
+      go right.
+    </p>
+
+    <div class="tiles">
+      <div class="tile">
+        <div class="hour">3:00 AM</div>
+        <h3>When life <em>breaks</em></h3>
+        <p>Men who pick up the phone in the middle of the night. Who drive across town when you need somebody to just be in the room.</p>
+      </div>
+      <div class="tile">
+        <div class="hour">Good days</div>
+        <h3>When life is <em>good</em></h3>
+        <p>Men who celebrate the promotion, the baby, the anniversary, the sobriety milestone. Real friends for the wins.</p>
+      </div>
+      <div class="tile">
+        <div class="hour">Every day</div>
+        <h3>Through the <em>everyday</em></h3>
+        <p>Men walking the same road. Marriage, kids, money, work, faith. Guys who want to see you win.</p>
+      </div>
+      <div class="tile">
+        <div class="hour">Every Thursday</div>
+        <h3>At the table <em>every week</em></h3>
+        <p>Showing up Thursday after Thursday is how the trust gets built. The room knows you. You know the room.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="ornament"><span class="line"></span></div>
+
+  <!-- Y PROJECT -->
+  <section class="block wrap">
+    <div class="partner">
+      <div class="tag">In partnership with</div>
+      <h3>The <em>Y Project</em>.</h3>
+      <p>
+        A charitable, faith-based organization filling holes in our
+        local community and the region. Volunteering for events.
+        Showing up where help is needed. Serving quietly. When they
+        need <em class="hit">hands</em>, we are those hands.
+      </p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta wrap">
+    <div class="section-eyebrow">Come Sit at the Table</div>
+    <h2>We will see you <em class="hit">Thursday</em>.</h2>
+
+    <div class="details">
+      <div class="row"><span class="k">When</span><span class="v">Thursdays <span class="muted">· 6:00 to 7:30 PM</span></span></div>
+      <div class="row"><span class="k">Where</span><span class="v">1227 N Washington Ave <span class="muted">· Suite 202</span></span></div>
+      <div class="row"><span class="k">City</span><span class="v">Cookeville, Tennessee</span></div>
+    </div>
+
+    <p class="final">
+      No sign up. No introduction required. Bring <em>yourself</em>,
+      and bring a friend if you want. The door is open.
+    </p>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <div class="foot-row">
+    <div class="foot-verse">
+      <q>Where two or three gather in my name, there am I with them.</q>
+      <cite>Matthew 18:20</cite>
+    </div>
+    <span class="foot-mark">The Upper Room · Cookeville, TN</span>
+  </div>
+</footer>
+
+</body>
+</html>
