@@ -1,0 +1,1574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BL4INE. | Playlist Playbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #f0c040;
+    --gold-dim: rgba(240, 192, 64, 0.15);
+    --gold-glow: rgba(240, 192, 64, 0.3);
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --nested: #181818;
+    --text-primary: rgba(255, 255, 255, 1);
+    --text-secondary: rgba(255, 255, 255, 0.6);
+    --text-tertiary: rgba(255, 255, 255, 0.3);
+    --separator: rgba(255, 255, 255, 0.08);
+    --card-radius: 12px;
+    --btn-radius: 8px;
+    --spring: cubic-bezier(0.2, 0, 0, 1);
+    --green: #78dc78;
+    --blue: #64b4ff;
+    --purple: #c882ff;
+    --red: #ff6464;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; background: var(--bg); }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    font-size: 17px;
+    font-weight: 400;
+    letter-spacing: -0.43px;
+    line-height: 26px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-size: 256px;
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  .nav-glass {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(10, 10, 10, 0.7);
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 0 24px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-brand {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .nav-doc {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 24px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -200px; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(240, 192, 64, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 32px;
+  }
+
+  .hero-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(48px, 8vw, 96px);
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 1;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+  }
+
+  .hero-title .gold {
+    color: var(--gold);
+    text-shadow: 0 0 60px rgba(240, 192, 64, 0.25);
+    font-style: italic;
+  }
+
+  .hero-subtitle {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(17px, 2vw, 21px);
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--text-secondary);
+    max-width: 720px;
+    margin: 0 auto 48px;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .hero-meta-item { text-align: center; }
+
+  .hero-meta-item .value {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.8px;
+    color: var(--gold);
+  }
+
+  .hero-meta-item .label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-top: 4px;
+  }
+
+  .hero-divider {
+    width: 1px;
+    height: 40px;
+    background: var(--separator);
+  }
+
+  /* SECTIONS */
+  .section {
+    padding: 80px 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    margin-bottom: 48px;
+  }
+
+  .section-number {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-number::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--gold), transparent);
+    opacity: 0.3;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 700;
+    letter-spacing: -1.05px;
+    line-height: 1.1;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+  }
+
+  .section-subtitle {
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 26px;
+    color: var(--text-secondary);
+    max-width: 720px;
+  }
+
+  /* COMPARISON TABLE */
+  .comparison {
+    overflow-x: auto;
+    border-radius: var(--card-radius);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+  }
+
+  .comparison-table {
+    width: 100%;
+    min-width: 720px;
+    border-collapse: collapse;
+    background: var(--surface);
+  }
+
+  .comparison-table thead th {
+    background: #1a1a1a;
+    color: var(--gold);
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--gold-dim);
+  }
+
+  .comparison-table tbody td {
+    padding: 20px 16px;
+    border-bottom: 1px solid var(--separator);
+    font-size: 14px;
+    line-height: 22px;
+    color: var(--text-secondary);
+    vertical-align: top;
+  }
+
+  .comparison-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .comparison-table .lane-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--text-primary);
+    letter-spacing: -0.3px;
+  }
+
+  .comparison-table .free {
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  .comparison-table .paid {
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  /* LANE CARDS */
+  .lane-card {
+    background: var(--surface);
+    border-radius: var(--card-radius);
+    padding: 40px;
+    margin-bottom: 32px;
+    border-left: 4px solid var(--gold);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+  }
+
+  .lane-card.free { border-left-color: var(--green); }
+  .lane-card.paid { border-left-color: var(--gold); }
+  .lane-card.bonus { border-left-color: var(--blue); }
+
+  .lane-tag {
+    display: inline-block;
+    font-family: 'Syne', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+  }
+
+  .lane-tag.free {
+    background: rgba(120, 220, 120, 0.12);
+    color: var(--green);
+  }
+
+  .lane-tag.paid {
+    background: rgba(240, 192, 64, 0.15);
+    color: var(--gold);
+  }
+
+  .lane-tag.bonus {
+    background: rgba(100, 180, 255, 0.12);
+    color: var(--blue);
+  }
+
+  .lane-tag.warning {
+    background: rgba(255, 100, 100, 0.12);
+    color: var(--red);
+  }
+
+  .lane-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.9px;
+    line-height: 1.1;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+
+  .lane-tldr {
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+    font-style: italic;
+  }
+
+  .lane-section {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid var(--separator);
+  }
+
+  .lane-section:first-of-type {
+    border-top: none;
+    padding-top: 0;
+    margin-top: 0;
+  }
+
+  .lane-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  .lane-body {
+    font-size: 15px;
+    line-height: 24px;
+    color: var(--text-secondary);
+  }
+
+  .lane-body p { margin-bottom: 12px; }
+  .lane-body p:last-child { margin-bottom: 0; }
+  .lane-body strong { color: var(--text-primary); font-weight: 600; }
+
+  .lane-body ul {
+    list-style: none;
+    margin-top: 8px;
+  }
+
+  .lane-body ul li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 8px;
+  }
+
+  .lane-body ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    opacity: 0.5;
+  }
+
+  /* OUTCOME BOX */
+  .outcome {
+    background: var(--nested);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-top: 16px;
+    border-left: 3px solid var(--green);
+  }
+
+  .outcome.warning { border-left-color: var(--red); }
+
+  .outcome .outcome-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 8px;
+  }
+
+  .outcome.warning .outcome-label { color: var(--red); }
+
+  .outcome .outcome-text {
+    font-size: 14px;
+    line-height: 22px;
+    color: var(--text-primary);
+  }
+
+  /* PRICE PILL */
+  .price-pill {
+    display: inline-block;
+    background: var(--nested);
+    color: var(--gold);
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 4px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--gold-dim);
+    margin-right: 8px;
+  }
+
+  .price-pill.free {
+    color: var(--green);
+    border-color: rgba(120, 220, 120, 0.2);
+  }
+
+  /* SERVICE COMPARISON CARDS */
+  .service-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .service-card {
+    background: var(--nested);
+    border-radius: var(--card-radius);
+    padding: 24px;
+  }
+
+  .service-card .service-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .service-card .service-cost {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .service-card .service-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--separator);
+    font-size: 13px;
+  }
+
+  .service-card .service-row:last-child {
+    border-bottom: none;
+  }
+
+  .service-card .service-row .label {
+    color: var(--text-tertiary);
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+
+  .service-card .service-row .value {
+    color: var(--text-primary);
+    font-weight: 500;
+    text-align: right;
+    max-width: 60%;
+  }
+
+  /* ARTIST REFS */
+  .ref-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .ref-card {
+    background: var(--nested);
+    border-radius: 8px;
+    padding: 14px 18px;
+    border-left: 2px solid var(--gold);
+  }
+
+  .ref-card .ref-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    color: var(--text-primary);
+    font-size: 14px;
+    margin-bottom: 2px;
+  }
+
+  .ref-card .ref-why {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    line-height: 1.4;
+  }
+
+  /* PLAN TIMELINE */
+  .plan-week {
+    background: var(--surface);
+    border-radius: var(--card-radius);
+    padding: 28px 32px;
+    margin-bottom: 16px;
+    border-left: 3px solid var(--gold);
+  }
+
+  .plan-week .week-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+
+  .plan-week .week-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+  }
+
+  .plan-week .week-tasks {
+    list-style: none;
+  }
+
+  .plan-week .week-tasks li {
+    position: relative;
+    padding: 6px 0 6px 24px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 22px;
+  }
+
+  .plan-week .week-tasks li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 12px;
+    width: 10px;
+    height: 10px;
+    border: 2px solid var(--gold);
+    border-radius: 3px;
+    opacity: 0.5;
+  }
+
+  /* BUDGET */
+  .budget-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .budget-item {
+    background: var(--surface);
+    border-radius: var(--card-radius);
+    padding: 24px;
+    text-align: center;
+    border-top: 3px solid var(--gold);
+  }
+
+  .budget-item .budget-amount {
+    font-family: 'Syne', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--gold);
+    letter-spacing: -1px;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .budget-item .budget-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+
+  .budget-item .budget-desc {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    line-height: 1.5;
+  }
+
+  /* TEMPLATE BLOCK */
+  .template-block {
+    background: var(--nested);
+    border-radius: var(--card-radius);
+    padding: 28px;
+    margin-top: 16px;
+    border-left: 3px solid var(--gold);
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .template-block .template-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+
+  .template-block .template-text {
+    font-size: 15px;
+    line-height: 26px;
+    color: var(--text-primary);
+    white-space: pre-wrap;
+  }
+
+  .template-block .template-text em {
+    color: var(--gold);
+    font-style: normal;
+    background: rgba(240, 192, 64, 0.08);
+    padding: 1px 6px;
+    border-radius: 3px;
+  }
+
+  /* SPLIT */
+  .split-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  @media (max-width: 700px) {
+    .split-grid { grid-template-columns: 1fr; }
+  }
+
+  .split-card {
+    background: var(--surface);
+    border-radius: var(--card-radius);
+    padding: 28px;
+    border-top: 3px solid var(--gold);
+  }
+
+  .split-card.vantage { border-top-color: var(--blue); }
+  .split-card.blaine { border-top-color: var(--gold); }
+
+  .split-card .split-who {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .split-card.vantage .split-who { color: var(--blue); }
+  .split-card.blaine .split-who { color: var(--gold); }
+
+  .split-card .split-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+  }
+
+  .split-card ul {
+    list-style: none;
+  }
+
+  .split-card ul li {
+    position: relative;
+    padding: 8px 0 8px 22px;
+    font-size: 14px;
+    line-height: 22px;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--separator);
+  }
+
+  .split-card ul li:last-child { border-bottom: none; }
+
+  .split-card ul li::before {
+    content: '\2713';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    color: var(--gold);
+    font-weight: 700;
+    font-size: 14px;
+  }
+
+  /* CALLOUT */
+  .callout {
+    background: linear-gradient(135deg, rgba(240, 192, 64, 0.08), rgba(240, 192, 64, 0.02));
+    border: 1px solid var(--gold-dim);
+    border-radius: var(--card-radius);
+    padding: 32px;
+    margin: 32px 0;
+  }
+
+  .callout .callout-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  .callout .callout-text {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: -0.5px;
+    color: var(--text-primary);
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 60px 24px;
+    text-align: center;
+    border-top: 1px solid var(--separator);
+    margin-top: 80px;
+  }
+
+  .footer .footer-brand {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .footer .footer-text {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.5px;
+  }
+
+  /* PRINT */
+  @media print {
+    @page {
+      size: Letter;
+      margin: 0.4in;
+    }
+
+    html, body {
+      background: var(--bg) !important;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    body::before { display: none; }
+    .nav-glass { display: none; }
+
+    .hero {
+      min-height: auto;
+      padding: 24px 0 32px;
+      page-break-after: avoid;
+    }
+
+    .hero::before { display: none; }
+    .hero-label { margin-bottom: 16px; font-size: 11px; }
+    .hero-title { font-size: 48px !important; margin-bottom: 16px; letter-spacing: -1.5px; }
+    .hero-title .gold { font-style: normal; text-shadow: none; }
+    .hero-subtitle { font-size: 14px; margin-bottom: 24px; max-width: 600px; }
+    .hero-meta { gap: 24px; }
+    .hero-meta-item .value { font-size: 22px; }
+    .hero-meta-item .label { font-size: 9px; }
+    .hero-divider { height: 28px; }
+
+    .section {
+      padding: 20px 8px;
+      max-width: none;
+      page-break-inside: auto;
+    }
+
+    .section-header {
+      margin-bottom: 16px;
+      page-break-after: avoid;
+      page-break-inside: avoid;
+    }
+    .section-number { font-size: 10px; margin-bottom: 6px; }
+    .section-title { font-size: 24px !important; margin-bottom: 6px; }
+    .section-subtitle { font-size: 13px; line-height: 1.5; }
+
+    /* Comparison table — print-friendly */
+    .comparison { overflow: visible; }
+    .comparison-table {
+      min-width: 0;
+      width: 100%;
+      table-layout: fixed;
+      font-size: 10px;
+    }
+    .comparison-table thead th {
+      padding: 8px 6px;
+      font-size: 9px;
+      letter-spacing: 1px;
+    }
+    .comparison-table tbody td {
+      padding: 10px 6px;
+      font-size: 11px;
+      line-height: 1.4;
+      word-wrap: break-word;
+    }
+    .comparison-table .lane-name { font-size: 12px; }
+    .comparison-table colgroup col:nth-child(1) { width: 16%; }
+    .comparison-table colgroup col:nth-child(2) { width: 10%; }
+    .comparison-table colgroup col:nth-child(3) { width: 14%; }
+    .comparison-table colgroup col:nth-child(4) { width: 16%; }
+    .comparison-table colgroup col:nth-child(5) { width: 44%; }
+
+    .lane-card {
+      padding: 20px 24px;
+      margin-bottom: 16px;
+      page-break-inside: auto;
+    }
+
+    .lane-tag { font-size: 9px; padding: 3px 8px; margin-bottom: 10px; }
+    .lane-title { font-size: 20px !important; margin-bottom: 4px; }
+    .lane-tldr { font-size: 12px; margin-bottom: 14px; }
+    .lane-section { margin-top: 14px; padding-top: 14px; }
+    .lane-label { font-size: 10px; margin-bottom: 8px; }
+    .lane-body { font-size: 12px; line-height: 1.5; }
+    .lane-body p { margin-bottom: 8px; }
+    .lane-body ul li { padding-left: 16px; margin-bottom: 6px; }
+    .lane-body ul li::before { top: 8px; width: 4px; height: 4px; }
+
+    .outcome { padding: 12px 16px; margin-top: 12px; page-break-inside: avoid; }
+    .outcome .outcome-label { font-size: 9px; margin-bottom: 4px; }
+    .outcome .outcome-text { font-size: 11px; line-height: 1.5; }
+
+    .price-pill { font-size: 11px; padding: 2px 8px; }
+
+    .ref-grid { gap: 8px; margin-top: 12px; }
+    .ref-card { padding: 10px 12px; }
+    .ref-card .ref-name { font-size: 12px; }
+    .ref-card .ref-why { font-size: 10px; }
+
+    .plan-week {
+      padding: 16px 20px;
+      margin-bottom: 10px;
+      page-break-inside: avoid;
+    }
+    .plan-week .week-label { font-size: 9px; }
+    .plan-week .week-title { font-size: 16px !important; margin-bottom: 8px; }
+    .plan-week .week-tasks li { font-size: 11px; line-height: 1.5; padding: 4px 0 4px 20px; }
+    .plan-week .week-tasks li::before { top: 9px; width: 8px; height: 8px; }
+
+    .budget-grid { gap: 10px; margin-top: 16px; }
+    .budget-item { padding: 16px 12px; }
+    .budget-item .budget-amount { font-size: 26px; }
+    .budget-item .budget-label { font-size: 11px; margin-bottom: 4px; }
+    .budget-item .budget-desc { font-size: 10px; }
+
+    .template-block {
+      padding: 16px 20px;
+      margin-top: 10px;
+      page-break-inside: avoid;
+    }
+    .template-block .template-label { font-size: 9px; margin-bottom: 8px; }
+    .template-block .template-text { font-size: 11px; line-height: 1.5; }
+
+    .split-grid { gap: 10px; margin-top: 16px; }
+    .split-card { padding: 16px 20px; page-break-inside: avoid; }
+    .split-card .split-who { font-size: 9px; }
+    .split-card .split-title { font-size: 16px !important; margin-bottom: 8px; }
+    .split-card ul li { font-size: 11px; padding: 5px 0 5px 18px; }
+    .split-card ul li::before { font-size: 11px; top: 5px; }
+
+    .callout { padding: 16px 20px; margin: 16px 0; page-break-inside: avoid; }
+    .callout .callout-label { font-size: 9px; margin-bottom: 6px; }
+    .callout .callout-text { font-size: 14px !important; line-height: 1.4; }
+
+    .footer { padding: 24px 0; margin-top: 24px; }
+    .footer .footer-brand { font-size: 11px; letter-spacing: 3px; }
+    .footer .footer-text { font-size: 11px; }
+
+    .service-grid { gap: 10px; margin-top: 14px; }
+    .service-card { padding: 14px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav-glass">
+  <div class="nav-brand">BL4INE.</div>
+  <div class="nav-doc">Playlist Playbook · v1</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-label">Vantage Co. × BL4INE.</div>
+  <h1 class="hero-title">Playlist <span class="gold">Playbook</span></h1>
+  <p class="hero-subtitle">Every option for getting "Brand New Me" on playlists. What's free, what costs money, and what each one will actually get you. Read it once, run it for 30 days.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <div class="value">4</div>
+      <div class="label">Lanes</div>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-meta-item">
+      <div class="value">$0–500</div>
+      <div class="label">Budget Range</div>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-meta-item">
+      <div class="value">30</div>
+      <div class="label">Days to Execute</div>
+    </div>
+  </div>
+</section>
+
+<!-- BIG PICTURE -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-number">01 — Overview</div>
+    <h2 class="section-title">The Four Lanes</h2>
+    <p class="section-subtitle">There are four real paths to playlist placement. Each one costs different amounts of time, money, and effort, and each one delivers different scale. Here's the lay of the land.</p>
+  </div>
+
+  <div class="comparison">
+    <table class="comparison-table">
+      <colgroup>
+        <col><col><col><col><col>
+      </colgroup>
+      <thead>
+        <tr>
+          <th>Lane</th>
+          <th>Cost</th>
+          <th>Effort</th>
+          <th>Time to Result</th>
+          <th>Realistic Outcome</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="lane-name">Spotify Editorial</td>
+          <td class="free">FREE</td>
+          <td>Low</td>
+          <td>1–2 weeks (post-pitch)</td>
+          <td>Long shot for indie. Window already missed for this single. Set up for next release.</td>
+        </tr>
+        <tr>
+          <td class="lane-name">User-Curated Playlists</td>
+          <td class="free">FREE</td>
+          <td>High (manual outreach)</td>
+          <td>2–4 weeks</td>
+          <td>5–10 placements out of 50 outreaches. Best ROI for indie.</td>
+        </tr>
+        <tr>
+          <td class="lane-name">Paid Submission Services</td>
+          <td class="paid">$50–$300</td>
+          <td>Low (set + forget)</td>
+          <td>1–7 days</td>
+          <td>2–10 placements depending on spend. Fastest path.</td>
+        </tr>
+        <tr>
+          <td class="lane-name">Christian Radio</td>
+          <td class="free">FREE</td>
+          <td>Medium</td>
+          <td>2–8 weeks</td>
+          <td>1–3 local TN spins possible. Major networks (K-LOVE) are long shots.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <div class="callout-label">The Move</div>
+    <div class="callout-text">Run user-curated outreach + a paid SubmitHub blast in parallel. They're the only two lanes that reliably move the needle for an indie artist on his first single. Editorial is set-up-for-next-time. Radio is bonus.</div>
+  </div>
+</section>
+
+<!-- LANE 1: EDITORIAL -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-number">02 — Lane 1</div>
+    <h2 class="section-title">Spotify Editorial Playlists</h2>
+    <p class="section-subtitle">The big leagues. Spotify-curated playlists like "New Music Friday Christian" or "Country Gospel" can do hundreds of thousands to millions of streams per placement.</p>
+  </div>
+
+  <div class="lane-card free">
+    <span class="lane-tag free">Free · Long Shot</span>
+    <h3 class="lane-title">The Holy Grail (with a catch)</h3>
+    <p class="lane-tldr">Free to pitch. Hardest to land. The window for "Brand New Me" already closed.</p>
+
+    <div class="lane-section">
+      <div class="lane-label">What it is</div>
+      <div class="lane-body">
+        <p>Editorial playlists are run by Spotify staff. Every Friday they update playlists like "New Music Friday Christian," "Country Gospel," and "Fresh Finds." Getting on one is like having Spotify hand you a megaphone in front of millions of listeners.</p>
+      </div>
+    </div>
+
+    <div class="lane-section">
+      <div class="lane-label">How to pitch</div>
+      <div class="lane-body">
+        <p>Through <strong>Spotify for Artists</strong> → "Pitch a Song." It's a form: track name, mood, genre, one-paragraph description, hometown, etc. Spotify's editorial team reads them.</p>
+      </div>
+    </div>
+
+    <div class="lane-section">
+      <div class="lane-label">The catch</div>
+      <div class="lane-body">
+        <p>You have to pitch the song <strong>at least 4 weeks BEFORE release date</strong>. For "Brand New Me" that window closed. No way to pitch it now.</p>
+      </div>
+    </div>
+
+    <div class="outcome warning">
+      <div class="outcome-label">For This Single</div>
+      <div class="outcome-text">Editorial pitch is off the table for "Brand New Me." Don't worry about it for this release.</div>
+    </div>
+
+    <div class="lane-section">
+      <div class="lane-label">What to do RIGHT NOW</div>
+      <div class="lane-body">
+        <ul>
+          <li>Complete your <strong>Spotify for Artists profile</strong> 100% — bio, header image, photo gallery, links</li>
+          <li>Set <strong>"Brand New Me" as your Artist's Pick</strong> — pinned at the top of your profile</li>
+          <li>Add a <strong>Canvas</strong> (8-second looping video) to "Brand New Me" — boosts share rate by 145% per Spotify's data</li>
+          <li>Confirm your <strong>artist genres</strong> are tagged correctly (Christian Country, Country, Indie Folk)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="lane-section">
+      <div class="lane-label">For your NEXT release</div>
+      <div class="lane-body">
+        <p>Pitch via Spotify for Artists <strong>at least 4 weeks before drop date</strong>. This is the single biggest mistake indie artists make. Don't make it again.</p>
+      </div>
+    </div>
+
+    <div class="outcome">
+      <div class="outcome-label">Realistic Outcome</div>
+      <div class="outcome-text">Even with a perfect pitch, editorial placement for an indie artist's first single is a long shot — maybe 1 in 50. But the algorithmic playlists (Discover Weekly, Release Radar) are way more accessible, and they trigger off SAVES not streams. A complete profile + Canvas + Artist's Pick all push you toward those.</div>
+    </div>
+  </div>
+</section>
+
+<!-- LANE 2: USER-CURATED -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-number">03 — Lane 2</div>
+    <h2 class="section-title">User-Curated Playlists</h2>
+    <p class="section-subtitle">Playlists run by individuals — fans, music nerds, faith-community folks, indie bloggers. Free to pitch. Hands-down the best ROI for an indie artist.</p>
+  </div>
+
+  <div class="lane-card free">
+    <span class="lane-tag free">Free · Best ROI</span>
+    <h3 class="lane-title">Your Bread and Butter</h3>
+    <p class="lane-tldr">50 outreaches → 5–10 playlist adds → 500–5,000 new streams. Pure sweat equity.</p>
+
+    <div class="lane-section">
+      <div class="lane-label">What they are</div>
+      <div class="lane-body">
+        <p>Playlists like "Indie Christian Country Vibes" or "Faith & Twang 2026" run by regular people. Some have 500 followers, some have 50,000. They're way more accessible than editorial because they're run by humans you can DM directly.</p>
+      </div>
+    </div>
+
+    <div class="lane-section">
+      <div class="lane-label">How to find them</div>
+      <div class="lane-body">
+        <p>Five proven methods, in order of best return:</p>
+        <ul>
+          <li><strong>"Discovered On" trick</strong> — Go to a similar artist's Spotify page, scroll to "Discovered On" section. Every playlist that added them is a target for you.</li>
+          <li><strong>Spotify search</strong> — search "christian country," "faith country," "indie christian," "country worship," "testimony songs." Filter to user-created playlists with 1K–50K followers.</li>
+          <li><strong>Instagram hashtags</strong> — search #christiancountryplaylist, #faithplaylist, #indiechristian. Curators promote their playlists on IG.</li>
+          <li><strong>Reddit</strong> — r/ChristianMusic, r/Christiancountry. Curators ask for submissions there.</li>
+          <li><strong>TikTok</strong> — many young curators run Spotify playlists and promote on TT. Same hashtags.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="lane-section">
+      <div class="lane-label">Reference artists to target</div>
+      <div class="lane-body">
+        <p>Every playlist that features these artists is a target for you. Mention them in your pitches too — curators trust comparisons.</p>
+        <div class="ref-grid">
+          <div class="ref-card">
+            <div class="ref-name">Josiah Queen</div>
+            <div class="ref-why">Christian country, blew up on TikTok</div>
+          </div>
+          <div class="ref-card">
+            <div class="ref-name">Forrest Frank</div>
+            <div class="ref-why">Indie Christian, testimony-forward</div>
+          </div>
+          <div class="ref-card">
+            <div class="ref-name">Anne Wilson</div>
+            <div class="ref-why">Christian country, radio-forward</div>
+          </div>
+          <div class="ref-card">
+            <div class="ref-name">CAIN</div>
+            <div class="ref-why">Faith-pop with country edges</div>
+          </div>
+          <div class="ref-card">
+            <div class="ref-name">Riley Clemmons</div>
+            <div class="ref-why">Christian indie-pop</div>
+          </div>
+          <div class="ref-card">
+            <div class="ref-name">Zach Williams</div>
+            <div class="ref-why">Christian country, testimony-heavy</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lane-section">
+      <div class="lane-label">How to pitch them</div>
+      <div class="lane-body">
+        <p>Cold DM the curator on Instagram or Twitter. (Curator's social is usually linked in the playlist description on Spotify.) Use the cold DM template at the bottom of this playbook. <strong>Personal beats polished.</strong> Reference a specific song already on their playlist.</p>
+      </div>
+    </div>
+
+    <div class="lane-section">
+      <div class="lane-label">Cadence</div>
+      <div class="lane-body">
+        <p>5–10 outreaches per day for 7–10 days. Total target: <strong>50 curator DMs</strong>. One follow-up at day 7 if no response. Never nag past that.</p>
+      </div>
+    </div>
+
+    <div class="outcome">
+      <div class="outcome-label">Realistic Outcome</div>
+      <div class="outcome-text">50 outreaches → 10–15% response rate → 5–10 playlist placements over 30 days. If those playlists average 2K followers, that's 500–5,000 new ear-worthy streams plus a permanent track record you can point to in your next pitch.</div>
+    </div>
+  </div>
+</section>
+
+<!-- LANE 3: PAID -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-number">04 — Lane 3</div>
+    <h2 class="section-title">Paid Submission Services</h2>
+    <p class="section-subtitle">Pay a small fee, your song lands in front of curators who agreed to listen. Fastest path to placements. Three main services, each with a different angle.</p>
+  </div>
+
+  <div class="lane-card paid">
+    <span class="lane-tag paid">Paid · Fast Results</span>
+    <h3 class="lane-title">SubmitHub</h3>
+    <p class="lane-tldr">Cheapest, biggest network, guaranteed feedback. Start here.</p>
+
+    <div class="lane-section">
+      <div class="lane-label">How it works</div>
+      <div class="lane-body">
+        <p>You buy credits (~$1 each). Each curator costs 1–4 credits. You submit your song with a 500-character pitch. The curator MUST either accept (add to playlist), reject with feedback, or refund your credits. <strong>Feedback is guaranteed</strong> — even rejections come with a comment.</p>
+      </div>
+    </div>
+
+    <div class="lane-section">
+      <div class="lane-label">What it costs</div>
+      <div class="lane-body">
+        <p><span class="price-pill">$50</span> ~ 50 credits → ~25 submissions → 1–4 placements</p>
+        <p><span class="price-pill">$100</span> ~ 100 credits → ~50 submissions → 3–8 placements</p>
+        <p><span class="price-pill">$200</span> ~ 200 credits → ~100 submissions → 6–15 placements</p>
+      </div>
+    </div>
+
+    <div class="lane-section">
+      <div class="lane-label">Pro tips</div>
+      <div class="lane-body">
+        <ul>
+          <li>Filter to <strong>Christian, Country, Indie, Folk, Americana</strong>. Don't waste credits on mainstream pop curators.</li>
+          <li>Sort by <strong>highest approval rate</strong> first, then playlist size 1K–50K followers.</li>
+          <li>Look for curators who already added Josiah Queen, Anne Wilson, or Forrest Frank — they're warm leads.</li>
+          <li>Lead the pitch with the <strong>emotional hook</strong>, not your bio.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="outcome">
+      <div class="outcome-label">Realistic Outcome</div>
+      <div class="outcome-text">$100 spend → 3–8 playlist placements within 7 days, plus written feedback from 40+ curators. Fastest, most measurable lane.</div>
+    </div>
+  </div>
+
+  <div class="lane-card paid">
+    <span class="lane-tag paid">Paid · Blogs + EU</span>
+    <h3 class="lane-title">Groover</h3>
+    <p class="lane-tldr">Same model as SubmitHub but stronger for blogs, small radio, and European markets.</p>
+
+    <div class="lane-section">
+      <div class="lane-label">How it works</div>
+      <div class="lane-body">
+        <p>Buy "Grooviz" (their currency, ~€1 each). Submit to curators, blogs, radio shows, and labels. Guaranteed feedback within 7 days. If no feedback, you get a refund + bonus credits.</p>
+      </div>
+    </div>
+
+    <div class="lane-section">
+      <div class="lane-label">What it costs</div>
+      <div class="lane-body">
+        <p><span class="price-pill">$30–50</span> ~ 30–50 submissions → 2–5 placements / blog features / radio spots</p>
+      </div>
+    </div>
+
+    <div class="lane-section">
+      <div class="lane-label">Best for</div>
+      <div class="lane-body">
+        <p>Music blogs (smaller but higher-quality coverage), independent radio shows, and reaching listeners in the UK + EU. Some Christian bloggers are on there too.</p>
+      </div>
+    </div>
+
+    <div class="outcome">
+      <div class="outcome-label">Realistic Outcome</div>
+      <div class="outcome-text">$40 spend → 2–4 placements + maybe 1 blog write-up. Worth a small test if SubmitHub goes well.</div>
+    </div>
+  </div>
+
+  <div class="lane-card paid">
+    <span class="lane-tag paid">Paid · Premium</span>
+    <h3 class="lane-title">PlaylistPush</h3>
+    <p class="lane-tldr">More expensive, more curated network, higher hit rate per dollar but bigger minimum spend.</p>
+
+    <div class="lane-section">
+      <div class="lane-label">How it works</div>
+      <div class="lane-body">
+        <p>You set a campaign budget. PlaylistPush sends your song to vetted curators. Each curator must rate your song 1–10 and explain why; if they rate 7+ they typically place it. They pre-vet curators harder than SubmitHub.</p>
+      </div>
+    </div>
+
+    <div class="lane-section">
+      <div class="lane-label">What it costs</div>
+      <div class="lane-body">
+        <p><span class="price-pill">$300+ minimum</span> for a real campaign. Out of budget for this single — save for a future release.</p>
+      </div>
+    </div>
+
+    <div class="outcome">
+      <div class="outcome-label">Realistic Outcome</div>
+      <div class="outcome-text">Skip for now. The minimum spend eats your whole budget on a single service. Revisit when you have $500+ to spend on a single track.</div>
+    </div>
+  </div>
+</section>
+
+<!-- LANE 4: RADIO -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-number">05 — Lane 4</div>
+    <h2 class="section-title">Christian Radio</h2>
+    <p class="section-subtitle">Free to submit, hard to land. Major networks are long shots. Local Tennessee stations are way more winnable and they still feed listeners straight to your Spotify.</p>
+  </div>
+
+  <div class="lane-card free">
+    <span class="lane-tag free">Free · Long Game</span>
+    <h3 class="lane-title">The Bonus Lane</h3>
+    <p class="lane-tldr">Don't expect K-LOVE on track #1. Expect a couple of local TN spins if you pitch right.</p>
+
+    <div class="lane-section">
+      <div class="lane-label">Major Christian networks (long shots)</div>
+      <div class="lane-body">
+        <ul>
+          <li><strong>K-LOVE</strong> — submit via klove.com/music. Major network, very competitive.</li>
+          <li><strong>Air1</strong> — submit via air1.com. K-LOVE's sister network, slightly more open to indie.</li>
+          <li><strong>WAY-FM</strong> — submit via wayfm.com. Smaller national network, more accessible.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="lane-section">
+      <div class="lane-label">Local TN stations (way more winnable)</div>
+      <div class="lane-body">
+        <ul>
+          <li><strong>WCRV (Memphis)</strong> — Christian talk + music</li>
+          <li><strong>WJAC (Cookeville area)</strong> — local, smaller, way more accessible</li>
+          <li><strong>WBOZ "94 FM the Fish" (Nashville)</strong> — Christian contemporary</li>
+          <li><strong>Local Christian college radio</strong> — Trevecca Nazarene, Lipscomb, Lee University</li>
+          <li><strong>Cookeville-area country stations</strong> — pitch as a hometown story, not a religious play</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="lane-section">
+      <div class="lane-label">How to pitch</div>
+      <div class="lane-body">
+        <p>Email the music director directly (find on station website). Use the radio email template at the bottom of this playbook. Attach a one-sheet PDF if you have one. Local angle wins — "Cookeville, TN artist" is a hook.</p>
+      </div>
+    </div>
+
+    <div class="outcome">
+      <div class="outcome-label">Realistic Outcome</div>
+      <div class="outcome-text">1–3 local TN spins are achievable if you pitch 10–15 stations. Major network play on track #1 is unlikely but possible. Everything you land becomes a credibility hook for the next pitch.</div>
+    </div>
+  </div>
+</section>
+
+<!-- BONUS LANES -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-number">06 — Bonus</div>
+    <h2 class="section-title">Hidden Lanes Most Artists Miss</h2>
+    <p class="section-subtitle">Three additional ways to get your song in front of listeners that don't fit the standard playlist pitch playbook.</p>
+  </div>
+
+  <div class="lane-card bonus">
+    <span class="lane-tag bonus">Bonus · Free</span>
+    <h3 class="lane-title">Spotify Algorithmic Playlists</h3>
+    <p class="lane-tldr">Discover Weekly, Release Radar, Daily Mix. The algorithm decides — and it cares about SAVES, not streams.</p>
+    <div class="lane-section">
+      <div class="lane-body">
+        <p>These auto-generated playlists pull in 60–70% of all indie playlist traffic. The algo triggers off <strong>save rate</strong>, <strong>completion rate</strong>, and <strong>share rate</strong> — NOT raw stream count.</p>
+        <p><strong>How to push it:</strong></p>
+        <ul>
+          <li>Personally text/DM 50 friends + church + family with the Spotify link. Ask them to <strong>save</strong> the song (not just listen).</li>
+          <li>Make sure your "Brand New Me" Canvas video is set up — Spotify boosts tracks with Canvas.</li>
+          <li>Anyone who follows you on Spotify gets the song in their Release Radar automatically. Push for follows.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="lane-card bonus">
+    <span class="lane-tag bonus">Bonus · Free</span>
+    <h3 class="lane-title">TikTok-to-Spotify Pipeline</h3>
+    <p class="lane-tldr">Many TikTok creators run their own Spotify playlists. Two birds, one DM.</p>
+    <div class="lane-section">
+      <div class="lane-body">
+        <p>If a TikTok creator (especially in faith/country space) features your song, ask them to add it to their Spotify playlist too. Most have one. This is how songs cross from TT virality → permanent stream catalog.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="lane-card bonus">
+    <span class="lane-tag bonus">Bonus · Free</span>
+    <h3 class="lane-title">Apple Music for Artists</h3>
+    <p class="lane-tldr">Same playbook as Spotify, smaller audience but less competition.</p>
+    <div class="lane-section">
+      <div class="lane-body">
+        <p>Sign up for Apple Music for Artists (free). Pitch through their dashboard for editorial. Their Christian + country editorial team is genuinely more open to indie artists than Spotify's. Lower volume but worth 30 minutes of setup.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BUDGET -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-number">07 — Budget</div>
+    <h2 class="section-title">How to Spend $200</h2>
+    <p class="section-subtitle">Recommended allocation from your $100–500 budget. Optimized for maximum placements per dollar.</p>
+  </div>
+
+  <div class="budget-grid">
+    <div class="budget-item">
+      <div class="budget-amount">$100</div>
+      <div class="budget-label">SubmitHub</div>
+      <div class="budget-desc">100 credits → ~50 submissions to vetted curators. Highest-volume lane.</div>
+    </div>
+    <div class="budget-item">
+      <div class="budget-amount">$40</div>
+      <div class="budget-label">Groover</div>
+      <div class="budget-desc">~40 submissions for blogs + small radio + EU curators. Test spend.</div>
+    </div>
+    <div class="budget-item">
+      <div class="budget-amount">$60</div>
+      <div class="budget-label">Reserve</div>
+      <div class="budget-desc">For tipping curators who accept, or doubling down on what's working in week 3.</div>
+    </div>
+    <div class="budget-item">
+      <div class="budget-amount">$0</div>
+      <div class="budget-label">Cold Outreach</div>
+      <div class="budget-desc">User-curated DMs + radio emails cost nothing but time. Run in parallel.</div>
+    </div>
+  </div>
+</section>
+
+<!-- THE PLAN -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-number">08 — Execution</div>
+    <h2 class="section-title">The 30-Day Plan</h2>
+    <p class="section-subtitle">Week-by-week cadence. Don't skip the foundation week — it makes every other lane work harder.</p>
+  </div>
+
+  <div class="plan-week">
+    <div class="week-label">Week 1 · Days 1–7</div>
+    <h3 class="week-title">Foundation + Target List</h3>
+    <ul class="week-tasks">
+      <li>Complete Spotify for Artists profile (bio, header, gallery, Canvas)</li>
+      <li>Set "Brand New Me" as Artist's Pick</li>
+      <li>Set up Apple Music for Artists account</li>
+      <li>Build curator target list — 50 user-curated playlists with contact info</li>
+      <li>Create SubmitHub account, buy 100 credits</li>
+      <li>DM/text 50 personal contacts asking them to SAVE the song on Spotify</li>
+    </ul>
+  </div>
+
+  <div class="plan-week">
+    <div class="week-label">Week 2 · Days 8–14</div>
+    <h3 class="week-title">Outreach Push</h3>
+    <ul class="week-tasks">
+      <li>SubmitHub blast — submit to 50 curators (Christian, Country, Indie, Folk filter)</li>
+      <li>Cold DM 5–10 user-curated playlist owners per day on IG</li>
+      <li>Email 5–10 local TN radio stations + 3 major Christian networks</li>
+      <li>Test Groover with $40 spend</li>
+      <li>Track everything in a simple spreadsheet (sender, date, response)</li>
+    </ul>
+  </div>
+
+  <div class="plan-week">
+    <div class="week-label">Week 3 · Days 15–21</div>
+    <h3 class="week-title">Follow-Ups + Momentum</h3>
+    <ul class="week-tasks">
+      <li>Single follow-up DM to anyone who didn't respond at day 7</li>
+      <li>Read SubmitHub feedback — apply learnings to your next pitch round</li>
+      <li>Thank-you message + ask-for-share to anyone who placed your track</li>
+      <li>Screenshot every playlist add → post to IG/TT stories ("just got added to X playlist")</li>
+      <li>Use early traction ("featured on 5 playlists in week 2") in next round of pitches</li>
+    </ul>
+  </div>
+
+  <div class="plan-week">
+    <div class="week-label">Week 4 · Days 22–30</div>
+    <h3 class="week-title">Double Down + Plan Next Release</h3>
+    <ul class="week-tasks">
+      <li>Spend reserve $60 on whatever lane is winning</li>
+      <li>Build relationships with curators who placed your track — they're your warm list for next release</li>
+      <li>Set calendar reminder for next single: pitch via Spotify for Artists 4 weeks before drop</li>
+      <li>Document what worked in a one-page recap → applies to every future release</li>
+    </ul>
+  </div>
+</section>
+
+<!-- TEMPLATES -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-number">09 — Templates</div>
+    <h2 class="section-title">Pitch Templates</h2>
+    <p class="section-subtitle">Three versions, copy-paste-ready. Replace the highlighted bits with the specifics for the playlist or station you're pitching.</p>
+  </div>
+
+  <div class="template-block">
+    <div class="template-label">Cold DM · For user-curated playlist owners</div>
+    <div class="template-text">Hey <em>[name]</em>, been listening to <em>[their playlist name]</em> — <em>[specific track on their playlist]</em> has been on repeat for me.
+
+I'm Blaine, just released "Brand New Me," a Christian country track about coming out of a season of shame. For fans of Josiah Queen, Zach Williams, Anne Wilson.
+
+<em>[Spotify link]</em>
+
+Would mean a lot if you gave it a listen for the playlist. Either way, appreciate the work you're doing.
+
+— Blaine (BL4INE.)</div>
+  </div>
+
+  <div class="template-block">
+    <div class="template-label">SubmitHub · 500-character pitch</div>
+    <div class="template-text">Christian country testimony track about coming out of a season of shame. Fully indie, fully written and sung by me.
+
+Quotable line: "I think this time it's safe to say, I finally made it to the other side of shame."
+
+For fans of Josiah Queen, Forrest Frank, Zach Williams.
+
+Doing 2K+ streams in week 1 as an independent artist with 60 TikTok followers — there's a real audience pull on this one. Appreciate the listen either way.</div>
+  </div>
+
+  <div class="template-block">
+    <div class="template-label">Radio Email · For Christian + local TN stations</div>
+    <div class="template-text">Subject: New Christian country release — "Brand New Me" by BL4INE.
+
+Hi <em>[music director name]</em>,
+
+Reaching out about a new Christian country track from independent Tennessee artist BL4INE. (William Blaine Smith).
+
+"Brand New Me" released April 20, 2026 — a testimony track about coming out of a season of shame. For fans of Josiah Queen and Anne Wilson.
+
+Spotify: <em>[link]</em>
+Artist profile: <em>[link]</em>
+
+Would love consideration for rotation.
+
+Thanks,
+<em>[your name]</em></div>
+  </div>
+</section>
+
+<!-- SPLIT -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-number">10 — Roles</div>
+    <h2 class="section-title">Who Does What</h2>
+    <p class="section-subtitle">Clear division of labor. Vantage handles the heavy lifting on the technical pitching side. You handle the human side and the song-promotion content.</p>
+  </div>
+
+  <div class="split-grid">
+    <div class="split-card vantage">
+      <div class="split-who">Vantage Co. Handles</div>
+      <h3 class="split-title">The Pitch Engine</h3>
+      <ul>
+        <li>Build the curator target list (50 playlists with contact info)</li>
+        <li>Run the SubmitHub + Groover campaigns end-to-end</li>
+        <li>Draft + send the radio outreach emails</li>
+        <li>Track responses in a shared spreadsheet</li>
+        <li>Recap report at end of 30 days</li>
+      </ul>
+    </div>
+    <div class="split-card blaine">
+      <div class="split-who">You Handle</div>
+      <h3 class="split-title">The Human Side</h3>
+      <ul>
+        <li>Personally DM/text 50 contacts asking for Spotify SAVES (not just streams)</li>
+        <li>Complete your Spotify for Artists profile (bio, photo, Canvas)</li>
+        <li>Send the cold DMs to user-curated playlist owners — these convert way better when they come from you, not a marketing team</li>
+        <li>Post a screenshot to IG story every time a playlist adds your song</li>
+        <li>Thank curators publicly when they place your track</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CALLOUT -->
+<section class="section">
+  <div class="callout">
+    <div class="callout-label">The One Thing to Remember</div>
+    <div class="callout-text">Spotify's algorithm cares about <em>saves</em>, not streams. Every "save" from a real human is worth ~10x a passive stream. The fastest way to land on Discover Weekly and Release Radar isn't a viral playlist — it's getting 200 real people to hit the save button. Start there.</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-brand">VANTAGE CO.</div>
+  <div class="footer-text">Playlist Playbook · Built for BL4INE. · April 2026</div>
+</footer>
+
+</body>
+</html>
