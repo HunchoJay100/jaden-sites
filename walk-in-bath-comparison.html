@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Walk-In Bath & Shower Programs — Flynn Development</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0a;
+  --surface: #131313;
+  --surface-2: #1a1a1a;
+  --border: #2a2a2a;
+  --text: #e8e6e1;
+  --text-dim: #9a968c;
+  --gold: #C5A55A;
+  --gold-dim: #8a7840;
+  --green: #7fa866;
+  --red: #b86b5f;
+  --amber: #d4a84b;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  line-height: 1.6;
+  font-size: 15px;
+  padding: 60px 40px;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 14px;
+}
+
+h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-size: 52px;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin-bottom: 16px;
+}
+
+h1 em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.subtitle {
+  font-size: 17px;
+  color: var(--text-dim);
+  max-width: 720px;
+  margin-bottom: 48px;
+  font-weight: 300;
+}
+
+h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-size: 32px;
+  letter-spacing: -0.005em;
+  margin-top: 56px;
+  margin-bottom: 24px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+h4 {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+p { margin-bottom: 12px; }
+
+/* TL;DR callout */
+.tldr {
+  background: var(--surface);
+  border-left: 3px solid var(--gold);
+  padding: 24px 28px;
+  margin-bottom: 40px;
+  border-radius: 0 6px 6px 0;
+}
+.tldr-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+.tldr p:last-child { margin-bottom: 0; }
+
+/* Model overview */
+.models {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 12px;
+}
+.model-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 22px 24px;
+}
+.model-card h3 {
+  color: var(--text);
+  font-size: 22px;
+  margin-bottom: 4px;
+}
+.model-tag {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+.tag-low { color: var(--green); }
+.tag-mid { color: var(--amber); }
+.tag-high { color: var(--red); }
+.model-card p {
+  font-size: 13.5px;
+  color: var(--text-dim);
+  margin-bottom: 0;
+}
+
+/* Program cards */
+.programs {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.program {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 28px 32px;
+  position: relative;
+}
+.program.recommended {
+  border-color: var(--gold);
+  background: linear-gradient(180deg, rgba(197,165,90,0.04) 0%, var(--surface) 100%);
+}
+.program-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.program-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-size: 28px;
+}
+.program-name em { color: var(--gold); font-style: italic; }
+.program-meta {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  font-weight: 500;
+}
+.recommended-badge {
+  position: absolute;
+  top: -10px;
+  right: 24px;
+  background: var(--gold);
+  color: #0a0a0a;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  padding: 4px 12px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+.program-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px 40px;
+}
+.field-row { margin-bottom: 14px; }
+.field-row:last-child { margin-bottom: 0; }
+.field-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 4px;
+  display: block;
+}
+.field-value {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.55;
+}
+.field-value .dim { color: var(--text-dim); font-size: 13px; }
+
+.pros-cons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.pc-col h4 { margin-bottom: 10px; }
+.pc-col ul {
+  list-style: none;
+  padding: 0;
+}
+.pc-col li {
+  font-size: 13.5px;
+  padding-left: 18px;
+  position: relative;
+  margin-bottom: 7px;
+  color: var(--text);
+  line-height: 1.5;
+}
+.pros li::before {
+  content: "+";
+  position: absolute;
+  left: 0;
+  color: var(--green);
+  font-weight: 600;
+}
+.cons li::before {
+  content: "−";
+  position: absolute;
+  left: 0;
+  color: var(--red);
+  font-weight: 600;
+}
+
+/* Fit matrix */
+.matrix {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.matrix th {
+  background: #0f0f0f;
+  color: var(--gold);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 14px 18px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.matrix td {
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+  vertical-align: top;
+}
+.matrix tr:last-child td { border-bottom: none; }
+.matrix tr:nth-child(even) td { background: rgba(255,255,255,0.012); }
+.matrix .program-cell { font-weight: 500; font-family: 'Cormorant Garamond', serif; font-size: 19px; }
+
+.score {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+.score-a { background: rgba(127,168,102,0.15); color: var(--green); }
+.score-b { background: rgba(212,168,75,0.15); color: var(--amber); }
+.score-c { background: rgba(184,107,95,0.15); color: var(--red); }
+
+/* Checklist */
+.checklist {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 28px 32px;
+}
+.checklist ol {
+  padding-left: 22px;
+  counter-reset: item;
+  list-style: none;
+}
+.checklist li {
+  counter-increment: item;
+  padding-left: 10px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.5;
+  position: relative;
+}
+.checklist li::before {
+  content: counter(item, decimal-leading-zero);
+  position: absolute;
+  left: -26px;
+  top: 0;
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.1em;
+}
+.checklist strong { color: var(--gold); font-weight: 500; }
+
+/* Next steps */
+.next {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.step {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 6px 6px 0;
+  padding: 22px 24px;
+}
+.step-num {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+.step h3 { font-size: 21px; margin-bottom: 8px; }
+.step p { font-size: 13.5px; color: var(--text-dim); margin-bottom: 0; }
+
+footer {
+  margin-top: 80px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--text-dim);
+  display: flex;
+  justify-content: space-between;
+}
+footer em { color: var(--gold); font-style: italic; }
+
+.note {
+  font-size: 12px;
+  color: var(--text-dim);
+  font-style: italic;
+  margin-top: 16px;
+  padding: 14px 18px;
+  background: rgba(255,255,255,0.018);
+  border-radius: 4px;
+  border-left: 2px solid var(--gold-dim);
+}
+
+@media (max-width: 860px) {
+  body { padding: 40px 20px; }
+  h1 { font-size: 38px; }
+  .models, .next { grid-template-columns: 1fr; }
+  .program-grid, .pros-cons { grid-template-columns: 1fr; gap: 18px; }
+  .program-header { flex-direction: column; gap: 6px; }
+}
+</style>
+</head>
+<body>
+
+<div class="eyebrow">Flynn Development / Business Opportunity</div>
+<h1>Walk-In Bath &amp; Shower Programs<br><em>Dealer Comparison</em></h1>
+<p class="subtitle">One-day bath and shower remodels are a high-margin, high-demand category with no local installer between Sparta and Knoxville. This doc compares the five programs worth a conversation, ranked by fit with Flynn Development's existing infrastructure.</p>
+
+<div class="tldr">
+  <div class="tldr-label">The Read</div>
+  <p><strong>Best fit for Flynn Development is the wholesale supplier route (BCI Acrylic or Luxury Bath).</strong> You already have the crews, the local brand, and the marketing engine. A franchise pays for infrastructure you already own and gives up margin forever for brand recognition that compounds slower than your own name in this market.</p>
+  <p>The only reason to consider Jacuzzi, Kohler, or Re-Bath is if you want a turnkey sales process and are willing to trade 8-15% of revenue to not build it yourself.</p>
+</div>
+
+<h2>The Three Business Models</h2>
+<div class="models">
+  <div class="model-card">
+    <div class="model-tag tag-low">Lowest Commitment</div>
+    <h3>Wholesale / Independent Dealer</h3>
+    <p>You buy product at wholesale from the manufacturer, install under your own brand, keep all margin, no royalty. BCI Acrylic, Luxury Bath, Bestbath.</p>
+  </div>
+  <div class="model-card">
+    <div class="model-tag tag-mid">Middle Ground</div>
+    <h3>Licensed / Authorized Dealer</h3>
+    <p>You sell a national brand (Jacuzzi, Kohler) in a protected territory. Moderate upfront fees, product purchase minimums, marketing co-op. Not a full franchise.</p>
+  </div>
+  <div class="model-card">
+    <div class="model-tag tag-high">Highest Commitment</div>
+    <h3>Franchise</h3>
+    <p>Full brand system. Franchise fee upfront, ongoing royalty (typically 5-7%), national ad fund (typically 1-3%), required showroom, locked-in operating standards. Re-Bath, Bath Fitter.</p>
+  </div>
+</div>
+
+<h2>Program Comparison</h2>
+<div class="programs">
+
+  <!-- BCI ACRYLIC -->
+  <div class="program recommended">
+    <div class="recommended-badge">Best Fit</div>
+    <div class="program-header">
+      <div class="program-name">BCI <em>Acrylic</em></div>
+      <div class="program-meta">Wholesale Manufacturer</div>
+    </div>
+    <div class="program-grid">
+      <div>
+        <div class="field-row">
+          <span class="field-label">Model</span>
+          <span class="field-value">Wholesale. You are an independent dealer, not a franchisee. Install under Flynn Development brand.</span>
+        </div>
+        <div class="field-row">
+          <span class="field-label">Upfront Cost</span>
+          <span class="field-value">Low. Typical entry is dealer setup kit, samples, sales materials. <span class="dim">No franchise fee. No territory buy-in.</span></span>
+        </div>
+        <div class="field-row">
+          <span class="field-label">Ongoing Fees</span>
+          <span class="field-value">None. Zero royalty. Zero ad fund. Margin on every job is 100% yours.</span>
+        </div>
+      </div>
+      <div>
+        <div class="field-row">
+          <span class="field-label">Territory</span>
+          <span class="field-value">Typically non-exclusive but lightly-protected. Confirm Sparta/Cookeville/Crossville coverage.</span>
+        </div>
+        <div class="field-row">
+          <span class="field-label">Product Scope</span>
+          <span class="field-value">Tub-to-shower conversions, replacement tubs, walk-in tubs, wall surrounds, shower bases. Full acrylic system.</span>
+        </div>
+        <div class="field-row">
+          <span class="field-label">Lead Time</span>
+          <span class="field-value">Custom pieces typically ship 2-4 weeks from order. Install itself is 1-2 days.</span>
+        </div>
+      </div>
+    </div>
+    <div class="pros-cons">
+      <div class="pc-col pros">
+        <h4>Why it fits Flynn Dev</h4>
+        <ul>
+          <li>You keep 100% of margin on every job forever</li>
+          <li>Install under Flynn Development name, strengthens local brand</li>
+          <li>No minimum volume lock-in if you stop selling it</li>
+          <li>Your crews already do this type of work</li>
+          <li>Stackable with current cost-plus and remodel lines</li>
+        </ul>
+      </div>
+      <div class="pc-col cons">
+        <h4>What you give up</h4>
+        <ul>
+          <li>No national TV ads driving leads to you</li>
+          <li>You build the brand recognition yourself</li>
+          <li>Limited sales training compared to franchise</li>
+          <li>You own marketing creative and lead gen entirely</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- LUXURY BATH -->
+  <div class="program">
+    <div class="program-header">
+      <div class="program-name">Luxury <em>Bath</em></div>
+      <div class="program-meta">Wholesale / Dealer Hybrid</div>
+    </div>
+    <div class="program-grid">
+      <div>
+        <div class="field-row">
+          <span class="field-label">Model</span>
+          <span class="field-value">Dealer network with wholesale pricing. Some dealers use Luxury Bath brand, others co-brand or use their own name.</span>
+        </div>
+        <div class="field-row">
+          <span class="field-label">Upfront Cost</span>
+          <span class="field-value">Low to moderate. Onboarding kit plus optional branded materials if you want to use their name.</span>
+        </div>
+        <div class="field-row">
+          <span class="field-label">Ongoing Fees</span>
+          <span class="field-value">No royalty. Optional marketing co-op if you use their brand.</span>
+        </div>
+      </div>
+      <div>
+        <div class="field-row">
+          <span class="field-label">Territory</span>
+          <span class="field-value">Dealer-by-dealer. Confirm whether the Sparta retailer is already a Luxury Bath dealer before committing.</span>
+        </div>
+        <div class="field-row">
+          <span class="field-label">Product Scope</span>
+          <span class="field-value">Full line: tub-to-shower, walk-ins, replacement, wall systems.</span>
+        </div>
+        <div class="field-row">
+          <span class="field-label">Lead Time</span>
+          <span class="field-value">Similar to BCI. Custom pieces 2-4 weeks typical.</span>
+        </div>
+      </div>
+    </div>
+    <div class="pros-cons">
+      <div class="pc-col pros">
+        <h4>Why to consider</h4>
+        <ul>
+          <li>Backup option if BCI can't serve the territory</li>
+          <li>Option to use their brand where it helps, your brand where it doesn't</li>
+          <li>No royalty commitment</li>
+        </ul>
+      </div>
+      <div class="pc-col cons">
+        <h4>What to watch</h4>
+        <ul>
+          <li>Weaker brand recognition than Jacuzzi or Kohler</li>
+          <li>Verify Sparta retailer isn't already their dealer</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- JACUZZI BATH REMODEL -->
+  <div class="program">
+    <div class="program-header">
+      <div class="program-name">Jacuzzi <em>Bath Remodel</em></div>
+      <div class="program-meta">Licensed Dealer</div>
+    </div>
+    <div class="program-grid">
+      <div>
+        <div class="field-row">
+          <span class="field-label">Model</span>
+          <span class="field-value">Licensed dealer program, not a full franchise. You sell Jacuzzi-branded bath remodel products in a protected territory.</span>
+        </div>
+        <div class="field-row">
+          <span class="field-label">Upfront Cost</span>
+          <span class="field-value">Moderate. Territory license fee, branded showroom or display requirements, sales training. <span class="dim">Typically five-figure entry, not six.</span></span>
+        </div>
+        <div class="field-row">
+          <span class="field-label">Ongoing Fees</span>
+          <span class="field-value">Product purchase minimums. Marketing co-op contribution typical. No royalty on revenue in most structures, but verify.</span>
+        </div>
+      </div>
+      <div>
+        <div class="field-row">
+          <span class="field-label">Territory</span>
+          <span class="field-value">Exclusive or semi-exclusive territory. Given the Knoxville gap, Upper Cumberland likely available.</span>
+        </div>
+        <div class="field-row">
+          <span class="field-label">Product Scope</span>
+          <span class="field-value">Full bath remodel: tub-to-shower, walk-in tubs, replacement, wall systems. Jacuzzi-branded.</span>
+        </div>
+        <div class="field-row">
+          <span class="field-label">Lead Time</span>
+          <span class="field-value">Similar to BCI. 2-4 weeks custom, 1-2 day install.</span>
+        </div>
+      </div>
+    </div>
+    <div class="pros-cons">
+      <div class="pc-col pros">
+        <h4>Why to consider</h4>
+        <ul>
+          <li>Jacuzzi is the strongest consumer brand in the category</li>
+          <li>National ad spend drives brand-searched leads</li>
+          <li>Proven sales process and training</li>
+          <li>Territory protection if you commit</li>
+        </ul>
+      </div>
+      <div class="pc-col cons">
+        <h4>What you give up</h4>
+        <ul>
+          <li>Can only sell Jacuzzi-branded product</li>
+          <li>Brand equity builds for Jacuzzi, not Flynn Development</li>
+          <li>Product pricing premium vs. BCI for similar acrylic</li>
+          <li>Volume expectations once you sign</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- KOHLER LUXSTONE -->
+  <div class="program">
+    <div class="program-header">
+      <div class="program-name">Kohler <em>LuxStone / Walk-In Bath</em></div>
+      <div class="program-meta">Authorized Dealer</div>
+    </div>
+    <div class="program-grid">
+      <div>
+        <div class="field-row">
+          <span class="field-label">Model</span>
+          <span class="field-value">Authorized dealer of Kohler's bath remodel line. You must typically be an existing remodeler in good standing to qualify. <strong>Flynn Development qualifies.</strong></span>
+        </div>
+        <div class="field-row">
+          <span class="field-label">Upfront Cost</span>
+          <span class="field-value">Moderate. Dealer onboarding, product samples, Kohler-branded showroom display. Lower entry than Jacuzzi.</span>
+        </div>
+        <div class="field-row">
+          <span class="field-label">Ongoing Fees</span>
+          <span class="field-value">Product purchase minimums. No royalty on revenue typical. Marketing MDF (market development funds) may be available.</span>
+        </div>
+      </div>
+      <div>
+        <div class="field-row">
+          <span class="field-label">Territory</span>
+          <span class="field-value">Less exclusive than Jacuzzi. Multiple Kohler dealers can coexist in a region.</span>
+        </div>
+        <div class="field-row">
+          <span class="field-label">Product Scope</span>
+          <span class="field-value">LuxStone walls (premium stone-composite), walk-in baths, showers, tub replacements. Highest-end product of the group.</span>
+        </div>
+        <div class="field-row">
+          <span class="field-label">Lead Time</span>
+          <span class="field-value">Custom pieces 3-5 weeks typical. Install 1-2 days.</span>
+        </div>
+      </div>
+    </div>
+    <div class="pros-cons">
+      <div class="pc-col pros">
+        <h4>Why to consider</h4>
+        <ul>
+          <li>Kohler is the most trusted premium brand in plumbing fixtures</li>
+          <li>LuxStone is genuinely higher-end than acrylic competitors</li>
+          <li>Pairs well with Flynn Dev's custom home positioning</li>
+          <li>No royalty structure typical</li>
+        </ul>
+      </div>
+      <div class="pc-col cons">
+        <h4>What to watch</h4>
+        <ul>
+          <li>Premium pricing limits market to higher-income buyers</li>
+          <li>Non-exclusive territory means future competition</li>
+          <li>Product purchase minimums are the real commitment</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- RE-BATH -->
+  <div class="program">
+    <div class="program-header">
+      <div class="program-name">Re-Bath</div>
+      <div class="program-meta">Full Franchise</div>
+    </div>
+    <div class="program-grid">
+      <div>
+        <div class="field-row">
+          <span class="field-label">Model</span>
+          <span class="field-value">Full franchise. Operates under Re-Bath brand only. Required showroom, required operating standards, territory-based.</span>
+        </div>
+        <div class="field-row">
+          <span class="field-label">Upfront Cost</span>
+          <span class="field-value">High. Franchise fee plus required showroom buildout. <span class="dim">Total investment typically runs into six figures per the FDD.</span></span>
+        </div>
+        <div class="field-row">
+          <span class="field-label">Ongoing Fees</span>
+          <span class="field-value">Royalty on revenue typical for franchises in this category (5-7% range). National ad fund contribution (1-3% range). <strong>Verify exact figures in FDD.</strong></span>
+        </div>
+      </div>
+      <div>
+        <div class="field-row">
+          <span class="field-label">Territory</span>
+          <span class="field-value">Exclusive protected territory. Typically defined by population count or ZIP boundaries.</span>
+        </div>
+        <div class="field-row">
+          <span class="field-label">Product Scope</span>
+          <span class="field-value">Full bath remodel including complete bathrooms (not just bath and shower). Broadest scope of any program.</span>
+        </div>
+        <div class="field-row">
+          <span class="field-label">Lead Time</span>
+          <span class="field-value">Full bath remodels typically 2-5 days install, not one day. Custom order lead similar.</span>
+        </div>
+      </div>
+    </div>
+    <div class="pros-cons">
+      <div class="pc-col pros">
+        <h4>Why to consider</h4>
+        <ul>
+          <li>Most complete turnkey system</li>
+          <li>Broadest scope (full bath, not just tub/shower)</li>
+          <li>Strong exclusive territory protection</li>
+          <li>Full operating playbook provided</li>
+        </ul>
+      </div>
+      <div class="pc-col cons">
+        <h4>Why it likely isn't for Flynn Dev</h4>
+        <ul>
+          <li>Royalty forever on revenue you are generating with your own crews</li>
+          <li>Brand equity builds for Re-Bath, not you</li>
+          <li>Required showroom adds overhead you don't need</li>
+          <li>Highest commitment in the group for services you already perform</li>
+          <li>Franchise obligations constrain how you run the division</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="note">Note on specific numbers: royalty percentages, franchise fees, and territory minimums change year to year and vary by region. Any franchise (Re-Bath, Bath Fitter) must provide a Franchise Disclosure Document (FDD) that discloses exact figures. Dealer programs (BCI, Luxury Bath, Jacuzzi, Kohler) will quote current terms on a discovery call. Treat the ranges above as orientation, confirm specifics before committing.</div>
+
+<h2>Fit Matrix — Flynn Development</h2>
+<table class="matrix">
+  <thead>
+    <tr>
+      <th>Program</th>
+      <th>Upfront $</th>
+      <th>Ongoing %</th>
+      <th>Brand Equity Builds For</th>
+      <th>Flynn Dev Fit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="program-cell">BCI Acrylic</td>
+      <td>Low</td>
+      <td>None</td>
+      <td>Flynn Development</td>
+      <td><span class="score score-a">Strong</span></td>
+    </tr>
+    <tr>
+      <td class="program-cell">Luxury Bath</td>
+      <td>Low</td>
+      <td>None</td>
+      <td>Flynn Development (optional co-brand)</td>
+      <td><span class="score score-a">Strong</span></td>
+    </tr>
+    <tr>
+      <td class="program-cell">Kohler LuxStone</td>
+      <td>Moderate</td>
+      <td>Product minimums</td>
+      <td>Kohler + Flynn Dev (dual)</td>
+      <td><span class="score score-b">Good</span></td>
+    </tr>
+    <tr>
+      <td class="program-cell">Jacuzzi Bath Remodel</td>
+      <td>Moderate-High</td>
+      <td>Marketing co-op + minimums</td>
+      <td>Jacuzzi</td>
+      <td><span class="score score-b">Good</span></td>
+    </tr>
+    <tr>
+      <td class="program-cell">Re-Bath</td>
+      <td>High</td>
+      <td>Royalty + ad fund</td>
+      <td>Re-Bath</td>
+      <td><span class="score score-c">Weak</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Due Diligence Checklist</h2>
+<div class="checklist">
+  <ol>
+    <li><strong>Exact fee structure.</strong> Upfront, ongoing royalty, ad fund, product purchase minimums, marketing co-op, showroom requirements. Get it in writing.</li>
+    <li><strong>Territory definition.</strong> Exclusive or non-exclusive. If exclusive, exact ZIP or county boundaries. Confirm Cookeville, Sparta, Crossville, Livingston, Jamestown, Monterey all covered.</li>
+    <li><strong>Is Sparta retailer already their dealer?</strong> If yes, confirm whether they'd block you or if a second dealer is allowed. This is the single most important question on the Luxury Bath call.</li>
+    <li><strong>Lead flow.</strong> Do they send you leads from national advertising? What is the cost per lead, and are leads exclusive to you or shared with competing dealers?</li>
+    <li><strong>Sales training and closing ratio.</strong> What is the expected close rate on in-home estimates? Jacuzzi and Re-Bath publish ratios; wholesale programs don't.</li>
+    <li><strong>Exit terms.</strong> If you stop selling, what do you owe? Franchises have long tails. Wholesale is clean.</li>
+    <li><strong>Product lead time under current supply chain.</strong> Real lead time in 2026, not brochure lead time.</li>
+    <li><strong>Financing partners.</strong> Do they have approved consumer financing (GreenSky, Synchrony, etc.) built in? This is the close-rate multiplier on higher-ticket jobs.</li>
+    <li><strong>Warranty structure.</strong> Who eats a product defect callback, you or the manufacturer? How are labor claims handled?</li>
+    <li><strong>Reference dealers.</strong> Ask for 2-3 current dealers in similar markets (rural Tennessee, Upper South). Call them. Ask what they'd do differently.</li>
+  </ol>
+</div>
+
+<h2>Recommended Next Steps</h2>
+<div class="next">
+  <div class="step">
+    <div class="step-num">Step 01</div>
+    <h3>Call BCI Acrylic</h3>
+    <p>Start with lowest-commitment option. Get dealer onboarding packet, territory coverage confirmation, and pricing sheet. This sets your floor.</p>
+  </div>
+  <div class="step">
+    <div class="step-num">Step 02</div>
+    <h3>Call Luxury Bath + Jacuzzi</h3>
+    <p>Get the dealer packets for comparison. Find out whether Sparta retailer is already locked to Luxury Bath. This determines whether you have a real Luxury Bath option.</p>
+  </div>
+  <div class="step">
+    <div class="step-num">Step 03</div>
+    <h3>Request Kohler LuxStone info</h3>
+    <p>Only if you want to pair this with custom home positioning. Skip if you're going volume-play rather than premium-play.</p>
+  </div>
+</div>
+
+<footer>
+  <div>Flynn Development / Business Opportunity Analysis</div>
+  <div><em>Prepared 2026-04-24</em></div>
+</footer>
+
+</body>
+</html>
