@@ -504,8 +504,9 @@
             <code>cd ~/GET-MATT-JACKED && ./setup-alias.sh</code><br>
             It auto-detects your shell and adds the alias for you.<br><br>
             <strong style="color: var(--bone);">Manual way · add this to <code>~/.zshrc</code>:</strong><br>
-            <code>coach() { (cd ~/GET-MATT-JACKED && claude "$@") }</code><br>
-            Then close and reopen Terminal.
+            <code>coach() { (cd ~/GET-MATT-JACKED && git fetch --quiet 2>/dev/null && git merge --ff-only --quiet 2>/dev/null; claude "$@") }</code><br>
+            Then close and reopen Terminal.<br><br>
+            Either version of this auto-pulls Jaden's latest changes every time you launch · the brain stays current without you doing anything.
           </div>
         </div>
       </div>
