@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GET MATT JACKED — Start Here</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #050506;
+    --surface: #101013;
+    --elevated: #17171B;
+    --nested: #1F1F25;
+    --line: rgba(255, 255, 255, 0.06);
+    --line-strong: rgba(255, 255, 255, 0.12);
+    --accent: #C6FF3C;
+    --accent-dim: rgba(198, 255, 60, 0.15);
+    --bone: #F2EDE4;
+    --bone-dim: rgba(242, 237, 228, 0.7);
+    --steel: #7A8599;
+    --steel-dim: rgba(122, 133, 153, 0.5);
+    --shadow-1: 0 1px 0 rgba(255,255,255,0.04) inset, 0 4px 12px rgba(0,0,0,0.4);
+    --shadow-2: 0 1px 0 rgba(255,255,255,0.04) inset, 0 8px 24px rgba(0,0,0,0.5);
+    --shadow-hero: 0 1px 0 rgba(255,255,255,0.05) inset, 0 12px 40px rgba(0,0,0,0.6);
+    --s-1: 4px;
+    --s-2: 8px;
+    --s-3: 12px;
+    --s-4: 16px;
+    --s-5: 24px;
+    --s-6: 32px;
+    --s-7: 48px;
+    --s-8: 64px;
+    --s-9: 96px;
+    --r-card: 12px;
+    --r-hero: 18px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--bone); }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.55;
+    font-size: 16px;
+    font-feature-settings: 'tnum' on, 'lnum' on;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .page {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: var(--s-7) var(--s-5) var(--s-9);
+  }
+
+  /* ─────────────── BRAND BAR ─────────────── */
+  .brand {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--s-7);
+    padding-bottom: var(--s-5);
+    border-bottom: 1px solid var(--line);
+  }
+  .brand-mark {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .brand-status {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--steel);
+    display: flex;
+    align-items: center;
+    gap: var(--s-2);
+  }
+  .brand-status::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 12px var(--accent);
+  }
+
+  /* ─────────────── HERO ─────────────── */
+  .hero {
+    padding: var(--s-7) var(--s-6);
+    background: linear-gradient(180deg, var(--elevated) 0%, var(--surface) 100%);
+    border: 1px solid var(--line);
+    border-radius: var(--r-hero);
+    box-shadow: var(--shadow-hero);
+    margin-bottom: var(--s-6);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 6px;
+    height: 100%;
+    background: var(--accent);
+    box-shadow: 0 0 32px var(--accent);
+  }
+  .hero-tag {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: var(--s-4);
+  }
+  .hero-name {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: clamp(72px, 14vw, 144px);
+    letter-spacing: -3px;
+    line-height: 0.9;
+    color: var(--bone);
+    margin-bottom: var(--s-4);
+  }
+  .hero-subhead {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 500;
+    font-size: clamp(20px, 3vw, 28px);
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+    color: var(--bone);
+    margin-bottom: var(--s-5);
+    max-width: 540px;
+  }
+  .hero-tagline {
+    color: var(--bone-dim);
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 540px;
+    margin-bottom: var(--s-6);
+  }
+
+  /* Stats row */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--s-3);
+    margin-top: var(--s-5);
+  }
+  .stat {
+    background: var(--nested);
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: var(--s-4);
+  }
+  .stat-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--steel);
+    margin-bottom: var(--s-2);
+  }
+  .stat-value {
+    font-family: 'Oswald', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    color: var(--bone);
+  }
+  .stat-sub {
+    font-size: 12px;
+    color: var(--steel);
+    margin-top: var(--s-1);
+  }
+  @media (max-width: 600px) {
+    .stats { grid-template-columns: 1fr; }
+  }
+
+  /* ─────────────── SECTIONS ─────────────── */
+  section {
+    margin-bottom: var(--s-7);
+  }
+  .section-tag {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: var(--s-3);
+  }
+  .section-head {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: clamp(28px, 4vw, 40px);
+    letter-spacing: -1px;
+    line-height: 1.1;
+    color: var(--bone);
+    margin-bottom: var(--s-3);
+  }
+  .section-lead {
+    font-size: 17px;
+    color: var(--bone-dim);
+    max-width: 640px;
+    margin-bottom: var(--s-6);
+    line-height: 1.6;
+  }
+
+  /* Step list */
+  .steps {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r-hero);
+    padding: var(--s-5);
+    box-shadow: var(--shadow-1);
+  }
+  .step {
+    display: flex;
+    gap: var(--s-4);
+    padding: var(--s-4) 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--bg);
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .step-body { flex: 1; }
+  .step-title {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: -0.3px;
+    color: var(--bone);
+    margin-bottom: var(--s-2);
+  }
+  .step-detail { color: var(--bone-dim); font-size: 15px; line-height: 1.55; }
+  .step-detail code {
+    font-family: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+    font-size: 13px;
+    background: var(--nested);
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: 1px solid var(--line);
+    color: var(--accent);
+  }
+
+  /* Custom features grid */
+  .features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--s-3);
+  }
+  @media (max-width: 720px) { .features { grid-template-columns: 1fr; } }
+  .feature {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: var(--s-5);
+    box-shadow: var(--shadow-1);
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+  .feature:hover {
+    border-color: var(--line-strong);
+    transform: translateY(-2px);
+  }
+  .feature-icon {
+    width: 32px;
+    height: 32px;
+    margin-bottom: var(--s-3);
+    color: var(--accent);
+  }
+  .feature-title {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: -0.3px;
+    color: var(--bone);
+    margin-bottom: var(--s-2);
+  }
+  .feature-body { color: var(--bone-dim); font-size: 14px; line-height: 1.6; }
+
+  /* Conversation examples */
+  .convo {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: var(--s-5);
+    margin-bottom: var(--s-3);
+    box-shadow: var(--shadow-1);
+  }
+  .convo-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--steel);
+    margin-bottom: var(--s-3);
+  }
+  .convo-msg {
+    display: flex;
+    gap: var(--s-3);
+    margin-bottom: var(--s-3);
+    align-items: flex-start;
+  }
+  .convo-msg:last-child { margin-bottom: 0; }
+  .convo-who {
+    flex-shrink: 0;
+    width: 56px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--steel);
+    padding-top: 2px;
+  }
+  .convo-msg.matt .convo-who { color: var(--bone); }
+  .convo-msg.coach .convo-who { color: var(--accent); }
+  .convo-text {
+    flex: 1;
+    color: var(--bone-dim);
+    font-size: 14.5px;
+    line-height: 1.6;
+  }
+  .convo-msg.matt .convo-text { color: var(--bone); }
+
+  /* Rules */
+  .rules {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--s-3);
+  }
+  @media (max-width: 720px) { .rules { grid-template-columns: 1fr; } }
+  .rule {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--r-card);
+    padding: var(--s-5);
+    box-shadow: var(--shadow-1);
+  }
+  .rule-num {
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: var(--s-2);
+  }
+  .rule-title {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    letter-spacing: -0.3px;
+    color: var(--bone);
+    margin-bottom: var(--s-3);
+    line-height: 1.2;
+  }
+  .rule-body { color: var(--bone-dim); font-size: 14.5px; line-height: 1.6; }
+
+  /* Closer */
+  .closer {
+    background: linear-gradient(135deg, var(--elevated) 0%, var(--nested) 100%);
+    border: 1px solid var(--line);
+    border-radius: var(--r-hero);
+    padding: var(--s-7) var(--s-6);
+    box-shadow: var(--shadow-hero);
+    text-align: center;
+  }
+  .closer-quote {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 500;
+    font-size: clamp(22px, 3vw, 30px);
+    letter-spacing: -0.5px;
+    line-height: 1.3;
+    color: var(--bone);
+    margin-bottom: var(--s-5);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .closer-quote strong { color: var(--accent); font-weight: 700; }
+  .closer-sig {
+    font-size: 13px;
+    color: var(--steel);
+    letter-spacing: 0.5px;
+    margin-top: var(--s-5);
+    padding-top: var(--s-5);
+    border-top: 1px solid var(--line);
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Footer */
+  footer {
+    margin-top: var(--s-7);
+    padding-top: var(--s-5);
+    border-top: 1px solid var(--line);
+    color: var(--steel);
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--s-3);
+  }
+  .footer-version { font-family: 'Oswald', sans-serif; font-weight: 500; }
+
+  /* Inline accents */
+  strong.lime { color: var(--accent); font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- BRAND BAR -->
+  <div class="brand">
+    <div class="brand-mark">BCH Fit · Early Access</div>
+    <div class="brand-status">Repo Loaded</div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-tag">Welcome to</div>
+    <h1 class="hero-name">MATT</h1>
+    <div class="hero-subhead">your repo is loaded</div>
+    <p class="hero-tagline">
+      A personal coach in your terminal. Built for your schedule, your knee, your gluten-free life, and your goal of putting on lean muscle. The BCH Fit app isn't built yet, so Jaden built the brain into this repo. Drop into Claude Code and the whole thing comes alive.
+    </p>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-label">Recommended Track</div>
+        <div class="stat-value">Hypertrophy</div>
+        <div class="stat-sub">Lean body mass</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Default Frequency</div>
+        <div class="stat-value">4 days / week</div>
+        <div class="stat-sub">3-day option also loaded</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Daily Fuel</div>
+        <div class="stat-value">2,020 cal · 170P</div>
+        <div class="stat-sub">Carbs & fat flex</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <section>
+    <div class="section-tag">Setup</div>
+    <h2 class="section-head">How it works</h2>
+    <p class="section-lead">
+      Five steps. Ten minutes. After this you've got a personal trainer + nutrition coach that lives in your terminal and knows everything about how Jaden coaches.
+    </p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Clone the repo</div>
+          <div class="step-detail">Accept the GitHub invite first (check your email). Then in Terminal: <code>git clone https://github.com/HunchoJay100/GET-MATT-JACKED.git ~/GET-MATT-JACKED</code></div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Verify everything's there</div>
+          <div class="step-detail"><code>cd ~/GET-MATT-JACKED && ./verify.sh</code> · checks every file is in place and you're good to go.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Set up the <code>coach</code> shortcut</div>
+          <div class="step-detail">
+            So you can launch the trainer from anywhere on your machine without remembering paths. Pick one:<br><br>
+            <strong style="color: var(--bone);">Easy way · run the script:</strong><br>
+            <code>cd ~/GET-MATT-JACKED && ./setup-alias.sh</code><br>
+            It auto-detects your shell and adds the alias for you.<br><br>
+            <strong style="color: var(--bone);">Manual way · add this to <code>~/.zshrc</code>:</strong><br>
+            <code>coach() { (cd ~/GET-MATT-JACKED && claude "$@") }</code><br>
+            Then close and reopen Terminal.
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-title">Type <code>coach</code> and start</div>
+          <div class="step-detail">From any Terminal window, anywhere on your machine, type <code>coach</code> and hit enter. The brain auto-loads. Tell it "I'm new, let's run intake" · it walks you through stats, confirms your track, drafts your v1 plan.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <div class="step-title">Send Jaden the draft</div>
+          <div class="step-detail">Coach saves the plan as <code>plans/_draft-for-jaden/matt-{track}-v1-DRAFT.md</code>. Text Jaden the path. He reviews, tweaks, and ships v1. Then you train.</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: var(--s-5); padding: var(--s-5); background: rgba(198, 255, 60, 0.06); border: 1px solid rgba(198, 255, 60, 0.2); border-radius: var(--r-card);">
+      <div style="font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: var(--s-2);">Every day after that</div>
+      <div style="color: var(--bone); font-size: 15px; line-height: 1.6;">
+        Just type <code style="font-family: 'JetBrains Mono', monospace; background: var(--nested); padding: 2px 8px; border-radius: 4px; color: var(--accent); border: 1px solid var(--line);">coach</code> from anywhere. The brain reloads automatically every session · no setup, no cd, no thinking. Coach already knows your profile, your plan, your last session. Just talk.
+      </div>
+    </div>
+  </section>
+
+  <!-- BUILT FOR YOU -->
+  <section>
+    <div class="section-tag">Custom build</div>
+    <h2 class="section-head">Built for your life</h2>
+    <p class="section-lead">
+      Not a generic fitness app. The brain is loaded with the constraints and preferences that make this work for the version of you that's on a shoot at 11pm in a hotel gym.
+    </p>
+
+    <div class="features">
+      <div class="feature">
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z"/></svg>
+        <div class="feature-title">Knee-aware coaching</div>
+        <div class="feature-body">
+          Plans ship as designed. If your knee acts up, coach acknowledges it (you don't have to re-explain), lists 2-3 substitution options, and lets you pick. Plus reminds you to log the pain so Jaden can adjust the next version.
+        </div>
+      </div>
+
+      <div class="feature">
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <div class="feature-title">Gluten-free, every food</div>
+        <div class="feature-body">
+          Every food on your list is gluten-free. Coach knows the hidden landmines (soy sauce, malt vinegar, breaded everything). Restaurant scripts and gas station survival picks are all gluten-free defaults.
+        </div>
+      </div>
+
+      <div class="feature">
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <div class="feature-title">Shoot-day ready</div>
+        <div class="feature-body">
+          30, 45, or 60 minute sessions. Cut a session short mid-workout, coach re-plans the rest. Hotel gym, no rack, just dumbbells · the substitution map handles it. Your shoot weeks don't break the streak.
+        </div>
+      </div>
+
+      <div class="feature">
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12c0-4.97 4.03-9 9-9s9 4.03 9 9"/><path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9"/><path d="M12 3v18"/></svg>
+        <div class="feature-title">Eat your way</div>
+        <div class="feature-body">
+          You eat what you want. Coach hits the numbers around your real life. Hard rails are 2,020 cal and 170g protein. Carbs and fat are flex · high-carb training day, low-carb steakhouse night, whatever. Coach just keeps the running total.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TYPICAL DAY -->
+  <section>
+    <div class="section-tag">Daily flow</div>
+    <h2 class="section-head">A day with coach</h2>
+    <p class="section-lead">
+      You don't read manuals. You just talk to Claude. Here's what that looks like.
+    </p>
+
+    <div class="convo">
+      <div class="convo-label">Morning · first message</div>
+      <div class="convo-msg matt">
+        <div class="convo-who">Matt</div>
+        <div class="convo-text">what am I doing today</div>
+      </div>
+      <div class="convo-msg coach">
+        <div class="convo-who">Coach</div>
+        <div class="convo-text">Quick check-in first · energy, soreness, sleep, readiness. After that I'll pull today's session. Looks like you're on Lower Quads day, primary is Back Squat. Last week you hit 185 for 7, 6, 6. Time to beat it.</div>
+      </div>
+    </div>
+
+    <div class="convo">
+      <div class="convo-label">Mid-day · food question</div>
+      <div class="convo-msg matt">
+        <div class="convo-who">Matt</div>
+        <div class="convo-text">I'm hungry, what should I eat</div>
+      </div>
+      <div class="convo-msg coach">
+        <div class="convo-who">Coach</div>
+        <div class="convo-text">You've got 1,090 cal and 105g protein left. What sounds good · carb-heavy, balanced, fat-heavy? Anything you're craving?</div>
+      </div>
+      <div class="convo-msg matt">
+        <div class="convo-who">Matt</div>
+        <div class="convo-text">balanced, something I can prep in 15 min</div>
+      </div>
+      <div class="convo-msg coach">
+        <div class="convo-who">Coach</div>
+        <div class="convo-text">Three options, all GF: 6 oz chicken breast + 1 cup jasmine rice + broccoli (565 / 60P / 60C / 6F), 6 oz 93/7 ground beef + sweet potato + greens (510 / 35P / 42C / 14F), or salmon + quinoa bowl if you have it (530 / 39P / 39C / 22F). Pick.</div>
+      </div>
+    </div>
+
+    <div class="convo">
+      <div class="convo-label">On a shoot · cut short</div>
+      <div class="convo-msg matt">
+        <div class="convo-who">Matt</div>
+        <div class="convo-text">stuck on shoot, only 30 min at the hotel gym tonight</div>
+      </div>
+      <div class="convo-msg coach">
+        <div class="convo-who">Coach</div>
+        <div class="convo-text">Got it. 30-min cut: warm-up, primary lift (full sets), one secondary (1 work set + AMRAP), core, AMRAP finisher. Skip everything else. Streak still holds, no penalty. Hotel gym version uses dumbbells for the secondary. Ready when you are.</div>
+      </div>
+    </div>
+
+    <div class="convo">
+      <div class="convo-label">Pain flag</div>
+      <div class="convo-msg matt">
+        <div class="convo-who">Matt</div>
+        <div class="convo-text">knee feels weird on squat today</div>
+      </div>
+      <div class="convo-msg coach">
+        <div class="convo-who">Coach</div>
+        <div class="convo-text">I know your knee has been a thing, that's noted. Don't push through. Note the pain in today's log: what kind, where, when. Three subs you can swap to: Front Squat, Goblet Squat, or Box Squat. Pick whichever feels best, we'll run that for the squat slot until the knee clears.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE RULES -->
+  <section>
+    <div class="section-tag">The two rules</div>
+    <h2 class="section-head">What stays constant</h2>
+    <p class="section-lead">
+      Most of this is flexible. These two are not. They're the load-bearing rules behind why this works.
+    </p>
+
+    <div class="rules">
+      <div class="rule">
+        <div class="rule-num">Rule 01</div>
+        <div class="rule-title">No plan goes live without Jaden's eyes</div>
+        <div class="rule-body">
+          Coach drafts every plan into <code style="font-family: 'JetBrains Mono', monospace; font-size: 13px; background: var(--nested); padding: 2px 6px; border-radius: 4px; color: var(--accent);">plans/_draft-for-jaden/</code>. Jaden reviews and promotes to <code style="font-family: 'JetBrains Mono', monospace; font-size: 13px; background: var(--nested); padding: 2px 6px; border-radius: 4px; color: var(--accent);">plans/active/</code>. Coach never ships you something untested. The repo is alpha · this gate is the QA. Send Jaden the draft path, wait for the green light, then go.
+        </div>
+      </div>
+
+      <div class="rule">
+        <div class="rule-num">Rule 02</div>
+        <div class="rule-title">You pick your weight, every set</div>
+        <div class="rule-body">
+          Coach never auto-prescribes load. Coach shows you last week's numbers ("you did 185 for 7") and your job is to beat it. Logbook progression is the coaching mechanism. The numbers climb because you climb them, not because the app told you to.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSER -->
+  <div class="closer">
+    <div class="closer-quote">
+      Open Claude.<br><strong class="lime">Time to get jacked.</strong>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>GET MATT JACKED · The repo</div>
+    <div class="footer-version">v1 · 2026-04-28</div>
+  </footer>
+
+</div>
+</body>
+</html>
