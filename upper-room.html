@@ -174,6 +174,72 @@
     background: var(--bg); border-radius: 50%;
   }
 
+  /* ===== EDITORIAL SPREAD (text + image) ===== */
+  .spread {
+    display: grid;
+    gap: var(--s-3xl);
+    align-items: center;
+  }
+  @media (min-width: 820px) {
+    .spread {
+      grid-template-columns: 1.15fr 1fr;
+      gap: var(--s-4xl);
+    }
+    .spread.flip { grid-template-columns: 1fr 1.15fr; }
+    .spread.flip .spread-media { order: -1; }
+  }
+  .spread-media {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    background: #0A0A0A;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .spread-media img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+    display: block;
+    filter: grayscale(0.15) contrast(1.05);
+  }
+  .spread-media.print {
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    aspect-ratio: 1 / 1;
+  }
+  .spread-media.print img {
+    object-fit: contain;
+    padding: var(--s-3xl);
+    filter: none;
+  }
+  .spread-media .caption {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    padding: var(--s-l) var(--s-xl);
+    font-family: var(--serif);
+    font-style: italic; font-weight: 400;
+    font-size: 14px; line-height: 1.4;
+    color: #FAFAFA;
+    background: linear-gradient(0deg, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0) 100%);
+    z-index: 1;
+  }
+  .spread-media.print .caption {
+    color: var(--ink);
+    background: none;
+    border-top: 1px solid var(--rule);
+    padding: var(--s-m) var(--s-xl);
+  }
+  .spread-media .caption span {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(250,250,250,0.65);
+    margin-top: 4px;
+  }
+  .spread-media.print .caption span { color: var(--ink-2); }
+
   /* ===== ORNAMENT (hairline rule) ===== */
   .ornament {
     padding: var(--s-4xl) 0;
@@ -244,20 +310,40 @@
     margin-top: var(--s-m);
   }
 
-  /* ===== CINEMATIC BAND (Crusader) ===== */
+  /* ===== CINEMATIC BANDS ===== */
   .cinematic {
     position: relative;
     width: 100%;
-    min-height: clamp(420px, 70vh, 720px);
+    min-height: clamp(420px, 62vh, 640px);
     margin: var(--s-4xl) 0;
     overflow: hidden;
-    background:
-      linear-gradient(180deg, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0.72) 50%, rgba(10,10,10,0.55) 100%),
-      url('brand_assets/upper-room/crusader.jpg') center / cover no-repeat;
-    background-attachment: scroll, fixed;
+    background-color: #0A0A0A;
     display: grid;
     place-items: center;
     isolation: isolate;
+  }
+  .cinematic .bg {
+    position: absolute; inset: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    z-index: 0;
+  }
+  .cinematic .scrim {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0.72) 50%, rgba(10,10,10,0.55) 100%);
+    z-index: 1;
+  }
+  .cinematic.crusader .bg { background-image: url('brand_assets/upper-room/crusader.jpg'); }
+  .cinematic.samson   .bg { background-image: url('brand_assets/upper-room/samson.jpg'); background-position: center 35%; }
+  .cinematic.david    .bg { background-image: url('brand_assets/upper-room/david-goliath.jpg'); background-position: center 20%; }
+  /* the original Crusader anchor stays tallest */
+  .cinematic.crusader { min-height: clamp(420px, 70vh, 720px); }
+  @media (max-width: 720px) {
+    .cinematic .bg { background-attachment: scroll; }
+    .cinematic { min-height: 420px; }
+    .cinematic.crusader { min-height: 480px; }
   }
   @media (max-width: 720px) {
     .cinematic { background-attachment: scroll, scroll; min-height: 480px; }
@@ -592,21 +678,41 @@
 
   <!-- THE NAME -->
   <section class="block wrap">
-    <div class="section-eyebrow">The Name</div>
-    <h2>Why <em class="hit">the upper room</em>.</h2>
-    <p class="lede">
-      In Acts 2, a handful of ordinary men gathered in an upper room.
-      It was there the Holy Spirit showed up and changed them.
-      Ordinary men walked out <em class="hit">different</em>.
-    </p>
-    <p class="body">
-      That is the posture we meet with. A borrowed room on the second
-      floor of an office building in Cookeville. Men who come in
-      carrying the week and leave carrying something else.
-    </p>
+    <div class="spread">
+      <div>
+        <div class="section-eyebrow">The Name</div>
+        <h2>Why <em class="hit">the upper room</em>.</h2>
+        <p class="lede">
+          In Acts 2, a handful of ordinary men gathered in an upper room.
+          It was there the Holy Spirit showed up and changed them.
+          Ordinary men walked out <em class="hit">different</em>.
+        </p>
+        <p class="body">
+          That is the posture we meet with. A borrowed room on the second
+          floor of an office building in Cookeville. Men who come in
+          carrying the week and leave carrying something else.
+        </p>
+      </div>
+      <figure class="spread-media print">
+        <img src="brand_assets/upper-room/door-open.png" alt="An open arched stone doorway — the mark of The Upper Room." />
+        <figcaption class="caption">
+          The door is open.
+          <span>Acts 2 · Cookeville</span>
+        </figcaption>
+      </figure>
+    </div>
   </section>
 
-  <div class="ornament"><span class="line"></span></div>
+  <!-- CINEMATIC: Samson -->
+  <aside class="cinematic samson" aria-label="Scripture">
+    <div class="bg" aria-hidden="true"></div>
+    <div class="scrim" aria-hidden="true"></div>
+    <div class="cinematic-inner">
+      <div class="eyebrow-on-dark">Judges 14:6</div>
+      <p class="verse">The Spirit of the Lord rushed upon him.</p>
+      <span class="ref">Strength · Surrender</span>
+    </div>
+  </aside>
 
   <!-- WHAT WE'RE ABOUT -->
   <section class="block wrap">
@@ -634,7 +740,9 @@
   </section>
 
   <!-- CINEMATIC: Iron Sharpens Iron -->
-  <aside class="cinematic" aria-label="Scripture">
+  <aside class="cinematic crusader" aria-label="Scripture">
+    <div class="bg" aria-hidden="true"></div>
+    <div class="scrim" aria-hidden="true"></div>
     <div class="cinematic-inner">
       <div class="eyebrow-on-dark">Proverbs 27:17</div>
       <p class="verse">As iron sharpens iron, so one man sharpens another.</p>
@@ -699,7 +807,16 @@
     </div>
   </section>
 
-  <div class="ornament"><span class="line"></span></div>
+  <!-- CINEMATIC: David & Goliath -->
+  <aside class="cinematic david" aria-label="Scripture">
+    <div class="bg" aria-hidden="true"></div>
+    <div class="scrim" aria-hidden="true"></div>
+    <div class="cinematic-inner">
+      <div class="eyebrow-on-dark">1 Samuel 17:47</div>
+      <p class="verse">The battle is the Lord's.</p>
+      <span class="ref">Courage · Conviction</span>
+    </div>
+  </aside>
 
   <!-- Y PROJECT -->
   <section class="block wrap">
