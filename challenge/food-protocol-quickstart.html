@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Food Protocol — Quick Start</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bone: #F1EBDD;
+      --bone-2: #E8E2D3;
+      --asphalt: #0E0E0E;
+      --asphalt-2: #1A1A1A;
+      --muted: rgba(14, 14, 14, 0.62);
+      --rule: rgba(14, 14, 14, 0.14);
+      --lime: #C6FF3C;
+      --lime-deep: #6E9E1F;
+      --display: 'Oswald', system-ui, sans-serif;
+      --body: 'Inter', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--body);
+      background: var(--bone);
+      color: var(--asphalt);
+      line-height: 1.55;
+      font-size: 15px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      padding: 40px 16px 60px;
+      min-height: 100vh;
+      background-image:
+        radial-gradient(circle at 20% 0%, rgba(110, 158, 31, 0.04), transparent 50%),
+        radial-gradient(circle at 80% 100%, rgba(14, 14, 14, 0.04), transparent 50%);
+    }
+
+    .page {
+      max-width: 720px;
+      margin: 0 auto;
+      background: var(--bone);
+    }
+
+    /* ======== HEADER ======== */
+    .header {
+      text-align: center;
+      padding-bottom: 28px;
+      margin-bottom: 32px;
+      border-bottom: 2px solid var(--asphalt);
+      position: relative;
+    }
+
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 6px;
+      background: var(--lime);
+    }
+
+    .eyebrow {
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(40px, 9vw, 64px);
+      line-height: 0.95;
+      text-transform: uppercase;
+      letter-spacing: -0.015em;
+    }
+
+    .subtitle {
+      font-style: italic;
+      color: var(--muted);
+      margin-top: 14px;
+      font-size: 14px;
+      letter-spacing: 0.01em;
+    }
+
+    /* ======== SECTIONS ======== */
+    .section { margin-bottom: 36px; }
+
+    h2 {
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--asphalt);
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    h2::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--asphalt);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    p { margin-bottom: 10px; }
+
+    /* ======== STEPS ======== */
+    .steps {
+      list-style: none;
+      counter-reset: step;
+      padding: 0;
+    }
+
+    .steps li {
+      counter-increment: step;
+      padding-left: 42px;
+      position: relative;
+      margin-bottom: 12px;
+      font-size: 14.5px;
+    }
+
+    .steps li::before {
+      content: counter(step);
+      font-family: var(--display);
+      font-weight: 700;
+      position: absolute;
+      left: 0;
+      top: -2px;
+      width: 28px;
+      height: 28px;
+      background: var(--asphalt);
+      color: var(--lime);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    /* ======== MACRO CARDS ======== */
+    .macro-card {
+      background: var(--asphalt);
+      color: var(--bone);
+      padding: 24px 26px;
+      border-radius: 6px;
+      margin-bottom: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .macro-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--lime);
+    }
+
+    .gender-label {
+      font-family: var(--display);
+      font-size: 13px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--lime);
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+
+    .macro-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+    }
+
+    .macro-cell {
+      text-align: center;
+    }
+
+    .macro-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(241, 235, 221, 0.55);
+      margin-bottom: 6px;
+    }
+
+    .macro-value {
+      font-family: var(--display);
+      font-size: clamp(22px, 5vw, 28px);
+      font-weight: 600;
+      color: var(--bone);
+      line-height: 1.1;
+    }
+
+    .macro-value .accent {
+      color: var(--lime);
+    }
+
+    .macro-formula {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: rgba(241, 235, 221, 0.55);
+      margin-top: 4px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ======== WRITE-IN BOX ======== */
+    .write-in {
+      background: var(--bone);
+      border: 2px solid var(--asphalt);
+      padding: 20px 22px;
+      margin: 18px 0 0;
+      border-radius: 6px;
+    }
+
+    .write-in-label {
+      font-family: var(--display);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--asphalt);
+      margin-bottom: 14px;
+      font-weight: 600;
+    }
+
+    .write-in-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 10px;
+      font-family: var(--mono);
+      font-size: 14px;
+    }
+
+    .write-in-row:last-child { margin-bottom: 0; }
+
+    .write-in-row .name {
+      width: 80px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .write-in-line {
+      flex: 1;
+      border-bottom: 1.5px solid var(--asphalt);
+      height: 24px;
+    }
+
+    .write-in-row .unit {
+      font-weight: 600;
+      width: 14px;
+      text-align: left;
+    }
+
+    /* ======== ACTION LIST ======== */
+    .action-list {
+      list-style: none;
+      counter-reset: action;
+      padding: 0;
+    }
+
+    .action-list li {
+      counter-increment: action;
+      padding: 12px 0 12px 44px;
+      border-bottom: 1px solid var(--rule);
+      position: relative;
+      font-size: 14.5px;
+    }
+
+    .action-list li:last-child { border-bottom: none; }
+
+    .action-list li::before {
+      content: counter(action, decimal-leading-zero);
+      font-family: var(--mono);
+      font-weight: 600;
+      font-size: 11px;
+      color: var(--lime-deep);
+      letter-spacing: 0.08em;
+      position: absolute;
+      left: 0;
+      top: 14px;
+    }
+
+    .repeat-banner {
+      text-align: center;
+      padding: 16px;
+      border: 2px solid var(--asphalt);
+      background: var(--asphalt);
+      color: var(--lime);
+      border-radius: 6px;
+      margin-top: 18px;
+      font-family: var(--display);
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-size: 14px;
+    }
+
+    /* ======== NON-NEGOTIABLES ======== */
+    .non-neg {
+      background: var(--asphalt);
+      color: var(--bone);
+      padding: 20px 26px;
+      border-radius: 6px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .non-neg::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--lime);
+    }
+
+    .non-neg-item {
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(241, 235, 221, 0.10);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .non-neg-item:last-child { border-bottom: none; }
+
+    .non-neg-bullet {
+      width: 8px;
+      height: 8px;
+      background: var(--lime);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .non-neg-text {
+      font-family: var(--display);
+      font-size: 16px;
+      letter-spacing: 0.04em;
+      font-weight: 400;
+    }
+
+    .non-neg-text strong {
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--lime);
+    }
+
+    /* ======== STUCK SECTION ======== */
+    .stuck {
+      display: grid;
+      gap: 14px;
+    }
+
+    .stuck dt {
+      font-family: var(--display);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      font-size: 14px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .stuck dt::before {
+      content: '→ ';
+      color: var(--lime-deep);
+      font-weight: 700;
+    }
+
+    .stuck dd {
+      color: var(--muted);
+      font-size: 13.5px;
+      line-height: 1.5;
+      padding-left: 18px;
+    }
+
+    /* ======== FOOTER ======== */
+    .footer {
+      margin-top: 44px;
+      padding-top: 24px;
+      border-top: 2px solid var(--asphalt);
+      text-align: center;
+      position: relative;
+    }
+
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 6px;
+      background: var(--lime);
+    }
+
+    .signature {
+      font-family: var(--display);
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-top: 10px;
+    }
+
+    .footnote {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    /* ======== PRINT ======== */
+    @media print {
+      body {
+        padding: 0;
+        font-size: 11.5px;
+        background: white;
+      }
+      .page { max-width: 100%; }
+      h1 { font-size: 36px; }
+      .macro-card, .non-neg { break-inside: avoid; box-shadow: none; }
+      .section { margin-bottom: 22px; break-inside: avoid; }
+      .header { margin-bottom: 22px; padding-bottom: 18px; }
+    }
+
+    /* ======== MOBILE ======== */
+    @media (max-width: 480px) {
+      body { padding: 24px 14px 40px; }
+      .macro-card { padding: 20px 18px; }
+      .macro-row { gap: 10px; }
+      .macro-value { font-size: 18px; }
+      .non-neg-text { font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <header class="header">
+      <div class="eyebrow">The Food Protocol</div>
+      <h1>Quick<br>Start</h1>
+      <p class="subtitle">Print this. Stick it on the fridge. Live by it.</p>
+    </header>
+
+    <section class="section">
+      <h2>Your Daily Macros</h2>
+      <ol class="steps">
+        <li>Weigh yourself this morning, after the bathroom, before food or coffee.</li>
+        <li>Use the formula for your gender:</li>
+      </ol>
+
+      <div style="margin-top: 20px;">
+        <div class="macro-card">
+          <div class="gender-label">Women</div>
+          <div class="macro-row">
+            <div class="macro-cell">
+              <div class="macro-label">Protein</div>
+              <div class="macro-value">×<span class="accent">0.8</span>g</div>
+              <div class="macro-formula">cap 140g</div>
+            </div>
+            <div class="macro-cell">
+              <div class="macro-label">Carbs</div>
+              <div class="macro-value"><span class="accent">150</span>g</div>
+              <div class="macro-formula">flat</div>
+            </div>
+            <div class="macro-cell">
+              <div class="macro-label">Fat</div>
+              <div class="macro-value"><span class="accent">60</span>g</div>
+              <div class="macro-formula">flat</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="macro-card">
+          <div class="gender-label">Men</div>
+          <div class="macro-row">
+            <div class="macro-cell">
+              <div class="macro-label">Protein</div>
+              <div class="macro-value">×<span class="accent">1.0</span>g</div>
+              <div class="macro-formula">cap 220g</div>
+            </div>
+            <div class="macro-cell">
+              <div class="macro-label">Carbs</div>
+              <div class="macro-value"><span class="accent">220</span>g</div>
+              <div class="macro-formula">flat</div>
+            </div>
+            <div class="macro-cell">
+              <div class="macro-label">Fat</div>
+              <div class="macro-value"><span class="accent">65</span>g</div>
+              <div class="macro-formula">flat</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ol class="steps" start="3" style="margin-top: 18px;">
+        <li>Write your three numbers below. You won't do this math again.</li>
+      </ol>
+
+      <div class="write-in">
+        <div class="write-in-label">My Daily Macros</div>
+        <div class="write-in-row">
+          <span class="name">Protein</span>
+          <span class="write-in-line"></span>
+          <span class="unit">g</span>
+        </div>
+        <div class="write-in-row">
+          <span class="name">Carbs</span>
+          <span class="write-in-line"></span>
+          <span class="unit">g</span>
+        </div>
+        <div class="write-in-row">
+          <span class="name">Fat</span>
+          <span class="write-in-line"></span>
+          <span class="unit">g</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Your Daily Action</h2>
+      <ol class="action-list">
+        <li>Eat <strong>3-4 meals</strong> built from the food list (in the full guide).</li>
+        <li><strong>Track every meal</strong> in Claude, ChatGPT, or MyFitnessPal.</li>
+        <li><strong>Hit your macros</strong> within ~10g of target.</li>
+        <li><strong>Post your check-in</strong> in the group.</li>
+      </ol>
+      <div class="repeat-banner">Repeat for 42 Days</div>
+    </section>
+
+    <section class="section">
+      <h2>The Non-Negotiables</h2>
+      <div class="non-neg">
+        <div class="non-neg-item">
+          <span class="non-neg-bullet"></span>
+          <span class="non-neg-text"><strong>No alcohol.</strong> None. Zero. 42 days.</span>
+        </div>
+        <div class="non-neg-item">
+          <span class="non-neg-bullet"></span>
+          <span class="non-neg-text"><strong>Track every meal.</strong> No exceptions.</span>
+        </div>
+        <div class="non-neg-item">
+          <span class="non-neg-bullet"></span>
+          <span class="non-neg-text"><strong>Hit your macros.</strong> Within ~10g.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>If You Get Stuck</h2>
+      <dl class="stuck">
+        <div>
+          <dt>Hungry past day 4?</dt>
+          <dd>Add 30g of carbs to your daily target. Still hungry 3-4 days later? Add 30g more. Max two adjustments.</dd>
+        </div>
+        <div>
+          <dt>Don't know what to eat?</dt>
+          <dd>Open the full guide → Build Your Plate.</dd>
+        </div>
+        <div>
+          <dt>Eating out or stuck at a gas station?</dt>
+          <dd>Open the full guide → When Real Life Happens.</dd>
+        </div>
+        <div>
+          <dt>Anything else?</dt>
+          <dd>Post in the group. Someone has been there.</dd>
+        </div>
+      </dl>
+    </section>
+
+    <footer class="footer">
+      <div class="signature">— Jaden + Amber</div>
+      <div class="footnote">The full guide explains the how and the why. Open it when you have questions.</div>
+    </footer>
+
+  </div>
+</body>
+</html>
