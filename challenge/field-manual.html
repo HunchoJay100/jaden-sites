@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Field Manual</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --asphalt: #0E0E0E;
+      --asphalt-2: #161616;
+      --asphalt-3: #1F1F1F;
+      --bone: #F1EBDD;
+      --bone-muted: rgba(241, 235, 221, 0.62);
+      --bone-faint: rgba(241, 235, 221, 0.42);
+      --rule: rgba(241, 235, 221, 0.10);
+      --lime: #C6FF3C;
+      --lime-deep: #9DD93D;
+      --display: 'Oswald', system-ui, sans-serif;
+      --body: 'Inter', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--body);
+      background: var(--asphalt);
+      color: var(--bone);
+      line-height: 1.65;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
+    }
+
+    /* ======== TOP BAR ======== */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(14, 14, 14, 0.85);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .topbar-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .topbar-brand {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--bone);
+    }
+
+    .topbar-brand .accent { color: var(--lime); }
+
+    .topbar-version {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--bone-faint);
+      letter-spacing: 0.06em;
+    }
+
+    /* ======== LAYOUT ======== */
+    .shell {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .toc {
+      position: sticky;
+      top: 80px;
+      align-self: start;
+    }
+
+    .toc-label {
+      font-family: var(--display);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--bone-faint);
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .toc-list {
+      list-style: none;
+      counter-reset: tocstep;
+    }
+
+    .toc-list li {
+      counter-increment: tocstep;
+      margin-bottom: 8px;
+    }
+
+    .toc-list a {
+      display: flex;
+      gap: 10px;
+      align-items: baseline;
+      color: var(--bone-muted);
+      text-decoration: none;
+      font-size: 13px;
+      line-height: 1.4;
+      padding: 4px 0;
+      transition: color 0.18s ease;
+    }
+
+    .toc-list a::before {
+      content: counter(tocstep, decimal-leading-zero);
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--bone-faint);
+      letter-spacing: 0.06em;
+      flex-shrink: 0;
+    }
+
+    .toc-list a:hover { color: var(--lime); }
+    .toc-list a:hover::before { color: var(--lime); }
+
+    .doc { max-width: 720px; }
+
+    /* ======== HERO ======== */
+    .hero {
+      margin-bottom: 60px;
+      padding-bottom: 40px;
+      border-bottom: 2px solid var(--bone);
+      position: relative;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 80px;
+      height: 6px;
+      background: var(--lime);
+    }
+
+    .eyebrow {
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: 12px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--lime);
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(48px, 9vw, 84px);
+      line-height: 0.92;
+      text-transform: uppercase;
+      letter-spacing: -0.015em;
+      color: var(--bone);
+    }
+
+    .hero-tag {
+      font-family: var(--display);
+      font-weight: 400;
+      font-size: clamp(18px, 3vw, 24px);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--bone-muted);
+      margin-top: 12px;
+    }
+
+    /* ======== INTRO ======== */
+    .intro p {
+      font-size: 17px;
+      line-height: 1.7;
+      margin-bottom: 16px;
+      color: var(--bone);
+    }
+
+    .intro p:last-child { margin-bottom: 0; }
+
+    /* ======== SECTIONS ======== */
+    section.section {
+      margin-bottom: 64px;
+      scroll-margin-top: 80px;
+    }
+
+    .section-num {
+      font-family: var(--display);
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--lime);
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+
+    h2 {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(28px, 4.5vw, 40px);
+      line-height: 1.05;
+      text-transform: uppercase;
+      letter-spacing: -0.005em;
+      color: var(--bone);
+      margin-bottom: 24px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    h3 {
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 18px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      margin-top: 28px;
+      color: var(--bone);
+    }
+
+    p {
+      margin-bottom: 14px;
+      color: var(--bone);
+    }
+
+    .muted { color: var(--bone-muted); }
+    strong { color: var(--lime); font-weight: 600; }
+    em { color: var(--bone); font-style: italic; }
+
+    /* ======== TABLES ======== */
+    .table-wrap {
+      overflow-x: auto;
+      margin: 18px 0;
+      border-radius: 8px;
+      border: 1px solid var(--rule);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14.5px;
+    }
+
+    table thead { background: var(--asphalt-3); }
+
+    table th {
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--bone-muted);
+      text-align: left;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--rule);
+      color: var(--bone);
+      vertical-align: top;
+    }
+
+    table tbody tr:last-child td { border-bottom: none; }
+    table tbody tr:hover { background: rgba(198, 255, 60, 0.04); }
+    table td strong { color: var(--bone); }
+
+    /* ======== SANDWICH / BUILD LIST ======== */
+    .build-list {
+      list-style: none;
+      counter-reset: build;
+      padding: 0;
+      margin: 18px 0;
+    }
+
+    .build-list li {
+      counter-increment: build;
+      padding: 14px 0 14px 44px;
+      border-bottom: 1px solid var(--rule);
+      position: relative;
+      font-size: 15px;
+      color: var(--bone);
+    }
+
+    .build-list li:last-child { border-bottom: none; }
+
+    .build-list li::before {
+      content: counter(build, decimal-leading-zero);
+      font-family: var(--mono);
+      font-weight: 600;
+      font-size: 12px;
+      color: var(--lime);
+      letter-spacing: 0.06em;
+      position: absolute;
+      left: 0;
+      top: 16px;
+    }
+
+    .build-list li strong { color: var(--bone); }
+
+    /* ======== CHAIN BLOCK ======== */
+    .chain {
+      background: var(--asphalt-2);
+      border: 1px solid var(--rule);
+      border-left: 3px solid var(--lime);
+      padding: 22px 26px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }
+
+    .chain h3 {
+      margin-top: 0;
+      margin-bottom: 14px;
+      font-size: 17px;
+      letter-spacing: 0.04em;
+    }
+
+    .chain p {
+      margin-bottom: 8px;
+      font-size: 14.5px;
+      color: var(--bone-muted);
+    }
+
+    .chain p:last-child { margin-bottom: 0; }
+    .chain p strong { color: var(--lime); }
+
+    /* ======== CATEGORY BLOCK (Gas Station protein/carb/fat) ======== */
+    .category-block {
+      background: var(--asphalt-2);
+      border: 1px solid var(--rule);
+      padding: 20px 24px;
+      border-radius: 8px;
+      margin-bottom: 14px;
+    }
+
+    .category-label {
+      font-family: var(--display);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--lime);
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .category-block ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .category-block ul li {
+      padding: 6px 0 6px 22px;
+      position: relative;
+      font-size: 14.5px;
+      color: var(--bone-muted);
+    }
+
+    .category-block ul li::before {
+      content: '›';
+      color: var(--lime);
+      font-weight: 700;
+      position: absolute;
+      left: 0;
+      top: 6px;
+    }
+
+    /* ======== FRAMEWORK (centered formula) ======== */
+    .framework {
+      text-align: center;
+      padding: 28px 24px;
+      margin: 28px 0;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .framework-prefix {
+      font-family: var(--display);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--bone-faint);
+      margin-bottom: 12px;
+    }
+
+    .framework-formula {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(20px, 3.4vw, 28px);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--lime);
+      line-height: 1.3;
+    }
+
+    /* ======== THUMB LIST (chevron bullets) ======== */
+    .thumb-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .thumb-list li {
+      padding: 10px 0 10px 24px;
+      border-bottom: 1px solid var(--rule);
+      position: relative;
+      font-size: 15px;
+      color: var(--bone-muted);
+    }
+
+    .thumb-list li:last-child { border-bottom: none; }
+
+    .thumb-list li::before {
+      content: '›';
+      color: var(--lime);
+      font-weight: 700;
+      position: absolute;
+      left: 0;
+      top: 10px;
+    }
+
+    .thumb-list li strong { color: var(--bone); }
+
+    /* ======== CLOSING ======== */
+    .closing {
+      margin-top: 60px;
+      padding: 40px 0 0;
+      border-top: 2px solid var(--bone);
+      position: relative;
+    }
+
+    .closing::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: 0;
+      width: 80px;
+      height: 6px;
+      background: var(--lime);
+    }
+
+    .closing h2 {
+      border-bottom: none;
+      padding-bottom: 0;
+      margin-bottom: 0;
+    }
+
+    /* ======== DISCLAIMER ======== */
+    .disclaimer {
+      margin-top: 60px;
+      padding: 28px 32px;
+      border-top: 1px solid rgba(241, 235, 221, 0.10);
+      font-size: 12px;
+      line-height: 1.55;
+      color: rgba(241, 235, 221, 0.42);
+      max-width: 720px;
+    }
+    .disclaimer-label {
+      font-family: var(--display);
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(241, 235, 221, 0.55);
+      margin-bottom: 14px;
+      font-weight: 600;
+    }
+    .disclaimer p { margin-bottom: 10px; }
+    .disclaimer p:last-child { margin-bottom: 0; }
+    .disclaimer strong { color: rgba(241, 235, 221, 0.62); }
+
+    /* ======== MOBILE ======== */
+    @media (max-width: 900px) {
+      .shell {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding: 40px 20px 60px;
+      }
+      .toc {
+        position: static;
+        order: -1;
+      }
+      .toc-list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      body { font-size: 15px; }
+      .hero { margin-bottom: 40px; padding-bottom: 28px; }
+      section.section { margin-bottom: 48px; }
+      h2 { margin-bottom: 18px; padding-bottom: 14px; }
+      .toc-list { grid-template-columns: 1fr; }
+      .chain { padding: 18px 20px; }
+    }
+
+    /* ======== PRINT ======== */
+    @media print {
+      body { background: white; color: black; font-size: 11px; }
+      .topbar { display: none; }
+      .shell { grid-template-columns: 1fr; gap: 0; padding: 20px; }
+      .toc { display: none; }
+      .doc { max-width: 100%; }
+      .hero, .section, .chain, .category-block, .build-list li { break-inside: avoid; }
+      h1, h2, h3 { color: black; }
+      p, td, li { color: #222; }
+      strong { color: #000; }
+      .closing { break-before: avoid; }
+      .disclaimer { background: white; color: #555; }
+    }
+
+    ::selection {
+      background: var(--lime);
+      color: var(--asphalt);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-brand">The Field <span class="accent">Manual</span></div>
+      <div class="topbar-version">v1</div>
+    </div>
+  </div>
+
+  <div class="shell">
+
+    <!-- TOC -->
+    <aside class="toc">
+      <div class="toc-label">Contents</div>
+      <ol class="toc-list">
+        <li><a href="#eating-out">Eating Out</a></li>
+        <li><a href="#gas-station">Gas Station Survival</a></li>
+      </ol>
+    </aside>
+
+    <!-- DOC -->
+    <article class="doc">
+
+      <header class="hero">
+        <div class="eyebrow">The Field Manual</div>
+        <h1>When<br>Life<br>Happens</h1>
+        <div class="hero-tag">Eating Out · Gas Station Survival</div>
+      </header>
+
+      <section class="intro">
+        <p><strong style="color: var(--bone);">The protocol works at your kitchen table. But you don't live at your kitchen table.</strong></p>
+        <p>You eat out. You travel. You forget to prep. You end up at a gas station with no clean food in sight. This is what to do when you're not at home but still on the protocol.</p>
+        <p>Two situations covered. Two answers. Same protein-first spine that runs the rest of the protocol.</p>
+      </section>
+
+      <!-- 01 EATING OUT -->
+      <section class="section" id="eating-out">
+        <div class="section-num">01 / Out There</div>
+        <h2>Eating Out</h2>
+
+        <p>You're not cooking. Someone else is. The rule changes: pick a clean order, ignore the temptations, drink water, eat slow.</p>
+
+        <div class="callout">
+          <div class="callout-label">A Note on Portion Sizing</div>
+          <p>Men lean toward the larger end of these orders (double protein at Chipotle, 6-8 oz steak, 12-count nuggets at Chick-fil-A). Women lean toward the smaller end (single protein, 4-6 oz steak, 8-count nuggets). Your macros are different. Your plate should be too.</p>
+        </div>
+
+        <div class="chain">
+          <h3>Chipotle (the gold standard)</h3>
+          <p><strong>Order:</strong> Chicken or steak burrito bowl, white or brown rice, black beans, fajita veggies, pico, salsa, romaine.</p>
+          <p><strong>Pick one fat:</strong> guac, cheese, or sour cream. Not all three.</p>
+          <p><strong>Men:</strong> double protein. <strong>Women:</strong> single protein.</p>
+          <p><strong>Skip:</strong> Chips, queso, flour tortilla, sweet tea.</p>
+        </div>
+
+        <div class="chain">
+          <h3>Chick-fil-A</h3>
+          <p><strong>Order:</strong> Grilled Nuggets (12-count for men, 8-count for women) + Market Salad (light avocado lime dressing), or Grilled Chicken Sandwich (no mayo).</p>
+          <p><strong>Drink:</strong> Water or unsweet tea.</p>
+          <p><strong>Skip:</strong> Waffle fries, regular nuggets, CFA sauce, lemonade.</p>
+        </div>
+
+        <div class="chain">
+          <h3>Panera</h3>
+          <p><strong>Order:</strong> Power chicken hummus bowl, Mediterranean bowl with chicken, or any Power Salad with chicken.</p>
+          <p><strong>Skip:</strong> Sandwiches (processed bread), pastries, mac and cheese, frozen lemonades.</p>
+        </div>
+
+        <div class="chain">
+          <h3>Subway / Jersey Mike's / Jimmy John's / Firehouse</h3>
+          <p><strong>Order:</strong> Any sub "in a tub" or unwich or bowl. Lettuce base, no bread. Real meat (turkey, roast beef, tuna, chicken). Load the veggies. Oil and vinegar.</p>
+          <p><strong>Skip:</strong> Fake steak, teriyaki sauce, chips, cookie.</p>
+        </div>
+
+        <div class="chain">
+          <h3>Any Steakhouse (Texas Roadhouse, Outback, Longhorn, Logan's, etc.)</h3>
+          <p><strong>Order:</strong> Sirloin + plain baked or sweet potato + broccoli or green beans + side salad with vinaigrette.</p>
+          <p><strong>Men:</strong> 6-8 oz sirloin. <strong>Women:</strong> 4-6 oz sirloin.</p>
+          <p><strong>The trick:</strong> Tell them not to bring the bread basket. That is the move.</p>
+          <p><strong>Skip:</strong> Bloomin' Onion, loaded baked potato, croutons.</p>
+        </div>
+
+        <div class="chain">
+          <h3>Olive Garden</h3>
+          <p><strong>Order:</strong> Grilled chicken + steamed broccoli + 1 cup pasta if you have carb room.</p>
+          <p><strong>Skip:</strong> Breadsticks (this is the trap), creamy pastas, fried apps.</p>
+        </div>
+
+        <div class="chain">
+          <h3>Wendy's</h3>
+          <p><strong>Order:</strong> Grilled Chicken Sandwich (no mayo, no cheese), Apple Pecan Salad with grilled chicken, or chili + plain baked potato.</p>
+          <p><strong>Skip:</strong> Fries, Frosty, baked potato with toppings.</p>
+        </div>
+
+        <div class="chain">
+          <h3>Buffalo Wild Wings</h3>
+          <p><strong>Order:</strong> Naked (unbreaded) wings, traditional, dry rub or low-sugar sauce. Veggies or plain fries on the side.</p>
+          <p><strong>Skip:</strong> Anything breaded, mango habanero, honey BBQ.</p>
+        </div>
+
+        <div class="chain">
+          <h3>Hibachi / Sushi</h3>
+          <p><strong>Hibachi:</strong> Chicken or steak + veggies + light rice. Skip the sauce baths.</p>
+          <p><strong>Sushi:</strong> Sashimi and nigiri. Skip deep-fried rolls and anything with cream cheese.</p>
+        </div>
+
+        <div class="chain">
+          <h3>Mexican Sit-Down</h3>
+          <p><strong>Order:</strong> Chicken, steak, or shrimp fajitas + rice + beans + pico + guac.</p>
+          <p><strong>Skip:</strong> Flour tortillas (go corn), chimichangas, cheese-sauce-covered anything.</p>
+        </div>
+
+        <div class="chain">
+          <h3>Pizza Night (family life is real)</h3>
+          <p><strong>Order:</strong> 2 slices real pizza (thin crust, real cheese, real toppings) + a big salad with grilled chicken.</p>
+          <p>Better than skipping family dinner. Quality-matched trade.</p>
+        </div>
+
+        <div class="chain">
+          <h3>McDonald's (last resort)</h3>
+          <p><strong>Breakfast:</strong> Egg McMuffin (egg + Canadian bacon + cheese + English muffin, real-ish food).</p>
+          <p><strong>Lunch:</strong> Grilled Chicken Sandwich (no mayo, no cheese).</p>
+          <p><strong>Skip:</strong> Fries, soda, McGriddles, frappes, hash browns.</p>
+        </div>
+      </section>
+
+      <!-- 02 GAS STATION -->
+      <section class="section" id="gas-station">
+        <div class="section-num">02 / Last Resort</div>
+        <h2>Gas Station Survival</h2>
+
+        <div class="framework">
+          <div class="framework-prefix">The Formula</div>
+          <div class="framework-formula">Protein Shake + Banana + Jerky + Nuts</div>
+        </div>
+
+        <p>Complete meal, under $10, five-minute stop. Every guy in America is within ten miles of this.</p>
+
+        <div class="category-block">
+          <div class="category-label">Protein</div>
+          <ul>
+            <li>Jerky or biltong (short ingredient list, low sugar)</li>
+            <li>Hard-boiled eggs (single-pack)</li>
+            <li>String cheese</li>
+            <li>Rolled deli meat pack (eat like jerky)</li>
+            <li>Core Power or Fairlife protein shake</li>
+            <li>Protein bars (Quest, Built, David, Barebells, RXBAR. Check macros.)</li>
+            <li>Starbucks egg bites</li>
+            <li>Chomps chicken sausage stick</li>
+          </ul>
+        </div>
+
+        <div class="category-block">
+          <div class="category-label">Carb / Fruit</div>
+          <ul>
+            <li>Bananas, apples, oranges</li>
+            <li>Plain Greek yogurt cup (Fage 2%, Chobani Less Sugar)</li>
+            <li>Plain rice cakes</li>
+            <li>Microwave rice pouch</li>
+          </ul>
+        </div>
+
+        <div class="category-block">
+          <div class="category-label">Fat</div>
+          <ul>
+            <li>Mixed nuts (dry roasted, salted, not honey roasted)</li>
+            <li>Avocado (some stations carry them)</li>
+            <li>1 oz dark chocolate (70%+)</li>
+          </ul>
+        </div>
+
+        <p style="margin-top: 20px;"><strong>Avoid anywhere:</strong> anything in cellophane that crunches, anything "energy" or "smoothie", anything with corn syrup in the first three ingredients.</p>
+      </section>
+
+      <!-- CLOSING -->
+      <section class="closing">
+        <h2>Welcome to the Field</h2>
+      </section>
+
+      <!-- DISCLAIMER -->
+      <section class="disclaimer">
+        <div class="disclaimer-label">Disclaimer</div>
+        <p><strong>Jaden and Amber are not registered dietitians, doctors, nurses, or licensed medical or nutritional professionals.</strong> Everything in this document is shared from personal experience and is for educational and informational purposes only. It is not medical advice, nutritional counseling, or a substitute for the advice of a qualified healthcare provider.</p>
+        <p><strong>Consult your physician before starting</strong> this challenge or any new diet, exercise, or supplement program. This applies double if you are pregnant, nursing, on prescription medication, or living with a medical condition (including diabetes, heart disease, kidney disease, thyroid issues, high blood pressure, or eating disorder history).</p>
+        <p>You assume all risk and responsibility for your participation. Individual results vary. Stop immediately and contact a medical professional if you experience any adverse effects.</p>
+        <p>By participating in the 42-Day Challenge you acknowledge that you have read this disclaimer and agree to hold Jaden Flynn, Amber Flynn-Jared, and any affiliated parties harmless from any claims related to your participation.</p>
+      </section>
+
+    </article>
+  </div>
+
+</body>
+</html>

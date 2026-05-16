@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Food Protocol: Quick Start (Men)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bone: #F1EBDD;
+      --bone-2: #E8E2D3;
+      --asphalt: #0E0E0E;
+      --asphalt-2: #1A1A1A;
+      --muted: rgba(14, 14, 14, 0.62);
+      --rule: rgba(14, 14, 14, 0.14);
+      --lime: #C6FF3C;
+      --lime-deep: #6E9E1F;
+      --display: 'Oswald', system-ui, sans-serif;
+      --body: 'Inter', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--body);
+      background: var(--bone);
+      color: var(--asphalt);
+      line-height: 1.55;
+      font-size: 15px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      padding: 40px 16px 60px;
+      min-height: 100vh;
+      background-image:
+        radial-gradient(circle at 20% 0%, rgba(110, 158, 31, 0.04), transparent 50%),
+        radial-gradient(circle at 80% 100%, rgba(14, 14, 14, 0.04), transparent 50%);
+    }
+
+    .page {
+      max-width: 720px;
+      margin: 0 auto;
+      background: var(--bone);
+    }
+
+    /* ======== HEADER ======== */
+    .header {
+      text-align: center;
+      padding-bottom: 28px;
+      margin-bottom: 32px;
+      border-bottom: 2px solid var(--asphalt);
+      position: relative;
+    }
+
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 6px;
+      background: var(--lime);
+    }
+
+    .eyebrow {
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(40px, 9vw, 64px);
+      line-height: 0.95;
+      text-transform: uppercase;
+      letter-spacing: -0.015em;
+    }
+
+    .subtitle {
+      font-style: italic;
+      color: var(--muted);
+      margin-top: 14px;
+      font-size: 14px;
+      letter-spacing: 0.01em;
+    }
+
+    /* ======== SECTIONS ======== */
+    .section { margin-bottom: 36px; }
+
+    h2 {
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--asphalt);
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    h2::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--asphalt);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    p { margin-bottom: 10px; }
+
+    /* ======== STEPS ======== */
+    .steps {
+      list-style: none;
+      counter-reset: step;
+      padding: 0;
+    }
+
+    .steps li {
+      counter-increment: step;
+      padding-left: 42px;
+      position: relative;
+      margin-bottom: 12px;
+      font-size: 14.5px;
+    }
+
+    .steps li::before {
+      content: counter(step);
+      font-family: var(--display);
+      font-weight: 700;
+      position: absolute;
+      left: 0;
+      top: -2px;
+      width: 28px;
+      height: 28px;
+      background: var(--asphalt);
+      color: var(--lime);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    /* ======== MACRO CARDS ======== */
+    .macro-card {
+      background: var(--asphalt);
+      color: var(--bone);
+      padding: 24px 26px;
+      border-radius: 6px;
+      margin-bottom: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .macro-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--lime);
+    }
+
+    .gender-label {
+      font-family: var(--display);
+      font-size: 13px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--lime);
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+
+    .macro-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+    }
+
+    .macro-cell {
+      text-align: center;
+    }
+
+    .macro-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(241, 235, 221, 0.55);
+      margin-bottom: 6px;
+    }
+
+    .macro-value {
+      font-family: var(--display);
+      font-size: clamp(22px, 5vw, 28px);
+      font-weight: 600;
+      color: var(--bone);
+      line-height: 1.1;
+    }
+
+    .macro-value .accent {
+      color: var(--lime);
+    }
+
+    .macro-formula {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: rgba(241, 235, 221, 0.55);
+      margin-top: 4px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ======== WRITE-IN BOX ======== */
+    .write-in {
+      background: var(--bone);
+      border: 2px solid var(--asphalt);
+      padding: 20px 22px;
+      margin: 18px 0 0;
+      border-radius: 6px;
+    }
+
+    .write-in-label {
+      font-family: var(--display);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--asphalt);
+      margin-bottom: 14px;
+      font-weight: 600;
+    }
+
+    .write-in-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 10px;
+      font-family: var(--mono);
+      font-size: 14px;
+    }
+
+    .write-in-row:last-child { margin-bottom: 0; }
+
+    .write-in-row .name {
+      width: 80px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .write-in-line {
+      flex: 1;
+      border-bottom: 1.5px solid var(--asphalt);
+      height: 24px;
+    }
+
+    .write-in-row .unit {
+      font-weight: 600;
+      width: 14px;
+      text-align: left;
+    }
+
+    /* ======== ACTION LIST ======== */
+    .action-list {
+      list-style: none;
+      counter-reset: action;
+      padding: 0;
+    }
+
+    .action-list li {
+      counter-increment: action;
+      padding: 12px 0 12px 44px;
+      border-bottom: 1px solid var(--rule);
+      position: relative;
+      font-size: 14.5px;
+    }
+
+    .action-list li:last-child { border-bottom: none; }
+
+    .action-list li::before {
+      content: counter(action, decimal-leading-zero);
+      font-family: var(--mono);
+      font-weight: 600;
+      font-size: 11px;
+      color: var(--lime-deep);
+      letter-spacing: 0.08em;
+      position: absolute;
+      left: 0;
+      top: 14px;
+    }
+
+    .repeat-banner {
+      text-align: center;
+      padding: 16px;
+      border: 2px solid var(--asphalt);
+      background: var(--asphalt);
+      color: var(--lime);
+      border-radius: 6px;
+      margin-top: 18px;
+      font-family: var(--display);
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-size: 14px;
+    }
+
+    /* ======== NON-NEGOTIABLES ======== */
+    .non-neg {
+      background: var(--asphalt);
+      color: var(--bone);
+      padding: 20px 26px;
+      border-radius: 6px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .non-neg::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--lime);
+    }
+
+    .non-neg-item {
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(241, 235, 221, 0.10);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .non-neg-item:last-child { border-bottom: none; }
+
+    .non-neg-bullet {
+      width: 8px;
+      height: 8px;
+      background: var(--lime);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .non-neg-text {
+      font-family: var(--display);
+      font-size: 16px;
+      letter-spacing: 0.04em;
+      font-weight: 400;
+    }
+
+    .non-neg-text strong {
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--lime);
+    }
+
+    /* ======== RAMP NOTE ======== */
+    .ramp-note {
+      margin-top: 18px;
+      background: var(--bone-2);
+      border-left: 4px solid var(--lime-deep);
+      padding: 16px 20px;
+      border-radius: 4px;
+    }
+    .ramp-label {
+      font-family: var(--display);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--lime-deep);
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+    .ramp-note p {
+      font-size: 13.5px;
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    /* ======== AI TRACKER PROMPT ======== */
+    .ai-prompt {
+      background: var(--bone);
+      border: 2px solid var(--asphalt);
+      border-radius: 6px;
+      padding: 22px 24px;
+      margin-top: 14px;
+      position: relative;
+    }
+    .ai-prompt::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--lime);
+    }
+    .ai-prompt-lede {
+      font-size: 14.5px;
+      margin-bottom: 14px;
+    }
+    .ai-prompt-script {
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.65;
+      background: var(--asphalt);
+      color: var(--bone);
+      padding: 18px 20px;
+      border-radius: 4px;
+      letter-spacing: 0.01em;
+    }
+    .ai-prompt-script .blank {
+      color: var(--lime);
+      font-weight: 600;
+    }
+    .ai-prompt-foot {
+      margin-top: 14px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* ======== GROUP PROMISE ======== */
+    .group-promise {
+      background: var(--asphalt);
+      color: var(--bone);
+      padding: 18px 22px;
+      border-radius: 6px;
+      margin-bottom: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+    .group-promise::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--lime);
+    }
+    .group-promise-label {
+      font-family: var(--display);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--lime);
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+    .group-promise p {
+      font-size: 13.5px;
+      line-height: 1.6;
+      margin: 0;
+      color: var(--bone);
+    }
+    .group-promise strong { color: var(--lime); }
+
+    /* ======== STUCK SECTION ======== */
+    .stuck {
+      display: grid;
+      gap: 14px;
+    }
+
+    .stuck dt {
+      font-family: var(--display);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      font-size: 14px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .stuck dt::before {
+      content: '→ ';
+      color: var(--lime-deep);
+      font-weight: 700;
+    }
+
+    .stuck dd {
+      color: var(--muted);
+      font-size: 13.5px;
+      line-height: 1.5;
+      padding-left: 18px;
+    }
+
+    /* ======== FOOTER ======== */
+    .footer {
+      margin-top: 44px;
+      padding-top: 24px;
+      border-top: 2px solid var(--asphalt);
+      text-align: center;
+      position: relative;
+    }
+
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 6px;
+      background: var(--lime);
+    }
+
+    .signature {
+      font-family: var(--display);
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-top: 10px;
+    }
+
+    .footnote {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    /* ======== DISCLAIMER ======== */
+    .disclaimer {
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--rule);
+      font-size: 11px;
+      line-height: 1.55;
+      color: rgba(14, 14, 14, 0.48);
+    }
+    .disclaimer-label {
+      font-family: var(--display);
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+    .disclaimer p {
+      margin-bottom: 8px;
+    }
+    .disclaimer p:last-child {
+      margin-bottom: 0;
+    }
+    .disclaimer strong {
+      color: rgba(14, 14, 14, 0.68);
+    }
+
+    /* ======== PRINT ======== */
+    @media print {
+      body {
+        padding: 0;
+        font-size: 11.5px;
+        background: white;
+      }
+      .page { max-width: 100%; }
+      h1 { font-size: 36px; }
+      .macro-card, .non-neg { break-inside: avoid; box-shadow: none; }
+      .section { margin-bottom: 22px; break-inside: avoid; }
+      .header { margin-bottom: 22px; padding-bottom: 18px; }
+    }
+
+    /* ======== MOBILE ======== */
+    @media (max-width: 480px) {
+      body { padding: 24px 14px 40px; }
+      .macro-card { padding: 20px 18px; }
+      .macro-row { gap: 10px; }
+      .macro-value { font-size: 18px; }
+      .non-neg-text { font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <header class="header">
+      <div class="eyebrow">The Food Protocol &bull; Men</div>
+      <h1>Quick<br>Start</h1>
+      <p class="subtitle">Screenshot this. Live by it for 42 days.</p>
+    </header>
+
+    <section class="section">
+      <h2>Your Daily Macros</h2>
+      <ol class="steps">
+        <li>Pick your <strong>desired weight</strong>. The weight you're trying to get to. (15-30 lb below where you are today is a good starting point if you don't have a clear goal.)</li>
+        <li>Run the formula:</li>
+      </ol>
+
+      <div style="margin-top: 20px;">
+        <div class="macro-card">
+          <div class="gender-label">Men</div>
+          <div class="macro-row">
+            <div class="macro-cell">
+              <div class="macro-label">Protein</div>
+              <div class="macro-value">×<span class="accent">1.0</span>g</div>
+              <div class="macro-formula">desired wt &middot; cap 220g</div>
+            </div>
+            <div class="macro-cell">
+              <div class="macro-label">Carbs</div>
+              <div class="macro-value"><span class="accent">220</span>g</div>
+              <div class="macro-formula">flat</div>
+            </div>
+            <div class="macro-cell">
+              <div class="macro-label">Fat</div>
+              <div class="macro-value"><span class="accent">65</span>g</div>
+              <div class="macro-formula">flat</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ol class="steps" start="3" style="margin-top: 18px;">
+        <li>Save your three numbers (screenshot, notes app, lock screen, whatever). You won't do this math again.</li>
+      </ol>
+    </section>
+
+    <section class="section">
+      <h2>Your Daily Action</h2>
+      <ol class="action-list">
+        <li>Eat <strong>3-5 meals</strong> built from the food list (in the full guide).</li>
+        <li><strong>Track every meal</strong> in Claude, ChatGPT, or MyFitnessPal.</li>
+        <li><strong>Stay at or under</strong> your daily totals.</li>
+        <li><strong>Post your check-in</strong> in the group.</li>
+      </ol>
+      <div class="repeat-banner">Repeat for 42 Days</div>
+
+      <div class="ramp-note">
+        <div class="ramp-label">First 10-14 Days</div>
+        <p>Expect to fall short on macros. Clean food is more volume than you're used to. Your appetite catches up as your body adapts. <strong>Only eat from the approved foods.</strong> Quality is non-negotiable. Quantity catches up.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Set Up Your AI Tracker</h2>
+      <div class="ai-prompt">
+        <p class="ai-prompt-lede">Open Claude or ChatGPT on your phone, tap the mic, and read this aloud. Fill in your three numbers where you see the highlighted spots.</p>
+        <div class="ai-prompt-script">
+          "You are my fitness tracker for the next 6 weeks. I'm doing a 42-day fat-loss challenge. My daily macro targets are <span class="blank">[protein]</span>g protein, <span class="blank">[carbs]</span>g carbs, and <span class="blank">[fat]</span>g fat. Every time I tell you what I ate, estimate the macros for that meal and keep a running total for the day. When I ask, tell me how close I am to my targets and what I have left. If I'm short on protein with one meal to go, suggest a quick fix. Don't lecture me about food choices. Just track and tally. Reset the running total each morning. Ready?"
+        </div>
+        <p class="ai-prompt-foot">After that, just say what you ate as you eat it. 10 seconds per meal.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>The Non-Negotiables</h2>
+      <div class="non-neg">
+        <div class="non-neg-item">
+          <span class="non-neg-bullet"></span>
+          <span class="non-neg-text"><strong>Two drinks per week max.</strong> Ceiling, not a goal.</span>
+        </div>
+        <div class="non-neg-item">
+          <span class="non-neg-bullet"></span>
+          <span class="non-neg-text"><strong>Track every meal.</strong> No exceptions.</span>
+        </div>
+        <div class="non-neg-item">
+          <span class="non-neg-bullet"></span>
+          <span class="non-neg-text"><strong>Don't bust your daily totals.</strong> Going under is fine, especially the first two weeks. Going over breaks the protocol.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>If You Get Stuck</h2>
+
+      <div class="group-promise">
+        <div class="group-promise-label">Bring It To The Group First</div>
+        <p>Jaden and Amber are <strong>active in the group every day</strong>. If you're hungry, too full, can't find a food on the list, eating somewhere weird, traveling, or just stuck, post it. <strong>Do not deviate from the plan on your own.</strong> We will find a solution together. That is the whole point of doing this with a group instead of a PDF.</p>
+      </div>
+
+      <dl class="stuck">
+        <div>
+          <dt>Don't know what to eat?</dt>
+          <dd>Open the full guide, Build Your Plate. Still stuck? Drop the question in the group.</dd>
+        </div>
+        <div>
+          <dt>Anything else?</dt>
+          <dd>Post in the group. Don't guess. Don't quit. Ask us first.</dd>
+        </div>
+      </dl>
+    </section>
+
+    <footer class="footer">
+      <div class="signature">Jaden + Amber</div>
+      <div class="footnote">The full guide explains the how and the why. Open it when you have questions.</div>
+    </footer>
+
+    <section class="disclaimer">
+      <div class="disclaimer-label">Disclaimer</div>
+      <p><strong>Jaden and Amber are not registered dietitians, doctors, nurses, or licensed medical or nutritional professionals.</strong> Everything in this document is shared from personal experience and is for educational and informational purposes only. It is not medical advice, nutritional counseling, or a substitute for the advice of a qualified healthcare provider.</p>
+      <p><strong>Consult your physician before starting</strong> this challenge or any new diet, exercise, or supplement program. This applies double if you are pregnant, nursing, on prescription medication, or living with a medical condition (including diabetes, heart disease, kidney disease, thyroid issues, high blood pressure, or eating disorder history).</p>
+      <p>You assume all risk and responsibility for your participation. Individual results vary. Stop immediately and contact a medical professional if you experience any adverse effects.</p>
+      <p>By participating in the 42-Day Challenge you acknowledge that you have read this disclaimer and agree to hold Jaden Flynn, Amber Flynn-Jared, and any affiliated parties harmless from any claims related to your participation.</p>
+    </section>
+
+  </div>
+</body>
+</html>

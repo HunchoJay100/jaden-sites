@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Food Protocol: Full Guide (Men)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --asphalt: #0E0E0E;
+      --asphalt-2: #161616;
+      --asphalt-3: #1F1F1F;
+      --bone: #F1EBDD;
+      --bone-muted: rgba(241, 235, 221, 0.62);
+      --bone-faint: rgba(241, 235, 221, 0.42);
+      --rule: rgba(241, 235, 221, 0.10);
+      --lime: #C6FF3C;
+      --lime-deep: #9DD93D;
+      --amber: #FF8B3C;
+      --display: 'Oswald', system-ui, sans-serif;
+      --body: 'Inter', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--body);
+      background: var(--asphalt);
+      color: var(--bone);
+      line-height: 1.65;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
+    }
+
+    /* ======== TOP BAR ======== */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(14, 14, 14, 0.85);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .topbar-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .topbar-brand {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--bone);
+    }
+
+    .topbar-brand .accent { color: var(--lime); }
+
+    .topbar-version {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--bone-faint);
+      letter-spacing: 0.06em;
+    }
+
+    /* ======== LAYOUT ======== */
+    .shell {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .toc {
+      position: sticky;
+      top: 80px;
+      align-self: start;
+    }
+
+    .toc-label {
+      font-family: var(--display);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--bone-faint);
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .toc-list {
+      list-style: none;
+      counter-reset: tocstep;
+    }
+
+    .toc-list li {
+      counter-increment: tocstep;
+      margin-bottom: 8px;
+    }
+
+    .toc-list a {
+      display: flex;
+      gap: 10px;
+      align-items: baseline;
+      color: var(--bone-muted);
+      text-decoration: none;
+      font-size: 13px;
+      line-height: 1.4;
+      padding: 4px 0;
+      transition: color 0.18s ease;
+    }
+
+    .toc-list a::before {
+      content: counter(tocstep, decimal-leading-zero);
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--bone-faint);
+      letter-spacing: 0.06em;
+      flex-shrink: 0;
+    }
+
+    .toc-list a:hover {
+      color: var(--lime);
+    }
+
+    .toc-list a:hover::before {
+      color: var(--lime);
+    }
+
+    .doc {
+      max-width: 720px;
+    }
+
+    /* ======== HERO ======== */
+    .hero {
+      margin-bottom: 60px;
+      padding-bottom: 40px;
+      border-bottom: 2px solid var(--bone);
+      position: relative;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 80px;
+      height: 6px;
+      background: var(--lime);
+    }
+
+    .eyebrow {
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: 12px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--lime);
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(48px, 9vw, 84px);
+      line-height: 0.92;
+      text-transform: uppercase;
+      letter-spacing: -0.015em;
+      color: var(--bone);
+    }
+
+    .hero-tag {
+      font-family: var(--display);
+      font-weight: 400;
+      font-size: clamp(18px, 3vw, 24px);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--bone-muted);
+      margin-top: 12px;
+    }
+
+    /* ======== INTRO ======== */
+    .intro p {
+      font-size: 17px;
+      line-height: 1.7;
+      margin-bottom: 16px;
+      color: var(--bone);
+    }
+
+    .intro p:last-child { margin-bottom: 0; }
+
+    /* ======== SECTIONS ======== */
+    section.section {
+      margin-bottom: 64px;
+      scroll-margin-top: 80px;
+    }
+
+    .section-num {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      color: var(--lime);
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    h2 {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(28px, 4.5vw, 40px);
+      line-height: 1.05;
+      text-transform: uppercase;
+      letter-spacing: -0.005em;
+      color: var(--bone);
+      margin-bottom: 24px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    h3 {
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 18px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      margin-top: 28px;
+      color: var(--bone);
+    }
+
+    p {
+      margin-bottom: 14px;
+      color: var(--bone);
+    }
+
+    .muted { color: var(--bone-muted); }
+
+    strong { color: var(--lime); font-weight: 600; }
+
+    em { color: var(--bone); font-style: italic; }
+
+    /* ======== RULE LIST (opening 1-2-3) ======== */
+    .rule-list {
+      list-style: none;
+      counter-reset: rule;
+      padding: 0;
+      margin: 18px 0 8px;
+    }
+
+    .rule-list li {
+      counter-increment: rule;
+      padding: 10px 0 10px 38px;
+      position: relative;
+      font-size: 16px;
+    }
+
+    .rule-list li::before {
+      content: counter(rule);
+      font-family: var(--display);
+      font-weight: 700;
+      position: absolute;
+      left: 0;
+      top: 6px;
+      width: 26px;
+      height: 26px;
+      background: var(--lime);
+      color: var(--asphalt);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+    }
+
+    /* ======== MACRO BLOCKS ======== */
+    .macro-block {
+      background: var(--asphalt-2);
+      border: 1px solid var(--rule);
+      padding: 28px;
+      border-radius: 8px;
+      margin-bottom: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .macro-block::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--lime);
+    }
+
+    .gender-label {
+      font-family: var(--display);
+      font-size: 13px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--lime);
+      margin-bottom: 18px;
+      font-weight: 600;
+    }
+
+    .macro-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 18px;
+    }
+
+    .macro-cell {
+      text-align: left;
+    }
+
+    .macro-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--bone-faint);
+      margin-bottom: 6px;
+    }
+
+    .macro-value {
+      font-family: var(--display);
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--bone);
+      line-height: 1.05;
+    }
+
+    .macro-value .accent { color: var(--lime); }
+
+    .macro-formula {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--bone-faint);
+      margin-top: 4px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ======== EXAMPLES TABLE ======== */
+    .table-wrap {
+      overflow-x: auto;
+      margin: 18px 0;
+      border-radius: 8px;
+      border: 1px solid var(--rule);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    table thead {
+      background: var(--asphalt-3);
+    }
+
+    table th {
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--bone-muted);
+      text-align: left;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    table th.num, table td.num {
+      text-align: right;
+      font-family: var(--mono);
+    }
+
+    table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--rule);
+      color: var(--bone);
+      vertical-align: middle;
+    }
+
+    table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    table tbody tr:hover {
+      background: rgba(198, 255, 60, 0.04);
+    }
+
+    table .total td {
+      background: var(--asphalt-3);
+      font-weight: 600;
+      color: var(--lime);
+      border-top: 1px solid var(--rule);
+    }
+
+    table .target td {
+      background: var(--asphalt-3);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--bone-faint);
+    }
+
+    /* ======== CALLOUT (Hunger Rule, Pull Quotes) ======== */
+    .callout {
+      background: var(--asphalt-2);
+      border: 1px solid var(--rule);
+      border-left: 4px solid var(--lime);
+      padding: 22px 26px;
+      border-radius: 8px;
+      margin: 20px 0;
+      font-size: 15.5px;
+    }
+
+    .callout-label {
+      font-family: var(--display);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--lime);
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .callout p {
+      margin-bottom: 8px;
+    }
+
+    .callout p:last-child { margin-bottom: 0; }
+
+    /* ======== PULL QUOTE / FRAMEWORK ======== */
+    .framework {
+      text-align: center;
+      padding: 28px 24px;
+      margin: 28px 0;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .framework-prefix {
+      font-family: var(--display);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--bone-faint);
+      margin-bottom: 12px;
+    }
+
+    .framework-formula {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(22px, 4vw, 32px);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--lime);
+    }
+
+    /* ======== TRACKING OPTIONS ======== */
+    .option {
+      background: var(--asphalt-2);
+      border: 1px solid var(--rule);
+      padding: 24px 26px;
+      border-radius: 8px;
+      margin-bottom: 14px;
+    }
+
+    .option-tag {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--asphalt);
+      background: var(--lime);
+      padding: 4px 10px;
+      border-radius: 3px;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .option h3 {
+      margin-top: 0;
+      font-size: 18px;
+      letter-spacing: 0.04em;
+    }
+
+    .option ol {
+      list-style: none;
+      counter-reset: opt;
+      padding: 0;
+      margin-top: 12px;
+    }
+
+    .option ol li {
+      counter-increment: opt;
+      padding-left: 32px;
+      margin-bottom: 8px;
+      position: relative;
+      color: var(--bone-muted);
+      font-size: 14.5px;
+    }
+
+    .option ol li::before {
+      content: counter(opt);
+      font-family: var(--mono);
+      font-weight: 600;
+      font-size: 12px;
+      color: var(--lime);
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    /* ======== AI SCRIPT BLOCK ======== */
+    .ai-script {
+      font-family: var(--mono);
+      font-size: 13.5px;
+      line-height: 1.7;
+      background: rgba(255, 255, 255, 0.04);
+      border-left: 3px solid var(--lime);
+      color: var(--bone);
+      padding: 20px 22px;
+      margin-top: 12px;
+      border-radius: 4px;
+      letter-spacing: 0.01em;
+    }
+    .ai-script .blank {
+      color: var(--lime);
+      font-weight: 600;
+    }
+
+    /* ======== RULE OF THUMB LIST ======== */
+    .thumb-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .thumb-list li {
+      padding: 10px 0 10px 24px;
+      border-bottom: 1px solid var(--rule);
+      position: relative;
+      font-size: 15px;
+      color: var(--bone-muted);
+    }
+
+    .thumb-list li:last-child { border-bottom: none; }
+
+    .thumb-list li::before {
+      content: '›';
+      color: var(--lime);
+      font-weight: 700;
+      position: absolute;
+      left: 0;
+      top: 10px;
+    }
+
+    .thumb-list li strong { color: var(--bone); }
+
+    /* ======== LINKS LIST ======== */
+    .link-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .link-list li {
+      padding: 14px 0;
+      border-bottom: 1px solid var(--rule);
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+    }
+
+    .link-list li:last-child { border-bottom: none; }
+
+    .link-name {
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--lime);
+      width: 200px;
+      flex-shrink: 0;
+    }
+
+    .link-desc {
+      color: var(--bone-muted);
+      font-size: 14.5px;
+    }
+
+    /* ======== ROUTINE LIST ======== */
+    .routine {
+      list-style: none;
+      counter-reset: routine;
+      padding: 0;
+    }
+
+    .routine li {
+      counter-increment: routine;
+      padding: 14px 0 14px 48px;
+      border-bottom: 1px solid var(--rule);
+      position: relative;
+      font-size: 15px;
+    }
+
+    .routine li:last-child { border-bottom: none; }
+
+    .routine li::before {
+      content: counter(routine, decimal-leading-zero);
+      font-family: var(--mono);
+      font-weight: 600;
+      font-size: 12px;
+      color: var(--lime);
+      letter-spacing: 0.06em;
+      position: absolute;
+      left: 0;
+      top: 16px;
+    }
+
+    /* ======== RESULTS LIST ======== */
+    .results {
+      list-style: none;
+      padding: 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .results li {
+      padding: 14px 18px;
+      background: var(--asphalt-2);
+      border: 1px solid var(--rule);
+      border-left: 3px solid var(--lime);
+      border-radius: 6px;
+      font-size: 15px;
+      color: var(--bone);
+    }
+
+    .results li strong { color: var(--lime); }
+
+    /* ======== CLOSING ======== */
+    .closing {
+      margin-top: 60px;
+      padding: 40px 0 0;
+      border-top: 2px solid var(--bone);
+      position: relative;
+    }
+
+    .closing::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: 0;
+      width: 80px;
+      height: 6px;
+      background: var(--lime);
+    }
+
+    .closing h2 {
+      border-bottom: none;
+      padding-bottom: 0;
+      margin-bottom: 18px;
+    }
+
+    .closing p {
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    .signature {
+      margin-top: 28px;
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 18px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--lime);
+    }
+
+    /* ======== DISCLAIMER ======== */
+    .disclaimer {
+      margin-top: 60px;
+      padding: 28px 32px;
+      border-top: 1px solid rgba(241, 235, 221, 0.10);
+      font-size: 12px;
+      line-height: 1.55;
+      color: rgba(241, 235, 221, 0.42);
+      max-width: 720px;
+    }
+    .disclaimer-label {
+      font-family: var(--display);
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(241, 235, 221, 0.55);
+      margin-bottom: 14px;
+      font-weight: 600;
+    }
+    .disclaimer p {
+      margin-bottom: 10px;
+    }
+    .disclaimer p:last-child {
+      margin-bottom: 0;
+    }
+    .disclaimer strong {
+      color: rgba(241, 235, 221, 0.62);
+    }
+
+    /* ======== MOBILE ======== */
+    @media (max-width: 900px) {
+      .shell {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding: 40px 20px 60px;
+      }
+      .toc {
+        position: static;
+        order: -1;
+      }
+      .toc-list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      body { font-size: 15px; }
+      .hero { margin-bottom: 40px; padding-bottom: 28px; }
+      section.section { margin-bottom: 48px; }
+      h2 { margin-bottom: 18px; padding-bottom: 14px; }
+      .macro-block { padding: 22px 20px; }
+      .macro-row { gap: 12px; }
+      .macro-value { font-size: 22px; }
+      .toc-list { grid-template-columns: 1fr; }
+      .link-list li { flex-direction: column; gap: 4px; }
+      .link-name { width: 100%; }
+    }
+
+    /* Selection styling */
+    ::selection {
+      background: var(--lime);
+      color: var(--asphalt);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-brand">The Food <span class="accent">Protocol</span></div>
+      <div class="topbar-version">v1 · 42 Days</div>
+    </div>
+  </div>
+
+  <div class="shell">
+
+    <!-- TOC -->
+    <aside class="toc">
+      <div class="toc-label">Contents</div>
+      <ol class="toc-list">
+        <li><a href="#macros">Calculate Your Macros</a></li>
+        <li><a href="#tracking">Set Up Tracking</a></li>
+        <li><a href="#lists">Build From These Lists</a></li>
+        <li><a href="#plate">Build Your Plate</a></li>
+        <li><a href="#sample">Sample Day</a></li>
+        <li><a href="#hunger">The Hunger Rule</a></li>
+        <li><a href="#counts">What Doesn't Count</a></li>
+        <li><a href="#routine">Your Daily Routine</a></li>
+        <li><a href="#results">What This Will Do To You</a></li>
+        <li><a href="#before">Before You Start</a></li>
+      </ol>
+    </aside>
+
+    <!-- DOC -->
+    <article class="doc">
+
+      <header class="hero">
+        <div class="eyebrow">The Food Protocol &bull; Men</div>
+        <h1>How to Eat<br>For the Next<br>42 Days</h1>
+        <div class="hero-tag">Hit your macros · Track every meal · Cap alcohol at 2 drinks/week</div>
+      </header>
+
+      <section class="intro">
+        <p><strong style="color: var(--bone);">We're not giving you a meal plan.</strong></p>
+        <p>Meal plans work for 6 weeks and then you're back where you started, because nobody taught you how to eat. They handed you a list of someone else's meals to follow, and the day you ran out of recipes, you ran out of the program.</p>
+        <p>This doc teaches you the system. Three macros. A list of foods. A way to build a plate. A tracker on your phone. Run it for 42 days and you'll know how to eat for the rest of your life.</p>
+
+        <p style="margin-top: 24px;">Three rules underneath everything:</p>
+        <ol class="rule-list">
+          <li><strong>Don't bust your daily totals.</strong> Going under is fine, especially the first two weeks. Going over breaks the protocol.</li>
+          <li><strong>Track every meal.</strong> No exceptions.</li>
+          <li><strong>Two drinks per week max.</strong> Zero is better if you can hold it.</li>
+        </ol>
+
+        <p style="margin-top: 16px;">The math will work. The discipline is on you.</p>
+      </section>
+
+      <!-- 01 MACROS -->
+      <section class="section" id="macros">
+        <div class="section-num">01 / Step One</div>
+        <h2>Calculate Your Daily Macros</h2>
+
+        <p><strong style="color: var(--bone);">Day 1 weigh-in.</strong> Step on the scale first thing in the morning, after the bathroom, before food or coffee. Write that number down. That's your starting line.</p>
+
+        <p><strong style="color: var(--bone);">After that, weigh every Wednesday and Saturday morning</strong> under the same conditions (first thing, post-bathroom, pre-food/coffee). Twice a week, same days, all 42 days. You can step on the scale every day if you want, but understand that daily readings will lie to you. Water, sodium, inflammation from a hard workout, and digestion can swing the number 2-4 lb overnight in either direction. Two readings a week, measured against each other over time, tell the truth. Daily readings make you crazy.</p>
+
+        <p>Then pick your <strong style="color: var(--bone);">desired weight</strong>. The weight you're trying to get to. If you have no clear goal, use the weight you felt best at, or pick a number 15-30 lb below where you are today. Don't overthink it. You can adjust later.</p>
+
+        <p>The protein formula runs off <strong style="color: var(--bone);">desired weight</strong>, not where you are today:</p>
+
+        <div style="margin: 24px 0;">
+          <div class="macro-block">
+            <div class="gender-label">Men</div>
+            <div class="macro-row">
+              <div class="macro-cell">
+                <div class="macro-label">Protein</div>
+                <div class="macro-value">des × <span class="accent">1.0g</span></div>
+                <div class="macro-formula">cap 220g</div>
+              </div>
+              <div class="macro-cell">
+                <div class="macro-label">Carbs</div>
+                <div class="macro-value"><span class="accent">220g</span></div>
+                <div class="macro-formula">flat</div>
+              </div>
+              <div class="macro-cell">
+                <div class="macro-label">Fat</div>
+                <div class="macro-value"><span class="accent">65g</span></div>
+                <div class="macro-formula">flat</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p>Write these three numbers down. Put them on the fridge, the lock screen, the bathroom mirror, somewhere you'll see them. You don't need to recalculate every week.</p>
+
+        <h3>Why these numbers</h3>
+
+        <p><strong>Protein scales with desired weight</strong> because protein supports lean mass, not fat mass. If you're carrying an extra 40 lb of fat, that fat doesn't need more protein to maintain. Sizing protein to where you're going (not where you are) puts the right amount of food in front of you. Enough to preserve muscle, not so much that you're eating like a 230 lb athlete just to lose weight.</p>
+
+        <p>This is the difference between <em>losing weight</em> and <em>changing your body composition</em>. Lose protein, lose muscle, tank your metabolism. That's the trap most diets fall into.</p>
+
+        <p><strong>Carbs and fat stay flat</strong> because hunger and energy needs don't scale linearly with bodyweight. Flat targets put everyone in a real deficit without leaving anyone crushed.</p>
+
+        <p><strong>The 220g protein cap exists</strong> because past 220g, more protein doesn't add anything for most guys. It's also genuinely hard to eat that much meat day after day. Caps make the protocol <em>executable</em>.</p>
+
+        <h3>Examples</h3>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Desired Weight</th>
+                <th class="num">Protein</th>
+                <th class="num">Carbs</th>
+                <th class="num">Fat</th>
+                <th class="num">Daily Cal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>160 lb</td><td class="num">160g</td><td class="num">220g</td><td class="num">65g</td><td class="num">~2,105</td></tr>
+              <tr><td>180 lb</td><td class="num">180g</td><td class="num">220g</td><td class="num">65g</td><td class="num">~2,185</td></tr>
+              <tr><td>200 lb</td><td class="num">200g</td><td class="num">220g</td><td class="num">65g</td><td class="num">~2,265</td></tr>
+              <tr><td>220 lb</td><td class="num">220g (cap)</td><td class="num">220g</td><td class="num">65g</td><td class="num">~2,345</td></tr>
+              <tr><td>240 lb</td><td class="num">220g (cap)</td><td class="num">220g</td><td class="num">65g</td><td class="num">~2,345</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>A Note on Volume</h3>
+        <p>When you look at your target numbers, your first thought is probably: <em>that's a lot of food.</em> And it is, if you've been eating ultra-processed stuff your whole life. Clean food fills you up faster, weighs more on the plate, and forces your stomach to actually work.</p>
+        <p><strong style="color: var(--bone);">We don't expect you to hit your macros perfectly in the first week.</strong> Your appetite has been calibrated to chips and soda, not chicken and rice. The first 10-14 days, you may fall short of your protein target. That's normal. As your body adapts and your metabolism comes back online, you'll be able to eat more of the right food without forcing it.</p>
+        <p>The hard rule in those early days: <strong style="color: var(--bone);">only eat from the approved foods.</strong> If you eat 60% of your target macros but every gram of it came from this list, you're winning. If you hit 100% of your macros with junk food, you've broken the protocol. Quality is non-negotiable. Quantity catches up.</p>
+      </section>
+
+      <!-- 02 TRACKING -->
+      <section class="section" id="tracking">
+        <div class="section-num">02 / Step Two</div>
+        <h2>Set Up Tracking</h2>
+
+        <p>You're going to track every meal for 42 days. Pick one tool, set it up today. <span class="muted">Five minutes max.</span></p>
+
+        <div class="option">
+          <span class="option-tag">Option A · Recommended</span>
+          <h3>Claude or ChatGPT (voice-first)</h3>
+          <p class="muted" style="margin-top: 6px;">This is what we use. Total setup time: about 60 seconds.</p>
+
+          <p style="margin-top: 14px;"><strong style="color: var(--bone);">On day one, open Claude or ChatGPT, tap the mic, and read this aloud:</strong></p>
+
+          <div class="ai-script">
+            "You are my fitness tracker for the next 6 weeks. I'm doing a 42-day fat-loss challenge. My daily macro targets are <span class="blank">[your protein]</span>g protein, <span class="blank">[your carbs]</span>g carbs, and <span class="blank">[your fat]</span>g fat. Every time I tell you what I ate, estimate the macros for that meal and keep a running total for the day. When I ask, tell me how close I am to my targets and what I have left. If I'm short on protein with one meal to go, suggest a quick fix. Don't lecture me about food choices. Just track and tally. Reset the running total each morning. Ready?"
+          </div>
+
+          <p class="muted" style="margin-top: 14px;">Fill in your three numbers where it says [your protein], [your carbs], [your fat].</p>
+
+          <p style="margin-top: 14px;">After that, your job is simple. Every time you eat:</p>
+          <ol>
+            <li>Open the app.</li>
+            <li>Tap the mic.</li>
+            <li>Say what you ate. <em>"I just ate 4 eggs, a cup of oatmeal, and 2 tablespoons of peanut butter."</em></li>
+            <li>The AI estimates the macros and updates your running total.</li>
+            <li>Ask anytime. <em>"How am I doing on my targets so far today?"</em></li>
+          </ol>
+          <p style="margin-top: 14px;" class="muted">No food database, no barcode scanning, no logging app. You talk to your phone, your phone tells you the math.</p>
+        </div>
+
+        <div class="option">
+          <span class="option-tag">Option B</span>
+          <h3>MyFitnessPal (the spreadsheet route)</h3>
+          <ol>
+            <li>Download MyFitnessPal (free version is fine).</li>
+            <li>In settings, set custom macro goals. Enter your protein, carbs, and fat targets.</li>
+            <li>Log every meal. Use the barcode scanner for packaged stuff.</li>
+            <li>End of day, check the dashboard.</li>
+          </ol>
+        </div>
+
+        <p style="margin-top: 18px;">Both work. Pick the one you'll actually use. The "I don't know how to track" excuse died the day voice mode launched. You can tell your phone what you ate while you walk to your car.</p>
+      </section>
+
+      <!-- 03 LISTS -->
+      <section class="section" id="lists">
+        <div class="section-num">03 / Step Three</div>
+        <h2>Build From These Lists</h2>
+
+        <p>Every meal you eat for 42 days will be built from these foods. Pick one from each list, put them on a plate.</p>
+
+        <h3>Protein</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Food</th><th class="num">Protein</th></tr></thead>
+            <tbody>
+              <tr><td>6 oz cooked chicken breast</td><td class="num">52g</td></tr>
+              <tr><td>6 oz cooked lean beef (90/10)</td><td class="num">42g</td></tr>
+              <tr><td>6 oz cooked ground turkey</td><td class="num">45g</td></tr>
+              <tr><td>6 oz cooked white fish (cod, tilapia, mahi)</td><td class="num">34g</td></tr>
+              <tr><td>6 oz cooked salmon</td><td class="num">37g</td></tr>
+              <tr><td>4 whole eggs <span class="muted">(also ~20g fat)</span></td><td class="num">24g</td></tr>
+              <tr><td>6 oz egg whites</td><td class="num">20g</td></tr>
+              <tr><td>6 oz cooked shrimp</td><td class="num">36g</td></tr>
+              <tr><td>4 oz deli meat (Boar's Head turkey, roast beef, ham, or chicken)</td><td class="num">22g</td></tr>
+              <tr><td>1 cup Greek yogurt (2% plain, Fage-style)</td><td class="num">20g</td></tr>
+              <tr><td>1 cup low-fat cottage cheese</td><td class="num">25g</td></tr>
+              <tr><td>1 scoop whey protein</td><td class="num">25g</td></tr>
+              <tr><td>1 can tuna (drained)</td><td class="num">22g</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Carbs</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Food</th><th class="num">Carbs</th></tr></thead>
+            <tbody>
+              <tr><td>1 cup cooked white rice</td><td class="num">45g</td></tr>
+              <tr><td>1 cup cooked jasmine rice</td><td class="num">45g</td></tr>
+              <tr><td>1 medium sweet potato (6 oz)</td><td class="num">26g</td></tr>
+              <tr><td>1 medium baked potato (6 oz)</td><td class="num">36g</td></tr>
+              <tr><td>1 medium red potato (6 oz)</td><td class="num">28g</td></tr>
+              <tr><td>1 cup cooked hash browns</td><td class="num">30g</td></tr>
+              <tr><td>1 cup cooked grits</td><td class="num">31g</td></tr>
+              <tr><td>½ cup dry oats</td><td class="num">27g</td></tr>
+              <tr><td>½ cup Kodiak Protein Pancake mix (dry) <span class="muted">(also 14g protein)</span></td><td class="num">30g</td></tr>
+              <tr><td>2 slices Ezekiel bread</td><td class="num">30g</td></tr>
+              <tr><td>2 slices sourdough</td><td class="num">32g</td></tr>
+              <tr><td>2 slices Lewis Bake Shop Protein Bread <span class="muted">(also 14g protein)</span></td><td class="num">20g</td></tr>
+              <tr><td>1 Dave's Killer Bread bagel <span class="muted">(also 12g protein)</span></td><td class="num">47g</td></tr>
+              <tr><td>1 English muffin</td><td class="num">25g</td></tr>
+              <tr><td>1 cup cooked pasta</td><td class="num">43g</td></tr>
+              <tr><td>1 cup cooked quinoa</td><td class="num">39g</td></tr>
+              <tr><td>1 large banana</td><td class="num">31g</td></tr>
+              <tr><td>1 cup berries</td><td class="num">17g</td></tr>
+              <tr><td>1 medium apple</td><td class="num">25g</td></tr>
+              <tr><td>1 medium orange</td><td class="num">15g</td></tr>
+              <tr><td>1 cup grapes</td><td class="num">27g</td></tr>
+              <tr><td>1 cup pineapple</td><td class="num">22g</td></tr>
+              <tr><td>1 corn tortilla</td><td class="num">12g</td></tr>
+              <tr><td>1 flour tortilla (8")</td><td class="num">24g</td></tr>
+              <tr><td>1 Mission Carb Balance large tortilla <span class="muted">(4g net, 14g fiber)</span></td><td class="num">18g</td></tr>
+              <tr><td>4 large rice cakes (plain)</td><td class="num">28g</td></tr>
+              <tr><td>2 medjool dates</td><td class="num">36g</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Fat</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Food</th><th class="num">Fat</th></tr></thead>
+            <tbody>
+              <tr><td>1 tbsp olive oil</td><td class="num">14g</td></tr>
+              <tr><td>1 tbsp butter or ghee</td><td class="num">11g</td></tr>
+              <tr><td>1 tbsp coconut oil</td><td class="num">14g</td></tr>
+              <tr><td>¼ avocado</td><td class="num">7g</td></tr>
+              <tr><td>1 oz almonds</td><td class="num">14g</td></tr>
+              <tr><td>1 oz cashews</td><td class="num">12g</td></tr>
+              <tr><td>1 oz walnuts</td><td class="num">18g</td></tr>
+              <tr><td>1 oz pecans</td><td class="num">20g</td></tr>
+              <tr><td>1 tbsp natural peanut butter</td><td class="num">8g</td></tr>
+              <tr><td>1 tbsp natural almond butter</td><td class="num">9g</td></tr>
+              <tr><td>¼ cup shredded cheddar cheese</td><td class="num">10g</td></tr>
+              <tr><td>¼ cup grated parmesan</td><td class="num">7g</td></tr>
+              <tr><td>3 whole eggs</td><td class="num">15g</td></tr>
+              <tr><td>1 oz dark chocolate (70%+)</td><td class="num">9g</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p style="margin-top: 16px;">These aren't suggestions. They're the building blocks. Mix and match every day. Your tracker tells you when you've hit your numbers.</p>
+      </section>
+
+      <!-- 04 PLATE -->
+      <section class="section" id="plate">
+        <div class="section-num">04 / Step Four</div>
+        <h2>Build Your Plate</h2>
+
+        <p>Every meal is the same shape:</p>
+
+        <div class="framework">
+          <div class="framework-prefix">The Formula</div>
+          <div class="framework-formula">1 Protein + 1 Carb + 1 Fat</div>
+        </div>
+
+        <p>That's it. Pull each from the lists above. Build 3-5 meals a day. Track everything.</p>
+
+        <h3>Per meal, aim for:</h3>
+        <ul class="thumb-list">
+          <li><strong>One protein serving</strong> from the protein list above. Pick whatever fits the meal.</li>
+          <li><strong>One or two carb servings</strong> from the carb list. Bigger at breakfast and lunch, smaller at dinner.</li>
+          <li><strong>One fat serving</strong> from the fat list. Or let the protein carry the fat (eggs, salmon, peanut butter, avocado on toast). You don't need to add fat on purpose every meal.</li>
+        </ul>
+
+        <h3>Rules of thumb</h3>
+        <ul class="thumb-list">
+          <li><strong>Protein anchors the meal.</strong> Pick it first, build everything else around it.</li>
+          <li><strong>Carbs go bigger at breakfast and lunch, smaller at dinner.</strong> This is when you need them, to fuel your workout, your work, and your walk.</li>
+          <li><strong>Fat usually rides along</strong> with the protein (eggs, salmon, steak) or shows up as a finisher (oil on rice, butter on potato). Let the protein do most of the work.</li>
+          <li><strong>If a meal feels too small, add another carb serving.</strong> Not another protein. Protein is sized to your daily target. You don't need more at any one meal.</li>
+          <li><strong>Vegetables are a free-for-all.</strong> They don't count against your macros for our purposes. Eat them whenever you want. They fill you up between meals.</li>
+        </ul>
+
+        <p style="margin-top: 16px;">The sample day below shows what this looks like in practice. Yours will look different. Different proteins, different carbs, your favorites. The shape stays the same.</p>
+      </section>
+
+      <!-- 05 SAMPLE DAY -->
+      <section class="section" id="sample">
+        <div class="section-num">05 / Sample Day</div>
+        <h2>Sample Day</h2>
+
+        <p class="muted">Target: 180P / 220C / 65F (180 lb desired weight)</p>
+
+        <p style="margin-top: 14px;">Five meals across the day. Each one is a portion you can actually finish in one sitting. Two of them are basically a shake or a snack plate, not "cooking a meal" five times.</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Meal</th>
+                <th>What</th>
+                <th class="num">P</th>
+                <th class="num">C</th>
+                <th class="num">F</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong style="color: var(--bone);">Breakfast</strong><br><span class="muted" style="font-size: 12px;">6:30am</span></td>
+                <td>4 whole eggs + ½ cup dry oats (cooked) + 1 cup berries + 1 tbsp peanut butter</td>
+                <td class="num">24</td><td class="num">44</td><td class="num">28</td>
+              </tr>
+              <tr>
+                <td><strong style="color: var(--bone);">Mid-morning</strong><br><span class="muted" style="font-size: 12px;">10am</span></td>
+                <td>1 cup Greek yogurt + 1 scoop whey + 1 large banana <span class="muted">(blended into a smoothie)</span></td>
+                <td class="num">45</td><td class="num">31</td><td class="num">0</td>
+              </tr>
+              <tr>
+                <td><strong style="color: var(--bone);">Lunch</strong><br><span class="muted" style="font-size: 12px;">12:30pm</span></td>
+                <td>6 oz chicken breast + 1 cup cooked rice + ¼ avocado</td>
+                <td class="num">52</td><td class="num">45</td><td class="num">7</td>
+              </tr>
+              <tr>
+                <td><strong style="color: var(--bone);">Afternoon</strong><br><span class="muted" style="font-size: 12px;">3:30pm</span></td>
+                <td>1 cup cottage cheese + 1 medium apple + 1 oz almonds</td>
+                <td class="num">25</td><td class="num">25</td><td class="num">16</td>
+              </tr>
+              <tr>
+                <td><strong style="color: var(--bone);">Dinner</strong><br><span class="muted" style="font-size: 12px;">7:30pm</span></td>
+                <td>6 oz lean beef (90/10) + 1 medium baked potato + 1 large banana + 1 tbsp butter</td>
+                <td class="num">42</td><td class="num">67</td><td class="num">11</td>
+              </tr>
+              <tr class="total">
+                <td colspan="2">TOTAL</td>
+                <td class="num">188</td><td class="num">212</td><td class="num">62</td>
+              </tr>
+              <tr class="target">
+                <td colspan="2">Target</td>
+                <td class="num">180</td><td class="num">220</td><td class="num">65</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="muted" style="margin-top: 12px; font-size: 14px;">Within 10g of every target. Real-world close.</p>
+
+        <h3 style="margin-top: 28px;">If you're training that day</h3>
+
+        <p>Swap the 3:30 afternoon meal for two smaller ones built around your workout. Same daily totals, different shape.</p>
+
+        <ul style="margin-top: 12px;">
+          <li style="margin-bottom: 8px;"><strong style="color: var(--lime);">Pre-workout (30-60 min before):</strong> 1 scoop whey + 4 large rice cakes + 1 medjool date. Fast carbs to fuel the session, light protein, <strong>zero fat.</strong> Fat slows digestion. You don't want food sitting heavy when you're under a bar.</li>
+          <li><strong style="color: var(--lime);">Post-workout (within 30 min after):</strong> 1 scoop whey + 1 large banana. Fast recovery shot before your real dinner an hour later. Still zero fat. It blunts the absorption speed you want here.</li>
+        </ul>
+      </section>
+
+      <!-- 06 HUNGER -->
+      <section class="section" id="hunger">
+        <div class="section-num">06 / Calibration</div>
+        <h2>The Hunger Rule</h2>
+
+        <p>You're going to be hungry sometimes. That's fat loss working. But there's hungry, and there's <em>starving</em>.</p>
+
+        <div class="callout">
+          <div class="callout-label">If You're Starving Past Day 4</div>
+          <p><strong>Post in the group.</strong> We have options. Sometimes it's a carb bump, sometimes it's protein timing, sometimes it's a food swap that fills you up better. We work it out with you in the group, not solo. <strong>Don't deviate on your own.</strong></p>
+        </div>
+
+        <p>The goal is fat loss you can sustain for <strong>42 days</strong>, not 4 days of suffering followed by a binge.</p>
+      </section>
+
+      <!-- 08 WHAT DOESN'T COUNT -->
+      <section class="section" id="counts">
+        <div class="section-num">07 / Hard Lines</div>
+        <h2>What Doesn't Count</h2>
+
+        <ul class="thumb-list">
+          <li><strong>Alcohol past two drinks per week.</strong> Two is the ceiling. Zero is the best answer if you can hold it. Past two drinks, the math stops working. Alcohol tanks recovery, kills sleep, drives water retention, and quietly adds 100-200 calories per drink your tracker can't fully see. Cutting alcohol way back does more for your sleep, skin, mood, and weight in 42 days than most of the food rules combined.</li>
+          <li><strong>Liquid calories</strong> (soda, juice, sweet tea, sweetened coffee drinks). Track them if you have them, but they're empty calories that don't fill you up. Better to spend those macros on real food.</li>
+          <li><strong>"It's just a bite."</strong> Track it. The whole point is learning what you actually eat. The bites add up. Pretending they don't is how you finish 42 days with nothing to show for it.</li>
+        </ul>
+      </section>
+
+      <!-- 09 ROUTINE -->
+      <section class="section" id="routine">
+        <div class="section-num">08 / Daily Cadence</div>
+        <h2>Your Daily Routine</h2>
+
+        <p>Five minutes of admin a day. The rest is just eating, training, and living.</p>
+
+        <ol class="routine">
+          <li><strong>Weigh yourself every Wednesday and Saturday morning.</strong> Same conditions every time. Write it down. Daily is allowed but the reading will lie to you (water, inflammation, digestion). Two days a week, compared over time, is what tells the truth.</li>
+          <li><strong>Plan tonight's meals roughly the night before.</strong> What's defrosting, what's on the stove.</li>
+          <li><strong>Track every meal</strong> in your app of choice.</li>
+          <li><strong>End of day check.</strong> Did I hit my macros? Yes or no.</li>
+          <li><strong>Post your check-in to the group.</strong> ✅ on macros + workout + 8,000 steps + reading + drink count for the week (out of 2).</li>
+        </ol>
+      </section>
+
+      <!-- 10 RESULTS -->
+      <section class="section" id="results">
+        <div class="section-num">09 / The Outcome</div>
+        <h2>What This Will Do To You</h2>
+
+        <p>If you run this clean for 42 days:</p>
+
+        <ul class="results">
+          <li><strong>10-18 lbs of fat loss.</strong> More if you're heavier to start.</li>
+          <li><strong>Visible body composition change.</strong> The lifting + protein drives this.</li>
+          <li><strong>Better sleep within 2 weeks.</strong> Cutting alcohol way back does most of the work.</li>
+          <li><strong>Stable energy.</strong> No afternoon crashes.</li>
+          <li><strong>Real food literacy.</strong> By day 14 you'll know what 30g of carbs looks like on a plate.</li>
+        </ul>
+
+        <p style="margin-top: 18px;">You'll also have a system you can run for the rest of your life. That's the actual product. The 42 days are how you learn it.</p>
+      </section>
+
+      <!-- 11 BEFORE YOU START -->
+      <section class="section" id="before">
+        <div class="section-num">10 / Real Talk</div>
+        <h2>Before You Start</h2>
+
+        <p><strong style="color: var(--bone); font-size: 18px;">We know this is a lot.</strong></p>
+
+        <p style="margin-top: 14px;">A lot of information. A lot of food. A lot of structure if you've been eating however you want for years. Just do the best you can.</p>
+
+        <p style="margin-top: 14px;">If you can't hit every macro perfectly the first week, that's fine. If you can't eat all your protein on day three, that's fine.</p>
+
+        <div class="callout">
+          <div class="callout-label">The One Rule That Does Not Bend</div>
+          <p><strong>Only eat from the approved foods list.</strong> Eat 60% of your numbers if that's where your appetite is, as long as every gram came from the list. Quality first. Quantity catches up.</p>
+        </div>
+
+        <p style="margin-top: 14px;">Your metabolism has been calibrated to whatever you've been eating for the last ten years. It takes time to reset. Over the 42 days, your hunger will sync to real food, your stomach will handle more volume, and you'll stop feeling full halfway through your plate. This starts to feel less like a job. That's the body adapting. It happens to everyone who runs the protocol.</p>
+
+        <p style="margin-top: 14px;">These are the steps you have to take to become the best version of yourself. There is no shortcut around them. But you are not running them alone.</p>
+
+        <p style="margin-top: 14px;">The whole point of this challenge is the group. Jaden and Amber are in there every day. Other members are working the same problem you are. When you get stuck, when you don't know what to eat, when you're hungry, when life gets in the way, that's what the group is for.</p>
+
+        <p style="margin-top: 14px;"><strong style="color: var(--bone);">We are here for you.</strong> Post your question. Someone has been there. Someone has the answer. If they don't, we will figure it out together.</p>
+
+        <p style="margin-top: 14px;">Show up. Eat the food. Stay in the group. Trust the math. Trust the people next to you.</p>
+      </section>
+
+      <!-- CLOSING -->
+      <section class="closing">
+        <h2>Welcome to the Protocol</h2>
+      </section>
+
+      <!-- DISCLAIMER -->
+      <section class="disclaimer">
+        <div class="disclaimer-label">Disclaimer</div>
+        <p><strong>Jaden and Amber are not registered dietitians, doctors, nurses, or licensed medical or nutritional professionals.</strong> Everything in this document is shared from personal experience and is for educational and informational purposes only. It is not medical advice, nutritional counseling, or a substitute for the advice of a qualified healthcare provider.</p>
+        <p><strong>Consult your physician before starting</strong> this challenge or any new diet, exercise, or supplement program. This applies double if you are pregnant, nursing, on prescription medication, or living with a medical condition (including diabetes, heart disease, kidney disease, thyroid issues, high blood pressure, or eating disorder history).</p>
+        <p>You assume all risk and responsibility for your participation. Individual results vary. Stop immediately and contact a medical professional if you experience any adverse effects.</p>
+        <p>By participating in the 42-Day Challenge you acknowledge that you have read this disclaimer and agree to hold Jaden Flynn, Amber Flynn-Jared, and any affiliated parties harmless from any claims related to your participation.</p>
+      </section>
+
+    </article>
+  </div>
+
+</body>
+</html>

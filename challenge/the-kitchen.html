@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Kitchen</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --asphalt: #0E0E0E;
+      --asphalt-2: #161616;
+      --asphalt-3: #1F1F1F;
+      --bone: #F1EBDD;
+      --bone-muted: rgba(241, 235, 221, 0.62);
+      --bone-faint: rgba(241, 235, 221, 0.42);
+      --rule: rgba(241, 235, 221, 0.10);
+      --lime: #C6FF3C;
+      --lime-deep: #9DD93D;
+      --display: 'Oswald', system-ui, sans-serif;
+      --body: 'Inter', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--body);
+      background: var(--asphalt);
+      color: var(--bone);
+      line-height: 1.65;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(14, 14, 14, 0.85);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .topbar-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .topbar-brand {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--bone);
+    }
+
+    .topbar-brand .accent { color: var(--lime); }
+
+    .topbar-version {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--bone-faint);
+      letter-spacing: 0.06em;
+    }
+
+    .shell {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .toc {
+      position: sticky;
+      top: 80px;
+      align-self: start;
+    }
+
+    .toc-label {
+      font-family: var(--display);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--bone-faint);
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .toc-list {
+      list-style: none;
+      counter-reset: tocstep;
+    }
+
+    .toc-list li {
+      counter-increment: tocstep;
+      margin-bottom: 8px;
+    }
+
+    .toc-list a {
+      display: flex;
+      gap: 10px;
+      align-items: baseline;
+      color: var(--bone-muted);
+      text-decoration: none;
+      font-size: 13px;
+      line-height: 1.4;
+      padding: 4px 0;
+      transition: color 0.18s ease;
+    }
+
+    .toc-list a::before {
+      content: counter(tocstep, decimal-leading-zero);
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--bone-faint);
+      letter-spacing: 0.06em;
+      flex-shrink: 0;
+    }
+
+    .toc-list a:hover { color: var(--lime); }
+    .toc-list a:hover::before { color: var(--lime); }
+
+    .doc { max-width: 720px; }
+
+    .hero {
+      margin-bottom: 60px;
+      padding-bottom: 40px;
+      border-bottom: 2px solid var(--bone);
+      position: relative;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 80px;
+      height: 6px;
+      background: var(--lime);
+    }
+
+    .eyebrow {
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: 12px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--lime);
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(48px, 9vw, 84px);
+      line-height: 0.92;
+      text-transform: uppercase;
+      letter-spacing: -0.015em;
+      color: var(--bone);
+    }
+
+    .hero-tag {
+      font-family: var(--display);
+      font-weight: 400;
+      font-size: clamp(18px, 3vw, 24px);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--bone-muted);
+      margin-top: 12px;
+    }
+
+    .intro p {
+      font-size: 17px;
+      line-height: 1.7;
+      margin-bottom: 16px;
+      color: var(--bone);
+    }
+
+    .intro p:last-child { margin-bottom: 0; }
+
+    section.section {
+      margin-bottom: 64px;
+      scroll-margin-top: 80px;
+    }
+
+    .section-num {
+      font-family: var(--display);
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--lime);
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+
+    h2 {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(28px, 4.5vw, 40px);
+      line-height: 1.05;
+      text-transform: uppercase;
+      letter-spacing: -0.005em;
+      color: var(--bone);
+      margin-bottom: 24px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    h3 {
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 18px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      margin-top: 28px;
+      color: var(--bone);
+    }
+
+    p {
+      margin-bottom: 14px;
+      color: var(--bone);
+    }
+
+    .muted { color: var(--bone-muted); }
+    strong { color: var(--lime); font-weight: 600; }
+    em { color: var(--bone); font-style: italic; }
+
+    .table-wrap {
+      overflow-x: auto;
+      margin: 18px 0;
+      border-radius: 8px;
+      border: 1px solid var(--rule);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14.5px;
+    }
+
+    table thead { background: var(--asphalt-3); }
+
+    table th {
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--bone-muted);
+      text-align: left;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--rule);
+      color: var(--bone);
+      vertical-align: top;
+    }
+
+    table tbody tr:last-child td { border-bottom: none; }
+    table tbody tr:hover { background: rgba(198, 255, 60, 0.04); }
+    table td strong { color: var(--bone); }
+
+    .build-list {
+      list-style: none;
+      counter-reset: build;
+      padding: 0;
+      display: grid;
+      gap: 14px;
+      margin: 20px 0;
+    }
+
+    .build-list li {
+      counter-increment: build;
+      background: var(--asphalt-2);
+      border: 1px solid var(--rule);
+      border-left: 3px solid var(--lime);
+      padding: 22px 26px 22px 70px;
+      border-radius: 8px;
+      position: relative;
+      font-size: 14.5px;
+      line-height: 1.6;
+      color: var(--bone-muted);
+    }
+
+    .build-list li::before {
+      content: counter(build, decimal-leading-zero);
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--lime);
+      letter-spacing: 0.16em;
+      position: absolute;
+      left: 26px;
+      top: 24px;
+    }
+
+    .build-list li strong {
+      display: block;
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 16px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--bone);
+      margin-bottom: 8px;
+    }
+
+    .macros {
+      display: block;
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: 12.5px;
+      color: var(--lime);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-top: 12px;
+    }
+
+    .closing {
+      margin-top: 60px;
+      padding: 40px 0 0;
+      border-top: 2px solid var(--bone);
+      position: relative;
+    }
+
+    .closing::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: 0;
+      width: 80px;
+      height: 6px;
+      background: var(--lime);
+    }
+
+    .closing h2 {
+      border-bottom: none;
+      padding-bottom: 0;
+      margin-bottom: 0;
+    }
+
+    .disclaimer {
+      margin-top: 60px;
+      padding: 28px 32px;
+      border-top: 1px solid rgba(241, 235, 221, 0.10);
+      font-size: 12px;
+      line-height: 1.55;
+      color: rgba(241, 235, 221, 0.42);
+      max-width: 720px;
+    }
+    .disclaimer-label {
+      font-family: var(--display);
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(241, 235, 221, 0.55);
+      margin-bottom: 14px;
+      font-weight: 600;
+    }
+    .disclaimer p { margin-bottom: 10px; }
+    .disclaimer p:last-child { margin-bottom: 0; }
+    .disclaimer strong { color: rgba(241, 235, 221, 0.62); }
+
+    @media (max-width: 900px) {
+      .shell {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding: 40px 20px 60px;
+      }
+      .toc {
+        position: static;
+        order: -1;
+      }
+      .toc-list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      body { font-size: 15px; }
+      .hero { margin-bottom: 40px; padding-bottom: 28px; }
+      section.section { margin-bottom: 48px; }
+      h2 { margin-bottom: 18px; padding-bottom: 14px; }
+      .toc-list { grid-template-columns: 1fr; }
+    }
+
+    @media print {
+      body { background: white; color: black; font-size: 11px; }
+      .topbar { display: none; }
+      .shell { grid-template-columns: 1fr; gap: 0; padding: 20px; }
+      .toc { display: none; }
+      .doc { max-width: 100%; }
+      .hero, .section, .build-list li { break-inside: avoid; }
+      h1, h2, h3 { color: black; }
+      p, td, li { color: #222; }
+      strong { color: #000; }
+      .closing { break-before: avoid; }
+      .disclaimer { background: white; color: #555; }
+    }
+
+    ::selection {
+      background: var(--lime);
+      color: var(--asphalt);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-brand">The <span class="accent">Kitchen</span></div>
+      <div class="topbar-version">v1</div>
+    </div>
+  </div>
+
+  <div class="shell">
+
+    <aside class="toc">
+      <div class="toc-label">Contents</div>
+      <ol class="toc-list">
+        <li><a href="#swaps">Smart Swaps</a></li>
+        <li><a href="#sandwiches">Sandwich Builds</a></li>
+        <li><a href="#wraps">Wraps and Quesadillas</a></li>
+        <li><a href="#breakfast">Breakfast Preps</a></li>
+        <li><a href="#pasta">Pasta and Mac Bowls</a></li>
+        <li><a href="#dinner">Dinner Bowls</a></li>
+        <li><a href="#snacks">Anabolic Snacks</a></li>
+      </ol>
+    </aside>
+
+    <article class="doc">
+
+      <header class="hero">
+        <div class="eyebrow">The Kitchen</div>
+        <h1>When<br>You're<br>Home</h1>
+        <div class="hero-tag">Smart Swaps · Recipes</div>
+      </header>
+
+      <section class="intro">
+        <p><strong style="color: var(--bone);">This is the at-home half of the Field Manual.</strong></p>
+        <p>The protocol runs on real food. Everything in here is something we actually eat. Scan the contents, pick what sounds good, cook it.</p>
+        <p>More recipes coming as we go.</p>
+      </section>
+
+      <!-- 01 SMART SWAPS -->
+      <section class="section" id="swaps">
+        <div class="section-num">01 / Cravings</div>
+        <h2>Smart Swaps</h2>
+
+        <p>Every food that's "off the list" has a cousin on the list. You don't need willpower. You need a better default.</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>When you're craving</th>
+                <th>Reach for</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Soda</strong></td><td>Unsweetened tea, sparkling water, diet soda</td></tr>
+              <tr><td><strong>Chips</strong></td><td>2 rice cakes + 1 tbsp peanut butter</td></tr>
+              <tr><td><strong>Ice cream</strong></td><td>1 cup Greek yogurt + 1 cup berries + 1 medjool date, drizzle of honey</td></tr>
+              <tr><td><strong>Donut</strong></td><td>Kodiak protein pancakes + 1 tbsp peanut butter</td></tr>
+              <tr><td><strong>Pasta night</strong></td><td>Same dish, jasmine rice or quinoa underneath</td></tr>
+              <tr><td><strong>White bread</strong></td><td>Sourdough, Ezekiel, or Lewis Bake Shop Protein Bread</td></tr>
+              <tr><td><strong>Candy</strong></td><td>2 medjool dates or 1 oz dark chocolate (70%+)</td></tr>
+              <tr><td><strong>Cereal</strong></td><td>½ cup dry oats + 1 scoop whey + ½ cup berries + 1 tbsp peanut butter</td></tr>
+              <tr><td><strong>Pizza</strong></td><td>Flour tortilla pressed flat + tomato sauce + protein + cheese, baked 8 min</td></tr>
+              <tr><td><strong>Cream-based pasta sauce</strong></td><td>Tomato-based marinara, same volume</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 02 SANDWICH BUILDS -->
+      <section class="section" id="sandwiches">
+        <div class="section-num">02 / The Easy Hack</div>
+        <h2>Sandwich Builds</h2>
+
+        <p>Sandwiches on real bread with real meat beat 90% of "healthy" options. Every sandwich below leads with serious protein. Build on sourdough, Ezekiel, or Lewis Bake Shop Protein Bread.</p>
+
+        <p class="muted" style="font-size: 13px; font-style: italic;">Macros are approximate. Your tracker is the source of truth.</p>
+
+        <ol class="build-list">
+          <li><strong>The Construction.</strong> 4 oz roast beef, sharp cheddar, horseradish, red onion, tomato, lettuce, salt and pepper on sourdough.<span class="macros">35P · 32C · 10F · ~360 cal</span></li>
+          <li><strong>The Italian.</strong> 4 oz turkey, provolone, roasted red peppers, olive oil, vinegar, oregano, lettuce, tomato on sourdough.<span class="macros">35P · 32C · 23F · ~475 cal</span></li>
+          <li><strong>The Chicken Club.</strong> Leftover grilled chicken (~5 oz), ¼ avocado, tomato, lettuce, mustard on sourdough.<span class="macros">51P · 35C · 14F · ~470 cal</span></li>
+          <li><strong>The Turkey Avocado.</strong> 4 oz Boar's Head turkey, ¼ avocado, tomato, sprouts, olive oil on Ezekiel.<span class="macros">31P · 33C · 23F · ~465 cal</span></li>
+          <li><strong>The Cold Steak.</strong> Leftover sliced steak (~5 oz), arugula, horseradish cream, red onion on sourdough.<span class="macros">43P · 34C · 13F · ~425 cal</span></li>
+          <li><strong>The Tuna Salad.</strong> 1 can tuna mixed with Greek yogurt + lemon + salt + diced pickle, tomato on sourdough.<span class="macros">33P · 36C · 2F · ~295 cal</span></li>
+          <li><strong>The Breakfast Bagel.</strong> 1 fried egg + 2 strips turkey bacon + 1 oz sharp cheddar on a toasted Dave's Killer Bread Everything Bagel.<span class="macros">31P · 47C · 22F · ~510 cal</span></li>
+          <li><strong>The PB and Banana.</strong> 1 tbsp natural peanut butter + sliced banana + cinnamon on Ezekiel. Pair with a whey shake to lead with protein.<span class="macros">13P · 64C · 10F · ~400 cal (38P · 64C · 10F · ~500 cal with whey)</span></li>
+          <li><strong>The Smash Burger.</strong> 5 oz lean ground beef (90/10) patty + sharp cheddar + tomato + red onion + mustard on sourdough.<span class="macros">48P · 32C · 24F · ~535 cal</span></li>
+          <li><strong>The Greek.</strong> Leftover grilled chicken (~5 oz) + cucumber + tomato + red onion + feta + olive oil on Ezekiel.<span class="macros">56P · 31C · 28F · ~600 cal</span></li>
+        </ol>
+      </section>
+
+      <!-- 03 WRAPS AND QUESADILLAS -->
+      <section class="section" id="wraps">
+        <div class="section-num">03 / Tortilla Plays</div>
+        <h2>Wraps and Quesadillas</h2>
+
+        <p>Two tortilla options. <strong>Mission Carb Balance large tortillas</strong> are the lighter play (18g total / 4g net carbs / 6g protein each). <strong>Corn tortillas</strong> turn these into street tacos (12g carbs each, gluten-free, more authentic flavor). Swap freely.</p>
+
+        <p class="muted" style="font-size: 13px; font-style: italic;">Wraps below assume 1 Mission Carb Balance tortilla unless noted. Macros are approximate.</p>
+
+        <ol class="build-list">
+          <li><strong>The Buffalo Chicken.</strong> Shredded grilled chicken (~5 oz) + Greek yogurt + Frank's Red Hot + romaine + diced celery + tomato.<span class="macros">55P · 22C · 9F · ~390 cal</span></li>
+          <li><strong>The Steak Fajita.</strong> Sliced steak (~5 oz) + sautéed peppers and onions + pico + lime + ¼ avocado.<span class="macros">42P · 21C · 24F · ~470 cal</span></li>
+          <li><strong>The Chicken Caesar.</strong> Grilled chicken (~5 oz) + romaine + parmesan + Greek yogurt Caesar (yogurt + lemon + garlic + parmesan + mustard).<span class="macros">63P · 20C · 16F · ~475 cal</span></li>
+          <li><strong>The Turkey Club.</strong> 4 oz Boar's Head turkey + 2 strips turkey bacon + tomato + lettuce + Greek yogurt mustard.<span class="macros">36P · 18C · 7F · ~280 cal</span></li>
+          <li><strong>The Breakfast Wrap.</strong> 2 scrambled eggs + 2 oz chicken sausage or 2 strips turkey bacon + 1 oz cheddar + salsa.<span class="macros">37P · 18C · 27F · ~465 cal</span></li>
+          <li><strong>The Shrimp Taco.</strong> 5 oz cooked shrimp + cabbage slaw + Greek yogurt chipotle sauce + lime + cilantro. Best on 2 corn tortillas.<span class="macros">39P · 28C · 3F · ~295 cal</span></li>
+          <li><strong>The Carne Asada Street Tacos.</strong> 5 oz sliced lean steak + diced white onion + cilantro + lime + salsa verde, on 2 corn tortillas.<span class="macros">39P · 24C · 16F · ~395 cal</span></li>
+          <li><strong>The Chicken Quesadilla.</strong> Shredded grilled chicken (~5 oz) + 1 oz shredded Monterey Jack + diced peppers and onions, pressed in a Mission Carb Balance tortilla. Salsa on top.<span class="macros">57P · 18C · 18F · ~460 cal</span></li>
+          <li><strong>The Steak and Pepper Quesadilla.</strong> Sliced steak (~5 oz) + 1 oz pepper jack + sautéed peppers + grilled onions, pressed in a Mission Carb Balance tortilla.<span class="macros">48P · 18C · 25F · ~490 cal</span></li>
+        </ol>
+      </section>
+
+      <!-- 04 BREAKFAST PREPS -->
+      <section class="section" id="breakfast">
+        <div class="section-num">04 / Sunday Prep</div>
+        <h2>Breakfast Preps</h2>
+
+        <p>Eight breakfasts you can batch on Sunday and ride through the week. Cold options for the door-on-the-way-out crowd, hot options for the slow-morning crowd.</p>
+
+        <p class="muted" style="font-size: 13px; font-style: italic;">Macros are approximate. Your tracker is the source of truth.</p>
+
+        <ol class="build-list">
+          <li><strong>Peanut Butter Banana Overnight Oats.</strong> Layer ½ cup rolled oats, 1 scoop chocolate or vanilla whey, 1 tbsp natural peanut butter, ½ sliced banana, and ¾ cup unsweetened almond milk in a jar. Stir, refrigerate overnight. Eat cold or microwave 60 seconds. Makes 1 jar.<span class="macros">35P · 55C · 12F · ~485 cal</span></li>
+          <li><strong>Blueberry Cheesecake Overnight Oats.</strong> ½ cup oats + ½ cup low-fat cottage cheese + ½ cup unsweetened almond milk + 1 scoop vanilla whey + ½ cup blueberries + 1 tsp vanilla in a jar. The cottage cheese melts into the oats overnight and tastes like cheesecake filling.<span class="macros">40P · 50C · 6F · ~410 cal</span></li>
+          <li><strong>Mediterranean Egg Cups.</strong> Whisk 12 eggs with 1 cup unsweetened almond milk, salt, and pepper. Fold in 1 cup chopped spinach, ½ cup diced sun-dried tomatoes, ¾ cup crumbled feta. Pour into 12 greased muffin tins, bake at 375 for 20 min. Holds 5 days. Makes 12 cups.<span class="macros">9P · 2C · 6F · ~95 cal each</span></li>
+          <li><strong>Sausage Cheddar Egg Cups.</strong> Brown 1 lb lean turkey breakfast sausage and drain. Whisk 12 eggs with salt and pepper, fold in cooked sausage and 1 cup shredded sharp cheddar. Pour into 12 greased muffin tins, bake at 375 for 22 min. Makes 12 cups.<span class="macros">14P · 1C · 11F · ~165 cal each</span></li>
+          <li><strong>Protein French Toast Bake.</strong> Whisk 6 eggs, 1 cup unsweetened almond milk, 2 scoops vanilla whey, 1 tsp cinnamon, 1 tsp vanilla. Tear 6 slices Lewis Protein Bread or Ezekiel into a greased 9x13, pour mixture over, push bread down. Bake at 350 for 35 min. Top with berries and sugar-free syrup. Makes 6 servings.<span class="macros">28P · 22C · 8F · ~290 cal</span></li>
+          <li><strong>Freezer Breakfast Burritos.</strong> Scramble 12 eggs with 1 tbsp olive oil, salt, and pepper. Brown 1 lb turkey breakfast sausage. Fill 6 Mission Carb Balance tortillas with eggs, sausage, 1 cup shredded cheese, salsa. Roll, wrap in foil, freeze. Reheat 2 min in microwave or 20 min at 350 from frozen. Makes 6.<span class="macros">38P · 22C · 18F · ~410 cal each</span></li>
+          <li><strong>Greek Yogurt Parfait Jars.</strong> Layer 1 cup nonfat Greek yogurt, ½ cup berries, ¼ cup low-sugar granola (Purely Elizabeth or similar), and 1 tbsp honey in a mason jar. Build 5 on Sunday.<span class="macros">23P · 38C · 7F · ~305 cal each</span></li>
+        </ol>
+      </section>
+
+      <!-- 05 PASTA AND MAC BOWLS -->
+      <section class="section" id="pasta">
+        <div class="section-num">05 / The Carb Engine</div>
+        <h2>Pasta and Mac Bowls</h2>
+
+        <p>The protocol is not anti-pasta. It is anti-empty-pasta. Every bowl below leads with serious protein and uses sauces that build flavor without 400 fat calories of cream. Sub in chickpea or lentil pasta if you want to push protein even higher.</p>
+
+        <ol class="build-list">
+          <li><strong>High-Protein Mac.</strong> Cook 1 lb chickpea or lentil pasta. Blend 1 ½ cups cottage cheese + ½ cup shredded sharp cheddar + ½ cup unsweetened almond milk + 1 tsp Dijon + salt and pepper until smooth. Warm in a pan with 1 more cup shredded cheddar until melted. Toss with pasta and 1 lb shredded rotisserie chicken. Makes 5 servings.<span class="macros">52P · 48C · 14F · ~520 cal</span></li>
+          <li><strong>Buffalo Chicken Pasta Bowl.</strong> Cook 1 lb penne. Toss with 1 ½ lb shredded chicken, ½ cup Frank's Red Hot, ½ cup nonfat Greek yogurt, 2 tbsp ranch seasoning, ½ cup crumbled blue cheese or feta. Top with diced celery. Makes 5.<span class="macros">56P · 52C · 11F · ~530 cal</span></li>
+          <li><strong>Korean Beef Pasta.</strong> Brown 1 ½ lb 93/7 ground beef. Add ½ cup low-sodium soy sauce, ¼ cup brown sugar substitute, 2 tbsp gochujang, 4 cloves garlic, 1 tbsp grated ginger, ¼ cup rice vinegar. Toss with 1 lb cooked spaghetti or rice noodles. Top with green onion and sesame seeds. Makes 5.<span class="macros">48P · 60C · 14F · ~560 cal</span></li>
+          <li><strong>Cottage Cheese Alfredo with Chicken.</strong> Cook 1 lb fettuccine. Blend 2 cups low-fat cottage cheese + ½ cup parmesan + ½ cup unsweetened almond milk + 4 cloves roasted garlic + salt and white pepper until silk-smooth. Warm gently, toss with pasta and 1 ½ lb sliced grilled chicken. Tastes like full-fat alfredo at half the fat. Makes 5.<span class="macros">58P · 50C · 11F · ~530 cal</span></li>
+          <li><strong>Pizza Pasta Bake.</strong> Cook 1 lb penne. Brown 1 lb 93/7 ground beef with Italian seasoning. Mix pasta, beef, 24 oz marinara, 1 cup part-skim mozzarella in a 9x13. Top with 2 oz turkey pepperoni and another ½ cup mozzarella. Bake at 400 for 20 min. Makes 6.<span class="macros">42P · 50C · 13F · ~490 cal</span></li>
+          <li><strong>Cajun Chicken Pasta.</strong> Cook 1 lb penne. Sauté 1 ½ lb cubed chicken with 2 tbsp Cajun seasoning, 1 sliced bell pepper, ½ sliced onion. Stir in ½ cup nonfat Greek yogurt, ¼ cup chicken broth, ¼ cup parmesan for a quick sauce. Toss with pasta. Makes 5.<span class="macros">50P · 50C · 9F · ~490 cal</span></li>
+        </ol>
+      </section>
+
+      <!-- 06 DINNER BOWLS -->
+      <section class="section" id="dinner">
+        <div class="section-num">06 / The Rotation</div>
+        <h2>Dinner Bowls</h2>
+
+        <p>Seven composed dinners, each built as a 5-bowl batch (Sunday cook, Monday to Friday eat). Pick three a week, rotate the next, never repeat enough to get bored.</p>
+
+        <ol class="build-list">
+          <li><strong>Korean Ground Beef Bowls.</strong> Brown 1 ½ lb 93/7 beef. Add ½ cup low-sodium soy sauce, 3 tbsp brown sugar substitute, 4 cloves garlic, 1 tbsp ginger, 2 tsp sesame oil, 1 tsp red pepper flakes. Serve over ¾ cup jasmine rice with steamed broccoli, green onion, sesame seeds. Makes 5 bowls.<span class="macros">42P · 44C · 12F · ~465 cal</span></li>
+          <li><strong>Chipotle Steak Bowl Copycat.</strong> Marinate 1 ½ lb skirt or flank steak in 3 tbsp olive oil, juice of 2 limes, 2 tbsp adobo sauce, 2 tsp cumin, 2 tsp chili powder, 4 cloves garlic for 2 hours. Grill, slice. Build over ¾ cup cilantro lime rice with black beans, fajita peppers, corn salsa, romaine. Makes 5.<span class="macros">48P · 44C · 16F · ~510 cal</span></li>
+          <li><strong>Teriyaki Salmon Rice Bowls.</strong> Brush 5 (5 oz) salmon fillets with ½ cup low-sugar teriyaki, bake at 400 for 12 min. Serve over ¾ cup jasmine rice with steamed broccoli, edamame, shredded carrots. Top with sesame seeds and sriracha mayo (¼ cup Greek yogurt + 1 tbsp sriracha + 1 tsp rice vinegar). Makes 5.<span class="macros">38P · 41C · 16F · ~460 cal</span></li>
+          <li><strong>Greek Chicken Bowls.</strong> Marinate 1 ½ lb chicken breast in 2 tbsp olive oil, juice of 2 lemons, 2 tbsp oregano, 4 cloves garlic for 2 hours. Grill or bake. Slice over ¾ cup jasmine rice with cucumber, halved cherry tomatoes, red onion, kalamata olives, feta, and tzatziki (1 cup Greek yogurt, grated cucumber, dill, lemon, garlic). Makes 5.<span class="macros">41P · 38C · 14F · ~440 cal</span></li>
+          <li><strong>Thai Peanut Chicken Bowls.</strong> Whisk ½ cup natural peanut butter, ¼ cup low-sodium soy sauce, 2 tbsp lime juice, 2 tbsp honey, 1 tbsp sriracha, 2 tbsp water. Toss with 1 ½ lb cubed grilled chicken. Serve over ¾ cup jasmine rice with shredded carrot, sliced cucumber, edamame, cilantro, lime. Makes 5.<span class="macros">50P · 44C · 20F · ~555 cal</span></li>
+          <li><strong>Carne Asada Bowls.</strong> Marinate 1 ½ lb flank steak in ¼ cup orange juice, ¼ cup lime juice, ¼ cup olive oil, 6 cloves garlic, 2 tbsp soy sauce, 2 tsp cumin, 1 bunch chopped cilantro for 4 hours. Grill, slice thin. Serve over ¾ cup cilantro lime rice with black beans, pico, ¼ avocado, queso fresco. Makes 5.<span class="macros">45P · 41C · 16F · ~490 cal</span></li>
+          <li><strong>Jerk Chicken Bowls.</strong> Marinate 1 ½ lb chicken thighs in ¼ cup jerk paste, 2 tbsp olive oil, 2 tbsp lime juice, 2 tbsp soy sauce, 1 tbsp honey for 4 hours. Grill, slice. Serve over ¾ cup coconut jasmine rice (rice cooked with ½ cup light coconut milk) with black beans, charred pineapple, diced red bell pepper, scallions. Makes 5.<span class="macros">45P · 49C · 14F · ~525 cal</span></li>
+        </ol>
+      </section>
+
+      <!-- 07 ANABOLIC SNACKS -->
+      <section class="section" id="snacks">
+        <div class="section-num">07 / Dessert Plays</div>
+        <h2>Anabolic Snacks</h2>
+
+        <p>Dessert and snack-shaped food that actually moves the macros. None of these are treats you earned. They are food. Use them in the macro budget like anything else.</p>
+
+        <ol class="build-list">
+          <li><strong>Cottage Cheese Ice Cream.</strong> Blend 2 cups low-fat cottage cheese, 1 scoop chocolate or vanilla protein powder, 2 tbsp cocoa powder (if chocolate), 2 tbsp sugar-free maple syrup, ¼ cup almond milk until completely smooth. Freeze 3-4 hours, stir once at the 90-min mark. Lands between gelato and soft serve. Makes 2 servings.<span class="macros">35P · 12C · 4F · ~225 cal</span></li>
+          <li><strong>Protein Cheesecake Jars.</strong> Blend 1 cup low-fat cottage cheese, 1 scoop vanilla whey, 4 oz light cream cheese, 2 tbsp sugar-free vanilla pudding mix, 2 tbsp Greek yogurt, 1 tsp vanilla. Layer into 4 jars over crushed graham cracker or crushed Quest bar bottom, top with berries. Refrigerate 2 hours. Makes 4.<span class="macros">22P · 14C · 8F · ~220 cal each</span></li>
+          <li><strong>Deconstructed Egg Roll in a Bowl.</strong> Brown 1 ½ lb 93/7 ground turkey or pork with 6 cups bagged coleslaw mix, 4 cloves garlic, 1 tbsp grated ginger, ¼ cup low-sodium soy sauce, 2 tsp sesame oil, 2 tsp sriracha. Cook until cabbage wilts, about 6 min. Top with green onion and sesame seeds. Makes 5.<span class="macros">35P · 12C · 14F · ~330 cal</span></li>
+          <li><strong>Kodiak Protein Muffins.</strong> Whisk 2 cups Kodiak Power Cakes mix, 1 scoop vanilla whey, 1 cup unsweetened almond milk, ½ cup nonfat Greek yogurt, 2 eggs, 1 tsp vanilla, 1 tsp baking powder, ½ cup blueberries or mini dark chocolate chips. Pour into 12 lined muffin tins. Bake at 375 for 18-20 min. Holds in fridge 5 days, freezer 1 month.<span class="macros">9P · 12C · 2F · ~100 cal each</span></li>
+        </ol>
+      </section>
+
+      <section class="closing">
+        <h2>Welcome to the Kitchen</h2>
+      </section>
+
+      <section class="disclaimer">
+        <div class="disclaimer-label">Disclaimer</div>
+        <p><strong>Jaden and Amber are not registered dietitians, doctors, nurses, or licensed medical or nutritional professionals.</strong> Everything in this document is shared from personal experience and is for educational and informational purposes only. It is not medical advice, nutritional counseling, or a substitute for the advice of a qualified healthcare provider.</p>
+        <p><strong>Consult your physician before starting</strong> this challenge or any new diet, exercise, or supplement program. This applies double if you are pregnant, nursing, on prescription medication, or living with a medical condition (including diabetes, heart disease, kidney disease, thyroid issues, high blood pressure, or eating disorder history).</p>
+        <p>You assume all risk and responsibility for your participation. Individual results vary. Stop immediately and contact a medical professional if you experience any adverse effects.</p>
+        <p>By participating in the 42-Day Challenge you acknowledge that you have read this disclaimer and agree to hold Jaden Flynn, Amber Flynn-Jared, and any affiliated parties harmless from any claims related to your participation.</p>
+      </section>
+
+    </article>
+  </div>
+
+</body>
+</html>
