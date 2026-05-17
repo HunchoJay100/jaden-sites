@@ -116,6 +116,10 @@ Every meal you eat for 42 days will be built from these foods. Pick one from eac
 |---|---|
 | 6 oz cooked chicken breast | 52g |
 | 6 oz cooked lean beef (90/10) | 42g |
+| 6 oz cooked sirloin | 48g |
+| 6 oz cooked filet | 44g |
+| 6 oz cooked ribeye | 40g |
+| 6 oz cooked New York strip | 46g |
 | 6 oz cooked ground turkey | 45g |
 | 6 oz cooked white fish (cod, tilapia, mahi) | 34g |
 | 6 oz cooked salmon | 37g |

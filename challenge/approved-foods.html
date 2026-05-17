@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Approved Foods</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --asphalt: #0E0E0E;
+      --asphalt-2: #161616;
+      --asphalt-3: #1F1F1F;
+      --bone: #F1EBDD;
+      --bone-muted: rgba(241, 235, 221, 0.62);
+      --bone-faint: rgba(241, 235, 221, 0.42);
+      --rule: rgba(241, 235, 221, 0.10);
+      --lime: #C6FF3C;
+      --display: 'Oswald', system-ui, sans-serif;
+      --body: 'Inter', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--body);
+      background: var(--asphalt);
+      color: var(--bone);
+      line-height: 1.65;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(14, 14, 14, 0.85);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .topbar-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .topbar-brand {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--bone);
+    }
+
+    .topbar-brand .accent { color: var(--lime); }
+
+    .topbar-version {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--bone-faint);
+      letter-spacing: 0.06em;
+    }
+
+    .shell {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .toc {
+      position: sticky;
+      top: 80px;
+      align-self: start;
+    }
+
+    .toc-label {
+      font-family: var(--display);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--bone-faint);
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .toc-list {
+      list-style: none;
+      counter-reset: tocstep;
+    }
+
+    .toc-list li {
+      counter-increment: tocstep;
+      margin-bottom: 8px;
+    }
+
+    .toc-list a {
+      display: flex;
+      gap: 10px;
+      align-items: baseline;
+      color: var(--bone-muted);
+      text-decoration: none;
+      font-size: 13px;
+      line-height: 1.4;
+      padding: 4px 0;
+      transition: color 0.18s ease;
+    }
+
+    .toc-list a::before {
+      content: counter(tocstep, decimal-leading-zero);
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--bone-faint);
+      letter-spacing: 0.06em;
+      flex-shrink: 0;
+    }
+
+    .toc-list a:hover { color: var(--lime); }
+    .toc-list a:hover::before { color: var(--lime); }
+
+    .doc { max-width: 720px; }
+
+    .hero {
+      margin-bottom: 50px;
+      padding-bottom: 36px;
+      border-bottom: 2px solid var(--bone);
+      position: relative;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 80px;
+      height: 6px;
+      background: var(--lime);
+    }
+
+    .eyebrow {
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: 12px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--lime);
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(44px, 8vw, 72px);
+      line-height: 0.95;
+      text-transform: uppercase;
+      letter-spacing: -0.015em;
+      color: var(--bone);
+    }
+
+    .intro p {
+      font-size: 17px;
+      line-height: 1.7;
+      margin-bottom: 14px;
+      color: var(--bone);
+    }
+    .intro p:last-child { margin-bottom: 0; }
+
+    section.section {
+      margin-bottom: 56px;
+      scroll-margin-top: 80px;
+    }
+
+    .section-num {
+      font-family: var(--display);
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--lime);
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+
+    h2 {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(28px, 4.5vw, 40px);
+      line-height: 1.05;
+      text-transform: uppercase;
+      letter-spacing: -0.005em;
+      color: var(--bone);
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    p { margin-bottom: 14px; color: var(--bone); }
+
+    .muted { color: var(--bone-muted); }
+    strong { color: var(--lime); font-weight: 600; }
+    em { color: var(--bone); font-style: italic; }
+
+    .table-wrap {
+      overflow-x: auto;
+      margin: 4px 0;
+      border-radius: 8px;
+      border: 1px solid var(--rule);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14.5px;
+    }
+
+    table td {
+      padding: 13px 18px;
+      border-bottom: 1px solid var(--rule);
+      color: var(--bone);
+      vertical-align: middle;
+    }
+
+    table tbody tr:last-child td { border-bottom: none; }
+    table tbody tr:hover { background: rgba(198, 255, 60, 0.04); }
+
+    .veggie-note {
+      background: var(--asphalt-2);
+      border: 1px solid var(--rule);
+      border-left: 3px solid var(--lime);
+      padding: 20px 24px;
+      border-radius: 8px;
+      margin-top: 32px;
+      font-size: 15px;
+      color: var(--bone-muted);
+    }
+
+    .veggie-note strong { color: var(--lime); }
+
+    .disclaimer {
+      margin-top: 60px;
+      padding: 28px 32px;
+      border-top: 1px solid rgba(241, 235, 221, 0.10);
+      font-size: 12px;
+      line-height: 1.55;
+      color: rgba(241, 235, 221, 0.42);
+      max-width: 720px;
+    }
+    .disclaimer-label {
+      font-family: var(--display);
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(241, 235, 221, 0.55);
+      margin-bottom: 14px;
+      font-weight: 600;
+    }
+    .disclaimer p { margin-bottom: 10px; }
+    .disclaimer p:last-child { margin-bottom: 0; }
+    .disclaimer strong { color: rgba(241, 235, 221, 0.62); }
+
+    @media (max-width: 900px) {
+      .shell { grid-template-columns: 1fr; gap: 32px; padding: 40px 20px 60px; }
+      .toc { position: static; order: -1; }
+      .toc-list { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px; }
+    }
+    @media (max-width: 600px) {
+      body { font-size: 15px; }
+      .hero { margin-bottom: 36px; padding-bottom: 24px; }
+      section.section { margin-bottom: 42px; }
+      h2 { margin-bottom: 16px; padding-bottom: 12px; }
+      .toc-list { grid-template-columns: 1fr; }
+      table td { padding: 10px 14px; }
+    }
+
+    @media print {
+      body { background: white; color: black; font-size: 11px; }
+      .topbar { display: none; }
+      .shell { grid-template-columns: 1fr; gap: 0; padding: 20px; }
+      .toc { display: none; }
+      .doc { max-width: 100%; }
+      .hero, .section, .veggie-note { break-inside: avoid; }
+      h1, h2 { color: black; }
+      p, td, li { color: #222; }
+      strong { color: #000; }
+      .disclaimer { background: white; color: #555; }
+    }
+
+    ::selection { background: var(--lime); color: var(--asphalt); }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-brand">The Approved <span class="accent">Foods</span></div>
+      <div class="topbar-version">v1</div>
+    </div>
+  </div>
+
+  <div class="shell">
+
+    <aside class="toc">
+      <div class="toc-label">Contents</div>
+      <ol class="toc-list">
+        <li><a href="#protein">Protein</a></li>
+        <li><a href="#carbs">Carbs</a></li>
+        <li><a href="#fat">Fat</a></li>
+      </ol>
+    </aside>
+
+    <article class="doc">
+
+      <header class="hero">
+        <div class="eyebrow">The Approved Foods</div>
+        <h1>The Approved<br>Foods</h1>
+      </header>
+
+      <section class="intro">
+        <p><strong style="color: var(--bone);">Build every meal of the next 42 days from these foods.</strong> If a food is not on this list, it is not on the protocol.</p>
+        <p>For your recommended serving sizes, check your Full Guide.</p>
+      </section>
+
+      <section class="section" id="protein" style="margin-top: 48px;">
+        <div class="section-num">01 / The Anchor</div>
+        <h2>Protein</h2>
+        <div class="table-wrap">
+          <table>
+            <tbody>
+              <tr><td>Chicken breast</td></tr>
+              <tr><td>Lean beef (90/10)</td></tr>
+              <tr><td>Sirloin</td></tr>
+              <tr><td>Filet</td></tr>
+              <tr><td>Ribeye</td></tr>
+              <tr><td>New York strip</td></tr>
+              <tr><td>Ground turkey</td></tr>
+              <tr><td>White fish (cod, tilapia, mahi)</td></tr>
+              <tr><td>Salmon</td></tr>
+              <tr><td>Eggs</td></tr>
+              <tr><td>Egg whites</td></tr>
+              <tr><td>Shrimp</td></tr>
+              <tr><td>Deli meat (Boar's Head turkey, roast beef, ham, or chicken)</td></tr>
+              <tr><td>Greek yogurt (2% plain, Fage-style)</td></tr>
+              <tr><td>Cottage cheese (low-fat)</td></tr>
+              <tr><td>Whey protein</td></tr>
+              <tr><td>Tuna (canned)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section" id="carbs">
+        <div class="section-num">02 / The Fuel</div>
+        <h2>Carbs</h2>
+        <div class="table-wrap">
+          <table>
+            <tbody>
+              <tr><td>White rice</td></tr>
+              <tr><td>Jasmine rice</td></tr>
+              <tr><td>Sweet potato</td></tr>
+              <tr><td>Baked potato</td></tr>
+              <tr><td>Red potato</td></tr>
+              <tr><td>Hash browns</td></tr>
+              <tr><td>Grits</td></tr>
+              <tr><td>Oats</td></tr>
+              <tr><td>Kodiak Protein Pancake mix</td></tr>
+              <tr><td>Ezekiel bread</td></tr>
+              <tr><td>Sourdough</td></tr>
+              <tr><td>Lewis Bake Shop Protein Bread</td></tr>
+              <tr><td>Dave's Killer Bread bagel</td></tr>
+              <tr><td>English muffin</td></tr>
+              <tr><td>Pasta</td></tr>
+              <tr><td>Quinoa</td></tr>
+              <tr><td>Banana</td></tr>
+              <tr><td>Berries</td></tr>
+              <tr><td>Apple</td></tr>
+              <tr><td>Orange</td></tr>
+              <tr><td>Grapes</td></tr>
+              <tr><td>Pineapple</td></tr>
+              <tr><td>Corn tortilla</td></tr>
+              <tr><td>Flour tortilla</td></tr>
+              <tr><td>Mission Carb Balance tortilla</td></tr>
+              <tr><td>Rice cakes (plain)</td></tr>
+              <tr><td>Medjool dates</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section" id="fat">
+        <div class="section-num">03 / The Finisher</div>
+        <h2>Fat</h2>
+        <div class="table-wrap">
+          <table>
+            <tbody>
+              <tr><td>Olive oil</td></tr>
+              <tr><td>Butter or ghee</td></tr>
+              <tr><td>Coconut oil</td></tr>
+              <tr><td>Avocado</td></tr>
+              <tr><td>Almonds</td></tr>
+              <tr><td>Cashews</td></tr>
+              <tr><td>Walnuts</td></tr>
+              <tr><td>Pecans</td></tr>
+              <tr><td>Natural peanut butter</td></tr>
+              <tr><td>Natural almond butter</td></tr>
+              <tr><td>Shredded cheddar cheese</td></tr>
+              <tr><td>Grated parmesan</td></tr>
+              <tr><td>Whole eggs</td></tr>
+              <tr><td>Dark chocolate (70%+)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="veggie-note">
+          <strong>Vegetables are a free-for-all.</strong> They don't count against your macros for our purposes. Eat them whenever you want. They fill you up between meals.
+        </div>
+      </section>
+
+      <section class="disclaimer">
+        <div class="disclaimer-label">Disclaimer</div>
+        <p><strong>Jaden and Amber are not registered dietitians, doctors, nurses, or licensed medical or nutritional professionals.</strong> Everything in this document is shared from personal experience and is for educational and informational purposes only. It is not medical advice, nutritional counseling, or a substitute for the advice of a qualified healthcare provider.</p>
+        <p><strong>Consult your physician before starting</strong> this challenge or any new diet, exercise, or supplement program. This applies double if you are pregnant, nursing, on prescription medication, or living with a medical condition (including diabetes, heart disease, kidney disease, thyroid issues, high blood pressure, or eating disorder history).</p>
+        <p>You assume all risk and responsibility for your participation. Individual results vary. Stop immediately and contact a medical professional if you experience any adverse effects.</p>
+        <p>By participating in the 42-Day Challenge you acknowledge that you have read this disclaimer and agree to hold Jaden Flynn, Amber Flynn-Jared, and any affiliated parties harmless from any claims related to your participation.</p>
+      </section>
+
+    </article>
+  </div>
+
+</body>
+</html>
