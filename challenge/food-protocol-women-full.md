@@ -115,14 +115,14 @@ Every meal you eat for 42 days will be built from these foods. Pick one from eac
 
 | Food | Protein |
 |---|---|
-| 6 oz cooked chicken breast | 52g |
-| 6 oz cooked lean beef (90/10) | 42g |
-| 6 oz cooked ground turkey | 45g |
-| 6 oz cooked white fish (cod, tilapia, mahi) | 34g |
-| 6 oz cooked salmon | 37g |
+| 4 oz cooked chicken breast | 35g |
+| 4 oz cooked lean beef (90/10) | 28g |
+| 4 oz cooked ground turkey | 30g |
+| 4 oz cooked white fish (cod, tilapia, mahi) | 23g |
+| 4 oz cooked salmon | 25g |
 | 4 whole eggs | 24g _(also ~20g fat)_ |
 | 6 oz egg whites | 20g |
-| 6 oz cooked shrimp | 36g |
+| 4 oz cooked shrimp | 24g |
 | 4 oz deli meat (Boar's Head turkey, roast beef, ham, or chicken) | 22g |
 | 1 cup Greek yogurt (2% plain, Fage-style) | 20g |
 | 1 cup low-fat cottage cheese | 25g |
@@ -133,8 +133,8 @@ Every meal you eat for 42 days will be built from these foods. Pick one from eac
 
 | Food | Carbs |
 |---|---|
-| 1 cup cooked white rice | 45g |
-| 1 cup cooked jasmine rice | 45g |
+| ¾ cup cooked white rice | 34g |
+| ¾ cup cooked jasmine rice | 34g |
 | 1 medium sweet potato (6 oz) | 26g |
 | 1 medium baked potato (6 oz) | 36g |
 | 1 medium red potato (6 oz) | 28g |
@@ -145,10 +145,10 @@ Every meal you eat for 42 days will be built from these foods. Pick one from eac
 | 2 slices Ezekiel bread | 30g |
 | 2 slices sourdough | 32g |
 | 2 slices Lewis Bake Shop Protein Bread | 20g _(also 14g protein)_ |
-| 1 Dave's Killer Bread bagel | 47g _(also 12g protein)_ |
+| ½ Dave's Killer Bread bagel | 24g _(also 6g protein)_ |
 | 1 English muffin | 25g |
-| 1 cup cooked pasta | 43g |
-| 1 cup cooked quinoa | 39g |
+| ¾ cup cooked pasta | 32g |
+| ¾ cup cooked quinoa | 29g |
 | 1 large banana | 31g |
 | 1 cup berries | 17g |
 | 1 medium apple | 25g |
@@ -221,8 +221,8 @@ Five meals across the day. Each one is a portion you can actually finish in one 
 | Mid-morning (10am) | 1 cup Greek yogurt + 1 medium apple | 20 | 29 | 3 |
 | Lunch (12:30pm) | 4 oz chicken breast + ½ cup cooked rice + ¼ avocado | 38 | 25 | 11 |
 | Afternoon (3:30pm) | 1 scoop whey + 1 medium banana + 1 oz almonds | 26 | 31 | 14 |
-| Dinner (7:30pm) | 3 oz lean beef (90/10) + 1 medium baked potato + 1 tbsp butter | 21 | 36 | 19 |
-| **TOTAL** | | **122** | **157** | **60** |
+| Dinner (7:30pm) | 4 oz lean beef (90/10) + 1 medium baked potato + 1 tbsp butter | 28 | 36 | 19 |
+| **TOTAL** | | **129** | **157** | **60** |
 
 Within 10g of every target. Real-world close.
 
