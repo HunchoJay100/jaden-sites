@@ -1,0 +1,1315 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>ConsultMD · Overview · 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFFFFF;
+  --canvas:#F7F8FA;
+  --ink-900:#0B1220;
+  --ink-800:#1A2332;
+  --ink-700:#344054;
+  --ink-600:#475467;
+  --ink-500:#667085;
+  --ink-400:#98A2B3;
+  --ink-300:#D0D5DD;
+  --ink-200:#E4E7EC;
+  --ink-100:#EAECF0;
+  --ink-50:#F2F4F7;
+  --blue:#2563EB;
+  --blue-600:#1D4ED8;
+  --blue-50:#EFF6FF;
+  --blue-100:#DBEAFE;
+  --green:#12B76A;
+  --green-50:#ECFDF3;
+  --amber:#F79009;
+  --amber-50:#FFFAEB;
+  --red:#D92D20;
+  --line:#EAECF0;
+}
+
+@page { size: letter; margin: 0; }
+
+*{box-sizing:border-box;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+html,body{margin:0;padding:0;background:#E5E7EB}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  color:var(--ink-900);
+  font-size:11pt;line-height:1.5;letter-spacing:-.003em;
+}
+
+.page{
+  width:8.5in;height:11in;
+  background:var(--bg);
+  margin:24px auto;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 4px 16px rgba(0,0,0,.12);
+  page-break-after:always;
+  break-after:page;
+}
+.page:last-child{page-break-after:auto;break-after:auto}
+
+@media print{
+  body{background:#FFF}
+  .page{margin:0;box-shadow:none}
+}
+
+.ph-wrap{position:absolute;top:.42in;left:0;right:0;display:flex;justify-content:space-between;padding:0 .6in .12in;}
+.ph-wrap::after{content:"";position:absolute;left:.6in;right:.6in;bottom:0;height:1px;background:var(--line)}
+.ph-brand{display:flex;align-items:center;gap:8px;font-size:8.5pt;color:var(--ink-500);letter-spacing:.06em;text-transform:uppercase}
+.ph-mark{width:14px;height:14px;background:var(--ink-900);border-radius:3px;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:7.5pt;font-weight:700;letter-spacing:-.5px}
+.ph-num{font-variant-numeric:tabular-nums;color:var(--ink-400);font-size:8.5pt;letter-spacing:.06em}
+
+.pf{
+  position:absolute;bottom:.4in;left:.6in;right:.6in;
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:8pt;color:var(--ink-400);
+  padding-top:.12in;border-top:1px solid var(--line);
+  letter-spacing:.06em;text-transform:uppercase;
+}
+
+.body{
+  padding: .8in .6in .4in;
+  position:relative;height:100%;
+}
+
+.cover{
+  background:linear-gradient(160deg,#0B1220 0%,#1D2A44 55%,#2563EB 130%);
+  color:#fff;position:relative;overflow:hidden;
+}
+.cover::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 80% 15%, rgba(37,99,235,.45), transparent 55%),
+             radial-gradient(circle at 10% 90%, rgba(37,99,235,.18), transparent 50%);
+}
+.cover-body{position:relative;z-index:2;padding:.7in .6in;height:100%;display:flex;flex-direction:column}
+.cover-mark{display:flex;align-items:center;gap:10px;font-size:10pt;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.7);font-weight:500}
+.cover-mark-square{width:18px;height:18px;background:#fff;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;color:#0B1220;font-size:9pt;font-weight:800;letter-spacing:-.5px}
+.cover-eyebrow{margin-top:auto;font-size:11pt;letter-spacing:.28em;text-transform:uppercase;color:#9CB4F4;font-weight:600}
+.cover-title{font-size:64pt;line-height:1.02;font-weight:700;letter-spacing:-.025em;margin:.18in 0 .14in}
+.cover-title em{font-style:italic;font-weight:500;color:#BFD0FB}
+.cover-sub{font-size:15pt;line-height:1.5;color:rgba(255,255,255,.82);font-weight:400;max-width:5.6in;letter-spacing:-.005em}
+.cover-meta{display:flex;gap:.5in;margin-top:.55in;padding-top:.28in;border-top:1px solid rgba(255,255,255,.15)}
+.cover-meta-block{font-size:9pt}
+.cover-meta-label{color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.12em;font-size:7.5pt;margin-bottom:4px}
+.cover-meta-value{color:#fff;font-weight:500;font-size:11pt;letter-spacing:-.005em}
+
+.divider{background:var(--canvas)}
+.divider .body{display:flex;flex-direction:column;justify-content:center}
+.div-num{font-size:88pt;font-weight:700;color:var(--blue);letter-spacing:-.04em;line-height:1}
+.div-eyebrow{font-size:10pt;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-500);font-weight:600;margin-top:.4in;margin-bottom:.12in}
+.div-title{font-size:34pt;font-weight:700;letter-spacing:-.022em;line-height:1.1;color:var(--ink-900);max-width:6in}
+.div-deck{font-size:13pt;line-height:1.6;color:var(--ink-600);margin-top:.28in;max-width:5.5in;font-weight:400}
+
+.sec-eyebrow{font-size:8.5pt;letter-spacing:.22em;text-transform:uppercase;color:var(--blue);font-weight:600;margin-bottom:.08in}
+.sec-title{font-size:22pt;font-weight:700;letter-spacing:-.018em;line-height:1.15;color:var(--ink-900);margin:0 0 .1in}
+.sec-deck{font-size:11pt;color:var(--ink-600);line-height:1.55;margin-bottom:.22in;max-width:6.4in}
+
+h3.sub{font-size:13pt;font-weight:600;letter-spacing:-.012em;margin:.18in 0 .06in;color:var(--ink-900)}
+p{margin:0 0 .11in;color:var(--ink-700);line-height:1.55}
+strong{color:var(--ink-900);font-weight:600}
+
+.toc-list{list-style:none;padding:0;margin:.2in 0 0;border-top:1px solid var(--line)}
+.toc-list li{display:flex;justify-content:space-between;align-items:baseline;gap:.2in;padding:.14in 0;border-bottom:1px solid var(--line)}
+.toc-num{font-size:9pt;color:var(--blue);font-weight:600;letter-spacing:.02em;width:.4in;flex-shrink:0}
+.toc-title{font-size:11.5pt;color:var(--ink-900);font-weight:500;flex:1}
+.toc-dots{flex:1;border-bottom:1.5px dotted var(--ink-200);margin:0 .14in;transform:translateY(-3px)}
+.toc-page{font-size:9pt;color:var(--ink-500);font-variant-numeric:tabular-nums;width:.4in;text-align:right;flex-shrink:0}
+
+.cards{display:grid;gap:.18in}
+.cards.c2{grid-template-columns:1fr 1fr}
+.cards.c3{grid-template-columns:1fr 1fr 1fr}
+.card{
+  background:var(--bg);
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:.22in;
+}
+.card-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.1in}
+.card-num{font-size:8.5pt;color:var(--blue);font-weight:600;letter-spacing:.1em}
+.card-title{font-size:13pt;font-weight:600;letter-spacing:-.012em;color:var(--ink-900);margin:0 0 .06in}
+.card-price{font-size:18pt;font-weight:700;color:var(--ink-900);letter-spacing:-.02em;margin-bottom:.04in}
+.card-price small{font-size:9pt;color:var(--ink-500);font-weight:500;letter-spacing:0;margin-left:4px}
+.card-body{font-size:10pt;color:var(--ink-600);line-height:1.55}
+.card-body ul{margin:.08in 0 0;padding-left:.18in}
+.card-body li{margin:.04in 0}
+
+.callout{
+  background:var(--blue-50);
+  border-left:3px solid var(--blue);
+  border-radius:0 6px 6px 0;
+  padding:.13in .2in;
+  margin:.14in 0;
+  font-size:10.5pt;
+  color:var(--ink-800);
+  line-height:1.55;
+}
+.callout strong{color:var(--blue-600)}
+
+.note{
+  font-size:9.5pt;color:var(--ink-500);font-style:italic;
+  border-top:1px solid var(--line);padding-top:.1in;margin-top:.18in
+}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line);border-radius:8px;overflow:hidden;margin:.14in 0 .18in;background:var(--bg)}
+.stat{padding:.15in .18in;border-right:1px solid var(--line)}
+.stat:last-child{border-right:0}
+.stat-label{font-size:7.5pt;color:var(--ink-500);text-transform:uppercase;letter-spacing:.12em;font-weight:600;margin-bottom:.06in}
+.stat-value{font-size:18pt;font-weight:700;color:var(--ink-900);letter-spacing:-.02em;line-height:1}
+.stat-sub{font-size:9pt;color:var(--ink-500);margin-top:.05in}
+
+.cmp{width:100%;border-collapse:separate;border-spacing:0;font-size:9.5pt;margin:.14in 0}
+.cmp th,.cmp td{padding:.1in .14in;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+.cmp thead th{font-size:8pt;color:var(--ink-500);text-transform:uppercase;letter-spacing:.1em;font-weight:600;background:var(--canvas)}
+.cmp td:first-child{font-weight:600;color:var(--ink-900)}
+.cmp .me{color:var(--blue-600);font-weight:600}
+
+.chips{display:flex;flex-wrap:wrap;gap:.07in;margin:.08in 0 .12in}
+.chip{
+  background:var(--ink-50);
+  color:var(--ink-700);
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:.05in .14in;
+  font-size:9pt;
+  font-weight:500;
+}
+.chip.b{background:var(--blue-50);color:var(--blue-600);border-color:var(--blue-100)}
+
+.tour{padding:0;background:var(--canvas)}
+.tour .body{padding:.95in 0 .65in}
+.tour-head{padding:0 .6in .2in}
+.tour-shot{
+  background:#fff;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  padding:.3in .6in;
+  text-align:center;
+}
+.tour-shot img{
+  width:100%;
+  max-width:7in;
+  border:1px solid var(--ink-200);
+  border-radius:8px;
+  box-shadow:0 6px 18px rgba(16,24,40,.08);
+  display:block;
+  margin:0 auto;
+}
+.tour-foot{padding:.22in .6in 0;display:grid;grid-template-columns:1fr 1fr;gap:.3in}
+.tour-foot h4{font-size:8.5pt;color:var(--ink-500);text-transform:uppercase;letter-spacing:.16em;font-weight:600;margin:0 0 .06in}
+.tour-foot p{font-size:10pt;color:var(--ink-700);margin:0;line-height:1.6}
+.tour-foot .tier-tag{display:inline-block;background:var(--blue-50);color:var(--blue-600);border:1px solid var(--blue-100);border-radius:4px;padding:2px 8px;font-size:8.5pt;font-weight:600;margin-right:6px}
+
+.timeline{margin:.16in 0;border-left:2px solid var(--ink-100);padding-left:.22in}
+.timeline-item{margin-bottom:.2in;position:relative}
+.timeline-item::before{
+  content:"";position:absolute;left:-.27in;top:6px;width:10px;height:10px;border-radius:50%;
+  background:var(--blue);border:2px solid #fff;box-shadow:0 0 0 1px var(--blue)
+}
+.timeline-q{font-size:8.5pt;color:var(--blue);font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.timeline-title{font-size:11.5pt;color:var(--ink-900);font-weight:600;margin:2px 0 4px}
+.timeline-desc{font-size:10pt;color:var(--ink-600);line-height:1.6}
+
+.back{background:var(--canvas)}
+.back .body{display:flex;flex-direction:column;justify-content:space-between;padding:.95in .6in}
+.back-h{font-size:28pt;font-weight:700;letter-spacing:-.02em;line-height:1.1;color:var(--ink-900);max-width:5.5in}
+.back-meta{display:grid;grid-template-columns:1fr 1fr;gap:.3in;margin-top:.4in;padding-top:.3in;border-top:1px solid var(--line)}
+.back-meta h5{font-size:7.5pt;color:var(--ink-500);text-transform:uppercase;letter-spacing:.14em;font-weight:600;margin:0 0 .06in}
+.back-meta p{font-size:11pt;color:var(--ink-900);margin:0;line-height:1.5;font-weight:500}
+
+.kicker{font-size:9pt;color:var(--ink-500);letter-spacing:.14em;text-transform:uppercase;font-weight:600}
+
+ul.tight{margin:.06in 0 .12in;padding-left:.2in}
+ul.tight li{margin:.04in 0;font-size:10.5pt;color:var(--ink-700);line-height:1.5}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:.32in}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.22in}
+
+.pill{display:inline-block;background:var(--ink-50);color:var(--ink-700);border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:9pt;font-weight:500;margin-right:4px}
+.pill.b{background:var(--blue-50);color:var(--blue-600);border-color:var(--blue-100)}
+.pill.g{background:var(--green-50);color:var(--green);border-color:#ABEFC6}
+.pill.a{background:var(--amber-50);color:var(--amber);border-color:#FEDF89}
+
+.unit-table{width:100%;border-collapse:separate;border-spacing:0;font-size:9.5pt;margin:.1in 0;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.unit-table th,.unit-table td{padding:.08in .12in;text-align:left;border-bottom:1px solid var(--line)}
+.unit-table thead th{font-size:8pt;color:var(--ink-500);text-transform:uppercase;letter-spacing:.1em;font-weight:600;background:var(--canvas)}
+.unit-table tbody tr:last-child td{border-bottom:0}
+.unit-table td:first-child{font-weight:600;color:var(--ink-900)}
+.unit-table .num{font-variant-numeric:tabular-nums;text-align:right}
+
+</style>
+</head>
+<body>
+
+<!-- ============== COVER ============== -->
+<section class="page cover">
+  <div class="cover-body">
+    <div class="cover-mark">
+      <span class="cover-mark-square">M</span>
+      <span>ConsultMD · Modern Development</span>
+    </div>
+    <div class="cover-eyebrow">Business Overview · 2026</div>
+    <h1 class="cover-title">The Cloud<br/>Construction<br/><em>Consultancy.</em></h1>
+    <p class="cover-sub">A productized methodology and a portal that scales without limit, built inside an active construction team and designed to teach a generation how to build the right way.</p>
+    <div class="cover-meta">
+      <div class="cover-meta-block">
+        <div class="cover-meta-label">Co-Founder</div>
+        <div class="cover-meta-value">Jaden Flynn</div>
+      </div>
+      <div class="cover-meta-block">
+        <div class="cover-meta-label">Co-Founder</div>
+        <div class="cover-meta-value">Jason Flynn</div>
+      </div>
+      <div class="cover-meta-block">
+        <div class="cover-meta-label">Stage</div>
+        <div class="cover-meta-value">Live · Year One</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== TOC / SUMMARY ============== -->
+<section class="page">
+  <div class="ph-wrap">
+    <div class="ph-brand"><span class="ph-mark">M</span>ConsultMD</div>
+    <div class="ph-num">02</div>
+  </div>
+  <div class="body">
+    <div class="sec-eyebrow">Contents</div>
+    <h2 class="sec-title">What&apos;s inside.</h2>
+    <p class="sec-deck">If you only read one page, here it is. ConsultMD is to residential construction what productized education brands are to operators in other industries: a teachable methodology, an offer ladder, and a community that compounds on top of both. We serve three audiences against the same product spine, and we&apos;re targeting <strong>$5 to $10M ARR by mid-2029</strong> at education-multiple economics.</p>
+
+    <ol class="toc-list">
+      <li><span class="toc-num">01</span><span class="toc-title">The Category Bet</span><span class="toc-dots"></span><span class="toc-page">03</span></li>
+      <li><span class="toc-num">02</span><span class="toc-title">The Problem We Solve</span><span class="toc-dots"></span><span class="toc-page">05</span></li>
+      <li><span class="toc-num">03</span><span class="toc-title">The Three Audiences</span><span class="toc-dots"></span><span class="toc-page">07</span></li>
+      <li><span class="toc-num">04</span><span class="toc-title">The Offer Ladder</span><span class="toc-dots"></span><span class="toc-page">09</span></li>
+      <li><span class="toc-num">05</span><span class="toc-title">The Methodology</span><span class="toc-dots"></span><span class="toc-page">12</span></li>
+      <li><span class="toc-num">06</span><span class="toc-title">The Product Tour</span><span class="toc-dots"></span><span class="toc-page">15</span></li>
+      <li><span class="toc-num">07</span><span class="toc-title">The MD Assistant</span><span class="toc-dots"></span><span class="toc-page">24</span></li>
+      <li><span class="toc-num">08</span><span class="toc-title">The Operator Side</span><span class="toc-dots"></span><span class="toc-page">26</span></li>
+      <li><span class="toc-num">09</span><span class="toc-title">The Business Case</span><span class="toc-dots"></span><span class="toc-page">28</span></li>
+      <li><span class="toc-num">10</span><span class="toc-title">The Moat</span><span class="toc-dots"></span><span class="toc-page">31</span></li>
+      <li><span class="toc-num">11</span><span class="toc-title">The Roadmap &amp; The Ask</span><span class="toc-dots"></span><span class="toc-page">33</span></li>
+    </ol>
+
+    <div class="callout" style="margin-top:.4in">
+      <strong>One-liner.</strong> ConsultMD packages the right way to build a house into a tiered, cloud-delivered product that works for self-contracting homeowners, working GCs, and aspiring builders alike. We compete on methodology and credibility, not on jobsite software.
+    </div>
+  </div>
+</section>
+
+<!-- ============== 01 DIVIDER ============== -->
+<section class="page divider">
+  <div class="body">
+    <div class="div-num">01</div>
+    <div class="div-eyebrow">Section One</div>
+    <h2 class="div-title">The Category Bet.</h2>
+    <p class="div-deck">Cloud-based construction consulting, first to market nationally, built to compete in the productized-education category rather than against project-management software.</p>
+  </div>
+</section>
+
+<!-- ============== 01 BODY ============== -->
+<section class="page">
+  <div class="ph-wrap">
+    <div class="ph-brand"><span class="ph-mark">M</span>ConsultMD</div>
+    <div class="ph-num">04</div>
+  </div>
+  <div class="body">
+    <div class="sec-eyebrow">01 · The Category Bet</div>
+    <h2 class="sec-title">A category that didn&apos;t exist.</h2>
+    <p class="sec-deck">Construction consulting has always been a local, relationship-driven business capped at whatever capacity one operator can personally hold. One name, one project, one phone call at a time. ConsultMD takes the methodology behind that work, productizes it, and ships it through a portal, so the same product can serve one customer or a thousand without the operator becoming the bottleneck.</p>
+
+    <h3 class="sub">What we are not.</h3>
+    <p>ConsultMD isn&apos;t jobsite software, and we make a point of saying so out loud. Procore, BuilderTrend, and CoConstruct already serve working GCs with scheduling, payroll, and multi-project pipeline tools, and they do it well. That category is crowded, it&apos;s well-served, and we have no interest in entering it.</p>
+
+    <h3 class="sub">Our comp set.</h3>
+    <p>We belong in the productized-education category instead. The shape is the same across that category: a teachable system, a community that grows around it, and an offer ladder running from low-ticket entry products up to high-ticket coaching. Businesses built on that shape tend to trade between 6 and 12 times ARR on exit, which is the economic frame ConsultMD is sized against.</p>
+
+    <table class="cmp">
+      <thead><tr><th></th><th class="me">ConsultMD</th><th>Procore / BuilderTrend</th><th>Productized education</th></tr></thead>
+      <tbody>
+        <tr><td>Sold as</td><td class="me">Methodology &amp; toolkit</td><td>Jobsite SaaS</td><td>Productized education</td></tr>
+        <tr><td>Customer</td><td class="me">Homeowners, GCs, new builders</td><td>Established GCs</td><td>Operators &amp; agencies</td></tr>
+        <tr><td>Price</td><td class="me">$5K to $25K + recurring</td><td>$50 to $500 / seat / mo</td><td>$1K to $50K + community</td></tr>
+        <tr><td>Delivery</td><td class="me">Cloud portal + calls</td><td>Cloud SaaS</td><td>Community + cohort</td></tr>
+        <tr><td>Multiple</td><td class="me">6 to 12x ARR (target)</td><td>6 to 10x ARR</td><td>6 to 12x ARR</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <strong>First-mover position.</strong> We haven&apos;t found another operator anywhere building cloud-delivered construction consulting at scale with a methodology grounded in an active construction team. The category is wide open, and we intend to be the operator who defines it.
+    </div>
+  </div>
+</section>
+
+<!-- ============== 02 DIVIDER ============== -->
+<section class="page divider">
+  <div class="body">
+    <div class="div-num">02</div>
+    <div class="div-eyebrow">Section Two</div>
+    <h2 class="div-title">The Problem We Solve.</h2>
+    <p class="div-deck">A 3,000 square foot custom home in Tennessee carries roughly $100,000 in general-contractor fee. We package the process so that fee is no longer the line between could-build and couldn&apos;t.</p>
+  </div>
+</section>
+
+<!-- ============== 02 PROBLEM ============== -->
+<section class="page">
+  <div class="ph-wrap">
+    <div class="ph-brand"><span class="ph-mark">M</span>ConsultMD</div>
+    <div class="ph-num">06</div>
+  </div>
+  <div class="body">
+    <div class="sec-eyebrow">02 · The Problem We Solve</div>
+    <h2 class="sec-title">The cost of not knowing the process.</h2>
+    <p class="sec-deck">A 3,000 square foot custom home in Tennessee carries roughly <strong>$100,000 in general-contractor fee</strong>, and what that fee actually buys is process: which sub to call when, how to read a bid properly, how to sequence the trades, and what to look for at each inspection. It buys judgment, not labor. For most families, the gap between being able to write that check and not being able to is the difference between &quot;could build&quot; and &quot;couldn&apos;t.&quot;</p>
+
+    <div class="cards c3">
+      <div class="card">
+        <div class="card-num">For the homeowner</div>
+        <div class="card-title">Build alone, or don&apos;t build.</div>
+        <div class="card-body">Skip the GC fee and you inherit every decision that GC was making behind the scenes. Without a playbook, the mistakes start to compound, with bad bids accepted, trades sequenced in the wrong order, and permits that come back rejected for things you didn&apos;t know to ask about. The overruns eat the savings, and sometimes they eat the whole project.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">For the GC</div>
+        <div class="card-title">Operating on memory.</div>
+        <div class="card-body">Most working contractors run their jobs out of their head, with no written process to hand off to a project manager and no client-facing system to bring customers into. Margin leaks through disorganization week after week, and scaling beyond the operator is impossible without a system to actually install on top.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">For the new builder</div>
+        <div class="card-title">No on-ramp anywhere.</div>
+        <div class="card-body">There&apos;s no formal training path for residential construction operators. Trade school teaches the trades, business school teaches business, and nobody teaches how to build a house the right way end to end. Most new entrants spend their first few builds making the same expensive mistakes everyone else has already made.</div>
+      </div>
+    </div>
+
+    <h3 class="sub">The market we&apos;re addressing.</h3>
+    <ul class="tight">
+      <li>There are roughly <strong>1.4 million single-family housing starts</strong> a year in the US.</li>
+      <li>There are roughly <strong>700,000 licensed residential GCs</strong> nationally, and most of them run on improvisation, which makes willingness to pay for a system that actually works unusually high.</li>
+      <li>The homeowner segment is the one growing fastest, as rising material costs, GC capacity constraints, and a younger demographic comfortable buying digital products all converge at the same time.</li>
+    </ul>
+
+    <div class="callout">
+      <strong>The thesis.</strong> The right process is the missing piece, and we package it once and sell it to everyone who needs it. The methodology underneath stays the same across all three audiences; only the story on top changes depending on who&apos;s listening.
+    </div>
+  </div>
+</section>
+
+<!-- ============== 03 DIVIDER ============== -->
+<section class="page divider">
+  <div class="body">
+    <div class="div-num">03</div>
+    <div class="div-eyebrow">Section Three</div>
+    <h2 class="div-title">The Three Audiences.</h2>
+    <p class="div-deck">Self-contracting homeowners, working general contractors, and aspiring builders. Three audiences against the same product spine. The story shifts depending on who&apos;s listening. The portal underneath doesn&apos;t.</p>
+  </div>
+</section>
+
+<!-- ============== 03 AUDIENCES ============== -->
+<section class="page">
+  <div class="ph-wrap">
+    <div class="ph-brand"><span class="ph-mark">M</span>ConsultMD</div>
+    <div class="ph-num">08</div>
+  </div>
+  <div class="body">
+    <div class="sec-eyebrow">03 · The Three Audiences</div>
+    <h2 class="sec-title">One methodology. Three stories.</h2>
+    <p class="sec-deck">The same Order of Operations works for all three audiences, the same portal serves them, and the same articles read for all of them. We segment by language and onboarding rather than by product, which means each new audience expansion adds funnel without adding engineering debt underneath.</p>
+
+    <div class="cards c3" style="margin-top:.1in">
+      <div class="card">
+        <div class="card-num">Audience 01</div>
+        <div class="card-title">Self-contracting homeowners</div>
+        <div class="card-body">
+          Our original audience, building once in their life on a project worth $400K and up, with no GC fee in the budget. They tend to be educated and internet-native, and they&apos;re willing to do the work themselves as long as someone hands them a playbook that actually works.
+          <ul>
+            <li><strong>Story:</strong> Save the GC fee, keep the equity.</li>
+            <li><strong>Tier fit:</strong> Blueprint &amp; Navigator</li>
+            <li><strong>Volume signal:</strong> ~140K starts/yr at 10% of total US</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-num">Audience 02</div>
+        <div class="card-title">General contractors</div>
+        <div class="card-body">
+          Working operators running anywhere from 2 to 15 active builds at once. They have the highest willingness to pay of the three groups, and they aren&apos;t buying to learn the trade so much as to install a system on top of what they already know. Natural Tier 3 customers and the right fit for the recurring community layer when it ships.
+          <ul>
+            <li><strong>Story:</strong> Run your builds like a $50M shop.</li>
+            <li><strong>Tier fit:</strong> The Operator</li>
+            <li><strong>Volume signal:</strong> ~700K active US GCs</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-num">Audience 03</div>
+        <div class="card-title">Aspiring builders</div>
+        <div class="card-body">
+          Brand-new entrants who want to build, either for themselves once or as a business going forward. The largest of the three audiences by a wide margin and the slowest-converting one, but also the biggest recurring-revenue prize once the cohort and certification layers ship in Q4.
+          <ul>
+            <li><strong>Story:</strong> Learn to build the right way from day one.</li>
+            <li><strong>Tier fit:</strong> The Operator (or Blueprint into cohort)</li>
+            <li><strong>Volume signal:</strong> indeterminate, but largest of the three</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="sub">Why it matters.</h3>
+    <p>A single-audience play caps the funnel at a few hundred thousand customers a year, which is fine but not generational. The three-audience play, running against the same product spine, opens the addressable market into the millions. The story shifts depending on who&apos;s listening, but the portal underneath doesn&apos;t change, and that&apos;s where the real operating leverage lives.</p>
+  </div>
+</section>
+
+<!-- ============== 04 DIVIDER ============== -->
+<section class="page divider">
+  <div class="body">
+    <div class="div-num">04</div>
+    <div class="div-eyebrow">Section Four</div>
+    <h2 class="div-title">The Offer Ladder.</h2>
+    <p class="div-deck">Two ladders running off the same methodology. Blueprint and Navigator serve homeowners building one house. The Operator is the standalone pro tier for working GCs and aspiring builders who want a real system installed in their business.</p>
+  </div>
+</section>
+
+<!-- ============== 04 OFFER LADDER ============== -->
+<section class="page">
+  <div class="ph-wrap">
+    <div class="ph-brand"><span class="ph-mark">M</span>ConsultMD</div>
+    <div class="ph-num">10</div>
+  </div>
+  <div class="body">
+    <div class="sec-eyebrow">04 · The Offer Ladder</div>
+    <h2 class="sec-title">Three tiers. One ladder.</h2>
+    <p class="sec-deck">Two ladders running off the same methodology: Blueprint and Navigator serve homeowners building one house, and The Operator is the standalone pro tier for working GCs and aspiring builders who want a real system installed in their business.</p>
+
+    <div class="cards c3">
+      <div class="card">
+        <div class="card-num">Tier 01</div>
+        <div class="card-title">The Blueprint</div>
+        <div class="card-price">$5,000<small>one-time</small></div>
+        <div class="card-body">
+          The full self-serve toolkit. No included calls, no consultant time on the cost side. The SKU that scales without us and funds everything above.
+          <ul>
+            <li>Order of Operations</li>
+            <li>11 articles, 9 deliverables</li>
+            <li>Portal access (lifetime)</li>
+            <li>Add-on calls $500 / 30 min</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card" style="border-color:var(--blue);box-shadow:0 0 0 2px var(--blue-50)">
+        <div class="card-head">
+          <div class="card-num" style="color:var(--blue)">Tier 02 · Best Value</div>
+        </div>
+        <div class="card-title">The Navigator</div>
+        <div class="card-price">$12,500<small>one-time</small></div>
+        <div class="card-body">
+          Everything in Blueprint, plus expert touchpoints across the build. The sweet-spot tier for serious self-contracting homeowners who want a real person to bounce decisions off.
+          <ul>
+            <li>Everything in Blueprint</li>
+            <li>2 calls / month, capped at 8 months</li>
+            <li>Communication framework + draw guidance</li>
+            <li>Email / text support, 48 hr</li>
+            <li>Member-rate add-on calls $250 / 30 min</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-num">Tier 03 · Pro</div>
+        <div class="card-title">The Operator</div>
+        <div class="card-price">$25,000<small>one-time</small></div>
+        <div class="card-body">
+          A 12-month install for working GCs and aspiring builders. We deploy the operating system (JobTread + methodology), coach the owner, and train the team. The system is theirs forever.
+          <ul>
+            <li>Full JobTread install + methodology layered on top</li>
+            <li>24 owner coaching calls (2 / month × 12)</li>
+            <li>5 team training calls, 1 hour each</li>
+            <li>5 walkthroughs, 6 bid reviews, 3 budget audits</li>
+            <li>Optional AI integration add-on (scoped separately)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="sub">Strategic shape.</h3>
+    <ul class="tight">
+      <li><strong>Blueprint is the cash machine:</strong> digital delivery, 95%+ margin, funds paid acquisition.</li>
+      <li><strong>Navigator is the homeowner volume tier</strong> where most serious self-contracting homeowners convert after the Blueprint experience.</li>
+      <li><strong>The Operator is the standalone pro tier:</strong> $25K for a 12-month JobTread and methodology install, system theirs forever.</li>
+      <li><strong>The recurring community layer ships Q4 2026</strong> at $97 to $297 per month as the long-term revenue compounder.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============== 04 ADD-ONS PAGE ============== -->
+<section class="page">
+  <div class="ph-wrap">
+    <div class="ph-brand"><span class="ph-mark">M</span>ConsultMD</div>
+    <div class="ph-num">11</div>
+  </div>
+  <div class="body">
+    <div class="sec-eyebrow">04 · The Offer Ladder (cont.)</div>
+    <h2 class="sec-title">Unit economics &amp; the upgrade path.</h2>
+    <p class="sec-deck">Margin tightens as the tier climbs, but lifetime value climbs faster. Blueprint is the entry funnel into the homeowner ladder, Navigator carries the homeowner volume, and The Operator is the standalone pro engagement that converts working GCs and aspiring builders into long-term customers of the methodology.</p>
+
+    <table class="unit-table">
+      <thead>
+        <tr><th>Tier</th><th>Price</th><th class="num">Consultant time</th><th class="num">Gross margin</th><th>LTV signal</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Blueprint</td><td>$5,000</td><td class="num">~0 hr</td><td class="num">95%+</td><td>Funnel into Navigator</td></tr>
+        <tr><td>Navigator</td><td>$12,500</td><td class="num">~16 hr</td><td class="num">~70%</td><td>Repeat &amp; referral engine</td></tr>
+        <tr><td>The Operator</td><td>$25,000</td><td class="num">~40 hr</td><td class="num">~70%</td><td>Standalone pro engagement, 12-mo install, yours forever</td></tr>
+        <tr><td>Add-on call</td><td>$500</td><td class="num">0.5 to 1 hr</td><td class="num">~75%</td><td>Margin expansion</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <strong>Illustrative path to $7.5M ARR at the year-3 midpoint:</strong> 750 Blueprint sales at $5K equals $3.75M, 200 Navigator sales at $12.5K equals $2.5M, and 50 Operator engagements at $25K equals $1.25M. Alternatively, the recurring community layer carries 30 to 40% of that target on its own at $97 per month across roughly 2,500 members.
+    </div>
+
+    <h3 class="sub">How the two paths actually behave.</h3>
+    <ul class="tight">
+      <li><strong>Homeowner, step 1.</strong> The customer buys Blueprint through paid traffic or a referral, and they hit real friction at the first sub-vetting decision.</li>
+      <li><strong>Homeowner, step 2.</strong> The upgrade to Navigator gets triggered by either the first add-on call purchase or pre-permit anxiety setting in.</li>
+      <li><strong>Homeowner, step 3.</strong> The customer finishes the build and becomes a referral source for the next homeowner inside their network.</li>
+      <li><strong>Pro path.</strong> A working GC or aspiring builder enters The Operator directly. Twelve-month engagement with full JobTread and methodology install, owner coaching, and team training. They walk away running a different kind of business than they started with, and the system stays theirs forever.</li>
+    </ul>
+
+    <h3 class="sub">What&apos;s coming to the ladder.</h3>
+    <ul class="tight">
+      <li><strong>Cohort program:</strong> an 8-week structured cohort for aspiring builders, priced between $1,500 and $3,000, opening in Q4 2026.</li>
+      <li><strong>Community layer:</strong> a Skool-style recurring membership at $97 to $297 per month, also Q4 2026.</li>
+      <li><strong>Certification and licensing</strong> for distribution partners and regional construction teams, still in exploratory conversations.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============== 05 DIVIDER ============== -->
+<section class="page divider">
+  <div class="body">
+    <div class="div-num">05</div>
+    <div class="div-eyebrow">Section Five</div>
+    <h2 class="div-title">The Methodology.</h2>
+    <p class="div-deck">311 sequenced tasks, 11 articles, 16 deliverables, all shipped and refined inside Flynn Development on active jobsites. The Order of Operations is the spine the whole product hangs from.</p>
+  </div>
+</section>
+
+<!-- ============== 05 METHODOLOGY ============== -->
+<section class="page">
+  <div class="ph-wrap">
+    <div class="ph-brand"><span class="ph-mark">M</span>ConsultMD</div>
+    <div class="ph-num">13</div>
+  </div>
+  <div class="body">
+    <div class="sec-eyebrow">05 · The Methodology</div>
+    <h2 class="sec-title">What we&apos;ve actually built.</h2>
+    <p class="sec-deck">Every artifact listed below is already shipped, and every one of them has been refined inside Flynn Development on active jobsites. This isn&apos;t a roadmap deck. It&apos;s an inventory of what&apos;s already in the customer&apos;s hands today.</p>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-label">Order of Ops</div><div class="stat-value">311</div><div class="stat-sub">sequenced tasks</div></div>
+      <div class="stat"><div class="stat-label">Articles</div><div class="stat-value">11</div><div class="stat-sub">tier-1 published</div></div>
+      <div class="stat"><div class="stat-label">Deliverables</div><div class="stat-value">16</div><div class="stat-sub">across all tiers</div></div>
+      <div class="stat"><div class="stat-label">Years of IP</div><div class="stat-value">15+</div><div class="stat-sub">field-tested</div></div>
+    </div>
+
+    <h3 class="sub">Order of Operations.</h3>
+    <p>Order of Operations is the spine of the whole product, a 311-task sequenced playbook that covers every phase of a custom build from land acquisition all the way through final walkthrough. Each task ties back to the article that explains the why, the deliverable that executes the how, and the tier that unlocks access to both. Everything else in the methodology hangs off this one document.</p>
+
+    <h3 class="sub">Tier 1 article library.</h3>
+    <div class="chips">
+      <span class="chip b">What Is Self-Contracting</span>
+      <span class="chip b">Understanding Draw Schedules</span>
+      <span class="chip b">How to Read a Bid</span>
+      <span class="chip b">Red Flags in Subcontractors</span>
+      <span class="chip b">Managing Sub Relationships</span>
+      <span class="chip b">Insurance Requirements Explained</span>
+      <span class="chip b">Lender Requirements</span>
+      <span class="chip b">Navigating Building Permits</span>
+      <span class="chip b">Common Budget Mistakes</span>
+      <span class="chip b">Material Lead Times</span>
+      <span class="chip b">+1 partner-only</span>
+    </div>
+
+    <h3 class="sub">Tier 1 deliverables.</h3>
+    <div class="chips">
+      <span class="chip">Order of Operations PDF</span>
+      <span class="chip">Budget Tracking Spreadsheet</span>
+      <span class="chip">Subcontractor List Tracker</span>
+      <span class="chip">Timeline Framework</span>
+      <span class="chip">Work Order &amp; Insurance Form</span>
+      <span class="chip">How to Vet Subs guide</span>
+      <span class="chip">Permit Checklist</span>
+      <span class="chip">Conditional Lien Waiver</span>
+      <span class="chip">Unconditional Lien Waiver</span>
+      <span class="chip">Material Ordering Timeline</span>
+    </div>
+
+    <h3 class="sub">Tier 2 add-ons.</h3>
+    <div class="chips">
+      <span class="chip">Communication Framework</span>
+      <span class="chip">Sub Coordination Playbook</span>
+      <span class="chip">Pre-Construction Checklist</span>
+    </div>
+
+    <h3 class="sub">Tier 3 add-ons.</h3>
+    <div class="chips">
+      <span class="chip">Problem-Solving Guide</span>
+      <span class="chip">Change Order Template</span>
+      <span class="chip">Punch List Template</span>
+      <span class="chip">Final Walkthrough Checklist</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============== 05 LEGAL / PROOF ============== -->
+<section class="page">
+  <div class="ph-wrap">
+    <div class="ph-brand"><span class="ph-mark">M</span>ConsultMD</div>
+    <div class="ph-num">14</div>
+  </div>
+  <div class="body">
+    <div class="sec-eyebrow">05 · The Methodology (cont.)</div>
+    <h2 class="sec-title">Built inside an active construction team.</h2>
+    <p class="sec-deck">This isn&apos;t theory work. Every article, every deliverable, and every step in the Order of Operations has been pressure-tested on active Flynn Development jobsites. That field-testing is the moat, and it&apos;s the one thing nobody starting from scratch can replicate quickly.</p>
+
+    <div class="two-col">
+      <div>
+        <h3 class="sub" style="margin-top:0">Provenance.</h3>
+        <p>ConsultMD is the published methodology of <strong>Flynn Development</strong>, the residential construction team Jaden and Jason Flynn run. We&apos;ve <strong>more than doubled the business every year for the past four years</strong>, and we have <strong>eight figures in sales already booked for 2026</strong>. The methodology inside ConsultMD is the same playbook running underneath that growth.</p>
+        <p>Every article in the library was sharpened on a real build, every deliverable was written to solve a real problem the team kept running into, and the Order of Operations itself was reverse-engineered from how Flynn Development actually runs jobs at scale, then productized into something teachable.</p>
+      </div>
+      <div>
+        <h3 class="sub" style="margin-top:0">Legal posture.</h3>
+        <p>The product is positioned as <strong>education, methodology, and toolkit</strong>, which means it isn&apos;t legal, financial, or construction advice. Every article carries the appropriate disclaimer making that clear, and every customer-facing deliverable (work orders, lien waivers, COIs) ships unbranded so it travels properly between homeowner and sub without putting our name on a document we don&apos;t control downstream.</p>
+        <p>The budget tracker is <strong>tracking-only</strong>, recording estimated, actual, and variance side by side. We never originate a number for the customer, so there&apos;s zero liability exposure on the accuracy of any estimate.</p>
+      </div>
+    </div>
+
+    <h3 class="sub">Design system &amp; quality.</h3>
+    <p>The methodology ships against a documented design system: Plus Jakarta Sans display paired with DM Sans body throughout, a light theme for customer-facing fillable forms (so they feel neutral when they land in a sub&apos;s inbox), and a darker branded treatment for the educational content. Articles render through a Puppeteer pipeline straight from HTML, and spreadsheets ship from Python with live formulas and conditional formatting baked in. Every output is built to the polish you&apos;d expect from a product that prices in at $25K.</p>
+
+    <div class="callout">
+      <strong>The Flynn Development connection isn&apos;t a marketing line.</strong> It&apos;s the actual reason the methodology works. Construction teams teaching from active jobsites publish a different product than agencies repackaging public knowledge into ebooks, and that difference shows up in every artifact we ship.
+    </div>
+  </div>
+</section>
+
+<!-- ============== 06 PRODUCT TOUR DIVIDER ============== -->
+<section class="page divider">
+  <div class="body">
+    <div class="div-num">06</div>
+    <div class="div-eyebrow">Section Six</div>
+    <h2 class="div-title">The Product Tour.</h2>
+    <p class="div-deck">Nine screens captured from the v5 portal. The product is built, the methodology is loaded, and the system is demoable end to end. What you&apos;re seeing on the next pages is the platform that ships to the first cohort of operators.</p>
+  </div>
+</section>
+
+<!-- ============== TOUR · DASHBOARD ============== -->
+<section class="page tour">
+  <div class="ph-wrap">
+    <div class="ph-brand"><span class="ph-mark">M</span>ConsultMD</div>
+    <div class="ph-num">16</div>
+  </div>
+  <div class="body">
+    <div class="tour-head">
+      <div class="sec-eyebrow">06 · Product Tour · Screen 01</div>
+      <h2 class="sec-title" style="font-size:20pt">Dashboard.</h2>
+      <p style="margin:0;color:var(--ink-600);font-size:11pt;max-width:6.5in;line-height:1.6">Home base for every build, showing phase progress measured against the Order of Operations, the current week&apos;s weather, decisions waiting on the customer&apos;s input, and an activity stream that surfaces every message, document, and event tied to the project.</p>
+    </div>
+    <div class="tour-shot"><img src="images/consultmd-demo/dashboard.png" alt="ConsultMD dashboard"></div>
+    <div class="tour-foot">
+      <div>
+        <h4>On the screen</h4>
+        <p>A hero photo of the build, four headline stats (budget, day count, photos, decisions), the phase table with active, queued, and done states, a This Week card combining weather and pending decisions, the live activity feed, the upcoming-schedule strip, and a stub for Ask ConsultMD that opens into the AI layer.</p>
+      </div>
+      <div>
+        <h4>Tier access</h4>
+        <p><span class="tier-tag">Blueprint</span><span class="tier-tag">Navigator</span><span class="tier-tag">Operator</span> All three tiers see the dashboard. Decision routing and consultant nudges are gated to Navigator and above.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== TOUR · ARTICLES LIST ============== -->
+<section class="page tour">
+  <div class="ph-wrap">
+    <div class="ph-brand"><span class="ph-mark">M</span>ConsultMD</div>
+    <div class="ph-num">17</div>
+  </div>
+  <div class="body">
+    <div class="tour-head">
+      <div class="sec-eyebrow">06 · Product Tour · Screen 02</div>
+      <h2 class="sec-title" style="font-size:20pt">Articles library.</h2>
+      <p style="margin:0;color:var(--ink-600);font-size:11pt;max-width:6.5in;line-height:1.6">The methodology, packaged as long-form articles that are phase-tagged, search-indexed, and progress-tracked per customer. Every article ties back into the Order of Operations and links forward into the deliverable that operationalizes whatever it teaches.</p>
+    </div>
+    <div class="tour-shot"><img src="images/consultmd-demo/articles-list.png" alt="Articles library"></div>
+    <div class="tour-foot">
+      <div>
+        <h4>On the screen</h4>
+        <p>Phase filters on the left, search across the top, article cards with read-status badges, a &quot;next up&quot; shelf surfacing the right article for the customer&apos;s current build phase, and cross-links throughout to the deliverables and forms each article references.</p>
+      </div>
+      <div>
+        <h4>Tier access</h4>
+        <p><span class="tier-tag">Blueprint</span> All 11 Tier-1 articles. <span class="tier-tag">Navigator</span> adds 3 more articles. <span class="tier-tag">Operator</span> adds 4 expert articles and templates on top.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== TOUR · ARTICLE READER ============== -->
+<section class="page tour">
+  <div class="ph-wrap">
+    <div class="ph-brand"><span class="ph-mark">M</span>ConsultMD</div>
+    <div class="ph-num">18</div>
+  </div>
+  <div class="body">
+    <div class="tour-head">
+      <div class="sec-eyebrow">06 · Product Tour · Screen 03</div>
+      <h2 class="sec-title" style="font-size:20pt">Article reader.</h2>
+      <p style="margin:0;color:var(--ink-600);font-size:11pt;max-width:6.5in;line-height:1.6">Long-form reading at roughly magazine quality, with inline pro tips and warning callouts woven through the body, linked deliverables that open in a side panel without losing reading position, and progress that saves automatically as the customer moves through.</p>
+    </div>
+    <div class="tour-shot"><img src="images/consultmd-demo/article-reader.png" alt="Article reader"></div>
+    <div class="tour-foot">
+      <div>
+        <h4>On the screen</h4>
+        <p>Reading-position memory, inline media, pro-tip and warning rails alongside the body, the related-deliverable panel that opens in-line, and a next-article funnel that keeps the customer moving through the library in sequence.</p>
+      </div>
+      <div>
+        <h4>Why we built it</h4>
+        <p>Customers don&apos;t read long PDFs at scale, but they will read good web pages. The reader is the conversion surface for the methodology itself, which is why we built it instead of just delivering everything as downloads.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== TOUR · MY BUILD ============== -->
+<section class="page tour">
+  <div class="ph-wrap">
+    <div class="ph-brand"><span class="ph-mark">M</span>ConsultMD</div>
+    <div class="ph-num">19</div>
+  </div>
+  <div class="body">
+    <div class="tour-head">
+      <div class="sec-eyebrow">06 · Product Tour · Screen 04</div>
+      <h2 class="sec-title" style="font-size:20pt">My Build.</h2>
+      <p style="margin:0;color:var(--ink-600);font-size:11pt;max-width:6.5in;line-height:1.6">The interactive build guide, walking the customer through 48 phase-grouped steps in a two-level accordion. Each step works as a mini-deliverable on its own, with an explanation, links to references, action items, and a completion checkbox, and the page auto-advances to the next step once the current one closes out.</p>
+    </div>
+    <div class="tour-shot"><img src="images/consultmd-demo/my-build.png" alt="My Build"></div>
+    <div class="tour-foot">
+      <div>
+        <h4>On the screen</h4>
+        <p>48 rich steps grouped by phase, auto-advance on completion, the Selections feature coming in Q3, and a back-channel that auto-syncs completed steps into the Timeline view so the two surfaces stay in lockstep.</p>
+      </div>
+      <div>
+        <h4>Why we built it</h4>
+        <p>This is the surface the customer opens every morning, making it the portal&apos;s stickiest page and the only one that earns daily active use rather than weekly check-ins.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== TOUR · TIMELINE ============== -->
+<section class="page tour">
+  <div class="ph-wrap">
+    <div class="ph-brand"><span class="ph-mark">M</span>ConsultMD</div>
+    <div class="ph-num">20</div>
+  </div>
+  <div class="body">
+    <div class="tour-head">
+      <div class="sec-eyebrow">06 · Product Tour · Screen 05</div>
+      <h2 class="sec-title" style="font-size:20pt">Timeline.</h2>
+      <p style="margin:0;color:var(--ink-600);font-size:11pt;max-width:6.5in;line-height:1.6">The Order of Operations visualized per build, with milestone tracking, slip warnings when phases run long, inspection windows mapped to phase, and auto-sync coming in from My Build completions. This is where the customer answers &quot;am I behind?&quot; in five seconds instead of half an hour.</p>
+    </div>
+    <div class="tour-shot"><img src="images/consultmd-demo/timeline.png" alt="Timeline"></div>
+    <div class="tour-foot">
+      <div>
+        <h4>On the screen</h4>
+        <p>A per-build Gantt chart with phase swimlanes, milestone markers, slip warnings on overdue phases, inspection windows mapped to their trades, and a current-day cursor running across the whole view.</p>
+      </div>
+      <div>
+        <h4>Why we built it</h4>
+        <p>Time is the most expensive variable in construction, so we built a surface dedicated to answering whether the build is on schedule or sliding. Customers come here whenever something feels off and need an answer in seconds.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== TOUR · BUDGET ============== -->
+<section class="page tour">
+  <div class="ph-wrap">
+    <div class="ph-brand"><span class="ph-mark">M</span>ConsultMD</div>
+    <div class="ph-num">21</div>
+  </div>
+  <div class="body">
+    <div class="tour-head">
+      <div class="sec-eyebrow">06 · Product Tour · Screen 06</div>
+      <h2 class="sec-title" style="font-size:20pt">Budget tracker.</h2>
+      <p style="margin:0;color:var(--ink-600);font-size:11pt;max-width:6.5in;line-height:1.6">Estimated, actual, and variance laid out side by side, phase-grouped, with live variance percentages that update as the customer enters costs. Tracking-only by design and never estimating, which keeps liability exposure on the numbers at zero. The honest view of where the money is going and where it&apos;s leaking.</p>
+    </div>
+    <div class="tour-shot"><img src="images/consultmd-demo/budget.png" alt="Budget tracker"></div>
+    <div class="tour-foot">
+      <div>
+        <h4>On the screen</h4>
+        <p>Phase-level rollups across the whole budget, a dedicated soft-cost section for non-construction line items, a miscellaneous bucket for anything that doesn&apos;t fit cleanly, color-coded variance indicators per row, and a one-click Excel export.</p>
+      </div>
+      <div>
+        <h4>Liability posture</h4>
+        <p>The customer enters their own estimates from their own bids, and we just render variance against actual spend as they update. We never originate a number, which keeps estimating liability at zero on our side of the line.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== TOUR · SUBS ============== -->
+<section class="page tour">
+  <div class="ph-wrap">
+    <div class="ph-brand"><span class="ph-mark">M</span>ConsultMD</div>
+    <div class="ph-num">22</div>
+  </div>
+  <div class="body">
+    <div class="tour-head">
+      <div class="sec-eyebrow">06 · Product Tour · Screen 07</div>
+      <h2 class="sec-title" style="font-size:20pt">Subcontractor tracker.</h2>
+      <p style="margin:0;color:var(--ink-600);font-size:11pt;max-width:6.5in;line-height:1.6">Every sub on the build, with their trade, contact info, insurance status, work-order status, and current bid status all in one row. This is the single source of truth on who&apos;s doing what and, more importantly, who hasn&apos;t returned the COI yet so the customer knows exactly which person to chase.</p>
+    </div>
+    <div class="tour-shot"><img src="images/consultmd-demo/subs.png" alt="Subcontractor tracker"></div>
+    <div class="tour-foot">
+      <div>
+        <h4>On the screen</h4>
+        <p>Trade-grouped sub list with status pills for insurance and work order, current bid status per sub, one-tap contact actions to text or call, and COI document attach right inline with the row.</p>
+      </div>
+      <div>
+        <h4>Tier access</h4>
+        <p><span class="tier-tag">Navigator</span><span class="tier-tag">Operator</span> Full tracker for both. Blueprint customers get the spreadsheet version of the same data.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== TOUR · FORMS / MATERIALS COMBINED ============== -->
+<section class="page tour">
+  <div class="ph-wrap">
+    <div class="ph-brand"><span class="ph-mark">M</span>ConsultMD</div>
+    <div class="ph-num">23</div>
+  </div>
+  <div class="body">
+    <div class="tour-head">
+      <div class="sec-eyebrow">06 · Product Tour · Screens 08 &amp; 09</div>
+      <h2 class="sec-title" style="font-size:20pt">Forms &amp; materials.</h2>
+      <p style="margin:0;color:var(--ink-600);font-size:11pt;max-width:6.5in;line-height:1.6">The connective tissue of the build. Work orders the homeowner fills out first and then sends to the sub, conditional and unconditional lien waivers covering both sides of payment, and a material ordering tracker tied to real lead times pulled from suppliers. Every operational artifact a build needs lives here, all of it unbranded so it travels cleanly between parties.</p>
+    </div>
+    <div class="tour-shot" style="padding:.2in .6in"><img src="images/consultmd-demo/forms.png" alt="Forms" style="max-width:6.4in"></div>
+    <div class="tour-foot" style="padding-top:.16in">
+      <div>
+        <h4>Forms library</h4>
+        <p>Work Order, COI request, Conditional Lien Waiver, Unconditional Lien Waiver, Change Order, Punch List, and Final Walkthrough Checklist. All of them fillable and all of them unbranded.</p>
+      </div>
+      <div>
+        <h4>Materials tracker</h4>
+        <p>Twenty-two pre-loaded items spread across five ordering phases, with a status dropdown that runs from Selected through Installed. It&apos;s the operational companion to the Material Lead Times article.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== 07 AI DIVIDER ============== -->
+<section class="page divider">
+  <div class="body">
+    <div class="div-num">07</div>
+    <div class="div-eyebrow">Section Seven</div>
+    <h2 class="div-title">The MD Assistant.</h2>
+    <p class="div-deck">A custom AI built into the portal, trained on the methodology and indexed on the customer&apos;s build. Available across every tier of the product. At the Operator level, installable inside the operator&apos;s own business.</p>
+  </div>
+</section>
+
+<!-- ============== 07 AI CONTENT ============== -->
+<section class="page">
+  <div class="ph-wrap">
+    <div class="ph-brand"><span class="ph-mark">M</span>ConsultMD</div>
+    <div class="ph-num">25</div>
+  </div>
+  <div class="body">
+    <div class="sec-eyebrow">07 · The MD Assistant</div>
+    <h2 class="sec-title">An AI layer most construction companies don&apos;t have.</h2>
+    <p class="sec-deck">ConsultMD ships with a portal-embedded AI assistant trained on the full methodology, every article in the library, and the customer&apos;s own build data. It isn&apos;t a wrapper on top of generic ChatGPT. It&apos;s a custom assistant that knows the difference between a footing pour and a slab pour, and between a draw schedule that protects margin and one that doesn&apos;t.</p>
+
+    <div class="cards c2" style="margin-top:.08in">
+      <div class="card">
+        <div class="card-num">Capability 01</div>
+        <div class="card-title">Trained on the methodology.</div>
+        <div class="card-body">
+          <ul>
+            <li>The full 311-task Order of Operations</li>
+            <li>All 16 deliverables and 11 articles indexed</li>
+            <li>Pro tips, warnings, and constraints baked in</li>
+            <li>Updates automatically as the methodology evolves</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-num">Capability 02</div>
+        <div class="card-title">Indexed on the build.</div>
+        <div class="card-body">
+          <ul>
+            <li>Sees budget, timeline, subs, phase, decisions</li>
+            <li>Knows what&apos;s been done and what&apos;s coming next</li>
+            <li>Answers in the customer&apos;s specific context</li>
+            <li>Pulls from documents, messages, and call history</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-num">Capability 03</div>
+        <div class="card-title">Scaled across every tier.</div>
+        <div class="card-body">
+          <ul>
+            <li>Blueprint: meaningful daily message limit</li>
+            <li>Navigator: higher limit, persistent history</li>
+            <li>Operator: effectively unlimited usage</li>
+            <li>The bigger the tier, the deeper the partner</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-num">Capability 04</div>
+        <div class="card-title">Operator AI Integration.</div>
+        <div class="card-body">
+          <ul>
+            <li>Custom AI assistant trained on their operation</li>
+            <li>JobTread workflow automation</li>
+            <li>Bid and proposal analysis pipelines</li>
+            <li>Lead intake and qualification, scoped per operator</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Why this is a moat.</strong> Most construction companies don&apos;t use AI at all. We run a custom AI stack across Flynn Development as part of how we keep operating overhead under $5K a month, and we install the same leverage inside operator clients through the Operator AI Integration add-on. The methodology and the AI layer together form a combined moat that&apos;s harder to copy than either one alone.
+    </div>
+  </div>
+</section>
+
+<!-- ============== 08 DIVIDER ============== -->
+<section class="page divider">
+  <div class="body">
+    <div class="div-num">08</div>
+    <div class="div-eyebrow">Section Eight</div>
+    <h2 class="div-title">The Operator Side.</h2>
+    <p class="div-deck">The admin platform that lets us scale to hundreds of clients without losing the white-glove feel. Multi-consultant scoping, a health-score engine, and an inbox that surfaces attention-needed clients automatically.</p>
+  </div>
+</section>
+
+<!-- ============== 08 OPERATOR ============== -->
+<section class="page">
+  <div class="ph-wrap">
+    <div class="ph-brand"><span class="ph-mark">M</span>ConsultMD</div>
+    <div class="ph-num">27</div>
+  </div>
+  <div class="body">
+    <div class="sec-eyebrow">08 · The Operator Side</div>
+    <h2 class="sec-title">Built to scale.</h2>
+    <p class="sec-deck">The bottleneck for any consulting business is the number of people you have managing clients. The Operator Platform is the admin side of ConsultMD, a multi-consultant command center designed to scale to hundreds of active clients at once without losing the white-glove feel that makes the product worth paying for in the first place.</p>
+
+    <h3 class="sub">Three-role architecture.</h3>
+    <ul class="tight">
+      <li><strong>Super Admin (Jaden),</strong> with full visibility across every client, every consultant, and every metric in the system.</li>
+      <li><strong>Consultants,</strong> scoped to their assigned subset of clients with row-level security enforced at the database level, so a consultant literally cannot see clients outside their book. Adding a new consultant takes about thirty seconds.</li>
+      <li><strong>Clients,</strong> who have an unchanged customer experience and never see the admin layer at all.</li>
+    </ul>
+
+    <h3 class="sub">The health-score engine.</h3>
+    <p>Every active client carries a computed health score from 0 to 100, recalculated on read so it always reflects current reality. Penalties stack across SLA breaches, stalled builds, low call usage, budget overruns, and prolonged inactivity. The operator dashboard surfaces attention-needed clients automatically, so clients stop falling through the cracks between consultant check-ins.</p>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-label">SLA breach</div><div class="stat-value" style="color:var(--red)">−30</div><div class="stat-sub">message past tier SLA</div></div>
+      <div class="stat"><div class="stat-label">Stalled build</div><div class="stat-value" style="color:var(--amber)">−20</div><div class="stat-sub">no phase movement</div></div>
+      <div class="stat"><div class="stat-label">Low calls</div><div class="stat-value" style="color:var(--amber)">−15</div><div class="stat-sub">vs. tier cadence</div></div>
+      <div class="stat"><div class="stat-label">Inactive</div><div class="stat-value" style="color:var(--ink-500)">−10</div><div class="stat-sub">30+ days quiet</div></div>
+    </div>
+
+    <h3 class="sub">Six admin pages.</h3>
+    <ol class="tight">
+      <li><strong>Dashboard:</strong> stats, alerts, activity feed, consultant workload.</li>
+      <li><strong>Clients:</strong> filterable table with health dots, progress %, phase, last-active.</li>
+      <li><strong>Client Detail:</strong> header, health ring, alerts, message and call history, read-only build summary.</li>
+      <li><strong>Messages:</strong> two-column inbox with response-time clocks per thread.</li>
+      <li><strong>Articles:</strong> full CRUD over the methodology library.</li>
+      <li><strong>Team:</strong> super-admin only, for inviting and assigning consultants.</li>
+    </ol>
+
+    <div class="callout">
+      <strong>Where this stands today.</strong> The data model and database migration are written, and the six-page admin UI is specced out in a 9-session build plan with session one partially complete. We&apos;re building this one carefully rather than rushing it, because the cost of getting consultant scoping wrong is much higher than the cost of taking another month to ship it right.
+    </div>
+  </div>
+</section>
+
+<!-- ============== 09 DIVIDER ============== -->
+<section class="page divider">
+  <div class="body">
+    <div class="div-num">09</div>
+    <div class="div-eyebrow">Section Nine</div>
+    <h2 class="div-title">The Business Case.</h2>
+    <p class="div-deck">$5 to $10M ARR by mid-2029 at education-multiple economics. We&apos;re targeting a $30M+ exit at standard comps. Every product, partnership, and capital decision gets measured against that outcome.</p>
+  </div>
+</section>
+
+<!-- ============== 08 BUSINESS CASE ============== -->
+<section class="page">
+  <div class="ph-wrap">
+    <div class="ph-brand"><span class="ph-mark">M</span>ConsultMD</div>
+    <div class="ph-num">29</div>
+  </div>
+  <div class="body">
+    <div class="sec-eyebrow">09 · The Business Case</div>
+    <h2 class="sec-title">$5 to $10M ARR by mid-2029.</h2>
+    <p class="sec-deck">A category-creating education business sized to land at education-multiple economics inside a three-year window. We&apos;re targeting a <strong>$30M+ exit</strong> at standard comps, and every product decision, partnership conversation, and capital decision gets measured against that outcome.</p>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-label">3-yr ARR target</div><div class="stat-value">$5 to $10M</div><div class="stat-sub">by mid-2029</div></div>
+      <div class="stat"><div class="stat-label">Exit multiple</div><div class="stat-value">6 to 12x</div><div class="stat-sub">edu / methodology comps</div></div>
+      <div class="stat"><div class="stat-label">Target exit</div><div class="stat-value">$30M+</div><div class="stat-sub">at education multiples</div></div>
+      <div class="stat"><div class="stat-label">Ownership</div><div class="stat-value">50 / 50</div><div class="stat-sub">Jaden &amp; Jason Flynn</div></div>
+    </div>
+
+    <h3 class="sub">Why education multiples, not SaaS multiples.</h3>
+    <p>SaaS multiples reward retention above almost everything else, whereas education multiples reward audience, brand, and methodology IP. ConsultMD is fundamentally a transactional product with a recurring layer sitting on top, not a recurring product with transactional add-ons, and that distinction is what puts us in the productized-education comp set rather than the construction-tech category. The two categories trade at very different multiples on exit, and the difference matters.</p>
+
+    <h3 class="sub">Illustrative path to $7.5M (year-3 midpoint).</h3>
+    <table class="unit-table">
+      <thead>
+        <tr><th>Stream</th><th class="num">Units / yr</th><th class="num">ASP</th><th class="num">Revenue</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Blueprint</td><td class="num">750</td><td class="num">$5,000</td><td class="num">$3,750,000</td></tr>
+        <tr><td>Navigator</td><td class="num">200</td><td class="num">$12,500</td><td class="num">$2,500,000</td></tr>
+        <tr><td>The Operator</td><td class="num">50</td><td class="num">$25,000</td><td class="num">$1,250,000</td></tr>
+        <tr><td colspan="3" style="text-align:right;font-weight:600">Total</td><td class="num" style="font-weight:700;color:var(--blue)">$7,500,000</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:9.5pt;color:var(--ink-500);font-style:italic">Alternatively, the recurring community layer alone carries 30 to 40% of that target at $97/mo across roughly 2,500 members ($2.9M).</p>
+
+    <h3 class="sub">Capital posture.</h3>
+    <p>The business is already profitable on a per-customer basis today, so ConsultMD doesn&apos;t actually require capital to operate. What capital does is compress the time it takes us to get to scale, and the three places dollars compound fastest are paid acquisition, the consultant-platform build, and the distribution-partner push. Any equity conversation gets sized against time compression, not survival.</p>
+  </div>
+</section>
+
+<!-- ============== 08 ECONOMICS DEEP DIVE ============== -->
+<section class="page">
+  <div class="ph-wrap">
+    <div class="ph-brand"><span class="ph-mark">M</span>ConsultMD</div>
+    <div class="ph-num">30</div>
+  </div>
+  <div class="body">
+    <div class="sec-eyebrow">09 · The Business Case (cont.)</div>
+    <h2 class="sec-title">Unit economics, plainly.</h2>
+    <p class="sec-deck">How each tier behaves at the unit level, and how that picture shifts once the recurring community layer ships in Q4 2026.</p>
+
+    <table class="unit-table">
+      <thead>
+        <tr><th>Tier</th><th class="num">ASP</th><th class="num">Gross margin</th><th>What drives the margin</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Blueprint</td><td class="num">$5,000</td><td class="num">95%+</td><td>Digital delivery, near-zero marginal cost per sale</td></tr>
+        <tr><td>Navigator</td><td class="num">$12,500</td><td class="num">~70%</td><td>16 consultant hours plus 48-hr email and text support</td></tr>
+        <tr><td>The Operator</td><td class="num">$25,000</td><td class="num">~70%</td><td>12-month JobTread + methodology install, coaching, training</td></tr>
+        <tr><td>Add-on call</td><td class="num">$500</td><td class="num">~75%</td><td>Single billable session, no support overhead</td></tr>
+        <tr><td>Community (planned)</td><td class="num">$97/mo</td><td class="num">~90%</td><td>Recurring, near-zero marginal cost per member</td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="sub">How to read this table.</h3>
+    <ul class="tight">
+      <li><strong>Blueprint is the cash machine,</strong> because every sale is fundamentally a digital-product transaction, which means the 1,001st sale costs us the same as the 100th did.</li>
+      <li><strong>Navigator is the volume tier,</strong> where most homeowners actually convert, and the margin is high enough that we can spend aggressively on paid acquisition into it.</li>
+      <li><strong>The Operator carries the brand.</strong> The per-unit margin is lower, but each Operator engagement turns one builder into a long-term advocate, a case study, and often a multi-engagement customer over time.</li>
+      <li><strong>Community is the long-term compounder</strong> once it ships, carrying Blueprint-like margin with SaaS-style retention behavior. It&apos;s the best property in the portfolio over a five-year horizon.</li>
+    </ul>
+
+    <h3 class="sub">CAC posture.</h3>
+    <p>Today the acquisition channel mix is organic, referral, and founder-led sales, so CAC is effectively zero on the first cohort. We haven&apos;t tested paid acquisition for ConsultMD yet, and the Q3 2026 push is what will establish the real number. Our reference point is custom-home acquisition at Flynn Development, which runs between <strong>$800 and $1,250</strong> per closed customer. ConsultMD&apos;s CAC could land in that same range, or come in materially lower because the product is digital, the price point is approachable, and the buyer doesn&apos;t have to trust us with their house before they can transact.</p>
+
+    <div class="callout">
+      <strong>The real upside</strong> isn&apos;t in any single tier on its own. It&apos;s the upgrade path and the community layer compounding on top of the transactional ladder underneath, which is a shape that&apos;s been validated across the productized-education category many times over.
+    </div>
+  </div>
+</section>
+
+<!-- ============== 10 DIVIDER ============== -->
+<section class="page divider">
+  <div class="body">
+    <div class="div-num">10</div>
+    <div class="div-eyebrow">Section Ten</div>
+    <h2 class="div-title">The Moat.</h2>
+    <p class="div-deck">Four layered moats that compound on top of each other rather than overlapping. Operator credibility, three-audience expansion, category creator advantage, and distribution partnerships in flight.</p>
+  </div>
+</section>
+
+<!-- ============== 09 MOAT ============== -->
+<section class="page">
+  <div class="ph-wrap">
+    <div class="ph-brand"><span class="ph-mark">M</span>ConsultMD</div>
+    <div class="ph-num">32</div>
+  </div>
+  <div class="body">
+    <div class="sec-eyebrow">10 · The Moat</div>
+    <h2 class="sec-title">Why this is defensible.</h2>
+    <p class="sec-deck">Methodology businesses are hard to copy not because the methodology itself is hard to clone (it usually isn&apos;t), but because the credibility behind it is what&apos;s actually hard to build. ConsultMD stacks four layered moats that compound on top of each other rather than overlapping.</p>
+
+    <div class="cards c2" style="margin-top:.16in">
+      <div class="card">
+        <div class="card-num">Moat 01</div>
+        <div class="card-title">Operator credibility.</div>
+        <div class="card-body">The methodology is the published playbook of an active construction team that&apos;s still building today. Flynn Development has more than doubled the business every year for the past four years and is sitting on eight figures in sales already booked for 2026. Any competing &quot;consultant&quot; without active jobsites can&apos;t credibly match this, because every claim they make comes from memory rather than from yesterday&apos;s punch list.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">Moat 02</div>
+        <div class="card-title">Three-audience expansion.</div>
+        <div class="card-body">A homeowner-only competitor caps their TAM at a few hundred thousand customers per year, and a GC-only competitor enters a market already served by Procore and BuilderTrend. By spanning homeowners, GCs, and aspiring builders against the same underlying methodology, we compound funnel capacity by close to an order of magnitude over either single-audience play.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">Moat 03</div>
+        <div class="card-title">Category creator advantage.</div>
+        <div class="card-body">There&apos;s no incumbent in cloud-based construction consulting yet, which means we get to define the category in the public conversation. That ownership extends to the language people use, the comparison frame anyone else has to push against, and the SEO ground floor for the relevant terms. First-mover narrative advantages compound quietly but powerfully over time.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">Moat 04</div>
+        <div class="card-title">Distribution partnerships in flight.</div>
+        <div class="card-body">We have active conversations underway with a top-10 home-product distributor (Builders FirstSource, a $13.8B business). A working partnership there inserts ConsultMD directly into the trade channel customers already buy from, which is a distribution moat no education-only competitor can match working alone.</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>What we don&apos;t defend with.</strong> We don&apos;t defend with software complexity, because anyone could clone the portal in 90 days if they wanted to. The real moat is the methodology, the credibility behind it, and the audience reach we&apos;ve built around it. Those three things compound over time, but the software itself doesn&apos;t.
+    </div>
+  </div>
+</section>
+
+<!-- ============== 11 DIVIDER ============== -->
+<section class="page divider">
+  <div class="body">
+    <div class="div-num">11</div>
+    <div class="div-eyebrow">Section Eleven</div>
+    <h2 class="div-title">The Roadmap &amp; The Ask.</h2>
+    <p class="div-deck">The next twelve months are sequenced and underway. Three kinds of conversations we&apos;re open to: equity partners, distribution partners, and operator intros from founders of education-multiple companies.</p>
+  </div>
+</section>
+
+<!-- ============== 10 ROADMAP & ASK ============== -->
+<section class="page">
+  <div class="ph-wrap">
+    <div class="ph-brand"><span class="ph-mark">M</span>ConsultMD</div>
+    <div class="ph-num">34</div>
+  </div>
+  <div class="body">
+    <div class="sec-eyebrow">11 · The Roadmap</div>
+    <h2 class="sec-title">The next twelve months.</h2>
+    <p class="sec-deck">Sequenced to compound, with each block building the foundation for the next one. None of what follows is speculative; every item is either in active build right now or specced out in a build plan ready to start.</p>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-q">Q3 2026 · Now through August</div>
+        <div class="timeline-title">Operator Platform &amp; Selections.</div>
+        <div class="timeline-desc">The multi-consultant admin platform across six pages, alongside the health-score engine and an SLA-aware inbox. Running in parallel, the Selections feature lands inside My Build as the homeowner&apos;s daily decision surface for finishes, fixtures, and options.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-q">Q3 2026 · Parallel</div>
+        <div class="timeline-title">MD Assistant. The AI layer.</div>
+        <div class="timeline-desc">A portal-embedded AI assistant trained on the full methodology, the customer&apos;s own build data, and the article library underneath. Available across all tiers with daily message limits scaled by tier, and its job is to answer &quot;what should I do next?&quot; inside the customer&apos;s specific context instead of generically.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-q">Q3 2026 · Funnel</div>
+        <div class="timeline-title">Landing page &amp; paid acquisition.</div>
+        <div class="timeline-desc">A hybrid funnel combining free articles, a VSL, and an application form. The first paid-traffic test budgets $25K against the Blueprint offer. The Q3 push establishes ConsultMD&apos;s actual CAC against our current custom-home customer acquisition cost of $800 to $1,250.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-q">Q4 2026 · Community</div>
+        <div class="timeline-title">Community &amp; cohort layer.</div>
+        <div class="timeline-desc">A $97 per month recurring community membership, plus an 8-week cohort program for aspiring builders priced between $1,500 and $3,000. This is the recurring-revenue compounder that sits on top of the transactional ladder underneath.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-q">Q1 2027 · Distribution</div>
+        <div class="timeline-title">Distribution partnership launch.</div>
+        <div class="timeline-desc">The white-label and licensing model ships in Q1 2027, putting ConsultMD into the trade channel customers already use. Builders FirstSource is the first conversation underway, but it isn&apos;t the only one.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== ASK PAGE ============== -->
+<section class="page">
+  <div class="ph-wrap">
+    <div class="ph-brand"><span class="ph-mark">M</span>ConsultMD</div>
+    <div class="ph-num">35</div>
+  </div>
+  <div class="body">
+    <div class="sec-eyebrow">11 · The Ask</div>
+    <h2 class="sec-title">Three conversations worth having.</h2>
+    <p class="sec-deck">We&apos;re not raising blind capital. What we&apos;re looking for is a specific shape of partner that compresses the time to a $5 to $10M ARR business, and there are three different conversations that could deliver that. Here&apos;s what each one looks like in practice.</p>
+
+    <div class="cards c3">
+      <div class="card">
+        <div class="card-num">Conversation 01</div>
+        <div class="card-title">Equity partners.</div>
+        <div class="card-body">Operators who actively back education-multiple businesses and understand how that model behaves over time. Capital from this kind of partner gets deployed against time-compression, mostly on paid acquisition, the community-layer build, and the distribution-partnership push. We&apos;re open to whatever structure works for both sides of the table.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">Conversation 02</div>
+        <div class="card-title">Distribution partners.</div>
+        <div class="card-body">Anyone with a builder or homeowner network already in motion, including distributors, lenders, and supplier brands. The fit is that ConsultMD becomes the methodology layer their customers learn from, which gives them a value-add their competitors can&apos;t match. In exchange, we get distribution into a funnel we&apos;d otherwise have to build from scratch.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">Conversation 03</div>
+        <div class="card-title">Operator intros.</div>
+        <div class="card-body">Founders of education-multiple companies who have already walked the path we&apos;re on. Productized-consulting operators, methodology-business founders, anyone whose experience compresses a decision we&apos;d otherwise make slowly. The fastest way to skip the avoidable mistakes is to talk with people who already made them.</div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:.28in">
+      <strong>What we&apos;re not asking for.</strong> We aren&apos;t looking for a project-management SaaS investor, a construction-vertical fund, or a strategic looking to bolt ConsultMD onto an existing operations stack. The category bet only works at education-multiple economics, and anything that pulls us toward a SaaS or construction-tech frame pulls us off that target.
+    </div>
+
+    <h3 class="sub">If something here resonates.</h3>
+    <p>Reach out anytime. The portal is live and demoable end to end today, the numbers in this brief defend themselves in about thirty minutes of conversation, and the next twelve months are already sequenced and underway.</p>
+  </div>
+</section>
+
+<!-- ============== BACK COVER ============== -->
+<section class="page back">
+  <div class="body">
+    <div>
+      <div class="kicker" style="color:var(--blue)">Modern Development · ConsultMD</div>
+      <h2 class="back-h" style="margin-top:.2in">Design. Construct. <em style="color:var(--blue);font-style:italic">Transform.</em></h2>
+      <p style="font-size:13pt;color:var(--ink-600);max-width:5.5in;margin-top:.18in;line-height:1.55">A category-defining construction consultancy built inside an active construction team. The portal is demoable today, the methodology is already shipped, the next twelve months are capitalized, and we&apos;re open for the right conversations.</p>
+    </div>
+
+    <div>
+      <div class="back-meta">
+        <div>
+          <h5>Co-Founder</h5>
+          <p>Jaden Flynn<br/><span style="font-weight:400;color:var(--ink-600);font-size:10pt">Co-Founder, Modern Development</span></p>
+        </div>
+        <div>
+          <h5>Co-Founder</h5>
+          <p>Jason Flynn<br/><span style="font-weight:400;color:var(--ink-600);font-size:10pt">Co-Founder, Modern Development</span></p>
+        </div>
+        <div>
+          <h5>Location</h5>
+          <p>Cookeville, Tennessee</p>
+        </div>
+        <div>
+          <h5>Contact</h5>
+          <p>jaden@moderndevelopment.co</p>
+        </div>
+      </div>
+
+      <p class="note" style="margin-top:.4in;text-align:center">This brief is a snapshot in time. The portal evolves weekly.</p>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

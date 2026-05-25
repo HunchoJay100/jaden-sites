@@ -1,0 +1,737 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>The Operator · ConsultMD</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFFFFF;
+  --canvas:#F7F8FA;
+  --ink-900:#0B1220;
+  --ink-800:#1A2332;
+  --ink-700:#344054;
+  --ink-600:#475467;
+  --ink-500:#667085;
+  --ink-400:#98A2B3;
+  --ink-300:#D0D5DD;
+  --ink-200:#E4E7EC;
+  --ink-100:#EAECF0;
+  --ink-50:#F2F4F7;
+  --blue:#2563EB;
+  --blue-600:#1D4ED8;
+  --blue-500:#3B82F6;
+  --blue-50:#EFF6FF;
+  --blue-100:#DBEAFE;
+  --green:#12B76A;
+  --green-50:#ECFDF3;
+  --amber:#F79009;
+  --line:#EAECF0;
+}
+
+*{box-sizing:border-box;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+html,body{margin:0;padding:0;background:var(--canvas)}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  color:var(--ink-900);
+  font-size:16px;line-height:1.5;letter-spacing:-.003em;
+}
+
+h1,h2,h3,h4{margin:0;font-weight:600;letter-spacing:-.018em;line-height:1.15}
+p{margin:0 0 1em;color:var(--ink-600);line-height:1.65}
+strong{color:var(--ink-900);font-weight:600}
+a{color:inherit;text-decoration:none}
+
+.wrap{max-width:1180px;margin:0 auto;padding:0 32px}
+.narrow{max-width:880px;margin:0 auto;padding:0 32px}
+
+/* ============ TOP NAV ============ */
+.nav{
+  background:#fff;border-bottom:1px solid var(--line);
+  position:sticky;top:0;z-index:50;
+}
+.nav-inner{
+  max-width:1180px;margin:0 auto;padding:18px 32px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:15px;letter-spacing:-.015em}
+.brand-mark{
+  width:30px;height:30px;background:var(--ink-900);border-radius:7px;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-weight:800;font-size:14px;letter-spacing:-.5px;
+}
+.brand-text{color:var(--ink-900)}
+.brand-text span{color:var(--ink-400);font-weight:500}
+.nav-cta{
+  background:var(--ink-900);color:#fff;
+  padding:9px 18px;border-radius:8px;font-size:13.5px;font-weight:500;
+  transition:.15s;
+}
+.nav-cta:hover{background:var(--blue)}
+
+/* ============ HERO ============ */
+.hero{
+  background:linear-gradient(165deg,#0B1220 0%,#1D2A44 50%,#16263F 100%);
+  color:#fff;position:relative;overflow:hidden;
+  padding:96px 0 112px;
+}
+.hero::before{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(circle at 88% 18%, rgba(37,99,235,.5), transparent 55%),
+    radial-gradient(circle at 5% 90%, rgba(37,99,235,.18), transparent 50%);
+  pointer-events:none;
+}
+.hero-inner{position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:0 32px}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#9CB4F4;font-weight:600;
+  padding:8px 14px;border:1px solid rgba(156,180,244,.3);border-radius:999px;background:rgba(37,99,235,.08);
+  margin-bottom:32px;
+}
+.hero-dot{width:6px;height:6px;border-radius:50%;background:var(--blue);box-shadow:0 0 12px var(--blue)}
+.hero-h{
+  font-size:72px;line-height:1.04;letter-spacing:-.028em;font-weight:700;
+  max-width:14ch;margin:0 0 28px;
+}
+.hero-h em{font-style:italic;font-weight:500;color:#BFD0FB}
+.hero-sub{
+  font-size:19px;line-height:1.55;color:rgba(255,255,255,.78);
+  max-width:640px;margin:0 0 44px;font-weight:400;letter-spacing:-.005em;
+}
+.hero-cta-row{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.btn-primary{
+  background:#fff;color:var(--ink-900);
+  padding:14px 24px;border-radius:10px;font-size:15px;font-weight:600;letter-spacing:-.005em;
+  display:inline-flex;align-items:center;gap:8px;
+  transition:.15s;
+}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(255,255,255,.18)}
+.btn-secondary{
+  background:transparent;color:#fff;border:1px solid rgba(255,255,255,.3);
+  padding:14px 24px;border-radius:10px;font-size:15px;font-weight:500;
+  display:inline-flex;align-items:center;gap:8px;
+  transition:.15s;
+}
+.btn-secondary:hover{background:rgba(255,255,255,.08)}
+.btn-arrow{font-size:18px;line-height:1}
+
+.hero-meta{
+  display:flex;gap:56px;margin-top:72px;padding-top:36px;
+  border-top:1px solid rgba(255,255,255,.12);
+}
+.hero-meta-block{font-size:13px}
+.hero-meta-label{color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.14em;font-size:11px;margin-bottom:8px;font-weight:600}
+.hero-meta-value{color:#fff;font-weight:600;font-size:17px;letter-spacing:-.012em}
+.hero-meta-value small{font-weight:400;color:rgba(255,255,255,.6);font-size:12px;margin-left:4px}
+
+/* ============ PROOF SECTION ============ */
+.proof{
+  background:#fff;
+  padding:88px 0;
+  border-bottom:1px solid var(--line);
+}
+.proof-grid{
+  display:grid;grid-template-columns:1.1fr 1.4fr;gap:64px;align-items:center;
+}
+.proof-eyebrow{
+  font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--blue);font-weight:600;margin-bottom:16px;
+}
+.proof-h{
+  font-size:42px;line-height:1.1;letter-spacing:-.02em;font-weight:700;color:var(--ink-900);
+  margin-bottom:20px;max-width:13ch;
+}
+.proof-sub{font-size:17px;line-height:1.6;color:var(--ink-600);max-width:36ch}
+
+.proof-stat-card{
+  background:var(--canvas);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:36px 40px;
+  position:relative;
+}
+.proof-row{
+  display:flex;justify-content:space-between;align-items:baseline;
+  padding:18px 0;border-bottom:1px solid var(--line);
+}
+.proof-row:last-child{border-bottom:0;padding-bottom:0}
+.proof-row:first-child{padding-top:0}
+.proof-row-label{font-size:14.5px;color:var(--ink-600);letter-spacing:-.005em}
+.proof-row-value{font-size:30px;font-weight:700;color:var(--ink-900);letter-spacing:-.022em;font-variant-numeric:tabular-nums;line-height:1}
+.proof-row-value small{font-size:13px;color:var(--ink-500);font-weight:500;margin-left:6px;letter-spacing:0}
+.proof-row.headline .proof-row-value{color:var(--blue);font-size:38px}
+.proof-row.headline .proof-row-label{color:var(--ink-900);font-weight:600;font-size:16px}
+
+.proof-footer{
+  margin-top:24px;font-size:13px;color:var(--ink-500);font-style:italic;
+  border-top:1px dashed var(--ink-200);padding-top:18px;
+}
+
+/* ============ WHO IT'S FOR ============ */
+.who{
+  background:var(--canvas);
+  padding:88px 0;
+}
+.section-head{
+  text-align:center;margin-bottom:56px;
+}
+.section-eyebrow{
+  font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--blue);font-weight:600;margin-bottom:14px;
+}
+.section-h{
+  font-size:42px;line-height:1.12;letter-spacing:-.02em;font-weight:700;color:var(--ink-900);
+  margin-bottom:14px;max-width:18ch;margin-left:auto;margin-right:auto;
+}
+.section-sub{
+  font-size:17px;line-height:1.6;color:var(--ink-600);max-width:60ch;margin:0 auto;
+}
+
+.who-cards{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.who-card{
+  background:#fff;border:1px solid var(--line);border-radius:16px;
+  padding:36px 36px 32px;
+}
+.who-card-num{
+  font-size:11px;color:var(--blue);letter-spacing:.18em;font-weight:600;text-transform:uppercase;margin-bottom:14px;
+}
+.who-card-h{
+  font-size:24px;font-weight:700;letter-spacing:-.018em;color:var(--ink-900);margin-bottom:14px;line-height:1.2;
+}
+.who-card-p{font-size:15px;color:var(--ink-600);line-height:1.65;margin-bottom:20px}
+.who-card-checklist{list-style:none;padding:0;margin:0}
+.who-card-checklist li{
+  font-size:14px;color:var(--ink-700);line-height:1.55;
+  padding:7px 0 7px 26px;position:relative;
+}
+.who-card-checklist li::before{
+  content:"";position:absolute;left:0;top:13px;
+  width:12px;height:12px;border-radius:50%;background:var(--blue-50);
+  border:2px solid var(--blue);
+}
+
+/* ============ THE PACKAGE ============ */
+.package{
+  background:#fff;
+  padding:96px 0;
+}
+.pillars{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:8px}
+.pillar{
+  background:var(--canvas);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:32px 32px 28px;
+  position:relative;
+  display:flex;flex-direction:column;
+}
+.pillar.lead{
+  background:linear-gradient(160deg,#0B1220 0%,#1D2A44 100%);
+  color:#fff;
+  border-color:transparent;
+  grid-column:span 2;
+}
+.pillar-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px;gap:24px}
+.pillar-tag{
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;color:var(--blue);
+}
+.pillar.lead .pillar-tag{color:#9CB4F4}
+.pillar-quantity{
+  font-size:13px;color:var(--ink-500);font-weight:500;
+  background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 12px;
+  white-space:nowrap;flex-shrink:0;
+}
+.pillar.lead .pillar-quantity{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.18);color:#BFD0FB}
+.pillar-h{
+  font-size:22px;font-weight:700;letter-spacing:-.018em;line-height:1.2;color:var(--ink-900);margin-bottom:10px;
+}
+.pillar.lead .pillar-h{color:#fff;font-size:30px;letter-spacing:-.022em}
+.pillar-p{font-size:14.5px;color:var(--ink-600);line-height:1.65;margin-bottom:18px}
+.pillar.lead .pillar-p{color:rgba(255,255,255,.78);font-size:16px;max-width:60ch}
+.pillar-list{list-style:none;padding:0;margin:0}
+.pillar-list li{
+  font-size:13.5px;color:var(--ink-700);line-height:1.55;
+  padding:6px 0 6px 22px;position:relative;
+}
+.pillar-list li::before{
+  content:"›";position:absolute;left:4px;top:4px;
+  color:var(--blue);font-weight:700;font-size:15px;
+}
+.pillar.lead .pillar-list li{color:rgba(255,255,255,.85);padding-left:24px}
+.pillar.lead .pillar-list li::before{color:#9CB4F4}
+
+/* ============ AT-A-GLANCE TABLE ============ */
+.glance{
+  background:var(--canvas);
+  padding:88px 0;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+.glance-card{
+  background:#fff;border:1px solid var(--line);border-radius:16px;
+  padding:8px;overflow:hidden;
+}
+.glance-table{width:100%;border-collapse:separate;border-spacing:0;font-size:15px}
+.glance-table th{
+  text-align:left;padding:18px 28px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ink-500);font-weight:600;background:var(--canvas);border-bottom:1px solid var(--line);
+}
+.glance-table th:last-child{text-align:right}
+.glance-table td{padding:18px 28px;border-bottom:1px solid var(--ink-100);vertical-align:top}
+.glance-table tr:last-child td{border-bottom:0}
+.glance-table td:first-child{font-weight:600;color:var(--ink-900)}
+.glance-table td.q{color:var(--blue-600);font-weight:600;font-variant-numeric:tabular-nums}
+.glance-table td.fmt{color:var(--ink-600);font-size:14px;text-align:right}
+
+.totals-row{
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;
+  margin-top:32px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;
+}
+.total-cell{padding:24px 28px;border-right:1px solid var(--line)}
+.total-cell:last-child{border-right:0}
+.total-label{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-500);font-weight:600;margin-bottom:8px}
+.total-value{font-size:28px;font-weight:700;letter-spacing:-.022em;color:var(--ink-900);font-variant-numeric:tabular-nums;line-height:1}
+.total-sub{font-size:13px;color:var(--ink-500);margin-top:6px}
+
+/* ============ INVESTMENT ============ */
+.invest{
+  background:#fff;
+  padding:96px 0;
+}
+.invest-card{
+  background:linear-gradient(145deg,#0B1220 0%,#1D2A44 70%,#2563EB 200%);
+  color:#fff;border-radius:24px;
+  padding:64px 56px;position:relative;overflow:hidden;
+}
+.invest-card::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 90% 30%, rgba(37,99,235,.35), transparent 50%);
+}
+.invest-inner{position:relative;z-index:2;display:grid;grid-template-columns:1.2fr 1fr;gap:64px;align-items:center}
+.invest-eyebrow{
+  font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#9CB4F4;font-weight:600;margin-bottom:18px;
+}
+.invest-h{
+  font-size:40px;line-height:1.1;letter-spacing:-.022em;font-weight:700;color:#fff;margin-bottom:18px;
+}
+.invest-p{font-size:16.5px;line-height:1.65;color:rgba(255,255,255,.8);margin-bottom:28px;max-width:48ch}
+.invest-meta{display:flex;gap:36px;font-size:13.5px;color:rgba(255,255,255,.7)}
+.invest-meta strong{color:#fff;font-weight:600}
+
+.invest-price{
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:18px;
+  padding:36px 32px;text-align:center;backdrop-filter:blur(20px);
+}
+.invest-price-eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#9CB4F4;font-weight:600;margin-bottom:10px}
+.invest-price-big{font-size:64px;font-weight:800;color:#fff;letter-spacing:-.03em;line-height:1;margin-bottom:6px}
+.invest-price-sub{font-size:14px;color:rgba(255,255,255,.65)}
+.invest-price-cta{
+  background:#fff;color:var(--ink-900);
+  padding:14px 24px;border-radius:10px;font-size:15px;font-weight:600;
+  display:inline-flex;align-items:center;gap:8px;
+  margin-top:24px;
+  transition:.15s;
+}
+.invest-price-cta:hover{transform:translateY(-1px);box-shadow:0 12px 28px rgba(0,0,0,.2)}
+
+/* ============ OUTCOME ============ */
+.outcome{
+  background:var(--canvas);
+  padding:88px 0;
+  border-top:1px solid var(--line);
+}
+.outcome-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:48px}
+.outcome-card{
+  background:#fff;border:1px solid var(--line);border-radius:16px;
+  padding:32px 32px 30px;
+}
+.outcome-num{
+  font-size:36px;font-weight:700;color:var(--blue);letter-spacing:-.022em;line-height:1;margin-bottom:14px;font-variant-numeric:tabular-nums;
+}
+.outcome-h{font-size:18px;font-weight:600;color:var(--ink-900);margin-bottom:10px;letter-spacing:-.012em}
+.outcome-p{font-size:14.5px;color:var(--ink-600);line-height:1.6;margin:0}
+
+/* ============ CLOSING ============ */
+.closing{
+  background:#fff;padding:96px 0;text-align:center;
+  border-top:1px solid var(--line);
+}
+.closing-h{
+  font-size:48px;line-height:1.1;letter-spacing:-.024em;font-weight:700;color:var(--ink-900);
+  max-width:18ch;margin:0 auto 22px;
+}
+.closing-h em{font-style:italic;color:var(--blue)}
+.closing-p{font-size:17px;line-height:1.65;color:var(--ink-600);max-width:54ch;margin:0 auto 36px}
+.closing-cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn-primary.dark{background:var(--ink-900);color:#fff}
+.btn-primary.dark:hover{background:var(--blue)}
+
+/* ============ FOOTER ============ */
+.footer{
+  background:var(--canvas);padding:36px 0;border-top:1px solid var(--line);
+  font-size:13px;color:var(--ink-500);text-align:center;
+}
+.footer strong{color:var(--ink-700)}
+
+@media (max-width:880px){
+  .hero-h{font-size:48px}
+  .proof-grid,.who-cards,.pillars,.outcome-grid,.invest-inner{grid-template-columns:1fr;gap:32px}
+  .pillar.lead{grid-column:span 1}
+  .totals-row{grid-template-columns:1fr}
+  .total-cell{border-right:0;border-bottom:1px solid var(--line)}
+  .invest-card{padding:36px 28px}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="brand">
+      <span class="brand-mark">M</span>
+      <span class="brand-text">ConsultMD <span>/ The Operator</span></span>
+    </a>
+    <a href="#apply" class="nav-cta">Apply</a>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">
+      <span class="hero-dot"></span>
+      For working GCs &amp; aspiring builders
+    </div>
+    <h1 class="hero-h">How we run an 8-figure construction company on under <em>$5K a month</em>.</h1>
+    <p class="hero-sub">The Operator is a 12-month install for working general contractors and aspiring builders. We deploy our entire operating system inside your business, including a full JobTread setup and the methodology that runs on top of it, and we coach you to run it the way we do. Twelve months in, the system is yours, forever.</p>
+    <div class="hero-cta-row">
+      <a href="#apply" class="btn-primary">Apply for The Operator <span class="btn-arrow">→</span></a>
+      <a href="#package" class="btn-secondary">See what&apos;s inside</a>
+    </div>
+    <div class="hero-meta">
+      <div class="hero-meta-block">
+        <div class="hero-meta-label">Engagement</div>
+        <div class="hero-meta-value">12 months</div>
+      </div>
+      <div class="hero-meta-block">
+        <div class="hero-meta-label">Investment</div>
+        <div class="hero-meta-value">$25,000 <small>one-time</small></div>
+      </div>
+      <div class="hero-meta-block">
+        <div class="hero-meta-label">Touchpoints</div>
+        <div class="hero-meta-value">29 one-on-one <small>plus project work</small></div>
+      </div>
+      <div class="hero-meta-block">
+        <div class="hero-meta-label">System</div>
+        <div class="hero-meta-value">Yours forever</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE PROOF ============ -->
+<section class="proof">
+  <div class="wrap">
+    <div class="proof-grid">
+      <div>
+        <div class="proof-eyebrow">The proof</div>
+        <h2 class="proof-h">We run the model we&apos;re selling you.</h2>
+        <p class="proof-sub">Flynn Development is an 8-figure residential construction operation in Tennessee. Our total monthly overhead, including everything we pay to keep the doors open and the leads coming in, comes in under $10,000. Roughly half of that is advertising. The other half is the real operating cost of running an 8-figure construction company.</p>
+        <p class="proof-sub" style="margin-top:14px"><strong style="color:var(--ink-900)">That&apos;s what we install in your business.</strong></p>
+      </div>
+      <div class="proof-stat-card">
+        <div class="proof-row">
+          <div class="proof-row-label">Annual revenue</div>
+          <div class="proof-row-value">8 figures</div>
+        </div>
+        <div class="proof-row">
+          <div class="proof-row-label">Total monthly overhead</div>
+          <div class="proof-row-value">&lt;$10K<small>/mo</small></div>
+        </div>
+        <div class="proof-row">
+          <div class="proof-row-label">Of which is advertising</div>
+          <div class="proof-row-value">~$5K<small>/mo</small></div>
+        </div>
+        <div class="proof-row headline">
+          <div class="proof-row-label">True operating overhead</div>
+          <div class="proof-row-value">&lt;$5K<small>/mo</small></div>
+        </div>
+        <div class="proof-footer">
+          That&apos;s how an 8-figure construction company actually runs when the methodology is doing the work the overhead used to do.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHO IT'S FOR ============ -->
+<section class="who">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-eyebrow">Who it&apos;s for</div>
+      <h2 class="section-h">Two kinds of operators.</h2>
+      <p class="section-sub">The Operator is built for people running construction businesses, not for homeowners building one house. If you fall into either of these groups, this is the tier for you.</p>
+    </div>
+    <div class="who-cards">
+      <div class="who-card">
+        <div class="who-card-num">For working GCs</div>
+        <h3 class="who-card-h">You&apos;re running 2 to 15 active builds and operating out of your head.</h3>
+        <p class="who-card-p">You can run the work, but the business runs you. Margin leaks through disorganization, your team has no system to follow, and scaling beyond your personal hours feels impossible. You need a real operating system installed, not another piece of software.</p>
+        <ul class="who-card-checklist">
+          <li>You want documented process across your team</li>
+          <li>You want to stop leaking margin on sub bids</li>
+          <li>You want to scale beyond your personal capacity</li>
+          <li>You&apos;re ready to be the CEO, not the foreman</li>
+        </ul>
+      </div>
+      <div class="who-card">
+        <div class="who-card-num">For aspiring builders</div>
+        <h3 class="who-card-h">You&apos;re starting your residential construction business and want it built right from day one.</h3>
+        <p class="who-card-p">You don&apos;t want to spend three years making the expensive mistakes everyone else has already made. You want the playbook from an active operator running the model you want to run, plus the coaching to put it in motion.</p>
+        <ul class="who-card-checklist">
+          <li>You want to start lean and stay lean</li>
+          <li>You want pricing discipline from day one</li>
+          <li>You want a methodology, not a guess</li>
+          <li>You want mentorship from someone still building</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE PACKAGE ============ -->
+<section class="package" id="package">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-eyebrow">What&apos;s inside</div>
+      <h2 class="section-h">The Operator engagement, in full.</h2>
+      <p class="section-sub">Twelve months of work, organized into five pillars. Everything below is included at the $25,000 price.</p>
+    </div>
+
+    <div class="pillars">
+
+      <div class="pillar lead">
+        <div class="pillar-head">
+          <span class="pillar-tag">Pillar 01 · The Spine</span>
+          <span class="pillar-quantity">24 calls · 12 months</span>
+        </div>
+        <h3 class="pillar-h">Owner Coaching</h3>
+        <p class="pillar-p">Two one-on-one coaching calls per month with Jaden for twelve months straight. This is the heart of the engagement, where you learn to actually run a construction company instead of just building houses. The curriculum flexes to where you are, but covers the full operator stack.</p>
+        <ul class="pillar-list">
+          <li>How we run management, who reports to who, and how to remove yourself from the day-to-day</li>
+          <li>How to set pricing that actually holds margin, by trade and by project type</li>
+          <li>Marketing, leads, sales conversations, and the lifetime value math behind each one</li>
+          <li>Overhead discipline: how we keep ours under $5K a month and how to get yours there</li>
+          <li>Hiring, scaling, and when to bring on a GM versus a second crew</li>
+          <li>Vendor and sub relationships, payment terms, and the leverage you didn&apos;t know you had</li>
+        </ul>
+      </div>
+
+      <div class="pillar">
+        <div class="pillar-head">
+          <span class="pillar-tag">Pillar 02 · Team</span>
+          <span class="pillar-quantity">5 hrs live + recorded</span>
+        </div>
+        <h3 class="pillar-h">Team Training</h3>
+        <p class="pillar-p">Five one-hour training calls with your team, recorded so new hires can run through them later. We deploy the methodology across your team and make sure everyone understands how the system runs day to day.</p>
+        <ul class="pillar-list">
+          <li>Order of Operations across the trades</li>
+          <li>How to run the deliverables (work orders, COIs, lien waivers)</li>
+          <li>Daily and weekly operating rhythm</li>
+          <li>Handoffs, communication standards, and escalation</li>
+        </ul>
+      </div>
+
+      <div class="pillar">
+        <div class="pillar-head">
+          <span class="pillar-tag">Pillar 03 · The System</span>
+          <span class="pillar-quantity">First 30 days</span>
+        </div>
+        <h3 class="pillar-h">JobTread + Methodology Install</h3>
+        <p class="pillar-p">In the first month, we deploy our entire operating system inside your business. JobTread set up properly from the ground up, our methodology layered on top, and gaps in your existing process documented and fixed. When the first month closes out, you&apos;re running the same stack we run.</p>
+        <ul class="pillar-list">
+          <li>Full JobTread install: cost codes, templates, workflows, users, permissions</li>
+          <li>Custom Order of Operations adapted to your team and pipeline</li>
+          <li>Deliverables wired into your daily workflow</li>
+          <li>Rebrandable library you can white-label under your own company</li>
+          <li>Process gap audit and remediation plan</li>
+        </ul>
+      </div>
+
+      <div class="pillar">
+        <div class="pillar-head">
+          <span class="pillar-tag">Pillar 04 · The Build</span>
+          <span class="pillar-quantity">14 deliverables</span>
+        </div>
+        <h3 class="pillar-h">Project Deliverables</h3>
+        <p class="pillar-p">Spread across the 12 months and applied to one of your active builds, so you see the system run end to end on a real project. Every deliverable is hands-on, not theoretical.</p>
+        <ul class="pillar-list">
+          <li>5 milestone virtual walkthroughs (foundation, framing, MEP rough-in, drywall, final)</li>
+          <li>6 bid reviews — we tear apart sub bids before you sign them</li>
+          <li>3 full budget audits — we find leaks, exposure, and overruns before they hit</li>
+        </ul>
+      </div>
+
+      <div class="pillar">
+        <div class="pillar-head">
+          <span class="pillar-tag">Pillar 05 · Access</span>
+          <span class="pillar-quantity">12-mo support · lifetime system</span>
+        </div>
+        <h3 class="pillar-h">Support &amp; Access</h3>
+        <p class="pillar-p">A direct line for the twelve months you&apos;re in the engagement, plus the methodology, the portal, and every future update yours to keep forever. The system doesn&apos;t expire when the engagement ends.</p>
+        <ul class="pillar-list">
+          <li>24-hour text and email response for the full 12 months</li>
+          <li>Lifetime access to the operator-side portal</li>
+          <li>All current and future methodology updates</li>
+          <li>Rebrandable deliverables refreshed as we improve them</li>
+        </ul>
+      </div>
+
+      <div class="pillar" style="grid-column:span 2;background:linear-gradient(140deg,#F7F8FA 0%,#EFF6FF 100%);border:1px dashed var(--blue-100)">
+        <div class="pillar-head">
+          <span class="pillar-tag" style="color:var(--blue-600)">Pillar 06 · Optional Add-On</span>
+          <span class="pillar-quantity" style="background:#fff;border-color:var(--blue-100);color:var(--blue-600)">Scoped per operator</span>
+        </div>
+        <h3 class="pillar-h">AI Integration</h3>
+        <p class="pillar-p">We run AI heavily inside Flynn Development, and we can install the same layer in your business. Optional, scoped separately, and priced based on what you actually need. Everything from a custom AI assistant trained on your data to JobTread workflow automation and bid-analysis pipelines.</p>
+        <ul class="pillar-list">
+          <li>Custom AI assistant trained on your operation, builds, and historical data</li>
+          <li>JobTread workflow automation (draws, change orders, daily logs, document generation)</li>
+          <li>Bid and proposal analysis pipelines</li>
+          <li>Lead intake, qualification, and follow-up automation</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ AT-A-GLANCE TABLE ============ -->
+<section class="glance">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-eyebrow">At a glance</div>
+      <h2 class="section-h">Every deliverable, on one page.</h2>
+    </div>
+
+    <div class="glance-card">
+      <table class="glance-table">
+        <thead>
+          <tr><th>Deliverable</th><th>Quantity</th><th>Format</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Owner coaching calls</td><td class="q">24</td><td class="fmt">1:1 with Jaden, 60 min each</td></tr>
+          <tr><td>Team training calls</td><td class="q">5</td><td class="fmt">Live + recorded, 60 min each</td></tr>
+          <tr><td>JobTread install + configuration</td><td class="q">Full</td><td class="fmt">First 30 days, deployed in your business</td></tr>
+          <tr><td>Methodology install</td><td class="q">Full</td><td class="fmt">First 30 days, layered on JobTread</td></tr>
+          <tr><td>Milestone virtual walkthroughs</td><td class="q">5</td><td class="fmt">On your active build</td></tr>
+          <tr><td>Sub bid reviews</td><td class="q">6</td><td class="fmt">Async deep-dive review</td></tr>
+          <tr><td>Full budget audits</td><td class="q">3</td><td class="fmt">Financial controls review</td></tr>
+          <tr><td>Rebrandable deliverable library</td><td class="q">Full</td><td class="fmt">White-label under your brand</td></tr>
+          <tr><td>24-hour text + email support</td><td class="q">12 mo</td><td class="fmt">Direct line</td></tr>
+          <tr><td>Operator-side portal access</td><td class="q">Lifetime</td><td class="fmt">All future updates included</td></tr>
+          <tr><td>AI integration (optional)</td><td class="q">Add-on</td><td class="fmt">Scoped per operator, priced separately</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="totals-row">
+      <div class="total-cell">
+        <div class="total-label">One-on-one touchpoints</div>
+        <div class="total-value">29</div>
+        <div class="total-sub">Owner coaching + team training combined</div>
+      </div>
+      <div class="total-cell">
+        <div class="total-label">Project deliverables</div>
+        <div class="total-value">14</div>
+        <div class="total-sub">Walkthroughs + bid reviews + audits</div>
+      </div>
+      <div class="total-cell">
+        <div class="total-label">Engagement length</div>
+        <div class="total-value">12 mo</div>
+        <div class="total-sub">System is yours forever</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ OUTCOME ============ -->
+<section class="outcome">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-eyebrow">12 months later</div>
+      <h2 class="section-h">What you walk away with.</h2>
+      <p class="section-sub">The engagement ends. The system stays with you, forever. Here&apos;s what your business looks like on the other side.</p>
+    </div>
+    <div class="outcome-grid">
+      <div class="outcome-card">
+        <div class="outcome-num">01</div>
+        <div class="outcome-h">A real, documented operating system.</div>
+        <p class="outcome-p">Your business runs off written process instead of off your memory, with the Order of Operations adapted to your team and the deliverables wired into your daily workflow.</p>
+      </div>
+      <div class="outcome-card">
+        <div class="outcome-num">02</div>
+        <div class="outcome-h">A trained team that can run it.</div>
+        <p class="outcome-p">Your team understands the methodology, knows the rhythm, and can keep the system moving without the owner standing over every decision.</p>
+      </div>
+      <div class="outcome-card">
+        <div class="outcome-num">03</div>
+        <div class="outcome-h">Pricing and overhead discipline.</div>
+        <p class="outcome-p">You hold margin where you used to leak it, your overhead is sized to the work it actually does, and your business stops costing you more than it has to.</p>
+      </div>
+      <div class="outcome-card">
+        <div class="outcome-num">04</div>
+        <div class="outcome-h">Capacity to scale beyond yourself.</div>
+        <p class="outcome-p">You can take on more work, hire the next person, or pull back without the operation collapsing, because the operation isn&apos;t actually you anymore.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INVESTMENT ============ -->
+<section class="invest" id="apply">
+  <div class="wrap">
+    <div class="invest-card">
+      <div class="invest-inner">
+        <div>
+          <div class="invest-eyebrow">The investment</div>
+          <h2 class="invest-h">$25,000 for a system that earns it back many times over, and stays yours forever.</h2>
+          <p class="invest-p">Most operators save the $25,000 inside the first 90 days through bid review and pricing discipline alone. The rest of the engagement compounds from there, and the system you walk away with keeps compounding long after the engagement ends.</p>
+          <div class="invest-meta">
+            <div><strong>Engagement:</strong> 12 months</div>
+            <div><strong>Format:</strong> Virtual</div>
+            <div><strong>Capacity:</strong> Limited per quarter</div>
+          </div>
+        </div>
+        <div class="invest-price">
+          <div class="invest-price-eyebrow">The Operator</div>
+          <div class="invest-price-big">$25,000</div>
+          <div class="invest-price-sub">One-time · 12 months · yours forever</div>
+          <a href="#" class="invest-price-cta">Apply now <span class="btn-arrow">→</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CLOSING ============ -->
+<section class="closing">
+  <div class="narrow">
+    <h2 class="closing-h">Built by an operator <em>still building.</em></h2>
+    <p class="closing-p">We&apos;re selective about who we work with. The Operator is for people who are ready to install a real system, not buyers looking for a magic bullet. If that&apos;s you, the next step is the application.</p>
+    <div class="closing-cta-row">
+      <a href="#apply" class="btn-primary dark">Apply for The Operator <span class="btn-arrow">→</span></a>
+      <a href="mailto:jaden@moderndevelopment.co" class="btn-secondary" style="color:var(--ink-900);border-color:var(--ink-200)">Email Jaden directly</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div>
+    <strong>ConsultMD</strong> · Modern Development · Cookeville, Tennessee · jaden@moderndevelopment.co
+  </div>
+</footer>
+
+</body>
+</html>
