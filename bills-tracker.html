@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flynn Development · Bills Tracker</title>
+<style>
+  :root {
+    --bg: #0b0d10;
+    --surface: #14181d;
+    --surface-2: #1c2127;
+    --surface-3: #242a32;
+    --border: rgba(197, 165, 90, 0.15);
+    --border-strong: rgba(197, 165, 90, 0.42);
+    --gold: #c5a55a;
+    --gold-soft: #d9bf80;
+    --text: #ececec;
+    --text-dim: #9aa0a6;
+    --text-faint: #6b7280;
+    --paid: #4ade80;
+    --paid-bg: rgba(74, 222, 128, 0.12);
+    --open: #fbbf24;
+    --open-bg: rgba(251, 191, 36, 0.12);
+    --hold: #f87171;
+    --hold-bg: rgba(248, 113, 113, 0.12);
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.4);
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.45), 0 2px 6px rgba(0,0,0,0.3);
+    --shadow-lg: 0 20px 50px rgba(0,0,0,0.6), 0 6px 16px rgba(0,0,0,0.4);
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    font-size: 15px;
+  }
+  body {
+    padding: 32px 24px 96px;
+  }
+  .wrap {
+    width: 100%;
+    max-width: 880px;
+    margin: 0 auto;
+  }
+
+  /* HEADER */
+  header { margin-bottom: 24px; }
+  .eyebrow {
+    color: var(--gold);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  h1 {
+    font-family: "SF Pro Display", -apple-system, system-ui, sans-serif;
+    font-size: 34px;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    margin-bottom: 6px;
+  }
+  .sub { color: var(--text-dim); font-size: 14px; }
+
+  /* STATS */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  @media (max-width: 760px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+  }
+  .stat {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 18px;
+    box-shadow: var(--shadow-sm);
+  }
+  .stat.gold {
+    background: linear-gradient(135deg, rgba(197,165,90,0.12), rgba(197,165,90,0.03));
+    border-color: var(--border-strong);
+  }
+  .stat-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+  }
+  .stat.gold .stat-label { color: var(--gold); }
+  .stat.danger {
+    background: linear-gradient(135deg, rgba(248,113,113,0.12), rgba(248,113,113,0.03));
+    border-color: rgba(248,113,113,0.42);
+  }
+  .stat.danger .stat-label { color: var(--hold); }
+  .stat.danger .stat-value { color: var(--hold); }
+  .stat-value {
+    font-family: "SF Pro Display", system-ui, sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+  .stat.gold .stat-value { color: var(--gold-soft); }
+  .stat-meta { font-size: 12px; color: var(--text-faint); margin-top: 4px; }
+
+  /* FILTER BAR */
+  .toolbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .tabs {
+    display: flex;
+    gap: 4px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 4px;
+  }
+  .tab {
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
+    padding: 8px 14px;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.18s var(--ease-out);
+    font-family: inherit;
+    font-variant-numeric: tabular-nums;
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active {
+    background: var(--surface-3);
+    color: var(--gold);
+  }
+  .tab .count {
+    margin-left: 6px;
+    color: var(--text-faint);
+    font-size: 11px;
+  }
+  .tab.active .count { color: var(--gold-soft); }
+  .spacer { flex: 1; }
+  .btn {
+    background: var(--gold);
+    color: #0b0d10;
+    border: none;
+    padding: 9px 16px;
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    transition: transform 0.2s var(--ease-spring), filter 0.2s ease;
+    font-family: inherit;
+  }
+  .btn:hover { transform: translateY(-1px); filter: brightness(1.05); }
+  .btn:active { transform: translateY(0); filter: brightness(0.95); }
+  .btn.ghost {
+    background: transparent;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+  }
+  .btn.ghost:hover { color: var(--text); border-color: var(--border-strong); }
+
+  /* JOB GROUP */
+  .job {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    margin-bottom: 14px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: border-color 0.2s ease;
+  }
+  .job:hover { border-color: rgba(197,165,90,0.25); }
+  .job-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    cursor: pointer;
+    user-select: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+  }
+  .job.expanded .job-head { border-bottom-color: var(--border); }
+  .job-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .chev {
+    color: var(--text-dim);
+    transition: transform 0.25s var(--ease-out);
+    display: inline-flex;
+  }
+  .job.expanded .chev { transform: rotate(90deg); }
+  .job-name {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .job-totals {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-variant-numeric: tabular-nums;
+  }
+  .job-open {
+    font-size: 14px;
+    color: var(--open);
+    font-weight: 600;
+  }
+  .job-open.zero { color: var(--text-faint); font-weight: 500; }
+  .job-paid {
+    font-size: 12px;
+    color: var(--text-faint);
+  }
+
+  /* ITEMS */
+  .items {
+    display: none;
+    padding: 6px 0;
+  }
+  .job.expanded .items { display: block; }
+  .item {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto auto;
+    gap: 12px;
+    align-items: center;
+    padding: 10px 20px;
+    transition: background 0.15s ease;
+    position: relative;
+  }
+  .item:hover { background: var(--surface-2); }
+  .item:hover .actions { opacity: 1; }
+  .pill {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: filter 0.15s ease;
+    min-width: 56px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+  }
+  .pill:hover { filter: brightness(1.15); }
+  .pill.paid { background: var(--paid-bg); color: var(--paid); }
+  .pill.open { background: var(--open-bg); color: var(--open); }
+  .pill.hold { background: var(--hold-bg); color: var(--hold); }
+  .desc {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.4;
+  }
+  .desc .note {
+    display: block;
+    color: var(--text-faint);
+    font-size: 11.5px;
+    margin-top: 2px;
+    letter-spacing: 0.01em;
+  }
+  .amt {
+    font-family: "SF Pro Display", system-ui, sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: var(--gold-soft);
+    min-width: 90px;
+    text-align: right;
+  }
+  .item.paid .amt { color: var(--text-dim); text-decoration: line-through; text-decoration-color: rgba(255,255,255,0.2); }
+  .rec-pill {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 5px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    border: 1px solid;
+    background: transparent;
+    font-family: inherit;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .rec-pill:hover { filter: brightness(1.18); transform: translateY(-1px); }
+  .rec-pill.recorded {
+    border-color: rgba(74, 222, 128, 0.45);
+    color: var(--paid);
+    background: rgba(74, 222, 128, 0.08);
+  }
+  .rec-pill.not-recorded {
+    border-color: rgba(248, 113, 113, 0.45);
+    color: var(--hold);
+    background: rgba(248, 113, 113, 0.10);
+  }
+  .actions {
+    display: flex;
+    gap: 4px;
+    opacity: 0;
+    transition: opacity 0.18s ease;
+  }
+  .icon-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-faint);
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    transition: color 0.15s ease, background 0.15s ease;
+  }
+  .icon-btn:hover { color: var(--text); background: var(--surface-3); }
+  .icon-btn svg { width: 14px; height: 14px; stroke-width: 2; stroke: currentColor; fill: none; }
+  .icon-btn.danger:hover { color: var(--hold); }
+  .add-row {
+    padding: 8px 20px 14px;
+  }
+  .add-row .btn {
+    width: 100%;
+    background: transparent;
+    color: var(--text-dim);
+    border: 1px dashed var(--border);
+    font-weight: 500;
+  }
+  .add-row .btn:hover {
+    color: var(--gold);
+    border-color: var(--border-strong);
+    background: rgba(197,165,90,0.04);
+    transform: none;
+  }
+
+  /* MODAL */
+  .backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 7, 10, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 50;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  .backdrop.show { display: flex; opacity: 1; }
+  .modal {
+    width: 100%;
+    max-width: 440px;
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: var(--shadow-lg);
+    transform: scale(0.95);
+    transition: transform 0.25s var(--ease-spring);
+  }
+  .backdrop.show .modal { transform: scale(1); }
+  .modal h2 {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 18px;
+  }
+  .field { margin-bottom: 14px; }
+  .field label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+  .field input, .field select {
+    width: 100%;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 11px 13px;
+    border-radius: 9px;
+    font-size: 14px;
+    font-family: inherit;
+    transition: border-color 0.15s ease;
+    font-variant-numeric: tabular-nums;
+  }
+  .field input:focus, .field select:focus {
+    outline: none;
+    border-color: var(--border-strong);
+  }
+  .row2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .modal-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 18px;
+    justify-content: flex-end;
+  }
+
+  /* SMALL */
+  @media (max-width: 600px) {
+    .stats { grid-template-columns: 1fr; }
+    .item { grid-template-columns: auto 1fr auto; row-gap: 6px; }
+    .amt { grid-column: 2 / 3; text-align: left; }
+    .rec-pill { grid-column: 3 / 4; }
+    .actions { grid-column: 1 / 4; justify-content: flex-end; opacity: 1; }
+  }
+
+  footer {
+    margin-top: 32px;
+    font-size: 11px;
+    color: var(--text-faint);
+    text-align: center;
+    letter-spacing: 0.06em;
+  }
+  footer .accent { color: var(--gold); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Flynn Development</div>
+    <h1>Bills Tracker</h1>
+    <p class="sub">Tap a status pill to cycle <strong style="color: var(--paid)">PAID</strong> → <strong style="color: var(--open)">OPEN</strong> → <strong style="color: var(--hold)">HOLD</strong>. Hover a row for edit / delete.</p>
+  </header>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-label">Open</div>
+      <div class="stat-value" id="openTotal">$0.00</div>
+      <div class="stat-meta" id="openCount">0 bills</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">On Hold</div>
+      <div class="stat-value" id="holdTotal">$0.00</div>
+      <div class="stat-meta" id="holdCount">0 bills</div>
+    </div>
+    <div class="stat gold">
+      <div class="stat-label">Paid</div>
+      <div class="stat-value" id="paidTotal">$0.00</div>
+      <div class="stat-meta" id="paidCount">0 bills</div>
+    </div>
+    <div class="stat danger">
+      <div class="stat-label">To Record</div>
+      <div class="stat-value" id="unrecordedTotal">$0.00</div>
+      <div class="stat-meta" id="unrecordedCount">0 bills</div>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <div class="tabs">
+      <button class="tab active" data-filter="all">All <span class="count" id="cAll">0</span></button>
+      <button class="tab" data-filter="open">Open <span class="count" id="cOpen">0</span></button>
+      <button class="tab" data-filter="hold">Hold <span class="count" id="cHold">0</span></button>
+      <button class="tab" data-filter="paid">Paid <span class="count" id="cPaid">0</span></button>
+    </div>
+    <div class="spacer"></div>
+    <button class="btn ghost" id="exportBtn">Export CSV</button>
+    <button class="btn" id="addBtn">+ Add Bill</button>
+  </div>
+
+  <div id="jobs"></div>
+
+  <footer>Flynn Development · <span class="accent">Bills Tracker</span> · saved locally in this browser</footer>
+</div>
+
+<!-- MODAL -->
+<div class="backdrop" id="backdrop">
+  <div class="modal">
+    <h2 id="modalTitle">Add Bill</h2>
+    <div class="field">
+      <label>Job</label>
+      <input list="jobList" id="fJob" placeholder="e.g. Martin Road">
+      <datalist id="jobList"></datalist>
+    </div>
+    <div class="field">
+      <label>Description</label>
+      <input id="fDesc" placeholder="e.g. Cabinets, Doors & trim, Concrete labor">
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label>Amount</label>
+        <input id="fAmt" type="number" step="0.01" placeholder="0.00">
+      </div>
+      <div class="field">
+        <label>Status</label>
+        <select id="fStatus">
+          <option value="open">Open</option>
+          <option value="paid">Paid</option>
+          <option value="hold">Hold</option>
+        </select>
+      </div>
+    </div>
+    <div class="field">
+      <label>Note (vendor, invoice #, etc.)</label>
+      <input id="fNote" placeholder="optional — e.g. Holman's #9134, BFS, Affordable Driveways">
+    </div>
+    <div class="modal-actions">
+      <button class="btn ghost" id="cancelBtn">Cancel</button>
+      <button class="btn" id="saveBtn">Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const STORAGE_KEY = 'flynndev_bills_v1';
+  const EXPANDED_KEY = 'flynndev_bills_expanded_v1';
+
+  const SEED = [
+    { id: 1,  job: 'Reco',          desc: 'Cabinets',          amt: 2037.00,  status: 'paid', note: "Holman's #9134" },
+    { id: 2,  job: 'Reco',          desc: 'Doors & trim',      amt: 2584.00,  status: 'paid', note: 'BFS' },
+    { id: 3,  job: 'Amy (Hickory Cove)', desc: 'Cabinets',     amt: 5160.50,  status: 'paid', note: "Holman's #9115", recorded: true },
+    { id: 4,  job: 'Martin Road',   desc: 'Cabinets',          amt: 7000.00,  status: 'paid', note: "Holman's #9183" },
+    { id: 5,  job: 'Martin Road',   desc: 'Concrete labor',    amt: 1552.24,  status: 'paid', note: 'Affordable Driveways #5947' },
+    { id: 6,  job: 'Martin Road',   desc: 'Doors & trim',      amt: 5315.79,  status: 'paid', note: 'BFS' },
+    { id: 7,  job: 'Lee Seminary',  desc: 'Concrete labor',    amt: 2142.96,  status: 'paid', note: 'Affordable Driveways #5922' },
+    { id: 8,  job: 'Lee Seminary',  desc: 'Doors',             amt: 4349.47,  status: 'paid', note: 'BFS' },
+    { id: 9,  job: 'Homechurch',    desc: 'Misc',              amt: 57.36,    status: 'paid', note: '' },
+    { id: 10, job: 'Parragon',      desc: 'Windows',           amt: 1766.88,  status: 'paid', note: '' },
+    { id: 11, job: 'Hice',          desc: 'Misc materials',    amt: 71.48,    status: 'paid', note: 'BFS' },
+    { id: 12, job: 'Amy (Hickory Cove)', desc: 'Water heater', amt: 548.75,   status: 'paid', note: 'Winnsupply', recorded: true },
+    { id: 13, job: 'Amy (Hickory Cove)', desc: 'Valve',        amt: 29.96,    status: 'paid', note: 'Winnsupply', recorded: true },
+    { id: 14, job: 'Amy (Hickory Cove)', desc: 'Countertops',  amt: 5038.06,  status: 'open', note: '', recorded: true },
+    { id: 15, job: 'Martin Road',   desc: 'Trim',              amt: 5200.00,  status: 'paid', note: '' },
+    { id: 16, job: 'Lee Seminary',  desc: 'Interior items',    amt: 1673.24,  status: 'paid', note: 'paid, not billed' },
+    { id: 17, job: 'Lee Seminary',  desc: 'Door knobs',        amt: 550.68,   status: 'paid', note: 'paid, not billed' },
+    { id: 18, job: 'Lee Seminary',  desc: 'Paint labor',       amt: 9223.75,  status: 'paid', note: 'paid, not billed' },
+    { id: 19, job: 'Parragon',      desc: 'Interior items',    amt: 1525.74,  status: 'paid', note: 'paid, not billed' },
+    { id: 20, job: 'Parragon',      desc: 'Sink',              amt: 317.18,   status: 'paid', note: 'paid, not billed' },
+    { id: 21, job: 'Parragon',      desc: 'Doors & trim labor', amt: 2445.00, status: 'paid', note: 'paid, not billed' },
+    { id: 22, job: 'Parragon',      desc: 'Shower labor',      amt: 1325.00,  status: 'paid', note: 'paid, not billed' },
+    { id: 23, job: 'Ty Spec 2',     desc: 'Septic permit',     amt: 500.00,   status: 'paid', note: 'paid, not billed' },
+    { id: 24, job: 'Martin Road',   desc: 'Paint',             amt: 9074.00,  status: 'paid', note: 'paid, not billed' },
+    { id: 25, job: 'Hice',          desc: 'Door installation labor', amt: 875.00, status: 'paid', note: 'paid, not billed' },
+    { id: 26, job: 'Ty Spec 1',     desc: 'Septic permit',     amt: 500.00,   status: 'paid', note: 'paid, not billed' },
+  ];
+
+  // One-time migrations for users who already have localStorage seeded
+  const MIGRATIONS_KEY = 'flynndev_bills_migrations_v1';
+  const MIGRATIONS = [
+    {
+      id: 'mig-2026-05-14-amy-winnsupply',
+      items: [
+        { job: 'Amy (Hickory Cove)', desc: 'Water heater', amt: 548.75, status: 'paid', note: 'Winnsupply' },
+        { job: 'Amy (Hickory Cove)', desc: 'Valve',        amt: 29.96,  status: 'paid', note: 'Winnsupply' },
+      ],
+    },
+    {
+      id: 'mig-2026-05-18-amy-countertops',
+      items: [
+        { job: 'Amy (Hickory Cove)', desc: 'Countertops', amt: 5038.06, status: 'open', note: '' },
+      ],
+    },
+    {
+      id: 'mig-2026-05-21-martin-road-trim',
+      items: [
+        { job: 'Martin Road', desc: 'Trim', amt: 5200.00, status: 'paid', note: '' },
+      ],
+    },
+    {
+      id: 'mig-2026-06-08-lee-seminary-paid-not-billed',
+      items: [
+        { job: 'Lee Seminary', desc: 'Interior items', amt: 1673.24, status: 'paid', note: 'paid, not billed' },
+        { job: 'Lee Seminary', desc: 'Door knobs',      amt: 550.68,  status: 'paid', note: 'paid, not billed' },
+        { job: 'Lee Seminary', desc: 'Paint labor',     amt: 9223.75, status: 'paid', note: 'paid, not billed' },
+      ],
+    },
+    {
+      id: 'mig-2026-06-08-parragon-and-ty-spec-paid-not-billed',
+      items: [
+        { job: 'Parragon',  desc: 'Interior items',     amt: 1525.74, status: 'paid', note: 'paid, not billed' },
+        { job: 'Parragon',  desc: 'Sink',               amt: 317.18,  status: 'paid', note: 'paid, not billed' },
+        { job: 'Parragon',  desc: 'Doors & trim labor', amt: 2445.00, status: 'paid', note: 'paid, not billed' },
+        { job: 'Parragon',  desc: 'Shower labor',       amt: 1325.00, status: 'paid', note: 'paid, not billed' },
+        { job: 'Ty Spec 2',   desc: 'Septic permit',      amt: 500.00,  status: 'paid', note: 'paid, not billed' },
+        { job: 'Martin Road', desc: 'Paint',              amt: 9074.00, status: 'paid', note: 'paid, not billed' },
+        { job: 'Hice',        desc: 'Door installation labor', amt: 875.00, status: 'paid', note: 'paid, not billed' },
+      ],
+    },
+    {
+      id: 'mig-2026-06-08b-ty-spec-1-permit',
+      items: [
+        { job: 'Ty Spec 1', desc: 'Septic permit', amt: 500.00, status: 'paid', note: 'paid, not billed' },
+      ],
+    },
+  ];
+
+  let bills = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null') || SEED.slice();
+  let expanded = JSON.parse(localStorage.getItem(EXPANDED_KEY) || 'null') || {};
+
+  // Apply one-time migrations (adds new seeded items into existing localStorage)
+  (function applyMigrations() {
+    const applied = JSON.parse(localStorage.getItem(MIGRATIONS_KEY) || '[]');
+    let changed = false;
+    MIGRATIONS.forEach(mig => {
+      if (applied.includes(mig.id)) return;
+      mig.items.forEach(it => {
+        const dup = bills.some(b => b.job === it.job && b.desc === it.desc && Number(b.amt) === Number(it.amt));
+        if (!dup) {
+          const newId = bills.length ? Math.max(...bills.map(x => x.id)) + 1 : 1;
+          bills.push({ id: newId, ...it, paidAt: it.status === 'paid' ? new Date().toISOString() : null });
+          changed = true;
+        }
+      });
+      applied.push(mig.id);
+    });
+    if (changed) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(bills));
+    }
+    localStorage.setItem(MIGRATIONS_KEY, JSON.stringify(applied));
+  })();
+
+  // One-time field updates for users who already have localStorage seeded
+  const FIELD_UPDATES = [
+    {
+      id: 'upd-2026-05-21-concrete-paid',
+      matches: [
+        { job: 'Martin Road', desc: 'Concrete labor', amt: 1552.24 },
+        { job: 'Lee Seminary', desc: 'Concrete labor', amt: 2142.96 },
+      ],
+      set: { status: 'paid' },
+    },
+    {
+      id: 'upd-2026-05-21-amy-all-recorded',
+      matches: [
+        { job: 'Amy (Hickory Cove)', desc: 'Cabinets',     amt: 5160.50 },
+        { job: 'Amy (Hickory Cove)', desc: 'Water heater', amt: 548.75 },
+        { job: 'Amy (Hickory Cove)', desc: 'Valve',        amt: 29.96 },
+        { job: 'Amy (Hickory Cove)', desc: 'Countertops',  amt: 5038.06 },
+      ],
+      set: { recorded: true },
+    },
+    {
+      id: 'upd-2026-06-08-gregory-paint-to-martin-road',
+      matches: [
+        { job: 'Gregory', desc: 'Paint', amt: 9074.00 },
+      ],
+      set: { job: 'Martin Road' },
+    },
+    {
+      id: 'upd-2026-06-08-fox-hill-to-hice',
+      matches: [
+        { job: 'Fox Hill', desc: 'Door installation labor', amt: 875.00 },
+      ],
+      set: { job: 'Hice' },
+    },
+  ];
+  (function applyFieldUpdates() {
+    const applied = JSON.parse(localStorage.getItem(MIGRATIONS_KEY) || '[]');
+    let changed = false;
+    FIELD_UPDATES.forEach(upd => {
+      if (applied.includes(upd.id)) return;
+      upd.matches.forEach(m => {
+        const b = bills.find(x => x.job === m.job && x.desc === m.desc && Number(x.amt) === Number(m.amt));
+        if (!b) return;
+        Object.entries(upd.set).forEach(([k, v]) => {
+          if (b[k] !== v) {
+            b[k] = v;
+            if (k === 'status' && v === 'paid' && !b.paidAt) b.paidAt = new Date().toISOString();
+            if (k === 'recorded' && v === true && !b.recordedAt) b.recordedAt = new Date().toISOString();
+            changed = true;
+          }
+        });
+      });
+      applied.push(upd.id);
+    });
+    if (changed) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(bills));
+    }
+    localStorage.setItem(MIGRATIONS_KEY, JSON.stringify(applied));
+  })();
+
+  let currentFilter = 'all';
+  let editingId = null;
+
+  const $ = (id) => document.getElementById(id);
+  const fmt = (n) => '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  function save() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(bills));
+    localStorage.setItem(EXPANDED_KEY, JSON.stringify(expanded));
+  }
+
+  function groupByJob() {
+    const m = new Map();
+    bills.forEach(b => {
+      if (!m.has(b.job)) m.set(b.job, []);
+      m.get(b.job).push(b);
+    });
+    return m;
+  }
+
+  function statusCycle(s) {
+    return s === 'paid' ? 'open' : s === 'open' ? 'hold' : 'paid';
+  }
+
+  function render() {
+    const root = $('jobs');
+    root.innerHTML = '';
+
+    let openSum = 0, paidSum = 0, holdSum = 0, unrecSum = 0;
+    let openN = 0, paidN = 0, holdN = 0, unrecN = 0;
+
+    bills.forEach(b => {
+      const a = Number(b.amt);
+      if (b.status === 'paid') { paidSum += a; paidN++; }
+      else if (b.status === 'open') { openSum += a; openN++; }
+      else if (b.status === 'hold') { holdSum += a; holdN++; }
+      if (!b.recorded) { unrecSum += a; unrecN++; }
+    });
+
+    $('openTotal').textContent = fmt(openSum);
+    $('paidTotal').textContent = fmt(paidSum);
+    $('holdTotal').textContent = fmt(holdSum);
+    $('unrecordedTotal').textContent = fmt(unrecSum);
+    $('openCount').textContent = openN + (openN === 1 ? ' bill' : ' bills');
+    $('paidCount').textContent = paidN + (paidN === 1 ? ' bill' : ' bills');
+    $('holdCount').textContent = holdN + (holdN === 1 ? ' bill' : ' bills');
+    $('unrecordedCount').textContent = unrecN + (unrecN === 1 ? ' bill' : ' bills');
+    $('cAll').textContent = bills.length;
+    $('cOpen').textContent = openN;
+    $('cPaid').textContent = paidN;
+    $('cHold').textContent = holdN;
+
+    const groups = groupByJob();
+    const visibleBills = (group) => group.filter(b => currentFilter === 'all' || b.status === currentFilter);
+
+    const jobList = $('jobList');
+    jobList.innerHTML = '';
+    [...groups.keys()].forEach(j => {
+      const o = document.createElement('option');
+      o.value = j;
+      jobList.appendChild(o);
+    });
+
+    [...groups.entries()].forEach(([jobName, items]) => {
+      const filtered = visibleBills(items);
+      if (filtered.length === 0) return;
+
+      const openInJob = items.filter(b => b.status === 'open').reduce((s, b) => s + Number(b.amt), 0);
+      const paidInJob = items.filter(b => b.status === 'paid').reduce((s, b) => s + Number(b.amt), 0);
+      const holdInJob = items.filter(b => b.status === 'hold').reduce((s, b) => s + Number(b.amt), 0);
+
+      const isExpanded = expanded[jobName] !== false;
+      const jobEl = document.createElement('div');
+      jobEl.className = 'job' + (isExpanded ? ' expanded' : '');
+
+      const head = document.createElement('div');
+      head.className = 'job-head';
+      head.innerHTML = `
+        <div class="job-title">
+          <span class="chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg></span>
+          <span class="job-name">${escapeHtml(jobName)}</span>
+        </div>
+        <div class="job-totals">
+          ${openInJob > 0 ? `<span class="job-open">${fmt(openInJob)} open</span>` : `<span class="job-open zero">— all clear —</span>`}
+          ${holdInJob > 0 ? `<span class="job-open" style="color: var(--hold)">${fmt(holdInJob)} hold</span>` : ''}
+          <span class="job-paid">${fmt(paidInJob)} paid</span>
+        </div>
+      `;
+      head.addEventListener('click', () => {
+        expanded[jobName] = !isExpanded;
+        save();
+        render();
+      });
+      jobEl.appendChild(head);
+
+      const itemsWrap = document.createElement('div');
+      itemsWrap.className = 'items';
+      filtered.forEach(b => {
+        const it = document.createElement('div');
+        it.className = 'item ' + b.status;
+        it.innerHTML = `
+          <span class="pill ${b.status}" data-id="${b.id}" data-action="status">${b.status.toUpperCase()}</span>
+          <div class="desc">
+            ${escapeHtml(b.desc)}
+            ${b.note ? `<span class="note">${escapeHtml(b.note)}</span>` : ''}
+          </div>
+          <div class="amt">${fmt(b.amt)}</div>
+          <button class="rec-pill ${b.recorded ? 'recorded' : 'not-recorded'}" data-id="${b.id}" data-action="recorded" title="Toggle whether this cost has been billed/recorded to the customer">
+            ${b.recorded ? 'RECORDED' : 'NOT RECORDED'}
+          </button>
+          <div class="actions">
+            <button class="icon-btn" data-id="${b.id}" data-action="edit" title="Edit">
+              <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            </button>
+            <button class="icon-btn danger" data-id="${b.id}" data-action="del" title="Delete">
+              <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+            </button>
+          </div>
+        `;
+        itemsWrap.appendChild(it);
+      });
+
+      const addRow = document.createElement('div');
+      addRow.className = 'add-row';
+      addRow.innerHTML = `<button class="btn" data-job="${escapeAttr(jobName)}" data-action="add-in-job">+ Add to ${escapeHtml(jobName)}</button>`;
+      itemsWrap.appendChild(addRow);
+
+      jobEl.appendChild(itemsWrap);
+      root.appendChild(jobEl);
+    });
+
+    if ([...groups.entries()].every(([_, items]) => visibleBills(items).length === 0)) {
+      root.innerHTML = `<div style="padding: 60px 20px; text-align: center; color: var(--text-faint); font-size: 14px;">No bills in this filter.</div>`;
+    }
+  }
+
+  function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function escapeAttr(s) { return escapeHtml(s); }
+
+  document.addEventListener('click', (e) => {
+    const action = e.target.closest('[data-action]')?.dataset.action;
+    if (!action) return;
+    const el = e.target.closest('[data-action]');
+    const id = el.dataset.id ? Number(el.dataset.id) : null;
+
+    if (action === 'status') {
+      const b = bills.find(x => x.id === id);
+      if (!b) return;
+      b.status = statusCycle(b.status);
+      if (b.status === 'paid') b.paidAt = new Date().toISOString();
+      save();
+      render();
+    } else if (action === 'recorded') {
+      const b = bills.find(x => x.id === id);
+      if (!b) return;
+      b.recorded = !b.recorded;
+      if (b.recorded) b.recordedAt = new Date().toISOString();
+      save();
+      render();
+    } else if (action === 'edit') {
+      const b = bills.find(x => x.id === id);
+      if (!b) return;
+      openModal(b);
+    } else if (action === 'del') {
+      if (confirm('Delete this bill?')) {
+        bills = bills.filter(x => x.id !== id);
+        save();
+        render();
+      }
+    } else if (action === 'add-in-job') {
+      const job = el.dataset.job;
+      openModal(null, job);
+    }
+  });
+
+  document.querySelectorAll('.tab').forEach(t => {
+    t.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+      currentFilter = t.dataset.filter;
+      render();
+    });
+  });
+
+  function openModal(existing = null, prefillJob = '') {
+    editingId = existing ? existing.id : null;
+    $('modalTitle').textContent = existing ? 'Edit Bill' : 'Add Bill';
+    $('fJob').value = existing ? existing.job : (prefillJob || '');
+    $('fDesc').value = existing ? existing.desc : '';
+    $('fAmt').value = existing ? existing.amt : '';
+    $('fStatus').value = existing ? existing.status : 'open';
+    $('fNote').value = existing ? (existing.note || '') : '';
+    $('backdrop').classList.add('show');
+    setTimeout(() => $('fJob').focus(), 50);
+  }
+  function closeModal() {
+    $('backdrop').classList.remove('show');
+    editingId = null;
+  }
+
+  $('addBtn').addEventListener('click', () => openModal());
+  $('cancelBtn').addEventListener('click', closeModal);
+  $('backdrop').addEventListener('click', (e) => { if (e.target.id === 'backdrop') closeModal(); });
+
+  $('saveBtn').addEventListener('click', () => {
+    const job = $('fJob').value.trim();
+    const desc = $('fDesc').value.trim();
+    const amt = parseFloat($('fAmt').value);
+    const status = $('fStatus').value;
+    const note = $('fNote').value.trim();
+    if (!job || !desc || isNaN(amt)) {
+      alert('Job, Description, and Amount are required.');
+      return;
+    }
+    if (editingId) {
+      const b = bills.find(x => x.id === editingId);
+      b.job = job; b.desc = desc; b.amt = amt; b.status = status; b.note = note;
+      if (status === 'paid' && !b.paidAt) b.paidAt = new Date().toISOString();
+    } else {
+      const newId = bills.length ? Math.max(...bills.map(x => x.id)) + 1 : 1;
+      bills.push({ id: newId, job, desc, amt, status, note, paidAt: status === 'paid' ? new Date().toISOString() : null });
+      expanded[job] = true;
+    }
+    save();
+    closeModal();
+    render();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && $('backdrop').classList.contains('show')) closeModal();
+    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter' && $('backdrop').classList.contains('show')) $('saveBtn').click();
+  });
+
+  $('exportBtn').addEventListener('click', () => {
+    const rows = [['Job','Description','Amount','Status','Recorded','Note','Paid At','Recorded At']];
+    bills.forEach(b => rows.push([b.job, b.desc, b.amt, b.status, b.recorded ? 'yes' : 'no', b.note || '', b.paidAt || '', b.recordedAt || '']));
+    const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `flynndev-bills-${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  render();
+</script>
+</body>
+</html>
