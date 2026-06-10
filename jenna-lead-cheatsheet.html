@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Jenna's Lead Playbook</title>
+<style>
+  :root{
+    --base:#FBF8F4;
+    --surface:#FFFFFF;
+    --nested:#F4F1EC;
+    --gold:#B8924A;
+    --sage:#4F9E89;
+    --blush:#E08A78;
+    --plum:#9070A8;
+    --sky:#5B93C7;
+    --txt:#23201C;
+    --txt-2:rgba(35,32,28,0.62);
+    --txt-3:rgba(35,32,28,0.40);
+    --sep:rgba(35,32,28,0.10);
+    --shadow:0 1px 3px rgba(60,50,30,0.08),0 6px 20px rgba(60,50,30,0.05);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",sans-serif;
+    background:
+      radial-gradient(1200px 500px at 80% -5%, rgba(224,138,120,0.12), transparent 60%),
+      radial-gradient(900px 400px at -10% 12%, rgba(79,158,137,0.12), transparent 55%),
+      var(--base);
+    background-attachment:fixed;
+    color:var(--txt);
+    line-height:1.5;
+    padding:0 16px calc(48px + env(safe-area-inset-bottom));
+    max-width:560px;
+    margin:0 auto;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ---- Sticky glass header ---- */
+  header{
+    position:sticky;top:0;z-index:10;
+    margin:0 -16px 24px;
+    padding:calc(22px + env(safe-area-inset-top)) 16px 18px;
+    background:rgba(251,248,244,0.72);
+    backdrop-filter:blur(18px) saturate(180%);
+    -webkit-backdrop-filter:blur(18px) saturate(180%);
+    border-bottom:1px solid var(--sep);
+  }
+  .hi{font-size:13px;font-weight:600;letter-spacing:0.3px;color:var(--blush);margin-bottom:4px;}
+  h1{font-size:30px;font-weight:700;letter-spacing:-0.9px;line-height:1.05;}
+  h1 .spark{color:var(--gold);}
+  .sub{font-size:13.5px;color:var(--txt-2);margin-top:8px;letter-spacing:0.01px;}
+  .flow{
+    display:flex;gap:6px;flex-wrap:wrap;margin-top:12px;
+  }
+  .flow span{
+    font-size:11px;font-weight:600;letter-spacing:0.2px;
+    padding:5px 10px;border-radius:9999px;background:var(--nested);color:var(--txt-2);
+  }
+  .flow span.on{background:rgba(184,146,74,0.16);color:var(--gold);}
+
+  /* ---- Section ---- */
+  section{margin-bottom:34px;animation:rise .5s cubic-bezier(.2,0,0,1) both;}
+  section:nth-of-type(1){animation-delay:.04s;}
+  section:nth-of-type(2){animation-delay:.10s;}
+  section:nth-of-type(3){animation-delay:.16s;}
+  section:nth-of-type(4){animation-delay:.22s;}
+  @keyframes rise{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+
+  .sec-label{
+    display:flex;align-items:center;gap:10px;
+    font-size:13px;font-weight:700;letter-spacing:0.4px;
+    text-transform:uppercase;color:var(--txt);margin-bottom:14px;
+  }
+  .sec-num{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:24px;height:24px;border-radius:8px;color:#fff;
+    font-size:13px;font-weight:700;
+  }
+  .n1{background:var(--sage);}
+  .n2{background:var(--blush);}
+  .n3{background:var(--sky);}
+  .n4{background:var(--gold);}
+
+  /* ---- Speaking cue ---- */
+  .cue{
+    display:inline-flex;align-items:center;gap:7px;
+    font-size:12.5px;font-style:italic;font-weight:500;
+    color:var(--plum);background:rgba(144,112,168,0.10);
+    padding:7px 12px;border-radius:9999px;margin-bottom:10px;letter-spacing:0.1px;
+  }
+
+  /* ---- Cards ---- */
+  .card{
+    background:var(--surface);border-radius:16px;padding:16px;
+    box-shadow:var(--shadow);margin-bottom:12px;
+  }
+  .card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:8px;}
+  .tag{font-size:11px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;}
+  .tag.t1{color:var(--sage);} .tag.t2{color:var(--blush);}
+  .timing{
+    font-size:11px;font-weight:600;color:var(--txt-3);
+    background:var(--nested);padding:4px 9px;border-radius:9999px;white-space:nowrap;
+  }
+  .script{font-size:17px;letter-spacing:-0.2px;line-height:1.5;color:var(--txt);}
+  .script .name{color:var(--gold);font-weight:600;}
+  .copy-hint{margin-top:12px;font-size:12px;color:var(--txt-3);display:flex;align-items:center;gap:6px;}
+  .card.copied{box-shadow:0 0 0 2px var(--sage),var(--shadow);}
+  .card.copied .copy-hint{color:var(--sage);font-weight:600;}
+
+  /* ---- Callback banner ---- */
+  .banner{
+    display:flex;align-items:center;gap:14px;
+    background:linear-gradient(135deg,rgba(224,138,120,0.16),rgba(184,146,74,0.10));
+    border-radius:16px;padding:16px;margin-bottom:14px;box-shadow:var(--shadow);
+  }
+  .banner .clock{font-size:28px;line-height:1;}
+  .banner b{font-size:17px;font-weight:700;letter-spacing:-0.3px;display:block;color:var(--txt);}
+  .banner span{font-size:13px;color:var(--txt-2);}
+
+  /* ---- Opener ---- */
+  .opener{
+    background:var(--surface);border-radius:16px;padding:16px;
+    box-shadow:var(--shadow);font-size:17px;line-height:1.5;letter-spacing:-0.2px;
+  }
+  .opener .name{color:var(--gold);font-weight:600;}
+  .opener .if{
+    display:block;margin-top:12px;padding-top:12px;border-top:1px solid var(--sep);
+    font-size:14px;color:var(--txt-2);line-height:1.45;
+  }
+  .opener .if b{color:var(--blush);font-weight:600;}
+
+  /* ---- Decision split (side-by-side fork) ---- */
+  .fork-tag{
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    font-size:12px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;
+    color:var(--txt-3);margin-bottom:10px;
+  }
+  .fork-tag::before,.fork-tag::after{content:"";flex:1;height:1px;background:var(--sep);}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:start;}
+  .branch{background:var(--surface);border-radius:14px;padding:13px;box-shadow:var(--shadow);border-top:3px solid var(--sep);min-width:0;}
+  .branch.yes{border-top-color:var(--sage);}
+  .branch.no{border-top-color:var(--blush);}
+  .branch-head{font-size:14px;font-weight:700;letter-spacing:-0.3px;margin-bottom:10px;display:flex;align-items:center;gap:6px;line-height:1.2;}
+  .branch.yes .branch-head{color:var(--sage);}
+  .branch.no .branch-head{color:var(--blush);}
+  .branch .cue{font-size:11.5px;padding:6px 10px;margin-bottom:9px;}
+  .branch .note{font-size:13px;color:var(--txt-2);margin-bottom:10px;line-height:1.4;}
+  .branch .quote{background:var(--nested);border-radius:11px;padding:12px;font-size:14.5px;line-height:1.45;letter-spacing:-0.1px;overflow-wrap:break-word;}
+  .branch .quote .name{color:var(--gold);font-weight:600;}
+  .branch .quote .if{display:block;margin-top:9px;padding-top:9px;border-top:1px solid var(--sep);font-size:12.5px;color:var(--txt-2);line-height:1.4;}
+  .branch .quote .if b{color:var(--blush);font-weight:600;}
+  .branch-note{margin-top:10px;font-size:12.5px;color:var(--txt-2);font-style:italic;text-align:center;line-height:1.35;}
+  .copybox{background:var(--nested);border-radius:11px;padding:12px;cursor:pointer;transition:box-shadow .15s cubic-bezier(.2,0,0,1);overflow-wrap:break-word;}
+  .copybox .card-top{flex-direction:column;align-items:flex-start;gap:4px;margin-bottom:8px;}
+  .copybox .script{font-size:14.5px;letter-spacing:-0.1px;line-height:1.45;}
+  .copybox .script .name{color:var(--gold);font-weight:600;}
+  .copybox .copy-hint{font-size:11px;margin-top:9px;}
+  .copybox.copied{box-shadow:0 0 0 2px var(--sage);}
+  .copybox.copied .copy-hint{color:var(--sage);font-weight:600;}
+
+  /* ---- Qualifying ---- */
+  .q-intro{font-size:13.5px;color:var(--txt-2);margin-bottom:14px;line-height:1.5;}
+  .q-intro b{color:var(--sky);}
+  ol.q{list-style:none;counter-reset:q;}
+  ol.q li{
+    counter-increment:q;background:var(--surface);border-radius:14px;
+    padding:14px 16px 14px 50px;position:relative;box-shadow:var(--shadow);
+    margin-bottom:8px;min-height:44px;font-size:16px;letter-spacing:-0.2px;line-height:1.45;
+  }
+  ol.q li::before{
+    content:counter(q);position:absolute;left:14px;top:13px;
+    width:24px;height:24px;border-radius:8px;background:var(--nested);color:var(--sky);
+    font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;
+  }
+  ol.q li .why{display:block;font-size:12px;color:var(--txt-3);margin-top:4px;letter-spacing:0;}
+
+  /* ---- Close ---- */
+  .close{
+    background:linear-gradient(135deg,rgba(184,146,74,0.12),rgba(255,255,255,0.9));
+    border-radius:16px;padding:18px 16px;box-shadow:var(--shadow);
+  }
+  .close .lbl{font-size:11px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+  .close p{font-size:17px;line-height:1.5;letter-spacing:-0.2px;margin-bottom:12px;}
+  .close p:last-child{margin-bottom:0;}
+  .close .name{color:var(--gold);font-weight:600;}
+
+  /* ---- Rules ---- */
+  .rules{background:var(--surface);border-radius:16px;padding:8px 16px;box-shadow:var(--shadow);margin-top:16px;}
+  .rules li{list-style:none;display:flex;gap:10px;align-items:flex-start;padding:11px 0;font-size:14px;color:var(--txt-2);line-height:1.45;}
+  .rules li:not(:last-child){border-bottom:1px solid var(--sep);}
+  .rules .dot{color:var(--blush);font-size:15px;line-height:1.4;}
+  .rules b{color:var(--txt);font-weight:600;}
+
+  footer{text-align:center;color:var(--txt-3);font-size:11px;letter-spacing:0.3px;margin-top:34px;}
+  footer b{color:var(--gold);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hi">Hey Jenna 👋</div>
+  <h1>Your Lead Playbook <span class="spark">✦</span></h1>
+  <div class="sub">A lead comes in. Text first, then call. The text puts your name on their phone, so when you ring they actually pick up. Tap any script to copy it.</div>
+  <div class="flow">
+    <span class="on">Lead in</span>
+    <span>Text first</span>
+    <span>Call</span>
+    <span>Hand to Jaden</span>
+  </div>
+</header>
+
+<!-- 1. FIRST TEXT -->
+<section>
+  <div class="sec-label"><span class="sec-num n1">1</span> The first text</div>
+  <div class="cue">💬 Friendly and casual, like you just stepped away for a sec</div>
+
+  <div class="banner">
+    <span class="clock">📲</span>
+    <div>
+      <b>Text 1 goes out first, before you call</b>
+      <span>It drops your name onto their phone, so your call shows up as "Maybe: Jenna" and they answer.</span>
+    </div>
+  </div>
+
+  <div class="card" data-copy="Hey {First}, it's Jenna! I'm sorry I missed you. I'll give you a shout right back in the next 5-10 min!">
+    <div class="card-top">
+      <span class="tag t1">Text 1 · the second a lead comes in</span>
+      <span class="timing">send first</span>
+    </div>
+    <div class="script">Hey <span class="name">{First}</span>, it's Jenna! I'm sorry I missed you. I'll give you a shout right back in the next 5-10 min!</div>
+    <div class="copy-hint">⧉ Tap to copy</div>
+  </div>
+</section>
+
+<!-- 2. CALL + SPLIT -->
+<section>
+  <div class="sec-label"><span class="sec-num n2">2</span> Then call her right back</div>
+  <div class="banner">
+    <span class="clock">⏱️</span>
+    <div>
+      <b>Call within 5 minutes of sending Text 1</b>
+      <span>Your name is fresh on their phone and the text promised it. Ring while "she just texted me" still feels true.</span>
+    </div>
+  </div>
+
+  <div class="fork-tag">They answer?</div>
+  <div class="split">
+    <div class="branch yes">
+      <div class="branch-head">✅ Yes, picked up</div>
+      <div class="cue">🎙️ Smile while you talk, they really can hear it</div>
+      <div class="quote">
+        "Hey is this <span class="name">{First}</span>? It's Jenna with Modern Development! Sorry I missed you earlier. You reached out about building a home so I wanted to get right back to you. Did I catch you at an okay time?"
+        <span class="if"><b>If they're busy:</b> "Totally get it, I'll be quick! You got two minutes, or want me to call you back this afternoon?"</span>
+      </div>
+      <div class="branch-note">Then ease into the questions below 👇</div>
+    </div>
+
+    <div class="branch no">
+      <div class="branch-head">📵 No answer</div>
+      <p class="note">Fire off Text 2 right away, then let the email follow up take it from here.</p>
+      <div class="copybox" data-copy="Tried you again and just missed you! No worries. When's a better time to catch you for a few minutes? I'll work around your schedule.">
+        <div class="card-top">
+          <span class="tag t2">Text 2 · no answer</span>
+          <span class="timing">send right after</span>
+        </div>
+        <div class="script"><span class="name">{First}</span>, tried you again and just missed you! No worries. When's a better time to catch you for a few minutes? I'll work around your schedule.</div>
+        <div class="copy-hint">⧉ Tap to copy</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. QUALIFYING -->
+<section>
+  <div class="sec-label"><span class="sec-num n3">3</span> Get to know the project</div>
+  <div class="cue">👂 Let them do the talking. This is a chat, not a survey.</div>
+  <p class="q-intro">Weave these in naturally. You're listening for: <b>real build, has land, good size, ready soon, talked to a lender.</b></p>
+  <ol class="q">
+    <li>So tell me what you're thinking. New construction, an addition, or a renovation?
+      <span class="why">Sorts the project type up front</span></li>
+    <li>Do you already have a lot or land, or still looking for that piece too?
+      <span class="why">Land means they're a lot closer to ready</span></li>
+    <li>Roughly what size are you picturing? A ballpark square footage is fine!
+      <span class="why">Our sweet spot is 2,500 to 4,500 sf</span></li>
+    <li>Any idea on the style or finish level you're going for?
+      <span class="why">Reads their budget tier without asking price</span></li>
+    <li>Where are you guys located? And are you building right there, or relocating?
+      <span class="why">Confirms the area and catches out-of-town movers</span></li>
+    <li>Are you trying to break ground this year, or more just exploring for now?
+      <span class="why">Hot lead vs. keep in touch</span></li>
+    <li>Have you talked to a lender yet, or is that still down the road?
+      <span class="why">Financing ready means move them up fast</span></li>
+  </ol>
+</section>
+
+<!-- 4. HAND OFF -->
+<section>
+  <div class="sec-label"><span class="sec-num n4">4</span> Hand off to Jaden</div>
+  <div class="cue">✨ Slow down here. This is the ask, then let them answer.</div>
+  <div class="close">
+    <div class="lbl">The whole point of the call</div>
+    <p>"This is exactly the kind of project we do, <span class="name">{First}</span>! Let me hand you over to Jaden. He's one of the owners here and he'll walk you through our process and get you guys some numbers."</p>
+    <p>"He's got some time <span class="name">{day}</span> in the <span class="name">{morning / afternoon}</span>, or <span class="name">{day}</span> works too. Which is better for you?"</p>
+  </div>
+
+  <ul class="rules">
+    <li><span class="dot">●</span><span><b>Lock a real day and time.</b> Don't leave it open ended.</span></li>
+    <li><span class="dot">●</span><span><b>Confirm their best number</b> and let them know Jaden will reach out then.</span></li>
+    <li><span class="dot">●</span><span><b>Didn't book?</b> All good. They stay in the email follow up automatically, so you're done.</span></li>
+  </ul>
+</section>
+
+<footer>Made for <b>Jenna</b> · Modern Development · keep this open on your phone 💛</footer>
+
+<script>
+  document.querySelectorAll('[data-copy]').forEach(card=>{
+    card.addEventListener('click',()=>{
+      const text=card.getAttribute('data-copy');
+      navigator.clipboard?.writeText(text).catch(()=>{});
+      const hint=card.querySelector('.copy-hint');
+      const orig=hint.textContent;
+      card.classList.add('copied');
+      hint.textContent='✓ Copied!';
+      setTimeout(()=>{card.classList.remove('copied');hint.textContent=orig;},1600);
+    });
+  });
+</script>
+</body>
+</html>
