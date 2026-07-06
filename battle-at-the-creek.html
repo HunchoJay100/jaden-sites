@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Battle at the Creek · 12-Week Block</title>
+<meta name="description" content="Flynn comp prep. 2-man team. Sept 28, 2026. Point a strong base at four events and don't get hurt." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:           #050506;
+  --bg-2:         #0A0A0C;
+  --surface:      #101013;
+  --surface-2:    #17171B;
+  --surface-3:    #1F1F25;
+  --hairline:     rgba(255,255,255,0.06);
+  --hairline-2:   rgba(255,255,255,0.10);
+  --text:         rgba(245,245,247,1);
+  --text-2:       rgba(245,245,247,0.62);
+  --text-3:       rgba(245,245,247,0.34);
+  --accent:       #C6FF3C;
+  --accent-ink:   #050506;
+  --accent-dim:   #9BD21A;
+  --accent-soft:  rgba(198,255,60,0.12);
+  --accent-glow:  0 0 40px rgba(198,255,60,0.25);
+  --danger:       #FF5247;
+  --danger-soft:  rgba(255,82,71,0.12);
+
+  --font-display: 'Oswald', -apple-system, sans-serif;
+  --font-ui:      'Inter', -apple-system, system-ui, sans-serif;
+
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px;
+  --s-5: 24px; --s-6: 32px; --s-7: 48px; --s-8: 64px; --s-9: 96px;
+
+  --r-sm: 8px; --r-md: 12px; --r-lg: 16px; --r-xl: 24px;
+
+  --shadow-1: 0 1px 3px rgba(0,0,0,0.45), 0 1px 2px rgba(0,0,0,0.25);
+  --shadow-2: 0 4px 14px rgba(0,0,0,0.55), 0 2px 6px rgba(0,0,0,0.35);
+  --shadow-3: 0 8px 32px rgba(0,0,0,0.65);
+
+  --spring: cubic-bezier(0.2, 0, 0, 1);
+  --spring-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-ui);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ─── Atmosphere ─── */
+.grain {
+  position: fixed; inset: 0; pointer-events: none; z-index: 1; opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.glow {
+  position: fixed; top: -30vh; right: -20vw; width: 70vw; height: 70vw;
+  background: radial-gradient(circle, rgba(198,255,60,0.12), transparent 55%);
+  filter: blur(40px); pointer-events: none; z-index: 0;
+}
+
+/* ─── Type ─── */
+.display { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.03em; line-height: 0.92; text-transform: uppercase; }
+.eyebrow { font-family: var(--font-display); font-weight: 500; font-size: 12px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--text-2); }
+.label   { font-family: var(--font-display); font-weight: 500; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-3); }
+.num     { font-family: var(--font-display); font-weight: 600; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+
+/* ─── Layout ─── */
+.shell { position: relative; z-index: 2; max-width: 1120px; margin: 0 auto; padding: var(--s-7) var(--s-5); }
+@media (min-width: 768px) { .shell { padding: var(--s-8) var(--s-7); } }
+
+/* ─── Top bar ─── */
+.topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--s-8); animation: fadeUp 0.6s var(--spring) both; }
+.stamp { display: flex; align-items: center; gap: var(--s-2); font-family: var(--font-display); font-size: 12px; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-2); }
+.stamp::before { content: ''; width: 8px; height: 8px; background: var(--accent); box-shadow: var(--accent-glow); border-radius: 50%; animation: pulse 2.4s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:0.6;} 50%{opacity:1;} }
+.status-pill { font-family: var(--font-display); font-size: 11px; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; padding: var(--s-2) var(--s-3); background: var(--accent-soft); color: var(--accent); border-radius: 9999px; }
+
+/* ─── Hero ─── */
+.hero { margin-bottom: var(--s-7); animation: fadeUp 0.8s var(--spring) 0.1s both; }
+.hero-title { font-size: clamp(52px, 11vw, 132px); }
+.hero-title .lime { color: var(--accent); }
+.hero-sub { font-family: var(--font-ui); font-size: 17px; font-weight: 400; color: var(--text-2); max-width: 640px; margin-top: var(--s-4); letter-spacing: -0.01em; text-transform: none; }
+.hero-sub strong { color: var(--text); font-weight: 600; }
+
+/* ─── Countdown ─── */
+.countdown { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--s-4); margin-top: var(--s-6); padding: var(--s-5); background: var(--surface); border-radius: var(--r-lg); box-shadow: var(--shadow-2); border-top: 1px solid var(--hairline-2); }
+@media (min-width: 768px) { .countdown { grid-template-columns: repeat(4, 1fr); padding: var(--s-6); } }
+.cd-cell { display: flex; flex-direction: column; gap: var(--s-2); }
+.cd-num { font-size: clamp(40px, 6vw, 60px); color: var(--text); line-height: 0.9; }
+.cd-cell.highlight .cd-num { color: var(--accent); }
+
+/* ─── Sections ─── */
+section { margin-bottom: var(--s-8); }
+.section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--s-5); margin-bottom: var(--s-6); padding-bottom: var(--s-4); border-bottom: 1px solid var(--hairline); }
+.section-title { font-size: clamp(30px, 4.5vw, 44px); line-height: 1; }
+.section-num { font-family: var(--font-display); font-size: 14px; font-weight: 600; color: var(--accent); letter-spacing: 0.2em; white-space: nowrap; }
+
+/* ─── Event cards ─── */
+.events { display: grid; grid-template-columns: 1fr; gap: var(--s-4); }
+@media (min-width: 820px) { .events { grid-template-columns: repeat(3, 1fr); } }
+.event { padding: var(--s-5); background: var(--surface); border-radius: var(--r-lg); box-shadow: var(--shadow-1); border-top: 1px solid var(--hairline); display: flex; flex-direction: column; gap: var(--s-3); }
+.event .e-tag { display: flex; align-items: baseline; gap: var(--s-3); }
+.event .e-idx { font-family: var(--font-display); font-weight: 700; font-size: 40px; color: var(--accent); line-height: 0.8; }
+.event .e-name { font-family: var(--font-display); font-weight: 700; font-size: 24px; text-transform: uppercase; letter-spacing: -0.01em; }
+.event .e-mode { font-family: var(--font-display); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-3); }
+.event ul { list-style: none; display: flex; flex-direction: column; gap: var(--s-2); margin-top: var(--s-1); }
+.event li { font-size: 14px; color: var(--text-2); line-height: 1.5; padding-left: var(--s-4); position: relative; }
+.event li::before { content: ''; position: absolute; left: 0; top: 9px; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); opacity: 0.7; }
+.event li strong { color: var(--text); font-weight: 600; }
+
+/* ─── Division ─── */
+.division { display: grid; grid-template-columns: 1fr; gap: var(--s-4); }
+@media (min-width: 768px) { .division { grid-template-columns: 1fr 1fr; } }
+.job-card { padding: var(--s-6); border-radius: var(--r-lg); box-shadow: var(--shadow-1); }
+.job-card.you { background: linear-gradient(145deg, var(--surface) 0%, var(--surface-2) 100%); border-top: 1px solid rgba(198,255,60,0.30); }
+.job-card.partner { background: var(--surface); border-top: 1px solid var(--hairline); }
+.job-card h3 { font-family: var(--font-display); font-weight: 700; font-size: 15px; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: var(--s-4); }
+.job-card.you h3 { color: var(--accent); }
+.job-card.partner h3 { color: var(--text-2); }
+.job-card ul { list-style: none; display: flex; flex-direction: column; gap: var(--s-3); }
+.job-card li { font-size: 15px; color: var(--text-2); line-height: 1.5; padding-left: var(--s-4); position: relative; }
+.job-card li::before { content: '›'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+.job-card.partner li::before { color: var(--text-3); }
+.job-card li strong { color: var(--text); font-weight: 600; }
+
+/* ─── Builds strip ─── */
+.builds { display: grid; grid-template-columns: 1fr; gap: var(--s-4); }
+@media (min-width: 820px) { .builds { grid-template-columns: repeat(3, 1fr); } }
+.build { padding: var(--s-5); background: var(--surface); border-radius: var(--r-md); box-shadow: var(--shadow-1); border-top: 1px solid var(--hairline); }
+.build .b-idx { font-family: var(--font-display); font-weight: 700; font-size: 13px; letter-spacing: 0.2em; color: var(--accent); margin-bottom: var(--s-3); }
+.build h4 { font-family: var(--font-display); font-weight: 700; font-size: 19px; text-transform: uppercase; letter-spacing: -0.01em; margin-bottom: var(--s-3); }
+.build p { font-size: 14px; color: var(--text-2); line-height: 1.6; }
+
+/* ─── Shoulder banner ─── */
+.banner { display: flex; gap: var(--s-4); align-items: flex-start; padding: var(--s-5); background: var(--danger-soft); border-radius: var(--r-lg); border-top: 1px solid rgba(255,82,71,0.30); margin-bottom: var(--s-8); }
+.banner .b-mark { font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: 0.2em; color: var(--danger); text-transform: uppercase; white-space: nowrap; padding-top: 2px; }
+.banner p { font-size: 14px; color: var(--text-2); line-height: 1.6; }
+.banner p strong { color: var(--text); font-weight: 600; }
+
+/* ─── Week viewer ─── */
+.weeknav-wrap { position: sticky; top: 0; z-index: 20; margin: 0 calc(-1 * var(--s-5)); padding: var(--s-3) var(--s-5); background: rgba(5,5,6,0.82); backdrop-filter: blur(12px) saturate(180%); -webkit-backdrop-filter: blur(12px) saturate(180%); border-bottom: 1px solid var(--hairline); }
+@media (min-width: 768px) { .weeknav-wrap { margin: 0 calc(-1 * var(--s-7)); padding: var(--s-3) var(--s-7); } }
+.weeknav { display: flex; gap: var(--s-2); overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding-bottom: 2px; }
+.weeknav::-webkit-scrollbar { display: none; }
+.wk-pill { flex: 0 0 auto; font-family: var(--font-display); font-weight: 600; font-size: 13px; letter-spacing: 0.06em; padding: var(--s-2) var(--s-4); min-height: 40px; display: inline-flex; align-items: center; gap: 6px; border-radius: 9999px; background: var(--surface-2); color: var(--text-2); cursor: pointer; border: 1px solid transparent; transition: all 0.2s var(--spring); white-space: nowrap; }
+.wk-pill:hover { color: var(--text); background: var(--surface-3); }
+.wk-pill.active { background: var(--accent); color: var(--accent-ink); }
+.wk-pill.sim { border: 1px solid rgba(198,255,60,0.4); }
+.wk-pill.sim.active { border-color: transparent; }
+.wk-pill .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+.wk-pill.active .dot { background: var(--accent-ink); }
+
+.week-panel { margin-top: var(--s-6); animation: fadeUp 0.45s var(--spring) both; }
+.week-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s-3) var(--s-4); margin-bottom: var(--s-2); }
+.week-head .wtitle { font-family: var(--font-display); font-weight: 700; font-size: clamp(30px, 5vw, 44px); text-transform: uppercase; letter-spacing: -0.02em; line-height: 1; }
+.phase-chip { font-family: var(--font-display); font-weight: 600; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; padding: var(--s-1) var(--s-3); border-radius: 9999px; background: var(--accent-soft); color: var(--accent); }
+.phase-chip.taper { background: var(--surface-3); color: var(--text-2); }
+.week-focus { font-size: 15px; color: var(--text-2); line-height: 1.6; max-width: 720px; margin-bottom: var(--s-5); }
+.week-focus strong { color: var(--accent); font-weight: 600; }
+
+.days { display: grid; grid-template-columns: 1fr; gap: var(--s-3); }
+@media (min-width: 720px) { .days { grid-template-columns: 1fr 1fr; } }
+.day { padding: var(--s-4); background: var(--surface); border-radius: var(--r-md); box-shadow: var(--shadow-1); border-top: 1px solid var(--hairline); position: relative; overflow: hidden; }
+.day.today { border-top: 1px solid rgba(198,255,60,0.5); background: linear-gradient(145deg, var(--surface) 0%, var(--surface-2) 100%); }
+.day.today::after { content: 'TODAY'; position: absolute; top: var(--s-4); right: var(--s-4); font-family: var(--font-display); font-weight: 700; font-size: 9px; letter-spacing: 0.2em; color: var(--accent-ink); background: var(--accent); padding: 3px 7px; border-radius: 9999px; }
+.day.sim { background: linear-gradient(145deg, var(--surface) 0%, rgba(198,255,60,0.06) 100%); border-top: 1px solid rgba(198,255,60,0.4); }
+.day.rest { opacity: 0.72; }
+.day-top { display: flex; align-items: baseline; gap: var(--s-3); margin-bottom: var(--s-3); }
+.day-d { font-family: var(--font-display); font-weight: 700; font-size: 15px; letter-spacing: 0.15em; color: var(--text); }
+.day-tag { font-family: var(--font-display); font-weight: 500; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-3); }
+.day.sim .day-tag { color: var(--accent); }
+.day-star { font-size: 14px; font-weight: 500; color: var(--accent); line-height: 1.45; margin-bottom: var(--s-2); letter-spacing: -0.01em; }
+.day.rest .day-star { color: var(--text); }
+.day-lines { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+.day-lines li { font-size: 12.5px; color: var(--text-2); line-height: 1.5; padding-left: var(--s-3); position: relative; }
+.day-lines li::before { content: ''; position: absolute; left: 0; top: 8px; width: 3px; height: 3px; border-radius: 50%; background: var(--text-3); }
+
+/* ─── Reference cards ─── */
+.card { padding: var(--s-6); background: var(--surface); border-radius: var(--r-lg); box-shadow: var(--shadow-1); border-top: 1px solid var(--hairline); }
+.card h3 { font-family: var(--font-display); font-weight: 700; font-size: 20px; letter-spacing: -0.01em; margin-bottom: var(--s-4); text-transform: uppercase; }
+.split { display: grid; grid-template-columns: 1fr; gap: var(--s-4); }
+@media (min-width: 768px) { .split { grid-template-columns: 1fr 1fr; } }
+
+.wave-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.wave-table { width: 100%; border-collapse: collapse; margin-top: var(--s-2); min-width: 460px; }
+.wave-table th, .wave-table td { padding: var(--s-3) var(--s-2); text-align: left; border-bottom: 1px solid var(--hairline); font-size: 13px; }
+.wave-table th { font-family: var(--font-display); font-weight: 600; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-3); }
+.wave-table td { font-family: var(--font-display); font-variant-numeric: tabular-nums; color: var(--text); }
+.wave-table td:first-child { color: var(--accent); font-weight: 600; }
+.wave-table tr.hot td { color: var(--text); }
+.wave-table tr.hot { background: rgba(198,255,60,0.06); }
+.wave-table tr.simrow td:first-child { color: var(--text-2); }
+.wave-table tr.simrow { background: var(--surface-2); }
+
+.proto ul { list-style: none; display: flex; flex-direction: column; gap: var(--s-3); }
+.proto li { font-size: 14px; color: var(--text-2); line-height: 1.55; padding-left: var(--s-4); position: relative; }
+.proto li::before { content: ''; position: absolute; left: 0; top: 9px; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); opacity: 0.7; }
+.proto li strong { color: var(--text); font-weight: 600; }
+.proto .wk-lbl { color: var(--accent); font-family: var(--font-display); font-weight: 600; letter-spacing: 0.06em; }
+
+/* ─── Rules ─── */
+.rules { display: grid; grid-template-columns: 1fr; gap: var(--s-3); }
+@media (min-width: 768px) { .rules { grid-template-columns: 1fr 1fr; } }
+.rule { padding: var(--s-4) var(--s-5); background: var(--surface); border-radius: var(--r-md); box-shadow: var(--shadow-1); border-top: 1px solid var(--hairline); font-size: 14px; color: var(--text-2); line-height: 1.55; }
+.rule strong { display: block; font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-bottom: var(--s-2); }
+
+/* ─── Mission ─── */
+.mission { background: linear-gradient(145deg, var(--surface) 0%, var(--surface-2) 100%); border-radius: var(--r-xl); padding: var(--s-7); box-shadow: var(--shadow-2); border-top: 1px solid rgba(198,255,60,0.20); position: relative; overflow: hidden; }
+.mission::before { content: ''; position: absolute; top: -30%; right: -10%; width: 420px; height: 420px; background: radial-gradient(circle, var(--accent-soft), transparent 60%); pointer-events: none; }
+.mission .m-eyebrow { position: relative; z-index: 1; }
+.mission h2 { position: relative; z-index: 1; font-family: var(--font-display); font-weight: 700; font-size: clamp(26px, 4vw, 40px); text-transform: uppercase; letter-spacing: -0.02em; line-height: 1.05; margin: var(--s-3) 0 var(--s-4); max-width: 760px; }
+.mission h2 .lime { color: var(--accent); }
+.mission p { position: relative; z-index: 1; color: var(--text-2); font-size: 16px; line-height: 1.65; max-width: 680px; }
+
+footer { text-align: center; margin-top: var(--s-8); padding-top: var(--s-6); border-top: 1px solid var(--hairline); }
+footer p { font-family: var(--font-display); font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-3); }
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div class="glow"></div>
+
+<div class="shell">
+
+  <div class="topbar">
+    <div class="stamp">Flynn // Comp Prep</div>
+    <div class="status-pill">12-Week Block</div>
+  </div>
+
+  <header class="hero">
+    <h1 class="display hero-title">Battle at<br>the <span class="lime">Creek</span></h1>
+    <p class="hero-sub"><strong>2-man team. Sept 28, 2026.</strong> You're the engine and the strength; your partner's the skill and the ropes. This block doesn't out-volume anyone. It points a strong base at four specific events and doesn't get you hurt.</p>
+
+    <div class="countdown">
+      <div class="cd-cell highlight">
+        <span class="label">Days Out</span>
+        <span class="num cd-num" id="daysOut">—</span>
+      </div>
+      <div class="cd-cell">
+        <span class="label">This Week</span>
+        <span class="num cd-num" id="weekOut">—</span>
+      </div>
+      <div class="cd-cell">
+        <span class="label">Comp Date</span>
+        <span class="num cd-num" style="font-size:clamp(24px,3.4vw,34px)">Sep 28</span>
+      </div>
+      <div class="cd-cell">
+        <span class="label">Format</span>
+        <span class="num cd-num" style="font-size:clamp(24px,3.4vw,34px)">2-Man</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- EVENTS -->
+  <section>
+    <div class="section-head">
+      <h2 class="display section-title">The Events</h2>
+      <span class="section-num">WHAT WE TRAIN FOR</span>
+    </div>
+    <div class="events">
+      <div class="event">
+        <div class="e-tag"><span class="e-idx">1</span><div><div class="e-name">Freedom</div><div class="e-mode">For Time</div></div></div>
+        <ul>
+          <li><strong>50</strong> sandbag squats (100/80)</li>
+          <li><strong>40</strong> pull-ups</li>
+          <li><strong>30</strong> cal bike</li>
+        </ul>
+      </div>
+      <div class="event">
+        <div class="e-tag"><span class="e-idx">2</span><div><div class="e-name">1RM + 1776</div><div class="e-mode">6 min · 3 min rest · then</div></div></div>
+        <ul>
+          <li><strong>Clean 1RM</strong> — 6 min cap</li>
+          <li>3 rds: <strong>10</strong> synchro burpees over bar</li>
+          <li>C&amp;J <strong>17 / 7 / 6</strong> @ 115 → 135 → 155</li>
+        </ul>
+      </div>
+      <div class="event">
+        <div class="e-tag"><span class="e-idx">3</span><div><div class="e-name">America</div><div class="e-mode">For Time</div></div></div>
+        <ul>
+          <li>DL ladder <strong>20/30/40/50</strong> @ 225</li>
+          <li>Rope climbs <strong>5/4/3/2</strong></li>
+          <li>Your DL share ~<strong>80</strong>, partner takes ropes</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIVISION -->
+  <section>
+    <div class="section-head">
+      <h2 class="display section-title">The Split</h2>
+      <span class="section-num">WHO OWNS WHAT</span>
+    </div>
+    <div class="division">
+      <div class="job-card you">
+        <h3>You Own</h3>
+        <ul>
+          <li><strong>Sandbag squat volume</strong> — the front-carry grind</li>
+          <li><strong>Deadlift volume</strong> — your ~80 share of the America ladder</li>
+          <li><strong>The bike</strong> — already elite, keep it sharp</li>
+          <li><strong>Lighter barbell volume</strong> — the 155 C&amp;J cycling</li>
+        </ul>
+      </div>
+      <div class="job-card partner">
+        <h3>Partner Owns</h3>
+        <ul>
+          <li><strong>Rope climbs</strong> — majority / all. Parked for you until the shoulder's cleared.</li>
+          <li><strong>Heavy end of C&amp;J cycling</strong></li>
+          <li><strong>The rope share of America</strong> while you pull</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUILDS -->
+  <section>
+    <div class="section-head">
+      <h2 class="display section-title">What This Builds</h2>
+      <span class="section-num">THE THREE THINGS</span>
+    </div>
+    <div class="builds">
+      <div class="build">
+        <div class="b-idx">01</div>
+        <h4>Clean Turnover</h4>
+        <p>You deadlift 500+ and clean ~255. The gap is speed under the bar, not strength. Fix the turnover and the 1RM climbs — doubles as faster 1776 cycling.</p>
+      </div>
+      <div class="build">
+        <div class="b-idx">02</div>
+        <h4>Barbell Endurance</h4>
+        <p>155 C&amp;J and 225 deadlift feeling submaximal when you're already tired. Trained by reps-per-set and the reset rhythm, not by grinding.</p>
+      </div>
+      <div class="build">
+        <div class="b-idx">03</div>
+        <h4>Multi-Event Reps</h4>
+        <p>Two full sims so comp day isn't the first time you feel event 3 on event-1 legs. Everything else is already comp-ready and maintained through class.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHOULDER BANNER -->
+  <div class="banner">
+    <span class="b-mark">Shoulder</span>
+    <p><strong>Get it assessed Phase 1 — book it now, don't let it drift.</strong> Cuff rehab daily, 10 min, non-negotiable (both ends on clean days). Ropes stay parked until cleared. Clean work only when fresh — the second bar speed drops or a catch gets ugly, you're done for the day.</p>
+  </div>
+
+  <!-- WEEK VIEWER -->
+  <section>
+    <div class="section-head">
+      <h2 class="display section-title">The Block</h2>
+      <span class="section-num">TAP YOUR WEEK</span>
+    </div>
+
+    <div class="weeknav-wrap">
+      <div class="weeknav" id="weeknav"></div>
+    </div>
+
+    <div id="weekPanel"></div>
+  </section>
+
+  <!-- DEADLIFT + BIKE REFERENCE -->
+  <section>
+    <div class="section-head">
+      <h2 class="display section-title">Progression</h2>
+      <span class="section-num">SO YOU CAN SELF-ADJUST</span>
+    </div>
+    <div class="split">
+      <div class="card">
+        <h3>Deadlift — Build to Your Share</h3>
+        <p style="color:var(--text-2);font-size:14px;line-height:1.6;margin-bottom:var(--s-3)">225 stays all block (it's the event weight, ~45% of your max). Progress by <strong style="color:var(--accent)">volume and set size</strong>, not shrinking rest. Peaks just above your ~80 share so comp-day 80 on tired legs is never the biggest set you've done. <strong style="color:var(--text)">Quick singles, not grinding TnG</strong> — that's the race strategy.</p>
+        <div class="wave-wrap">
+          <table class="wave-table">
+            <thead><tr><th>Wk</th><th>Work @ 225</th><th>Reps</th><th>Intent</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>5 × 10, rest 60-75s</td><td>50</td><td>Base tolerance</td></tr>
+              <tr><td>2</td><td>5 × 12, rest 75s</td><td>60</td><td>Bigger chunks</td></tr>
+              <tr><td>3</td><td>4 × 15, rest 90s</td><td>60</td><td>Grip management</td></tr>
+              <tr><td>4</td><td>20-20-15-15 ladder</td><td>70</td><td>Feel the shape</td></tr>
+              <tr class="hot"><td>5</td><td>Quick singles / clock</td><td>80</td><td>Rehearse the reset</td></tr>
+              <tr class="simrow"><td>6</td><td>SIM 1 — full America</td><td>~80</td><td>In context</td></tr>
+              <tr class="hot"><td>7</td><td>Full ladder w/ partner</td><td>~90</td><td>Benchmark, log it</td></tr>
+              <tr><td>8</td><td>30-30-15, tighter</td><td>75</td><td>Sharpen</td></tr>
+              <tr><td>9</td><td>Comp-pace singles</td><td>65</td><td>Feels light</td></tr>
+              <tr class="simrow"><td>10-11</td><td>SIM 2 — true intensity</td><td>~80</td><td>Automatic</td></tr>
+              <tr><td>12</td><td>3 × 12 crisp</td><td>36</td><td>Taper, preserve</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card proto">
+        <h3>Bike — Thu Ceiling, Sun Floor</h3>
+        <p style="color:var(--text-2);font-size:14px;line-height:1.6;margin-bottom:var(--s-4)">Drive the 50-cal Echo time down. Under 1:30 needs 85+ RPM held. Rotate Thursday weekly; Sunday stays aerobic.</p>
+        <ul>
+          <li><span class="wk-lbl">WEEK A · ceiling</span> — 8 × 15 sec HARD @ 85-90 RPM / 75 sec easy</li>
+          <li><span class="wk-lbl">WEEK B · sustain</span> — 5 × 10 cal for time / rest 90 sec, chunk 5 ≥ chunk 1</li>
+          <li><span class="wk-lbl">WEEK C · race pace</span> — 3 × 20 cal / rest 2-3 min, open ~80, negative-split</li>
+          <li><strong>Every Thu:</strong> WU + 3 × 10-sec cadence bursts, then the set, then 20-30 min Z2</li>
+          <li><strong>Every Sun:</strong> aerobic ride + optional 2-3 × 3-5 min sustained-cadence blocks</li>
+          <li><strong>Once a month:</strong> test an all-out fresh 50-cal. Watch the number drop.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- RULES -->
+  <section>
+    <div class="section-head">
+      <h2 class="display section-title">Standing Rules</h2>
+      <span class="section-num">THE GUARDRAILS</span>
+    </div>
+    <div class="rules">
+      <div class="rule"><strong>Class is the base</strong>Don't bolt a second program on top. We hijack existing slots — 4 classes, 1 trainer session, 1-2 solo focus slots. That's it.</div>
+      <div class="rule"><strong>Clean only when fresh</strong>Turnover done tired grooves slow reps. Bar speed drops or the catch gets ugly? Done for the day. No exceptions.</div>
+      <div class="rule"><strong>Stay-after logic</strong>Do class warm-up + strength as programmed, then either the class metcon (if it maps to your events) or your comp-specific piece.</div>
+      <div class="rule"><strong>Ease before tests</strong>Pull Tuesday's clean volume back the week of the Wk 7 DL benchmark and both sims. Treat those like mini-tests — show up fresh.</div>
+      <div class="rule"><strong>Ropes stay parked</strong>Partner carries them until your shoulder's cleared. Then low-volume insurance only — pain-free or not at all.</div>
+      <div class="rule"><strong>Cuff rehab is daily</strong>10 minutes, every day, non-negotiable. Band ER/IR, scap pull-ups, pull-aparts. Both ends on clean days.</div>
+    </div>
+  </section>
+
+  <!-- MISSION -->
+  <div class="mission">
+    <span class="eyebrow m-eyebrow">The Mission</span>
+    <h2>Elite without training <span class="lime">full-time.</span></h2>
+    <p>You're not out-voluming anyone. You're pointing a strong base at four specific events and not getting hurt. Discipline here is <em>not</em> overtraining and <em>not</em> wrecking the shoulder. Show up Sept 28 rested and dangerous. That's the whole game.</p>
+  </div>
+
+  <footer>
+    <p>Flynn Development · Battle at the Creek · 09.28.26</p>
+  </footer>
+
+</div>
+
+<script>
+// ── Countdown ──
+const COMP = new Date(2026, 8, 28);   // Sept 28, 2026
+const START = new Date(2026, 6, 6);   // Mon Jul 6, 2026 — block start
+const DAY = 86400000;
+(function(){
+  const now = new Date(); now.setHours(0,0,0,0);
+  const daysOut = Math.max(0, Math.round((COMP - now) / DAY));
+  const wk = Math.min(12, Math.max(1, Math.floor((now - START) / (7*DAY)) + 1));
+  document.getElementById('daysOut').textContent = daysOut;
+  document.getElementById('weekOut').textContent = 'W' + wk;
+  window.__curWeek = (now >= START && now <= COMP) ? wk : 1;
+  const dow = now.getDay(); // 0 Sun .. 6 Sat
+  window.__curDayIdx = (dow === 0) ? 6 : dow - 1; // map to Mon=0..Sun=6
+  window.__inBlock = (now >= START && now <= COMP);
+})();
+
+// ── Day builders ──
+const bikeA = { d:'THU', tag:'Bike + Z2', star:'Bike power — Week A · ceiling', lines:['8 × 15 sec HARD @ 85-90 RPM / 75 sec easy','WU + 3 × 10-sec cadence bursts first','Then 20-30 min Zone 2 · cuff rehab'] };
+const bikeB = { d:'THU', tag:'Bike + Z2', star:'Bike power — Week B · sustain', lines:['5 × 10 cal for time / rest 90 sec','Hold RPM across all 5 — chunk 5 ≥ chunk 1','Then 20-30 min Zone 2 · cuff rehab'] };
+const bikeC = { d:'THU', tag:'Bike + Z2', star:'Bike power — Week C · race pace', lines:['3 × 20 cal / rest 2-3 min','Open ~80, negative-split, finish faster','Then 20-30 min Z2 · monthly 50-cal test'] };
+const banger = { d:'FRI', tag:'Class Banger', star:'Send it as programmed', lines:['Nothing added','Cuff rehab after'] };
+const sun = { d:'SUN', tag:'Cycling + Durability', star:'Aerobic ride + optional sustained blocks', lines:['2-3 × 3-5 min at strong-but-sustainable cadence','Keep it aerobic, not a redline day','Cuff rehab'] };
+
+const WEEKS = [
+  { // 1
+    phase:'Phase 1 · Build & Protect', title:'Week 1',
+    focus:'Ropes parked. Book the shoulder assessment. Groove clean turnover and <strong>find your real heavy single Tuesday — write it down, it anchors the whole block.</strong>',
+    days:[
+      { d:'MON', tag:'Legs + Sandbag', star:'Sandbag squats — 4 × 15 @ 100', lines:['Own the front-carry + volume — keep Monday light','Class warm-up + strength as programmed','Cuff: band ER/IR 2 × 15'] },
+      { d:'TUE', tag:'Clean Day', star:'FIND your real heavy single — write it down', lines:['Turnover primer: Tall cleans 3 × 2 @ 135, fast','Fast clean single only — slows or ugly catch = that\'s the number','Strength 3 × 3 @ ~80-83% of today\'s single, full recovery','Strip down → 155, 4 × 5 TnG','Cuff both ends'] },
+      { d:'WED', tag:'Deadlift', star:'5 × 10 @ 225, rest 60-75s (50 reps)', lines:['Fast singles / clean small TnG — build grip + back base','Class warm-up + strength as programmed','Cuff rehab'] },
+      bikeA, banger,
+      { d:'SAT', tag:'Nick · 2nd Clean Touch', star:'Turnover / positions / light cycling — NOT a max', lines:['You went heavy Tuesday','Coach\'s eyes on your catch','Cuff rehab'] },
+      sun
+    ]
+  },
+  { // 2
+    phase:'Phase 1 · Build & Protect', title:'Week 2',
+    focus:'Same skeleton, small progressions. Turnover load creeps, endurance volume rises.',
+    days:[
+      { d:'MON', tag:'Legs + Sandbag', star:'Sandbag squats — 4 × 18 @ 100', lines:['Class strength as programmed','Cuff rehab'] },
+      { d:'TUE', tag:'Clean Day', star:'Strength 3 × 2 @ ~85-88% of Wk 1 single', lines:['Turnover: Tall / high-hang 3 × 2 @ 145, fast','Heavier than last week, still fast catches, full recovery','Strip down → 155, 4 × 6 TnG','Cuff both ends'] },
+      { d:'WED', tag:'Deadlift', star:'5 × 12 @ 225, rest 75s (60 reps)', lines:['Bigger chunks, start managing grip','Class strength as programmed','Cuff rehab'] },
+      bikeB, banger,
+      { d:'SAT', tag:'Nick · Complements Tue', star:'Turnover / positional / cycling / front squat', lines:['Not another max','Cuff rehab'] },
+      { d:'SUN', tag:'Cycling + Durability', star:'Ride + optional 2-3 × 4 min sustained blocks', lines:['Aerobic overall','Cuff rehab'] }
+    ]
+  },
+  { // 3
+    phase:'Phase 1 · Build & Protect', title:'Week 3',
+    focus:'Peak of Phase 1 volume. Top-end clean singles — <strong>a PR often shows up here if the turnover locked in.</strong> Cap it with a single-event test if Nick\'s flexible.',
+    days:[
+      { d:'MON', tag:'Legs + Sandbag', star:'Sandbag squats — 3 × 20 @ 100', lines:['Class strength as programmed','Cuff rehab'] },
+      { d:'TUE', tag:'Clean Day', star:'Strength 3 × 1 @ ~90%+ of Wk 1 single', lines:['Turnover: Tall cleans 2 × 2 @ 155, fast','Fast clean singles — NOT grinders. Feels fast + easy? Nudge up, find a real max','Strip down → 155, 3 × 7 TnG','Cuff both ends'] },
+      { d:'WED', tag:'Deadlift', star:'4 × 15 @ 225, rest 90s (60 reps)', lines:['Grip management under bigger sets','Class strength as programmed','Cuff rehab'] },
+      bikeC, banger,
+      { d:'SAT', tag:'Nick OR Test', star:'Run Freedom solo @ ~75% — first real data', lines:['Sandbag → pull-up → bike flow. Time it, note where grip fades','Otherwise: complementary clean work with Nick','Cuff rehab'] },
+      sun
+    ]
+  },
+  { // 4
+    phase:'Phase 2 · Pair & Sharpen', title:'Week 4',
+    focus:'Bring the partner in. Start pairing events and rehearsing splits. <strong>Turnover\'s locking in — start testing heavier singles.</strong> Reintroduce ropes only if cleared.',
+    days:[
+      { d:'MON', tag:'Legs + Sandbag', star:'Sandbag squats — 3 × 20 @ 100', lines:['Start pushing toward 25 unbroken (your Freedom share)','Class strength as programmed','Cuff rehab'] },
+      { d:'TUE', tag:'Clean Day', star:'Build to a fast heavy single — past Wk 1 if speed\'s there', lines:['Turnover: Tall cleans 3 × 2 @ 155, fast','Fast catch only — abandon any grind','155 cycling, 4 × 6 TnG','Cuff both ends'] },
+      { d:'WED', tag:'Deadlift', star:'Ladder rehearsal — 20-20-15-15 @ 225 (70)', lines:['First taste of the actual America shape','Quick singles / small sets, not grinding','Cuff rehab'] },
+      bikeA, banger,
+      { d:'SAT', tag:'Partner Session', star:'1776 synchro rhythm + C&J handoff timing', lines:['Synchro burpees over the bar — dial the rhythm','Low reps, get the timing not the fatigue','Cuff rehab'] },
+      sun
+    ]
+  },
+  { // 5
+    phase:'Phase 2 · Pair & Sharpen', title:'Week 5',
+    focus:'Rehearse the ugly transitions. Loading bars under a running clock is its own skill. <strong>Deadlift strategy session — rehearse the reset at your real share.</strong>',
+    days:[
+      { d:'MON', tag:'Legs + Sandbag', star:'Sandbag squats — 2 × 25 @ 100', lines:['Your Freedom share, unbroken','Class strength as programmed','Cuff rehab'] },
+      { d:'TUE', tag:'Clean Day', star:'Heavier single test + 155 cycling 4 × 7', lines:['Turnover primer first, fast','Test the ceiling as technique locks — fast catch only','Cuff both ends'] },
+      { d:'WED', tag:'Deadlift', star:'80 quick singles under one clock', lines:[':05-:10 between reps — rehearse the reset + breathe','This is your comp share. Comp pace, not a grind','Cuff rehab'] },
+      bikeB, banger,
+      { d:'SAT', tag:'Partner Session', star:'America pacing + Clean 1RM → 1776 transition', lines:['Rehearse the DL / rope split','Practice loading bars under a running clock','Cuff rehab'] },
+      sun
+    ]
+  },
+  { // 6
+    phase:'Week 6 · SIM 1', title:'Sim 1', sim:true,
+    focus:'Full dress rehearsal — all four events, in order, with partner, realistic rest. <strong>Goal = DATA, not a hero score.</strong> Light days around it; the sim replaces the week\'s hardest training.',
+    days:[
+      { d:'MON', tag:'Light', star:'Easy movement + mobility', rest:true, lines:['Sandbag 2 × 15 easy','Cuff rehab'] },
+      { d:'TUE', tag:'Prime', star:'Short clean touches @ moderate', rest:true, lines:['Nothing heavy — save it for Saturday','Cuff both ends'] },
+      { d:'WED', tag:'Recover', star:'Easy Zone 2 bike + mobility', rest:true, lines:['Keep it aerobic','Cuff rehab'] },
+      { d:'THU', tag:'Openers', star:'Short bike openers, legs fresh', rest:true, lines:['A few cadence bursts, nothing draining','Cuff rehab'] },
+      { d:'FRI', tag:'Rest', star:'Walk, mobility, sleep', rest:true, lines:['Fuel + hydrate for tomorrow','Cuff rehab'] },
+      { d:'SAT', tag:'SIM 1', star:'FULL DRESS REHEARSAL — all 4 events, in order', sim:true, lines:['With partner · realistic rest (20-40 min)','Bring a notebook: where did you blow up? Splits right? Fueling sit ok? Legs / grip on event 3?','That list becomes Weeks 7-9'] },
+      { d:'SUN', tag:'Recover', star:'Easy cycling + debrief', rest:true, lines:['Turn sim notes into the fix list','Cuff rehab'] }
+    ]
+  },
+  { // 7
+    phase:'Phase 3 · Apply & Peak', title:'Week 7',
+    focus:'Fix what Sim 1 exposed. <strong>Deadlift benchmark this week — run your real America share once, clean.</strong> Ease Tuesday\'s cleans so the pull is fresh.',
+    days:[
+      { d:'MON', tag:'Legs + Sandbag', star:'Sandbag — address any Freedom-flow gap from the sim', lines:['Class strength as programmed','Cuff rehab'] },
+      { d:'TUE', tag:'Clean Day · Eased', star:'Turnover + a couple crisp singles — NOT heavy', lines:['Benchmark tomorrow — protect it','Bar speed is the governor','Cuff both ends'] },
+      { d:'WED', tag:'Deadlift · Benchmark', star:'BENCHMARK — full-ladder share ~90 @ 225', sim:true, lines:['Partner splitting the rest + on ropes','Log the time + where grip fades','90 fresh buys you an easy 80 tired on comp day'] },
+      bikeC, banger,
+      { d:'SAT', tag:'Partner Session', star:'Hammer the weak transition Sim 1 exposed', lines:['Whatever the notebook flagged','Cuff rehab'] },
+      sun
+    ]
+  },
+  { // 8
+    phase:'Phase 3 · Apply & Peak', title:'Week 8',
+    focus:'Keep clean technique + barbell endurance rolling. <strong>A 270-285 clean becomes realistic here</strong> if turnover locked in and the shoulder\'s happy.',
+    days:[
+      { d:'MON', tag:'Legs + Sandbag', star:'Sandbag — maintain, 25 unbroken feels routine', lines:['Class strength as programmed','Cuff rehab'] },
+      { d:'TUE', tag:'Clean Day', star:'Heavier single — chase 270-285 if it\'s there', lines:['Fast catch only — abandon any grind','155 cycling after, should feel light','Cuff both ends'] },
+      { d:'WED', tag:'Deadlift', star:'30-30-15 @ 225 (75), tighter pace', lines:['Comp-pace singles','Cuff rehab'] },
+      bikeA, banger,
+      { d:'SAT', tag:'Partner Session', star:'Reps on the weak transitions', lines:['Sharpen the splits','Cuff rehab'] },
+      sun
+    ]
+  },
+  { // 9
+    phase:'Phase 3 · Apply & Peak', title:'Week 9',
+    focus:'Last big work week before Sim 2. Splits should be getting automatic. Full partner runs at near intensity.',
+    days:[
+      { d:'MON', tag:'Legs + Sandbag', star:'Sandbag — maintain', lines:['Class strength as programmed','Cuff rehab'] },
+      { d:'TUE', tag:'Clean Day', star:'Technique + moderate-heavy singles', lines:['155 cycling feels light now','Cuff both ends'] },
+      { d:'WED', tag:'Deadlift', star:'65 comp-pace singles @ 225 — submaximal', lines:['Should feel easy','Cuff rehab'] },
+      bikeB, banger,
+      { d:'SAT', tag:'Partner Session', star:'Full 1776 run + America pacing, near intensity', lines:['Everything rehearsed','Cuff rehab'] },
+      sun
+    ]
+  },
+  { // 10
+    phase:'Weeks 10-11 · SIM 2', title:'Sim 2', sim:true,
+    focus:'Everything rehearsed, run closer to true comp intensity. <strong>Splits should feel automatic now.</strong> Light days around the sim, same as Week 6.',
+    days:[
+      { d:'MON', tag:'Light', star:'Easy movement + mobility', rest:true, lines:['Prime, don\'t drain','Cuff rehab'] },
+      { d:'TUE', tag:'Prime', star:'Short clean touches @ moderate', rest:true, lines:['Nothing heavy','Cuff both ends'] },
+      { d:'WED', tag:'Recover', star:'Easy Zone 2 + mobility', rest:true, lines:['Aerobic only','Cuff rehab'] },
+      { d:'THU', tag:'Openers', star:'Short bike openers, legs fresh', rest:true, lines:['Cadence bursts only','Cuff rehab'] },
+      { d:'FRI', tag:'Rest', star:'Walk, mobility, fuel', rest:true, lines:['Set up for tomorrow','Cuff rehab'] },
+      { d:'SAT', tag:'SIM 2', star:'FULL SIM — true comp intensity, all 4 events', sim:true, lines:['With partner · real weights, real rest','Splits automatic, fueling dialed','Log anything still rough'] },
+      { d:'SUN', tag:'Recover', star:'Easy cycling + debrief', rest:true, lines:['Final fixes into Week 11','Cuff rehab'] }
+    ]
+  },
+  { // 11
+    phase:'Weeks 10-11 · SIM 2', title:'Week 11',
+    focus:'Sharpen off Sim 2. <strong>Last realistic 270-285 clean shot if you\'re fresh</strong> — then done grinding. Lock splits, fueling, warm-up ritual with your partner.',
+    days:[
+      { d:'MON', tag:'Legs + Sandbag', star:'Sandbag — short, crisp sets', lines:['Volume comes down','Cuff rehab'] },
+      { d:'TUE', tag:'Clean Day', star:'Last heavier single attempt if fresh — 270-285 shot', lines:['Fast + easy or leave it — then done grinding','Cuff both ends'] },
+      { d:'WED', tag:'Deadlift', star:'50 crisp singles @ 225 — easy', lines:['Feel submaximal, no fatigue','Cuff rehab'] },
+      { d:'THU', tag:'Bike · Openers', star:'Short bike openers', lines:['Keep the engine sharp, don\'t drain it','Cuff rehab'] },
+      { d:'FRI', tag:'Light Banger / Rest', star:'Light class or rest — read your recovery', lines:['Nothing that digs a hole','Cuff rehab'] },
+      { d:'SAT', tag:'Partner Session', star:'Lock splits, fueling, warm-up ritual', lines:['Optional partial event re-run','Cuff rehab'] },
+      sun
+    ]
+  },
+  { // 12
+    phase:'Week 12 · Taper', title:'Taper', taper:true,
+    focus:'You don\'t build fitness in the last 7 days — you preserve it and show up fresh. Volume drops hard, intensity stays sharp. Zero sims, zero grinding. <strong>Show up rested and dangerous.</strong>',
+    days:[
+      { d:'MON', tag:'Legs + Sandbag', star:'Sandbag — 2 × 12 crisp @ 100', lines:['Sharp, short, done','Cuff rehab'] },
+      { d:'TUE', tag:'Clean · Tune-Up', star:'A few fast singles @ moderate — no max', lines:['Crisp turnover touches only','Cuff both ends'] },
+      { d:'WED', tag:'Deadlift', star:'3 × 12 @ 225 crisp (36) — no grind', lines:['Preserve, don\'t build','Cuff rehab'] },
+      { d:'THU', tag:'Bike · Easy', star:'Easy spin + 2-3 short openers', lines:['Legs fresh, engine primed','Cuff rehab'] },
+      { d:'FRI', tag:'Rest', star:'Mobility · sleep + macros dialed', rest:true, lines:['Confirm splits, fueling, warm-up ritual','Cuff rehab'] },
+      { d:'SAT', tag:'Sept 28 · Comp', star:'BATTLE AT THE CREEK — show up rested and dangerous', sim:true, lines:['Warm-up ritual with your partner','Trust the block. Point the base at the four events','Go get it.'] }
+    ]
+  }
+];
+
+// ── Render ──
+const nav = document.getElementById('weeknav');
+const panel = document.getElementById('weekPanel');
+
+WEEKS.forEach((w, i) => {
+  const p = document.createElement('button');
+  p.className = 'wk-pill' + (w.sim ? ' sim' : '');
+  const n = i + 1;
+  p.innerHTML = (w.sim ? '<span class="dot"></span>' : '') + (w.sim ? w.title.toUpperCase() : 'W' + n);
+  p.addEventListener('click', () => selectWeek(i, true));
+  nav.appendChild(p);
+});
+
+function selectWeek(idx, scrollNav){
+  const w = WEEKS[idx];
+  [...nav.children].forEach((c, i) => c.classList.toggle('active', i === idx));
+  const isCurrent = window.__inBlock && (idx === window.__curWeek - 1);
+
+  const daysHTML = w.days.map((d, di) => {
+    const showToday = isCurrent && di === window.__curDayIdx;
+    const cls = ['day'];
+    if (d.sim) cls.push('sim');
+    if (d.rest) cls.push('rest');
+    if (showToday) cls.push('today');
+    const lines = d.lines.map(l => '<li>' + l + '</li>').join('');
+    return '<div class="' + cls.join(' ') + '">' +
+        '<div class="day-top"><span class="day-d">' + d.d + '</span><span class="day-tag">' + d.tag + '</span></div>' +
+        '<div class="day-star">' + d.star + '</div>' +
+        '<ul class="day-lines">' + lines + '</ul>' +
+      '</div>';
+  }).join('');
+
+  const chipCls = 'phase-chip' + (w.taper ? ' taper' : '');
+  panel.innerHTML =
+    '<div class="week-panel">' +
+      '<div class="week-head"><span class="wtitle">' + w.title + '</span><span class="' + chipCls + '">' + w.phase + '</span></div>' +
+      '<p class="week-focus">' + w.focus + '</p>' +
+      '<div class="days">' + daysHTML + '</div>' +
+    '</div>';
+
+  if (scrollNav) {
+    const pill = nav.children[idx];
+    pill.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  }
+}
+
+selectWeek(window.__curWeek - 1, false);
+// center the active pill on load without smooth jump
+nav.children[window.__curWeek - 1].scrollIntoView({ inline: 'center', block: 'nearest' });
+</script>
+</body>
+</html>
